@@ -8,7 +8,7 @@ namespace ForumApp.Domain.Topics
         public Guid SectionId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public Guid ProfileId { get; set; }
+        public Guid MemberId { get; set; }
         public int Replies { get; set; }
     }
 }

@@ -7,5 +7,6 @@ namespace ForumApp.Domain.Replies
         public Guid Id { get; set; }
         public Guid TopicId { get; set; }
         public string Content { get; set; }
+        public Guid MemberId { get; set; }
     }
 }
