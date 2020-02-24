@@ -1,10 +1,10 @@
 ﻿using System;
 
-namespace ForumApp.Domain.Profiles
+namespace Atlas.Data.Entities
 {
-    public class PermissionItem
+    public class Permission
     {
-        public Guid PermissionId { get; set; }
+        public Guid PermissionSetId { get; set; }
         public PermissionType Type { get; set; }
         public string RoleId { get; set; }
     }

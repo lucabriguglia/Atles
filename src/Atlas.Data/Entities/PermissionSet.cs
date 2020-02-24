@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 
-namespace ForumApp.Domain.Profiles
+namespace Atlas.Data.Entities
 {
     public class PermissionSet
     {
@@ -10,6 +10,9 @@ namespace ForumApp.Domain.Profiles
         public Guid SiteId { get; private set; }
         public string Name { get; private set; }
 
+        //modelBuilder.Entity<Book>()
+        //.FindNavigation(nameof(Book.Reviews))
+        //.SetPropertyAccessMode(PropertyAccessMode.Field);
         private List<Permission> _permissions;
         public ReadOnlyCollection<Permission> Permissions => _permissions.AsReadOnly();
 

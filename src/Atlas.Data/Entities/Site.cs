@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace ForumApp.Domain.Sites
+namespace Atlas.Data.Entities
 {
     public class Site
     {

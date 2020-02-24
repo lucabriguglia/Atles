@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Domain
+namespace Atlas.Services
 {
     public class Class1
     {

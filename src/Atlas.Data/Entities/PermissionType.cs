@@ -1,4 +1,4 @@
-﻿namespace ForumApp.Domain.Profiles
+﻿namespace Atlas.Data.Entities
 {
     public enum PermissionType
     {
