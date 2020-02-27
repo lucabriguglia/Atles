@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas", "Atlas\Atlas.csproj", "{3F11B625-28EE-48DD-9E31-4506256A2326}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlas.Tests", "Atlas.Tests\Atlas.Tests.csproj", "{CD8337F9-75A1-4D02-B918-BDB0D023F072}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Tests", "Atlas.Tests\Atlas.Tests.csproj", "{CD8337F9-75A1-4D02-B918-BDB0D023F072}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

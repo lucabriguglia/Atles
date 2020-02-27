@@ -14,10 +14,38 @@ namespace Atlas.Data
         {
             base.OnModelCreating(builder);
 
+            builder.Entity<Forum>()
+                .ToTable("Forum");
+
+            builder.Entity<ForumGroup>()
+                .ToTable("ForumGroup");
+
+            builder.Entity<Member>()
+                .ToTable("Member");
+
+            builder.Entity<PermissionSet>()
+                .ToTable("PermissionSet");
+
+            builder.Entity<Permission>()
+                .ToTable("Permission");
+
+            builder.Entity<Reply>()
+                .ToTable("Reply");
+
             builder.Entity<Site>()
                 .ToTable("Site");
+
+            builder.Entity<Topic>()
+                .ToTable("Topic");
         }
 
+        public DbSet<Forum> Forums { get; set; }
+        public DbSet<ForumGroup> ForumGroups { get; set; }
+        public DbSet<Member> Members { get; set; }
+        public DbSet<PermissionSet> PermissionSets { get; set; }
+        public DbSet<Permission> Permissions { get; set; }
+        public DbSet<Reply> Replies { get; set; }
         public DbSet<Site> Sites { get; set; }
+        public DbSet<Topic> Topics { get; set; }
     }
 }
