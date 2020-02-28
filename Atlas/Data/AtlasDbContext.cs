@@ -1,4 +1,5 @@
-﻿using Atlas.Models;
+﻿using System.Reflection;
+using Atlas.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data
@@ -14,11 +15,7 @@ namespace Atlas.Data
         {
             base.OnModelCreating(builder);
 
-            builder.Entity<Forum>()
-                .ToTable("Forum");
-
-            builder.Entity<ForumGroup>()
-                .ToTable("ForumGroup");
+            builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
 
             builder.Entity<Member>()
                 .ToTable("Member");
@@ -27,16 +24,11 @@ namespace Atlas.Data
                 .ToTable("PermissionSet");
 
             builder.Entity<Permission>()
-                .ToTable("Permission");
+                .ToTable("Permission")
+                .HasKey(x => new { x.PermissionSetId, x.RoleId, x.Type });
 
             builder.Entity<Reply>()
                 .ToTable("Reply");
-
-            builder.Entity<Site>()
-                .ToTable("Site");
-
-            builder.Entity<Topic>()
-                .ToTable("Topic");
         }
 
         public DbSet<Forum> Forums { get; set; }

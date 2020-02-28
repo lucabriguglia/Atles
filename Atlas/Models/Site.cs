@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Atlas.Models
 {
@@ -6,5 +7,12 @@ namespace Atlas.Models
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
+
+        public virtual ICollection<ForumGroup> ForumGroups { get; set; }
+
+        public Site()
+        {
+            
+        }
     }
 }

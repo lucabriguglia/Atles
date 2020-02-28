@@ -5,13 +5,13 @@ using Atlas.Data;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Areas.Admin.Pages
+namespace Atlas.Areas.Admin.Pages.ForumGroups
 {
-    public class ForumGroupsModel : PageModel
+    public class IndexModel : PageModel
     {
         private readonly AtlasDbContext _dbContext;
 
-        public ForumGroupsModel(AtlasDbContext dbContext)
+        public IndexModel(AtlasDbContext dbContext)
         {
             _dbContext = dbContext;
         }

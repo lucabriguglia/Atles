@@ -16,6 +16,11 @@ namespace Atlas.Models
         private List<Permission> _permissions;
         public ReadOnlyCollection<Permission> Permissions => _permissions.AsReadOnly();
 
+        public PermissionSet()
+        {
+            
+        }
+
         public PermissionSet(Guid id, Guid siteId, string name, List<Permission> permissions)
         {
             Id = id;

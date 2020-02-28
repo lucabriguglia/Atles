@@ -7,5 +7,10 @@ namespace Atlas.Models
         public Guid PermissionSetId { get; set; }
         public PermissionType Type { get; set; }
         public string RoleId { get; set; }
+
+        public Permission()
+        {
+            
+        }
     }
 }
