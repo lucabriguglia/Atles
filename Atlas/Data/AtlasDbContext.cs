@@ -16,19 +16,6 @@ namespace Atlas.Data
             base.OnModelCreating(builder);
 
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
-
-            builder.Entity<Member>()
-                .ToTable("Member");
-
-            builder.Entity<PermissionSet>()
-                .ToTable("PermissionSet");
-
-            builder.Entity<Permission>()
-                .ToTable("Permission")
-                .HasKey(x => new { x.PermissionSetId, x.RoleId, x.Type });
-
-            builder.Entity<Reply>()
-                .ToTable("Reply");
         }
 
         public DbSet<Forum> Forums { get; set; }

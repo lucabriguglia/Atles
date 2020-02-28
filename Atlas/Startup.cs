@@ -42,8 +42,8 @@ namespace Atlas
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AtlasDbContext atlasDbContext, ApplicationDbContext applicationDbContext)
         {
-            atlasDbContext.Database.EnsureCreated();
-            applicationDbContext.Database.EnsureCreated();
+            //atlasDbContext.Database.EnsureCreated();
+            //applicationDbContext.Database.EnsureCreated();
 
             if (env.IsDevelopment())
             {

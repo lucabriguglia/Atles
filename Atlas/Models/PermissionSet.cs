@@ -21,9 +21,9 @@ namespace Atlas.Models
             
         }
 
-        public PermissionSet(Guid id, Guid siteId, string name, List<Permission> permissions)
+        public PermissionSet(Guid siteId, string name, List<Permission> permissions)
         {
-            Id = id;
+            Id = Guid.NewGuid();
             SiteId = siteId;
             Name = name;
             _permissions = permissions;

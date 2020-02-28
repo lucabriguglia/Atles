@@ -1,9 +1,9 @@
-﻿using Microsoft.AspNetCore.Mvc.RazorPages;
+﻿using Atlas.Framework;
 using Microsoft.Extensions.Logging;
 
 namespace Atlas.Areas.Admin.Pages
 {
-    public class IndexModel : PageModel
+    public class IndexModel : BasePageModel
     {
         private readonly ILogger<IndexModel> _logger;
 

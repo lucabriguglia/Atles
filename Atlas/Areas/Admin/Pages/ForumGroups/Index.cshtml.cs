@@ -2,12 +2,12 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Data;
-using Microsoft.AspNetCore.Mvc.RazorPages;
+using Atlas.Framework;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Areas.Admin.Pages.ForumGroups
 {
-    public class IndexModel : PageModel
+    public class IndexModel : BasePageModel
     {
         private readonly AtlasDbContext _dbContext;
 

@@ -5,13 +5,13 @@ namespace Atlas.Models
 {
     public class ForumGroup
     {
-        public Guid Id { get; set; }
-        public Guid SiteId { get; set; }
-        public string Name { get; set; }
-        public int SortOrder { get; set; }
-        public int TopicsCount { get; set; }
-        public int RepliesCounts { get; set; }
-        public Guid? PermissionSetId { get; set; }
+        public Guid Id { get; private set; }
+        public Guid SiteId { get; private set; }
+        public string Name { get; private set; }
+        public int SortOrder { get; private set; }
+        public int TopicsCount { get; private set; }
+        public int RepliesCounts { get; private set; }
+        public Guid? PermissionSetId { get; private set; }
 
         public virtual Site Site { get; set; }
 
@@ -19,7 +19,15 @@ namespace Atlas.Models
 
         public ForumGroup()
         {
-            
+
+        }
+
+        public ForumGroup(Guid siteId, string name, int sortOrder)
+        {
+            Id = Guid.NewGuid();
+            SiteId = siteId;
+            Name = name;
+            SortOrder = sortOrder;
         }
     }    
 }
