@@ -1,35 +1,37 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.DependencyInjection;
 
 namespace Atlas.Services
 {
     public class InstallationService : IInstallationService
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
         private readonly AtlasDbContext _dbContext;
         private readonly IConfiguration _configuration;
+        private readonly IServiceProvider _serviceProvider;
 
-        public InstallationService(RoleManager<IdentityRole> roleManager, 
-            UserManager<IdentityUser> userManager, 
-            AtlasDbContext dbContext, 
-            IConfiguration configuration)
+        public InstallationService(AtlasDbContext dbContext, 
+            IConfiguration configuration, 
+            IServiceProvider serviceProvider)
         {
-            _roleManager = roleManager;
-            _userManager = userManager;
             _dbContext = dbContext;
             _configuration = configuration;
+            _serviceProvider = serviceProvider;
         }
 
         public async Task EnsureAdminUserInitializedAsync()
         {
-            if (await _roleManager.RoleExistsAsync("Admin") == false)
+            var roleManager = _serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
+            var userManager = _serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            if (await roleManager.RoleExistsAsync("Admin") == false)
             {
-                await _roleManager.CreateAsync(new IdentityRole("Admin"));
+                await roleManager.CreateAsync(new IdentityRole("Admin"));
             }
 
             if (_configuration["CreateDefaultAdminUser"].ToLowerInvariant() != "true")
@@ -37,7 +39,7 @@ namespace Atlas.Services
                 return;
             }
 
-            if (await _userManager.FindByEmailAsync(_configuration["DefaultAdminUserEmail"]) != null)
+            if (await userManager.FindByEmailAsync(_configuration["DefaultAdminUserEmail"]) != null)
             {
                 return;
             }
@@ -48,14 +50,17 @@ namespace Atlas.Services
                 UserName = _configuration["DefaultAdminUserName"]
             };
 
-            var userResult = await _userManager.CreateAsync(user, _configuration["DefaultAdminUserPassword"]);
+            var userResult = await userManager.CreateAsync(user, _configuration["DefaultAdminUserPassword"]);
 
             if (!userResult.Succeeded)
             {
                 return;
             }
 
-            await _userManager.AddToRoleAsync(user, "Admin");
+            var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
+            await userManager.ConfirmEmailAsync(user, code);
+
+            await userManager.AddToRoleAsync(user, "Admin");
 
             var member = new Member(user.Id);
             _dbContext.Members.Add(member);
