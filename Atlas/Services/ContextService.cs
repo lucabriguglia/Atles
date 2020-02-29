@@ -14,7 +14,7 @@ namespace Atlas.Services
         private readonly AtlasDbContext _dbContext;
 
         public ContextService(IHttpContextAccessor httpContextAccessor, 
-            ICacheManager cacheManager, 
+            ICacheManager cacheManager,
             AtlasDbContext dbContext)
         {
             _httpContextAccessor = httpContextAccessor;

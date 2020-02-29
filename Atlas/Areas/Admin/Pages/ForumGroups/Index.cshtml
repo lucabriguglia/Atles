@@ -3,3 +3,25 @@
 @{
     ViewData["Title"] = "Forum Groups";
 }
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table">
+    <thead class="thead-dark">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">&nbsp;</th>
+        </tr>
+    </thead>
+    <tbody>
+    @foreach (var @group in Model.ForumGroups)
+    {
+        <tr>
+            <td>@group.Name</td>
+            <td>
+                &nbsp;
+            </td>
+        </tr>
+    }
+    </tbody>
+</table>

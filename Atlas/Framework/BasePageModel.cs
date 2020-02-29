@@ -14,7 +14,7 @@ namespace Atlas.Framework
         {
             get
             {
-                return User.Identity.IsAuthenticated 
+                return User.Identity.IsAuthenticated
                     ? User.Identities.First().Claims.FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value
                     : null;
             }
