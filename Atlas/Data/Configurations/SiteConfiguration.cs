@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Atlas.Data.Configuration
+namespace Atlas.Data.Configurations
 {
     public class SiteConfiguration : IEntityTypeConfiguration<Site>
     {

@@ -5,10 +5,10 @@ namespace Atlas.Models
 {
     public class Member
     {
-        public Guid Id { get; set; }
-        public string UserId { get; set; }
-        public int TopicsCount { get; set; }
-        public int RepliesCount { get; set; }
+        public Guid Id { get; private set; }
+        public string UserId { get; private set; }
+        public int TopicsCount { get; private set; }
+        public int RepliesCount { get; private set; }
 
         public virtual ICollection<Topic> Topics { get; set; }
         public virtual ICollection<Reply> Replies { get; set; }
@@ -17,5 +17,11 @@ namespace Atlas.Models
         {
             
         }
-    }    
+
+        public Member(string userId)
+        {
+            Id = Guid.NewGuid();
+            UserId = userId;
+        }
+    }
 }

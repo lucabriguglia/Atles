@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-namespace Atlas.Data.Configuration
+namespace Atlas.Data.Configurations
 {
     public class TopicConfiguration : IEntityTypeConfiguration<Topic>
     {
@@ -13,6 +13,13 @@ namespace Atlas.Data.Configuration
             builder
                 .HasOne(x => x.Forum)
                 .WithMany(x => x.Topics)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
+
+            builder
+                .HasOne(x => x.Member)
+                .WithMany(x => x.Topics)
+                .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
         }
     }

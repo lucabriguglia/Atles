@@ -1,8 +1,10 @@
+using Atlas.Caching;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Atlas.Data;
+using Atlas.Services;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -32,18 +34,34 @@ namespace Atlas
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
-            services.AddRazorPages();
-            //.AddRazorPagesOptions(options =>
-            //{
-            //    options.Conventions.AuthorizeAreaFolder("Admin", "", "Admin");
-            //});
+            services.AddAuthorization(options =>
+            {
+                options.AddPolicy("Admin", policy =>
+                    policy.RequireRole("Admin"));
+            });
+
+            services.AddRazorPages()
+                .AddRazorPagesOptions(options =>
+                {
+                    options.Conventions.AuthorizeAreaFolder("Admin", "/", "Admin");
+                });
+
+            services.AddTransient<IInstallationService, InstallationService>();
+            services.AddScoped<IContextService, ContextService>();
+            services.AddTransient<ICacheManager, CacheManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IWebHostEnvironment env, AtlasDbContext atlasDbContext, ApplicationDbContext applicationDbContext)
+        public void Configure(IApplicationBuilder app, 
+            IWebHostEnvironment env, 
+            AtlasDbContext atlasDbContext, 
+            ApplicationDbContext applicationDbContext,
+            IInstallationService installationService)
         {
-            //atlasDbContext.Database.EnsureCreated();
-            //applicationDbContext.Database.EnsureCreated();
+            atlasDbContext.Database.Migrate();
+            applicationDbContext.Database.Migrate();
+            installationService.EnsureAdminUserInitializedAsync().GetAwaiter().GetResult();
+            installationService.EnsureDefaultSiteInitializedAsync().GetAwaiter().GetResult();
 
             if (env.IsDevelopment())
             {
