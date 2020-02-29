@@ -75,7 +75,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     Name = table.Column<string>(nullable: true),
                     SortOrder = table.Column<int>(nullable: false),
                     TopicsCount = table.Column<int>(nullable: false),
-                    RepliesCounts = table.Column<int>(nullable: false),
+                    RepliesCount = table.Column<int>(nullable: false),
                     PermissionSetId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>

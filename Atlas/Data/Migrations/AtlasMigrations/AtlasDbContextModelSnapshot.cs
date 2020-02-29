@@ -62,7 +62,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<Guid?>("PermissionSetId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RepliesCounts")
+                    b.Property<int>("RepliesCount")
                         .HasColumnType("int");
 
                     b.Property<Guid>("SiteId")

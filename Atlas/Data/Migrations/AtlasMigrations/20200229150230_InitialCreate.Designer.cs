@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atlas.Data.Migrations.AtlasMigrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20200229110044_InitialCreate")]
+    [Migration("20200229150230_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -64,7 +64,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<Guid?>("PermissionSetId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<int>("RepliesCounts")
+                    b.Property<int>("RepliesCount")
                         .HasColumnType("int");
 
                     b.Property<Guid>("SiteId")

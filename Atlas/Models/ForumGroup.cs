@@ -10,7 +10,7 @@ namespace Atlas.Models
         public string Name { get; private set; }
         public int SortOrder { get; private set; }
         public int TopicsCount { get; private set; }
-        public int RepliesCounts { get; private set; }
+        public int RepliesCount { get; private set; }
         public Guid? PermissionSetId { get; private set; }
 
         public virtual Site Site { get; set; }
