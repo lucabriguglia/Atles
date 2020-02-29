@@ -47,6 +47,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
                     b.HasIndex("ForumGroupId");
 
+                    b.HasIndex("PermissionSetId");
+
                     b.ToTable("Forum");
                 });
 
@@ -75,6 +77,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasColumnType("int");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("PermissionSetId");
 
                     b.HasIndex("SiteId");
 
@@ -212,10 +216,20 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasForeignKey("ForumGroupId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("Atlas.Models.PermissionSet", "PermissionSet")
+                        .WithMany("Forums")
+                        .HasForeignKey("PermissionSetId")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Atlas.Models.ForumGroup", b =>
                 {
+                    b.HasOne("Atlas.Models.PermissionSet", "PermissionSet")
+                        .WithMany("ForumGroups")
+                        .HasForeignKey("PermissionSetId")
+                        .OnDelete(DeleteBehavior.NoAction);
+
                     b.HasOne("Atlas.Models.Site", "Site")
                         .WithMany("ForumGroups")
                         .HasForeignKey("SiteId")

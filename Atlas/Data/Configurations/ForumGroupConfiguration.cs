@@ -15,6 +15,11 @@ namespace Atlas.Data.Configurations
                 .WithMany(x => x.ForumGroups)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
+
+            builder
+                .HasOne(x => x.PermissionSet)
+                .WithMany(x => x.ForumGroups)
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }

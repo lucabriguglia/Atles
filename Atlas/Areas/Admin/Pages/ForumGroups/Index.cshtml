@@ -10,6 +10,8 @@
     <thead class="thead-dark">
         <tr>
             <th scope="col">Name</th>
+            <th scope="col">Total Topics</th>
+            <th scope="col">Total Replies</th>
             <th scope="col">&nbsp;</th>
         </tr>
     </thead>
@@ -18,8 +20,10 @@
     {
         <tr>
             <td>@group.Name</td>
+            <td>@group.TotalTopics</td>
+            <td>@group.TotalReplies</td>
             <td>
-                &nbsp;
+                <a class="btn btn-primary" asp-area="Admin" asp-page="/ForumGroups/Edit" asp-route-id="@group.Id" role="button">Edit</a>
             </td>
         </tr>
     }

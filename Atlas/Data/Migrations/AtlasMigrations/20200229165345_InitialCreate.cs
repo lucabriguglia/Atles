@@ -82,6 +82,11 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 {
                     table.PrimaryKey("PK_ForumGroup", x => x.Id);
                     table.ForeignKey(
+                        name: "FK_ForumGroup_PermissionSet_PermissionSetId",
+                        column: x => x.PermissionSetId,
+                        principalTable: "PermissionSet",
+                        principalColumn: "Id");
+                    table.ForeignKey(
                         name: "FK_ForumGroup_Site_SiteId",
                         column: x => x.SiteId,
                         principalTable: "Site",
@@ -107,6 +112,11 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         name: "FK_Forum_ForumGroup_ForumGroupId",
                         column: x => x.ForumGroupId,
                         principalTable: "ForumGroup",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Forum_PermissionSet_PermissionSetId",
+                        column: x => x.PermissionSetId,
+                        principalTable: "PermissionSet",
                         principalColumn: "Id");
                 });
 
@@ -166,6 +176,16 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 column: "ForumGroupId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Forum_PermissionSetId",
+                table: "Forum",
+                column: "PermissionSetId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_ForumGroup_PermissionSetId",
+                table: "ForumGroup",
+                column: "PermissionSetId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_ForumGroup_SiteId",
                 table: "ForumGroup",
                 column: "SiteId");
@@ -200,9 +220,6 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 name: "Reply");
 
             migrationBuilder.DropTable(
-                name: "PermissionSet");
-
-            migrationBuilder.DropTable(
                 name: "Topic");
 
             migrationBuilder.DropTable(
@@ -213,6 +230,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
             migrationBuilder.DropTable(
                 name: "ForumGroup");
+
+            migrationBuilder.DropTable(
+                name: "PermissionSet");
 
             migrationBuilder.DropTable(
                 name: "Site");

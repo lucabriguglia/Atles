@@ -14,6 +14,7 @@ namespace Atlas.Models
         public Guid? PermissionSetId { get; private set; }
 
         public virtual Site Site { get; set; }
+        public virtual PermissionSet PermissionSet { get; set; }
 
         public virtual ICollection<Forum> Forums { get; set; }
 

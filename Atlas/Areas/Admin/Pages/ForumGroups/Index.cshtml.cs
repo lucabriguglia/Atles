@@ -23,27 +23,33 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
         public async Task OnGetAsync()
         {
             var entities = await _dbContext.ForumGroups
+                .Include(x => x.PermissionSet)
                 .Where(x => x.SiteId == _contextService.CurrentSite().Id)
+                .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
             foreach (var entity in entities)
             {
-                ForumGroups.Add(new ForumGroup
+                ForumGroups.Add(new ForumGroupModel
                 {
                     Id = entity.Id,
                     Name = entity.Name,
-                    SortOrder = entity.SortOrder
+                    SortOrder = entity.SortOrder,
+                    TotalTopics = entity.TopicsCount,
+                    TotalReplies = entity.RepliesCount
                 });
             }
         }
 
-        public IList<ForumGroup> ForumGroups { get; } = new List<ForumGroup>();
+        public IList<ForumGroupModel> ForumGroups { get; } = new List<ForumGroupModel>();
 
-        public class ForumGroup
+        public class ForumGroupModel
         {
             public Guid Id { get; set; }
             public string Name { get; set; }
             public int SortOrder { get; set; }
+            public int TotalTopics { get; set; }
+            public int TotalReplies { get; set; }
         }
     }
 }

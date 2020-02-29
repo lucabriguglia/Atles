@@ -16,6 +16,9 @@ namespace Atlas.Models
         private List<Permission> _permissions;
         public ReadOnlyCollection<Permission> Permissions => _permissions.AsReadOnly();
 
+        public virtual ICollection<ForumGroup> ForumGroups { get; set; }
+        public virtual ICollection<Forum> Forums { get; set; }
+
         public PermissionSet()
         {
             

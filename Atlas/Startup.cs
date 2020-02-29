@@ -61,8 +61,8 @@ namespace Atlas
         {
             atlasDbContext.Database.Migrate();
             applicationDbContext.Database.Migrate();
-            installationService.EnsureAdminUserInitializedAsync().GetAwaiter().GetResult();
-            installationService.EnsureDefaultSiteInitializedAsync().GetAwaiter().GetResult();
+            installationService.EnsureAdminUserInitializedAsync().Wait();
+            installationService.EnsureDefaultSiteInitializedAsync().Wait();
 
             if (env.IsDevelopment())
             {
