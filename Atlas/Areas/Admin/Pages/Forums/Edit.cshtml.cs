@@ -37,7 +37,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
             {
                 return NotFound();
             }
-            ViewData["ForumGroupId"] = new SelectList(_context.ForumGroups, "Id", "Id");
+            ViewData["ForumGroupId"] = new SelectList(_context.ForumGroups, "Id", "Name");
             return Page();
         }
 

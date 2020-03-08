@@ -21,7 +21,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
 
         public IActionResult OnGet()
         {
-        ViewData["ForumGroupId"] = new SelectList(_context.ForumGroups, "Id", "Id");
+        ViewData["ForumGroupId"] = new SelectList(_context.ForumGroups, "Id", "Name");
             return Page();
         }
 

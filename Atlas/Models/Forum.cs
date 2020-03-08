@@ -30,5 +30,7 @@ namespace Atlas.Models
             Name = name;
             SortOrder = sortOrder;
         }
+
+        public string PermissionSetName() => PermissionSet?.Name;
     }
 }
