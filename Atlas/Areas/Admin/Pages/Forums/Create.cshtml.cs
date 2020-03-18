@@ -1,32 +1,49 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Data;
+using Atlas.Models;
+using Atlas.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
-using Atlas.Data;
-using Atlas.Models;
+using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Areas.Admin.Pages.Forums
 {
     public class CreateModel : PageModel
     {
-        private readonly Atlas.Data.AtlasDbContext _context;
+        private readonly IContextService _contextService;
+        private readonly AtlasDbContext _dbContext;
 
-        public CreateModel(Atlas.Data.AtlasDbContext context)
+        public CreateModel(IContextService contextService, AtlasDbContext dbContext)
         {
-            _context = context;
+            _contextService = contextService;
+            _dbContext = dbContext;
         }
 
-        public IActionResult OnGet()
+        public async Task<IActionResult> OnGetAsync()
         {
-        ViewData["ForumGroupId"] = new SelectList(_context.ForumGroups, "Id", "Name");
+            var siteId = _contextService.CurrentSite().Id;
+
+            var groups = await _dbContext.ForumGroups
+                .Where(x => x.SiteId == siteId)
+                .OrderBy(x => x.SortOrder)
+                .ToListAsync();
+
+            var permissionSets = await _dbContext.PermissionSets
+                .Where(x => x.SiteId == siteId)
+                .ToListAsync();
+
+            ViewData["ForumGroupId"] = new SelectList(groups, "Id", "Name");
+            ViewData["PermissionSetId"] = new SelectList(permissionSets, "Id", "Name");
+
             return Page();
         }
 
         [BindProperty]
-        public Forum Forum { get; set; }
+        public ForumModel Forum { get; set; }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -37,10 +54,26 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return Page();
             }
 
-            _context.Forums.Add(Forum);
-            await _context.SaveChangesAsync();
+            var forumsCount = await _dbContext.Forums.Where(x => x.ForumGroupId == Forum.ForumGroupId).CountAsync();
+            var sortOrder = forumsCount + 1;
+
+            var forum = new Forum(Forum.ForumGroupId, Forum.Name, sortOrder, Forum.PermissionSetId);
+
+            _dbContext.Forums.Add(forum);
+            await _dbContext.SaveChangesAsync();
 
             return RedirectToPage("./Index");
+        }
+
+        public class ForumModel
+        {
+            [Required]
+            public Guid ForumGroupId { get; set; }
+
+            [Required]
+            public string Name { get; set; }
+
+            public Guid? PermissionSetId { get; set; }
         }
     }
 }

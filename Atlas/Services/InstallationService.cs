@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Models;
@@ -78,6 +79,9 @@ namespace Atlas.Services
 
             site = new Site("Default", "My Website");
             _dbContext.Sites.Add(site);
+
+            var permissionSet = new PermissionSet(site.Id, "Default", new List<Permission>());
+            _dbContext.PermissionSets.Add(permissionSet);
 
             var forumGroup = new ForumGroup(site.Id, "General", 1);
             _dbContext.ForumGroups.Add(forumGroup);

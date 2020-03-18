@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
@@ -7,21 +7,23 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Atlas.Data;
-using Atlas.Models;
+using Atlas.Services;
 
 namespace Atlas.Areas.Admin.Pages.Forums
 {
     public class EditModel : PageModel
     {
-        private readonly AtlasDbContext _context;
+        private readonly IContextService _contextService;
+        private readonly AtlasDbContext _dbContext;
 
-        public EditModel(AtlasDbContext context)
+        public EditModel(IContextService contextService, AtlasDbContext dbContext)
         {
-            _context = context;
+            _contextService = contextService;
+            _dbContext = dbContext;
         }
 
         [BindProperty]
-        public Forum Forum { get; set; }
+        public ForumModel Forum { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -30,14 +32,35 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return NotFound();
             }
 
-            Forum = await _context.Forums
-                .Include(f => f.ForumGroup).FirstOrDefaultAsync(m => m.Id == id);
+            var entity = await _dbContext.Forums.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Forum == null)
+            if (entity == null)
             {
                 return NotFound();
             }
-            ViewData["ForumGroupId"] = new SelectList(_context.ForumGroups, "Id", "Name");
+
+            Forum = new ForumModel
+            {
+                Id = entity.Id,
+                ForumGroupId = entity.ForumGroupId,
+                Name = entity.Name,
+                PermissionSetId = entity.PermissionSetId
+            };
+
+            var siteId = _contextService.CurrentSite().Id;
+
+            var groups = await _dbContext.ForumGroups
+                .Where(x => x.SiteId == siteId)
+                .OrderBy(x => x.SortOrder)
+                .ToListAsync();
+
+            var permissionSets = await _dbContext.PermissionSets
+                .Where(x => x.SiteId == siteId)
+                .ToListAsync();
+
+            ViewData["ForumGroupId"] = new SelectList(groups, "Id", "Name");
+            ViewData["PermissionSetId"] = new SelectList(permissionSets, "Id", "Name");
+
             return Page();
         }
 
@@ -50,30 +73,31 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return Page();
             }
 
-            _context.Attach(Forum).State = EntityState.Modified;
+            var entity = await _dbContext.Forums.FirstOrDefaultAsync(x => x.Id == Forum.Id);
 
-            try
+            if (entity == null)
             {
-                await _context.SaveChangesAsync();
+                return NotFound();
             }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ForumExists(Forum.Id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
+            entity.UpdateDetails(Forum.ForumGroupId, Forum.Name, Forum.PermissionSetId);
+
+            await _dbContext.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
 
-        private bool ForumExists(Guid id)
+        public class ForumModel
         {
-            return _context.Forums.Any(e => e.Id == id);
+            public Guid Id { get; set; }
+
+            [Required]
+            public Guid ForumGroupId { get; set; }
+
+            [Required]
+            public string Name { get; set; }
+
+            public Guid? PermissionSetId { get; set; }
         }
     }
 }

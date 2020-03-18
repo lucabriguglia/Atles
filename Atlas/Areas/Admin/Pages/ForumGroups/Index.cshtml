@@ -4,26 +4,27 @@
     ViewData["Title"] = "Forum Groups";
 }
 
-<h2>@ViewData["Title"]</h2>
+<h1>@ViewData["Title"]</h1>
 
 <table class="table">
     <thead class="thead-dark">
         <tr>
-            <th scope="col">Name</th>
-            <th scope="col">Total Topics</th>
-            <th scope="col">Total Replies</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.ForumGroups[0].Name)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.ForumGroups[0].TotalTopics)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.ForumGroups[0].TotalReplies)</th>
             <th scope="col">&nbsp;</th>
         </tr>
     </thead>
     <tbody>
-    @foreach (var @group in Model.ForumGroups)
+    @foreach (var item in Model.ForumGroups)
     {
         <tr>
-            <td>@group.Name</td>
-            <td>@group.TotalTopics</td>
-            <td>@group.TotalReplies</td>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalTopics)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalReplies)</td>
             <td>
-                <a class="btn btn-primary" asp-area="Admin" asp-page="/ForumGroups/Edit" asp-route-id="@group.Id" role="button">Edit</a>
+                <a class="btn btn-secondary" asp-area="Admin" asp-page="/ForumGroups/Edit" asp-route-id="@item.Id" role="button">Edit</a>
+                <a class="btn btn-secondary" asp-area="Admin" asp-page="/Forums/Index" asp-route-forumgroupid="@item.Id" role="button">Forums</a>
             </td>
         </tr>
     }

@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using Atlas.Data;
 using Atlas.Models;
 
-namespace Atlas.Areas.Admin.Pages.Forums
+namespace Atlas.Areas.Admin.Pages.Member
 {
     public class DeleteModel : PageModel
     {
@@ -20,7 +20,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
         }
 
         [BindProperty]
-        public Forum Forum { get; set; }
+        public Models.Member Member { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -29,10 +29,9 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return NotFound();
             }
 
-            Forum = await _context.Forums
-                .Include(f => f.ForumGroup).FirstOrDefaultAsync(m => m.Id == id);
+            Member = await _context.Members.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Forum == null)
+            if (Member == null)
             {
                 return NotFound();
             }
@@ -46,11 +45,11 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return NotFound();
             }
 
-            Forum = await _context.Forums.FindAsync(id);
+            Member = await _context.Members.FindAsync(id);
 
-            if (Forum != null)
+            if (Member != null)
             {
-                _context.Forums.Remove(Forum);
+                _context.Members.Remove(Member);
                 await _context.SaveChangesAsync();
             }
 

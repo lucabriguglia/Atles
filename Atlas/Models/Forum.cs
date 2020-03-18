@@ -23,11 +23,24 @@ namespace Atlas.Models
             
         }
 
-        public Forum(Guid forumGroupId, string name, int sortOrder)
+        public Forum(Guid forumGroupId, string name, int sortOrder, Guid? permissionSetId = null)
         {
             Id = Guid.NewGuid();
             ForumGroupId = forumGroupId;
             Name = name;
+            SortOrder = sortOrder;
+            PermissionSetId = permissionSetId;
+        }
+
+        public void UpdateDetails(Guid forumGroupId, string name, Guid? permissionSetId = null)
+        {
+            ForumGroupId = forumGroupId;
+            Name = name;
+            PermissionSetId = permissionSetId;
+        }
+
+        public void UpdateOrder(int sortOrder)
+        {
             SortOrder = sortOrder;
         }
 

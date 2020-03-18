@@ -2,37 +2,35 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.EntityFrameworkCore;
 using Atlas.Data;
+using Microsoft.AspNetCore.Mvc.RazorPages;
 using Atlas.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Areas.Admin.Pages.Forums
 {
     public class IndexModel : PageModel
     {
-        private readonly AtlasDbContext _context;
         private readonly IContextService _contextService;
-        private readonly IForumGroupService _forumGroupService;
-        private readonly IForumService _forumService;
+        private readonly AtlasDbContext _dbContext;
 
-        public IndexModel(AtlasDbContext context, 
-            IContextService contextService, 
-            IForumGroupService forumGroupService, 
-            IForumService forumService)
+        public IndexModel(IContextService contextService, AtlasDbContext dbContext)
         {
-            _context = context;
             _contextService = contextService;
-            _forumGroupService = forumGroupService;
-            _forumService = forumService;
+            _dbContext = dbContext;
         }
+
+        public IList<ForumModel> Forums { get; } = new List<ForumModel>();
 
         public async Task OnGetAsync(Guid? forumGroupId)
         {
             var siteId = _contextService.CurrentSite().Id;
 
-            var forumGroups = await _forumGroupService.GetAll(siteId);
+            var forumGroups = await _dbContext.ForumGroups
+                .Where(x => x.SiteId == siteId)
+                .OrderBy(x => x.SortOrder)
+                .ToListAsync();
 
             if (!forumGroups.Any())
             {
@@ -50,7 +48,11 @@ namespace Atlas.Areas.Admin.Pages.Forums
 
             ViewData["ForumGroupId"] = new SelectList(forumGroups, "Id", "Name", currentForumGroup.Id);
 
-            var forums = await _forumService.GetAll(currentForumGroup.Id);
+            var forums = await _dbContext.Forums
+                .Include(x => x.PermissionSet)
+                .Where(x => x.ForumGroupId == currentForumGroup.Id)
+                .OrderBy(x => x.SortOrder)
+                .ToListAsync();
 
             foreach (var entity in forums)
             {
@@ -71,8 +73,6 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 });
             }
         }
-
-        public IList<ForumModel> Forums { get; } = new List<ForumModel>();
 
         public class ForumModel
         {

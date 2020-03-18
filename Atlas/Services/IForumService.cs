@@ -7,6 +7,9 @@ namespace Atlas.Services
 {
     public interface IForumService
     {
-        Task<IEnumerable<Forum>> GetAll(Guid forumGroupId);
+        Task<Forum> GetAsync(Guid forumId);
+        Task<IEnumerable<Forum>> GetAllAsync(Guid forumGroupId);
+        Task<int> GetNextSortOrderAsync(Guid forumGroupId);
+        Task CreateAsync(Forum forum);
     }
 }

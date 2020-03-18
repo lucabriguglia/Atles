@@ -2,13 +2,11 @@
 @model Atlas.Areas.Admin.Pages.Forums.EditModel
 
 @{
-    ViewData["Title"] = "Edit";
+    ViewData["Title"] = "Edit Forum";
 }
 
-<h1>Edit</h1>
+<h1>@ViewData["Title"]</h1>
 
-<h4>Forum</h4>
-<hr />
 <div class="row">
     <div class="col-md-4">
         <form method="post">
@@ -17,7 +15,6 @@
             <div class="form-group">
                 <label asp-for="Forum.ForumGroupId" class="control-label"></label>
                 <select asp-for="Forum.ForumGroupId" class="form-control" asp-items="ViewBag.ForumGroupId"></select>
-                <span asp-validation-for="Forum.ForumGroupId" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Forum.Name" class="control-label"></label>
@@ -25,24 +22,8 @@
                 <span asp-validation-for="Forum.Name" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Forum.SortOrder" class="control-label"></label>
-                <input asp-for="Forum.SortOrder" class="form-control" />
-                <span asp-validation-for="Forum.SortOrder" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Forum.TopicsCount" class="control-label"></label>
-                <input asp-for="Forum.TopicsCount" class="form-control" />
-                <span asp-validation-for="Forum.TopicsCount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <label asp-for="Forum.RepliesCount" class="control-label"></label>
-                <input asp-for="Forum.RepliesCount" class="form-control" />
-                <span asp-validation-for="Forum.RepliesCount" class="text-danger"></span>
-            </div>
-            <div class="form-group">
                 <label asp-for="Forum.PermissionSetId" class="control-label"></label>
-                <input asp-for="Forum.PermissionSetId" class="form-control" />
-                <span asp-validation-for="Forum.PermissionSetId" class="text-danger"></span>
+                <select asp-for="Forum.PermissionSetId" class="form-control" asp-items="ViewBag.PermissionSetId"></select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />

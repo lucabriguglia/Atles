@@ -2,55 +2,42 @@
 @model Atlas.Areas.Admin.Pages.Forums.IndexModel
 
 @{
-    ViewData["Title"] = "Index";
+    ViewData["Title"] = "Forums";
 }
 
-<h1>Index</h1>
+<h1>@ViewData["Title"]</h1>
 
 <p>
     <a asp-page="Create">Create New</a>
 </p>
+
 <p>
     <select class="form-control" asp-items="ViewBag.ForumGroupId"></select>
 </p>
+
 <table class="table">
-    <thead>
+    <thead class="thead-dark">
         <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Forums[0].Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Forums[0].TotalTopics)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Forums[0].TotalReplies)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Forums[0].PermissionSetName)
-            </th>
-            <th></th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Forums[0].Name)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Forums[0].TotalTopics)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Forums[0].TotalReplies)</th>
+            <th scope="col">@Html.DisplayNameFor(model => model.Forums[0].PermissionSetName)</th>
+            <th scope="col">&nbsp;</th>
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model.Forums) {
+    @foreach (var item in Model.Forums) 
+    {
         <tr>
+            <td>@Html.DisplayFor(modelItem => item.Name)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalTopics)</td>
+            <td>@Html.DisplayFor(modelItem => item.TotalReplies)</td>
+            <td>@Html.DisplayFor(modelItem => item.PermissionSetName)</td>
             <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalTopics)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TotalReplies)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.PermissionSetName)
-            </td>
-            <td>
-                <a asp-page="./Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-page="./Delete" asp-route-id="@item.Id">Delete</a>
+                <a class="btn btn-secondary" asp-page="./Edit" asp-route-id="@item.Id" role="button">Edit</a>
+                <a class="btn btn-secondary" asp-page="./Delete" asp-route-id="@item.Id" role="button">Delete</a>
             </td>
         </tr>
-}
+    }
     </tbody>
 </table>

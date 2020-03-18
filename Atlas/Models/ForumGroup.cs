@@ -23,12 +23,13 @@ namespace Atlas.Models
 
         }
 
-        public ForumGroup(Guid siteId, string name, int sortOrder)
+        public ForumGroup(Guid siteId, string name, int sortOrder, Guid? permissionSetId = null)
         {
             Id = Guid.NewGuid();
             SiteId = siteId;
             Name = name;
             SortOrder = sortOrder;
+            PermissionSetId = permissionSetId;
         }
 
         public string PermissionSetName() => PermissionSet?.Name;

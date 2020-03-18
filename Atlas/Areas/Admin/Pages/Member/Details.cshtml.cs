@@ -8,18 +8,18 @@ using Microsoft.EntityFrameworkCore;
 using Atlas.Data;
 using Atlas.Models;
 
-namespace Atlas.Areas.Admin.Pages.Forums
+namespace Atlas.Areas.Admin.Pages.Member
 {
     public class DetailsModel : PageModel
     {
-        private readonly Atlas.Data.AtlasDbContext _context;
+        private readonly AtlasDbContext _context;
 
-        public DetailsModel(Atlas.Data.AtlasDbContext context)
+        public DetailsModel(AtlasDbContext context)
         {
             _context = context;
         }
 
-        public Forum Forum { get; set; }
+        public Models.Member Member { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -28,10 +28,9 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return NotFound();
             }
 
-            Forum = await _context.Forums
-                .Include(f => f.ForumGroup).FirstOrDefaultAsync(m => m.Id == id);
+            Member = await _context.Members.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (Forum == null)
+            if (Member == null)
             {
                 return NotFound();
             }
