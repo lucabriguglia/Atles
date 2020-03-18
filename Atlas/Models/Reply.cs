@@ -7,6 +7,7 @@ namespace Atlas.Models
         public Guid Id { get; set; }
         public Guid TopicId { get; set; }
         public string Content { get; set; }
+        public StatusType Status { get; private set; }
         public Guid MemberId { get; set; }
 
         public virtual Topic Topic { get; set; }
@@ -15,6 +16,11 @@ namespace Atlas.Models
         public Reply()
         {
             
+        }
+
+        public void Delete()
+        {
+            Status = StatusType.Deleted;
         }
     }
 }

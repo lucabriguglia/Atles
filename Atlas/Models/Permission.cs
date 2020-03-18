@@ -8,6 +8,8 @@ namespace Atlas.Models
         public PermissionType Type { get; set; }
         public string RoleId { get; set; }
 
+        public virtual PermissionSet PermissionSet { get; set; }
+
         public Permission()
         {
             

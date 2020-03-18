@@ -1,23 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
 namespace Atlas.Models
 {
-    public class PermissionSet
+    public sealed class PermissionSet
     {
         public Guid Id { get; private set; }
         public Guid SiteId { get; private set; }
         public string Name { get; private set; }
+        public StatusType Status { get; private set; }
 
-        //modelBuilder.Entity<Book>()
-        //.FindNavigation(nameof(Book.Reviews))
-        //.SetPropertyAccessMode(PropertyAccessMode.Field);
-        private List<Permission> _permissions;
-        public ReadOnlyCollection<Permission> Permissions => _permissions.AsReadOnly();
-
-        public virtual ICollection<ForumGroup> ForumGroups { get; set; }
-        public virtual ICollection<Forum> Forums { get; set; }
+        public ICollection<Permission> Permissions { get; set; }
+        public ICollection<ForumGroup> ForumGroups { get; set; }
+        public ICollection<Forum> Forums { get; set; }
 
         public PermissionSet()
         {
@@ -29,7 +24,7 @@ namespace Atlas.Models
             Id = Guid.NewGuid();
             SiteId = siteId;
             Name = name;
-            _permissions = permissions;
+            Permissions = permissions;
         }
 
         public void UpdateName(string name)
@@ -39,8 +34,13 @@ namespace Atlas.Models
 
         public void UpdatePermissions(List<Permission> permissions)
         {
-            _permissions.Clear();
-            _permissions = permissions;
+            Permissions.Clear();
+            Permissions = permissions;
+        }
+
+        public void Delete()
+        {
+            Status = StatusType.Deleted;
         }
     }
 }

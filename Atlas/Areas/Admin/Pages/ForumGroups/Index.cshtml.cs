@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Framework;
+using Atlas.Models;
 using Atlas.Services;
 using Microsoft.EntityFrameworkCore;
 
@@ -22,21 +23,21 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
 
         public async Task OnGetAsync()
         {
-            var entities = await _dbContext.ForumGroups
+            var forumGroups = await _dbContext.ForumGroups
                 .Include(x => x.PermissionSet)
-                .Where(x => x.SiteId == _contextService.CurrentSite().Id)
+                .Where(x => x.SiteId == _contextService.CurrentSite().Id && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
-            foreach (var entity in entities)
+            foreach (var forumGroup in forumGroups)
             {
                 ForumGroups.Add(new ForumGroupModel
                 {
-                    Id = entity.Id,
-                    Name = entity.Name,
-                    SortOrder = entity.SortOrder,
-                    TotalTopics = entity.TopicsCount,
-                    TotalReplies = entity.RepliesCount
+                    Id = forumGroup.Id,
+                    Name = forumGroup.Name,
+                    SortOrder = forumGroup.SortOrder,
+                    TotalTopics = forumGroup.TopicsCount,
+                    TotalReplies = forumGroup.RepliesCount
                 });
             }
         }

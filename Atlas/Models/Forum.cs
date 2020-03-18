@@ -11,6 +11,7 @@ namespace Atlas.Models
         public int SortOrder { get; private set; }
         public int TopicsCount { get; private set; }
         public int RepliesCount { get; private set; }
+        public StatusType Status { get; private set; }
         public Guid? PermissionSetId { get; private set; }
 
         public virtual ForumGroup ForumGroup { get; set; }
@@ -42,6 +43,11 @@ namespace Atlas.Models
         public void UpdateOrder(int sortOrder)
         {
             SortOrder = sortOrder;
+        }
+
+        public void Delete()
+        {
+            Status = StatusType.Deleted;
         }
 
         public string PermissionSetName() => PermissionSet?.Name;

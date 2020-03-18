@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data;
+using Atlas.Models;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Atlas.Services;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Atlas.Areas.Admin.Pages.Forums
 {
@@ -28,7 +30,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
             var siteId = _contextService.CurrentSite().Id;
 
             var forumGroups = await _dbContext.ForumGroups
-                .Where(x => x.SiteId == siteId)
+                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
@@ -50,7 +52,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
 
             var forums = await _dbContext.Forums
                 .Include(x => x.PermissionSet)
-                .Where(x => x.ForumGroupId == currentForumGroup.Id)
+                .Where(x => x.ForumGroupId == currentForumGroup.Id && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
@@ -72,6 +74,22 @@ namespace Atlas.Areas.Admin.Pages.Forums
                     PermissionSetName = permissionSetName
                 });
             }
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(Guid id)
+        {
+            var forum = await _dbContext.Forums.FirstOrDefaultAsync(x => x.Id == id);
+
+            if (forum == null)
+            {
+                return NotFound();
+            }
+
+            forum.Delete();
+
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToPage(new { forum.ForumGroupId });
         }
 
         public class ForumModel

@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Atlas.Data;
+using Atlas.Models;
 using Atlas.Services;
 
 namespace Atlas.Areas.Admin.Pages.Forums
@@ -32,30 +33,30 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return NotFound();
             }
 
-            var entity = await _dbContext.Forums.FirstOrDefaultAsync(m => m.Id == id);
+            var forum = await _dbContext.Forums.FirstOrDefaultAsync(m => m.Id == id);
 
-            if (entity == null)
+            if (forum == null)
             {
                 return NotFound();
             }
 
             Forum = new ForumModel
             {
-                Id = entity.Id,
-                ForumGroupId = entity.ForumGroupId,
-                Name = entity.Name,
-                PermissionSetId = entity.PermissionSetId
+                Id = forum.Id,
+                ForumGroupId = forum.ForumGroupId,
+                Name = forum.Name,
+                PermissionSetId = forum.PermissionSetId
             };
 
             var siteId = _contextService.CurrentSite().Id;
 
             var groups = await _dbContext.ForumGroups
-                .Where(x => x.SiteId == siteId)
+                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
             var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId)
+                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .ToListAsync();
 
             ViewData["ForumGroupId"] = new SelectList(groups, "Id", "Name");
@@ -73,14 +74,14 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return Page();
             }
 
-            var entity = await _dbContext.Forums.FirstOrDefaultAsync(x => x.Id == Forum.Id);
+            var forum = await _dbContext.Forums.FirstOrDefaultAsync(x => x.Id == Forum.Id && x.Status != StatusType.Deleted);
 
-            if (entity == null)
+            if (forum == null)
             {
                 return NotFound();
             }
 
-            entity.UpdateDetails(Forum.ForumGroupId, Forum.Name, Forum.PermissionSetId);
+            forum.UpdateDetails(Forum.ForumGroupId, Forum.Name, Forum.PermissionSetId);
 
             await _dbContext.SaveChangesAsync();
 

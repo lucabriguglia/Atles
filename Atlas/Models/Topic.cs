@@ -9,8 +9,10 @@ namespace Atlas.Models
         public Guid ForumId { get; set; }
         public string Title { get; set; }
         public string Content { get; set; }
-        public Guid MemberId { get; set; }
         public int RepliesCount { get; set; }
+        public StatusType Status { get; private set; }
+        public Guid MemberId { get; set; }
+
 
         public virtual Forum Forum { get; set; }
         public virtual Member Member { get; set; }
@@ -20,6 +22,11 @@ namespace Atlas.Models
         public Topic()
         {
             
+        }
+
+        public void Delete()
+        {
+            Status = StatusType.Deleted;
         }
     }
 }

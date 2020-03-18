@@ -40,6 +40,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<int>("SortOrder")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<int>("TopicsCount")
                         .HasColumnType("int");
 
@@ -71,6 +74,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<int>("TopicsCount")
@@ -133,6 +139,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<Guid>("SiteId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.HasKey("Id");
 
                     b.ToTable("PermissionSet");
@@ -149,6 +158,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
                     b.Property<Guid>("MemberId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
 
                     b.Property<Guid>("TopicId")
                         .HasColumnType("uniqueidentifier");
@@ -197,6 +209,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<int>("RepliesCount")
                         .HasColumnType("int");
 
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -239,10 +254,10 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
             modelBuilder.Entity("Atlas.Models.Permission", b =>
                 {
-                    b.HasOne("Atlas.Models.PermissionSet", null)
+                    b.HasOne("Atlas.Models.PermissionSet", "PermissionSet")
                         .WithMany("Permissions")
                         .HasForeignKey("PermissionSetId")
-                        .OnDelete(DeleteBehavior.Cascade)
+                        .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 

@@ -11,6 +11,12 @@ namespace Atlas.Data.Configurations
             builder.ToTable("Permission");
 
             builder.HasKey(x => new { x.PermissionSetId, x.RoleId, x.Type });
+
+            builder
+                .HasOne(x => x.PermissionSet)
+                .WithMany(x => x.Permissions)
+                .OnDelete(DeleteBehavior.NoAction)
+                .IsRequired();
         }
     }
 }

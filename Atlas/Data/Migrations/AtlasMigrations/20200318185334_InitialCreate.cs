@@ -27,7 +27,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     SiteId = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true)
+                    Name = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -62,8 +63,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         name: "FK_Permission_PermissionSet_PermissionSetId",
                         column: x => x.PermissionSetId,
                         principalTable: "PermissionSet",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -76,6 +76,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     SortOrder = table.Column<int>(nullable: false),
                     TopicsCount = table.Column<int>(nullable: false),
                     RepliesCount = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
                     PermissionSetId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -103,6 +104,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     SortOrder = table.Column<int>(nullable: false),
                     TopicsCount = table.Column<int>(nullable: false),
                     RepliesCount = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
                     PermissionSetId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
@@ -128,8 +130,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     ForumId = table.Column<Guid>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
-                    MemberId = table.Column<Guid>(nullable: false),
-                    RepliesCount = table.Column<int>(nullable: false)
+                    RepliesCount = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    MemberId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -153,6 +156,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     Id = table.Column<Guid>(nullable: false),
                     TopicId = table.Column<Guid>(nullable: false),
                     Content = table.Column<string>(nullable: true),
+                    Status = table.Column<int>(nullable: false),
                     MemberId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>

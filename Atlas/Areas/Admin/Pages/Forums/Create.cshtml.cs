@@ -28,12 +28,12 @@ namespace Atlas.Areas.Admin.Pages.Forums
             var siteId = _contextService.CurrentSite().Id;
 
             var groups = await _dbContext.ForumGroups
-                .Where(x => x.SiteId == siteId)
+                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
             var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId)
+                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .ToListAsync();
 
             ViewData["ForumGroupId"] = new SelectList(groups, "Id", "Name");
@@ -54,7 +54,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return Page();
             }
 
-            var forumsCount = await _dbContext.Forums.Where(x => x.ForumGroupId == Forum.ForumGroupId).CountAsync();
+            var forumsCount = await _dbContext.Forums.Where(x => x.ForumGroupId == Forum.ForumGroupId && x.Status != StatusType.Deleted).CountAsync();
             var sortOrder = forumsCount + 1;
 
             var forum = new Forum(Forum.ForumGroupId, Forum.Name, sortOrder, Forum.PermissionSetId);
