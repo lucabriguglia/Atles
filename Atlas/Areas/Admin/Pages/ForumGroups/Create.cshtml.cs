@@ -28,10 +28,10 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
 
         public async Task<IActionResult> OnGetAsync()
         {
-            var siteId = _contextService.CurrentSite().Id;
+            var site = await _contextService.CurrentSiteAsync();
 
             var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
                 .ToListAsync();
 
             ViewData["PermissionSetId"] = new SelectList(permissionSets, "Id", "Name");
@@ -48,15 +48,15 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
                 return Page();
             }
 
-            var siteId = _contextService.CurrentSite().Id;
+            var site = await _contextService.CurrentSiteAsync();
 
             var forumGroupsCount = await _dbContext.ForumGroups
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
                 .CountAsync();
 
             var sortOrder = forumGroupsCount + 1;
 
-            var forumGroup = new ForumGroup(siteId, 
+            var forumGroup = new ForumGroup(site.Id, 
                 ForumGroup.Name, 
                 sortOrder, 
                 ForumGroup.PermissionSetId);

@@ -47,10 +47,10 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
                 PermissionSetId = forumGroup.PermissionSetId
             };
 
-            var siteId = _contextService.CurrentSite().Id;
+            var site = await _contextService.CurrentSiteAsync();
 
             var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
                 .ToListAsync();
 
             ViewData["PermissionSetId"] = new SelectList(permissionSets, "Id", "Name");

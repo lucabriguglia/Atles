@@ -1,14 +1,22 @@
 ﻿using System.Linq;
 using System.Security.Claims;
+using Atlas.Data;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace Atlas.Framework
 {
-    public class BasePageModel : PageModel
+    public abstract class BasePageModel : PageModel
     {
+        protected readonly AtlasDbContext DbContext;
+
         private AtlasContext _atlasContext;
 
         public AtlasContext AtlasContext => _atlasContext ?? (_atlasContext = new AtlasContext());
+
+        protected BasePageModel(AtlasDbContext dbContext)
+        {
+            DbContext = dbContext;
+        }
 
         public string UserId
         {

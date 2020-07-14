@@ -1,10 +1,11 @@
-﻿using Atlas.Domain;
+﻿using System.Threading.Tasks;
+using Atlas.Domain;
 
 namespace Atlas.Services
 {
     public interface IContextService
     {
-        Site CurrentSite();
-        Member CurrentMember();
+        Task<Site> CurrentSiteAsync();
+        Task<Member> CurrentMemberAsync();
     }
 }

@@ -18,6 +18,7 @@ namespace Atlas.Data
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
+        //public DbSet<Event> Events { get; set; }
         public DbSet<Forum> Forums { get; set; }
         public DbSet<ForumGroup> ForumGroups { get; set; }
         public DbSet<Member> Members { get; set; }

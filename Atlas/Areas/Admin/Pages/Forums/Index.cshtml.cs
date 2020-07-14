@@ -27,10 +27,10 @@ namespace Atlas.Areas.Admin.Pages.Forums
 
         public async Task OnGetAsync(Guid? forumGroupId)
         {
-            var siteId = _contextService.CurrentSite().Id;
+            var site = await _contextService.CurrentSiteAsync();
 
             var forumGroups = await _dbContext.ForumGroups
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 

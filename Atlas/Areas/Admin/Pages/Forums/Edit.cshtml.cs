@@ -48,15 +48,15 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 PermissionSetId = forum.PermissionSetId
             };
 
-            var siteId = _contextService.CurrentSite().Id;
+            var site = await _contextService.CurrentSiteAsync();
 
             var groups = await _dbContext.ForumGroups
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
             var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
                 .ToListAsync();
 
             ViewData["ForumGroupId"] = new SelectList(groups, "Id", "Name");

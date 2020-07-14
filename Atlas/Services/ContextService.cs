@@ -1,9 +1,11 @@
 ﻿using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using Atlas.Caching;
 using Atlas.Data;
 using Atlas.Domain;
 using Microsoft.AspNetCore.Http;
+using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Services
 {
@@ -22,11 +24,11 @@ namespace Atlas.Services
             _dbContext = dbContext;
         }
 
-        public Site CurrentSite() =>
-            _cacheManager.GetOrSet(CacheKeys.Site("Default"), () => 
-                _dbContext.Sites.FirstOrDefault(x => x.Name == "Default"));
+        public async Task<Site> CurrentSiteAsync() =>
+            await _cacheManager.GetOrSetAsync(CacheKeys.Site("Default"), () => 
+                _dbContext.Sites.FirstOrDefaultAsync(x => x.Name == "Default"));
 
-        public Member CurrentMember()
+        public async Task<Member> CurrentMemberAsync()
         {
             const string key = "Member";
 
@@ -44,13 +46,13 @@ namespace Atlas.Services
 
                 if (!string.IsNullOrEmpty(userId))
                 {
-                    member = _dbContext.Members.FirstOrDefault(x => x.UserId == userId);
+                    member = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userId);
 
                     if (member == null)
                     {
                         member = new Member(userId);
                         _dbContext.Members.Add(member);
-                        _dbContext.SaveChanges();
+                        await _dbContext.SaveChangesAsync();
                     }
                 }
             }
