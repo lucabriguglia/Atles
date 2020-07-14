@@ -78,7 +78,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
 
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)
         {
-            var forum = await _dbContext.Forums.FirstOrDefaultAsync(x => x.Id == id);
+            var forum = await _dbContext.Forums.FirstOrDefaultAsync(x => x.Id == id && x.Status != StatusType.Deleted);
 
             if (forum == null)
             {

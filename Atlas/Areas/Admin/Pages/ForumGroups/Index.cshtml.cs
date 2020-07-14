@@ -6,6 +6,7 @@ using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Framework;
 using Atlas.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Areas.Admin.Pages.ForumGroups
@@ -42,6 +43,31 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
                     TotalReplies = forumGroup.RepliesCount
                 });
             }
+        }
+
+        public async Task<IActionResult> OnPostDeleteAsync(Guid id)
+        {
+            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == id && x.Status != StatusType.Deleted);
+
+            if (forumGroup == null)
+            {
+                return NotFound();
+            }
+
+            forumGroup.Delete();
+
+            var forums = await _dbContext.Forums
+                .Where(x => x.ForumGroupId == forumGroup.Id)
+                .ToListAsync();
+
+            foreach (var forum in forums)
+            {
+                forum.Delete();
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            return RedirectToPage();
         }
 
         public class ForumGroupModel
