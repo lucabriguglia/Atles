@@ -10,7 +10,7 @@ using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Services;
 
-namespace Atlas.Areas.Admin.Pages.Forums
+namespace Atlas.Areas.Admin.Pages.ForumGroups
 {
     public class EditModel : PageModel
     {
@@ -24,7 +24,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
         }
 
         [BindProperty]
-        public ForumModel Forum { get; set; }
+        public ForumGroupModel ForumGroup { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -33,33 +33,26 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return NotFound();
             }
 
-            var forum = await _dbContext.Forums.FirstOrDefaultAsync(x => x.Id == id && x.Status != StatusType.Deleted);
+            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == id && x.Status != StatusType.Deleted);
 
-            if (forum == null)
+            if (forumGroup == null)
             {
                 return NotFound();
             }
 
-            Forum = new ForumModel
+            ForumGroup = new ForumGroupModel
             {
-                Id = forum.Id,
-                ForumGroupId = forum.ForumGroupId,
-                Name = forum.Name,
-                PermissionSetId = forum.PermissionSetId
+                Id = forumGroup.Id,
+                Name = forumGroup.Name,
+                PermissionSetId = forumGroup.PermissionSetId
             };
 
             var siteId = _contextService.CurrentSite().Id;
-
-            var groups = await _dbContext.ForumGroups
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
-                .OrderBy(x => x.SortOrder)
-                .ToListAsync();
 
             var permissionSets = await _dbContext.PermissionSets
                 .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .ToListAsync();
 
-            ViewData["ForumGroupId"] = new SelectList(groups, "Id", "Name");
             ViewData["PermissionSetId"] = new SelectList(permissionSets, "Id", "Name");
 
             return Page();
@@ -74,26 +67,23 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return Page();
             }
 
-            var forum = await _dbContext.Forums.FirstOrDefaultAsync(x => x.Id == Forum.Id && x.Status != StatusType.Deleted);
+            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == ForumGroup.Id && x.Status != StatusType.Deleted);
 
-            if (forum == null)
+            if (forumGroup == null)
             {
                 return NotFound();
             }
 
-            forum.UpdateDetails(Forum.ForumGroupId, Forum.Name, Forum.PermissionSetId);
+            forumGroup.UpdateDetails(ForumGroup.Name, ForumGroup.PermissionSetId);
 
             await _dbContext.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
 
-        public class ForumModel
+        public class ForumGroupModel
         {
             public Guid Id { get; set; }
-
-            [Required]
-            public Guid ForumGroupId { get; set; }
 
             [Required]
             public string Name { get; set; }

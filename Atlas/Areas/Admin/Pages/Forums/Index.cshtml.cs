@@ -58,8 +58,8 @@ namespace Atlas.Areas.Admin.Pages.Forums
 
             foreach (var entity in forums)
             {
-                var permissionSetName = string.IsNullOrEmpty(entity.PermissionSetName())
-                    ? string.IsNullOrEmpty(currentForumGroup.PermissionSetName())
+                var permissionSetName = !entity.HasPermissionSet()
+                    ? !currentForumGroup.HasPermissionSet()
                         ? "<None>"
                         : currentForumGroup.PermissionSetName()
                     : entity.PermissionSetName();

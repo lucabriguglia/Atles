@@ -18,7 +18,7 @@ namespace Atlas.Areas.Admin.Pages.Member
             _context = context;
         }
 
-        public Models.Member Member { get; set; }
+        public Domain.Member Member { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {

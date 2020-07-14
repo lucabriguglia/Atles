@@ -1,4 +1,6 @@
-﻿namespace Atlas.Services
+﻿using Atlas.Domain;
+
+namespace Atlas.Services
 {
     public interface IContextService
     {

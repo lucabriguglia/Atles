@@ -18,7 +18,7 @@ namespace Atlas.Areas.Admin.Pages.Member
             _context = context;
         }
 
-        public IList<Models.Member> Member { get;set; }
+        public IList<Domain.Member> Member { get;set; }
 
         public async Task OnGetAsync()
         {

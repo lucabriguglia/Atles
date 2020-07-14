@@ -51,5 +51,7 @@ namespace Atlas.Domain
         }
 
         public string PermissionSetName() => PermissionSet?.Name;
+
+        public bool HasPermissionSet() => PermissionSet != null;
     }
 }

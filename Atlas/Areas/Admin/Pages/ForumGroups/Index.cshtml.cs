@@ -21,6 +21,8 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
             _contextService = contextService;
         }
 
+        public IList<ForumGroupModel> ForumGroups { get; } = new List<ForumGroupModel>();
+
         public async Task OnGetAsync()
         {
             var forumGroups = await _dbContext.ForumGroups
@@ -42,8 +44,6 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
             }
         }
 
-        public IList<ForumGroupModel> ForumGroups { get; } = new List<ForumGroupModel>();
-
         public class ForumGroupModel
         {
             public Guid Id { get; set; }
@@ -51,6 +51,7 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
             public int SortOrder { get; set; }
             public int TotalTopics { get; set; }
             public int TotalReplies { get; set; }
+            public string PermissionSetName { get; set; }
         }
     }
 }

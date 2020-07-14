@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Areas.Admin.Pages.Forums
+namespace Atlas.Areas.Admin.Pages.ForumGroups
 {
     public class CreateModel : PageModel
     {
@@ -24,22 +24,16 @@ namespace Atlas.Areas.Admin.Pages.Forums
         }
 
         [BindProperty]
-        public ForumModel Forum { get; set; }
+        public ForumGroupModel ForumGroup { get; set; }
 
         public async Task<IActionResult> OnGetAsync()
         {
             var siteId = _contextService.CurrentSite().Id;
 
-            var groups = await _dbContext.ForumGroups
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
-                .OrderBy(x => x.SortOrder)
-                .ToListAsync();
-
             var permissionSets = await _dbContext.PermissionSets
                 .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .ToListAsync();
 
-            ViewData["ForumGroupId"] = new SelectList(groups, "Id", "Name");
             ViewData["PermissionSetId"] = new SelectList(permissionSets, "Id", "Name");
 
             return Page();
@@ -54,28 +48,27 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 return Page();
             }
 
-            var forumsCount = await _dbContext.Forums
-                .Where(x => x.ForumGroupId == Forum.ForumGroupId && x.Status != StatusType.Deleted)
+            var siteId = _contextService.CurrentSite().Id;
+
+            var forumGroupsCount = await _dbContext.ForumGroups
+                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .CountAsync();
 
-            var sortOrder = forumsCount + 1;
+            var sortOrder = forumGroupsCount + 1;
 
-            var forum = new Forum(Forum.ForumGroupId, 
-                Forum.Name, 
+            var forumGroup = new ForumGroup(siteId, 
+                ForumGroup.Name, 
                 sortOrder, 
-                Forum.PermissionSetId);
+                ForumGroup.PermissionSetId);
 
-            _dbContext.Forums.Add(forum);
+            _dbContext.ForumGroups.Add(forumGroup);
             await _dbContext.SaveChangesAsync();
 
             return RedirectToPage("./Index");
         }
 
-        public class ForumModel
+        public class ForumGroupModel
         {
-            [Required]
-            public Guid ForumGroupId { get; set; }
-
             [Required]
             public string Name { get; set; }
 

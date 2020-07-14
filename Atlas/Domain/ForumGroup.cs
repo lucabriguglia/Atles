@@ -32,6 +32,11 @@ namespace Atlas.Domain
             SortOrder = sortOrder;
             PermissionSetId = permissionSetId;
         }
+        public void UpdateDetails(string name, Guid? permissionSetId = null)
+        {
+            Name = name;
+            PermissionSetId = permissionSetId;
+        }
 
         public void Delete()
         {
@@ -39,5 +44,7 @@ namespace Atlas.Domain
         }
 
         public string PermissionSetName() => PermissionSet?.Name;
+
+        public bool HasPermissionSet() => PermissionSet != null;
     }    
 }
