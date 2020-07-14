@@ -11,9 +11,9 @@ namespace Atlas.Areas.Admin.Pages.Member
 {
     public class IndexModel : PageModel
     {
-        private readonly Atlas.Data.AtlasDbContext _context;
+        private readonly AtlasDbContext _context;
 
-        public IndexModel(Atlas.Data.AtlasDbContext context)
+        public IndexModel(AtlasDbContext context)
         {
             _context = context;
         }

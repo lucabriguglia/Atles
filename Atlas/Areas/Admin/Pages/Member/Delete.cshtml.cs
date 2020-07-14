@@ -11,9 +11,9 @@ namespace Atlas.Areas.Admin.Pages.Member
 {
     public class DeleteModel : PageModel
     {
-        private readonly Atlas.Data.AtlasDbContext _context;
+        private readonly AtlasDbContext _context;
 
-        public DeleteModel(Atlas.Data.AtlasDbContext context)
+        public DeleteModel(AtlasDbContext context)
         {
             _context = context;
         }

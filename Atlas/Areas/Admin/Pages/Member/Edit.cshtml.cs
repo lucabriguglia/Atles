@@ -12,15 +12,15 @@ namespace Atlas.Areas.Admin.Pages.Member
 {
     public class EditModel : PageModel
     {
-        private readonly Atlas.Data.AtlasDbContext _context;
+        private readonly AtlasDbContext _context;
 
-        public EditModel(Atlas.Data.AtlasDbContext context)
+        public EditModel(AtlasDbContext context)
         {
             _context = context;
         }
 
         [BindProperty]
-        public Models.Member Member { get; set; }
+        public MemberModel Member { get; set; }
 
         public async Task<IActionResult> OnGetAsync(Guid? id)
         {
@@ -71,6 +71,12 @@ namespace Atlas.Areas.Admin.Pages.Member
         private bool MemberExists(Guid id)
         {
             return _context.Members.Any(e => e.Id == id);
+        }
+
+        public class MemberModel
+        {
+            public Guid Id { get; set; }
+            public string UserId { get; set; }
         }
     }
 }

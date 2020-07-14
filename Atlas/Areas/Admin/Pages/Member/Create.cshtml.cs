@@ -1,19 +1,16 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Mvc.Rendering;
 using Atlas.Data;
 
 namespace Atlas.Areas.Admin.Pages.Member
 {
     public class CreateModel : PageModel
     {
-        private readonly Atlas.Data.AtlasDbContext _context;
+        private readonly AtlasDbContext _context;
 
-        public CreateModel(Atlas.Data.AtlasDbContext context)
+        public CreateModel(AtlasDbContext context)
         {
             _context = context;
         }
@@ -24,7 +21,7 @@ namespace Atlas.Areas.Admin.Pages.Member
         }
 
         [BindProperty]
-        public Models.Member Member { get; set; }
+        public MemberModel Member { get; set; }
 
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for
         // more details see https://aka.ms/RazorPagesCRUD.
@@ -40,5 +37,11 @@ namespace Atlas.Areas.Admin.Pages.Member
 
             return RedirectToPage("./Index");
         }
+    }
+
+    public class MemberModel
+    {
+        public Guid Id { get; set; }
+        public string UserId { get; set; }
     }
 }
