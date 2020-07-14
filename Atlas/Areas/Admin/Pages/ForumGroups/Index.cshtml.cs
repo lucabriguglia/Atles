@@ -3,8 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data;
+using Atlas.Domain;
 using Atlas.Framework;
-using Atlas.Models;
 using Atlas.Services;
 using Microsoft.EntityFrameworkCore;
 

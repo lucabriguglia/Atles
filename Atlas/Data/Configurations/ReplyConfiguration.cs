@@ -1,5 +1,4 @@
-﻿using Atlas.Models;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Atlas.Data.Configurations

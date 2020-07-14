@@ -7,7 +7,6 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using Atlas.Data;
-using Atlas.Models;
 using Atlas.Services;
 
 namespace Atlas.Areas.Admin.Pages.Forums

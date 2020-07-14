@@ -6,7 +6,6 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Atlas.Data;
-using Atlas.Models;
 
 namespace Atlas.Areas.Admin.Pages.Member
 {

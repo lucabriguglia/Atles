@@ -1,6 +1,4 @@
-﻿using Atlas.Models;
-
-namespace Atlas.Services
+﻿namespace Atlas.Services
 {
     public interface IContextService
     {

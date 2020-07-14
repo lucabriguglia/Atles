@@ -2,7 +2,6 @@
 using System.Security.Claims;
 using Atlas.Caching;
 using Atlas.Data;
-using Atlas.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Atlas.Services

@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Atlas.Models;
+using Atlas.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data

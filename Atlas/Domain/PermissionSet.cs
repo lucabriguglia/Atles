@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Atlas.Models
+namespace Atlas.Domain
 {
     public sealed class PermissionSet
     {

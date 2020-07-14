@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data;
-using Atlas.Models;
+using Atlas.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Services

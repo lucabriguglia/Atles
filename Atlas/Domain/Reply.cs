@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Models
+namespace Atlas.Domain
 {
     public class Reply
     {

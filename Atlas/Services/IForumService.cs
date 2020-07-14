@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atlas.Models;
+using Atlas.Domain;
 
 namespace Atlas.Services
 {

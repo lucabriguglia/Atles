@@ -1,4 +1,4 @@
-﻿namespace Atlas.Models
+﻿namespace Atlas.Domain
 {
     public enum StatusType
     {
