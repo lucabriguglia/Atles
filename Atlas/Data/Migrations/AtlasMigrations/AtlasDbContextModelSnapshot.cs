@@ -29,7 +29,6 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("MemberId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TargetId")
@@ -261,8 +260,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.HasOne("Atlas.Domain.Member", "Member")
                         .WithMany("Events")
                         .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Atlas.Domain.Forum", b =>

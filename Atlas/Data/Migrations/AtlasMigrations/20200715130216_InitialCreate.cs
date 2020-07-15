@@ -58,7 +58,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     TargetType = table.Column<string>(nullable: true),
                     Type = table.Column<string>(nullable: true),
                     Data = table.Column<string>(nullable: true),
-                    MemberId = table.Column<Guid>(nullable: false)
+                    MemberId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {

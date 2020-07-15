@@ -5,7 +5,15 @@
     ViewData["Title"] = "Create Forum Group";
 }
 
-<h1>@ViewData["Title"]</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-page="/Index">Home</a></li>
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-page="/ForumGroups/Index">Forum Groups</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+    </ol>
+</nav>
+
+<h1 class="mb-3">@ViewData["Title"]</h1>
 
 <div class="row">
     <div class="col-md-4">

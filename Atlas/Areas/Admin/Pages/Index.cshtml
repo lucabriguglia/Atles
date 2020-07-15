@@ -4,10 +4,13 @@
     ViewData["Title"] = "Admin";
 }
 
-<h1 class="display-4">Admin</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Home</li>
+    </ol>
+</nav>
 
-<ul>
-    <li>
-        <a asp-area="Admin" asp-page="/ForumGroups/Index">Forum Groups</a>
-    </li>
-</ul>
+<h1 class="mb-3">@ViewData["Title"]</h1>
+
+<div><a asp-area="Admin" asp-page="/ForumGroups/Index">Forum Groups</a></div>
+<div><a asp-area="Admin" asp-page="/Forums/Index">Forums</a></div>

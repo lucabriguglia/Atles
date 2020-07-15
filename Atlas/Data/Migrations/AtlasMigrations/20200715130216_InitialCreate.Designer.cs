@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atlas.Data.Migrations.AtlasMigrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20200715125925_InitialCreate")]
+    [Migration("20200715130216_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -31,7 +31,6 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("MemberId")
-                        .IsRequired()
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TargetId")
@@ -263,8 +262,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.HasOne("Atlas.Domain.Member", "Member")
                         .WithMany("Events")
                         .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Atlas.Domain.Forum", b =>

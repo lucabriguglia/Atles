@@ -4,14 +4,21 @@
     ViewData["Title"] = "Forum Groups";
 }
 
-<h1>@ViewData["Title"]</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-area="Admin" asp-page="/Index">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@ViewData["Title"]</li>
+    </ol>
+</nav>
 
-<p>
-    <a asp-page="Create">Create New</a>
-</p>
+<h1 class="mb-3">@ViewData["Title"]</h1>
 
-<table class="table">
-    <thead class="thead-dark">
+<div class="float-right mb-3">
+    <a class="btn btn-primary" asp-page="Create" role="button">Create New</a>
+</div>
+
+<table class="table table-bordered">
+    <thead>
         <tr>
             <th scope="col">@Html.DisplayNameFor(model => model.ForumGroups[0].Name)</th>
             <th scope="col">@Html.DisplayNameFor(model => model.ForumGroups[0].TotalTopics)</th>
@@ -29,12 +36,16 @@
                 <td>
                     <a class="btn btn-secondary" asp-area="Admin" asp-page="/ForumGroups/Edit" asp-route-id="@item.Id" role="button">Edit</a>
                     <a class="btn btn-secondary" asp-area="Admin" asp-page="/Forums/Index" asp-route-forumgroupid="@item.Id" role="button">Forums</a>
-                    <button type="button" class="btn btn-secondary delete-forum" data-toggle="modal" data-target="#confirm-delete-forum" data-id="@item.Id">Delete</button>
+                    <button type="button" class="btn btn-danger delete-forum" data-toggle="modal" data-target="#confirm-delete-forum" data-id="@item.Id">Delete</button>
                 </td>
             </tr>
         }
     </tbody>
 </table>
+
+<div class="float-right">
+    <a class="btn btn-primary" asp-page="Create" role="button">Create New</a>
+</div>
 
 <form method="post">
     <div class="modal fade" id="confirm-delete-forum" tabindex="-1" role="dialog" aria-labelledby="deleteForumModalLabel" aria-hidden="true">

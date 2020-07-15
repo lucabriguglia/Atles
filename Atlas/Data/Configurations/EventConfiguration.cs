@@ -13,8 +13,7 @@ namespace Atlas.Data.Configurations
             builder
                 .HasOne(x => x.Member)
                 .WithMany(x => x.Events)
-                .OnDelete(DeleteBehavior.NoAction)
-                .IsRequired();
+                .OnDelete(DeleteBehavior.NoAction);
         }
     }
 }
