@@ -36,7 +36,7 @@
                 <td>
                     <a class="btn btn-secondary" asp-area="Admin" asp-page="/ForumGroups/Edit" asp-route-id="@item.Id" role="button">Edit</a>
                     <a class="btn btn-secondary" asp-area="Admin" asp-page="/Forums/Index" asp-route-forumgroupid="@item.Id" role="button">Forums</a>
-                    <button type="button" class="btn btn-danger delete-forum" data-toggle="modal" data-target="#confirm-delete-forum" data-id="@item.Id">Delete</button>
+                    <button type="button" class="btn btn-danger delete-forum-group" data-toggle="modal" data-target="#confirm-delete-forum-group" data-id="@item.Id">Delete</button>
                 </td>
             </tr>
         }
@@ -48,11 +48,11 @@
 </div>
 
 <form method="post">
-    <div class="modal fade" id="confirm-delete-forum" tabindex="-1" role="dialog" aria-labelledby="deleteForumModalLabel" aria-hidden="true">
+    <div class="modal fade" id="confirm-delete-forum-group" tabindex="-1" role="dialog" aria-labelledby="deleteForumGroupModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title" id="deleteForumModalLabel">Delete Forum Group</h5>
+                    <h5 class="modal-title" id="deleteForumGroupModalLabel">Delete Forum Group</h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    <button type="submit" class="btn btn-danger" id="confirm-delete-forum-button">Delete</button>
+                    <button type="submit" class="btn btn-danger" id="confirm-delete-forum-group-button">Delete</button>
                 </div>
             </div>
         </div>
@@ -72,8 +72,8 @@
 @section Scripts
 {
     <script>
-        $('.delete-forum').click(function () {
-            $("#confirm-delete-forum-button").attr("formaction", "/Admin/ForumGroups?handler=Delete&id=" + $(this).attr("data-id"));
+        $('.delete-forum-group').click(function () {
+            $("#confirm-delete-forum-group-button").attr("formaction", "/Admin/ForumGroups?handler=Delete&id=" + $(this).attr("data-id"));
         });
     </script>
 }

@@ -23,10 +23,13 @@ namespace Atlas.Areas.Admin.Pages.Forums
             _dbContext = dbContext;
         }
 
+        public Guid? ForumGroupId { get; set; }
         public IList<ForumModel> Forums { get; } = new List<ForumModel>();
 
         public async Task OnGetAsync(Guid? forumGroupId)
         {
+            ForumGroupId = forumGroupId;
+
             var site = await _contextService.CurrentSiteAsync();
 
             var forumGroups = await _dbContext.ForumGroups

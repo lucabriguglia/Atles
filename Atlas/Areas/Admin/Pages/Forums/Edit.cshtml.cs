@@ -85,7 +85,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
 
             await _dbContext.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { forumGroupId = Forum.ForumGroupId });
         }
 
         public class ForumModel

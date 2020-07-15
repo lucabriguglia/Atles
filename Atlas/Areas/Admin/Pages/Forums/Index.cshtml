@@ -15,14 +15,14 @@
 <h1 class="mb-3">@ViewData["Title"]</h1>
 
 <div class="form-group row mb-4">
-    <label class="col-sm-2 col-form-label">Select Forum Group</label>
+    <label class="col-sm-2 col-form-label">Select Forum Group:</label>
     <div class="col-sm-10">
-        <select class="form-control" asp-items="ViewBag.ForumGroupId"></select>
+        <select id="forum-groups" class="form-control" asp-items="ViewBag.ForumGroupId" onchange="selectForumGroup()"></select>
     </div>
 </div>
 
 <div class="float-right mb-3">
-    <a class="btn btn-primary" asp-page="Create" role="button">Create New</a>
+    <a class="btn btn-primary" asp-page="Create" asp-route-forumgroupid="@Model.ForumGroupId" role="button">Create New</a>
 </div>
 
 <table class="table table-bordered">
@@ -81,6 +81,10 @@
 @section Scripts
 {
     <script>
+        function selectForumGroup() {
+            window.location.href = "/Admin/Forums?forumgroupid=" + $("#forum-groups").val();
+        }
+
         $('.delete-forum').click(function () {
             $("#confirm-delete-forum-button").attr("formaction", "/Admin/Forums?handler=Delete&id=" + $(this).attr("data-id"));
         });

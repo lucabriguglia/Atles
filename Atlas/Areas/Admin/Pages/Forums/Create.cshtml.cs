@@ -26,7 +26,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
         [BindProperty]
         public ForumModel Forum { get; set; }
 
-        public async Task<IActionResult> OnGetAsync()
+        public async Task<IActionResult> OnGetAsync(Guid? forumGroupId)
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -39,7 +39,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
                 .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
                 .ToListAsync();
 
-            ViewData["ForumGroupId"] = new SelectList(groups, "Id", "Name");
+            ViewData["ForumGroupId"] = new SelectList(groups, "Id", "Name", forumGroupId);
             ViewData["PermissionSetId"] = new SelectList(permissionSets, "Id", "Name");
 
             return Page();
@@ -60,15 +60,15 @@ namespace Atlas.Areas.Admin.Pages.Forums
 
             var sortOrder = forumsCount + 1;
 
-            var forum = new Forum(Forum.ForumGroupId, 
-                Forum.Name, 
-                sortOrder, 
+            var forum = new Forum(Forum.ForumGroupId,
+                Forum.Name,
+                sortOrder,
                 Forum.PermissionSetId);
 
             _dbContext.Forums.Add(forum);
             await _dbContext.SaveChangesAsync();
 
-            return RedirectToPage("./Index");
+            return RedirectToPage("./Index", new { forumGroupId = Forum.ForumGroupId });
         }
 
         public class ForumModel
