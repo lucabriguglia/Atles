@@ -27,7 +27,7 @@
         @foreach (var forum in forumGroup.Forums)
         {
             <tr>
-                <td>@Html.DisplayFor(modelItem => forum.Name)</td>
+                <td><a asp-page="/Forum" asp-route-id="@forum.Id">@forum.Name</a></td>
                 <td class="text-center">@Html.DisplayFor(modelItem => forum.TotalTopics)</td>
                 <td class="text-center">@Html.DisplayFor(modelItem => forum.TotalReplies)</td>
                 <td>&nbsp;</td>

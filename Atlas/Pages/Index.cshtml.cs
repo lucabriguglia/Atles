@@ -6,6 +6,7 @@ using Atlas.Caching;
 using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Services;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -32,7 +33,7 @@ namespace Atlas.Pages
 
         public IList<ForumGroupModel> ForumGroups { get; set; } = new List<ForumGroupModel>();
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -70,6 +71,8 @@ namespace Atlas.Pages
                     }).ToList();
                 });
             }
+
+            return Page();
         }
 
         public class ForumGroupModel

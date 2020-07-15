@@ -1,0 +1,14 @@
+﻿@page
+@model ForumModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a asp-page="/Index">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model.ForumName</li>
+    </ol>
+</nav>
+
+<h3 class="mb-3">@Model.ForumName</h3>

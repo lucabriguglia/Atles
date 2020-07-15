@@ -29,7 +29,7 @@ namespace Atlas.Areas.Admin.Pages.Forums
         public Guid? ForumGroupId { get; set; }
         public IList<ForumModel> Forums { get; } = new List<ForumModel>();
 
-        public async Task OnGetAsync(Guid? forumGroupId)
+        public async Task<IActionResult> OnGetAsync(Guid? forumGroupId)
         {
             ForumGroupId = forumGroupId;
 
@@ -80,6 +80,8 @@ namespace Atlas.Areas.Admin.Pages.Forums
                     PermissionSetName = permissionSetName
                 });
             }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)

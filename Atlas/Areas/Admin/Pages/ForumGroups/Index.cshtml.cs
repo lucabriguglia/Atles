@@ -27,7 +27,7 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
 
         public IList<ForumGroupModel> ForumGroups { get; } = new List<ForumGroupModel>();
 
-        public async Task OnGetAsync()
+        public async Task<IActionResult> OnGetAsync()
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -48,6 +48,8 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
                     TotalReplies = forumGroup.RepliesCount
                 });
             }
+
+            return Page();
         }
 
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)
