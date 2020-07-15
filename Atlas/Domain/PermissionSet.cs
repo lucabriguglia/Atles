@@ -19,7 +19,7 @@ namespace Atlas.Domain
             
         }
 
-        public PermissionSet(Guid siteId, string name, List<Permission> permissions)
+        public PermissionSet(Guid siteId, string name, ICollection<Permission> permissions)
         {
             Id = Guid.NewGuid();
             SiteId = siteId;

@@ -12,6 +12,7 @@ namespace Atlas.Domain
 
         public virtual ICollection<Topic> Topics { get; set; }
         public virtual ICollection<Reply> Replies { get; set; }
+        public virtual ICollection<Event> Events { get; set; }
 
         public Member()
         {

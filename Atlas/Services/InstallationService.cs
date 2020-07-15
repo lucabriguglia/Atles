@@ -79,15 +79,37 @@ namespace Atlas.Services
 
             site = new Site("Default", "My Website");
             _dbContext.Sites.Add(site);
+            _dbContext.Events.Add(new Event(nameof(Site), EventType.Created, site.Id, null, new
+            {
+                site.Name,
+                site.Title
+            }));
 
             var permissionSet = new PermissionSet(site.Id, "Default", new List<Permission>());
             _dbContext.PermissionSets.Add(permissionSet);
+            _dbContext.Events.Add(new Event(nameof(PermissionSet), EventType.Created, permissionSet.Id, null, new
+            {
+                permissionSet.SiteId,
+                permissionSet.Name
+            }));
 
             var forumGroup = new ForumGroup(site.Id, "General", 1);
             _dbContext.ForumGroups.Add(forumGroup);
+            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Created, forumGroup.Id, null, new
+            {
+                forumGroup.SiteId,
+                forumGroup.Name,
+                forumGroup.SortOrder
+            }));
 
             var forum = new Forum(forumGroup.Id, "Welcome", 1);
             _dbContext.Forums.Add(forum);
+            _dbContext.Events.Add(new Event(nameof(Forum), EventType.Created, forum.Id, null, new
+            {
+                forum.ForumGroupId,
+                forum.Name,
+                forumGroup.SortOrder
+            }));
 
             await _dbContext.SaveChangesAsync();
         }

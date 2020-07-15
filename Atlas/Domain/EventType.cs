@@ -2,14 +2,9 @@
 {
     public enum EventType
     {
-        ForumGroupCreated,
-        ForumGroupUpdated,
-        ForumGroupDeleted,
-        ForumGroupRestored,
-
-        ForumCreated,
-        ForumUpdated,
-        ForumDeleted,
-        ForumRestored,
+        Created,
+        Updated,
+        Deleted,
+        Restored,
     }
 }

@@ -49,6 +49,7 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
             }
 
             var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
 
             var forumGroupsCount = await _dbContext.ForumGroups
                 .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
@@ -62,6 +63,14 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
                 ForumGroup.PermissionSetId);
 
             _dbContext.ForumGroups.Add(forumGroup);
+            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Created, forumGroup.Id, member.Id, new
+            {
+                forumGroup.SiteId,
+                forumGroup.Name, 
+                forumGroup.SortOrder, 
+                forumGroup.PermissionSetId
+            }));
+
             await _dbContext.SaveChangesAsync();
 
             return RedirectToPage("./Index");

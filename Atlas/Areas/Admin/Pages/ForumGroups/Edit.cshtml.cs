@@ -67,6 +67,8 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
                 return Page();
             }
 
+            var member = await _contextService.CurrentMemberAsync();
+
             var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == ForumGroup.Id && x.Status != StatusType.Deleted);
 
             if (forumGroup == null)
@@ -75,6 +77,12 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
             }
 
             forumGroup.UpdateDetails(ForumGroup.Name, ForumGroup.PermissionSetId);
+
+            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Updated, forumGroup.Id, member.Id, new
+            {
+                forumGroup.Name,
+                forumGroup.PermissionSetId
+            }));
 
             await _dbContext.SaveChangesAsync();
 

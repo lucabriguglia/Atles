@@ -59,7 +59,7 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
             }
 
             forumGroup.Delete();
-            _dbContext.Events.Add(new Event(forumGroup.Id, forumGroup, EventType.ForumGroupDeleted, currentMember.UserId));
+            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Deleted, forumGroup.Id, currentMember.Id));
 
             var forums = await _dbContext.Forums
                 .Where(x => x.ForumGroupId == forumGroup.Id)
@@ -68,7 +68,7 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
             foreach (var forum in forums)
             {
                 forum.Delete();
-                _dbContext.Events.Add(new Event(forum.Id, forum, EventType.ForumDeleted, currentMember.UserId));
+                _dbContext.Events.Add(new Event(nameof(Forum), EventType.Deleted, forum.Id, currentMember.Id));
             }
 
             await _dbContext.SaveChangesAsync();
