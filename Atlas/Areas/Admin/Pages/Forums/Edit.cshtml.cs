@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Caching;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Mvc.Rendering;
@@ -16,11 +17,13 @@ namespace Atlas.Areas.Admin.Pages.Forums
     {
         private readonly IContextService _contextService;
         private readonly AtlasDbContext _dbContext;
+        private readonly ICacheManager _cacheManager;
 
-        public EditModel(IContextService contextService, AtlasDbContext dbContext)
+        public EditModel(IContextService contextService, AtlasDbContext dbContext, ICacheManager cacheManager)
         {
             _contextService = contextService;
             _dbContext = dbContext;
+            _cacheManager = cacheManager;
         }
 
         [BindProperty]
@@ -84,6 +87,8 @@ namespace Atlas.Areas.Admin.Pages.Forums
             forum.UpdateDetails(Forum.ForumGroupId, Forum.Name, Forum.PermissionSetId);
 
             await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.Forums(forum.ForumGroupId));
 
             return RedirectToPage("./Index", new { forumGroupId = Forum.ForumGroupId });
         }

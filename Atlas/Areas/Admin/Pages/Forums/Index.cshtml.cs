@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Caching;
 using Atlas.Data;
 using Atlas.Domain;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -14,13 +15,15 @@ namespace Atlas.Areas.Admin.Pages.Forums
 {
     public class IndexModel : PageModel
     {
-        private readonly IContextService _contextService;
         private readonly AtlasDbContext _dbContext;
+        private readonly IContextService _contextService;
+        private readonly ICacheManager _cacheManager;
 
-        public IndexModel(IContextService contextService, AtlasDbContext dbContext)
+        public IndexModel(AtlasDbContext dbContext, IContextService contextService, ICacheManager cacheManager)
         {
-            _contextService = contextService;
             _dbContext = dbContext;
+            _contextService = contextService;
+            _cacheManager = cacheManager;
         }
 
         public Guid? ForumGroupId { get; set; }
@@ -91,6 +94,8 @@ namespace Atlas.Areas.Admin.Pages.Forums
             forum.Delete();
 
             await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.Forums(forum.ForumGroupId));
 
             return RedirectToPage(new { forum.ForumGroupId });
         }

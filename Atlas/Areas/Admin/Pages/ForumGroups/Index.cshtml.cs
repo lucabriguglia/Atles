@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Caching;
 using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Services;
@@ -15,11 +16,13 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
     {
         private readonly AtlasDbContext _dbContext;
         private readonly IContextService _contextService;
+        private readonly ICacheManager _cacheManager;
 
-        public IndexModel(AtlasDbContext dbContext, IContextService contextService) 
+        public IndexModel(AtlasDbContext dbContext, IContextService contextService, ICacheManager cacheManager) 
         {
             _dbContext = dbContext;
             _contextService = contextService;
+            _cacheManager = cacheManager;
         }
 
         public IList<ForumGroupModel> ForumGroups { get; } = new List<ForumGroupModel>();
@@ -72,6 +75,8 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
             }
 
             await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
 
             return RedirectToPage();
         }

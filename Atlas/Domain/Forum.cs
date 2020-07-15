@@ -31,6 +31,7 @@ namespace Atlas.Domain
             Name = name;
             SortOrder = sortOrder;
             PermissionSetId = permissionSetId;
+            Status = StatusType.Published;
         }
 
         public void UpdateDetails(Guid forumGroupId, string name, Guid? permissionSetId = null)

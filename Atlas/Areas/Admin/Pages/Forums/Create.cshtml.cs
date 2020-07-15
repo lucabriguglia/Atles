@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Caching;
 using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Services;
@@ -16,11 +17,13 @@ namespace Atlas.Areas.Admin.Pages.Forums
     {
         private readonly IContextService _contextService;
         private readonly AtlasDbContext _dbContext;
+        private readonly ICacheManager _cacheManager;
 
-        public CreateModel(IContextService contextService, AtlasDbContext dbContext)
+        public CreateModel(IContextService contextService, AtlasDbContext dbContext, ICacheManager cacheManager)
         {
             _contextService = contextService;
             _dbContext = dbContext;
+            _cacheManager = cacheManager;
         }
 
         [BindProperty]
@@ -67,6 +70,8 @@ namespace Atlas.Areas.Admin.Pages.Forums
 
             _dbContext.Forums.Add(forum);
             await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.Forums(forum.ForumGroupId));
 
             return RedirectToPage("./Index", new { forumGroupId = Forum.ForumGroupId });
         }
