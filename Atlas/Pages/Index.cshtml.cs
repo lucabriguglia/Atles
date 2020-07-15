@@ -40,7 +40,7 @@ namespace Atlas.Pages
             {
                 var forumGroups = await _dbContext.ForumGroups
                     .Include(x => x.PermissionSet)
-                    .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
+                    .Where(x => x.SiteId == site.Id && x.Status == StatusType.Published)
                     .OrderBy(x => x.SortOrder)
                     .ToListAsync();
 
@@ -57,7 +57,7 @@ namespace Atlas.Pages
                 {
                     var forums = await _dbContext.Forums
                         .Include(x => x.PermissionSet)
-                        .Where(x => x.ForumGroupId == forumGroup.Id && x.Status != StatusType.Deleted)
+                        .Where(x => x.ForumGroupId == forumGroup.Id && x.Status == StatusType.Published)
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
 

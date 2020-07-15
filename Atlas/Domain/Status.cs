@@ -2,7 +2,8 @@
 {
     public enum StatusType
     {
-        Active = 0,
-        Deleted = 1
+        Draft = 0,
+        Published = 1,
+        Deleted = 2
     }
 }

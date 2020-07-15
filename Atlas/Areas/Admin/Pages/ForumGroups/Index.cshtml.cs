@@ -49,6 +49,8 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
 
         public async Task<IActionResult> OnPostDeleteAsync(Guid id)
         {
+            var currentMember = await _contextService.CurrentMemberAsync();
+
             var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == id && x.Status != StatusType.Deleted);
 
             if (forumGroup == null)
@@ -57,7 +59,7 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
             }
 
             forumGroup.Delete();
-            //_dbContext.Events.Add(new Event(forumGroup.Id, forumGroup, "", ""));
+            _dbContext.Events.Add(new Event(forumGroup.Id, forumGroup, EventType.ForumGroupDeleted, currentMember.UserId));
 
             var forums = await _dbContext.Forums
                 .Where(x => x.ForumGroupId == forumGroup.Id)
@@ -66,7 +68,7 @@ namespace Atlas.Areas.Admin.Pages.ForumGroups
             foreach (var forum in forums)
             {
                 forum.Delete();
-                //_dbContext.Events.Add(new Event(forum.Id, forum, "", ""));
+                _dbContext.Events.Add(new Event(forum.Id, forum, EventType.ForumDeleted, currentMember.UserId));
             }
 
             await _dbContext.SaveChangesAsync();
