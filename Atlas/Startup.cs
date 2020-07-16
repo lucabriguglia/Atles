@@ -47,8 +47,6 @@ namespace Atlas
                     options.Conventions.AuthorizeAreaFolder("Admin", "/", "Admin");
                 });
 
-            services.AddServerSideBlazor();
-
             services.AddTransient<IInstallationService, InstallationService>();
             services.AddScoped<IContextService, ContextService>();
             services.AddTransient<ICacheManager, CacheManager>();
@@ -89,8 +87,6 @@ namespace Atlas
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();
-                endpoints.MapBlazorHub();
-                endpoints.MapFallbackToPage("/_Host");
             });
         }
     }
