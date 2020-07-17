@@ -1,3 +1,4 @@
+using Atlas.Server.Caching;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -7,6 +8,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Atlas.Server.Data;
 using Atlas.Server.Models;
+using Atlas.Server.Services;
+using Microsoft.AspNetCore.Identity;
 
 namespace Atlas.Server
 {
@@ -32,6 +35,7 @@ namespace Atlas.Server
                     Configuration.GetConnectionString("ApplicationConnection")));
 
             services.AddDefaultIdentity<ApplicationUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
             services.AddIdentityServer()
@@ -48,13 +52,18 @@ namespace Atlas.Server
 
             services.AddControllersWithViews();
             services.AddRazorPages();
+
+            services.AddTransient<IInstallationService, InstallationService>();
+            services.AddScoped<IContextService, ContextService>();
+            services.AddTransient<ICacheManager, CacheManager>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
+            IWebHostEnvironment env,
             AtlasDbContext atlasDbContext,
             ApplicationDbContext applicationDbContext,
-            IWebHostEnvironment env)
+            IInstallationService installationService)
         {
             if (env.IsDevelopment())
             {
@@ -88,6 +97,8 @@ namespace Atlas.Server
 
             atlasDbContext.Database.Migrate();
             applicationDbContext.Database.Migrate();
+            installationService.EnsureAdminUserInitializedAsync().Wait();
+            installationService.EnsureDefaultSiteInitializedAsync().Wait();
         }
     }
 }
