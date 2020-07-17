@@ -1,0 +1,13 @@
+﻿@page "/admin"
+@attribute [Authorize(Policy = "Admin")]
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Home</li>
+    </ol>
+</nav>
+
+<h1 class="mb-3">Admin</h1>
+
+<div><a href="/admin/forumgroups">Forum Groups</a></div>
+<div><a href="/admin/forums">Forums</a></div>
