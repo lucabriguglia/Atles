@@ -1,0 +1,72 @@
+﻿@page "/admin/forum-groups"
+@using Atlas.Shared.Models.Admin.ForumGroups
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@attribute [Authorize(Policy = "Admin")]
+@inject HttpClient Http
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Title</li>
+    </ol>
+</nav>
+
+<h1 class="mb-3">@Title</h1>
+
+@if (_model == null)
+{
+    <p><em>Loading Forum Groups...</em></p>
+}
+else
+{
+    <div class="float-right mb-3">
+        <a href="/admin/forum-groups/create" class="btn btn-primary" role="button">Create New</a>
+    </div>
+
+    <table class="table table-bordered">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Total Topics</th>
+                <th scope="col">Total Replies</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in _model)
+            {
+                <tr>
+                    <td>@item.Name</td>
+                    <td>@item.TotalTopics</td>
+                    <td>@item.TotalReplies</td>
+                    <td>
+                        <a href="/admin/forum-groups/edit/@item.Id" class="btn btn-secondary" role="button">Edit</a>
+                        <a href="/admin/forums/@item.Id" class="btn btn-secondary" role="button">Forums</a>
+                        <button type="button" class="btn btn-danger delete-forum-group" data-toggle="modal" data-target="#confirm-delete-forum-group" data-id="@item.Id">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <div class="float-right">
+        <a href="/admin/forum-groups/create" class="btn btn-primary" role="button">Create New</a>
+    </div>
+}
+
+@code {
+    private const string Title = "Forum Groups";
+    private IList<IndexModel.ForumGroupModel> _model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            _model = await Http.GetFromJsonAsync<IList<IndexModel.ForumGroupModel>>("api/admin/ForumGroups");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+}
