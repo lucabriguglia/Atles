@@ -1,0 +1,20 @@
+﻿@page "/admin/forum-groups/create"
+@using Atlas.Shared.Models.Admin.ForumGroups
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@attribute [Authorize(Policy = "Admin")]
+@inject HttpClient Http
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+        <li class="breadcrumb-item"><a href="/admin/forum-groups">Forum Gorups</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Title</li>
+    </ol>
+</nav>
+
+<h1 class="mb-3">@Title</h1>
+
+@code {
+    private const string Title = "Create Forum Group";
+    private CreateModel _model = new CreateModel();
+}

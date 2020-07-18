@@ -42,7 +42,7 @@ else
                     <td>
                         <a href="/admin/forum-groups/edit/@item.Id" class="btn btn-secondary" role="button">Edit</a>
                         <a href="/admin/forums/@item.Id" class="btn btn-secondary" role="button">Forums</a>
-                        <button type="button" class="btn btn-danger delete-forum-group" data-toggle="modal" data-target="#confirm-delete-forum-group" data-id="@item.Id">Delete</button>
+                        <button type="button" class="btn btn-danger delete-forum-group" data-toggle="modal" data-target="#delete-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">Delete</button>
                     </td>
                 </tr>
             }
@@ -52,17 +52,43 @@ else
     <div class="float-right">
         <a href="/admin/forum-groups/create" class="btn btn-primary" role="button">Create New</a>
     </div>
+
+    <Atlas.Client.Shared.DeleteModal
+        Title="Delete Forum Group" 
+        Body="Are you sure you want to delete this Forum Group and all associated Forums?"
+        OnClickCallback="@DeleteAsync">
+    </Atlas.Client.Shared.DeleteModal>
 }
 
 @code {
     private const string Title = "Forum Groups";
     private IndexModel _model;
+    private Guid DeleteId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
             _model = await Http.GetFromJsonAsync<IndexModel>("api/admin/forum-groups/index-model");
+        }
+        catch (AccessTokenNotAvailableException exception)
+        {
+            exception.Redirect();
+        }
+    }
+
+    private void SetDeleteId(Guid Id)
+    {
+        DeleteId = Id;
+    }
+
+    private async Task DeleteAsync(MouseEventArgs e)
+    {
+        try
+        {
+            await Http.DeleteAsync($"api/admin/forum-groups/delete/{DeleteId}");
+            _model = await Http.GetFromJsonAsync<IndexModel>("api/admin/forum-groups/index-model");
+            StateHasChanged();
         }
         catch (AccessTokenNotAvailableException exception)
         {

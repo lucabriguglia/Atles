@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Server.Caching;
 using Atlas.Server.Data;
@@ -53,6 +54,38 @@ namespace Atlas.Server.Controllers.Admin
             }
 
             return result;
+        }
+
+        [HttpDelete("delete/{id}")]
+        public async Task<ActionResult> Delete(Guid id)
+        {
+            var currentMember = await _contextService.CurrentMemberAsync();
+
+            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == id && x.Status != StatusType.Deleted);
+
+            if (forumGroup == null)
+            {
+                return NotFound();
+            }
+
+            forumGroup.Delete();
+            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Deleted, forumGroup.Id, currentMember.Id));
+
+            var forums = await _dbContext.Forums
+                .Where(x => x.ForumGroupId == forumGroup.Id)
+                .ToListAsync();
+
+            foreach (var forum in forums)
+            {
+                forum.Delete();
+                _dbContext.Events.Add(new Event(nameof(Forum), EventType.Deleted, forum.Id, currentMember.Id));
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
+
+            return NoContent();
         }
     }
 }
