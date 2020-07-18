@@ -63,7 +63,6 @@ else
         try
         {
             _model = await Http.GetFromJsonAsync<IndexModel>("api/admin/forum-groups/index-model");
-            StateHasChanged();
         }
         catch (AccessTokenNotAvailableException exception)
         {
