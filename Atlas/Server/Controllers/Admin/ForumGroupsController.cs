@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Server.Caching;
 using Atlas.Server.Data;
@@ -13,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 namespace Atlas.Server.Controllers.Admin
 {
     [Authorize(Policy = "Admin")]
-    [Route("api/admin/[controller]")]
+    [Route("api/admin/forum-groups")]
     [ApiController]
     public class ForumGroupsController : ControllerBase
     {
@@ -28,10 +27,10 @@ namespace Atlas.Server.Controllers.Admin
             _cacheManager = cacheManager;
         }
 
-        [HttpGet]
-        public async Task<ActionResult<IList<IndexModel.ForumGroupModel>>> Get()
+        [HttpGet("index-model")]
+        public async Task<IndexModel> Index()
         {
-            var result = new List<IndexModel.ForumGroupModel>();
+            var result = new IndexModel();
 
             var site = await _contextService.CurrentSiteAsync();
 
@@ -43,7 +42,7 @@ namespace Atlas.Server.Controllers.Admin
 
             foreach (var forumGroup in forumGroups)
             {
-                result.Add(new IndexModel.ForumGroupModel
+                result.ForumGroups.Add(new IndexModel.ForumGroupModel
                 {
                     Id = forumGroup.Id,
                     Name = forumGroup.Name,

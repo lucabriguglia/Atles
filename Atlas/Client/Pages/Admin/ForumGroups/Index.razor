@@ -13,9 +13,9 @@
 
 <h1 class="mb-3">@Title</h1>
 
-@if (_model == null)
+@if (_model?.ForumGroups == null)
 {
-    <p><em>Loading Forum Groups...</em></p>
+    <p><em>Loading...</em></p>
 }
 else
 {
@@ -33,7 +33,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in _model)
+            @foreach (var item in _model.ForumGroups)
             {
                 <tr>
                     <td>@item.Name</td>
@@ -56,13 +56,14 @@ else
 
 @code {
     private const string Title = "Forum Groups";
-    private IList<IndexModel.ForumGroupModel> _model;
+    private IndexModel _model;
 
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            _model = await Http.GetFromJsonAsync<IList<IndexModel.ForumGroupModel>>("api/admin/ForumGroups");
+            _model = await Http.GetFromJsonAsync<IndexModel>("api/admin/forum-groups/index-model");
+            StateHasChanged();
         }
         catch (AccessTokenNotAvailableException exception)
         {
