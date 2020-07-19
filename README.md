@@ -3,8 +3,7 @@ Super simple ASP.NET Core forum software
 
 ## Technology
 
-- ASP.NET Core 3.1
-- Razor Pages
-- Blazor
+- Blazor WebAssembly 3.2.0
 - Entity Framework Core 3.1
 - SQL Server
+
