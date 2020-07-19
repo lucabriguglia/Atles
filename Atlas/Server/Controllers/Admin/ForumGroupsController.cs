@@ -56,6 +56,62 @@ namespace Atlas.Server.Controllers.Admin
             return result;
         }
 
+        [HttpGet("create-model")]
+        public async Task<CreateModel> Create()
+        {
+            var result = new CreateModel();
+
+            var site = await _contextService.CurrentSiteAsync();
+
+            var permissionSets = await _dbContext.PermissionSets
+                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
+                .ToListAsync();
+
+            foreach (var permissionSet in permissionSets)
+            {
+                result.PermissionSets.Add(new CreateModel.PermissionSetModel
+                {
+                    Id = permissionSet.Id,
+                    Name = permissionSet.Name
+                });
+            }
+
+            return result;
+        }
+
+        [HttpPost("create")]
+        public async Task<ActionResult> Create(CreateModel.ForumGroupModel model)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var forumGroupsCount = await _dbContext.ForumGroups
+                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
+                .CountAsync();
+
+            var sortOrder = forumGroupsCount + 1;
+
+            var forumGroup = new ForumGroup(site.Id,
+                model.Name,
+                sortOrder,
+                model.PermissionSetId);
+
+            _dbContext.ForumGroups.Add(forumGroup);
+            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Created, forumGroup.Id, member.Id, new
+            {
+                forumGroup.SiteId,
+                forumGroup.Name,
+                forumGroup.SortOrder,
+                forumGroup.PermissionSetId
+            }));
+
+            await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
+
+            return NoContent();
+        }
+
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
