@@ -1,4 +1,4 @@
-# Atlas
+# Atlas (Alpha)
 Super simple ASP.NET Core forum software
 
 ## Technology

@@ -59,24 +59,7 @@ namespace Atlas.Server.Controllers.Admin
         [HttpGet("create")]
         public async Task<FormModel> Create()
         {
-            var result = new FormModel();
-
-            var site = await _contextService.CurrentSiteAsync();
-
-            var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
-                .ToListAsync();
-
-            foreach (var permissionSet in permissionSets)
-            {
-                result.PermissionSets.Add(new FormModel.PermissionSetModel
-                {
-                    Id = permissionSet.Id,
-                    Name = permissionSet.Name
-                });
-            }
-
-            return result;
+            return await BuildFormModelAsync();
         }
 
         [HttpPost("save")]
@@ -115,35 +98,11 @@ namespace Atlas.Server.Controllers.Admin
         [HttpGet("edit/{id}")]
         public async Task<ActionResult<FormModel>> Edit(Guid id)
         {
-            var result = new FormModel();
+            var result = await BuildFormModelAsync(id);
 
-            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == id && x.Status != StatusType.Deleted);
-
-            if (forumGroup == null)
+            if (result == null)
             {
                 return NotFound();
-            }
-
-            result.ForumGroup = new FormModel.ForumGroupModel
-            {
-                Id = forumGroup.Id,
-                Name = forumGroup.Name,
-                PermissionSetId = forumGroup.PermissionSetId
-            };
-
-            var site = await _contextService.CurrentSiteAsync();
-
-            var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
-                .ToListAsync();
-
-            foreach (var permissionSet in permissionSets)
-            {
-                result.PermissionSets.Add(new FormModel.PermissionSetModel
-                {
-                    Id = permissionSet.Id,
-                    Name = permissionSet.Name
-                });
             }
 
             return result;
@@ -152,8 +111,6 @@ namespace Atlas.Server.Controllers.Admin
         [HttpPost("update")]
         public async Task<ActionResult> Update(FormModel.ForumGroupModel model)
         {
-            var member = await _contextService.CurrentMemberAsync();
-
             var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == model.Id && x.Status != StatusType.Deleted);
 
             if (forumGroup == null)
@@ -162,6 +119,8 @@ namespace Atlas.Server.Controllers.Admin
             }
 
             forumGroup.UpdateDetails(model.Name, model.PermissionSetId);
+
+            var member = await _contextService.CurrentMemberAsync();
 
             _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Updated, forumGroup.Id, member.Id, new
             {
@@ -179,14 +138,14 @@ namespace Atlas.Server.Controllers.Admin
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
-            var currentMember = await _contextService.CurrentMemberAsync();
-
-            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == id && x.Status != StatusType.Deleted);
+            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == id);
 
             if (forumGroup == null)
             {
                 return NotFound();
             }
+
+            var currentMember = await _contextService.CurrentMemberAsync();
 
             forumGroup.Delete();
             _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Deleted, forumGroup.Id, currentMember.Id));
@@ -206,6 +165,45 @@ namespace Atlas.Server.Controllers.Admin
             _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
 
             return Ok();
+        }
+
+        private async Task<FormModel> BuildFormModelAsync(Guid? id = null)
+        {
+            var result = new FormModel();
+
+            if (id != null)
+            {
+                var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == id && x.Status != StatusType.Deleted);
+
+                if (forumGroup == null)
+                {
+                    return null;
+                }
+
+                result.ForumGroup = new FormModel.ForumGroupModel
+                {
+                    Id = forumGroup.Id,
+                    Name = forumGroup.Name,
+                    PermissionSetId = forumGroup.PermissionSetId
+                };
+            }
+
+            var site = await _contextService.CurrentSiteAsync();
+
+            var permissionSets = await _dbContext.PermissionSets
+                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
+                .ToListAsync();
+
+            foreach (var permissionSet in permissionSets)
+            {
+                result.PermissionSets.Add(new FormModel.PermissionSetModel
+                {
+                    Id = permissionSet.Id,
+                    Name = permissionSet.Name
+                });
+            }
+
+            return result;
         }
     }
 }
