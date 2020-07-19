@@ -21,13 +21,11 @@
 
 @if (_model == null)
 {
-    <Loading></Loading>
+    <Loading />
 }
 else if (_model.ForumGroups.Count == 0)
 {
-    <div class="alert alert-secondary" role="alert">
-        No records found.
-    </div>
+    <NoRecords />
 }
 else
 {
@@ -60,8 +58,7 @@ else
     <ConfirmModal Title="Delete Forum Group"
                   Body="Are you sure you want to delete this Forum Group and all associated Forums?"
                   Button="Delete"
-                  OnClickCallback="@DeleteAsync">
-    </ConfirmModal>
+                  OnClickCallback="@DeleteAsync" />
 }
 
 @code {

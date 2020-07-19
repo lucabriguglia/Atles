@@ -1,4 +1,4 @@
-﻿@page "/admin/forum-groups/create"
+﻿@page "/admin/forum-groups/edit/{id:guid}"
 @using Atlas.Shared.Models.Admin.ForumGroups
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
@@ -20,21 +20,23 @@
 }
 else
 {
-    <Form _model="_model" Button="Save" OnValidSubmit="@SaveAsync" />
+    <Form _model="_model" Button="Update" OnValidSubmit="@UpdateAsync" />
 }
 
 @code {
-    private const string Title = "Create Forum Group";
+    private const string Title = "Edit Forum Group";
+    [Parameter]
+    public Guid Id { get; set; }
     private FormModel _model { get; set; }
 
-    protected override async Task OnInitializedAsync()
+    protected override async Task OnParametersSetAsync()
     {
-        _model = await Http.GetFromJsonAsync<FormModel>("api/admin/forum-groups/create");
+        _model = await Http.GetFromJsonAsync<FormModel>($"api/admin/forum-groups/edit/{Id}");
     }
 
-    private async Task SaveAsync()
+    private async Task UpdateAsync()
     {
-        await Http.PostAsJsonAsync($"api/admin/forum-groups/save", _model.ForumGroup);
+        await Http.PostAsJsonAsync($"api/admin/forum-groups/update", _model.ForumGroup);
         navigationManager.NavigateTo("/admin/forum-groups");
     }
 }

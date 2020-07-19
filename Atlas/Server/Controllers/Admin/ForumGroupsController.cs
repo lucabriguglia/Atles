@@ -56,10 +56,10 @@ namespace Atlas.Server.Controllers.Admin
             return result;
         }
 
-        [HttpGet("create-model")]
-        public async Task<CreateModel> Create()
+        [HttpGet("create")]
+        public async Task<FormModel> Create()
         {
-            var result = new CreateModel();
+            var result = new FormModel();
 
             var site = await _contextService.CurrentSiteAsync();
 
@@ -69,7 +69,7 @@ namespace Atlas.Server.Controllers.Admin
 
             foreach (var permissionSet in permissionSets)
             {
-                result.PermissionSets.Add(new CreateModel.PermissionSetModel
+                result.PermissionSets.Add(new FormModel.PermissionSetModel
                 {
                     Id = permissionSet.Id,
                     Name = permissionSet.Name
@@ -79,8 +79,8 @@ namespace Atlas.Server.Controllers.Admin
             return result;
         }
 
-        [HttpPost("create")]
-        public async Task<ActionResult> Create(CreateModel.ForumGroupModel model)
+        [HttpPost("save")]
+        public async Task<ActionResult> Save(FormModel.ForumGroupModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
@@ -109,7 +109,71 @@ namespace Atlas.Server.Controllers.Admin
 
             _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
 
-            return NoContent();
+            return Ok();
+        }
+
+        [HttpGet("edit/{id}")]
+        public async Task<ActionResult<FormModel>> Edit(Guid id)
+        {
+            var result = new FormModel();
+
+            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == id && x.Status != StatusType.Deleted);
+
+            if (forumGroup == null)
+            {
+                return NotFound();
+            }
+
+            result.ForumGroup = new FormModel.ForumGroupModel
+            {
+                Id = forumGroup.Id,
+                Name = forumGroup.Name,
+                PermissionSetId = forumGroup.PermissionSetId
+            };
+
+            var site = await _contextService.CurrentSiteAsync();
+
+            var permissionSets = await _dbContext.PermissionSets
+                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
+                .ToListAsync();
+
+            foreach (var permissionSet in permissionSets)
+            {
+                result.PermissionSets.Add(new FormModel.PermissionSetModel
+                {
+                    Id = permissionSet.Id,
+                    Name = permissionSet.Name
+                });
+            }
+
+            return result;
+        }
+
+        [HttpPost("update")]
+        public async Task<ActionResult> Update(FormModel.ForumGroupModel model)
+        {
+            var member = await _contextService.CurrentMemberAsync();
+
+            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == model.Id && x.Status != StatusType.Deleted);
+
+            if (forumGroup == null)
+            {
+                return NotFound();
+            }
+
+            forumGroup.UpdateDetails(model.Name, model.PermissionSetId);
+
+            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Updated, forumGroup.Id, member.Id, new
+            {
+                forumGroup.Name,
+                forumGroup.PermissionSetId
+            }));
+
+            await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
+
+            return Ok();
         }
 
         [HttpDelete("delete/{id}")]
@@ -141,7 +205,7 @@ namespace Atlas.Server.Controllers.Admin
 
             _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
 
-            return NoContent();
+            return Ok();
         }
     }
 }

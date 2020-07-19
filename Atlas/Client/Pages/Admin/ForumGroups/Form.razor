@@ -1,0 +1,41 @@
+﻿@using Atlas.Shared.Models.Admin.ForumGroups
+@inject NavigationManager navigationManager
+
+<div class="row">
+    <div class="col-md-4">
+        <EditForm Model="@_model.ForumGroup" OnValidSubmit="OnValidSubmit">
+            <DataAnnotationsValidator />
+            <ValidationSummary />
+            <div class="form-group">
+                <label class="control-label">Name</label>
+                <InputText id="name" @bind-Value="_model.ForumGroup.Name" Class="form-control" />
+                <ValidationMessage For="@(() => _model.ForumGroup.Name)" />
+            </div>
+            <div class="form-group">
+                <label class="control-label">Permission Set</label>
+                <select @bind="_model.ForumGroup.PermissionSetId" class="form-control">
+                    <option value="">Inherit from Site Settings</option>
+                    @foreach (var item in _model.PermissionSets)
+                    {
+                        <option value="@item.Id">@item.Name</option>
+                    }
+                </select>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@Button" class="btn btn-primary" />
+                <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+            </div>
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    [Parameter] public FormModel _model { get; set; }
+    [Parameter] public string Button { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private void Cancel()
+    {
+        navigationManager.NavigateTo("/admin/forum-groups");
+    }
+}
