@@ -5,6 +5,7 @@
     <div class="col-md-4">
         <EditForm Model="@_model.ForumGroup" OnValidSubmit="OnValidSubmit">
             <DataAnnotationsValidator />
+            @*<FluentValidationValidator ValidatorType=typeof(Validators.PersonValidator)/>*@
             <ValidationSummary />
             <div class="form-group">
                 <label class="control-label">Name</label>
