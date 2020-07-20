@@ -23,12 +23,12 @@ namespace Atlas.Client.Components
 		public Type ValidatorType { get; set; }
 
 		// Holds an instance to perform our actual validation
-		private IValidator Validator;
+		private IValidator _validator;
 
 		// This is where we register our validation errors for Blazor to pick up
 		// in the UI. Like EditContext, this instance should be discarded when
 		// EditForm.Model changes (for us, that's when EditContext changes).
-		private ValidationMessageStore ValidationMessageStore;
+		private ValidationMessageStore _validationMessageStore;
 
 		// Inject the service provider so we can create our IValidator instances
 		[Inject]
@@ -71,7 +71,7 @@ namespace Atlas.Client.Components
 		/// </summary>
 		private void ValidatorTypeChanged()
 		{
-			Validator = (IValidator)ServiceProvider.GetService(ValidatorType);
+			_validator = (IValidator)ServiceProvider.GetService(ValidatorType);
 		}
 
 		/// <summary>
@@ -85,7 +85,7 @@ namespace Atlas.Client.Components
 			// We need this to store our validation errors
 			// Whenever we get a new EditContext (because EditForm.Model has changed)
 			// we also need to discard our old message store and create a new one
-			ValidationMessageStore = new ValidationMessageStore(EditContext);
+			_validationMessageStore = new ValidationMessageStore(EditContext);
 			System.Diagnostics.Debug.WriteLine("New ValidationMessageStore created");
 
 			// Observe any changes to the EditForm.Model object
@@ -110,10 +110,10 @@ namespace Atlas.Client.Components
 			System.Diagnostics.Debug.WriteLine("OnValidationRequested triggered: Validating whole object");
 
 			// Clear all errors from a previous validation
-			ValidationMessageStore.Clear();
+			_validationMessageStore.Clear();
 
 			// Tell FluentValidation to validate the object
-			ValidationResult result = await Validator.ValidateAsync(EditContext.Model);
+			ValidationResult result = await _validator.ValidateAsync(EditContext.Model);
 
 			// Now add the results to the ValidationMessageStore we created
 			AddValidationResult(EditContext.Model, result);
@@ -130,7 +130,7 @@ namespace Atlas.Client.Components
 
 			// Make sure we clear out errors from a previous validation
 			// only for this Object+Property
-			ValidationMessageStore.Clear(fieldIdentifier);
+			_validationMessageStore.Clear(fieldIdentifier);
 
 			// FluentValidation specific, we need to tell it to only validate
 			// a specific property
@@ -143,7 +143,7 @@ namespace Atlas.Client.Components
 				);
 
 			// Tell FluentValidation to validate the specified property on the object that was edited
-			ValidationResult result = await Validator.ValidateAsync(fluentValidationContext);
+			ValidationResult result = await _validator.ValidateAsync(fluentValidationContext);
 
 			// Now add the results to the ValidationMessageStore we created
 			AddValidationResult(fieldIdentifier.Model, result);
@@ -158,7 +158,7 @@ namespace Atlas.Client.Components
 			foreach (ValidationFailure error in validationResult.Errors)
 			{
 				var fieldIdentifier = new FieldIdentifier(model, error.PropertyName);
-				ValidationMessageStore.Add(fieldIdentifier, error.ErrorMessage);
+				_validationMessageStore.Add(fieldIdentifier, error.ErrorMessage);
 			}
 			EditContext.NotifyValidationStateChanged();
 		}

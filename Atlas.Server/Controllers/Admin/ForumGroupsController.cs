@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Server.Caching;
 using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Server.Services;
@@ -21,19 +20,16 @@ namespace Atlas.Server.Controllers.Admin
     {
         private readonly AtlasDbContext _dbContext;
         private readonly IContextService _contextService;
-        private readonly ICacheManager _cacheManager;
         private readonly IForumGroupService _forumGroupService;
         private readonly IForumGroupRules _forumGroupRules;
 
         public ForumGroupsController(AtlasDbContext dbContext, 
-            IContextService contextService, 
-            ICacheManager cacheManager,
+            IContextService contextService,
             IForumGroupService forumGroupService,
             IForumGroupRules forumGroupRules)
         {
             _dbContext = dbContext;
             _contextService = contextService;
-            _cacheManager = cacheManager;
             _forumGroupService = forumGroupService;
             _forumGroupRules = forumGroupRules;
         }

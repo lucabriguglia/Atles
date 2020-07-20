@@ -1,13 +1,14 @@
-﻿using Atlas.Data;
+﻿using System.Data;
+using System.Linq;
+using System.Threading.Tasks;
 using Atlas.Data.Caching;
+using Atlas.Domain;
+using Atlas.Domain.ForumGroups;
 using Atlas.Domain.ForumGroups.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using System.Data;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Atlas.Domain.ForumGroups
+namespace Atlas.Data.Services
 {
     public class ForumGroupService : IForumGroupService
     {

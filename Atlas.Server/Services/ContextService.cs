@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Atlas.Server.Caching;
 using Atlas.Data;
+using Atlas.Data.Caching;
 using Atlas.Domain;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;

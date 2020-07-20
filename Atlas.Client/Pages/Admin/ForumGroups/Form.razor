@@ -1,10 +1,10 @@
 ﻿@using Atlas.Shared.Models.Admin.ForumGroups
-@inject NavigationManager navigationManager
+@inject NavigationManager NavigationManager
 @inject HttpClient Http
 
 <div class="row">
     <div class="col-md-4">
-        <EditForm EditContext="@editContext" OnSubmit="OnSubmit">
+        <EditForm EditContext="@_editContext" OnSubmit="OnSubmit">
             <DataAnnotationsValidator />
             <div class="form-group">
                 <label for="name" class="control-label">Name</label>
@@ -35,37 +35,37 @@
     [Parameter] public string Button { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
-    private EditContext editContext;
-    private ValidationMessageStore validationMessageStore;
-    private string currentName;
+    private EditContext _editContext;
+    private ValidationMessageStore _validationMessageStore;
+    private string _currentName;
 
     protected override void OnInitialized()
     {
-        editContext = new EditContext(Model.ForumGroup);
-        editContext.OnFieldChanged += HandleFieldChanged;
-        validationMessageStore = new ValidationMessageStore(editContext);
-        currentName = Model.ForumGroup.Name;
+        _editContext = new EditContext(Model.ForumGroup);
+        _editContext.OnFieldChanged += HandleFieldChanged;
+        _validationMessageStore = new ValidationMessageStore(_editContext);
+        _currentName = Model.ForumGroup.Name;
     }
 
     private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
     {
-        validationMessageStore.Clear(e.FieldIdentifier);
+        _validationMessageStore.Clear(e.FieldIdentifier);
     }
 
     private async Task OnSubmit()
     {
-        if (editContext.Validate())
+        if (_editContext.Validate())
         {
-            if (await NameIsUnique(editContext))
+            if (await NameIsUnique(_editContext))
             {
                 await OnValidSubmit.InvokeAsync(null);
             }
             else
             {
-                var fieldIdentifier = new FieldIdentifier(editContext.Model, "Name");
-                validationMessageStore.Clear(fieldIdentifier);
-                validationMessageStore.Add(fieldIdentifier, $"A forum group with the same name already exists.");
-                editContext.NotifyValidationStateChanged();
+                var fieldIdentifier = new FieldIdentifier(_editContext.Model, "Name");
+                _validationMessageStore.Clear(fieldIdentifier);
+                _validationMessageStore.Add(fieldIdentifier, $"A forum group with the same name already exists.");
+                _editContext.NotifyValidationStateChanged();
             }
         }
     }
@@ -75,18 +75,18 @@
         var nameProp = editContext.Model.GetType().GetProperty("Name");
         var nameVal = nameProp.GetValue(editContext.Model).ToString();
 
-        var isNameUnique = nameVal == currentName ? true : await Http.GetFromJsonAsync<bool>($"api/admin/forum-groups/is-name-unique/{nameVal}");
+        var isNameUnique = nameVal == _currentName || await Http.GetFromJsonAsync<bool>($"api/admin/forum-groups/is-name-unique/{nameVal}");
 
         return isNameUnique;
     }
 
     public void Dispose()
     {
-        editContext.OnFieldChanged -= HandleFieldChanged;
+        _editContext.OnFieldChanged -= HandleFieldChanged;
     }
 
     private void Cancel()
     {
-        navigationManager.NavigateTo("/admin/forum-groups");
+        NavigationManager.NavigateTo("/admin/forum-groups");
     }
 }

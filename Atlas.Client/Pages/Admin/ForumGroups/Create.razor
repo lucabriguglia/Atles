@@ -2,7 +2,7 @@
 @using Atlas.Shared.Models.Admin.ForumGroups
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
-@inject NavigationManager navigationManager
+@inject NavigationManager NavigationManager
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -20,7 +20,7 @@
 }
 else
 {
-    <Form Model="Model" Button="Save" OnValidSubmit="@SaveAsync" />
+    <Form Model="Model" Button="Save" OnValidSubmit="@SaveAsync"></Form>
 }
 
 @code {
@@ -35,6 +35,6 @@ else
     private async Task SaveAsync()
     {
         await Http.PostAsJsonAsync($"api/admin/forum-groups/save", Model.ForumGroup);
-        navigationManager.NavigateTo("/admin/forum-groups");
+        NavigationManager.NavigateTo("/admin/forum-groups");
     }
 }

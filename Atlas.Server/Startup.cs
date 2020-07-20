@@ -1,6 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
-using Atlas.Server.Caching;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -9,9 +8,11 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Atlas.Data;
+using Atlas.Data.Caching;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Atlas.Data.Rules;
+using Atlas.Data.Services;
 using Atlas.Domain.ForumGroups;
 using FluentValidation;
 using Atlas.Domain.ForumGroups.Commands;
@@ -70,7 +71,6 @@ namespace Atlas.Server
             services.AddTransient<IInstallationService, InstallationService>();
             services.AddScoped<IContextService, ContextService>();
             services.AddTransient<ICacheManager, CacheManager>();
-            services.AddTransient<Atlas.Data.Caching.ICacheManager, Atlas.Data.Caching.CacheManager>();
             services.AddTransient<IForumGroupRules, ForumGroupRules>();
             services.AddTransient<IForumGroupService, ForumGroupService>();
             services.AddTransient<IValidator<CreateForumGroup>, CreateForumGroupValidator>();
