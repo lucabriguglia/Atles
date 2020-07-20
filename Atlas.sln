@@ -11,11 +11,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Server", "Atlas\Server\Atlas.Server.csproj", "{7ADEAF92-9A67-4ECB-AC0C-C712129C3072}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Server", "Atlas.Server\Atlas.Server.csproj", "{7ADEAF92-9A67-4ECB-AC0C-C712129C3072}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Client", "Atlas\Client\Atlas.Client.csproj", "{6CD152FC-DFF1-4098-A7D3-2EE03A08ACEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Client", "Atlas.Client\Atlas.Client.csproj", "{6CD152FC-DFF1-4098-A7D3-2EE03A08ACEF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Shared", "Atlas\Shared\Atlas.Shared.csproj", "{C91D322F-6360-4F49-9505-0D57E24F69FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Shared", "Atlas.Shared\Atlas.Shared.csproj", "{C91D322F-6360-4F49-9505-0D57E24F69FD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
