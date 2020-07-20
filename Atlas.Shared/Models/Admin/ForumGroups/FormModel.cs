@@ -17,7 +17,7 @@ namespace Atlas.Shared.Models.Admin.ForumGroups
             [StringLength(100)]
             public string Name { get; set; }
 
-            public Guid? PermissionSetId { get; set; }
+            public Guid PermissionSetId { get; set; } = Guid.Empty;
         }
 
         public class PermissionSetModel

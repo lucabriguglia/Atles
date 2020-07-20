@@ -77,7 +77,7 @@ namespace Atlas.Server.Controllers.Admin
             var command = new CreateForumGroup
             {
                 Name = model.Name,
-                PermissionSetId = model.PermissionSetId,
+                PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
                 SiteId = site.Id,
                 MemberId = member.Id
             };
@@ -110,7 +110,7 @@ namespace Atlas.Server.Controllers.Admin
             {
                 Id = model.Id,
                 Name = model.Name,
-                PermissionSetId = model.PermissionSetId,
+                PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
                 SiteId = site.Id,
                 MemberId = member.Id
             };
@@ -173,7 +173,7 @@ namespace Atlas.Server.Controllers.Admin
                 {
                     Id = forumGroup.Id,
                     Name = forumGroup.Name,
-                    PermissionSetId = forumGroup.PermissionSetId
+                    PermissionSetId = forumGroup.PermissionSetId ?? Guid.Empty
                 };
             }
 

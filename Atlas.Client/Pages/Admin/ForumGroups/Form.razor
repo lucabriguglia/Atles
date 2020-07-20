@@ -6,6 +6,7 @@
     <div class="col-md-4">
         <EditForm EditContext="@_editContext" OnSubmit="OnSubmit">
             <DataAnnotationsValidator />
+            @*<FluentValidationValidator ValidatorType=typeof(Atlas.Domain.ForumGroups.Validators.CreateForumGroupClientValidator) />*@
             <div class="form-group">
                 <label for="name" class="control-label">Name</label>
                 <InputText id="name" @bind-Value="Model.ForumGroup.Name" Class="form-control" />
@@ -14,7 +15,7 @@
             <div class="form-group">
                 <label for="permissionSetId" class="control-label">Permission Set</label>
                 <select id="permissionSetId" @bind="Model.ForumGroup.PermissionSetId" class="form-control">
-                    <option value="">Inherit from Site Settings</option>
+                    <option value="@Guid.Empty" selected="">&lt;inherit from site settings&gt;</option>
                     @foreach (var item in Model.PermissionSets)
                     {
                         <option value="@item.Id">@item.Name</option>

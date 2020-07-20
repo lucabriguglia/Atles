@@ -17,6 +17,7 @@ using Atlas.Domain.ForumGroups;
 using FluentValidation;
 using Atlas.Domain.ForumGroups.Commands;
 using Atlas.Domain.ForumGroups.Validators;
+using Atlas.Domain.PermissionSets;
 
 namespace Atlas.Server
 {
@@ -72,6 +73,7 @@ namespace Atlas.Server
             services.AddScoped<IContextService, ContextService>();
             services.AddTransient<ICacheManager, CacheManager>();
             services.AddTransient<IForumGroupRules, ForumGroupRules>();
+            services.AddTransient<IPermissionSetRules, PermissionSetRules>();
             services.AddTransient<IForumGroupService, ForumGroupService>();
             services.AddTransient<IValidator<CreateForumGroup>, CreateForumGroupValidator>();
             services.AddTransient<IValidator<UpdateForumGroup>, UpdateForumGroupValidator>();
