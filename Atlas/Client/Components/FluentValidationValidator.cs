@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components.Forms;
 using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Shared.Components
+namespace Atlas.Client.Components
 {
 	/// <summary>
 	/// https://blazor-university.com/forms/writing-custom-validation/

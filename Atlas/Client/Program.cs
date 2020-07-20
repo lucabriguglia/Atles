@@ -28,6 +28,8 @@ namespace Atlas.Client
                     policy.RequireRole("Admin"));
             });
 
+            builder.Services.AddScoped<Atlas.Server.Domain.ForumGroups.Validators.CreateForumGroupValidator>();
+
             await builder.Build().RunAsync();
         }
     }
