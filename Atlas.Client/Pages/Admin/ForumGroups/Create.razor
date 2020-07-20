@@ -14,27 +14,27 @@
 
 <h3 class="mb-3">@Title</h3>
 
-@if (_model == null)
+@if (Model == null)
 {
     <Loading />
 }
 else
 {
-    <Form _model="_model" Button="Save" OnValidSubmit="@SaveAsync" />
+    <Form Model="Model" Button="Save" OnValidSubmit="@SaveAsync" />
 }
 
 @code {
     private const string Title = "Create Forum Group";
-    private FormModel _model { get; set; }
+    private FormModel Model { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        _model = await Http.GetFromJsonAsync<FormModel>("api/admin/forum-groups/create");
+        Model = await Http.GetFromJsonAsync<FormModel>("api/admin/forum-groups/create");
     }
 
     private async Task SaveAsync()
     {
-        await Http.PostAsJsonAsync($"api/admin/forum-groups/save", _model.ForumGroup);
+        await Http.PostAsJsonAsync($"api/admin/forum-groups/save", Model.ForumGroup);
         navigationManager.NavigateTo("/admin/forum-groups");
     }
 }

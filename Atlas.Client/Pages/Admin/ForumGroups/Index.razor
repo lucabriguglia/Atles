@@ -19,11 +19,11 @@
     </div>
 </div>
 
-@if (_model == null)
+@if (Model == null)
 {
     <Loading />
 }
-else if (_model.ForumGroups.Count == 0)
+else if (Model.ForumGroups.Count == 0)
 {
     <NoRecords />
 }
@@ -39,7 +39,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in _model.ForumGroups)
+            @foreach (var item in Model.ForumGroups)
             {
                 <tr>
                     <td>@item.Name</td>
@@ -63,12 +63,12 @@ else
 
 @code {
     private const string Title = "Forum Groups";
-    private IndexModel _model { get; set; }
+    private IndexModel Model { get; set; }
     private Guid DeleteId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        _model = await Http.GetFromJsonAsync<IndexModel>("api/admin/forum-groups/index-model");
+        Model = await Http.GetFromJsonAsync<IndexModel>("api/admin/forum-groups/index-model");
     }
 
     protected void SetDeleteId(Guid Id)

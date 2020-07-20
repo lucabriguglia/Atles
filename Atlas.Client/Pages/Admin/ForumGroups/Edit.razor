@@ -14,29 +14,28 @@
 
 <h3 class="mb-3">@Title</h3>
 
-@if (_model == null)
+@if (Model == null)
 {
     <Loading />
 }
 else
 {
-    <Form _model="_model" Button="Update" OnValidSubmit="@UpdateAsync" />
+    <Form Model="Model" Button="Update" OnValidSubmit="@UpdateAsync" />
 }
 
 @code {
     private const string Title = "Edit Forum Group";
-    [Parameter]
-    public Guid Id { get; set; }
-    private FormModel _model { get; set; }
+    [Parameter] public Guid Id { get; set; }
+    private FormModel Model { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        _model = await Http.GetFromJsonAsync<FormModel>($"api/admin/forum-groups/edit/{Id}");
+        Model = await Http.GetFromJsonAsync<FormModel>($"api/admin/forum-groups/edit/{Id}");
     }
 
     private async Task UpdateAsync()
     {
-        await Http.PostAsJsonAsync($"api/admin/forum-groups/update", _model.ForumGroup);
+        await Http.PostAsJsonAsync($"api/admin/forum-groups/update", Model.ForumGroup);
         navigationManager.NavigateTo("/admin/forum-groups");
     }
 }

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Server.Domain;
+using Atlas.Domain;
 
 namespace Atlas.Server.Services
 {

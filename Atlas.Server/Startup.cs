@@ -8,9 +8,14 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Atlas.Server.Data;
+using Atlas.Data;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Identity;
+using Atlas.Data.Rules;
+using Atlas.Domain.ForumGroups;
+using FluentValidation;
+using Atlas.Domain.ForumGroups.Commands;
+using Atlas.Domain.ForumGroups.Validators;
 
 namespace Atlas.Server
 {
@@ -65,6 +70,10 @@ namespace Atlas.Server
             services.AddTransient<IInstallationService, InstallationService>();
             services.AddScoped<IContextService, ContextService>();
             services.AddTransient<ICacheManager, CacheManager>();
+            services.AddTransient<Atlas.Data.Caching.ICacheManager, Atlas.Data.Caching.CacheManager>();
+            services.AddTransient<IForumGroupRules, ForumGroupRules>();
+            services.AddTransient<IForumGroupService, ForumGroupService>();
+            services.AddTransient<IValidator<CreateForumGroup>, CreateForumGroupValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
