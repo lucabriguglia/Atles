@@ -107,26 +107,19 @@ namespace Atlas.Server.Controllers.Admin
         [HttpPost("update")]
         public async Task<ActionResult> Update(FormModel.ForumGroupModel model)
         {
-            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == model.Id && x.Status != StatusType.Deleted);
-
-            if (forumGroup == null)
-            {
-                return NotFound();
-            }
-
-            forumGroup.UpdateDetails(model.Name, model.PermissionSetId);
-
+            var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Updated, forumGroup.Id, member.Id, new
+            var command = new UpdateForumGroup
             {
-                forumGroup.Name,
-                forumGroup.PermissionSetId
-            }));
+                Id = model.Id,
+                Name = model.Name,
+                PermissionSetId = model.PermissionSetId,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
 
-            await _dbContext.SaveChangesAsync();
-
-            _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
+            await _forumGroupService.UpdateAsync(command);
 
             return Ok();
         }
@@ -134,31 +127,17 @@ namespace Atlas.Server.Controllers.Admin
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
-            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == id);
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
 
-            if (forumGroup == null)
+            var command = new DeleteForumGroup
             {
-                return NotFound();
-            }
+                Id = id,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
 
-            var currentMember = await _contextService.CurrentMemberAsync();
-
-            forumGroup.Delete();
-            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Deleted, forumGroup.Id, currentMember.Id));
-
-            var forums = await _dbContext.Forums
-                .Where(x => x.ForumGroupId == forumGroup.Id)
-                .ToListAsync();
-
-            foreach (var forum in forums)
-            {
-                forum.Delete();
-                _dbContext.Events.Add(new Event(nameof(Forum), EventType.Deleted, forum.Id, currentMember.Id));
-            }
-
-            await _dbContext.SaveChangesAsync();
-
-            _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
+            await _forumGroupService.DeleteAsync(command);
 
             return Ok();
         }

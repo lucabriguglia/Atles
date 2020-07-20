@@ -14,14 +14,17 @@ namespace Atlas.Domain.ForumGroups
         private readonly AtlasDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IValidator<CreateForumGroup> _createValidator;
+        private readonly IValidator<UpdateForumGroup> _updateValidator;
 
         public ForumGroupService(AtlasDbContext dbContext,
             ICacheManager cacheManager,
-            IValidator<CreateForumGroup> createValidator)
+            IValidator<CreateForumGroup> createValidator,
+            IValidator<UpdateForumGroup> updateValidator)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
             _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
 
         public async Task CreateAsync(CreateForumGroup command)
@@ -45,6 +48,30 @@ namespace Atlas.Domain.ForumGroups
                 forumGroup.SiteId,
                 forumGroup.Name,
                 forumGroup.SortOrder,
+                forumGroup.PermissionSetId
+            }));
+
+            await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
+        }
+
+        public async Task UpdateAsync(UpdateForumGroup command)
+        {
+            await _updateValidator.ValidateAndThrowAsync(command);
+
+            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == command.Id && x.Status != StatusType.Deleted);
+
+            if (forumGroup == null)
+            {
+                throw new DataException($"Forum Group with Id {command.Id} not found.");
+            }
+
+            forumGroup.UpdateDetails(command.Name, command.PermissionSetId);
+
+            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Updated, forumGroup.Id, command.MemberId, new
+            {
+                forumGroup.Name,
                 forumGroup.PermissionSetId
             }));
 

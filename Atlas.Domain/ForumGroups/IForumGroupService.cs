@@ -6,6 +6,7 @@ namespace Atlas.Domain.ForumGroups
     public interface IForumGroupService
     {
         Task CreateAsync(CreateForumGroup command);
+        Task UpdateAsync(UpdateForumGroup command);
         Task DeleteAsync(DeleteForumGroup command);
     }
 }

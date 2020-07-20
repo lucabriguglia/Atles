@@ -74,6 +74,7 @@ namespace Atlas.Server
             services.AddTransient<IForumGroupRules, ForumGroupRules>();
             services.AddTransient<IForumGroupService, ForumGroupService>();
             services.AddTransient<IValidator<CreateForumGroup>, CreateForumGroupValidator>();
+            services.AddTransient<IValidator<UpdateForumGroup>, UpdateForumGroupValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
