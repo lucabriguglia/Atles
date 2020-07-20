@@ -46,6 +46,28 @@ namespace Atlas.Domain
             SortOrder = sortOrder;
         }
 
+        public void IncreaseTopicsCount()
+        {
+            TopicsCount += 1;
+        }
+
+        public void IncreaseRepliesCount()
+        {
+            RepliesCount += 1;
+        }
+
+        public void DecreaseTopicsCount()
+        {
+            TopicsCount -= 1;
+            if (TopicsCount < 0) TopicsCount = 0;
+        }
+
+        public void DecreaseRepliesCount()
+        {
+            RepliesCount -= 1;
+            if (RepliesCount < 0) RepliesCount = 0;
+        }
+
         public void Delete()
         {
             Status = StatusType.Deleted;
