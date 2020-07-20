@@ -2,13 +2,15 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Server.Caching;
-using Atlas.Server.Data;
-using Atlas.Server.Domain;
+using Atlas.Data;
+using Atlas.Domain;
 using Atlas.Server.Services;
 using Atlas.Shared.Models.Admin.ForumGroups;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Atlas.Domain.ForumGroups.Commands;
+using Atlas.Domain.ForumGroups;
 
 namespace Atlas.Server.Controllers.Admin
 {
@@ -20,12 +22,20 @@ namespace Atlas.Server.Controllers.Admin
         private readonly AtlasDbContext _dbContext;
         private readonly IContextService _contextService;
         private readonly ICacheManager _cacheManager;
+        private readonly IForumGroupService _forumGroupService;
+        private readonly IForumGroupRules _forumGroupRules;
 
-        public ForumGroupsController(AtlasDbContext dbContext, IContextService contextService, ICacheManager cacheManager)
+        public ForumGroupsController(AtlasDbContext dbContext, 
+            IContextService contextService, 
+            ICacheManager cacheManager,
+            IForumGroupService forumGroupService,
+            IForumGroupRules forumGroupRules)
         {
             _dbContext = dbContext;
             _contextService = contextService;
             _cacheManager = cacheManager;
+            _forumGroupService = forumGroupService;
+            _forumGroupRules = forumGroupRules;
         }
 
         [HttpGet("index-model")]
@@ -68,29 +78,15 @@ namespace Atlas.Server.Controllers.Admin
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var forumGroupsCount = await _dbContext.ForumGroups
-                .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
-                .CountAsync();
-
-            var sortOrder = forumGroupsCount + 1;
-
-            var forumGroup = new ForumGroup(site.Id,
-                model.Name,
-                sortOrder,
-                model.PermissionSetId);
-
-            _dbContext.ForumGroups.Add(forumGroup);
-            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Created, forumGroup.Id, member.Id, new
+            var command = new CreateForumGroup
             {
-                forumGroup.SiteId,
-                forumGroup.Name,
-                forumGroup.SortOrder,
-                forumGroup.PermissionSetId
-            }));
+                Name = model.Name,
+                PermissionSetId = model.PermissionSetId,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
 
-            await _dbContext.SaveChangesAsync();
-
-            _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
+            await _forumGroupService.CreateAsync(command);
 
             return Ok();
         }
@@ -167,13 +163,31 @@ namespace Atlas.Server.Controllers.Admin
             return Ok();
         }
 
+        [HttpGet("is-name-unique/{name}")]
+        public async Task<IActionResult> IsNameUnique(string name)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var isNameUnique = await _forumGroupRules.IsNameUniqueAsync(site.Id, name);
+            return Ok(isNameUnique);
+        }
+
+        [HttpGet("is-name-unique/{id}/{name}")]
+        public async Task<IActionResult> IsNameUnique(Guid id, string name)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var isNameUnique = await _forumGroupRules.IsNameUniqueAsync(site.Id, id, name);
+            return Ok(isNameUnique);
+        }
+
         private async Task<FormModel> BuildFormModelAsync(Guid? id = null)
         {
             var result = new FormModel();
 
+            var site = await _contextService.CurrentSiteAsync();
+
             if (id != null)
             {
-                var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == id && x.Status != StatusType.Deleted);
+                var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.SiteId == site.Id && x.Id == id && x.Status != StatusType.Deleted);
 
                 if (forumGroup == null)
                 {
@@ -187,8 +201,6 @@ namespace Atlas.Server.Controllers.Admin
                     PermissionSetId = forumGroup.PermissionSetId
                 };
             }
-
-            var site = await _contextService.CurrentSiteAsync();
 
             var permissionSets = await _dbContext.PermissionSets
                 .Where(x => x.SiteId == site.Id && x.Status != StatusType.Deleted)
