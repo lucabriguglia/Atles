@@ -5,6 +5,8 @@ using Atlas.Data.Caching;
 using Atlas.Domain;
 using Atlas.Domain.ForumGroups;
 using Atlas.Domain.ForumGroups.Commands;
+using Atlas.Domain.ForumGroups.Events;
+using Atlas.Domain.Forums.Events;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,12 +46,15 @@ namespace Atlas.Data.Services
                 command.PermissionSetId);
 
             _dbContext.ForumGroups.Add(forumGroup);
-            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Created, forumGroup.Id, command.MemberId, new
+
+            _dbContext.Events.Add(new Event(new ForumGroupCreated
             {
-                forumGroup.SiteId,
-                forumGroup.Name,
-                forumGroup.SortOrder,
-                forumGroup.PermissionSetId
+                SiteId = forumGroup.SiteId,
+                MemberId = command.MemberId,
+                TargetId = forumGroup.Id,
+                TargetType = typeof(ForumGroup).Name,
+                Name = forumGroup.Name,
+                PermissionSetId = forumGroup.PermissionSetId
             }));
 
             await _dbContext.SaveChangesAsync();
@@ -70,10 +75,14 @@ namespace Atlas.Data.Services
 
             forumGroup.UpdateDetails(command.Name, command.PermissionSetId);
 
-            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Updated, forumGroup.Id, command.MemberId, new
+            _dbContext.Events.Add(new Event(new ForumGroupUpdated
             {
-                forumGroup.Name,
-                forumGroup.PermissionSetId
+                SiteId = forumGroup.SiteId,
+                MemberId = command.MemberId,
+                TargetId = forumGroup.Id,
+                TargetType = typeof(ForumGroup).Name,
+                Name = forumGroup.Name,
+                PermissionSetId = forumGroup.PermissionSetId
             }));
 
             await _dbContext.SaveChangesAsync();
@@ -91,7 +100,14 @@ namespace Atlas.Data.Services
             }
 
             forumGroup.Delete();
-            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Deleted, forumGroup.Id, command.MemberId));
+
+            _dbContext.Events.Add(new Event(new ForumGroupDeleted
+            {
+                SiteId = forumGroup.SiteId,
+                MemberId = command.MemberId,
+                TargetId = forumGroup.Id,
+                TargetType = typeof(ForumGroup).Name
+            }));
 
             var forums = await _dbContext.Forums
                 .Where(x => x.ForumGroupId == forumGroup.Id)
@@ -100,7 +116,14 @@ namespace Atlas.Data.Services
             foreach (var forum in forums)
             {
                 forum.Delete();
-                _dbContext.Events.Add(new Event(nameof(Forum), EventType.Deleted, forum.Id, command.MemberId));
+
+                _dbContext.Events.Add(new Event(new ForumDeleted
+                {
+                    SiteId = forumGroup.SiteId,
+                    MemberId = command.MemberId,
+                    TargetId = forum.Id,
+                    TargetType = typeof(Forum).Name
+                }));
             }
 
             await _dbContext.SaveChangesAsync();

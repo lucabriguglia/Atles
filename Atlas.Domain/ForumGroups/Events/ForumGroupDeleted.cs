@@ -1,6 +1,6 @@
 ﻿namespace Atlas.Domain.ForumGroups.Events
 {
-    public class ForumGroupDeleted
+    public class ForumGroupDeleted : EventBase
     {
 
     }
