@@ -53,6 +53,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
+                    SiteId = table.Column<Guid>(nullable: false),
                     TimeStamp = table.Column<DateTime>(nullable: false),
                     TargetId = table.Column<Guid>(nullable: false),
                     TargetType = table.Column<string>(nullable: true),

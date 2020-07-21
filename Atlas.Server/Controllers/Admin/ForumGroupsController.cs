@@ -120,6 +120,44 @@ namespace Atlas.Server.Controllers.Admin
             return Ok();
         }
 
+        [HttpPost("move-up")]
+        public async Task<ActionResult> MoveUp([FromBody] Guid id)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var command = new MoveForumGroup
+            {
+                Id = id,
+                SiteId = site.Id,
+                MemberId = member.Id,
+                Direction = Direction.Up
+            };
+
+            await _forumGroupService.MoveAsync(command);
+
+            return Ok();
+        }
+
+        [HttpPost("move-down")]
+        public async Task<ActionResult> MoveDown([FromBody] Guid id)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var command = new MoveForumGroup
+            {
+                Id = id,
+                SiteId = site.Id,
+                MemberId = member.Id,
+                Direction = Direction.Down
+            };
+
+            await _forumGroupService.MoveAsync(command);
+
+            return Ok();
+        }
+
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {

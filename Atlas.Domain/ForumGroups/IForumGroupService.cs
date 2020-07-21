@@ -7,6 +7,7 @@ namespace Atlas.Domain.ForumGroups
     {
         Task CreateAsync(CreateForumGroup command);
         Task UpdateAsync(UpdateForumGroup command);
+        Task MoveAsync(MoveForumGroup command);
         Task DeleteAsync(DeleteForumGroup command);
     }
 }

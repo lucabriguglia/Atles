@@ -10,14 +10,14 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atlas.Data.Migrations.AtlasMigrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20200715130216_InitialCreate")]
+    [Migration("20200721085931_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -31,6 +31,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("MemberId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SiteId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TargetId")

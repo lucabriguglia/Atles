@@ -32,6 +32,7 @@ else
     <table class="table table-bordered">
         <thead>
             <tr>
+                <th scope="col">&nbsp;</th>
                 <th scope="col">Name</th>
                 <th scope="col">Total Topics</th>
                 <th scope="col">Total Replies</th>
@@ -42,6 +43,20 @@ else
             @foreach (var item in Model.ForumGroups)
             {
                 <tr>
+                    <td class="text-center">
+                        @if (item.SortOrder > 1)
+                        {
+                            <button type="button" class="btn btn-link btn-sm" @onclick="() => MoveUp(item.Id)">
+                                <span class="fas fa-arrow-up"></span>
+                            </button>
+                        }
+                        @if (item.SortOrder < Model.ForumGroups.Count)
+                        {
+                            <button type="button" class="btn btn-link btn-sm" @onclick="() => MoveDown(item.Id)">
+                                <span class="fas fa-arrow-down"></span>
+                            </button>
+                        }
+                    </td>
                     <td>@item.Name</td>
                     <td>@item.TotalTopics</td>
                     <td>@item.TotalReplies</td>
@@ -69,6 +84,18 @@ else
     protected override async Task OnInitializedAsync()
     {
         Model = await Http.GetFromJsonAsync<IndexModel>("api/admin/forum-groups/index-model");
+    }
+
+    private async Task MoveUp(Guid id)
+    {
+        await Http.PostAsJsonAsync("api/admin/forum-groups/move-up", id);
+        await OnInitializedAsync();
+    }
+
+    private async Task MoveDown(Guid id)
+    {
+        await Http.PostAsJsonAsync("api/admin/forum-groups/move-down", id);
+        await OnInitializedAsync();
     }
 
     protected void SetDeleteId(Guid Id)

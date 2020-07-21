@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Atlas.Domain.ForumGroups.Commands;
+using System;
 using System.Collections.Generic;
 
 namespace Atlas.Domain
@@ -37,6 +38,21 @@ namespace Atlas.Domain
         {
             Name = name;
             PermissionSetId = permissionSetId;
+        }
+
+        public void MoveUp()
+        {
+            SortOrder -= 1;
+        }
+
+        public void MoveDown()
+        {
+            SortOrder += 1;
+        }
+
+        public void Reorder(int sortOrder)
+        {
+            SortOrder = sortOrder;
         }
 
         public void IncreaseTopicsCount()

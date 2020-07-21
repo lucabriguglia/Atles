@@ -15,7 +15,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.1")
+                .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
@@ -29,6 +29,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("MemberId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("SiteId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("TargetId")

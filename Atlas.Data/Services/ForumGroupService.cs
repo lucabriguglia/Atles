@@ -59,14 +59,14 @@ namespace Atlas.Data.Services
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
+            _cacheManager.Remove(CacheKeys.ForumGroups(command.SiteId));
         }
 
         public async Task UpdateAsync(UpdateForumGroup command)
         {
             await _updateValidator.ValidateAndThrowAsync(command);
 
-            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == command.Id && x.Status != StatusType.Deleted);
+            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.SiteId == command.SiteId && x.Id == command.Id && x.Status != StatusType.Deleted);
 
             if (forumGroup == null)
             {
@@ -87,12 +87,58 @@ namespace Atlas.Data.Services
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
+            _cacheManager.Remove(CacheKeys.ForumGroups(command.SiteId));
+        }
+
+        public async Task MoveAsync(MoveForumGroup command)
+        {
+            var forumGroup = await _dbContext.ForumGroups
+                .FirstOrDefaultAsync(x => 
+                    x.SiteId == command.SiteId && 
+                    x.Id == command.Id && 
+                    x.Status != StatusType.Deleted);
+
+            if (forumGroup == null)
+            {
+                throw new DataException($"Forum Group with Id {command.Id} not found.");
+            }
+
+            var currentSortOrder = forumGroup.SortOrder;
+
+            if (command.Direction == Direction.Up)
+            {
+                forumGroup.MoveUp();
+            }
+            else
+            {
+                forumGroup.MoveDown();
+            }
+
+            var sortOrderToReplace = forumGroup.SortOrder;
+
+            var adjacentForumGroup = await _dbContext.ForumGroups
+                .FirstOrDefaultAsync(x => 
+                    x.SiteId == command.SiteId && 
+                    x.SortOrder == sortOrderToReplace && 
+                    x.Status != StatusType.Deleted);
+
+            if (command.Direction == Direction.Up)
+            {
+                adjacentForumGroup.MoveDown();
+            }
+            else
+            {
+                adjacentForumGroup.MoveUp();
+            }
+
+            await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.ForumGroups(command.SiteId));
         }
 
         public async Task DeleteAsync(DeleteForumGroup command)
         {
-            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == command.Id);
+            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.SiteId == command.SiteId && x.Id == command.Id);
 
             if (forumGroup == null)
             {
@@ -100,6 +146,18 @@ namespace Atlas.Data.Services
             }
 
             forumGroup.Delete();
+
+            var otherForumGroups = await _dbContext.ForumGroups
+                .Where(x =>
+                    x.SiteId == command.SiteId &&
+                    x.Id != command.Id &&
+                    x.Status != StatusType.Deleted)
+                .ToListAsync();
+
+            for (int i = 0; i < otherForumGroups.Count; i++)
+            {
+                otherForumGroups[i].Reorder(i + 1);
+            }
 
             _dbContext.Events.Add(new Event(new ForumGroupDeleted
             {
@@ -128,7 +186,7 @@ namespace Atlas.Data.Services
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.ForumGroups(forumGroup.SiteId));
+            _cacheManager.Remove(CacheKeys.ForumGroups(command.SiteId));
         }
     }
 }

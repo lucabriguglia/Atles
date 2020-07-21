@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Domain;
+using Atlas.Domain.ForumGroups.Events;
+using Atlas.Domain.Forums.Events;
+using Atlas.Domain.PermissionSets.Events;
+using Atlas.Domain.Sites.Events;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -77,38 +81,55 @@ namespace Atlas.Server.Services
                 return;
             }
 
+            // Site
             site = new Site("Default", "My Website");
             _dbContext.Sites.Add(site);
-            _dbContext.Events.Add(new Event(nameof(Site), EventType.Created, site.Id, null, new
+            _dbContext.Events.Add(new Event(new SiteCreated
             {
-                site.Name,
-                site.Title
+                SiteId = site.Id,
+                MemberId = null,
+                TargetId = site.Id,
+                TargetType = typeof(Site).Name,
+                Name = site.Name,
+                Title = site.Title
             }));
 
+            // Permission Set
             var permissionSet = new PermissionSet(site.Id, "Default", new List<Permission>());
             _dbContext.PermissionSets.Add(permissionSet);
-            _dbContext.Events.Add(new Event(nameof(PermissionSet), EventType.Created, permissionSet.Id, null, new
+            _dbContext.Events.Add(new Event(new PermissionSetCreated
             {
-                permissionSet.SiteId,
-                permissionSet.Name
+                SiteId = permissionSet.SiteId,
+                MemberId = null,
+                TargetId = permissionSet.Id,
+                TargetType = typeof(PermissionSet).Name,
+                Name = site.Name
             }));
 
+            // Forum Group
             var forumGroup = new ForumGroup(site.Id, "General", 1);
             _dbContext.ForumGroups.Add(forumGroup);
-            _dbContext.Events.Add(new Event(nameof(ForumGroup), EventType.Created, forumGroup.Id, null, new
+            _dbContext.Events.Add(new Event(new ForumGroupCreated
             {
-                forumGroup.SiteId,
-                forumGroup.Name,
-                forumGroup.SortOrder
+                SiteId = forumGroup.SiteId,
+                MemberId = null,
+                TargetId = forumGroup.Id,
+                TargetType = typeof(ForumGroup).Name,
+                Name = forumGroup.Name,
+                PermissionSetId = forumGroup.PermissionSetId
             }));
 
+            // Forum
             var forum = new Forum(forumGroup.Id, "Welcome", 1);
             _dbContext.Forums.Add(forum);
-            _dbContext.Events.Add(new Event(nameof(Forum), EventType.Created, forum.Id, null, new
+            _dbContext.Events.Add(new Event(new ForumCreated
             {
-                forum.ForumGroupId,
-                forum.Name,
-                forumGroup.SortOrder
+                SiteId = forumGroup.SiteId,
+                MemberId = null,
+                TargetId = forum.Id,
+                TargetType = typeof(Forum).Name,
+                Name = forum.Name,
+                PermissionSetId = forum.PermissionSetId
             }));
 
             await _dbContext.SaveChangesAsync();
