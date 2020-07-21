@@ -114,6 +114,15 @@ namespace Atlas.Data.Services
                 forumGroup.MoveDown();
             }
 
+            _dbContext.Events.Add(new Event(new ForumGroupReordered
+            {
+                SiteId = command.SiteId,
+                MemberId = command.MemberId,
+                TargetId = forumGroup.Id,
+                TargetType = typeof(ForumGroup).Name,
+                SortOrder = forumGroup.SortOrder
+            }));
+
             var sortOrderToReplace = forumGroup.SortOrder;
 
             var adjacentForumGroup = await _dbContext.ForumGroups
@@ -131,6 +140,15 @@ namespace Atlas.Data.Services
                 adjacentForumGroup.MoveUp();
             }
 
+            _dbContext.Events.Add(new Event(new ForumGroupReordered
+            {
+                SiteId = command.SiteId,
+                MemberId = command.MemberId,
+                TargetId = adjacentForumGroup.Id,
+                TargetType = typeof(ForumGroup).Name,
+                SortOrder = adjacentForumGroup.SortOrder
+            }));
+
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.ForumGroups(command.SiteId));
@@ -147,6 +165,14 @@ namespace Atlas.Data.Services
 
             forumGroup.Delete();
 
+            _dbContext.Events.Add(new Event(new ForumGroupDeleted
+            {
+                SiteId = forumGroup.SiteId,
+                MemberId = command.MemberId,
+                TargetId = forumGroup.Id,
+                TargetType = typeof(ForumGroup).Name
+            }));
+
             var otherForumGroups = await _dbContext.ForumGroups
                 .Where(x =>
                     x.SiteId == command.SiteId &&
@@ -157,15 +183,16 @@ namespace Atlas.Data.Services
             for (int i = 0; i < otherForumGroups.Count; i++)
             {
                 otherForumGroups[i].Reorder(i + 1);
-            }
 
-            _dbContext.Events.Add(new Event(new ForumGroupDeleted
-            {
-                SiteId = forumGroup.SiteId,
-                MemberId = command.MemberId,
-                TargetId = forumGroup.Id,
-                TargetType = typeof(ForumGroup).Name
-            }));
+                _dbContext.Events.Add(new Event(new ForumGroupReordered
+                {
+                    SiteId = command.SiteId,
+                    MemberId = command.MemberId,
+                    TargetId = otherForumGroups[i].Id,
+                    TargetType = typeof(ForumGroup).Name,
+                    SortOrder = otherForumGroups[i].SortOrder
+                }));
+            }
 
             var forums = await _dbContext.Forums
                 .Where(x => x.ForumGroupId == forumGroup.Id)
