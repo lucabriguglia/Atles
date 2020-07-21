@@ -7,6 +7,4 @@ namespace Atlas.Domain.ForumGroups.Commands
         public string Name { get; set; }
         public Guid? PermissionSetId { get; set; }
     }
-
-
 }

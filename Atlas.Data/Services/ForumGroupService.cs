@@ -109,7 +109,7 @@ namespace Atlas.Data.Services
             {
                 forumGroup.MoveUp();
             }
-            else
+            else if (command.Direction == Direction.Down)
             {
                 forumGroup.MoveDown();
             }
@@ -135,7 +135,7 @@ namespace Atlas.Data.Services
             {
                 adjacentForumGroup.MoveDown();
             }
-            else
+            else if (command.Direction == Direction.Down)
             {
                 adjacentForumGroup.MoveUp();
             }

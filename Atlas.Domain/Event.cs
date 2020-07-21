@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Newtonsoft.Json;
+using System;
 using System.Text.Json;
 
 namespace Atlas.Domain
@@ -29,16 +30,7 @@ namespace Atlas.Domain
             TargetId = @event.TargetId;
             MemberId = @event.MemberId;
             SiteId = @event.SiteId;
-            Data = JsonSerializer.Serialize(@event);
-        }
-
-        public Event(string targetType, EventType type, Guid targetId, Guid? memberId = null, object data = null)
-        {
-            TargetType = targetType;
-            Type = type.ToString();
-            TargetId = targetId;
-            MemberId = memberId;
-            Data = data != null ? JsonSerializer.Serialize(data) : null;
+            Data = JsonConvert.SerializeObject(@event);
         }
     }
 }

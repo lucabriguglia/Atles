@@ -18,6 +18,8 @@ using FluentValidation;
 using Atlas.Domain.ForumGroups.Commands;
 using Atlas.Domain.ForumGroups.Validators;
 using Atlas.Domain.PermissionSets;
+using Atlas.Shared;
+using Atlas.Data.Builders.Admin;
 
 namespace Atlas.Server
 {
@@ -77,6 +79,8 @@ namespace Atlas.Server
             services.AddTransient<IForumGroupService, ForumGroupService>();
             services.AddTransient<IValidator<CreateForumGroup>, CreateForumGroupValidator>();
             services.AddTransient<IValidator<UpdateForumGroup>, UpdateForumGroupValidator>();
+            services.AddTransient<IEventModelBuilder, EventModelBuilder>();
+            services.AddTransient<IForumGroupModelBuilder, ForumGroupModelBuilder>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

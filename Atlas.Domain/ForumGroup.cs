@@ -1,5 +1,4 @@
-﻿using Atlas.Domain.ForumGroups.Commands;
-using System;
+﻿using System;
 using System.Collections.Generic;
 
 namespace Atlas.Domain

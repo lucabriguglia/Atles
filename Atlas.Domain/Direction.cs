@@ -1,4 +1,4 @@
-﻿namespace Atlas.Domain.ForumGroups.Commands
+﻿namespace Atlas.Domain
 {
     public enum Direction
     {
