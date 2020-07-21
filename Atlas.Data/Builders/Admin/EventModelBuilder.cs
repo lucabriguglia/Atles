@@ -45,7 +45,7 @@ namespace Atlas.Data.Builders.Admin
                     Type = @event.Type,
                     TimeStamp = @event.TimeStamp,
                     MemberId = @event.MemberId,
-                    MemberName = @event.Member?.Id.ToString() ?? "<system>" // TODO: Change to display name
+                    MemberName = @event.Member?.DisplayName ?? "<system>"
                 };
 
                 var parsedData = JObject.Parse(@event.Data);

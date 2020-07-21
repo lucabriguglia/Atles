@@ -131,6 +131,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<int>("RepliesCount")
                         .HasColumnType("int");
 

@@ -7,6 +7,7 @@ namespace Atlas.Domain
     {
         public Guid Id { get; private set; }
         public string UserId { get; private set; }
+        public string DisplayName { get; private set; }
         public int TopicsCount { get; private set; }
         public int RepliesCount { get; private set; }
 
@@ -19,10 +20,11 @@ namespace Atlas.Domain
             
         }
 
-        public Member(string userId)
+        public Member(string userId, string displayName)
         {
             Id = Guid.NewGuid();
             UserId = userId;
+            DisplayName = displayName;
         }
     }
 }

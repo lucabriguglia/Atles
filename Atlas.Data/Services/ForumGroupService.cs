@@ -54,7 +54,8 @@ namespace Atlas.Data.Services
                 TargetId = forumGroup.Id,
                 TargetType = typeof(ForumGroup).Name,
                 Name = forumGroup.Name,
-                PermissionSetId = forumGroup.PermissionSetId
+                PermissionSetId = forumGroup.PermissionSetId,
+                SortOrder = forumGroup.SortOrder
             }));
 
             await _dbContext.SaveChangesAsync();

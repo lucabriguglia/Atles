@@ -50,7 +50,7 @@ namespace Atlas.Server.Services
 
                     if (member == null)
                     {
-                        member = new Member(userId);
+                        member = new Member(userId, "Anonymous");
                         _dbContext.Members.Add(member);
                         await _dbContext.SaveChangesAsync();
                     }

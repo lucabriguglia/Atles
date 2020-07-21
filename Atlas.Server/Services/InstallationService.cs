@@ -67,7 +67,7 @@ namespace Atlas.Server.Services
 
             await userManager.AddToRoleAsync(user, "Admin");
 
-            var member = new Member(user.Id);
+            var member = new Member(user.Id, "Admin");
             _dbContext.Members.Add(member);
             await _dbContext.SaveChangesAsync();
         }
@@ -116,7 +116,8 @@ namespace Atlas.Server.Services
                 TargetId = forumGroup.Id,
                 TargetType = typeof(ForumGroup).Name,
                 Name = forumGroup.Name,
-                PermissionSetId = forumGroup.PermissionSetId
+                PermissionSetId = forumGroup.PermissionSetId,
+                SortOrder = forumGroup.SortOrder
             }));
 
             // Forum
@@ -129,7 +130,8 @@ namespace Atlas.Server.Services
                 TargetId = forum.Id,
                 TargetType = typeof(Forum).Name,
                 Name = forum.Name,
-                PermissionSetId = forum.PermissionSetId
+                PermissionSetId = forum.PermissionSetId,
+                SortOrder = forum.SortOrder
             }));
 
             await _dbContext.SaveChangesAsync();
