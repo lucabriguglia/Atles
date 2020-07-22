@@ -32,12 +32,20 @@ namespace Atlas.Server.Controllers.Admin
             _modelBuilder = modelBuilder;
         }
 
-        [HttpGet("list")]
-        public async Task<IndexModel> List()
+        [HttpGet("index-model")]
+        public async Task<IndexModel> Index()
         {
             var site = await _contextService.CurrentSiteAsync();
 
             return await _modelBuilder.BuildIndexModelAsync(site.Id);
+        }
+
+        [HttpGet("index-model/{forumGroupId}")]
+        public async Task<IndexModel> Index(Guid forumGroupId)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+
+            return await _modelBuilder.BuildIndexModelAsync(site.Id, forumGroupId);
         }
 
         [HttpGet("create/{forumGroupId}")]

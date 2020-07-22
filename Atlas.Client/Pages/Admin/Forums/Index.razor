@@ -1,4 +1,5 @@
 ﻿@page "/admin/forums"
+@page "/admin/forums/{forumGroupId:guid}"
 @using Atlas.Shared.Models.Admin.Forums
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
@@ -6,18 +7,19 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+        <li class="breadcrumb-item"><a href="/admin/forum-groups">Forum Groups</a></li>
         <li class="breadcrumb-item active" aria-current="page">@Title</li>
     </ol>
 </nav>
 
-@*<div class="row">
+<div class="row">
     <div class="col-md-6">
         <h3 class="mb-3">@Title</h3>
     </div>
     <div class="col-md-6 text-right mb-3">
         <a href="/admin/forums/create/@ForumGroupId" class="btn btn-primary" role="button">Create New</a>
     </div>
-</div>*@
+</div>
 
 @if (Model == null)
 {
@@ -29,6 +31,18 @@ else if (Model.Forums.Count == 0)
 }
 else
 {
+    <div class="form-group row mb-4">
+        <label class="col-sm-2 col-form-label">Select Forum Group:</label>
+        <div class="col-sm-6">
+            <select id="forumGroupId" @bind="ForumGroupId" @onselectionchange="ForumGroupChanged" class="form-control">
+                @foreach (var item in Model.ForumGroups)
+                {
+                    <option value="@item.Id">@item.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+
     @*<div class="row">
         <div class="col-md-4">
             <div class="form-group">
@@ -78,7 +92,6 @@ else
                     <td>@item.PermissionSetName</td>
                     <td>
                         <a href="/admin/forum-groups/edit/@item.Id" class="btn btn-secondary" role="button">Edit</a>
-                        <a href="/admin/forums/@item.Id" class="btn btn-secondary" role="button">Forums</a>
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">Delete</button>
                     </td>
                 </tr>
@@ -94,17 +107,23 @@ else
 
 @code {
     private const string Title = "Forums";
-    //[Parameter] public Guid ForumGroupId { get; set; }
+    [Parameter] public Guid? ForumGroupId { get; set; } = null;
     private IndexModel Model { get; set; }
     private Guid DeleteId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        //var requestUri = ForumGroupId == null
-        //    ? $"api/admin/forums/list"
-        //    : $"api/admin/forums/list/{ForumGroupId}";
+        var requestUri = ForumGroupId == null
+            ? $"api/admin/forums/index-model"
+            : $"api/admin/forums/index-model/{ForumGroupId}";
 
-        Model = await Http.GetFromJsonAsync<IndexModel>($"api/admin/forums/list");
+        Model = await Http.GetFromJsonAsync<IndexModel>(requestUri);
+    }
+
+    private async Task ForumGroupChanged(EventArgs args)
+    {
+        Model = await Http.GetFromJsonAsync<IndexModel>($"api/admin/forums/index-model/{ForumGroupId}");
+        StateHasChanged();
     }
 
     private async Task MoveUp(Guid id)
