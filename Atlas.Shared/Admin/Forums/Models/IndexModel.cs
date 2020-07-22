@@ -5,7 +5,14 @@ namespace Atlas.Shared.Models.Admin.Forums
 {
     public class IndexModel
     {
+        public IList<ForumGroupModel> ForumGroups { get; set; } = new List<ForumGroupModel>();
         public IList<ForumModel> Forums { get; set; } = new List<ForumModel>();
+
+        public class ForumGroupModel
+        {
+            public Guid Id { get; set; }
+            public string Name { get; set; }
+        }
 
         public class ForumModel
         {

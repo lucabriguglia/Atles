@@ -20,6 +20,12 @@ using Atlas.Domain.ForumGroups.Validators;
 using Atlas.Domain.PermissionSets;
 using Atlas.Shared;
 using Atlas.Data.Builders.Admin;
+using Atlas.Domain;
+using Atlas.Shared.Models.Admin.ForumGroups;
+using Atlas.Domain.Forums;
+using Atlas.Domain.Forums.Commands;
+using Atlas.Domain.Forums.Validators;
+using Atlas.Shared.Forums;
 
 namespace Atlas.Server
 {
@@ -71,16 +77,27 @@ namespace Atlas.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
 
-            services.AddTransient<IInstallationService, InstallationService>();
-            services.AddScoped<IContextService, ContextService>();
-            services.AddTransient<ICacheManager, CacheManager>();
-            services.AddTransient<IForumGroupRules, ForumGroupRules>();
-            services.AddTransient<IPermissionSetRules, PermissionSetRules>();
-            services.AddTransient<IForumGroupService, ForumGroupService>();
-            services.AddTransient<IValidator<CreateForumGroup>, CreateForumGroupValidator>();
-            services.AddTransient<IValidator<UpdateForumGroup>, UpdateForumGroupValidator>();
-            services.AddTransient<IEventModelBuilder, EventModelBuilder>();
-            services.AddTransient<IForumGroupModelBuilder, ForumGroupModelBuilder>();
+            services.Scan(s => s
+                .FromAssembliesOf(typeof(Startup), typeof(Site), typeof(IndexModel), typeof(AtlasDbContext))
+                .AddClasses()
+                .AsImplementedInterfaces());
+
+            //services.AddTransient<IInstallationService, InstallationService>();
+            //services.AddScoped<IContextService, ContextService>();
+            //services.AddTransient<ICacheManager, CacheManager>();
+            //services.AddTransient<IForumGroupRules, ForumGroupRules>();
+            //services.AddTransient<IPermissionSetRules, PermissionSetRules>();
+            //services.AddTransient<IForumGroupService, ForumGroupService>();
+            //services.AddTransient<IValidator<CreateForumGroup>, CreateForumGroupValidator>();
+            //services.AddTransient<IValidator<UpdateForumGroup>, UpdateForumGroupValidator>();
+            //services.AddTransient<IEventModelBuilder, EventModelBuilder>();
+            //services.AddTransient<IForumGroupModelBuilder, ForumGroupModelBuilder>();
+
+            //services.AddTransient<IForumRules, ForumRules>();
+            //services.AddTransient<IForumService, ForumService>();
+            //services.AddTransient<IForumModelBuilder, ForumModelBuilder>();
+            //services.AddTransient<IValidator<CreateForum>, CreateForumValidator>();
+            //services.AddTransient<IValidator<UpdateForum>, UpdateForumValidator>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

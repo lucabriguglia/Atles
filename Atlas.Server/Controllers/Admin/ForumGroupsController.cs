@@ -32,8 +32,8 @@ namespace Atlas.Server.Controllers.Admin
             _modelBuilder = modelBuilder;
         }
 
-        [HttpGet("index-model")]
-        public async Task<IndexModel> Index()
+        [HttpGet("list")]
+        public async Task<IndexModel> List()
         {
             var site = await _contextService.CurrentSiteAsync();
 

@@ -17,15 +17,43 @@ namespace Atlas.Data.Builders.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<IndexModel> BuildIndexModelAsync(Guid forumGroupId)
+        public async Task<IndexModel> BuildIndexModelAsync(Guid siteId, Guid? forumGroupId)
         {
-            var result = new IndexModel();
+            var forumGroups = await _dbContext.ForumGroups
+                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .OrderBy(x => x.SortOrder)
+                .ToListAsync();
+
+            if (!forumGroups.Any())
+            {
+                throw new ApplicationException("No Forum Groups found");
+            }
+
+            var currentForumGroup = forumGroupId == null
+                ? forumGroups.FirstOrDefault()
+                : forumGroups.FirstOrDefault(x => x.Id == forumGroupId);
+
+            if (currentForumGroup == null)
+            {
+                throw new ApplicationException("Forum Group not found");
+            }
 
             var forums = await _dbContext.Forums
                 .Include(x => x.PermissionSet)
-                .Where(x => x.ForumGroupId == forumGroupId && x.Status != StatusType.Deleted)
+                .Where(x => x.ForumGroupId == currentForumGroup.Id && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
+
+            var result = new IndexModel();
+
+            foreach (var forumGroup in forumGroups)
+            {
+                result.ForumGroups.Add(new IndexModel.ForumGroupModel
+                {
+                    Id = forumGroup.Id,
+                    Name = forumGroup.Name
+                });
+            }
 
             foreach (var forum in forums)
             {

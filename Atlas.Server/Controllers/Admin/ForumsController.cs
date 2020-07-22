@@ -12,7 +12,7 @@ using Atlas.Shared.Forums;
 namespace Atlas.Server.Controllers.Admin
 {
     [Authorize(Policy = "Admin")]
-    [Route("api/admin/forum-groups")]
+    [Route("api/admin/forums")]
     [ApiController]
     public class ForumsController : ControllerBase
     {
@@ -32,12 +32,12 @@ namespace Atlas.Server.Controllers.Admin
             _modelBuilder = modelBuilder;
         }
 
-        [HttpGet("index/{forumGroupId}")]
-        public async Task<IndexModel> Index(Guid forumGroupId)
+        [HttpGet("list")]
+        public async Task<IndexModel> List()
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildIndexModelAsync(forumGroupId);
+            return await _modelBuilder.BuildIndexModelAsync(site.Id);
         }
 
         [HttpGet("create/{forumGroupId}")]
