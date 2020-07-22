@@ -24,15 +24,26 @@ namespace Atlas.Domain
 
         }
 
+        public ForumGroup(Guid id, Guid siteId, string name, int sortOrder, Guid? permissionSetId = null)
+        {
+            New(id, siteId, name, sortOrder, permissionSetId);
+        }
+
         public ForumGroup(Guid siteId, string name, int sortOrder, Guid? permissionSetId = null)
         {
-            Id = Guid.NewGuid();
+            New(Guid.NewGuid(), siteId, name, sortOrder, permissionSetId);
+        }
+
+        private void New(Guid id, Guid siteId, string name, int sortOrder, Guid? permissionSetId = null)
+        {
+            Id = id;
             SiteId = siteId;
             Name = name;
             SortOrder = sortOrder;
             PermissionSetId = permissionSetId;
             Status = StatusType.Published;
         }
+
         public void UpdateDetails(string name, Guid? permissionSetId = null)
         {
             Name = name;

@@ -6,7 +6,7 @@ using System;
 namespace Atlas.Tests.Domain.ForumGroups
 {
     [TestFixture]
-    public class ForumGroupTests : TextFixtureBase
+    public class ForumGroupTests : TestFixtureBase
     {
         [Test]
         public void New()

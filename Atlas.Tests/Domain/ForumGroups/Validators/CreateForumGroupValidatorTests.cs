@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Atlas.Tests.Domain.ForumGroups.Validators
 {
     [TestFixture]
-    public class CreateForumGroupValidatorTests : TextFixtureBase
+    public class CreateForumGroupValidatorTests : TestFixtureBase
     {
         [Test]
         public void Should_have_validation_error_when_name_is_empty()

@@ -24,13 +24,13 @@ namespace Atlas.Data.Rules
             return !any;
         }
 
-        public async Task<bool> IsNameUniqueAsync(Guid siteId, Guid id, string name)
+        public async Task<bool> IsNameUniqueAsync(Guid siteId, string name, Guid id)
         {
             var any = await _dbContext.ForumGroups
                 .AnyAsync(x => x.SiteId == siteId && 
-                               x.Id != id && 
                                x.Name == name && 
-                               x.Status != StatusType.Deleted);
+                               x.Status != StatusType.Deleted &&
+                               x.Id != id);
             return !any;
         }
     }

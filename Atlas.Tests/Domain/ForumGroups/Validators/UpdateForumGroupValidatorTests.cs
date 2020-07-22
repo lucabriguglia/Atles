@@ -10,7 +10,7 @@ using NUnit.Framework;
 namespace Atlas.Tests.Domain.ForumGroups.Validators
 {
     [TestFixture]
-    public class UpdateForumGroupValidatorTests : TextFixtureBase
+    public class UpdateForumGroupValidatorTests : TestFixtureBase
     {
         [Test]
         public void Should_have_validation_error_when_name_is_empty()
@@ -44,7 +44,7 @@ namespace Atlas.Tests.Domain.ForumGroups.Validators
             var command = Fixture.Create<UpdateForumGroup>();
 
             var forumGroupRules = new Mock<IForumGroupRules>();
-            forumGroupRules.Setup(x => x.IsNameUniqueAsync(command.SiteId, command.Id, command.Name)).ReturnsAsync(false);
+            forumGroupRules.Setup(x => x.IsNameUniqueAsync(command.SiteId, command.Name, command.Id)).ReturnsAsync(false);
 
             var permissionSetRules = new Mock<IPermissionSetRules>();
 

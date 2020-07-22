@@ -4,7 +4,7 @@ using NUnit.Framework;
 namespace Atlas.Tests
 {
     [TestFixture]
-    public abstract class TextFixtureBase
+    public abstract class TestFixtureBase
     {
         protected Fixture Fixture { get; private set; }
 

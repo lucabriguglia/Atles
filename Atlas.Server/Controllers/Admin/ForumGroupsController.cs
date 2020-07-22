@@ -166,11 +166,11 @@ namespace Atlas.Server.Controllers.Admin
             return Ok(isNameUnique);
         }
 
-        [HttpGet("is-name-unique/{id}/{name}")]
-        public async Task<IActionResult> IsNameUnique(Guid id, string name)
+        [HttpGet("is-name-unique/{name}/{id}")]
+        public async Task<IActionResult> IsNameUnique(string name, Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _forumGroupRules.IsNameUniqueAsync(site.Id, id, name);
+            var isNameUnique = await _forumGroupRules.IsNameUniqueAsync(site.Id, name, id);
             return Ok(isNameUnique);
         }
     }
