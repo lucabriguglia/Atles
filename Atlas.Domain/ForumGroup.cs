@@ -52,6 +52,11 @@ namespace Atlas.Domain
 
         public void MoveUp()
         {
+            if (SortOrder == 1)
+            {
+                throw new ApplicationException($"Forum Group \"{Name}\" can't be moved up.");
+            }
+
             SortOrder -= 1;
         }
 
@@ -78,13 +83,21 @@ namespace Atlas.Domain
         public void DecreaseTopicsCount()
         {
             TopicsCount -= 1;
-            if (TopicsCount < 0) TopicsCount = 0;
+
+            if (TopicsCount < 0)
+            {
+                TopicsCount = 0;
+            }
         }
 
         public void DecreaseRepliesCount()
         {
             RepliesCount -= 1;
-            if (RepliesCount < 0) RepliesCount = 0;
+
+            if (RepliesCount < 0)
+            {
+                RepliesCount = 0;
+            }
         }
 
         public void Delete()

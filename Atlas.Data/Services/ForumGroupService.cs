@@ -32,7 +32,7 @@ namespace Atlas.Data.Services
 
         public async Task CreateAsync(CreateForumGroup command)
         {
-            await _createValidator.ValidateAndThrowAsync(command);
+            await _createValidator.ValidateCommandAsync(command);
 
             var forumGroupsCount = await _dbContext.ForumGroups
                 .Where(x => x.SiteId == command.SiteId && x.Status != StatusType.Deleted)
@@ -40,13 +40,13 @@ namespace Atlas.Data.Services
 
             var sortOrder = forumGroupsCount + 1;
 
-            var forumGroup = new ForumGroup(command.SiteId,
+            var forumGroup = new ForumGroup(command.Id,
+                command.SiteId,
                 command.Name,
                 sortOrder,
                 command.PermissionSetId);
 
             _dbContext.ForumGroups.Add(forumGroup);
-
             _dbContext.Events.Add(new Event(new ForumGroupCreated
             {
                 SiteId = forumGroup.SiteId,
@@ -65,7 +65,7 @@ namespace Atlas.Data.Services
 
         public async Task UpdateAsync(UpdateForumGroup command)
         {
-            await _updateValidator.ValidateAndThrowAsync(command);
+            await _updateValidator.ValidateCommandAsync(command);
 
             var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.SiteId == command.SiteId && x.Id == command.Id && x.Status != StatusType.Deleted);
 
@@ -75,7 +75,6 @@ namespace Atlas.Data.Services
             }
 
             forumGroup.UpdateDetails(command.Name, command.PermissionSetId);
-
             _dbContext.Events.Add(new Event(new ForumGroupUpdated
             {
                 SiteId = forumGroup.SiteId,
@@ -170,7 +169,6 @@ namespace Atlas.Data.Services
             }
 
             forumGroup.Delete();
-
             _dbContext.Events.Add(new Event(new ForumGroupDeleted
             {
                 SiteId = forumGroup.SiteId,
@@ -189,7 +187,6 @@ namespace Atlas.Data.Services
             for (int i = 0; i < otherForumGroups.Count; i++)
             {
                 otherForumGroups[i].Reorder(i + 1);
-
                 _dbContext.Events.Add(new Event(new ForumGroupReordered
                 {
                     SiteId = command.SiteId,
@@ -203,7 +200,6 @@ namespace Atlas.Data.Services
             foreach (var forum in forumGroup.Forums)
             {
                 forum.Delete();
-
                 _dbContext.Events.Add(new Event(new ForumDeleted
                 {
                     SiteId = forumGroup.SiteId,

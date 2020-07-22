@@ -2,6 +2,7 @@
 using AutoFixture;
 using NUnit.Framework;
 using System;
+using System.Security.Cryptography.X509Certificates;
 
 namespace Atlas.Tests.Domain.ForumGroups
 {
@@ -25,7 +26,25 @@ namespace Atlas.Tests.Domain.ForumGroups
         }
 
         [Test]
-        public void UpdateDetails()
+        public void New_passing_id()
+        {
+            var id = Guid.NewGuid();
+            var siteId = Guid.NewGuid();
+            var name = "New Forum Group";
+            var sortOrder = 2;
+            var permissionSetId = Guid.NewGuid();
+
+            var sut = new ForumGroup(id, siteId, name, sortOrder, permissionSetId);
+
+            Assert.AreEqual(id, sut.Id, nameof(sut.Id));
+            Assert.AreEqual(siteId, sut.SiteId, nameof(sut.SiteId));
+            Assert.AreEqual(name, sut.Name, nameof(sut.Name));
+            Assert.AreEqual(sortOrder, sut.SortOrder, nameof(sut.SortOrder));
+            Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
+        }
+
+        [Test]
+        public void Update_details()
         {
             var sut = Fixture.Create<ForumGroup>();
 
@@ -39,7 +58,7 @@ namespace Atlas.Tests.Domain.ForumGroups
         }
 
         [Test]
-        public void MoveUp()
+        public void Move_up()
         {
             var sut = Fixture.Create<ForumGroup>();
 
@@ -51,7 +70,15 @@ namespace Atlas.Tests.Domain.ForumGroups
         }
 
         [Test]
-        public void MoveDown()
+        public void Move_up_throws_exception_when_sort_order_is_one()
+        {
+            var sut = new ForumGroup(Guid.NewGuid(), "My Forum Group", 1);
+
+            Assert.Throws<ApplicationException>(() => sut.MoveUp());
+        }
+
+        [Test]
+        public void Move_down()
         {
             var sut = Fixture.Create<ForumGroup>();
 
@@ -75,7 +102,7 @@ namespace Atlas.Tests.Domain.ForumGroups
         }
 
         [Test]
-        public void IncreaseTopicsCount()
+        public void Increase_topics_count()
         {
             var sut = Fixture.Create<ForumGroup>();
 
@@ -87,7 +114,7 @@ namespace Atlas.Tests.Domain.ForumGroups
         }
 
         [Test]
-        public void DecreaseTopicsCount()
+        public void Decrease_topics_count()
         {
             var sut = Fixture.Create<ForumGroup>();
             sut.IncreaseTopicsCount();
@@ -100,7 +127,7 @@ namespace Atlas.Tests.Domain.ForumGroups
         }
 
         [Test]
-        public void DecreaseTopicsCount_LessThanZero()
+        public void Decrease_topics_count_less_than_zero()
         {
             var sut = Fixture.Create<ForumGroup>();
 
@@ -110,7 +137,7 @@ namespace Atlas.Tests.Domain.ForumGroups
         }
 
         [Test]
-        public void IncreaseRepliesCount()
+        public void Increase_replies_count()
         {
             var sut = Fixture.Create<ForumGroup>();
 
@@ -122,7 +149,7 @@ namespace Atlas.Tests.Domain.ForumGroups
         }
 
         [Test]
-        public void DecreaseRepliesCount()
+        public void Decrease_replies_count()
         {
             var sut = Fixture.Create<ForumGroup>();
             sut.IncreaseRepliesCount();
@@ -135,7 +162,7 @@ namespace Atlas.Tests.Domain.ForumGroups
         }
 
         [Test]
-        public void DecreaseRepliesCount_LessThanZero()
+        public void Decrease_replies_count_less_than_zero()
         {
             var sut = Fixture.Create<ForumGroup>();
 
