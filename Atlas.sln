@@ -21,6 +21,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Data", "Atlas.Data\At
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Domain", "Atlas.Domain\Atlas.Domain.csproj", "{C51EDBBF-F283-41B1-95F9-068A7F11B186}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlas.Tests", "Atlas.Tests\Atlas.Tests.csproj", "{95E98347-3BBE-4DA6-B4E1-3BED1ECD02DE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -51,6 +53,10 @@ Global
 		{C51EDBBF-F283-41B1-95F9-068A7F11B186}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C51EDBBF-F283-41B1-95F9-068A7F11B186}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C51EDBBF-F283-41B1-95F9-068A7F11B186}.Release|Any CPU.Build.0 = Release|Any CPU
+		{95E98347-3BBE-4DA6-B4E1-3BED1ECD02DE}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{95E98347-3BBE-4DA6-B4E1-3BED1ECD02DE}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{95E98347-3BBE-4DA6-B4E1-3BED1ECD02DE}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{95E98347-3BBE-4DA6-B4E1-3BED1ECD02DE}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
