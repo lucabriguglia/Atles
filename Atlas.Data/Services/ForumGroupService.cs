@@ -157,7 +157,12 @@ namespace Atlas.Data.Services
 
         public async Task DeleteAsync(DeleteForumGroup command)
         {
-            var forumGroup = await _dbContext.ForumGroups.FirstOrDefaultAsync(x => x.SiteId == command.SiteId && x.Id == command.Id);
+            var forumGroup = await _dbContext.ForumGroups
+                .Include(x => x.Forums)
+                .FirstOrDefaultAsync(x => 
+                    x.SiteId == command.SiteId && 
+                    x.Id == command.Id &&
+                    x.Status != StatusType.Deleted);
 
             if (forumGroup == null)
             {
@@ -195,11 +200,7 @@ namespace Atlas.Data.Services
                 }));
             }
 
-            var forums = await _dbContext.Forums
-                .Where(x => x.ForumGroupId == forumGroup.Id)
-                .ToListAsync();
-
-            foreach (var forum in forums)
+            foreach (var forum in forumGroup.Forums)
             {
                 forum.Delete();
 
