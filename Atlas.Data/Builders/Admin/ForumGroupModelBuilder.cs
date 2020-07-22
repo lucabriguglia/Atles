@@ -16,6 +16,7 @@ namespace Atlas.Data.Builders.Admin
         {
             _dbContext = dbContext;
         }
+
         public async Task<IndexModel> BuildIndexModelAsync(Guid siteId)
         {
             var result = new IndexModel();
