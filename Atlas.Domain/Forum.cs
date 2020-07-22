@@ -24,9 +24,19 @@ namespace Atlas.Domain
             
         }
 
+        public Forum(Guid id, Guid forumGroupId, string name, int sortOrder, Guid? permissionSetId = null)
+        {
+            New(id, forumGroupId, name, sortOrder, permissionSetId);
+        }
+
         public Forum(Guid forumGroupId, string name, int sortOrder, Guid? permissionSetId = null)
         {
-            Id = Guid.NewGuid();
+            New(Guid.NewGuid(), forumGroupId, name, sortOrder, permissionSetId);
+        }
+
+        private void New(Guid id, Guid forumGroupId, string name, int sortOrder, Guid? permissionSetId = null)
+        {
+            Id = id;
             ForumGroupId = forumGroupId;
             Name = name;
             SortOrder = sortOrder;
@@ -41,7 +51,22 @@ namespace Atlas.Domain
             PermissionSetId = permissionSetId;
         }
 
-        public void UpdateOrder(int sortOrder)
+        public void MoveUp()
+        {
+            if (SortOrder == 1)
+            {
+                throw new ApplicationException($"Forum \"{Name}\" can't be moved up.");
+            }
+
+            SortOrder -= 1;
+        }
+
+        public void MoveDown()
+        {
+            SortOrder += 1;
+        }
+
+        public void Reorder(int sortOrder)
         {
             SortOrder = sortOrder;
         }
@@ -59,13 +84,21 @@ namespace Atlas.Domain
         public void DecreaseTopicsCount()
         {
             TopicsCount -= 1;
-            if (TopicsCount < 0) TopicsCount = 0;
+
+            if (TopicsCount < 0)
+            {
+                TopicsCount = 0;
+            }
         }
 
         public void DecreaseRepliesCount()
         {
             RepliesCount -= 1;
-            if (RepliesCount < 0) RepliesCount = 0;
+
+            if (RepliesCount < 0)
+            {
+                RepliesCount = 0;
+            }
         }
 
         public void Delete()
