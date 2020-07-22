@@ -49,7 +49,7 @@ namespace Atlas.Data.Services
             _dbContext.ForumGroups.Add(forumGroup);
             _dbContext.Events.Add(new Event(new ForumGroupCreated
             {
-                SiteId = forumGroup.SiteId,
+                SiteId = command.SiteId,
                 MemberId = command.MemberId,
                 TargetId = forumGroup.Id,
                 TargetType = typeof(ForumGroup).Name,
@@ -77,7 +77,7 @@ namespace Atlas.Data.Services
             forumGroup.UpdateDetails(command.Name, command.PermissionSetId);
             _dbContext.Events.Add(new Event(new ForumGroupUpdated
             {
-                SiteId = forumGroup.SiteId,
+                SiteId = command.SiteId,
                 MemberId = command.MemberId,
                 TargetId = forumGroup.Id,
                 TargetType = typeof(ForumGroup).Name,
@@ -171,7 +171,7 @@ namespace Atlas.Data.Services
             forumGroup.Delete();
             _dbContext.Events.Add(new Event(new ForumGroupDeleted
             {
-                SiteId = forumGroup.SiteId,
+                SiteId = command.SiteId,
                 MemberId = command.MemberId,
                 TargetId = forumGroup.Id,
                 TargetType = typeof(ForumGroup).Name
@@ -202,7 +202,7 @@ namespace Atlas.Data.Services
                 forum.Delete();
                 _dbContext.Events.Add(new Event(new ForumDeleted
                 {
-                    SiteId = forumGroup.SiteId,
+                    SiteId = command.SiteId,
                     MemberId = command.MemberId,
                     TargetId = forum.Id,
                     TargetType = typeof(Forum).Name

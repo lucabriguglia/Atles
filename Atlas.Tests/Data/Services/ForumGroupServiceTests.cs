@@ -196,7 +196,7 @@ namespace Atlas.Tests.Data.Services
         }
 
         [Test]
-        public async Task Should_delete_forum_group_and_reorder_other_froum_groups_and_add_event()
+        public async Task Should_delete_forum_group_and_reorder_other_forum_groups_and_add_event()
         {
             var options = Shared.CreateContextOptions();
 
@@ -241,6 +241,7 @@ namespace Atlas.Tests.Data.Services
 
                 await sut.DeleteAsync(command);
 
+                var forumGroup1Reordered = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == forumGroup1.Id);
                 var forumGroup2Deleted = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var forumGroup3Reordered = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == forumGroup3.Id);
                 var forumGroup4Reordered = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == forumGroup4.Id);
@@ -256,6 +257,7 @@ namespace Atlas.Tests.Data.Services
                 var forum1Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum1.Id);
                 var forum2Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum2.Id);
 
+                Assert.AreEqual(forumGroup1.SortOrder, forumGroup1Reordered.SortOrder);
                 Assert.AreEqual(StatusType.Deleted, forumGroup2Deleted.Status);
                 Assert.AreEqual(forumGroup2.SortOrder, forumGroup3Reordered.SortOrder);
                 Assert.AreEqual(forumGroup3.SortOrder, forumGroup4Reordered.SortOrder);

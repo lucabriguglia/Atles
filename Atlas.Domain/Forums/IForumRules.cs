@@ -5,7 +5,7 @@ namespace Atlas.Domain.Forums
 {
     public interface IForumRules
     {
-        Task<bool> IsNameUniqueAsync(Guid siteId, string name);
-        Task<bool> IsNameUniqueAsync(Guid siteId, string name, Guid id);
+        Task<bool> IsNameUniqueAsync(Guid forumGroupId, string name);
+        Task<bool> IsNameUniqueAsync(Guid forumGroupId, string name, Guid id);
     }
 }
