@@ -143,5 +143,15 @@ namespace Atlas.Tests.Domain.ForumGroups
 
             Assert.AreEqual(0, sut.RepliesCount, nameof(sut.RepliesCount));
         }
+
+        [Test]
+        public void Delete()
+        {
+            var sut = Fixture.Create<ForumGroup>();
+
+            sut.Delete();
+
+            Assert.AreEqual(StatusType.Deleted, sut.Status, nameof(sut.Status));
+        }
     }
 }
