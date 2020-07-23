@@ -48,6 +48,14 @@ namespace Atlas.Server.Controllers.Admin
             return await _modelBuilder.BuildIndexModelAsync(site.Id, forumGroupId);
         }
 
+        [HttpGet("create")]
+        public async Task<FormModel> Create()
+        {
+            var site = await _contextService.CurrentSiteAsync();
+
+            return await _modelBuilder.BuildCreateFormModelAsync(site.Id);
+        }
+
         [HttpGet("create/{forumGroupId}")]
         public async Task<FormModel> Create(Guid forumGroupId)
         {

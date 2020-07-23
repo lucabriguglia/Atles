@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
@@ -53,6 +54,7 @@ namespace Atlas.Data.Services
                 TargetId = forum.Id,
                 TargetType = typeof(Forum).Name,
                 Name = forum.Name,
+                ForumGorupId = forum.ForumGroupId,
                 PermissionSetId = forum.PermissionSetId,
                 SortOrder = forum.SortOrder
             }));
@@ -68,13 +70,25 @@ namespace Atlas.Data.Services
 
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x => 
-                    x.ForumGroupId == command.ForumGroupId && 
                     x.Id == command.Id && 
                     x.Status != StatusType.Deleted);
 
             if (forum == null)
             {
                 throw new DataException($"Forum with Id {command.Id} not found.");
+            }
+
+            var originalForumGroupId = forum.ForumGroupId;
+
+            if (originalForumGroupId != command.ForumGroupId)
+            {
+                await ReorderForumsInForumGroup(originalForumGroupId, command.Id, command.SiteId, command.MemberId);
+
+                var newGroupForumsCount = await _dbContext.Forums
+                    .Where(x => x.ForumGroupId == command.ForumGroupId && x.Status != StatusType.Deleted)
+                    .CountAsync();
+
+                forum.Reorder(newGroupForumsCount + 1);
             }
 
             forum.UpdateDetails(command.ForumGroupId, command.Name, command.PermissionSetId);
@@ -98,7 +112,6 @@ namespace Atlas.Data.Services
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
-                    x.ForumGroupId == command.ForumGroupId &&
                     x.Id == command.Id && 
                     x.Status != StatusType.Deleted);
 
@@ -131,7 +144,7 @@ namespace Atlas.Data.Services
 
             var adjacentForum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x => 
-                    x.ForumGroupId == command.ForumGroupId && 
+                    x.ForumGroupId == forum.ForumGroupId && 
                     x.SortOrder == sortOrderToReplace && 
                     x.Status != StatusType.Deleted);
 
@@ -155,14 +168,13 @@ namespace Atlas.Data.Services
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.Forums(command.ForumGroupId));
+            _cacheManager.Remove(CacheKeys.Forums(forum.ForumGroupId));
         }
 
         public async Task DeleteAsync(DeleteForum command)
         {
             var forum = await _dbContext.Forums
-                .FirstOrDefaultAsync(x => 
-                    x.ForumGroupId == command.ForumGroupId && 
+                .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.Status != StatusType.Deleted);
 
@@ -180,10 +192,39 @@ namespace Atlas.Data.Services
                 TargetType = typeof(Forum).Name
             }));
 
+            await ReorderForumsInForumGroup(forum.ForumGroupId, command.Id, command.SiteId, command.MemberId);
+
+            //var otherForums = await _dbContext.Forums
+            //    .Where(x =>
+            //        x.ForumGroupId == forum.ForumGroupId &&
+            //        x.Id != command.Id &&
+            //        x.Status != StatusType.Deleted)
+            //    .ToListAsync();
+
+            //for (int i = 0; i < otherForums.Count; i++)
+            //{
+            //    otherForums[i].Reorder(i + 1);
+            //    _dbContext.Events.Add(new Event(new ForumReordered
+            //    {
+            //        SiteId = command.SiteId,
+            //        MemberId = command.MemberId,
+            //        TargetId = otherForums[i].Id,
+            //        TargetType = typeof(Forum).Name,
+            //        SortOrder = otherForums[i].SortOrder
+            //    }));
+            //}
+
+            await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.Forums(forum.ForumGroupId));
+        }
+
+        private async Task ReorderForumsInForumGroup(Guid forumGroupId, Guid forumIdToExclude, Guid siteId, Guid memberId)
+        {
             var otherForums = await _dbContext.Forums
                 .Where(x =>
-                    x.ForumGroupId == command.ForumGroupId &&
-                    x.Id != command.Id &&
+                    x.ForumGroupId == forumGroupId &&
+                    x.Id != forumIdToExclude &&
                     x.Status != StatusType.Deleted)
                 .ToListAsync();
 
@@ -192,17 +233,13 @@ namespace Atlas.Data.Services
                 otherForums[i].Reorder(i + 1);
                 _dbContext.Events.Add(new Event(new ForumReordered
                 {
-                    SiteId = command.SiteId,
-                    MemberId = command.MemberId,
+                    SiteId = siteId,
+                    MemberId = memberId,
                     TargetId = otherForums[i].Id,
                     TargetType = typeof(Forum).Name,
                     SortOrder = otherForums[i].SortOrder
                 }));
             }
-
-            await _dbContext.SaveChangesAsync();
-
-            _cacheManager.Remove(CacheKeys.Forums(command.ForumGroupId));
         }
     }
 }

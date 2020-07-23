@@ -17,7 +17,7 @@ namespace Atlas.Data.Builders.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<IndexModel> BuildIndexModelAsync(Guid siteId, Guid? forumGroupId)
+        public async Task<IndexModel> BuildIndexModelAsync(Guid siteId, Guid? forumGroupId = null)
         {
             var forumGroups = await _dbContext.ForumGroups
                 .Include(x => x.PermissionSet)
@@ -78,14 +78,31 @@ namespace Atlas.Data.Builders.Admin
             return result;
         }
 
-        public async Task<FormModel> BuildCreateFormModelAsync(Guid siteId, Guid forumGroupId)
+        public async Task<FormModel> BuildCreateFormModelAsync(Guid siteId, Guid? forumGroupId = null)
         {
-            var result = new FormModel
+            var result = new FormModel();
+
+            var forumGroups = await _dbContext.ForumGroups
+                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .OrderBy(x => x.SortOrder)
+                .ToListAsync();
+
+            foreach (var forumGroup in forumGroups)
             {
-                Forum = new FormModel.ForumModel
+                result.ForumGroups.Add(new FormModel.ForumGroupModel
                 {
-                    ForumGroupId = forumGroupId
-                }
+                    Id = forumGroup.Id,
+                    Name = forumGroup.Name
+                });
+            }
+
+            var selectedForumGroupId = forumGroupId == null 
+                ? forumGroups.FirstOrDefault().Id 
+                : forumGroupId.Value;
+
+            result.Forum = new FormModel.ForumModel
+            {
+                ForumGroupId = selectedForumGroupId
             };
 
             var permissionSets = await _dbContext.PermissionSets
@@ -126,6 +143,20 @@ namespace Atlas.Data.Builders.Admin
                     PermissionSetId = forum.PermissionSetId ?? Guid.Empty
                 }
             };
+
+            var forumGroups = await _dbContext.ForumGroups
+                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .OrderBy(x => x.SortOrder)
+                .ToListAsync();
+
+            foreach (var forumGroup in forumGroups)
+            {
+                result.ForumGroups.Add(new FormModel.ForumGroupModel
+                {
+                    Id = forumGroup.Id,
+                    Name = forumGroup.Name
+                });
+            }
 
             var permissionSets = await _dbContext.PermissionSets
                 .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)

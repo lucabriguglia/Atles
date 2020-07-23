@@ -82,7 +82,7 @@ else
                     <td>@item.TotalReplies</td>
                     <td>@item.PermissionSetName</td>
                     <td>
-                        <a href="/admin/forum-groups/edit/@item.Id" class="btn btn-secondary" role="button">Edit</a>
+                        <a href="/admin/forums/edit/@item.Id" class="btn btn-secondary" role="button">Edit</a>
                         <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">Delete</button>
                     </td>
                 </tr>
@@ -113,7 +113,8 @@ else
 
     private async Task ForumGroupChanged(ChangeEventArgs args)
     {
-        Model = await Http.GetFromJsonAsync<IndexModel>($"api/admin/forums/index-model/{args.Value}");
+        ForumGroupId = new Guid(args.Value.ToString());
+        Model = await Http.GetFromJsonAsync<IndexModel>($"api/admin/forums/index-model/{ForumGroupId}");
         StateHasChanged();
     }
 
