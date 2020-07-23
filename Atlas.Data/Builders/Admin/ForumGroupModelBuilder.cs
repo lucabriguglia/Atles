@@ -29,13 +29,18 @@ namespace Atlas.Data.Builders.Admin
 
             foreach (var forumGroup in forumGroups)
             {
+                var permissionSetName = !forumGroup.HasPermissionSet()
+                    ? "Default (from Site)"
+                    : forumGroup.PermissionSetName();
+
                 result.ForumGroups.Add(new IndexModel.ForumGroupModel
                 {
                     Id = forumGroup.Id,
                     Name = forumGroup.Name,
                     SortOrder = forumGroup.SortOrder,
                     TotalTopics = forumGroup.TopicsCount,
-                    TotalReplies = forumGroup.RepliesCount
+                    TotalReplies = forumGroup.RepliesCount,
+                    PermissionSetName = permissionSetName
                 });
             }
 

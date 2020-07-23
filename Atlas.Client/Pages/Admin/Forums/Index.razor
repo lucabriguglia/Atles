@@ -21,42 +21,33 @@
     </div>
 </div>
 
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-sm-6 input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="forumGroupId">Forum Group</label>
+            </div>
+            <select class="custom-select" id="forumGroupId" @onchange="ForumGroupChanged">
+                @foreach (var option in Model.ForumGroups)
+                {
+                    <option value=@option.Id selected=@(ForumGroupId == option.Id)>@option.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+}
+
 @if (Model == null)
 {
     <Loading />
 }
 else if (Model.Forums.Count == 0)
 {
-    <NoRecords />
+    <NoRecords Text="No forums found for the selected forum group." />
 }
 else
 {
-    <div class="form-group row mb-4">
-        <label class="col-sm-2 col-form-label">Select Forum Group:</label>
-        <div class="col-sm-6">
-            <select id="forumGroupId" @bind="ForumGroupId" @onselectionchange="ForumGroupChanged" class="form-control">
-                @foreach (var item in Model.ForumGroups)
-                {
-                    <option value="@item.Id">@item.Name</option>
-                }
-            </select>
-        </div>
-    </div>
-
-    @*<div class="row">
-        <div class="col-md-4">
-            <div class="form-group">
-                <label for="forumGroupId" class="control-label">Forum Group:</label>
-                <select id="forumGroupId" @bind="ForumGroupId" class="form-control">
-                    @foreach (var item in Model.ForumGroups)
-                    {
-                        <option value="@item.Id">@item.Name</option>
-                    }
-                </select>
-            </div>
-        </div>
-    </div>*@
-
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
@@ -120,9 +111,9 @@ else
         Model = await Http.GetFromJsonAsync<IndexModel>(requestUri);
     }
 
-    private async Task ForumGroupChanged(EventArgs args)
+    private async Task ForumGroupChanged(ChangeEventArgs args)
     {
-        Model = await Http.GetFromJsonAsync<IndexModel>($"api/admin/forums/index-model/{ForumGroupId}");
+        Model = await Http.GetFromJsonAsync<IndexModel>($"api/admin/forums/index-model/{args.Value}");
         StateHasChanged();
     }
 

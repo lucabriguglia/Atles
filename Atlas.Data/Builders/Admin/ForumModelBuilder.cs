@@ -20,6 +20,7 @@ namespace Atlas.Data.Builders.Admin
         public async Task<IndexModel> BuildIndexModelAsync(Guid siteId, Guid? forumGroupId)
         {
             var forumGroups = await _dbContext.ForumGroups
+                .Include(x => x.PermissionSet)
                 .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
@@ -57,13 +58,20 @@ namespace Atlas.Data.Builders.Admin
 
             foreach (var forum in forums)
             {
+                var permissionSetName = !forum.HasPermissionSet()
+                    ? !currentForumGroup.HasPermissionSet()
+                        ? "Default (from Site)"
+                        : $"{currentForumGroup.PermissionSetName()} (from Group)"
+                    : forum.PermissionSetName();
+
                 result.Forums.Add(new IndexModel.ForumModel
                 {
                     Id = forum.Id,
                     Name = forum.Name,
                     SortOrder = forum.SortOrder,
                     TotalTopics = forum.TopicsCount,
-                    TotalReplies = forum.RepliesCount
+                    TotalReplies = forum.RepliesCount,
+                    PermissionSetName = permissionSetName
                 });
             }
 
