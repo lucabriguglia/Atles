@@ -1,0 +1,59 @@
+﻿@page "/forum/{id:guid}"
+@using Atlas.Shared.Site.Models
+@inject HttpClient Http
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Forum.Name</li>
+        </ol>
+    </nav>
+
+    <h3>@Model.Forum.Name</h3>
+
+    @*<div class="row">
+            @foreach (var forumGroup in Model.ForumGroups)
+            {
+                <div class="col-md-12">
+                    <h3 class="mb-2">@forumGroup.Name</h3>
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th scope="col" class="col-md-4">Forum</th>
+                                <th scope="col" class="col-md-2 text-center">Topics</th>
+                                <th scope="col" class="col-md-2 text-center">Replies</th>
+                                <th scope="col" class="col-md-4">&nbsp;</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var forum in forumGroup.Forums)
+                            {
+                                <tr>
+                                    <td><a href="/forum/@forum.Id">@forum.Name</a></td>
+                                    <td class="text-center">@forum.TotalTopics</td>
+                                    <td class="text-center">@forum.TotalReplies</td>
+                                    <td>&nbsp;</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            }
+        </div>*@
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+    private ForumPageModel Model { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Model = await Http.GetFromJsonAsync<ForumPageModel>($"api/index/forum/{Id}");
+    }
+}

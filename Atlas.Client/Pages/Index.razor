@@ -1,3 +1,55 @@
 ﻿@page "/"
+@using Atlas.Shared.Site.Models
+@inject HttpClient Http
 
-<h1>Atlas</h1>
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item active" aria-current="page">Home</li>
+    </ol>
+</nav>
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <div class="row">
+        @foreach (var forumGroup in Model.ForumGroups)
+        {
+            <div class="col-md-12">
+                <h3 class="mb-2">@forumGroup.Name</h3>
+                <table class="table table-bordered">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="col-md-4">Forum</th>
+                            <th scope="col" class="col-md-2 text-center">Topics</th>
+                            <th scope="col" class="col-md-2 text-center">Replies</th>
+                            <th scope="col" class="col-md-4">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var forum in forumGroup.Forums)
+                        {
+                            <tr>
+                                <td><a href="/forum/@forum.Id">@forum.Name</a></td>
+                                <td class="text-center">@forum.TotalTopics</td>
+                                <td class="text-center">@forum.TotalReplies</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+}
+
+@code {
+    private IndexPageModel Model { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await Http.GetFromJsonAsync<IndexPageModel>("api/index/index-model");
+    }
+}
