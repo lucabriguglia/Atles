@@ -117,8 +117,7 @@ namespace Atlas.Tests.Data.Services
                 var command = new MoveForum
                 {
                     Id = forum2.Id,
-                    Direction = Direction.Up,
-                    ForumGroupId = forumGroupId
+                    Direction = Direction.Up
                 };
 
                 var cacheManager = new Mock<ICacheManager>();
@@ -167,8 +166,7 @@ namespace Atlas.Tests.Data.Services
                 var command = new MoveForum
                 {
                     Id = forum1.Id,
-                    Direction = Direction.Down,
-                    ForumGroupId = forumGroupId
+                    Direction = Direction.Down
                 };
 
                 var cacheManager = new Mock<ICacheManager>();
@@ -221,7 +219,6 @@ namespace Atlas.Tests.Data.Services
             {
                 var command = Fixture.Build<DeleteForum>()
                         .With(x => x.Id, forum2.Id)
-                        .With(x => x.ForumGroupId, forumGroupId)
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();

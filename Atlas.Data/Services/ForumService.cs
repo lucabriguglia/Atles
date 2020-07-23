@@ -194,26 +194,6 @@ namespace Atlas.Data.Services
 
             await ReorderForumsInForumGroup(forum.ForumGroupId, command.Id, command.SiteId, command.MemberId);
 
-            //var otherForums = await _dbContext.Forums
-            //    .Where(x =>
-            //        x.ForumGroupId == forum.ForumGroupId &&
-            //        x.Id != command.Id &&
-            //        x.Status != StatusType.Deleted)
-            //    .ToListAsync();
-
-            //for (int i = 0; i < otherForums.Count; i++)
-            //{
-            //    otherForums[i].Reorder(i + 1);
-            //    _dbContext.Events.Add(new Event(new ForumReordered
-            //    {
-            //        SiteId = command.SiteId,
-            //        MemberId = command.MemberId,
-            //        TargetId = otherForums[i].Id,
-            //        TargetType = typeof(Forum).Name,
-            //        SortOrder = otherForums[i].SortOrder
-            //    }));
-            //}
-
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.Forums(forum.ForumGroupId));
