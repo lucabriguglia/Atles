@@ -1,6 +1,7 @@
-﻿@page "/forum/{id:guid}"
+﻿@*@layout PublicLayout*@
+@page "/forum/{id:guid}"
 @using Atlas.Shared.Site.Models
-@inject HttpClient Http
+@inject AnonymousService service;
 
 @if (Model == null)
 {
@@ -54,6 +55,6 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        Model = await Http.GetFromJsonAsync<ForumPageModel>($"api/index/forum/{Id}");
+        Model = await service.GetFromJsonAsync<ForumPageModel>($"api/index/forum/{Id}");
     }
 }

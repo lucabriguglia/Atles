@@ -29,6 +29,12 @@ namespace Atlas.Data.Builders.Admin
 
             foreach (var forumGroup in forumGroups)
             {
+                var forumsCount = await _dbContext.Forums
+                    .Where(x => 
+                        x.ForumGroupId == forumGroup.Id && 
+                        x.Status != StatusType.Deleted)
+                    .CountAsync();
+
                 var permissionSetName = !forumGroup.HasPermissionSet()
                     ? "Default (from Site)"
                     : forumGroup.PermissionSetName();
@@ -38,6 +44,7 @@ namespace Atlas.Data.Builders.Admin
                     Id = forumGroup.Id,
                     Name = forumGroup.Name,
                     SortOrder = forumGroup.SortOrder,
+                    TotalForums = forumsCount,
                     TotalTopics = forumGroup.TopicsCount,
                     TotalReplies = forumGroup.RepliesCount,
                     PermissionSetName = permissionSetName

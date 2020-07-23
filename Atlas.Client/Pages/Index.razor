@@ -1,6 +1,7 @@
-﻿@page "/"
+﻿@*@layout PublicLayout*@
+@page "/"
 @using Atlas.Shared.Site.Models
-@inject HttpClient Http
+@inject AnonymousService service;
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -50,6 +51,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await Http.GetFromJsonAsync<IndexPageModel>("api/index/index-model");
+        Model = await service.GetFromJsonAsync<IndexPageModel>("api/index/index-model");
     }
 }
