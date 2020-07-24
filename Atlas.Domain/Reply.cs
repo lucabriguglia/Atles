@@ -19,6 +19,25 @@ namespace Atlas.Domain
             
         }
 
+        public Reply(Guid forumId, Guid memberId, string content, StatusType status)
+        {
+            New(Guid.NewGuid(), forumId, memberId, content, status);
+        }
+
+        public Reply(Guid id, Guid forumId, Guid memberId, string content, StatusType status)
+        {
+            New(id, forumId, memberId, content, status);
+        }
+
+        private void New(Guid id, Guid topicId, Guid memberId, string content, StatusType status)
+        {
+            Id = id;
+            TopicId = topicId;
+            MemberId = memberId;
+            Content = content;
+            Status = status;
+        }
+
         public void Delete()
         {
             Status = StatusType.Deleted;

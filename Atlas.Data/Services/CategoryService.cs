@@ -104,8 +104,6 @@ namespace Atlas.Data.Services
                 throw new DataException($"Category with Id {command.Id} not found.");
             }
 
-            var currentSortOrder = category.SortOrder;
-
             if (command.Direction == Direction.Up)
             {
                 category.MoveUp();

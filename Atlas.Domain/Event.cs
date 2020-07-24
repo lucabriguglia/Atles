@@ -22,6 +22,21 @@ namespace Atlas.Domain
             
         }
 
+        public Event(Guid siteId, 
+            Guid? memberId, 
+            EventType eventType, 
+            Type targetType, 
+            Guid targetId, 
+            object data = null)
+        {
+            Type = eventType.ToString();
+            TargetType = targetType.Name;
+            TargetId = targetId;
+            MemberId = memberId;
+            SiteId = siteId;
+            Data = JsonConvert.SerializeObject(data);
+        }
+
         public Event(EventBase @event)
         {
             Type = @event.GetType().Name;
