@@ -69,7 +69,8 @@ namespace Atlas.Data.Services
             await _updateValidator.ValidateCommandAsync(command);
 
             var forum = await _dbContext.Forums
-                .FirstOrDefaultAsync(x => 
+                .FirstOrDefaultAsync(x =>
+                    x.Category.SiteId == command.SiteId &&
                     x.Id == command.Id && 
                     x.Status != StatusType.Deleted);
 
@@ -112,6 +113,7 @@ namespace Atlas.Data.Services
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
+                    x.Category.SiteId == command.SiteId &&
                     x.Id == command.Id && 
                     x.Status != StatusType.Deleted);
 
@@ -173,6 +175,7 @@ namespace Atlas.Data.Services
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
+                    x.Category.SiteId == command.SiteId &&
                     x.Id == command.Id &&
                     x.Status != StatusType.Deleted);
 

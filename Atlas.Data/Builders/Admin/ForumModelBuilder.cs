@@ -87,6 +87,11 @@ namespace Atlas.Data.Builders.Admin
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
+            if (!categories.Any())
+            {
+                throw new ApplicationException("No Categories found.");
+            }
+
             foreach (var category in categories)
             {
                 result.Categories.Add(new FormComponentModel.CategoryModel
@@ -96,9 +101,7 @@ namespace Atlas.Data.Builders.Admin
                 });
             }
 
-            var selectedCategoryId = categoryId == null 
-                ? categories.FirstOrDefault().Id 
-                : categoryId.Value;
+            var selectedCategoryId = categoryId ?? categories.FirstOrDefault().Id;
 
             result.Forum = new FormComponentModel.ForumModel
             {
@@ -106,7 +109,7 @@ namespace Atlas.Data.Builders.Admin
             };
 
             var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
                 .ToListAsync();
 
             foreach (var permissionSet in permissionSets)
@@ -125,6 +128,7 @@ namespace Atlas.Data.Builders.Admin
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
+                    x.Category.SiteId == siteId &&
                     x.Id == id &&
                     x.Status != StatusType.Deleted);
 
@@ -159,7 +163,7 @@ namespace Atlas.Data.Builders.Admin
             }
 
             var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
                 .ToListAsync();
 
             foreach (var permissionSet in permissionSets)

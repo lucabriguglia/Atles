@@ -80,7 +80,7 @@ namespace Atlas.Data.Builders.Admin
             }
 
             var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
                 .ToListAsync();
 
             foreach (var permissionSet in permissionSets)

@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
+using Atlas.Domain.Replies;
 using Atlas.Domain.Topics;
 using Atlas.Domain.Topics.Commands;
 using TopicService = Atlas.Data.Services.TopicService;

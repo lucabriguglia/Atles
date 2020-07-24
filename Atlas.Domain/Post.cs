@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using Atlas.Domain.Forums;
+using Atlas.Domain.Members;
 
 namespace Atlas.Domain
 {

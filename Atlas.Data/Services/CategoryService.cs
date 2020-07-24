@@ -68,7 +68,11 @@ namespace Atlas.Data.Services
         {
             await _updateValidator.ValidateCommandAsync(command);
 
-            var category = await _dbContext.Categories.FirstOrDefaultAsync(x => x.SiteId == command.SiteId && x.Id == command.Id && x.Status != StatusType.Deleted);
+            var category = await _dbContext.Categories
+                .FirstOrDefaultAsync(x => 
+                    x.SiteId == command.SiteId && 
+                    x.Id == command.Id && 
+                    x.Status != StatusType.Deleted);
 
             if (category == null)
             {

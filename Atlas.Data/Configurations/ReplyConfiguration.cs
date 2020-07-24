@@ -1,4 +1,5 @@
 ﻿using Atlas.Domain;
+using Atlas.Domain.Replies;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

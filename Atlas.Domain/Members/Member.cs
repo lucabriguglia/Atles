@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using Atlas.Domain.Replies;
 using Atlas.Domain.Topics;
 
-namespace Atlas.Domain
+namespace Atlas.Domain.Members
 {
     public class Member
     {

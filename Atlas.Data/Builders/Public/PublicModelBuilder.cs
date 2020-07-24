@@ -68,7 +68,7 @@ namespace Atlas.Data.Builders.Public
                 .FirstOrDefaultAsync(x =>
                     x.Id == forumId &&
                     x.Category.SiteId == siteId &&
-                    x.Status != StatusType.Deleted);
+                    x.Status == StatusType.Published);
 
             if (forum == null)
             {
@@ -112,7 +112,7 @@ namespace Atlas.Data.Builders.Public
                 .FirstOrDefaultAsync(x =>
                     x.Id == forumId &&
                     x.Category.SiteId == siteId &&
-                    x.Status != StatusType.Deleted);
+                    x.Status == StatusType.Published);
 
             if (forum == null)
             {
@@ -137,7 +137,7 @@ namespace Atlas.Data.Builders.Public
                 .FirstOrDefaultAsync(x =>
                     x.Id == forumId &&
                     x.Category.SiteId == siteId &&
-                    x.Status != StatusType.Deleted);
+                    x.Status == StatusType.Published);
 
             if (forum == null)
             {

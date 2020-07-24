@@ -15,19 +15,21 @@ namespace Atlas.Data.Rules
             _dbContext = dbContext;
         }
 
-        public async Task<bool> IsNameUniqueAsync(Guid categoryId, string name)
+        public async Task<bool> IsNameUniqueAsync(Guid siteId, Guid categoryId, string name)
         {
             var any = await _dbContext.Forums
-                .AnyAsync(x => x.CategoryId == categoryId && 
+                .AnyAsync(x => x.Category.SiteId== siteId &&
+                               x.CategoryId == categoryId && 
                                x.Name == name && 
                                x.Status != StatusType.Deleted);
             return !any;
         }
 
-        public async Task<bool> IsNameUniqueAsync(Guid categoryId, string name, Guid id)
+        public async Task<bool> IsNameUniqueAsync(Guid siteId, Guid categoryId, string name, Guid id)
         {
             var any = await _dbContext.Forums
-                .AnyAsync(x => x.CategoryId == categoryId && 
+                .AnyAsync(x => x.Category.SiteId == siteId &&
+                               x.CategoryId == categoryId &&
                                x.Name == name && 
                                x.Status != StatusType.Deleted &&
                                x.Id != id);
@@ -39,7 +41,7 @@ namespace Atlas.Data.Rules
             var any = await _dbContext.Forums
                 .AnyAsync(x => x.Category.SiteId == siteId &&
                                x.Id == id &&
-                               x.Status != StatusType.Deleted);
+                               x.Status == StatusType.Published);
             return any;
         }
     }

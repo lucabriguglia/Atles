@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Data.Caching;
 using Atlas.Domain;
+using Atlas.Domain.Members;
 using Atlas.Domain.Sites;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;

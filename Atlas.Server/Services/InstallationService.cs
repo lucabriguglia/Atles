@@ -7,6 +7,7 @@ using Atlas.Domain.Categories;
 using Atlas.Domain.Categories.Events;
 using Atlas.Domain.Forums;
 using Atlas.Domain.Forums.Events;
+using Atlas.Domain.Members;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.PermissionSets.Events;
 using Atlas.Domain.Sites;

@@ -1,5 +1,6 @@
 ﻿using Newtonsoft.Json;
 using System;
+using Atlas.Domain.Members;
 
 namespace Atlas.Domain
 {

@@ -2,7 +2,9 @@
 using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
+using Atlas.Domain.Members;
 using Atlas.Domain.PermissionSets;
+using Atlas.Domain.Replies;
 using Atlas.Domain.Sites;
 using Atlas.Domain.Topics;
 using Microsoft.EntityFrameworkCore;

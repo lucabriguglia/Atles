@@ -12,6 +12,7 @@ using NUnit.Framework;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
 
 namespace Atlas.Tests.Data.Services
@@ -56,10 +57,16 @@ namespace Atlas.Tests.Data.Services
         public async Task Should_update_forum_and_add_event()
         {
             var options = Shared.CreateContextOptions();
-            var forum = Fixture.Create<Forum>();
+
+            var categoryId = Guid.NewGuid();
+            var siteId = Guid.NewGuid();
+
+            var category = new Category(categoryId, siteId, "Category", 1);
+            var forum = new Forum(categoryId, "Forum 1", 1);
 
             using (var dbContext = new AtlasDbContext(options))
             {
+                dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
                 await dbContext.SaveChangesAsync();
             }
@@ -69,6 +76,7 @@ namespace Atlas.Tests.Data.Services
                 var command = Fixture.Build<UpdateForum>()
                         .With(x => x.Id, forum.Id)
                         .With(x => x.CategoryId, forum.CategoryId)
+                        .With(x => x.SiteId, siteId)
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
@@ -102,12 +110,16 @@ namespace Atlas.Tests.Data.Services
             var options = Shared.CreateContextOptions();
 
             var categoryId = Guid.NewGuid();
+            var siteId = Guid.NewGuid();
+
+            var category = new Category(categoryId, siteId, "Category", 1);
 
             var forum1 = new Forum(categoryId, "Forum 1", 1);
             var forum2 = new Forum(categoryId, "Forum 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
+                dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum1);
                 dbContext.Forums.Add(forum2);
                 await dbContext.SaveChangesAsync();
@@ -118,7 +130,8 @@ namespace Atlas.Tests.Data.Services
                 var command = new MoveForum
                 {
                     Id = forum2.Id,
-                    Direction = Direction.Up
+                    Direction = Direction.Up,
+                    SiteId = siteId
                 };
 
                 var cacheManager = new Mock<ICacheManager>();
@@ -151,12 +164,16 @@ namespace Atlas.Tests.Data.Services
             var options = Shared.CreateContextOptions();
 
             var categoryId = Guid.NewGuid();
+            var siteId = Guid.NewGuid();
+
+            var category = new Category(categoryId, siteId, "Category", 1);
 
             var forum1 = new Forum(categoryId, "Forum 1", 1);
             var forum2 = new Forum(categoryId, "Forum 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
+                dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum1);
                 dbContext.Forums.Add(forum2);
                 await dbContext.SaveChangesAsync();
@@ -167,7 +184,8 @@ namespace Atlas.Tests.Data.Services
                 var command = new MoveForum
                 {
                     Id = forum1.Id,
-                    Direction = Direction.Down
+                    Direction = Direction.Down,
+                    SiteId = siteId
                 };
 
                 var cacheManager = new Mock<ICacheManager>();
@@ -200,6 +218,9 @@ namespace Atlas.Tests.Data.Services
             var options = Shared.CreateContextOptions();
 
             var categoryId = Guid.NewGuid();
+            var siteId = Guid.NewGuid();
+
+            var category = new Category(categoryId, siteId, "Category", 1);
 
             var forum1 = new Forum(categoryId, "Forum 1", 1);
             var forum2 = new Forum(categoryId, "Forum 2", 2);
@@ -208,6 +229,7 @@ namespace Atlas.Tests.Data.Services
 
             using (var dbContext = new AtlasDbContext(options))
             {
+                dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum1);
                 dbContext.Forums.Add(forum2);
                 dbContext.Forums.Add(forum3);
@@ -219,6 +241,7 @@ namespace Atlas.Tests.Data.Services
             using (var dbContext = new AtlasDbContext(options))
             {
                 var command = Fixture.Build<DeleteForum>()
+                        .With(x => x.SiteId, siteId)
                         .With(x => x.Id, forum2.Id)
                     .Create();
 

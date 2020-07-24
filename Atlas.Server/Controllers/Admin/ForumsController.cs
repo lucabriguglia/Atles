@@ -180,7 +180,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(Guid categoryId, string name)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _forumRules.IsNameUniqueAsync(categoryId, name);
+            var isNameUnique = await _forumRules.IsNameUniqueAsync(site.Id, categoryId, name);
             return Ok(isNameUnique);
         }
 
@@ -188,7 +188,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(Guid categoryId, string name, Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _forumRules.IsNameUniqueAsync(categoryId, name, id);
+            var isNameUnique = await _forumRules.IsNameUniqueAsync(site.Id, categoryId, name, id);
             return Ok(isNameUnique);
         }
     }

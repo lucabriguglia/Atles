@@ -1,7 +1,8 @@
 ﻿using System;
+using Atlas.Domain.Members;
 using Atlas.Domain.Topics;
 
-namespace Atlas.Domain
+namespace Atlas.Domain.Replies
 {
     public class Reply
     {

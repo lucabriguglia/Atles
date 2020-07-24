@@ -44,7 +44,7 @@ namespace Atlas.Tests.Domain.Forums.Validators
             var command = Fixture.Create<CreateForum>();
 
             var forumRules = new Mock<IForumRules>();
-            forumRules.Setup(x => x.IsNameUniqueAsync(command.CategoryId, command.Name)).ReturnsAsync(false);
+            forumRules.Setup(x => x.IsNameUniqueAsync(command.SiteId, command.CategoryId, command.Name)).ReturnsAsync(false);
 
             var permissionSetRules = new Mock<IPermissionSetRules>();
 

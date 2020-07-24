@@ -20,7 +20,7 @@ namespace Atlas.Data.Rules
             var any = await _dbContext.PermissionSets
                 .AnyAsync(x => x.SiteId == siteId && 
                                x.Id == id && 
-                               x.Status != StatusType.Deleted);
+                               x.Status == StatusType.Published);
             return any;
         }
     }
