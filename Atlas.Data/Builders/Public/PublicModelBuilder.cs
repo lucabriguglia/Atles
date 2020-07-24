@@ -1,20 +1,20 @@
-﻿using Atlas.Data.Caching;
-using Atlas.Domain;
-using Atlas.Shared.Site;
-using Atlas.Shared.Site.Models;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Data.Caching;
+using Atlas.Domain;
+using Atlas.Shared.Public;
+using Atlas.Shared.Public.Models;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Builders.Site
+namespace Atlas.Data.Builders.Public
 {
-    public class SiteModelBuilder : ISiteModelBuilder
+    public class PublicModelBuilder : IPublicModelBuilder
     {
         private readonly AtlasDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
 
-        public SiteModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager)
+        public PublicModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;

@@ -1,10 +1,10 @@
-﻿using Atlas.Shared.Site.Models;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Atlas.Shared.Public.Models;
 
-namespace Atlas.Shared.Site
+namespace Atlas.Shared.Public
 {
-    public interface ISiteModelBuilder
+    public interface IPublicModelBuilder
     {
         Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId);
         Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId);

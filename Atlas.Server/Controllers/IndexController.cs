@@ -1,20 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Atlas.Server.Services;
+using Atlas.Shared.Public;
+using Atlas.Shared.Public.Models;
 using Microsoft.AspNetCore.Mvc;
-using Atlas.Shared.Site;
-using Atlas.Shared.Site.Models;
-using System;
 
-namespace Atlas.Server.Controllers.Admin
+namespace Atlas.Server.Controllers
 {
     [Route("api/index")]
     [ApiController]
     public class IndexController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly ISiteModelBuilder _modelBuilder;
+        private readonly IPublicModelBuilder _modelBuilder;
 
-        public IndexController(IContextService contextService, ISiteModelBuilder modelBuilder)
+        public IndexController(IContextService contextService, IPublicModelBuilder modelBuilder)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
