@@ -1,6 +1,5 @@
 ﻿using Atlas.Data;
 using Atlas.Data.Rules;
-using Atlas.Domain;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;

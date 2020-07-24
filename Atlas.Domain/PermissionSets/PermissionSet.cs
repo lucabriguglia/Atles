@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
 
-namespace Atlas.Domain
+namespace Atlas.Domain.PermissionSets
 {
     public sealed class PermissionSet
     {

@@ -6,8 +6,8 @@ namespace Atlas.Shared.Admin.Forums
 {
     public interface IForumModelBuilder
     {
-        Task<IndexModel> BuildIndexModelAsync(Guid siteId, Guid? categoryId = null);
-        Task<FormModel> BuildCreateFormModelAsync(Guid siteId, Guid? categoryId = null);
-        Task<FormModel> BuildEditFormModelAsync(Guid siteId, Guid id);
+        Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId, Guid? categoryId = null);
+        Task<FormComponentModel> BuildCreateFormModelAsync(Guid siteId, Guid? categoryId = null);
+        Task<FormComponentModel> BuildEditFormModelAsync(Guid siteId, Guid id);
     }
 }

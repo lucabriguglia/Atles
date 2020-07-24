@@ -27,11 +27,11 @@ else
 @code {
     private const string Title = "Edit Forum";
     [Parameter] public Guid Id { get; set; }
-    private FormModel Model { get; set; }
+    private FormComponentModel Model { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        Model = await Http.GetFromJsonAsync<FormModel>($"api/admin/forums/edit/{Id}");
+        Model = await Http.GetFromJsonAsync<FormComponentModel>($"api/admin/forums/edit/{Id}");
     }
 
     private async Task UpdateAsync()

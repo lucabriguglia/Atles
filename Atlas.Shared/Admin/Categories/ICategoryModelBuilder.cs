@@ -6,7 +6,7 @@ namespace Atlas.Shared.Admin.Categories
 {
     public interface ICategoryModelBuilder
     {
-        Task<IndexModel> BuildIndexModelAsync(Guid siteId);
-        Task<FormModel> BuildFormModelAsync(Guid siteId, Guid? id = null);
+        Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId);
+        Task<FormComponentModel> BuildFormModelAsync(Guid siteId, Guid? id = null);
     }
 }

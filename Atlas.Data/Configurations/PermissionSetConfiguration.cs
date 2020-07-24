@@ -1,4 +1,4 @@
-﻿using Atlas.Domain;
+﻿using Atlas.Domain.PermissionSets;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

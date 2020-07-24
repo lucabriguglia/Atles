@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Atlas.Domain.PermissionSets.Events
+﻿namespace Atlas.Domain.PermissionSets.Events
 {
     public class PermissionSetCreated : EventBase
     {

@@ -1,11 +1,11 @@
-﻿using Atlas.Shared.Models.Admin.Events;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Atlas.Shared.Admin.Events.Models;
 
 namespace Atlas.Shared
 {
     public interface IEventModelBuilder
     {
-        Task<TargetModel> BuildTargetModelAsync(Guid siteId, Guid id);
+        Task<TargetEventsComponentModel> BuildTargetModelAsync(Guid siteId, Guid id);
     }
 }

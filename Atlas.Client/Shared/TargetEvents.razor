@@ -1,4 +1,4 @@
-﻿@using Atlas.Shared.Models.Admin.Events
+﻿@using Atlas.Shared.Admin.Events.Models
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
 
@@ -43,10 +43,10 @@ else
 
 @code {
     [Parameter] public Guid Id { get; set; }
-    private TargetModel Model { get; set; }
+    private TargetEventsComponentModel Model { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        Model = await Http.GetFromJsonAsync<TargetModel>($"api/admin/events/target-model/{Id}");
+        Model = await Http.GetFromJsonAsync<TargetEventsComponentModel>($"api/admin/events/target-model/{Id}");
     }
 }

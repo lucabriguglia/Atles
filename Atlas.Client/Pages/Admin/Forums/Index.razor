@@ -99,7 +99,7 @@ else
 @code {
     private const string Title = "Forums";
     [Parameter] public Guid? CategoryId { get; set; } = null;
-    private IndexModel Model { get; set; }
+    private IndexPageModel Model { get; set; }
     private Guid DeleteId { get; set; }
 
     protected override async Task OnInitializedAsync()
@@ -108,13 +108,13 @@ else
             ? $"api/admin/forums/index-model"
             : $"api/admin/forums/index-model/{CategoryId}";
 
-        Model = await Http.GetFromJsonAsync<IndexModel>(requestUri);
+        Model = await Http.GetFromJsonAsync<IndexPageModel>(requestUri);
     }
 
     private async Task CategoryChanged(ChangeEventArgs args)
     {
         CategoryId = new Guid(args.Value.ToString());
-        Model = await Http.GetFromJsonAsync<IndexModel>($"api/admin/forums/index-model/{CategoryId}");
+        Model = await Http.GetFromJsonAsync<IndexPageModel>($"api/admin/forums/index-model/{CategoryId}");
         StateHasChanged();
     }
 

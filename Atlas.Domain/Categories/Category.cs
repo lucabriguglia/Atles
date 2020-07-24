@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using Atlas.Domain.Forums;
+using Atlas.Domain.PermissionSets;
+using Atlas.Domain.Sites;
 
 namespace Atlas.Domain.Categories
 {

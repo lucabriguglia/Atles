@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 
-namespace Atlas.Shared.Models.Admin.Events
+namespace Atlas.Shared.Admin.Events.Models
 {
-    public class TargetModel
+    public class TargetEventsComponentModel
     {
         public Guid Id { get; set; }
         public string Type { get; set; }

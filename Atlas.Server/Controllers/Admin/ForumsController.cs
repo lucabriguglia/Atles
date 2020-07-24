@@ -33,23 +33,23 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpGet("index-model")]
-        public async Task<IndexModel> Index()
+        public async Task<IndexPageModel> Index()
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildIndexModelAsync(site.Id);
+            return await _modelBuilder.BuildIndexPageModelAsync(site.Id);
         }
 
         [HttpGet("index-model/{categoryId}")]
-        public async Task<IndexModel> Index(Guid categoryId)
+        public async Task<IndexPageModel> Index(Guid categoryId)
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildIndexModelAsync(site.Id, categoryId);
+            return await _modelBuilder.BuildIndexPageModelAsync(site.Id, categoryId);
         }
 
         [HttpGet("create")]
-        public async Task<FormModel> Create()
+        public async Task<FormComponentModel> Create()
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -57,7 +57,7 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpGet("create/{categoryId}")]
-        public async Task<FormModel> Create(Guid categoryId)
+        public async Task<FormComponentModel> Create(Guid categoryId)
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -65,7 +65,7 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpPost("save")]
-        public async Task<ActionResult> Save(FormModel.ForumModel model)
+        public async Task<ActionResult> Save(FormComponentModel.ForumModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
@@ -85,7 +85,7 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpGet("edit/{id}")]
-        public async Task<ActionResult<FormModel>> Edit(Guid id)
+        public async Task<ActionResult<FormComponentModel>> Edit(Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -100,7 +100,7 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpPost("update")]
-        public async Task<ActionResult> Update(FormModel.ForumModel model)
+        public async Task<ActionResult> Update(FormComponentModel.ForumModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();

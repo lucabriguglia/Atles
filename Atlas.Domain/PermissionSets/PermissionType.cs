@@ -1,4 +1,4 @@
-﻿namespace Atlas.Domain
+﻿namespace Atlas.Domain.PermissionSets
 {
     public enum PermissionType
     {

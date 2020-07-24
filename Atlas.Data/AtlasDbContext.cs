@@ -2,6 +2,8 @@
 using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
+using Atlas.Domain.PermissionSets;
+using Atlas.Domain.Sites;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data

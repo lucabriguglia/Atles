@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Atlas.Shared.Admin.Categories.Models
 {
-    public class FormModel
+    public class FormComponentModel
     {
         public CategoryModel Category { get; set; } = new CategoryModel();
         public IList<PermissionSetModel> PermissionSets { get; set; } = new List<PermissionSetModel>();

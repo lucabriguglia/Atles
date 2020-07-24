@@ -17,7 +17,7 @@ namespace Atlas.Data.Builders.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<IndexModel> BuildIndexModelAsync(Guid siteId, Guid? categoryId = null)
+        public async Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId, Guid? categoryId = null)
         {
             var categories = await _dbContext.Categories
                 .Include(x => x.PermissionSet)
@@ -45,11 +45,11 @@ namespace Atlas.Data.Builders.Admin
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
-            var result = new IndexModel();
+            var result = new IndexPageModel();
 
             foreach (var category in categories)
             {
-                result.Categories.Add(new IndexModel.CategoryModel
+                result.Categories.Add(new IndexPageModel.CategoryModel
                 {
                     Id = category.Id,
                     Name = category.Name
@@ -64,7 +64,7 @@ namespace Atlas.Data.Builders.Admin
                         : $"{currentCategory.PermissionSetName()} (from Category)"
                     : forum.PermissionSetName();
 
-                result.Forums.Add(new IndexModel.ForumModel
+                result.Forums.Add(new IndexPageModel.ForumModel
                 {
                     Id = forum.Id,
                     Name = forum.Name,
@@ -78,9 +78,9 @@ namespace Atlas.Data.Builders.Admin
             return result;
         }
 
-        public async Task<FormModel> BuildCreateFormModelAsync(Guid siteId, Guid? categoryId = null)
+        public async Task<FormComponentModel> BuildCreateFormModelAsync(Guid siteId, Guid? categoryId = null)
         {
-            var result = new FormModel();
+            var result = new FormComponentModel();
 
             var categories = await _dbContext.Categories
                 .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
@@ -89,7 +89,7 @@ namespace Atlas.Data.Builders.Admin
 
             foreach (var category in categories)
             {
-                result.Categories.Add(new FormModel.CategoryModel
+                result.Categories.Add(new FormComponentModel.CategoryModel
                 {
                     Id = category.Id,
                     Name = category.Name
@@ -100,7 +100,7 @@ namespace Atlas.Data.Builders.Admin
                 ? categories.FirstOrDefault().Id 
                 : categoryId.Value;
 
-            result.Forum = new FormModel.ForumModel
+            result.Forum = new FormComponentModel.ForumModel
             {
                 CategoryId = selectedCategoryId
             };
@@ -111,7 +111,7 @@ namespace Atlas.Data.Builders.Admin
 
             foreach (var permissionSet in permissionSets)
             {
-                result.PermissionSets.Add(new FormModel.PermissionSetModel
+                result.PermissionSets.Add(new FormComponentModel.PermissionSetModel
                 {
                     Id = permissionSet.Id,
                     Name = permissionSet.Name
@@ -121,7 +121,7 @@ namespace Atlas.Data.Builders.Admin
             return result;
         }
 
-        public async Task<FormModel> BuildEditFormModelAsync(Guid siteId, Guid id)
+        public async Task<FormComponentModel> BuildEditFormModelAsync(Guid siteId, Guid id)
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
@@ -133,9 +133,9 @@ namespace Atlas.Data.Builders.Admin
                 return null;
             }
 
-            var result = new FormModel
+            var result = new FormComponentModel
             {
-                Forum = new FormModel.ForumModel
+                Forum = new FormComponentModel.ForumModel
                 {
                     Id = forum.Id,
                     CategoryId = forum.CategoryId,
@@ -151,7 +151,7 @@ namespace Atlas.Data.Builders.Admin
 
             foreach (var category in categories)
             {
-                result.Categories.Add(new FormModel.CategoryModel
+                result.Categories.Add(new FormComponentModel.CategoryModel
                 {
                     Id = category.Id,
                     Name = category.Name
@@ -164,7 +164,7 @@ namespace Atlas.Data.Builders.Admin
 
             foreach (var permissionSet in permissionSets)
             {
-                result.PermissionSets.Add(new FormModel.PermissionSetModel
+                result.PermissionSets.Add(new FormComponentModel.PermissionSetModel
                 {
                     Id = permissionSet.Id,
                     Name = permissionSet.Name

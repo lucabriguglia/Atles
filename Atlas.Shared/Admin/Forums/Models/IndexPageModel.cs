@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Atlas.Shared.Admin.Forums.Models
 {
-    public class IndexModel
+    public class IndexPageModel
     {
         public IList<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
         public IList<ForumModel> Forums { get; set; } = new List<ForumModel>();

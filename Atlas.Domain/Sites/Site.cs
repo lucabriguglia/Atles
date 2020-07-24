@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Atlas.Domain.Categories;
 
-namespace Atlas.Domain
+namespace Atlas.Domain.Sites
 {
     public class Site
     {
@@ -14,13 +14,28 @@ namespace Atlas.Domain
 
         public Site()
         {
-            
+
         }
 
         public Site(string name, string title)
         {
-            Id = Guid.NewGuid();
+            New(Guid.NewGuid(), name, title);
+        }
+
+        public Site(Guid id, string name, string title)
+        {
+            New(id, name, title);
+        }
+
+        private void New(Guid id, string name, string title)
+        {
+            Id = id;
             Name = name;
+            Title = title;
+        }
+
+        public void UpdateDetails(string title)
+        {
             Title = title;
         }
     }

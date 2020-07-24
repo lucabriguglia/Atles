@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Atlas.Shared.Admin.Forums.Models
 {
-    public class FormModel
+    public class FormComponentModel
     {
         public ForumModel Forum { get; set; } = new ForumModel();
         public IList<CategoryModel> Categories { get; set; } = new List<CategoryModel>();

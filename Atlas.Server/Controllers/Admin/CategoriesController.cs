@@ -6,7 +6,6 @@ using Atlas.Domain.Categories.Commands;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Atlas.Shared;
 using Atlas.Shared.Admin.Categories;
 using Atlas.Shared.Admin.Categories.Models;
 
@@ -34,15 +33,15 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpGet("list")]
-        public async Task<IndexModel> List()
+        public async Task<IndexPageModel> List()
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildIndexModelAsync(site.Id);
+            return await _modelBuilder.BuildIndexPageModelAsync(site.Id);
         }
 
         [HttpGet("create")]
-        public async Task<FormModel> Create()
+        public async Task<FormComponentModel> Create()
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -50,7 +49,7 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpPost("save")]
-        public async Task<ActionResult> Save(FormModel.CategoryModel model)
+        public async Task<ActionResult> Save(FormComponentModel.CategoryModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
@@ -69,7 +68,7 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpGet("edit/{id}")]
-        public async Task<ActionResult<FormModel>> Edit(Guid id)
+        public async Task<ActionResult<FormComponentModel>> Edit(Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -84,7 +83,7 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpPost("update")]
-        public async Task<ActionResult> Update(FormModel.CategoryModel model)
+        public async Task<ActionResult> Update(FormComponentModel.CategoryModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();

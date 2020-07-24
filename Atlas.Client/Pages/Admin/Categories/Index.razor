@@ -82,12 +82,12 @@ else
 
 @code {
     private const string Title = "Categories";
-    private IndexModel Model { get; set; }
+    private IndexPageModel Model { get; set; }
     private Guid DeleteId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await Http.GetFromJsonAsync<IndexModel>("api/admin/categories/list");
+        Model = await Http.GetFromJsonAsync<IndexPageModel>("api/admin/categories/list");
     }
 
     private async Task MoveUp(Guid id)

@@ -3,8 +3,8 @@ using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Atlas.Shared;
-using Atlas.Shared.Models.Admin.Events;
 using System;
+using Atlas.Shared.Admin.Events.Models;
 
 namespace Atlas.Server.Controllers.Admin
 {
@@ -23,7 +23,7 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpGet("target-model/{id}")]
-        public async Task<TargetModel> Target(Guid id)
+        public async Task<TargetEventsComponentModel> Target(Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
 

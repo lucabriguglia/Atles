@@ -1,11 +1,11 @@
 ﻿using Atlas.Shared;
-using Atlas.Shared.Models.Admin.Events;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Shared.Admin.Events.Models;
 
 namespace Atlas.Data.Builders.Admin
 {
@@ -18,7 +18,7 @@ namespace Atlas.Data.Builders.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<TargetModel> BuildTargetModelAsync(Guid siteId, Guid id)
+        public async Task<TargetEventsComponentModel> BuildTargetModelAsync(Guid siteId, Guid id)
         {
             var events = await _dbContext.Events
                 .Include(x => x.Member)
@@ -28,10 +28,10 @@ namespace Atlas.Data.Builders.Admin
 
             if (events.Count == 0)
             {
-                return new TargetModel();
+                return new TargetEventsComponentModel();
             }
 
-            var result = new TargetModel
+            var result = new TargetEventsComponentModel
             {
                 Id = events[0].TargetId,
                 Type = events[0].TargetType
@@ -39,7 +39,7 @@ namespace Atlas.Data.Builders.Admin
 
             foreach (var @event in events)
             {
-                var model = new TargetModel.EventModel
+                var model = new TargetEventsComponentModel.EventModel
                 {
                     Id = @event.Id,
                     Type = @event.Type,

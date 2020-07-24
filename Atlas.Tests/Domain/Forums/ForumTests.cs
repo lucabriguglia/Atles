@@ -13,8 +13,8 @@ namespace Atlas.Tests.Domain.Forums
         public void New()
         {
             var categoryId = Guid.NewGuid();
-            var name = "New Forum";
-            var sortOrder = 2;
+            const string name = "New Forum";
+            const int sortOrder = 2;
             var permissionSetId = Guid.NewGuid();
 
             var sut = new Forum(categoryId, name, sortOrder, permissionSetId);
@@ -30,8 +30,8 @@ namespace Atlas.Tests.Domain.Forums
         {
             var id = Guid.NewGuid();
             var categoryId = Guid.NewGuid();
-            var name = "New Forum";
-            var sortOrder = 2;
+            const string name = "New Forum";
+            const int sortOrder = 2;
             var permissionSetId = Guid.NewGuid();
 
             var sut = new Forum(id, categoryId, name, sortOrder, permissionSetId);
@@ -49,7 +49,7 @@ namespace Atlas.Tests.Domain.Forums
             var sut = Fixture.Create<Forum>();
 
             var categoryId = Guid.NewGuid();
-            var name = "Updated Forum";
+            const string name = "Updated Forum";
             var permissionSetId = Guid.NewGuid();
 
             sut.UpdateDetails(categoryId, name, permissionSetId);

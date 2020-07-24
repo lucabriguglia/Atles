@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Atlas.Shared.Admin.Categories.Models
 {
-    public class IndexModel
+    public class IndexPageModel
     {
         public IList<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
 

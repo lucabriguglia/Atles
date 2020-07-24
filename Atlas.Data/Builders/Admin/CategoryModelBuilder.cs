@@ -1,5 +1,4 @@
 ﻿using Atlas.Domain;
-using Atlas.Shared;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
@@ -18,9 +17,9 @@ namespace Atlas.Data.Builders.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<IndexModel> BuildIndexModelAsync(Guid siteId)
+        public async Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId)
         {
-            var result = new IndexModel();
+            var result = new IndexPageModel();
 
             var categories = await _dbContext.Categories
                 .Include(x => x.PermissionSet)
@@ -40,7 +39,7 @@ namespace Atlas.Data.Builders.Admin
                     ? "Default (from Site)"
                     : category.PermissionSetName();
 
-                result.Categories.Add(new IndexModel.CategoryModel
+                result.Categories.Add(new IndexPageModel.CategoryModel
                 {
                     Id = category.Id,
                     Name = category.Name,
@@ -55,9 +54,9 @@ namespace Atlas.Data.Builders.Admin
             return result;
         }
 
-        public async Task<FormModel> BuildFormModelAsync(Guid siteId, Guid? id = null)
+        public async Task<FormComponentModel> BuildFormModelAsync(Guid siteId, Guid? id = null)
         {
-            var result = new FormModel();
+            var result = new FormComponentModel();
 
             if (id != null)
             {
@@ -72,7 +71,7 @@ namespace Atlas.Data.Builders.Admin
                     return null;
                 }
 
-                result.Category = new FormModel.CategoryModel
+                result.Category = new FormComponentModel.CategoryModel
                 {
                     Id = category.Id,
                     Name = category.Name,
@@ -86,7 +85,7 @@ namespace Atlas.Data.Builders.Admin
 
             foreach (var permissionSet in permissionSets)
             {
-                result.PermissionSets.Add(new FormModel.PermissionSetModel
+                result.PermissionSets.Add(new FormComponentModel.PermissionSetModel
                 {
                     Id = permissionSet.Id,
                     Name = permissionSet.Name
