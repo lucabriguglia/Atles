@@ -18,18 +18,18 @@ namespace Atlas.Server.Controllers.Admin
     public class CategoriesController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly ICategoryService _forumGroupService;
-        private readonly ICategoryRules _forumGroupRules;
+        private readonly ICategoryService _categoryService;
+        private readonly ICategoryRules _categoryRules;
         private readonly ICategoryModelBuilder _modelBuilder;
 
         public CategoriesController(IContextService contextService,
-            ICategoryService forumGroupService,
-            ICategoryRules forumGroupRules,
+            ICategoryService categoryService,
+            ICategoryRules categoryRules,
             ICategoryModelBuilder modelBuilder)
         {
             _contextService = contextService;
-            _forumGroupService = forumGroupService;
-            _forumGroupRules = forumGroupRules;
+            _categoryService = categoryService;
+            _categoryRules = categoryRules;
             _modelBuilder = modelBuilder;
         }
 
@@ -63,7 +63,7 @@ namespace Atlas.Server.Controllers.Admin
                 MemberId = member.Id
             };
 
-            await _forumGroupService.CreateAsync(command);
+            await _categoryService.CreateAsync(command);
 
             return Ok();
         }
@@ -98,7 +98,7 @@ namespace Atlas.Server.Controllers.Admin
                 MemberId = member.Id
             };
 
-            await _forumGroupService.UpdateAsync(command);
+            await _categoryService.UpdateAsync(command);
 
             return Ok();
         }
@@ -117,7 +117,7 @@ namespace Atlas.Server.Controllers.Admin
                 Direction = Direction.Up
             };
 
-            await _forumGroupService.MoveAsync(command);
+            await _categoryService.MoveAsync(command);
 
             return Ok();
         }
@@ -136,7 +136,7 @@ namespace Atlas.Server.Controllers.Admin
                 Direction = Direction.Down
             };
 
-            await _forumGroupService.MoveAsync(command);
+            await _categoryService.MoveAsync(command);
 
             return Ok();
         }
@@ -154,7 +154,7 @@ namespace Atlas.Server.Controllers.Admin
                 MemberId = member.Id
             };
 
-            await _forumGroupService.DeleteAsync(command);
+            await _categoryService.DeleteAsync(command);
 
             return Ok();
         }
@@ -163,7 +163,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string name)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _forumGroupRules.IsNameUniqueAsync(site.Id, name);
+            var isNameUnique = await _categoryRules.IsNameUniqueAsync(site.Id, name);
             return Ok(isNameUnique);
         }
 
@@ -171,7 +171,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string name, Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _forumGroupRules.IsNameUniqueAsync(site.Id, name, id);
+            var isNameUnique = await _categoryRules.IsNameUniqueAsync(site.Id, name, id);
             return Ok(isNameUnique);
         }
     }

@@ -10,7 +10,7 @@ namespace Atlas.Domain
         public string Name { get; private set; }
         public string Title { get; private set; }
 
-        public virtual ICollection<Category> ForumGroups { get; set; }
+        public virtual ICollection<Category> Categories { get; set; }
 
         public Site()
         {

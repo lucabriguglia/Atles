@@ -17,10 +17,10 @@ namespace Atlas.Tests.Domain.Categories.Validators
         {
             var command = Fixture.Build<UpdateCategory>().With(x => x.Name, string.Empty).Create();
 
-            var forumGroupRules = new Mock<ICategoryRules>();
+            var categoryRules = new Mock<ICategoryRules>();
             var permissionSetRules = new Mock<IPermissionSetRules>();
 
-            var sut = new UpdateCategoryValidator(forumGroupRules.Object, permissionSetRules.Object);
+            var sut = new UpdateCategoryValidator(categoryRules.Object, permissionSetRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -30,10 +30,10 @@ namespace Atlas.Tests.Domain.Categories.Validators
         {
             var command = Fixture.Build<UpdateCategory>().With(x => x.Name, new string('*', 101)).Create();
 
-            var forumGroupRules = new Mock<ICategoryRules>();
+            var categoryRules = new Mock<ICategoryRules>();
             var permissionSetRules = new Mock<IPermissionSetRules>();
 
-            var sut = new UpdateCategoryValidator(forumGroupRules.Object, permissionSetRules.Object);
+            var sut = new UpdateCategoryValidator(categoryRules.Object, permissionSetRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -43,12 +43,12 @@ namespace Atlas.Tests.Domain.Categories.Validators
         {
             var command = Fixture.Create<UpdateCategory>();
 
-            var forumGroupRules = new Mock<ICategoryRules>();
-            forumGroupRules.Setup(x => x.IsNameUniqueAsync(command.SiteId, command.Name, command.Id)).ReturnsAsync(false);
+            var categoryRules = new Mock<ICategoryRules>();
+            categoryRules.Setup(x => x.IsNameUniqueAsync(command.SiteId, command.Name, command.Id)).ReturnsAsync(false);
 
             var permissionSetRules = new Mock<IPermissionSetRules>();
 
-            var sut = new UpdateCategoryValidator(forumGroupRules.Object, permissionSetRules.Object);
+            var sut = new UpdateCategoryValidator(categoryRules.Object, permissionSetRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -58,12 +58,12 @@ namespace Atlas.Tests.Domain.Categories.Validators
         {
             var command = Fixture.Create<UpdateCategory>();
 
-            var forumGroupRules = new Mock<ICategoryRules>();
+            var categoryRules = new Mock<ICategoryRules>();
 
             var permissionSetRules = new Mock<IPermissionSetRules>();
             permissionSetRules.Setup(x => x.IsValid(command.SiteId, command.PermissionSetId.Value)).ReturnsAsync(false);
 
-            var sut = new UpdateCategoryValidator(forumGroupRules.Object, permissionSetRules.Object);
+            var sut = new UpdateCategoryValidator(categoryRules.Object, permissionSetRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.PermissionSetId, command);
         }

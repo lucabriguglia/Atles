@@ -55,7 +55,7 @@ namespace Atlas.Domain.Categories
         {
             if (SortOrder == 1)
             {
-                throw new ApplicationException($"Forum Group \"{Name}\" can't be moved up.");
+                throw new ApplicationException($"Category \"{Name}\" can't be moved up.");
             }
 
             SortOrder -= 1;

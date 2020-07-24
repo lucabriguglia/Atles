@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atlas.Data.Migrations.AtlasMigrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20200724082110_InitialCreate")]
+    [Migration("20200724085134_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -54,7 +54,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
                     b.HasIndex("SiteId");
 
-                    b.ToTable("ForumGroup");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Atlas.Domain.Event", b =>
@@ -266,12 +266,12 @@ namespace Atlas.Data.Migrations.AtlasMigrations
             modelBuilder.Entity("Atlas.Domain.Categories.Category", b =>
                 {
                     b.HasOne("Atlas.Domain.PermissionSet", "PermissionSet")
-                        .WithMany("ForumGroups")
+                        .WithMany("Categories")
                         .HasForeignKey("PermissionSetId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Atlas.Domain.Site", "Site")
-                        .WithMany("ForumGroups")
+                        .WithMany("Categories")
                         .HasForeignKey("SiteId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -287,7 +287,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
             modelBuilder.Entity("Atlas.Domain.Forums.Forum", b =>
                 {
-                    b.HasOne("Atlas.Domain.Categories.Category", "ForumGroup")
+                    b.HasOne("Atlas.Domain.Categories.Category", "Category")
                         .WithMany("Forums")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)

@@ -12,7 +12,7 @@ namespace Atlas.Data.Configurations
             builder.ToTable("Forum");
 
             builder
-                .HasOne(x => x.ForumGroup)
+                .HasOne(x => x.Category)
                 .WithMany(x => x.Forums)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();

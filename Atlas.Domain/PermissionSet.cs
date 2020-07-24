@@ -13,7 +13,7 @@ namespace Atlas.Domain
         public StatusType Status { get; private set; }
 
         public ICollection<Permission> Permissions { get; set; }
-        public ICollection<Category> ForumGroups { get; set; }
+        public ICollection<Category> Categories { get; set; }
         public ICollection<Forum> Forums { get; set; }
 
         public PermissionSet()

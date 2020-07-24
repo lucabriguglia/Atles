@@ -15,7 +15,7 @@ namespace Atlas.Domain.Forums
         public StatusType Status { get; private set; }
         public Guid? PermissionSetId { get; private set; }
 
-        public virtual Category ForumGroup { get; set; }
+        public virtual Category Category { get; set; }
         public virtual PermissionSet PermissionSet { get; set; }
 
         public virtual ICollection<Topic> Topics { get; set; }
@@ -25,29 +25,29 @@ namespace Atlas.Domain.Forums
             
         }
 
-        public Forum(Guid id, Guid forumGroupId, string name, int sortOrder, Guid? permissionSetId = null)
+        public Forum(Guid id, Guid categoryId, string name, int sortOrder, Guid? permissionSetId = null)
         {
-            New(id, forumGroupId, name, sortOrder, permissionSetId);
+            New(id, categoryId, name, sortOrder, permissionSetId);
         }
 
-        public Forum(Guid forumGroupId, string name, int sortOrder, Guid? permissionSetId = null)
+        public Forum(Guid categoryId, string name, int sortOrder, Guid? permissionSetId = null)
         {
-            New(Guid.NewGuid(), forumGroupId, name, sortOrder, permissionSetId);
+            New(Guid.NewGuid(), categoryId, name, sortOrder, permissionSetId);
         }
 
-        private void New(Guid id, Guid forumGroupId, string name, int sortOrder, Guid? permissionSetId = null)
+        private void New(Guid id, Guid categoryId, string name, int sortOrder, Guid? permissionSetId = null)
         {
             Id = id;
-            CategoryId = forumGroupId;
+            CategoryId = categoryId;
             Name = name;
             SortOrder = sortOrder;
             PermissionSetId = permissionSetId;
             Status = StatusType.Published;
         }
 
-        public void UpdateDetails(Guid forumGroupId, string name, Guid? permissionSetId = null)
+        public void UpdateDetails(Guid categoryId, string name, Guid? permissionSetId = null)
         {
-            CategoryId = forumGroupId;
+            CategoryId = categoryId;
             Name = name;
             PermissionSetId = permissionSetId;
         }

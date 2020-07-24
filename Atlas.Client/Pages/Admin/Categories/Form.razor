@@ -6,7 +6,7 @@
     <div class="col-md-4">
         <EditForm EditContext="@_editContext" OnSubmit="OnSubmit">
             <DataAnnotationsValidator />
-            @*<FluentValidationValidator ValidatorType=typeof(Atlas.Domain.ForumGroups.Validators.CreateForumGroupClientValidator) />*@
+            @*<FluentValidationValidator ValidatorType=typeof(Atlas.Domain.Forum.Validators.CreateForumClientValidator) />*@
             <div class="form-group">
                 <label for="name" class="control-label">Name</label>
                 <InputText id="name" @bind-Value="Model.Category.Name" Class="form-control" />

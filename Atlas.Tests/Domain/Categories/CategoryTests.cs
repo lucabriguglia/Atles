@@ -13,8 +13,8 @@ namespace Atlas.Tests.Domain.Categories
         public void New()
         {
             var siteId = Guid.NewGuid();
-            var name = "New Forum Group";
-            var sortOrder = 2;
+            const string name = "New Category";
+            const int sortOrder = 2;
             var permissionSetId = Guid.NewGuid();
 
             var sut = new Category(siteId, name, sortOrder, permissionSetId);
@@ -30,8 +30,8 @@ namespace Atlas.Tests.Domain.Categories
         {
             var id = Guid.NewGuid();
             var siteId = Guid.NewGuid();
-            var name = "New Forum Group";
-            var sortOrder = 2;
+            const string name = "New Category";
+            const int sortOrder = 2;
             var permissionSetId = Guid.NewGuid();
 
             var sut = new Category(id, siteId, name, sortOrder, permissionSetId);
@@ -48,7 +48,7 @@ namespace Atlas.Tests.Domain.Categories
         {
             var sut = Fixture.Create<Category>();
 
-            var name = "Updated Forum Group";
+            const string name = "Updated Category";
             var permissionSetId = Guid.NewGuid();
 
             sut.UpdateDetails(name, permissionSetId);
@@ -72,7 +72,7 @@ namespace Atlas.Tests.Domain.Categories
         [Test]
         public void Move_up_throws_exception_when_sort_order_is_one()
         {
-            var sut = new Category(Guid.NewGuid(), "My Forum Group", 1);
+            var sut = new Category(Guid.NewGuid(), "My Category", 1);
 
             Assert.Throws<ApplicationException>(() => sut.MoveUp());
         }
@@ -94,7 +94,7 @@ namespace Atlas.Tests.Domain.Categories
         {
             var sut = Fixture.Create<Category>();
 
-            var sortOrder = 2;
+            const int sortOrder = 2;
 
             sut.Reorder(sortOrder);
 

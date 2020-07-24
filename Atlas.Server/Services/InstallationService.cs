@@ -108,26 +108,26 @@ namespace Atlas.Server.Services
                 Name = site.Name
             }));
 
-            // Forum Group
-            var forumGroup = new Category(site.Id, "General", 1);
-            _dbContext.Categories.Add(forumGroup);
+            // Category
+            var category = new Category(site.Id, "General", 1);
+            _dbContext.Categories.Add(category);
             _dbContext.Events.Add(new Event(new CategoryCreated
             {
-                SiteId = forumGroup.SiteId,
+                SiteId = category.SiteId,
                 MemberId = null,
-                TargetId = forumGroup.Id,
+                TargetId = category.Id,
                 TargetType = typeof(Category).Name,
-                Name = forumGroup.Name,
-                PermissionSetId = forumGroup.PermissionSetId,
-                SortOrder = forumGroup.SortOrder
+                Name = category.Name,
+                PermissionSetId = category.PermissionSetId,
+                SortOrder = category.SortOrder
             }));
 
             // Forum
-            var forum = new Forum(forumGroup.Id, "Welcome", 1);
+            var forum = new Forum(category.Id, "Welcome", 1);
             _dbContext.Forums.Add(forum);
             _dbContext.Events.Add(new Event(new ForumCreated
             {
-                SiteId = forumGroup.SiteId,
+                SiteId = category.SiteId,
                 MemberId = null,
                 TargetId = forum.Id,
                 TargetType = typeof(Forum).Name,

@@ -7,8 +7,8 @@
         <EditForm EditContext="@_editContext" OnSubmit="OnSubmit">
             <DataAnnotationsValidator />
             <div class="form-group">
-                <label for="forumGroupId" class="control-label">Category</label>
-                <select id="forumGroupId" @bind="Model.Forum.CategoryId" class="form-control">
+                <label for="categoryId" class="control-label">Category</label>
+                <select id="categoryId" @bind="Model.Forum.CategoryId" class="form-control">
                     @foreach (var item in Model.Categories)
                     {
                         <option value="@item.Id">@item.Name</option>

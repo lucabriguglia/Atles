@@ -52,7 +52,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
                     b.HasIndex("SiteId");
 
-                    b.ToTable("ForumGroup");
+                    b.ToTable("Category");
                 });
 
             modelBuilder.Entity("Atlas.Domain.Event", b =>
@@ -264,12 +264,12 @@ namespace Atlas.Data.Migrations.AtlasMigrations
             modelBuilder.Entity("Atlas.Domain.Categories.Category", b =>
                 {
                     b.HasOne("Atlas.Domain.PermissionSet", "PermissionSet")
-                        .WithMany("ForumGroups")
+                        .WithMany("Categories")
                         .HasForeignKey("PermissionSetId")
                         .OnDelete(DeleteBehavior.NoAction);
 
                     b.HasOne("Atlas.Domain.Site", "Site")
-                        .WithMany("ForumGroups")
+                        .WithMany("Categories")
                         .HasForeignKey("SiteId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -285,7 +285,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
             modelBuilder.Entity("Atlas.Domain.Forums.Forum", b =>
                 {
-                    b.HasOne("Atlas.Domain.Categories.Category", "ForumGroup")
+                    b.HasOne("Atlas.Domain.Categories.Category", "Category")
                         .WithMany("Forums")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)

@@ -28,7 +28,7 @@
             <div class="input-group-prepend">
                 <label class="input-group-text" for="categoryId">Category</label>
             </div>
-            <select class="custom-select" id="categoryId" @onchange="ForumGroupChanged">
+            <select class="custom-select" id="categoryId" @onchange="CategoryChanged">
                 @foreach (var option in Model.Categories)
                 {
                     <option value=@option.Id selected=@(CategoryId == option.Id)>@option.Name</option>
@@ -111,7 +111,7 @@ else
         Model = await Http.GetFromJsonAsync<IndexModel>(requestUri);
     }
 
-    private async Task ForumGroupChanged(ChangeEventArgs args)
+    private async Task CategoryChanged(ChangeEventArgs args)
     {
         CategoryId = new Guid(args.Value.ToString());
         Model = await Http.GetFromJsonAsync<IndexModel>($"api/admin/forums/index-model/{CategoryId}");

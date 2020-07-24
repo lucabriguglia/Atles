@@ -5,21 +5,21 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Atlas.Data.Configurations
 {
-    public class ForumGroupConfiguration : IEntityTypeConfiguration<Category>
+    public class CategoryConfiguration : IEntityTypeConfiguration<Category>
     {
         public void Configure(EntityTypeBuilder<Category> builder)
         {
-            builder.ToTable("ForumGroup");
+            builder.ToTable("Category");
 
             builder
                 .HasOne(x => x.Site)
-                .WithMany(x => x.ForumGroups)
+                .WithMany(x => x.Categories)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
             builder
                 .HasOne(x => x.PermissionSet)
-                .WithMany(x => x.ForumGroups)
+                .WithMany(x => x.Categories)
                 .OnDelete(DeleteBehavior.NoAction);
         }
     }

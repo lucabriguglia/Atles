@@ -26,26 +26,26 @@ namespace Atlas.Data.Builders.Site
 
             model.Categories = await _cacheManager.GetOrSetAsync(CacheKeys.Categories(siteId), async () =>
             {
-                var forumGroups = await _dbContext.Categories
+                var categories = await _dbContext.Categories
                     .Include(x => x.PermissionSet)
                     .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
                     .OrderBy(x => x.SortOrder)
                     .ToListAsync();
 
-                return forumGroups.Select(forumGroup => new IndexPageModel.CategoryModel
+                return categories.Select(category => new IndexPageModel.CategoryModel
                 {
-                    Id = forumGroup.Id,
-                    Name = forumGroup.Name
+                    Id = category.Id,
+                    Name = category.Name
                 }).ToList();
             });
 
-            foreach (var forumGroup in model.Categories)
+            foreach (var category in model.Categories)
             {
-                forumGroup.Forums = await _cacheManager.GetOrSetAsync(CacheKeys.Forums(forumGroup.Id), async () =>
+                category.Forums = await _cacheManager.GetOrSetAsync(CacheKeys.Forums(category.Id), async () =>
                 {
                     var forums = await _dbContext.Forums
                         .Include(x => x.PermissionSet)
-                        .Where(x => x.CategoryId == forumGroup.Id && x.Status == StatusType.Published)
+                        .Where(x => x.CategoryId == category.Id && x.Status == StatusType.Published)
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
 
