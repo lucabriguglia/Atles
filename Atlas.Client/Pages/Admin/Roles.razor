@@ -1,0 +1,17 @@
+﻿@page "/admin/roles"
+@attribute [Authorize(Policy = "Admin")]
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<h3 class="mb-3">@Title</h3>
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Title</li>
+    </ol>
+</nav>
+
+@code {
+        private const string Title = "Roles";
+}
