@@ -52,6 +52,10 @@ namespace Atlas.Data.Services
                     command.Status
                 }));
 
+            var forum = await _dbContext.Forums.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == topic.ForumId);
+            forum.IncreaseTopicsCount();
+            forum.Category.IncreaseTopicsCount();
+
             await _dbContext.SaveChangesAsync();
         }
 
@@ -88,6 +92,7 @@ namespace Atlas.Data.Services
         public async Task DeleteAsync(DeleteTopic command)
         {
             var topic = await _dbContext.Topics
+                .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Replies)
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
@@ -114,6 +119,9 @@ namespace Atlas.Data.Services
                     typeof(Reply),
                     reply.Id));
             }
+
+            topic.Forum.DecreaseTopicsCount();
+            topic.Forum.Category.DecreaseTopicsCount();
 
             await _dbContext.SaveChangesAsync();
         }

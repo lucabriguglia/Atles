@@ -19,14 +19,14 @@ namespace Atlas.Domain
             
         }
 
-        public Reply(Guid forumId, Guid memberId, string content, StatusType status)
+        public Reply(Guid topicId, Guid memberId, string content, StatusType status)
         {
-            New(Guid.NewGuid(), forumId, memberId, content, status);
+            New(Guid.NewGuid(), topicId, memberId, content, status);
         }
 
-        public Reply(Guid id, Guid forumId, Guid memberId, string content, StatusType status)
+        public Reply(Guid id, Guid topicId, Guid memberId, string content, StatusType status)
         {
-            New(id, forumId, memberId, content, status);
+            New(id, topicId, memberId, content, status);
         }
 
         private void New(Guid id, Guid topicId, Guid memberId, string content, StatusType status)
