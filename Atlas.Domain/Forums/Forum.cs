@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using Atlas.Domain.Categories;
 
-namespace Atlas.Domain
+namespace Atlas.Domain.Forums
 {
     public class Forum
     {
         public Guid Id { get; private set; }
-        public Guid ForumGroupId { get; private set; }
+        public Guid CategoryId { get; private set; }
         public string Name { get; private set; }
         public int SortOrder { get; private set; }
         public int TopicsCount { get; private set; }
@@ -14,7 +15,7 @@ namespace Atlas.Domain
         public StatusType Status { get; private set; }
         public Guid? PermissionSetId { get; private set; }
 
-        public virtual ForumGroup ForumGroup { get; set; }
+        public virtual Category ForumGroup { get; set; }
         public virtual PermissionSet PermissionSet { get; set; }
 
         public virtual ICollection<Topic> Topics { get; set; }
@@ -37,7 +38,7 @@ namespace Atlas.Domain
         private void New(Guid id, Guid forumGroupId, string name, int sortOrder, Guid? permissionSetId = null)
         {
             Id = id;
-            ForumGroupId = forumGroupId;
+            CategoryId = forumGroupId;
             Name = name;
             SortOrder = sortOrder;
             PermissionSetId = permissionSetId;
@@ -46,7 +47,7 @@ namespace Atlas.Domain
 
         public void UpdateDetails(Guid forumGroupId, string name, Guid? permissionSetId = null)
         {
-            ForumGroupId = forumGroupId;
+            CategoryId = forumGroupId;
             Name = name;
             PermissionSetId = permissionSetId;
         }

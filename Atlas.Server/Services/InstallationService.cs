@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Domain;
-using Atlas.Domain.ForumGroups.Events;
+using Atlas.Domain.Categories;
+using Atlas.Domain.Categories.Events;
+using Atlas.Domain.Forums;
 using Atlas.Domain.Forums.Events;
 using Atlas.Domain.PermissionSets.Events;
 using Atlas.Domain.Sites.Events;
@@ -107,14 +109,14 @@ namespace Atlas.Server.Services
             }));
 
             // Forum Group
-            var forumGroup = new ForumGroup(site.Id, "General", 1);
-            _dbContext.ForumGroups.Add(forumGroup);
-            _dbContext.Events.Add(new Event(new ForumGroupCreated
+            var forumGroup = new Category(site.Id, "General", 1);
+            _dbContext.Categories.Add(forumGroup);
+            _dbContext.Events.Add(new Event(new CategoryCreated
             {
                 SiteId = forumGroup.SiteId,
                 MemberId = null,
                 TargetId = forumGroup.Id,
-                TargetType = typeof(ForumGroup).Name,
+                TargetType = typeof(Category).Name,
                 Name = forumGroup.Name,
                 PermissionSetId = forumGroup.PermissionSetId,
                 SortOrder = forumGroup.SortOrder

@@ -4,6 +4,7 @@ using Atlas.Domain;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using Atlas.Domain.Categories;
 
 namespace Atlas.Tests.Data.Rules
 {
@@ -15,7 +16,7 @@ namespace Atlas.Tests.Data.Rules
         {
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new ForumGroupRules(dbContext);
+                var sut = new CategoryRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Forum Group");
 
                 Assert.IsTrue(actual);
@@ -27,7 +28,7 @@ namespace Atlas.Tests.Data.Rules
         {
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new ForumGroupRules(dbContext);
+                var sut = new CategoryRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Forum Group", Guid.NewGuid());
 
                 Assert.IsTrue(actual);
@@ -43,14 +44,14 @@ namespace Atlas.Tests.Data.Rules
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var forumGroup = new ForumGroup(siteId, forumGroupName, 1);
-                dbContext.ForumGroups.Add(forumGroup);
+                var forumGroup = new Category(siteId, forumGroupName, 1);
+                dbContext.Categories.Add(forumGroup);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var sut = new ForumGroupRules(dbContext);
+                var sut = new CategoryRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(siteId, forumGroupName);
 
                 Assert.IsFalse(actual);
@@ -66,16 +67,16 @@ namespace Atlas.Tests.Data.Rules
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var forumGroup1 = new ForumGroup(siteId, "Forum Group 1", 1);
-                var forumGroup2 = new ForumGroup(forumGroupId, siteId, "Forum Group 2", 2);
-                dbContext.ForumGroups.Add(forumGroup1);
-                dbContext.ForumGroups.Add(forumGroup2);
+                var forumGroup1 = new Category(siteId, "Forum Group 1", 1);
+                var forumGroup2 = new Category(forumGroupId, siteId, "Forum Group 2", 2);
+                dbContext.Categories.Add(forumGroup1);
+                dbContext.Categories.Add(forumGroup2);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var sut = new ForumGroupRules(dbContext);
+                var sut = new CategoryRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(siteId, "Forum Group 1", forumGroupId);
 
                 Assert.IsFalse(actual);

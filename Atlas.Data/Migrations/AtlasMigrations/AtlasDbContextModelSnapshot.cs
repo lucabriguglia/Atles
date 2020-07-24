@@ -19,6 +19,42 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+            modelBuilder.Entity("Atlas.Domain.Categories.Category", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<Guid?>("PermissionSetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("RepliesCount")
+                        .HasColumnType("int");
+
+                    b.Property<Guid>("SiteId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<int>("TopicsCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("PermissionSetId");
+
+                    b.HasIndex("SiteId");
+
+                    b.ToTable("ForumGroup");
+                });
+
             modelBuilder.Entity("Atlas.Domain.Event", b =>
                 {
                     b.Property<Guid>("Id")
@@ -53,13 +89,13 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.ToTable("Event");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Forum", b =>
+            modelBuilder.Entity("Atlas.Domain.Forums.Forum", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<Guid>("ForumGroupId")
+                    b.Property<Guid>("CategoryId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("Name")
@@ -82,47 +118,11 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("ForumGroupId");
+                    b.HasIndex("CategoryId");
 
                     b.HasIndex("PermissionSetId");
 
                     b.ToTable("Forum");
-                });
-
-            modelBuilder.Entity("Atlas.Domain.ForumGroup", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("Name")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<Guid?>("PermissionSetId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("RepliesCount")
-                        .HasColumnType("int");
-
-                    b.Property<Guid>("SiteId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("SortOrder")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<int>("TopicsCount")
-                        .HasColumnType("int");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("PermissionSetId");
-
-                    b.HasIndex("SiteId");
-
-                    b.ToTable("ForumGroup");
                 });
 
             modelBuilder.Entity("Atlas.Domain.Member", b =>
@@ -261,29 +261,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.ToTable("Topic");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Event", b =>
-                {
-                    b.HasOne("Atlas.Domain.Member", "Member")
-                        .WithMany("Events")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.NoAction);
-                });
-
-            modelBuilder.Entity("Atlas.Domain.Forum", b =>
-                {
-                    b.HasOne("Atlas.Domain.ForumGroup", "ForumGroup")
-                        .WithMany("Forums")
-                        .HasForeignKey("ForumGroupId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Atlas.Domain.PermissionSet", "PermissionSet")
-                        .WithMany("Forums")
-                        .HasForeignKey("PermissionSetId")
-                        .OnDelete(DeleteBehavior.NoAction);
-                });
-
-            modelBuilder.Entity("Atlas.Domain.ForumGroup", b =>
+            modelBuilder.Entity("Atlas.Domain.Categories.Category", b =>
                 {
                     b.HasOne("Atlas.Domain.PermissionSet", "PermissionSet")
                         .WithMany("ForumGroups")
@@ -295,6 +273,28 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasForeignKey("SiteId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+                });
+
+            modelBuilder.Entity("Atlas.Domain.Event", b =>
+                {
+                    b.HasOne("Atlas.Domain.Member", "Member")
+                        .WithMany("Events")
+                        .HasForeignKey("MemberId")
+                        .OnDelete(DeleteBehavior.NoAction);
+                });
+
+            modelBuilder.Entity("Atlas.Domain.Forums.Forum", b =>
+                {
+                    b.HasOne("Atlas.Domain.Categories.Category", "ForumGroup")
+                        .WithMany("Forums")
+                        .HasForeignKey("CategoryId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Atlas.Domain.PermissionSet", "PermissionSet")
+                        .WithMany("Forums")
+                        .HasForeignKey("PermissionSetId")
+                        .OnDelete(DeleteBehavior.NoAction);
                 });
 
             modelBuilder.Entity("Atlas.Domain.Permission", b =>
@@ -323,7 +323,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
             modelBuilder.Entity("Atlas.Domain.Topic", b =>
                 {
-                    b.HasOne("Atlas.Domain.Forum", "Forum")
+                    b.HasOne("Atlas.Domain.Forums.Forum", "Forum")
                         .WithMany("Topics")
                         .HasForeignKey("ForumId")
                         .OnDelete(DeleteBehavior.NoAction)

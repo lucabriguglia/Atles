@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Atlas.Shared.Models.Admin.Forums
+namespace Atlas.Shared.Admin.Forums.Models
 {
     public class IndexModel
     {
-        public IList<ForumGroupModel> ForumGroups { get; set; } = new List<ForumGroupModel>();
+        public IList<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
         public IList<ForumModel> Forums { get; set; } = new List<ForumModel>();
 
-        public class ForumGroupModel
+        public class CategoryModel
         {
             public Guid Id { get; set; }
             public string Name { get; set; }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using Atlas.Domain.Categories;
+using Atlas.Domain.Forums;
 
 namespace Atlas.Domain
 {
@@ -11,7 +13,7 @@ namespace Atlas.Domain
         public StatusType Status { get; private set; }
 
         public ICollection<Permission> Permissions { get; set; }
-        public ICollection<ForumGroup> ForumGroups { get; set; }
+        public ICollection<Category> ForumGroups { get; set; }
         public ICollection<Forum> Forums { get; set; }
 
         public PermissionSet()

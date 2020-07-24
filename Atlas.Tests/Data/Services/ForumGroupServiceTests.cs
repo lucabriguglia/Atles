@@ -2,7 +2,6 @@
 using Atlas.Data.Caching;
 using Atlas.Data.Services;
 using Atlas.Domain;
-using Atlas.Domain.ForumGroups.Commands;
 using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;
@@ -12,6 +11,9 @@ using NUnit.Framework;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Atlas.Domain.Categories;
+using Atlas.Domain.Categories.Commands;
+using Atlas.Domain.Forums;
 
 namespace Atlas.Tests.Data.Services
 {
@@ -23,25 +25,25 @@ namespace Atlas.Tests.Data.Services
         {
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
-                var command = Fixture.Create<CreateForumGroup>();
+                var command = Fixture.Create<CreateCategory>();
 
                 var cacheManager = new Mock<ICacheManager>();
 
-                var createValidator = new Mock<IValidator<CreateForumGroup>>();
+                var createValidator = new Mock<IValidator<CreateCategory>>();
                 createValidator
                     .Setup(x => x.ValidateAsync(command, new CancellationToken()))
                     .ReturnsAsync(new ValidationResult());
 
-                var updateValidator = new Mock<IValidator<UpdateForumGroup>>();
+                var updateValidator = new Mock<IValidator<UpdateCategory>>();
 
-                var sut = new ForumGroupService(dbContext,
+                var sut = new CategoryService(dbContext,
                     cacheManager.Object, 
                     createValidator.Object, 
                     updateValidator.Object);
 
                 await sut.CreateAsync(command);
 
-                var forumGroup = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == command.Id);
+                var forumGroup = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 createValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
@@ -55,38 +57,38 @@ namespace Atlas.Tests.Data.Services
         public async Task Should_update_forum_group_and_add_event()
         {
             var options = Shared.CreateContextOptions();
-            var forumGroup = Fixture.Create<ForumGroup>();
+            var forumGroup = Fixture.Create<Category>();
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.ForumGroups.Add(forumGroup);
+                dbContext.Categories.Add(forumGroup);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var command = Fixture.Build<UpdateForumGroup>()
+                var command = Fixture.Build<UpdateCategory>()
                         .With(x => x.Id, forumGroup.Id)
                         .With(x => x.SiteId, forumGroup.SiteId)
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
 
-                var createValidator = new Mock<IValidator<CreateForumGroup>>();
+                var createValidator = new Mock<IValidator<CreateCategory>>();
 
-                var updateValidator = new Mock<IValidator<UpdateForumGroup>>();
+                var updateValidator = new Mock<IValidator<UpdateCategory>>();
                 updateValidator
                     .Setup(x => x.ValidateAsync(command, new CancellationToken()))
                     .ReturnsAsync(new ValidationResult());
 
-                var sut = new ForumGroupService(dbContext,
+                var sut = new CategoryService(dbContext,
                     cacheManager.Object,
                     createValidator.Object,
                     updateValidator.Object);
 
                 await sut.UpdateAsync(command);
 
-                var updatedForumGroup = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == command.Id);
+                var updatedForumGroup = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 updateValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
@@ -102,19 +104,19 @@ namespace Atlas.Tests.Data.Services
 
             var siteId = Guid.NewGuid();
 
-            var forumGroup1 = new ForumGroup(siteId, "Forum Group 1", 1);
-            var forumGroup2 = new ForumGroup(siteId, "Forum Group 2", 2);
+            var forumGroup1 = new Category(siteId, "Forum Group 1", 1);
+            var forumGroup2 = new Category(siteId, "Forum Group 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.ForumGroups.Add(forumGroup1);
-                dbContext.ForumGroups.Add(forumGroup2);
+                dbContext.Categories.Add(forumGroup1);
+                dbContext.Categories.Add(forumGroup2);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var command = new MoveForumGroup
+                var command = new MoveCategory
                 {
                     Id = forumGroup2.Id,
                     Direction = Direction.Up,
@@ -122,18 +124,18 @@ namespace Atlas.Tests.Data.Services
                 };
 
                 var cacheManager = new Mock<ICacheManager>();
-                var createValidator = new Mock<IValidator<CreateForumGroup>>();
-                var updateValidator = new Mock<IValidator<UpdateForumGroup>>();
+                var createValidator = new Mock<IValidator<CreateCategory>>();
+                var updateValidator = new Mock<IValidator<UpdateCategory>>();
 
-                var sut = new ForumGroupService(dbContext,
+                var sut = new CategoryService(dbContext,
                     cacheManager.Object,
                     createValidator.Object,
                     updateValidator.Object);
 
                 await sut.MoveAsync(command);
 
-                var updatedForumGroup1 = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == forumGroup1.Id);
-                var updatedForumGroup2 = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == forumGroup2.Id);
+                var updatedForumGroup1 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup1.Id);
+                var updatedForumGroup2 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup2.Id);
 
                 var event1 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forumGroup1.Id);
                 var event2 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forumGroup2.Id);
@@ -152,19 +154,19 @@ namespace Atlas.Tests.Data.Services
 
             var siteId = Guid.NewGuid();
 
-            var forumGroup1 = new ForumGroup(siteId, "Forum Group 1", 1);
-            var forumGroup2 = new ForumGroup(siteId, "Forum Group 2", 2);
+            var forumGroup1 = new Category(siteId, "Forum Group 1", 1);
+            var forumGroup2 = new Category(siteId, "Forum Group 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.ForumGroups.Add(forumGroup1);
-                dbContext.ForumGroups.Add(forumGroup2);
+                dbContext.Categories.Add(forumGroup1);
+                dbContext.Categories.Add(forumGroup2);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var command = new MoveForumGroup
+                var command = new MoveCategory
                 {
                     Id = forumGroup1.Id,
                     Direction = Direction.Down,
@@ -172,18 +174,18 @@ namespace Atlas.Tests.Data.Services
                 };
 
                 var cacheManager = new Mock<ICacheManager>();
-                var createValidator = new Mock<IValidator<CreateForumGroup>>();
-                var updateValidator = new Mock<IValidator<UpdateForumGroup>>();
+                var createValidator = new Mock<IValidator<CreateCategory>>();
+                var updateValidator = new Mock<IValidator<UpdateCategory>>();
 
-                var sut = new ForumGroupService(dbContext,
+                var sut = new CategoryService(dbContext,
                     cacheManager.Object,
                     createValidator.Object,
                     updateValidator.Object);
 
                 await sut.MoveAsync(command);
 
-                var updatedForumGroup1 = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == forumGroup1.Id);
-                var updatedForumGroup2 = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == forumGroup2.Id);
+                var updatedForumGroup1 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup1.Id);
+                var updatedForumGroup2 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup2.Id);
 
                 var event1 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forumGroup1.Id);
                 var event2 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forumGroup2.Id);
@@ -202,20 +204,20 @@ namespace Atlas.Tests.Data.Services
 
             var siteId = Guid.NewGuid();
 
-            var forumGroup1 = new ForumGroup(siteId, "Forum Group 1", 1);
-            var forumGroup2 = new ForumGroup(siteId, "Forum Group 2", 2);
-            var forumGroup3 = new ForumGroup(siteId, "Forum Group 3", 3);
-            var forumGroup4 = new ForumGroup(siteId, "Forum Group 4", 4);
+            var forumGroup1 = new Category(siteId, "Forum Group 1", 1);
+            var forumGroup2 = new Category(siteId, "Forum Group 2", 2);
+            var forumGroup3 = new Category(siteId, "Forum Group 3", 3);
+            var forumGroup4 = new Category(siteId, "Forum Group 4", 4);
 
             var forum1 = new Forum(forumGroup2.Id, "Forum 1", 1);
             var forum2 = new Forum(forumGroup2.Id, "Forum 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.ForumGroups.Add(forumGroup1);
-                dbContext.ForumGroups.Add(forumGroup2);
-                dbContext.ForumGroups.Add(forumGroup3);
-                dbContext.ForumGroups.Add(forumGroup4);
+                dbContext.Categories.Add(forumGroup1);
+                dbContext.Categories.Add(forumGroup2);
+                dbContext.Categories.Add(forumGroup3);
+                dbContext.Categories.Add(forumGroup4);
 
                 dbContext.Forums.Add(forum1);
                 dbContext.Forums.Add(forum2);
@@ -225,26 +227,26 @@ namespace Atlas.Tests.Data.Services
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var command = Fixture.Build<DeleteForumGroup>()
+                var command = Fixture.Build<DeleteCategory>()
                         .With(x => x.Id, forumGroup2.Id)
                         .With(x => x.SiteId, siteId)
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
-                var createValidator = new Mock<IValidator<CreateForumGroup>>();
-                var updateValidator = new Mock<IValidator<UpdateForumGroup>>();
+                var createValidator = new Mock<IValidator<CreateCategory>>();
+                var updateValidator = new Mock<IValidator<UpdateCategory>>();
 
-                var sut = new ForumGroupService(dbContext,
+                var sut = new CategoryService(dbContext,
                     cacheManager.Object,
                     createValidator.Object,
                     updateValidator.Object);
 
                 await sut.DeleteAsync(command);
 
-                var forumGroup1Reordered = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == forumGroup1.Id);
-                var forumGroup2Deleted = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var forumGroup3Reordered = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == forumGroup3.Id);
-                var forumGroup4Reordered = await dbContext.ForumGroups.FirstOrDefaultAsync(x => x.Id == forumGroup4.Id);
+                var forumGroup1Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup1.Id);
+                var forumGroup2Deleted = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
+                var forumGroup3Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup3.Id);
+                var forumGroup4Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup4.Id);
 
                 var forum1Deleted = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum1.Id);
                 var forum2Deleted = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum2.Id);

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Atlas.Domain.Categories;
 
 namespace Atlas.Domain
 {
@@ -9,7 +10,7 @@ namespace Atlas.Domain
         public string Name { get; private set; }
         public string Title { get; private set; }
 
-        public virtual ICollection<ForumGroup> ForumGroups { get; set; }
+        public virtual ICollection<Category> ForumGroups { get; set; }
 
         public Site()
         {

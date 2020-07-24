@@ -2,12 +2,12 @@
 using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Server.Services;
-using Atlas.Shared.Models.Admin.Forums;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Atlas.Domain.Forums.Commands;
 using Atlas.Domain.Forums;
-using Atlas.Shared.Forums;
+using Atlas.Shared.Admin.Forums;
+using Atlas.Shared.Admin.Forums.Models;
 
 namespace Atlas.Server.Controllers.Admin
 {
@@ -17,18 +17,18 @@ namespace Atlas.Server.Controllers.Admin
     public class ForumsController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IForumService _forumGroupService;
-        private readonly IForumRules _forumGroupRules;
+        private readonly IForumService _forumService;
+        private readonly IForumRules _forumRules;
         private readonly IForumModelBuilder _modelBuilder;
 
         public ForumsController(IContextService contextService,
-            IForumService forumGroupService,
-            IForumRules forumGroupRules,
+            IForumService forumService,
+            IForumRules forumRules,
             IForumModelBuilder modelBuilder)
         {
             _contextService = contextService;
-            _forumGroupService = forumGroupService;
-            _forumGroupRules = forumGroupRules;
+            _forumService = forumService;
+            _forumRules = forumRules;
             _modelBuilder = modelBuilder;
         }
 
@@ -40,12 +40,12 @@ namespace Atlas.Server.Controllers.Admin
             return await _modelBuilder.BuildIndexModelAsync(site.Id);
         }
 
-        [HttpGet("index-model/{forumGroupId}")]
-        public async Task<IndexModel> Index(Guid forumGroupId)
+        [HttpGet("index-model/{categoryId}")]
+        public async Task<IndexModel> Index(Guid categoryId)
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildIndexModelAsync(site.Id, forumGroupId);
+            return await _modelBuilder.BuildIndexModelAsync(site.Id, categoryId);
         }
 
         [HttpGet("create")]
@@ -56,12 +56,12 @@ namespace Atlas.Server.Controllers.Admin
             return await _modelBuilder.BuildCreateFormModelAsync(site.Id);
         }
 
-        [HttpGet("create/{forumGroupId}")]
-        public async Task<FormModel> Create(Guid forumGroupId)
+        [HttpGet("create/{categoryId}")]
+        public async Task<FormModel> Create(Guid categoryId)
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildCreateFormModelAsync(site.Id, forumGroupId);
+            return await _modelBuilder.BuildCreateFormModelAsync(site.Id, categoryId);
         }
 
         [HttpPost("save")]
@@ -72,14 +72,14 @@ namespace Atlas.Server.Controllers.Admin
 
             var command = new CreateForum
             {
-                ForumGroupId = model.ForumGroupId,
+                CategoryId = model.CategoryId,
                 Name = model.Name,
                 PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
                 SiteId = site.Id,
                 MemberId = member.Id
             };
 
-            await _forumGroupService.CreateAsync(command);
+            await _forumService.CreateAsync(command);
 
             return Ok();
         }
@@ -108,14 +108,14 @@ namespace Atlas.Server.Controllers.Admin
             var command = new UpdateForum
             {
                 Id = model.Id,
-                ForumGroupId = model.ForumGroupId,
+                CategoryId = model.CategoryId,
                 Name = model.Name,
                 PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
                 SiteId = site.Id,
                 MemberId = member.Id
             };
 
-            await _forumGroupService.UpdateAsync(command);
+            await _forumService.UpdateAsync(command);
 
             return Ok();
         }
@@ -134,7 +134,7 @@ namespace Atlas.Server.Controllers.Admin
                 Direction = Direction.Up
             };
 
-            await _forumGroupService.MoveAsync(command);
+            await _forumService.MoveAsync(command);
 
             return Ok();
         }
@@ -153,7 +153,7 @@ namespace Atlas.Server.Controllers.Admin
                 Direction = Direction.Down
             };
 
-            await _forumGroupService.MoveAsync(command);
+            await _forumService.MoveAsync(command);
 
             return Ok();
         }
@@ -171,24 +171,24 @@ namespace Atlas.Server.Controllers.Admin
                 MemberId = member.Id
             };
 
-            await _forumGroupService.DeleteAsync(command);
+            await _forumService.DeleteAsync(command);
 
             return Ok();
         }
 
-        [HttpGet("is-name-unique/{forumGroupId}/{name}")]
-        public async Task<IActionResult> IsNameUnique(Guid forumGroupId, string name)
+        [HttpGet("is-name-unique/{categoryId}/{name}")]
+        public async Task<IActionResult> IsNameUnique(Guid categoryId, string name)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _forumGroupRules.IsNameUniqueAsync(forumGroupId, name);
+            var isNameUnique = await _forumRules.IsNameUniqueAsync(categoryId, name);
             return Ok(isNameUnique);
         }
 
-        [HttpGet("is-name-unique/{forumGroupId}/{name}/{id}")]
-        public async Task<IActionResult> IsNameUnique(Guid forumGroupId, string name, Guid id)
+        [HttpGet("is-name-unique/{categoryId}/{name}/{id}")]
+        public async Task<IActionResult> IsNameUnique(Guid categoryId, string name, Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _forumGroupRules.IsNameUniqueAsync(forumGroupId, name, id);
+            var isNameUnique = await _forumRules.IsNameUniqueAsync(categoryId, name, id);
             return Ok(isNameUnique);
         }
     }

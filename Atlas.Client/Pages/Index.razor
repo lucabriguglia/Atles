@@ -16,10 +16,10 @@
 else
 {
     <div class="row">
-        @foreach (var forumGroup in Model.ForumGroups)
+        @foreach (var forumGroup in Model.Categories)
         {
         <div class="col-md-12">
-            @if (Model.ForumGroups.Count > 1)
+            @if (Model.Categories.Count > 1)
             {
                 <h3 class="mb-2">@forumGroup.Name</h3>
             }

@@ -1,12 +1,13 @@
 ﻿using Atlas.Domain;
+using Atlas.Domain.Categories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Atlas.Data.Configurations
 {
-    public class ForumGroupConfiguration : IEntityTypeConfiguration<ForumGroup>
+    public class ForumGroupConfiguration : IEntityTypeConfiguration<Category>
     {
-        public void Configure(EntityTypeBuilder<ForumGroup> builder)
+        public void Configure(EntityTypeBuilder<Category> builder)
         {
             builder.ToTable("ForumGroup");
 

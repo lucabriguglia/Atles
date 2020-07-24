@@ -2,6 +2,7 @@
 using AutoFixture;
 using NUnit.Framework;
 using System;
+using Atlas.Domain.Forums;
 
 namespace Atlas.Tests.Domain.Forums
 {
@@ -18,7 +19,7 @@ namespace Atlas.Tests.Domain.Forums
 
             var sut = new Forum(forumGroupId, name, sortOrder, permissionSetId);
 
-            Assert.AreEqual(forumGroupId, sut.ForumGroupId, nameof(sut.ForumGroupId));
+            Assert.AreEqual(forumGroupId, sut.CategoryId, nameof(sut.CategoryId));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
             Assert.AreEqual(sortOrder, sut.SortOrder, nameof(sut.SortOrder));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
@@ -36,7 +37,7 @@ namespace Atlas.Tests.Domain.Forums
             var sut = new Forum(id, forumGroupId, name, sortOrder, permissionSetId);
 
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
-            Assert.AreEqual(forumGroupId, sut.ForumGroupId, nameof(sut.ForumGroupId));
+            Assert.AreEqual(forumGroupId, sut.CategoryId, nameof(sut.CategoryId));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
             Assert.AreEqual(sortOrder, sut.SortOrder, nameof(sut.SortOrder));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
@@ -53,7 +54,7 @@ namespace Atlas.Tests.Domain.Forums
 
             sut.UpdateDetails(forumGroupId, name, permissionSetId);
 
-            Assert.AreEqual(forumGroupId, sut.ForumGroupId, nameof(sut.ForumGroupId));
+            Assert.AreEqual(forumGroupId, sut.CategoryId, nameof(sut.CategoryId));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
         }

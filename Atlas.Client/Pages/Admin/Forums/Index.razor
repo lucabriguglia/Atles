@@ -1,13 +1,13 @@
 ﻿@page "/admin/forums"
-@page "/admin/forums/{forumGroupId:guid}"
-@using Atlas.Shared.Models.Admin.Forums
+@page "/admin/forums/{categoryId:guid}"
+@using Atlas.Shared.Admin.Forums.Models
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/admin">Home</a></li>
-        <li class="breadcrumb-item"><a href="/admin/forum-groups">Forum Groups</a></li>
+        <li class="breadcrumb-item"><a href="/admin/categories">Categories</a></li>
         <li class="breadcrumb-item active" aria-current="page">@Title</li>
     </ol>
 </nav>
@@ -17,7 +17,7 @@
         <h3 class="mb-3">@Title</h3>
     </div>
     <div class="col-md-6 text-right mb-3">
-        <a href="/admin/forums/create/@ForumGroupId" class="btn btn-primary" role="button">Create New</a>
+        <a href="/admin/forums/create/@CategoryId" class="btn btn-primary" role="button">Create New</a>
     </div>
 </div>
 
@@ -26,12 +26,12 @@
     <div class="row">
         <div class="col-sm-6 input-group mb-3">
             <div class="input-group-prepend">
-                <label class="input-group-text" for="forumGroupId">Forum Group</label>
+                <label class="input-group-text" for="categoryId">Category</label>
             </div>
-            <select class="custom-select" id="forumGroupId" @onchange="ForumGroupChanged">
-                @foreach (var option in Model.ForumGroups)
+            <select class="custom-select" id="categoryId" @onchange="ForumGroupChanged">
+                @foreach (var option in Model.Categories)
                 {
-                    <option value=@option.Id selected=@(ForumGroupId == option.Id)>@option.Name</option>
+                    <option value=@option.Id selected=@(CategoryId == option.Id)>@option.Name</option>
                 }
             </select>
         </div>
@@ -98,23 +98,23 @@ else
 
 @code {
     private const string Title = "Forums";
-    [Parameter] public Guid? ForumGroupId { get; set; } = null;
+    [Parameter] public Guid? CategoryId { get; set; } = null;
     private IndexModel Model { get; set; }
     private Guid DeleteId { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var requestUri = ForumGroupId == null
+        var requestUri = CategoryId == null
             ? $"api/admin/forums/index-model"
-            : $"api/admin/forums/index-model/{ForumGroupId}";
+            : $"api/admin/forums/index-model/{CategoryId}";
 
         Model = await Http.GetFromJsonAsync<IndexModel>(requestUri);
     }
 
     private async Task ForumGroupChanged(ChangeEventArgs args)
     {
-        ForumGroupId = new Guid(args.Value.ToString());
-        Model = await Http.GetFromJsonAsync<IndexModel>($"api/admin/forums/index-model/{ForumGroupId}");
+        CategoryId = new Guid(args.Value.ToString());
+        Model = await Http.GetFromJsonAsync<IndexModel>($"api/admin/forums/index-model/{CategoryId}");
         StateHasChanged();
     }
 

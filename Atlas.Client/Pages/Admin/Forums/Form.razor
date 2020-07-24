@@ -1,4 +1,4 @@
-﻿@using Atlas.Shared.Models.Admin.Forums
+﻿@using Atlas.Shared.Admin.Forums.Models
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 
@@ -7,9 +7,9 @@
         <EditForm EditContext="@_editContext" OnSubmit="OnSubmit">
             <DataAnnotationsValidator />
             <div class="form-group">
-                <label for="forumGroupId" class="control-label">Forum Group</label>
-                <select id="forumGroupId" @bind="Model.Forum.ForumGroupId" class="form-control">
-                    @foreach (var item in Model.ForumGroups)
+                <label for="forumGroupId" class="control-label">Category</label>
+                <select id="forumGroupId" @bind="Model.Forum.CategoryId" class="form-control">
+                    @foreach (var item in Model.Categories)
                     {
                         <option value="@item.Id">@item.Name</option>
                     }
@@ -23,7 +23,7 @@
             <div class="form-group">
                 <label for="permissionSetId" class="control-label">Permission Set</label>
                 <select id="permissionSetId" @bind="Model.Forum.PermissionSetId" class="form-control">
-                    <option value="@Guid.Empty" selected="">&lt;inherit from forum group&gt;</option>
+                    <option value="@Guid.Empty" selected="">&lt;inherit from category&gt;</option>
                     @foreach (var item in Model.PermissionSets)
                     {
                         <option value="@item.Id">@item.Name</option>
@@ -84,7 +84,7 @@
         var nameProp = editContext.Model.GetType().GetProperty("Name");
         var nameVal = nameProp.GetValue(editContext.Model).ToString();
 
-        var isNameUnique = nameVal == _currentName || await Http.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{Model.Forum.ForumGroupId}/{nameVal}");
+        var isNameUnique = nameVal == _currentName || await Http.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{Model.Forum.CategoryId}/{nameVal}");
 
         return isNameUnique;
     }
@@ -96,6 +96,6 @@
 
     private void Cancel()
     {
-        NavigationManager.NavigateTo($"/admin/forums/{Model.Forum.ForumGroupId}");
+        NavigationManager.NavigateTo($"/admin/forums/{Model.Forum.CategoryId}");
     }
 }

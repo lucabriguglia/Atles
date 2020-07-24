@@ -4,6 +4,7 @@ using Atlas.Domain;
 using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
+using Atlas.Domain.Forums;
 
 namespace Atlas.Tests.Data.Rules
 {

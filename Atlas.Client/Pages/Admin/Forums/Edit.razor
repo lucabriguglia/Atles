@@ -1,5 +1,5 @@
 ﻿@page "/admin/forums/edit/{id:guid}"
-@using Atlas.Shared.Models.Admin.Forums
+@using Atlas.Shared.Admin.Forums.Models
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
@@ -37,6 +37,6 @@ else
     private async Task UpdateAsync()
     {
         await Http.PostAsJsonAsync($"api/admin/forums/update", Model.Forum);
-        NavigationManager.NavigateTo($"/admin/forums/{Model.Forum.ForumGroupId}");
+        NavigationManager.NavigateTo($"/admin/forums/{Model.Forum.CategoryId}");
     }
 }

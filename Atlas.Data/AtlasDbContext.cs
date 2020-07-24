@@ -1,5 +1,7 @@
 ﻿using System.Reflection;
 using Atlas.Domain;
+using Atlas.Domain.Categories;
+using Atlas.Domain.Forums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data
@@ -20,7 +22,7 @@ namespace Atlas.Data
 
         public DbSet<Event> Events { get; set; }
         public DbSet<Forum> Forums { get; set; }
-        public DbSet<ForumGroup> ForumGroups { get; set; }
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<PermissionSet> PermissionSets { get; set; }
         public DbSet<Permission> Permissions { get; set; }

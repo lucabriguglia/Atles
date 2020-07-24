@@ -1,8 +1,8 @@
-﻿using Atlas.Shared.Models.Admin.Forums;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Atlas.Shared.Admin.Forums.Models;
 
-namespace Atlas.Shared.Forums
+namespace Atlas.Shared.Admin.Forums
 {
     public interface IForumModelBuilder
     {

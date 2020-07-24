@@ -11,7 +11,7 @@ namespace Atlas.Domain.Forums.Validators
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Forum name is required.")
                 .Length(1, 100).WithMessage("Forum name length must be between 1 and 100 characters.")
-                .MustAsync((c, p, cancellation) => rules.IsNameUniqueAsync(c.ForumGroupId, p, c.Id))
+                .MustAsync((c, p, cancellation) => rules.IsNameUniqueAsync(c.CategoryId, p, c.Id))
                     .WithMessage(c => $"A forum with name {c.Name} already exists.");
 
             RuleFor(c => c.PermissionSetId)

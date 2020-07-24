@@ -1,10 +1,10 @@
 ﻿using Atlas.Domain;
-using Atlas.Shared.Forums;
-using Atlas.Shared.Models.Admin.Forums;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Shared.Admin.Forums;
+using Atlas.Shared.Admin.Forums.Models;
 
 namespace Atlas.Data.Builders.Admin
 {
@@ -17,51 +17,51 @@ namespace Atlas.Data.Builders.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<IndexModel> BuildIndexModelAsync(Guid siteId, Guid? forumGroupId = null)
+        public async Task<IndexModel> BuildIndexModelAsync(Guid siteId, Guid? categoryId = null)
         {
-            var forumGroups = await _dbContext.ForumGroups
+            var categories = await _dbContext.Categories
                 .Include(x => x.PermissionSet)
                 .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
-            if (!forumGroups.Any())
+            if (!categories.Any())
             {
-                throw new ApplicationException("No Forum Groups found");
+                throw new ApplicationException("No Categories found.");
             }
 
-            var currentForumGroup = forumGroupId == null
-                ? forumGroups.FirstOrDefault()
-                : forumGroups.FirstOrDefault(x => x.Id == forumGroupId);
+            var currentCategory = categoryId == null
+                ? categories.FirstOrDefault()
+                : categories.FirstOrDefault(x => x.Id == categoryId);
 
-            if (currentForumGroup == null)
+            if (currentCategory == null)
             {
-                throw new ApplicationException("Forum Group not found");
+                throw new ApplicationException("Category not found.");
             }
 
             var forums = await _dbContext.Forums
                 .Include(x => x.PermissionSet)
-                .Where(x => x.ForumGroupId == currentForumGroup.Id && x.Status != StatusType.Deleted)
+                .Where(x => x.CategoryId == currentCategory.Id && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
             var result = new IndexModel();
 
-            foreach (var forumGroup in forumGroups)
+            foreach (var category in categories)
             {
-                result.ForumGroups.Add(new IndexModel.ForumGroupModel
+                result.Categories.Add(new IndexModel.CategoryModel
                 {
-                    Id = forumGroup.Id,
-                    Name = forumGroup.Name
+                    Id = category.Id,
+                    Name = category.Name
                 });
             }
 
             foreach (var forum in forums)
             {
                 var permissionSetName = !forum.HasPermissionSet()
-                    ? !currentForumGroup.HasPermissionSet()
+                    ? !currentCategory.HasPermissionSet()
                         ? "Default (from Site)"
-                        : $"{currentForumGroup.PermissionSetName()} (from Group)"
+                        : $"{currentCategory.PermissionSetName()} (from Category)"
                     : forum.PermissionSetName();
 
                 result.Forums.Add(new IndexModel.ForumModel
@@ -78,31 +78,31 @@ namespace Atlas.Data.Builders.Admin
             return result;
         }
 
-        public async Task<FormModel> BuildCreateFormModelAsync(Guid siteId, Guid? forumGroupId = null)
+        public async Task<FormModel> BuildCreateFormModelAsync(Guid siteId, Guid? categoryId = null)
         {
             var result = new FormModel();
 
-            var forumGroups = await _dbContext.ForumGroups
+            var categories = await _dbContext.Categories
                 .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
-            foreach (var forumGroup in forumGroups)
+            foreach (var category in categories)
             {
-                result.ForumGroups.Add(new FormModel.ForumGroupModel
+                result.Categories.Add(new FormModel.CategoryModel
                 {
-                    Id = forumGroup.Id,
-                    Name = forumGroup.Name
+                    Id = category.Id,
+                    Name = category.Name
                 });
             }
 
-            var selectedForumGroupId = forumGroupId == null 
-                ? forumGroups.FirstOrDefault().Id 
-                : forumGroupId.Value;
+            var selectedCategoryId = categoryId == null 
+                ? categories.FirstOrDefault().Id 
+                : categoryId.Value;
 
             result.Forum = new FormModel.ForumModel
             {
-                ForumGroupId = selectedForumGroupId
+                CategoryId = selectedCategoryId
             };
 
             var permissionSets = await _dbContext.PermissionSets
@@ -138,23 +138,23 @@ namespace Atlas.Data.Builders.Admin
                 Forum = new FormModel.ForumModel
                 {
                     Id = forum.Id,
-                    ForumGroupId = forum.ForumGroupId,
+                    CategoryId = forum.CategoryId,
                     Name = forum.Name,
                     PermissionSetId = forum.PermissionSetId ?? Guid.Empty
                 }
             };
 
-            var forumGroups = await _dbContext.ForumGroups
+            var categories = await _dbContext.Categories
                 .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
-            foreach (var forumGroup in forumGroups)
+            foreach (var category in categories)
             {
-                result.ForumGroups.Add(new FormModel.ForumGroupModel
+                result.Categories.Add(new FormModel.CategoryModel
                 {
-                    Id = forumGroup.Id,
-                    Name = forumGroup.Name
+                    Id = category.Id,
+                    Name = category.Name
                 });
             }
 

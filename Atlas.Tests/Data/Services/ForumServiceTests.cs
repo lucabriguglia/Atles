@@ -12,6 +12,7 @@ using NUnit.Framework;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Atlas.Domain.Forums;
 
 namespace Atlas.Tests.Data.Services
 {
@@ -67,7 +68,7 @@ namespace Atlas.Tests.Data.Services
             {
                 var command = Fixture.Build<UpdateForum>()
                         .With(x => x.Id, forum.Id)
-                        .With(x => x.ForumGroupId, forum.ForumGroupId)
+                        .With(x => x.CategoryId, forum.CategoryId)
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();

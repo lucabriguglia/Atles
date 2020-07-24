@@ -24,28 +24,28 @@ namespace Atlas.Data.Builders.Site
         {
             var model = new IndexPageModel();
 
-            model.ForumGroups = await _cacheManager.GetOrSetAsync(CacheKeys.ForumGroups(siteId), async () =>
+            model.Categories = await _cacheManager.GetOrSetAsync(CacheKeys.Categories(siteId), async () =>
             {
-                var forumGroups = await _dbContext.ForumGroups
+                var forumGroups = await _dbContext.Categories
                     .Include(x => x.PermissionSet)
                     .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
                     .OrderBy(x => x.SortOrder)
                     .ToListAsync();
 
-                return forumGroups.Select(forumGroup => new IndexPageModel.ForumGroupModel
+                return forumGroups.Select(forumGroup => new IndexPageModel.CategoryModel
                 {
                     Id = forumGroup.Id,
                     Name = forumGroup.Name
                 }).ToList();
             });
 
-            foreach (var forumGroup in model.ForumGroups)
+            foreach (var forumGroup in model.Categories)
             {
                 forumGroup.Forums = await _cacheManager.GetOrSetAsync(CacheKeys.Forums(forumGroup.Id), async () =>
                 {
                     var forums = await _dbContext.Forums
                         .Include(x => x.PermissionSet)
-                        .Where(x => x.ForumGroupId == forumGroup.Id && x.Status == StatusType.Published)
+                        .Where(x => x.CategoryId == forumGroup.Id && x.Status == StatusType.Published)
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
 

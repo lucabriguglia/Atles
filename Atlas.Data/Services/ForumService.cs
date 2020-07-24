@@ -35,13 +35,13 @@ namespace Atlas.Data.Services
             await _createValidator.ValidateCommandAsync(command);
 
             var forumsCount = await _dbContext.Forums
-                .Where(x => x.ForumGroupId == command.ForumGroupId && x.Status != StatusType.Deleted)
+                .Where(x => x.CategoryId == command.CategoryId && x.Status != StatusType.Deleted)
                 .CountAsync();
 
             var sortOrder = forumsCount + 1;
 
             var forum = new Forum(command.Id,
-                command.ForumGroupId,
+                command.CategoryId,
                 command.Name,
                 sortOrder,
                 command.PermissionSetId);
@@ -54,14 +54,14 @@ namespace Atlas.Data.Services
                 TargetId = forum.Id,
                 TargetType = typeof(Forum).Name,
                 Name = forum.Name,
-                ForumGorupId = forum.ForumGroupId,
+                ForumGorupId = forum.CategoryId,
                 PermissionSetId = forum.PermissionSetId,
                 SortOrder = forum.SortOrder
             }));
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.Forums(command.ForumGroupId));
+            _cacheManager.Remove(CacheKeys.Forums(command.CategoryId));
         }
 
         public async Task UpdateAsync(UpdateForum command)
@@ -78,34 +78,34 @@ namespace Atlas.Data.Services
                 throw new DataException($"Forum with Id {command.Id} not found.");
             }
 
-            var originalForumGroupId = forum.ForumGroupId;
+            var originalCategoryId = forum.CategoryId;
 
-            if (originalForumGroupId != command.ForumGroupId)
+            if (originalCategoryId != command.CategoryId)
             {
-                await ReorderForumsInForumGroup(originalForumGroupId, command.Id, command.SiteId, command.MemberId);
+                await ReorderForumsInForumGroup(originalCategoryId, command.Id, command.SiteId, command.MemberId);
 
                 var newGroupForumsCount = await _dbContext.Forums
-                    .Where(x => x.ForumGroupId == command.ForumGroupId && x.Status != StatusType.Deleted)
+                    .Where(x => x.CategoryId == command.CategoryId && x.Status != StatusType.Deleted)
                     .CountAsync();
 
                 forum.Reorder(newGroupForumsCount + 1);
             }
 
-            forum.UpdateDetails(command.ForumGroupId, command.Name, command.PermissionSetId);
+            forum.UpdateDetails(command.CategoryId, command.Name, command.PermissionSetId);
             _dbContext.Events.Add(new Event(new ForumUpdated
             {
                 SiteId = command.SiteId,
                 MemberId = command.MemberId,
                 TargetId = forum.Id,
                 TargetType = typeof(Forum).Name,
-                ForumGroupId = forum.ForumGroupId,
+                CategoryId = forum.CategoryId,
                 Name = forum.Name,
                 PermissionSetId = forum.PermissionSetId
             }));
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.Forums(command.ForumGroupId));
+            _cacheManager.Remove(CacheKeys.Forums(command.CategoryId));
         }
 
         public async Task MoveAsync(MoveForum command)
@@ -119,8 +119,6 @@ namespace Atlas.Data.Services
             {
                 throw new DataException($"Forum with Id {command.Id} not found.");
             }
-
-            var currentSortOrder = forum.SortOrder;
 
             if (command.Direction == Direction.Up)
             {
@@ -144,7 +142,7 @@ namespace Atlas.Data.Services
 
             var adjacentForum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x => 
-                    x.ForumGroupId == forum.ForumGroupId && 
+                    x.CategoryId == forum.CategoryId && 
                     x.SortOrder == sortOrderToReplace && 
                     x.Status != StatusType.Deleted);
 
@@ -168,7 +166,7 @@ namespace Atlas.Data.Services
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.Forums(forum.ForumGroupId));
+            _cacheManager.Remove(CacheKeys.Forums(forum.CategoryId));
         }
 
         public async Task DeleteAsync(DeleteForum command)
@@ -192,18 +190,18 @@ namespace Atlas.Data.Services
                 TargetType = typeof(Forum).Name
             }));
 
-            await ReorderForumsInForumGroup(forum.ForumGroupId, command.Id, command.SiteId, command.MemberId);
+            await ReorderForumsInForumGroup(forum.CategoryId, command.Id, command.SiteId, command.MemberId);
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.Forums(forum.ForumGroupId));
+            _cacheManager.Remove(CacheKeys.Forums(forum.CategoryId));
         }
 
         private async Task ReorderForumsInForumGroup(Guid forumGroupId, Guid forumIdToExclude, Guid siteId, Guid memberId)
         {
             var otherForums = await _dbContext.Forums
                 .Where(x =>
-                    x.ForumGroupId == forumGroupId &&
+                    x.CategoryId == forumGroupId &&
                     x.Id != forumIdToExclude &&
                     x.Status != StatusType.Deleted)
                 .ToListAsync();
