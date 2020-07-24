@@ -1,10 +1,7 @@
 ﻿using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
-using Atlas.Domain.Forums;
-using Atlas.Domain.Forums.Events;
 using Atlas.Domain.Topics;
 using Atlas.Domain.Topics.Commands;
 using FluentValidation;

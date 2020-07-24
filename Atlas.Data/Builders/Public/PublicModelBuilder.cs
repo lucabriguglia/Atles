@@ -67,6 +67,7 @@ namespace Atlas.Data.Builders.Public
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
                     x.Id == forumId &&
+                    x.Category.SiteId == siteId &&
                     x.Status != StatusType.Deleted);
 
             if (forum == null)
@@ -105,11 +106,37 @@ namespace Atlas.Data.Builders.Public
             return result;
         }
 
-        public async Task<TopicPageModel> BuildNewTopicPageModelAsync(Guid siteId, Guid forumId)
+        public async Task<PostPageModel> BuildPostPageModelAsync(Guid siteId, Guid forumId)
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
                     x.Id == forumId &&
+                    x.Category.SiteId == siteId &&
+                    x.Status != StatusType.Deleted);
+
+            if (forum == null)
+            {
+                return null;
+            }
+
+            var result = new PostPageModel
+            {
+                Forum = new PostPageModel.ForumModel
+                {
+                    Id = forum.Id,
+                    Name = forum.Name
+                }
+            };
+
+            return result;
+        }
+
+        public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId)
+        {
+            var forum = await _dbContext.Forums
+                .FirstOrDefaultAsync(x =>
+                    x.Id == forumId &&
+                    x.Category.SiteId == siteId &&
                     x.Status != StatusType.Deleted);
 
             if (forum == null)
@@ -125,6 +152,44 @@ namespace Atlas.Data.Builders.Public
                     Name = forum.Name
                 }
             };
+
+            var topic = await _dbContext.Topics
+                .Include(x => x.Member)
+                .FirstOrDefaultAsync(x =>
+                    x.ForumId == forumId &&
+                    x.Id == topicId &&
+                    x.Status == StatusType.Published);
+
+            if (topic == null)
+            {
+                return null;
+            }
+
+            result.Topic = new TopicPageModel.TopicModel
+            {
+                Id = topic.Id,
+                Title = topic.Title,
+                Content = topic.Content,
+                MemberId = topic.Member.Id,
+                MemberDisplayName = topic.Member.DisplayName
+            };
+
+            var replies = await _dbContext.Replies
+                .Where(x => 
+                    x.TopicId == topicId && 
+                    x.Status == StatusType.Published)
+                .ToListAsync();
+
+            foreach (var reply in replies)
+            {
+                result.Replies.Add(new TopicPageModel.ReplyModel
+                {
+                    Id = reply.Id,
+                    Content = reply.Content,
+                    MemberId = reply.Member.Id,
+                    MemberDisplayName = reply.Member.DisplayName
+                });
+            }
 
             return result;
         }
