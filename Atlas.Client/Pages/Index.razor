@@ -18,30 +18,33 @@ else
     <div class="row">
         @foreach (var forumGroup in Model.ForumGroups)
         {
-            <div class="col-md-12">
+        <div class="col-md-12">
+            @if (Model.ForumGroups.Count > 1)
+            {
                 <h3 class="mb-2">@forumGroup.Name</h3>
-                <table class="table table-bordered">
-                    <thead>
+            }
+            <table class="table table-bordered">
+                <thead>
+                    <tr>
+                        <th scope="col" class="col-md-4">Forum</th>
+                        <th scope="col" class="col-md-2 text-center">Topics</th>
+                        <th scope="col" class="col-md-2 text-center">Replies</th>
+                        <th scope="col" class="col-md-4">&nbsp;</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var forum in forumGroup.Forums)
+                    {
                         <tr>
-                            <th scope="col" class="col-md-4">Forum</th>
-                            <th scope="col" class="col-md-2 text-center">Topics</th>
-                            <th scope="col" class="col-md-2 text-center">Replies</th>
-                            <th scope="col" class="col-md-4">&nbsp;</th>
+                            <td><a href="/forum/@forum.Id">@forum.Name</a></td>
+                            <td class="text-center">@forum.TotalTopics</td>
+                            <td class="text-center">@forum.TotalReplies</td>
+                            <td>&nbsp;</td>
                         </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var forum in forumGroup.Forums)
-                        {
-                            <tr>
-                                <td><a href="/forum/@forum.Id">@forum.Name</a></td>
-                                <td class="text-center">@forum.TotalTopics</td>
-                                <td class="text-center">@forum.TotalReplies</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    }
+                </tbody>
+            </table>
+        </div>
         }
     </div>
 }
