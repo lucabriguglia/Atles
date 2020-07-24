@@ -22,22 +22,22 @@ namespace Atlas.Data.Builders.Public
 
         public async Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId)
         {
-            var model = new IndexPageModel();
-
-            model.Categories = await _cacheManager.GetOrSetAsync(CacheKeys.Categories(siteId), async () =>
+            var model = new IndexPageModel
             {
-                var categories = await _dbContext.Categories
-                    .Include(x => x.PermissionSet)
-                    .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
-                    .OrderBy(x => x.SortOrder)
-                    .ToListAsync();
-
-                return categories.Select(category => new IndexPageModel.CategoryModel
+                Categories = await _cacheManager.GetOrSetAsync(CacheKeys.Categories(siteId), async () =>
                 {
-                    Id = category.Id,
-                    Name = category.Name
-                }).ToList();
-            });
+                    var categories = await _dbContext.Categories
+                        .Include(x => x.PermissionSet)
+                        .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
+                        .OrderBy(x => x.SortOrder)
+                        .ToListAsync();
+
+                    return categories.Select(category => new IndexPageModel.CategoryModel
+                    {
+                        Id = category.Id, Name = category.Name
+                    }).ToList();
+                })
+            };
 
             foreach (var category in model.Categories)
             {
@@ -77,6 +77,49 @@ namespace Atlas.Data.Builders.Public
             var result = new ForumPageModel
             {
                 Forum = new ForumPageModel.ForumModel
+                {
+                    Id = forum.Id,
+                    Name = forum.Name
+                }
+            };
+
+            var topics = await _dbContext.Topics
+                .Include(x => x.Member)
+                .Where(x => 
+                    x.ForumId == forum.Id && 
+                    x.Status == StatusType.Published)
+                .ToListAsync();
+
+            foreach (var topic in topics)
+            {
+                result.Topics.Add(new ForumPageModel.TopicModel
+                {
+                    Id = topic.Id,
+                    Title = topic.Title,
+                    TotalReplies = topic.RepliesCount,
+                    MemberId = topic.Member.Id,
+                    MemberDisplayName = topic.Member.DisplayName
+                });
+            }
+
+            return result;
+        }
+
+        public async Task<TopicPageModel> BuildNewTopicPageModelAsync(Guid siteId, Guid forumId)
+        {
+            var forum = await _dbContext.Forums
+                .FirstOrDefaultAsync(x =>
+                    x.Id == forumId &&
+                    x.Status != StatusType.Deleted);
+
+            if (forum == null)
+            {
+                return null;
+            }
+
+            var result = new TopicPageModel
+            {
+                Forum = new TopicPageModel.ForumModel
                 {
                     Id = forum.Id,
                     Name = forum.Name

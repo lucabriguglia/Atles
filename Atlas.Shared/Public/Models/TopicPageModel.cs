@@ -1,12 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
 namespace Atlas.Shared.Public.Models
 {
-    public class ForumPageModel
+    public class TopicPageModel
     {
         public ForumModel Forum { get; set; } = new ForumModel();
-        public IList<TopicModel> Topics { get; set; } = new List<TopicModel>();
+        public TopicModel Topic { get; set; }
 
         public class ForumModel
         {
@@ -17,10 +17,13 @@ namespace Atlas.Shared.Public.Models
         public class TopicModel
         {
             public Guid Id { get; set; }
+
+            [Required]
+            [StringLength(100)]
             public string Title { get; set; }
-            public int TotalReplies { get; set; }
-            public Guid MemberId { get; set; }
-            public string MemberDisplayName { get; set; }
+
+            [Required]
+            public string Content { get; set; }
         }
     }
 }

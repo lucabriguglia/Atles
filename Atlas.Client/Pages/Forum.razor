@@ -1,22 +1,55 @@
 ﻿@*@layout PublicLayout*@
 @page "/forum/{id:guid}"
 @using Atlas.Shared.Public.Models
-@inject AnonymousService service;
+@inject AnonymousService Service;
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Model?.Forum.Name</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3 class="mb-3">@Model?.Forum.Name</h3>
+    </div>
+    <div class="col-md-6 text-right mb-3">
+        <a href="/topic" class="btn btn-primary" role="button">New Topic</a>
+    </div>
+</div>
 
 @if (Model == null)
 {
     <Loading />
 }
+else if (Model.Topics.Count == 0)
+{
+    <NoRecords Text="No topics found for this forum." />
+}
 else
 {
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Model.Forum.Name</li>
-        </ol>
-    </nav>
-
-    <h3>@Model.Forum.Name</h3>
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">Title</th>
+                <th scope="col">Total Replies</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Topics)
+            {
+                <tr>
+                    <td class="text-center">&nbsp;</td>
+                    <td>@item.Title</td>
+                    <td class="text-center">@item.TotalReplies</td>
+                    <td>&nbsp;</td>
+                </tr>
+            }
+        </tbody>
+    </table>
 }
 
 @code {
@@ -25,6 +58,6 @@ else
 
     protected override async Task OnParametersSetAsync()
     {
-        Model = await service.GetFromJsonAsync<ForumPageModel>($"api/index/forum/{Id}");
+        Model = await Service.GetFromJsonAsync<ForumPageModel>($"api/index/forum/{Id}");
     }
 }

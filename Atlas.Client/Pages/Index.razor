@@ -1,7 +1,7 @@
 ﻿@*@layout PublicLayout*@
 @page "/"
 @using Atlas.Shared.Public.Models
-@inject AnonymousService service;
+@inject AnonymousService Service;
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -54,6 +54,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await service.GetFromJsonAsync<IndexPageModel>("api/index/index-model");
+        Model = await Service.GetFromJsonAsync<IndexPageModel>("api/index/index-model");
     }
 }

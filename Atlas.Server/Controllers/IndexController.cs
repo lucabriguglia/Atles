@@ -42,5 +42,20 @@ namespace Atlas.Server.Controllers
 
             return model;
         }
+
+        [HttpGet("forum/{forumId}/new-topic")]
+        public async Task<ActionResult<TopicPageModel>> NewTopic(Guid forumId)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+
+            var model = await _modelBuilder.BuildNewTopicPageModelAsync(site.Id, forumId);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            return model;
+        }
     }
 }
