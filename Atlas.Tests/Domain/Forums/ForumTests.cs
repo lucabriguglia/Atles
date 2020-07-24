@@ -12,14 +12,14 @@ namespace Atlas.Tests.Domain.Forums
         [Test]
         public void New()
         {
-            var forumGroupId = Guid.NewGuid();
+            var categoryId = Guid.NewGuid();
             var name = "New Forum";
             var sortOrder = 2;
             var permissionSetId = Guid.NewGuid();
 
-            var sut = new Forum(forumGroupId, name, sortOrder, permissionSetId);
+            var sut = new Forum(categoryId, name, sortOrder, permissionSetId);
 
-            Assert.AreEqual(forumGroupId, sut.CategoryId, nameof(sut.CategoryId));
+            Assert.AreEqual(categoryId, sut.CategoryId, nameof(sut.CategoryId));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
             Assert.AreEqual(sortOrder, sut.SortOrder, nameof(sut.SortOrder));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
@@ -29,15 +29,15 @@ namespace Atlas.Tests.Domain.Forums
         public void New_passing_id()
         {
             var id = Guid.NewGuid();
-            var forumGroupId = Guid.NewGuid();
+            var categoryId = Guid.NewGuid();
             var name = "New Forum";
             var sortOrder = 2;
             var permissionSetId = Guid.NewGuid();
 
-            var sut = new Forum(id, forumGroupId, name, sortOrder, permissionSetId);
+            var sut = new Forum(id, categoryId, name, sortOrder, permissionSetId);
 
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
-            Assert.AreEqual(forumGroupId, sut.CategoryId, nameof(sut.CategoryId));
+            Assert.AreEqual(categoryId, sut.CategoryId, nameof(sut.CategoryId));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
             Assert.AreEqual(sortOrder, sut.SortOrder, nameof(sut.SortOrder));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
@@ -48,13 +48,13 @@ namespace Atlas.Tests.Domain.Forums
         {
             var sut = Fixture.Create<Forum>();
 
-            var forumGroupId = Guid.NewGuid();
+            var categoryId = Guid.NewGuid();
             var name = "Updated Forum";
             var permissionSetId = Guid.NewGuid();
 
-            sut.UpdateDetails(forumGroupId, name, permissionSetId);
+            sut.UpdateDetails(categoryId, name, permissionSetId);
 
-            Assert.AreEqual(forumGroupId, sut.CategoryId, nameof(sut.CategoryId));
+            Assert.AreEqual(categoryId, sut.CategoryId, nameof(sut.CategoryId));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
         }

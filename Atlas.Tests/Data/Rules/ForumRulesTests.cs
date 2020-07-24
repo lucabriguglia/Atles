@@ -24,7 +24,7 @@ namespace Atlas.Tests.Data.Rules
         }
 
         [Test]
-        public async Task Should_return_true_when_name_is_unique_for_existing_forum_group()
+        public async Task Should_return_true_when_name_is_unique_for_existing_forum()
         {
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
@@ -39,45 +39,45 @@ namespace Atlas.Tests.Data.Rules
         public async Task Should_return_false_when_name_is_not_unique()
         {
             var options = Shared.CreateContextOptions();
-            var forumGroupId = Guid.NewGuid();
-            var forumGroupName = "My Forum";
+            var categoryId = Guid.NewGuid();
+            var forumName = "My Forum";
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var forumGroup = new Forum(forumGroupId, forumGroupName, 1);
-                dbContext.Forums.Add(forumGroup);
+                var forum = new Forum(categoryId, forumName, 1);
+                dbContext.Forums.Add(forum);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var sut = new ForumRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(forumGroupId, forumGroupName);
+                var actual = await sut.IsNameUniqueAsync(categoryId, forumName);
 
                 Assert.IsFalse(actual);
             }
         }
 
         [Test]
-        public async Task Should_return_false_when_name_is_not_unique_for_existing_forum_group()
+        public async Task Should_return_false_when_name_is_not_unique_for_existing_forum()
         {
             var options = Shared.CreateContextOptions();
-            var forumGroupId = Guid.NewGuid();
+            var categoryId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var forumGroup1 = new Forum(forumGroupId, "Forum 1", 1);
-                var forumGroup2 = new Forum(forumId, forumGroupId, "Forum 2", 2);
-                dbContext.Forums.Add(forumGroup1);
-                dbContext.Forums.Add(forumGroup2);
+                var forum1 = new Forum(categoryId, "Forum 1", 1);
+                var forum2 = new Forum(forumId, categoryId, "Forum 2", 2);
+                dbContext.Forums.Add(forum1);
+                dbContext.Forums.Add(forum2);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var sut = new ForumRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(forumGroupId, "Forum 1", forumId);
+                var actual = await sut.IsNameUniqueAsync(categoryId, "Forum 1", forumId);
 
                 Assert.IsFalse(actual);
             }

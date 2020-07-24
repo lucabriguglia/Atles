@@ -9,7 +9,7 @@ using Atlas.Domain.Categories;
 namespace Atlas.Tests.Data.Rules
 {
     [TestFixture]
-    public class ForumGroupRulesTests : TestFixtureBase
+    public class CategoryRulesTests : TestFixtureBase
     {
         [Test]
         public async Task Should_return_true_when_name_is_unique()
@@ -17,19 +17,19 @@ namespace Atlas.Tests.Data.Rules
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
                 var sut = new CategoryRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Forum Group");
+                var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Category");
 
                 Assert.IsTrue(actual);
             }
         }
 
         [Test]
-        public async Task Should_return_true_when_name_is_unique_for_existing_forum_group()
+        public async Task Should_return_true_when_name_is_unique_for_existing_category()
         {
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
                 var sut = new CategoryRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Forum Group", Guid.NewGuid());
+                var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Category", Guid.NewGuid());
 
                 Assert.IsTrue(actual);
             }
@@ -40,44 +40,44 @@ namespace Atlas.Tests.Data.Rules
         {
             var options = Shared.CreateContextOptions();
             var siteId = Guid.NewGuid();
-            var forumGroupName = "My Forum Group";
+            var categoryName = "My Category";
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var forumGroup = new Category(siteId, forumGroupName, 1);
-                dbContext.Categories.Add(forumGroup);
+                var category = new Category(siteId, categoryName, 1);
+                dbContext.Categories.Add(category);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var sut = new CategoryRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(siteId, forumGroupName);
+                var actual = await sut.IsNameUniqueAsync(siteId, categoryName);
 
                 Assert.IsFalse(actual);
             }
         }
 
         [Test]
-        public async Task Should_return_false_when_name_is_not_unique_for_existing_forum_group()
+        public async Task Should_return_false_when_name_is_not_unique_for_existing_category()
         {
             var options = Shared.CreateContextOptions();
             var siteId = Guid.NewGuid();
-            var forumGroupId = Guid.NewGuid();
+            var categoryId = Guid.NewGuid();
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var forumGroup1 = new Category(siteId, "Forum Group 1", 1);
-                var forumGroup2 = new Category(forumGroupId, siteId, "Forum Group 2", 2);
-                dbContext.Categories.Add(forumGroup1);
-                dbContext.Categories.Add(forumGroup2);
+                var category1 = new Category(siteId, "Category 1", 1);
+                var category2 = new Category(categoryId, siteId, "Category 2", 2);
+                dbContext.Categories.Add(category1);
+                dbContext.Categories.Add(category2);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var sut = new CategoryRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(siteId, "Forum Group 1", forumGroupId);
+                var actual = await sut.IsNameUniqueAsync(siteId, "Category 1", categoryId);
 
                 Assert.IsFalse(actual);
             }

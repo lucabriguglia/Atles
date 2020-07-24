@@ -101,10 +101,10 @@ namespace Atlas.Tests.Data.Services
         {
             var options = Shared.CreateContextOptions();
 
-            var forumGroupId = Guid.NewGuid();
+            var categoryId = Guid.NewGuid();
 
-            var forum1 = new Forum(forumGroupId, "Forum 1", 1);
-            var forum2 = new Forum(forumGroupId, "Forum 2", 2);
+            var forum1 = new Forum(categoryId, "Forum 1", 1);
+            var forum2 = new Forum(categoryId, "Forum 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -150,10 +150,10 @@ namespace Atlas.Tests.Data.Services
         {
             var options = Shared.CreateContextOptions();
 
-            var forumGroupId = Guid.NewGuid();
+            var categoryId = Guid.NewGuid();
 
-            var forum1 = new Forum(forumGroupId, "Forum 1", 1);
-            var forum2 = new Forum(forumGroupId, "Forum 2", 2);
+            var forum1 = new Forum(categoryId, "Forum 1", 1);
+            var forum2 = new Forum(categoryId, "Forum 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -199,12 +199,12 @@ namespace Atlas.Tests.Data.Services
         {
             var options = Shared.CreateContextOptions();
 
-            var forumGroupId = Guid.NewGuid();
+            var categoryId = Guid.NewGuid();
 
-            var forum1 = new Forum(forumGroupId, "Forum 1", 1);
-            var forum2 = new Forum(forumGroupId, "Forum 2", 2);
-            var forum3 = new Forum(forumGroupId, "Forum 3", 3);
-            var forum4 = new Forum(forumGroupId, "Forum 4", 4);
+            var forum1 = new Forum(categoryId, "Forum 1", 1);
+            var forum2 = new Forum(categoryId, "Forum 2", 2);
+            var forum3 = new Forum(categoryId, "Forum 3", 3);
+            var forum4 = new Forum(categoryId, "Forum 4", 4);
 
             using (var dbContext = new AtlasDbContext(options))
             {

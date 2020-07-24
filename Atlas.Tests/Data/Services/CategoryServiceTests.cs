@@ -18,10 +18,10 @@ using Atlas.Domain.Forums;
 namespace Atlas.Tests.Data.Services
 {
     [TestFixture]
-    public class ForumGroupServiceTests : TestFixtureBase
+    public class CategoryServiceTests : TestFixtureBase
     {
         [Test]
-        public async Task Should_create_new_forum_group_and_add_event()
+        public async Task Should_create_new_category_and_add_event()
         {
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
@@ -43,33 +43,33 @@ namespace Atlas.Tests.Data.Services
 
                 await sut.CreateAsync(command);
 
-                var forumGroup = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
+                var category = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 createValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
-                Assert.NotNull(forumGroup);
-                Assert.AreEqual(1, forumGroup.SortOrder);
+                Assert.NotNull(category);
+                Assert.AreEqual(1, category.SortOrder);
                 Assert.NotNull(@event);
             }
         }
 
         [Test]
-        public async Task Should_update_forum_group_and_add_event()
+        public async Task Should_update_category_and_add_event()
         {
             var options = Shared.CreateContextOptions();
-            var forumGroup = Fixture.Create<Category>();
+            var category = Fixture.Create<Category>();
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.Categories.Add(forumGroup);
+                dbContext.Categories.Add(category);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var command = Fixture.Build<UpdateCategory>()
-                        .With(x => x.Id, forumGroup.Id)
-                        .With(x => x.SiteId, forumGroup.SiteId)
+                        .With(x => x.Id, category.Id)
+                        .With(x => x.SiteId, category.SiteId)
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
@@ -88,29 +88,29 @@ namespace Atlas.Tests.Data.Services
 
                 await sut.UpdateAsync(command);
 
-                var updatedForumGroup = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
+                var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 updateValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
-                Assert.AreEqual(command.Name, updatedForumGroup.Name);
+                Assert.AreEqual(command.Name, updatedCategory.Name);
                 Assert.NotNull(@event);
             }
         }
 
         [Test]
-        public async Task Should_move_forum_group_up_and_add_events()
+        public async Task Should_move_category_up_and_add_events()
         {
             var options = Shared.CreateContextOptions();
 
             var siteId = Guid.NewGuid();
 
-            var forumGroup1 = new Category(siteId, "Forum Group 1", 1);
-            var forumGroup2 = new Category(siteId, "Forum Group 2", 2);
+            var category1 = new Category(siteId, "Category 1", 1);
+            var category2 = new Category(siteId, "Category 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.Categories.Add(forumGroup1);
-                dbContext.Categories.Add(forumGroup2);
+                dbContext.Categories.Add(category1);
+                dbContext.Categories.Add(category2);
                 await dbContext.SaveChangesAsync();
             }
 
@@ -118,7 +118,7 @@ namespace Atlas.Tests.Data.Services
             {
                 var command = new MoveCategory
                 {
-                    Id = forumGroup2.Id,
+                    Id = category2.Id,
                     Direction = Direction.Up,
                     SiteId = siteId
                 };
@@ -134,33 +134,33 @@ namespace Atlas.Tests.Data.Services
 
                 await sut.MoveAsync(command);
 
-                var updatedForumGroup1 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup1.Id);
-                var updatedForumGroup2 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup2.Id);
+                var updatedCategory1 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category1.Id);
+                var updatedCategory2 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category2.Id);
 
-                var event1 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forumGroup1.Id);
-                var event2 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forumGroup2.Id);
+                var event1 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category1.Id);
+                var event2 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category2.Id);
 
-                Assert.AreEqual(forumGroup2.SortOrder, updatedForumGroup1.SortOrder);
-                Assert.AreEqual(forumGroup1.SortOrder, updatedForumGroup2.SortOrder);
+                Assert.AreEqual(category2.SortOrder, updatedCategory1.SortOrder);
+                Assert.AreEqual(category1.SortOrder, updatedCategory2.SortOrder);
                 Assert.NotNull(event1);
                 Assert.NotNull(event2);
             }
         }
 
         [Test]
-        public async Task Should_move_forum_group_down_and_add_events()
+        public async Task Should_move_category_down_and_add_events()
         {
             var options = Shared.CreateContextOptions();
 
             var siteId = Guid.NewGuid();
 
-            var forumGroup1 = new Category(siteId, "Forum Group 1", 1);
-            var forumGroup2 = new Category(siteId, "Forum Group 2", 2);
+            var category1 = new Category(siteId, "Category 1", 1);
+            var category2 = new Category(siteId, "Category 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.Categories.Add(forumGroup1);
-                dbContext.Categories.Add(forumGroup2);
+                dbContext.Categories.Add(category1);
+                dbContext.Categories.Add(category2);
                 await dbContext.SaveChangesAsync();
             }
 
@@ -168,7 +168,7 @@ namespace Atlas.Tests.Data.Services
             {
                 var command = new MoveCategory
                 {
-                    Id = forumGroup1.Id,
+                    Id = category1.Id,
                     Direction = Direction.Down,
                     SiteId = siteId
                 };
@@ -184,40 +184,40 @@ namespace Atlas.Tests.Data.Services
 
                 await sut.MoveAsync(command);
 
-                var updatedForumGroup1 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup1.Id);
-                var updatedForumGroup2 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup2.Id);
+                var updatedCategory1 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category1.Id);
+                var updatedCategory2 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category2.Id);
 
-                var event1 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forumGroup1.Id);
-                var event2 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forumGroup2.Id);
+                var event1 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category1.Id);
+                var event2 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category2.Id);
 
-                Assert.AreEqual(forumGroup2.SortOrder, updatedForumGroup1.SortOrder);
-                Assert.AreEqual(forumGroup1.SortOrder, updatedForumGroup2.SortOrder);
+                Assert.AreEqual(category2.SortOrder, updatedCategory1.SortOrder);
+                Assert.AreEqual(category1.SortOrder, updatedCategory2.SortOrder);
                 Assert.NotNull(event1);
                 Assert.NotNull(event2);
             }
         }
 
         [Test]
-        public async Task Should_delete_forum_group_and_reorder_other_forum_groups_and_add_event()
+        public async Task Should_delete_category_and_reorder_other_categories_and_add_event()
         {
             var options = Shared.CreateContextOptions();
 
             var siteId = Guid.NewGuid();
 
-            var forumGroup1 = new Category(siteId, "Forum Group 1", 1);
-            var forumGroup2 = new Category(siteId, "Forum Group 2", 2);
-            var forumGroup3 = new Category(siteId, "Forum Group 3", 3);
-            var forumGroup4 = new Category(siteId, "Forum Group 4", 4);
+            var category1 = new Category(siteId, "Category 1", 1);
+            var category2 = new Category(siteId, "Category 2", 2);
+            var category3 = new Category(siteId, "Category 3", 3);
+            var category4 = new Category(siteId, "Category 4", 4);
 
-            var forum1 = new Forum(forumGroup2.Id, "Forum 1", 1);
-            var forum2 = new Forum(forumGroup2.Id, "Forum 2", 2);
+            var forum1 = new Forum(category2.Id, "Forum 1", 1);
+            var forum2 = new Forum(category2.Id, "Forum 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.Categories.Add(forumGroup1);
-                dbContext.Categories.Add(forumGroup2);
-                dbContext.Categories.Add(forumGroup3);
-                dbContext.Categories.Add(forumGroup4);
+                dbContext.Categories.Add(category1);
+                dbContext.Categories.Add(category2);
+                dbContext.Categories.Add(category3);
+                dbContext.Categories.Add(category4);
 
                 dbContext.Forums.Add(forum1);
                 dbContext.Forums.Add(forum2);
@@ -228,7 +228,7 @@ namespace Atlas.Tests.Data.Services
             using (var dbContext = new AtlasDbContext(options))
             {
                 var command = Fixture.Build<DeleteCategory>()
-                        .With(x => x.Id, forumGroup2.Id)
+                        .With(x => x.Id, category2.Id)
                         .With(x => x.SiteId, siteId)
                     .Create();
 
@@ -243,32 +243,32 @@ namespace Atlas.Tests.Data.Services
 
                 await sut.DeleteAsync(command);
 
-                var forumGroup1Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup1.Id);
-                var forumGroup2Deleted = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var forumGroup3Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup3.Id);
-                var forumGroup4Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == forumGroup4.Id);
+                var category1Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category1.Id);
+                var category2Deleted = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
+                var category3Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category3.Id);
+                var category4Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category4.Id);
 
                 var forum1Deleted = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum1.Id);
                 var forum2Deleted = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum2.Id);
 
-                var forumGroup1Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forumGroup1.Id);
-                var forumGroup2Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
-                var forumGroup3Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forumGroup3.Id);
-                var forumGroup4Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forumGroup4.Id);
+                var category1Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category1.Id);
+                var category2Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var category3Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category3.Id);
+                var category4Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category4.Id);
 
                 var forum1Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum1.Id);
                 var forum2Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum2.Id);
 
-                Assert.AreEqual(forumGroup1.SortOrder, forumGroup1Reordered.SortOrder);
-                Assert.AreEqual(StatusType.Deleted, forumGroup2Deleted.Status);
-                Assert.AreEqual(forumGroup2.SortOrder, forumGroup3Reordered.SortOrder);
-                Assert.AreEqual(forumGroup3.SortOrder, forumGroup4Reordered.SortOrder);
+                Assert.AreEqual(category1.SortOrder, category1Reordered.SortOrder);
+                Assert.AreEqual(StatusType.Deleted, category2Deleted.Status);
+                Assert.AreEqual(category2.SortOrder, category3Reordered.SortOrder);
+                Assert.AreEqual(category3.SortOrder, category4Reordered.SortOrder);
                 Assert.AreEqual(StatusType.Deleted, forum1Deleted.Status);
                 Assert.AreEqual(StatusType.Deleted, forum2Deleted.Status);
-                Assert.NotNull(forumGroup1Event);
-                Assert.NotNull(forumGroup2Event);
-                Assert.NotNull(forumGroup3Event);
-                Assert.NotNull(forumGroup4Event);
+                Assert.NotNull(category1Event);
+                Assert.NotNull(category2Event);
+                Assert.NotNull(category3Event);
+                Assert.NotNull(category4Event);
                 Assert.NotNull(forum1Event);
                 Assert.NotNull(forum2Event);
             }
