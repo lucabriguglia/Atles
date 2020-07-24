@@ -33,5 +33,14 @@ namespace Atlas.Data.Rules
                                x.Id != id);
             return !any;
         }
+
+        public async Task<bool> IsValidAsync(Guid siteId, Guid id)
+        {
+            var any = await _dbContext.Forums
+                .AnyAsync(x => x.Category.SiteId == siteId &&
+                               x.Id == id &&
+                               x.Status != StatusType.Deleted);
+            return any;
+        }
     }
 }

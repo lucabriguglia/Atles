@@ -4,6 +4,7 @@ using NUnit.Framework;
 using System;
 using System.Threading.Tasks;
 using Atlas.Domain.Forums;
+using AutoFixture;
 
 namespace Atlas.Tests.Data.Rules
 {
@@ -79,6 +80,27 @@ namespace Atlas.Tests.Data.Rules
                 var actual = await sut.IsNameUniqueAsync(categoryId, "Forum 1", forumId);
 
                 Assert.IsFalse(actual);
+            }
+        }
+
+        [Test]
+        public async Task Should_return_true_when_it_is_valid()
+        {
+            var options = Shared.CreateContextOptions();
+            var forum = Fixture.Create<Forum>();
+
+            using (var dbContext = new AtlasDbContext(options))
+            {
+                dbContext.Forums.Add(forum);
+                await dbContext.SaveChangesAsync();
+            }
+
+            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            {
+                var sut = new ForumRules(dbContext);
+                var actual = await sut.IsValidAsync(forum.Category.SiteId, forum.Id);
+
+                Assert.IsTrue(actual);
             }
         }
     }

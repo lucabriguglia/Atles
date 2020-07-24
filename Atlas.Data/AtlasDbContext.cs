@@ -4,6 +4,7 @@ using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.Sites;
+using Atlas.Domain.Topics;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data
@@ -22,9 +23,9 @@ namespace Atlas.Data
             builder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
 
+        public DbSet<Category> Categories { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Forum> Forums { get; set; }
-        public DbSet<Category> Categories { get; set; }
         public DbSet<Member> Members { get; set; }
         public DbSet<PermissionSet> PermissionSets { get; set; }
         public DbSet<Permission> Permissions { get; set; }

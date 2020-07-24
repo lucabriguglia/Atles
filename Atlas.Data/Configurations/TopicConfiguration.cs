@@ -1,4 +1,4 @@
-﻿using Atlas.Domain;
+﻿using Atlas.Domain.Topics;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

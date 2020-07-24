@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Atlas.Domain.Topics;
 
 namespace Atlas.Domain
 {

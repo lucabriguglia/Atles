@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Atlas.Domain.Categories;
 using Atlas.Domain.PermissionSets;
+using Atlas.Domain.Topics;
 
 namespace Atlas.Domain.Forums
 {
@@ -78,11 +79,6 @@ namespace Atlas.Domain.Forums
             TopicsCount += 1;
         }
 
-        public void IncreaseRepliesCount()
-        {
-            RepliesCount += 1;
-        }
-
         public void DecreaseTopicsCount()
         {
             TopicsCount -= 1;
@@ -91,6 +87,11 @@ namespace Atlas.Domain.Forums
             {
                 TopicsCount = 0;
             }
+        }
+
+        public void IncreaseRepliesCount()
+        {
+            RepliesCount += 1;
         }
 
         public void DecreaseRepliesCount()

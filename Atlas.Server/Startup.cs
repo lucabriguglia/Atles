@@ -10,7 +10,6 @@ using Microsoft.Extensions.Hosting;
 using Atlas.Data;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Identity;
-using Atlas.Domain;
 using Atlas.Domain.Sites;
 using Atlas.Shared.Admin.Categories.Models;
 

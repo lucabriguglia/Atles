@@ -1,4 +1,5 @@
 ﻿using System;
+using Atlas.Domain.Topics;
 
 namespace Atlas.Domain
 {
