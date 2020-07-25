@@ -67,6 +67,8 @@ namespace Atlas.Data.Services
             var topic = await _dbContext.Topics
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
+                    x.ForumId == command.ForumId &&
+                    x.Forum.Category.SiteId == command.SiteId &&
                     x.Status != StatusType.Deleted);
 
             if (topic == null)
@@ -94,9 +96,10 @@ namespace Atlas.Data.Services
         {
             var topic = await _dbContext.Topics
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
-                .Include(x => x.Replies)
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
+                    x.ForumId == command.ForumId &&
+                    x.Forum.Category.SiteId == command.SiteId &&
                     x.Status != StatusType.Deleted);
 
             if (topic == null)
@@ -110,16 +113,6 @@ namespace Atlas.Data.Services
                 EventType.Deleted,
                 typeof(Topic),
                 command.Id));
-
-            foreach (var reply in topic.Replies)
-            {
-                reply.Delete();
-                _dbContext.Events.Add(new Event(command.SiteId,
-                    command.MemberId,
-                    EventType.Deleted,
-                    typeof(Reply),
-                    reply.Id));
-            }
 
             topic.Forum.DecreaseTopicsCount();
             topic.Forum.Category.DecreaseTopicsCount();

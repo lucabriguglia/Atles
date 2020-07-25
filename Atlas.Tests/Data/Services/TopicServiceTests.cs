@@ -78,19 +78,31 @@ namespace Atlas.Tests.Data.Services
         public async Task Should_update_topic_and_add_event()
         {
             var options = Shared.CreateContextOptions();
-            var topic = Fixture.Create<Topic>();
+
+            var siteId = Guid.NewGuid();
+            var categoryId = Guid.NewGuid();
+            var forumId = Guid.NewGuid();
+
+            var category = new Category(categoryId, siteId, "Category", 1);
+            var forum = new Forum(forumId, category.Id, "Forum", 1);
+            var topic = new Topic(forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
 
             using (var dbContext = new AtlasDbContext(options))
             {
+                dbContext.Categories.Add(category);
+                dbContext.Forums.Add(forum);
                 dbContext.Topics.Add(topic);
+
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var command = Fixture.Build<UpdateTopic>()
-                        .With(x => x.Id, topic.Id)
-                        .Create();
+                    .With(x => x.Id, topic.Id)
+                    .With(x => x.ForumId, forumId)
+                    .With(x => x.SiteId, siteId)
+                    .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
 
@@ -122,14 +134,13 @@ namespace Atlas.Tests.Data.Services
         {
             var options = Shared.CreateContextOptions();
 
+            var siteId = Guid.NewGuid();
             var categoryId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
 
-            var category = new Category(categoryId, Guid.NewGuid(), "Category", 1);
+            var category = new Category(categoryId, siteId, "Category", 1);
             var forum = new Forum(forumId, category.Id, "Forum", 1);
             var topic = new Topic(forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
-            var reply1 = new Reply(topic.Id, Guid.NewGuid(), "Content", StatusType.Published);
-            var reply2 = new Reply(topic.Id, Guid.NewGuid(), "Content", StatusType.Published);
 
             category.IncreaseTopicsCount();
             forum.IncreaseTopicsCount();
@@ -139,8 +150,6 @@ namespace Atlas.Tests.Data.Services
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
                 dbContext.Topics.Add(topic);
-                dbContext.Replies.Add(reply1);
-                dbContext.Replies.Add(reply2);
 
                 await dbContext.SaveChangesAsync();
             }
@@ -149,7 +158,9 @@ namespace Atlas.Tests.Data.Services
             {
                 var command = Fixture.Build<DeleteTopic>()
                         .With(x => x.Id, topic.Id)
-                        .Create();
+                        .With(x => x.ForumId, forumId)
+                        .With(x => x.SiteId, siteId)
+                    .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
                 var createValidator = new Mock<IValidator<CreateTopic>>();
@@ -165,20 +176,11 @@ namespace Atlas.Tests.Data.Services
                 var topicDeleted = await dbContext.Topics.FirstOrDefaultAsync(x => x.Id == topic.Id);
                 var topicEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == topic.Id);
 
-                var reply1Deleted = await dbContext.Replies.FirstOrDefaultAsync(x => x.Id == reply1.Id);
-                var reply2Deleted = await dbContext.Replies.FirstOrDefaultAsync(x => x.Id == reply2.Id);
-                var reply1Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == reply1.Id);
-                var reply2Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == reply2.Id);
-
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
 
                 Assert.AreEqual(StatusType.Deleted, topicDeleted.Status);
                 Assert.NotNull(topicEvent);
-                Assert.AreEqual(StatusType.Deleted, reply1Deleted.Status);
-                Assert.AreEqual(StatusType.Deleted, reply2Deleted.Status);
-                Assert.NotNull(reply1Event);
-                Assert.NotNull(reply2Event);
                 Assert.AreEqual(0, updatedCategory.TopicsCount);
                 Assert.AreEqual(0, updatedForum.TopicsCount);
             }
