@@ -9,6 +9,8 @@ using Atlas.Models.Public;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Westwind.AspNetCore.Markdown;
+using Markdown = Markdig.Markdown;
 
 namespace Atlas.Server.Controllers
 {
@@ -128,6 +130,13 @@ namespace Atlas.Server.Controllers
             await _replyService.CreateAsync(command);
 
             return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("preview")]
+        public async Task<string> Preview([FromBody]string content)
+        {
+            return await Task.FromResult(Markdown.ToHtml(content));
         }
     }
 }

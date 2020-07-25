@@ -1,5 +1,6 @@
 ﻿@*@layout PublicLayout*@
 @page "/forum/{forumId:guid}/{topicId:guid}"
+@using System.Text.Encodings.Web
 @using Atlas.Models.Public
 @inject HttpClient Http
 @inject AnonymousService Service;
@@ -13,14 +14,7 @@
     </ol>
 </nav>
 
-<div class="row">
-    <div class="col-md-6">
-        <h3 class="mb-3">@Model?.Topic.Title</h3>
-    </div>
-    <div class="col-md-6 text-right mb-3">
-        <a href="#reply" class="btn btn-primary" role="button">Reply</a>
-    </div>
-</div>
+<h3 class="mb-3">@Model?.Topic.Title</h3>
 
 @if (Model == null)
 {
@@ -28,25 +22,54 @@
 }
 else
 {
-    <div>@Model.Topic.Content</div>
+    <div>@((MarkupString)Model.Topic.Content)</div>
 
     <hr />
 
-    @foreach (var reply in Model.Replies)
+    if (Model.Replies.Count == 0)
     {
-        <div>@reply.Content</div>
+        <NoRecords Text="No replies yet for this topic."></NoRecords>
+    }
+    else
+    {
+        @foreach (var reply in Model.Replies)
+        {
+            <div>@((MarkupString)reply.Content)</div>
+        }
     }
 
     <AuthorizeView>
         <Authorized>
             <hr />
-            <h3 id="reply">Reply</h3>
+            <h3>Reply</h3>
             <div class="row">
                 <div class="col-md-4">
                     <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveAsync">
                         <DataAnnotationsValidator />
                         <div class="form-group">
-                            <InputTextArea id="content" @bind-Value="Model.Post.Content" Class="form-control" />
+                            <ul class="nav nav-tabs" id="tabLinks" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" id="text-tab" data-toggle="tab" href="#text" role="tab" aria-controls="text" aria-selected="true">Text</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" id="preview-tab" data-toggle="tab" href="#preview" role="tab" aria-controls="preview" aria-selected="false" @onclick="@PreviewAsync">Preview</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content" id="tabContent">
+                                <div class="tab-pane fade show active" id="text" role="tabpanel" aria-labelledby="text-tab">
+                                    <InputTextArea id="content" @bind-Value="Model.Post.Content" Class="form-control" />
+                                </div>
+                                <div class="tab-pane fade" id="preview" role="tabpanel" aria-labelledby="preview-tab">
+                                    @if (Preview == null)
+                                    {
+                                        <Loading></Loading>
+                                    }
+                                    else
+                                    {
+                                        @((MarkupString)Preview)
+                                    }
+                                </div>
+                            </div>
                             <ValidationMessage For="@(() => Model.Post.Content)" />
                         </div>
                         <div class="form-group">
@@ -67,6 +90,7 @@ else
     [Parameter] public Guid ForumId { get; set; }
     [Parameter] public Guid TopicId { get; set; }
     private TopicPageModel Model { get; set; }
+    private string Preview { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -77,5 +101,15 @@ else
     {
         await Http.PostAsJsonAsync("api/public/save-reply", Model);
         await OnInitializedAsync();
+    }
+
+    private async Task PreviewAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(Model.Post.Content))
+        {
+            Preview = null;
+            var response = await Http.PostAsJsonAsync("api/public/preview", Model.Post.Content);
+            Preview = await response.Content.ReadAsStringAsync();
+        }
     }
 }

@@ -12,6 +12,7 @@ using Atlas.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Atlas.Domain.Sites;
 using Atlas.Models.Admin.Categories;
+using Westwind.AspNetCore.Markdown;
 
 namespace Atlas.Server
 {
@@ -59,6 +60,8 @@ namespace Atlas.Server
                 options.AddPolicy("Admin", policy =>
                     policy.RequireRole("Admin"));
             });
+
+            services.AddMarkdown();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

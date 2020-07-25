@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
 using Atlas.Models.Public;
+using Markdig;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data.Builders.Public
@@ -169,7 +170,7 @@ namespace Atlas.Data.Builders.Public
             {
                 Id = topic.Id,
                 Title = topic.Title,
-                Content = topic.Content,
+                Content = Markdown.ToHtml(topic.Content),
                 MemberId = topic.Member.Id,
                 MemberDisplayName = topic.Member.DisplayName
             };
@@ -186,7 +187,7 @@ namespace Atlas.Data.Builders.Public
                 result.Replies.Add(new TopicPageModel.ReplyModel
                 {
                     Id = reply.Id,
-                    Content = reply.Content,
+                    Content = Markdown.ToHtml(reply.Content),
                     MemberId = reply.Member.Id,
                     MemberDisplayName = reply.Member.DisplayName
                 });
