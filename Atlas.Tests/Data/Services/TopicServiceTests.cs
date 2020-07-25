@@ -118,7 +118,7 @@ namespace Atlas.Tests.Data.Services
         }
 
         [Test]
-        public async Task Should_delete_topic__and_add_event()
+        public async Task Should_delete_topic_and_add_event()
         {
             var options = Shared.CreateContextOptions();
 
