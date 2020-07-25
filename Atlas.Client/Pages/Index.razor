@@ -54,6 +54,6 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await Service.GetFromJsonAsync<IndexPageModel>("api/index/index-model");
+        Model = await Service.GetFromJsonAsync<IndexPageModel>("api/public/index-model");
     }
 }

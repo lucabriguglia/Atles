@@ -62,13 +62,14 @@ else
     [Parameter] public Guid TopicId { get; set; }
     private TopicPageModel Model { get; set; }
 
-    protected override async Task OnParametersSetAsync()
+    protected override async Task OnInitializedAsync()
     {
-        Model = await Service.GetFromJsonAsync<TopicPageModel>($"api/index/forum/{ForumId}/{TopicId}");
+        Model = await Service.GetFromJsonAsync<TopicPageModel>($"api/public/forum/{ForumId}/{TopicId}");
     }
 
     private async Task SaveAsync()
     {
-        await Http.PostAsJsonAsync("api/index/save-reply", Model);
+        await Http.PostAsJsonAsync("api/public/save-reply", Model);
+        await OnParametersSetAsync();
     }
 }

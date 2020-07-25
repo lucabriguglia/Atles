@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Domain;
+using Atlas.Domain.Replies;
+using Atlas.Domain.Replies.Commands;
 using Atlas.Domain.Topics;
 using Atlas.Domain.Topics.Commands;
 using Atlas.Models.Public;
@@ -10,19 +12,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Atlas.Server.Controllers
 {
-    [Route("api/index")]
+    [Route("api/public")]
     [ApiController]
-    public class IndexController : ControllerBase
+    public class PublicController : ControllerBase
     {
         private readonly IContextService _contextService;
         private readonly IPublicModelBuilder _modelBuilder;
         private readonly ITopicService _topicService;
+        private readonly IReplyService _replyService;
 
-        public IndexController(IContextService contextService, IPublicModelBuilder modelBuilder, ITopicService topicService)
+        public PublicController(IContextService contextService, 
+            IPublicModelBuilder modelBuilder, 
+            ITopicService topicService, 
+            IReplyService replyService)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
             _topicService = topicService;
+            _replyService = replyService;
         }
 
         [HttpGet("index-model")]
@@ -64,8 +71,8 @@ namespace Atlas.Server.Controllers
         }
 
         [Authorize]
-        [HttpGet("forum/{forumId}/new-topic")]
-        public async Task<ActionResult<PostPageModel>> NewTopic(Guid forumId)
+        [HttpGet("forum/{forumId}/post")]
+        public async Task<ActionResult<PostPageModel>> Post(Guid forumId)
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -103,22 +110,21 @@ namespace Atlas.Server.Controllers
 
         [Authorize]
         [HttpPost("save-reply")]
-        public async Task<ActionResult> SaveReply(PostPageModel model)
+        public async Task<ActionResult> SaveReply(TopicPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var command = new CreateTopic
+            var command = new CreateReply
             {
                 ForumId = model.Forum.Id,
-                Title = model.Topic.Title,
-                Content = model.Topic.Content,
+                Content = model.Post.Content,
                 Status = StatusType.Published,
                 SiteId = site.Id,
                 MemberId = member.Id
             };
 
-            await _topicService.CreateAsync(command);
+            await _replyService.CreateAsync(command);
 
             return Ok();
         }

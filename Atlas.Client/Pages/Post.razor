@@ -1,4 +1,4 @@
-﻿@page "/forum/{forumId:guid}/new"
+﻿@page "/forum/{forumId:guid}/post"
 @using Atlas.Models.Public
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
@@ -50,12 +50,12 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await Http.GetFromJsonAsync<PostPageModel>($"api/index/forum/{ForumId}/new-topic");
+        Model = await Http.GetFromJsonAsync<PostPageModel>($"api/public/forum/{ForumId}/post");
     }
 
     private async Task SaveAsync()
     {
-        await Http.PostAsJsonAsync("api/index/save-topic", Model);
+        await Http.PostAsJsonAsync("api/public/save-topic", Model);
         NavigationManager.NavigateTo($"/forum/{ForumId}");
     }
 
