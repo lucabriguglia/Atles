@@ -67,7 +67,10 @@ else
             @for (int i = startPage; i <= endPage; i++)
             {
                 var currentPage = i;
-                <li class="page-item"><a class="page-link" href="#" @onclick=@(async () =>await refreshRecords(currentPage))>@currentPage</a></li>
+                <li class="page-item">
+                    <button class="btn btn-link page-link" role="link" @onclick=@(async () =>await refreshRecords(currentPage))>@currentPage</button>
+                    <a class="page-link" href="#" @onclick=@(async () =>await refreshRecords(currentPage))>@currentPage</a>
+                </li>
             }
             <li class="page-item">
                 <a class="page-link" href="#" @onclick=@(async ()=>await NavigateToPage("next"))>&raquo;</a>
@@ -111,7 +114,7 @@ else
         curPage = 1;
         //articleModel = await articleManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir, searchTerm);
         //totalRecords = await articleManager.Count(searchTerm);
-        Model = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}");
+        Model = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}?page={curPage}");
         totalRecords = 10;
         totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
         SetPagerSize("forward");
@@ -138,7 +141,7 @@ else
 
     public async Task refreshRecords(int currentPage)
     {
-        Model = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}");
+        Model = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}?page={currentPage}");
         //articleModel = await articleManager.ListAll((currentPage - 1) * pageSize, pageSize, sortColumnName, sortDir, searchTerm);
         curPage = currentPage;
         this.StateHasChanged();

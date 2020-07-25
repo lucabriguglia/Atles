@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Net;
+using System.Net.Http;
 using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Domain.Replies;
@@ -43,11 +45,11 @@ namespace Atlas.Server.Controllers
         }
 
         [HttpGet("forum/{id}")]
-        public async Task<ActionResult<ForumPageModel>> Forum(Guid id)
+        public async Task<ActionResult<ForumPageModel>> Forum(Guid id, [FromQuery] int? page = 1)
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id, new Pagination(1));
+            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id, new Pagination(page));
 
             if (model == null)
             {
@@ -92,6 +94,11 @@ namespace Atlas.Server.Controllers
         [HttpPost("save-topic")]
         public async Task<ActionResult> SaveTopic(PostPageModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 

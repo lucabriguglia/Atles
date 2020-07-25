@@ -21,9 +21,9 @@ namespace Atlas.Models
             
         }
 
-        public Pagination(int currentPage)
+        public Pagination(int? currentPage)
         {
-            CurrentPage = currentPage;
+            CurrentPage = currentPage ?? 1;
         }
     }
 
