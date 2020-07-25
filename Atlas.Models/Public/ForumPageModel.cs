@@ -8,6 +8,8 @@ namespace Atlas.Models.Public
         public ForumModel Forum { get; set; } = new ForumModel();
         public IList<TopicModel> Topics { get; set; } = new List<TopicModel>();
 
+        public PaginatedData<TopicModel> Data { get; set; }
+
         public class ForumModel
         {
             public Guid Id { get; set; }

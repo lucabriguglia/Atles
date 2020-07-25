@@ -5,12 +5,12 @@ using Atlas.Domain.Replies;
 using Atlas.Domain.Replies.Commands;
 using Atlas.Domain.Topics;
 using Atlas.Domain.Topics.Commands;
+using Atlas.Models;
 using Atlas.Models.Public;
 using Atlas.Server.Services;
+using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Westwind.AspNetCore.Markdown;
-using Markdown = Markdig.Markdown;
 
 namespace Atlas.Server.Controllers
 {
@@ -47,7 +47,7 @@ namespace Atlas.Server.Controllers
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id);
+            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id, new Pagination(1));
 
             if (model == null)
             {

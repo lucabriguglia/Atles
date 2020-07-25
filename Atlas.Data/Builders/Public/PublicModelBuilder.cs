@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
+using Atlas.Models;
 using Atlas.Models.Public;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
@@ -62,7 +63,7 @@ namespace Atlas.Data.Builders.Public
             return model;
         }
 
-        public async Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId)
+        public async Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId, Pagination options)
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
@@ -90,7 +91,15 @@ namespace Atlas.Data.Builders.Public
                     x.ForumId == forum.Id && 
                     x.Status == StatusType.Published)
                 .OrderByDescending(x => x.TimeStamp)
+                .Skip(options.Skip)
+                .Take(options.PageSize)
                 .ToListAsync();
+
+            var totalRecords = await _dbContext.Topics
+                .Where(x =>
+                    x.ForumId == forum.Id &&
+                    x.Status == StatusType.Published)
+                .CountAsync();
 
             foreach (var topic in topics)
             {
@@ -103,6 +112,8 @@ namespace Atlas.Data.Builders.Public
                     MemberDisplayName = topic.Member.DisplayName
                 });
             }
+
+            result.Data = new PaginatedData<ForumPageModel.TopicModel>(result.Topics.ToList(), totalRecords);
 
             return result;
         }
