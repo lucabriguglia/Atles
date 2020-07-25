@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Atlas.Shared.Public.Models
+namespace Atlas.Models.Public
 {
     public class TopicPageModel
     {

@@ -3,8 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
-using Atlas.Shared.Public;
-using Atlas.Shared.Public.Models;
+using Atlas.Models.Public;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data.Builders.Public

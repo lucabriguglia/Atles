@@ -6,8 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Atlas.Domain.Forums.Commands;
 using Atlas.Domain.Forums;
-using Atlas.Shared.Admin.Forums;
-using Atlas.Shared.Admin.Forums.Models;
+using Atlas.Models.Admin.Forums;
 
 namespace Atlas.Server.Controllers.Admin
 {

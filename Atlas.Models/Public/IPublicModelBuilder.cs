@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Shared.Public.Models;
 
-namespace Atlas.Shared.Public
+namespace Atlas.Models.Public
 {
     public interface IPublicModelBuilder
     {

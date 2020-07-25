@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Shared.Admin.Categories.Models;
 
-namespace Atlas.Shared.Admin.Categories
+namespace Atlas.Models.Admin.Categories
 {
     public interface ICategoryModelBuilder
     {

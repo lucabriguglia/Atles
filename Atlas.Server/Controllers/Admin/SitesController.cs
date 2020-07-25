@@ -4,8 +4,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Atlas.Domain.Sites.Commands;
 using Atlas.Domain.Sites;
-using Atlas.Shared.Admin.Site;
-using Atlas.Shared.Admin.Site.Models;
+using Atlas.Models.Admin.Site;
 
 namespace Atlas.Server.Controllers.Admin
 {

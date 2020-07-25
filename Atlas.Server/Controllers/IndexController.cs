@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Domain.Topics;
 using Atlas.Domain.Topics.Commands;
+using Atlas.Models.Public;
 using Atlas.Server.Services;
-using Atlas.Shared.Public;
-using Atlas.Shared.Public.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 

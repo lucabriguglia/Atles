@@ -1,5 +1,5 @@
 ﻿@page "/admin/categories/edit/{id:guid}"
-@using Atlas.Shared.Admin.Categories.Models
+@using Atlas.Models.Admin.Categories
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
 @inject NavigationManager NavigationManager

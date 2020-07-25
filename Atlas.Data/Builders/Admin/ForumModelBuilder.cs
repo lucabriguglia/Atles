@@ -3,8 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Shared.Admin.Forums;
-using Atlas.Shared.Admin.Forums.Models;
+using Atlas.Models.Admin.Forums;
 
 namespace Atlas.Data.Builders.Admin
 {

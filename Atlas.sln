@@ -13,7 +13,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Server", "Atlas.Serve
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Client", "Atlas.Client\Atlas.Client.csproj", "{6CD152FC-DFF1-4098-A7D3-2EE03A08ACEF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Shared", "Atlas.Shared\Atlas.Shared.csproj", "{C91D322F-6360-4F49-9505-0D57E24F69FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Models", "Atlas.Models\Atlas.Models.csproj", "{C91D322F-6360-4F49-9505-0D57E24F69FD}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Data", "Atlas.Data\Atlas.Data.csproj", "{9C3C652E-E71C-4113-8937-7DEB09A26E67}"
 EndProject

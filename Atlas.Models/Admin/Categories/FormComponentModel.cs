@@ -2,31 +2,22 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Atlas.Shared.Admin.Forums.Models
+namespace Atlas.Models.Admin.Categories
 {
     public class FormComponentModel
     {
-        public ForumModel Forum { get; set; } = new ForumModel();
-        public IList<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
+        public CategoryModel Category { get; set; } = new CategoryModel();
         public IList<PermissionSetModel> PermissionSets { get; set; } = new List<PermissionSetModel>();
 
-        public class ForumModel
+        public class CategoryModel
         {
             public Guid Id { get; set; }
-
-            public Guid CategoryId { get; set; }
 
             [Required]
             [StringLength(100)]
             public string Name { get; set; }
 
             public Guid PermissionSetId { get; set; } = Guid.Empty;
-        }
-
-        public class CategoryModel
-        {
-            public Guid Id { get; set; }
-            public string Name { get; set; }
         }
 
         public class PermissionSetModel

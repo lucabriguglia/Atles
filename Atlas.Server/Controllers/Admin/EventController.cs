@@ -2,9 +2,8 @@
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Atlas.Shared;
 using System;
-using Atlas.Shared.Admin.Events.Models;
+using Atlas.Models.Admin.Events;
 
 namespace Atlas.Server.Controllers.Admin
 {

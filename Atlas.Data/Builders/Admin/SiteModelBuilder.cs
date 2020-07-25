@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Shared.Admin.Site;
-using Atlas.Shared.Admin.Site.Models;
+using Atlas.Models.Admin.Site;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data.Builders.Admin

@@ -3,11 +3,10 @@ using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Categories.Commands;
+using Atlas.Models.Admin.Categories;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Atlas.Shared.Admin.Categories;
-using Atlas.Shared.Admin.Categories.Models;
 
 namespace Atlas.Server.Controllers.Admin
 {

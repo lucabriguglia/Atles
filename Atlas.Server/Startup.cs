@@ -11,7 +11,7 @@ using Atlas.Data;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Atlas.Domain.Sites;
-using Atlas.Shared.Admin.Categories.Models;
+using Atlas.Models.Admin.Categories;
 
 namespace Atlas.Server
 {

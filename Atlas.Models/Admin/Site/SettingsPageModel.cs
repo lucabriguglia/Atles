@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Atlas.Shared.Admin.Site.Models
+namespace Atlas.Models.Admin.Site
 {
     public class SettingsPageModel
     {

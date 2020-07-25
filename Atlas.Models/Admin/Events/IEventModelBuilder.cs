@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Shared.Admin.Events.Models;
 
-namespace Atlas.Shared
+namespace Atlas.Models.Admin.Events
 {
     public interface IEventModelBuilder
     {

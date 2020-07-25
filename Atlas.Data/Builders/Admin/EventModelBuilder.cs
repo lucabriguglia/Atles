@@ -1,11 +1,10 @@
-﻿using Atlas.Shared;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Shared.Admin.Events.Models;
+using Atlas.Models.Admin.Events;
 
 namespace Atlas.Data.Builders.Admin
 {

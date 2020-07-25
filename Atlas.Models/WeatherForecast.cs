@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Shared
+namespace Atlas.Models
 {
     public class WeatherForecast
     {

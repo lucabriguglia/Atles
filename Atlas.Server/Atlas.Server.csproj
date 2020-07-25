@@ -15,7 +15,7 @@
     <ProjectReference Include="..\Atlas.Client\Atlas.Client.csproj" />
     <ProjectReference Include="..\Atlas.Data\Atlas.Data.csproj" />
     <ProjectReference Include="..\Atlas.Domain\Atlas.Domain.csproj" />
-    <ProjectReference Include="..\Atlas.Shared\Atlas.Shared.csproj" />
+    <ProjectReference Include="..\Atlas.Models\Atlas.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
