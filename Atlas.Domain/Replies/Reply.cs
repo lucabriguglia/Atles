@@ -6,11 +6,12 @@ namespace Atlas.Domain.Replies
 {
     public class Reply
     {
-        public Guid Id { get; set; }
-        public Guid TopicId { get; set; }
-        public string Content { get; set; }
+        public Guid Id { get; private set; }
+        public Guid TopicId { get; private set; }
+        public string Content { get; private set; }
         public StatusType Status { get; private set; }
-        public Guid MemberId { get; set; }
+        public Guid MemberId { get; private set; }
+        public DateTime TimeStamp { get; private set; }
 
         public virtual Topic Topic { get; set; }
         public virtual Member Member { get; set; }
@@ -35,6 +36,13 @@ namespace Atlas.Domain.Replies
             Id = id;
             TopicId = topicId;
             MemberId = memberId;
+            Content = content;
+            Status = status;
+            TimeStamp = DateTime.UtcNow;
+        }
+
+        public void UpdateDetails(string content, StatusType status)
+        {
             Content = content;
             Status = status;
         }

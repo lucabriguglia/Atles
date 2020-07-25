@@ -81,7 +81,29 @@ namespace Atlas.Server.Controllers
 
         [Authorize]
         [HttpPost("save-topic")]
-        public async Task<ActionResult> Save(PostPageModel model)
+        public async Task<ActionResult> SaveTopic(PostPageModel model)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var command = new CreateTopic
+            {
+                ForumId = model.Forum.Id,
+                Title = model.Topic.Title,
+                Content = model.Topic.Content,
+                Status = StatusType.Published,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
+
+            await _topicService.CreateAsync(command);
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("save-reply")]
+        public async Task<ActionResult> SaveReply(PostPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();

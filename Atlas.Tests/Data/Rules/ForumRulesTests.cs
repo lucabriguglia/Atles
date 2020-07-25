@@ -91,7 +91,7 @@ namespace Atlas.Tests.Data.Rules
         }
 
         [Test]
-        public async Task Should_return_true_when_it_is_valid()
+        public async Task Should_return_true_when_forum_is_valid()
         {
             var options = Shared.CreateContextOptions();
             var category = new Category(Guid.NewGuid(), Guid.NewGuid(), "Category", 1);

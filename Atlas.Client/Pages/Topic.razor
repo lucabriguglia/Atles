@@ -1,6 +1,7 @@
 ﻿@*@layout PublicLayout*@
 @page "/forum/{forumId:guid}/{topicId:guid}"
 @using Atlas.Models.Public
+@inject HttpClient Http
 @inject AnonymousService Service;
 
 <nav aria-label="breadcrumb">
@@ -28,12 +29,32 @@ else
 {
     <div>@Model.Topic.Content</div>
 
-    <hr/>
+    <hr />
 
     @foreach (var reply in Model.Replies)
     {
         <div>@reply.Content</div>
     }
+
+    <hr />
+
+    <h3>Reply</h3>
+
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm Model="@Model.Post" OnValidSubmit="SaveAsync">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <InputTextArea id="content" @bind-Value="Model.Post.Content" Class="form-control" />
+                    <ValidationMessage For="@(() => Model.Post.Content)" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                </div>
+                <ValidationSummary />
+            </EditForm>
+        </div>
+    </div>
 }
 
 @code {
@@ -44,5 +65,10 @@ else
     protected override async Task OnParametersSetAsync()
     {
         Model = await Service.GetFromJsonAsync<TopicPageModel>($"api/index/forum/{ForumId}/{TopicId}");
+    }
+
+    private async Task SaveAsync()
+    {
+        await Http.PostAsJsonAsync("api/index/save-reply", Model);
     }
 }

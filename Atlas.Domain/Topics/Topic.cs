@@ -9,12 +9,13 @@ namespace Atlas.Domain.Topics
     public class Topic
     {
         public Guid Id { get; private set; }
-        public Guid ForumId { get; set; }
+        public Guid ForumId { get; private set; }
         public string Title { get; private set; }
         public string Content { get; private set; }
         public int RepliesCount { get; private set; }
         public StatusType Status { get; private set; }
         public Guid MemberId { get; private set; }
+        public DateTime TimeStamp { get; private set; }
 
         public virtual Forum Forum { get; set; }
         public virtual Member Member { get; set; }
@@ -44,6 +45,7 @@ namespace Atlas.Domain.Topics
             Title = title;
             Content = content;
             Status = status;
+            TimeStamp = DateTime.UtcNow;
         }
 
         public void UpdateDetails(string title, string content, StatusType status)
