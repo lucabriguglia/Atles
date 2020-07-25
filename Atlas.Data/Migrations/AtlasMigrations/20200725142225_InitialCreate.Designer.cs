@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atlas.Data.Migrations.AtlasMigrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20200724085134_InitialCreate")]
+    [Migration("20200725142225_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -127,7 +127,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.ToTable("Forum");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Member", b =>
+            modelBuilder.Entity("Atlas.Domain.Members.Member", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -150,7 +150,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.ToTable("Member");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Permission", b =>
+            modelBuilder.Entity("Atlas.Domain.PermissionSets.Permission", b =>
                 {
                     b.Property<Guid>("PermissionSetId")
                         .HasColumnType("uniqueidentifier");
@@ -166,7 +166,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.ToTable("Permission");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.PermissionSet", b =>
+            modelBuilder.Entity("Atlas.Domain.PermissionSets.PermissionSet", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -186,7 +186,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.ToTable("PermissionSet");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Reply", b =>
+            modelBuilder.Entity("Atlas.Domain.Replies.Reply", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -201,6 +201,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("TopicId")
                         .HasColumnType("uniqueidentifier");
 
@@ -213,7 +216,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.ToTable("Reply");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Site", b =>
+            modelBuilder.Entity("Atlas.Domain.Sites.Site", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -230,7 +233,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.ToTable("Site");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Topic", b =>
+            modelBuilder.Entity("Atlas.Domain.Topics.Topic", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -251,6 +254,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -265,12 +271,12 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
             modelBuilder.Entity("Atlas.Domain.Categories.Category", b =>
                 {
-                    b.HasOne("Atlas.Domain.PermissionSet", "PermissionSet")
+                    b.HasOne("Atlas.Domain.PermissionSets.PermissionSet", "PermissionSet")
                         .WithMany("Categories")
                         .HasForeignKey("PermissionSetId")
                         .OnDelete(DeleteBehavior.NoAction);
 
-                    b.HasOne("Atlas.Domain.Site", "Site")
+                    b.HasOne("Atlas.Domain.Sites.Site", "Site")
                         .WithMany("Categories")
                         .HasForeignKey("SiteId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -279,7 +285,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
             modelBuilder.Entity("Atlas.Domain.Event", b =>
                 {
-                    b.HasOne("Atlas.Domain.Member", "Member")
+                    b.HasOne("Atlas.Domain.Members.Member", "Member")
                         .WithMany("Events")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -293,37 +299,37 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atlas.Domain.PermissionSet", "PermissionSet")
+                    b.HasOne("Atlas.Domain.PermissionSets.PermissionSet", "PermissionSet")
                         .WithMany("Forums")
                         .HasForeignKey("PermissionSetId")
                         .OnDelete(DeleteBehavior.NoAction);
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Permission", b =>
+            modelBuilder.Entity("Atlas.Domain.PermissionSets.Permission", b =>
                 {
-                    b.HasOne("Atlas.Domain.PermissionSet", "PermissionSet")
+                    b.HasOne("Atlas.Domain.PermissionSets.PermissionSet", "PermissionSet")
                         .WithMany("Permissions")
                         .HasForeignKey("PermissionSetId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Reply", b =>
+            modelBuilder.Entity("Atlas.Domain.Replies.Reply", b =>
                 {
-                    b.HasOne("Atlas.Domain.Member", "Member")
+                    b.HasOne("Atlas.Domain.Members.Member", "Member")
                         .WithMany("Replies")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atlas.Domain.Topic", "Topic")
+                    b.HasOne("Atlas.Domain.Topics.Topic", "Topic")
                         .WithMany("Replies")
                         .HasForeignKey("TopicId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Topic", b =>
+            modelBuilder.Entity("Atlas.Domain.Topics.Topic", b =>
                 {
                     b.HasOne("Atlas.Domain.Forums.Forum", "Forum")
                         .WithMany("Topics")
@@ -331,7 +337,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atlas.Domain.Member", "Member")
+                    b.HasOne("Atlas.Domain.Members.Member", "Member")
                         .WithMany("Topics")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.NoAction)

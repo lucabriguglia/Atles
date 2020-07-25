@@ -88,6 +88,7 @@ namespace Atlas.Data.Builders.Public
                 .Where(x => 
                     x.ForumId == forum.Id && 
                     x.Status == StatusType.Published)
+                .OrderByDescending(x => x.TimeStamp)
                 .ToListAsync();
 
             foreach (var topic in topics)
@@ -177,6 +178,7 @@ namespace Atlas.Data.Builders.Public
                 .Where(x => 
                     x.TopicId == topicId && 
                     x.Status == StatusType.Published)
+                .OrderByDescending(x => x.TimeStamp)
                 .ToListAsync();
 
             foreach (var reply in replies)

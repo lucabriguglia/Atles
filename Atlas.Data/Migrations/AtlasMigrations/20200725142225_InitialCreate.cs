@@ -156,7 +156,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     Content = table.Column<string>(nullable: true),
                     RepliesCount = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    MemberId = table.Column<Guid>(nullable: false)
+                    MemberId = table.Column<Guid>(nullable: false),
+                    TimeStamp = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -181,7 +182,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     TopicId = table.Column<Guid>(nullable: false),
                     Content = table.Column<string>(nullable: true),
                     Status = table.Column<int>(nullable: false),
-                    MemberId = table.Column<Guid>(nullable: false)
+                    MemberId = table.Column<Guid>(nullable: false),
+                    TimeStamp = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {

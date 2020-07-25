@@ -118,6 +118,7 @@ namespace Atlas.Server.Controllers
             var command = new CreateReply
             {
                 ForumId = model.Forum.Id,
+                TopicId = model.Topic.Id,
                 Content = model.Post.Content,
                 Status = StatusType.Published,
                 SiteId = site.Id,

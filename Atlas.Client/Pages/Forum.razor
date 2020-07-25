@@ -2,6 +2,7 @@
 @page "/forum/{id:guid}"
 @using Atlas.Models.Public
 @inject AnonymousService Service;
+@inject NavigationManager Navigation
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -15,9 +16,18 @@
         <h3 class="mb-3">@Model?.Forum.Name</h3>
     </div>
     <div class="col-md-6 text-right mb-3">
-        <a href="/forum/@Model?.Forum.Id/post" class="btn btn-primary" role="button">New Topic</a>
+        <AuthorizeView>
+            <Authorized>
+                <a href="/forum/@Model?.Forum.Id/post" class="btn btn-primary" role="button">New Topic</a>
+            </Authorized>
+            <NotAuthorized>
+                <a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to start a new discussion.
+            </NotAuthorized>
+        </AuthorizeView>
     </div>
 </div>
+
+
 
 @if (Model == null)
 {

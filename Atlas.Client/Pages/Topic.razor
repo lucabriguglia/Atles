@@ -3,6 +3,7 @@
 @using Atlas.Models.Public
 @inject HttpClient Http
 @inject AnonymousService Service;
+@inject NavigationManager Navigation
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -17,7 +18,7 @@
         <h3 class="mb-3">@Model?.Topic.Title</h3>
     </div>
     <div class="col-md-6 text-right mb-3">
-        <a href="/forum/@Model?.Forum.Id/@Model?.Topic.Id/new-reply" class="btn btn-primary" role="button">New Reply</a>
+        <a href="#reply" class="btn btn-primary" role="button">Reply</a>
     </div>
 </div>
 
@@ -36,25 +37,30 @@ else
         <div>@reply.Content</div>
     }
 
-    <hr />
-
-    <h3>Reply</h3>
-
-    <div class="row">
-        <div class="col-md-4">
-            <EditForm Model="@Model.Post" OnValidSubmit="SaveAsync">
-                <DataAnnotationsValidator />
-                <div class="form-group">
-                    <InputTextArea id="content" @bind-Value="Model.Post.Content" Class="form-control" />
-                    <ValidationMessage For="@(() => Model.Post.Content)" />
+    <AuthorizeView>
+        <Authorized>
+            <hr />
+            <h3 id="reply">Reply</h3>
+            <div class="row">
+                <div class="col-md-4">
+                    <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveAsync">
+                        <DataAnnotationsValidator />
+                        <div class="form-group">
+                            <InputTextArea id="content" @bind-Value="Model.Post.Content" Class="form-control" />
+                            <ValidationMessage For="@(() => Model.Post.Content)" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                        </div>
+                        <ValidationSummary />
+                    </EditForm>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
-                </div>
-                <ValidationSummary />
-            </EditForm>
-        </div>
-    </div>
+            </div>
+        </Authorized>
+        <NotAuthorized>
+            <a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to reply.
+        </NotAuthorized>
+    </AuthorizeView>
 }
 
 @code {
@@ -70,6 +76,6 @@ else
     private async Task SaveAsync()
     {
         await Http.PostAsJsonAsync("api/public/save-reply", Model);
-        await OnParametersSetAsync();
+        await OnInitializedAsync();
     }
 }
