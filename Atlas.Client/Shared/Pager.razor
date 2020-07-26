@@ -111,10 +111,11 @@
         }
         else if (action == "last")
         {
-            if (PagerSize < TotalPages)
+            var pagers = (int)Math.Ceiling(TotalPages / (decimal)PagerSize);
+
+            if (pagers > 1)
             {
-                _endPage = TotalPages - 1;
-                _startPage = _endPage - PagerSize;
+                _endPage = (pagers - 1) * PagerSize;
                 SetPager("forward");
             }
 

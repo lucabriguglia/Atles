@@ -47,7 +47,7 @@ namespace Atlas.Server.Controllers
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id, new PaginationOptions(page, 1));
+            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id, new PaginationOptions(page));
 
             if (model == null)
             {
@@ -58,11 +58,11 @@ namespace Atlas.Server.Controllers
         }
 
         [HttpGet("forum/{forumId}/{topicId}")]
-        public async Task<ActionResult<TopicPageModel>> Topic(Guid forumId, Guid topicId)
+        public async Task<ActionResult<TopicPageModel>> Topic(Guid forumId, Guid topicId, [FromQuery] int? page = 1)
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var model = await _modelBuilder.BuildTopicPageModelAsync(site.Id, forumId, topicId);
+            var model = await _modelBuilder.BuildTopicPageModelAsync(site.Id, forumId, topicId, new PaginationOptions(page, 1));
 
             if (model == null)
             {

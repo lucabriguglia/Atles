@@ -8,6 +8,6 @@ namespace Atlas.Models.Public
         Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId);
         Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId, PaginationOptions options);
         Task<PostPageModel> BuildPostPageModelAsync(Guid siteId, Guid forumId);
-        Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId);
+        Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, PaginationOptions options);
     }
 }

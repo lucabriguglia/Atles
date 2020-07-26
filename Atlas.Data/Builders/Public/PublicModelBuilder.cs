@@ -111,7 +111,7 @@ namespace Atlas.Data.Builders.Public
                     x.Status == StatusType.Published)
                 .CountAsync();
 
-            result.Data = new PaginatedData<ForumPageModel.TopicModel>(items, totalRecords, options.PageSize);
+            result.Topics = new PaginatedData<ForumPageModel.TopicModel>(items, totalRecords, options.PageSize);
 
             return result;
         }
@@ -141,7 +141,7 @@ namespace Atlas.Data.Builders.Public
             return result;
         }
 
-        public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId)
+        public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, PaginationOptions options)
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
@@ -189,18 +189,26 @@ namespace Atlas.Data.Builders.Public
                     x.TopicId == topicId && 
                     x.Status == StatusType.Published)
                 .OrderByDescending(x => x.TimeStamp)
+                .Skip(options.Skip)
+                .Take(options.PageSize)
                 .ToListAsync();
 
-            foreach (var reply in replies)
-            {
-                result.Replies.Add(new TopicPageModel.ReplyModel
+            var items = replies.Select(reply => new TopicPageModel.ReplyModel
                 {
                     Id = reply.Id,
                     Content = Markdown.ToHtml(reply.Content),
                     MemberId = reply.Member.Id,
                     MemberDisplayName = reply.Member.DisplayName
-                });
-            }
+                })
+                .ToList();
+
+            var totalRecords = await _dbContext.Replies
+                .Where(x =>
+                    x.TopicId == topic.Id &&
+                    x.Status == StatusType.Published)
+                .CountAsync();
+
+            result.Replies = new PaginatedData<TopicPageModel.ReplyModel>(items, totalRecords, options.PageSize);
 
             return result;
         }

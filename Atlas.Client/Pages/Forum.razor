@@ -31,7 +31,7 @@
 {
     <Loading />
 }
-else if (Model.Data.Items.Count == 0)
+else if (Model.Topics.Items.Count == 0)
 {
     <NoRecords Text="No topics found for this forum." />
 }
@@ -47,7 +47,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Data.Items)
+            @foreach (var item in Model.Topics.Items)
             {
                 <tr>
                     <td class="text-center">&nbsp;</td>
@@ -59,7 +59,7 @@ else
         </tbody>
     </table>
 
-    <Pager TotalPages="Model.Data.TotalPages" OnLoadDataCallback="@LoadDataAsync"></Pager>
+    <Pager TotalPages="Model.Topics.TotalPages" OnLoadDataCallback="@LoadDataAsync"></Pager>
 }
 
 @code {
