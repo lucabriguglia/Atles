@@ -64,7 +64,7 @@ namespace Atlas.Data.Builders.Public
             return model;
         }
 
-        public async Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId, Pagination options)
+        public async Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId, PaginationOptions options)
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
@@ -112,7 +112,7 @@ namespace Atlas.Data.Builders.Public
                     x.Status == StatusType.Published)
                 .CountAsync();
 
-            result.Data = new PaginatedData<ForumPageModel.TopicModel>(items, totalRecords);
+            result.Data = new PaginatedData<ForumPageModel.TopicModel>(items, totalRecords, options.PageSize);
 
             return result;
         }

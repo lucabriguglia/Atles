@@ -1,99 +1,80 @@
-﻿<nav aria-label="Pager">
-    <ul class="pagination justify-content-center">
+﻿@* Based on: https://www.thecodehubs.com/visual-studio-blazor-template-with-dapper-and-net-core-3-1/*@
+
+<nav aria-label="Pager">
+    <ul class="pagination">
         <li class="page-item">
-            <button class="btn btn-link page-link" role="link" @onclick=@(async () => await refreshRecords(1))>First</button>
+            <button class="btn btn-link page-link" role="link" @onclick=@(async () => await RefreshDataAsync(1))>First</button>
         </li>
         <li class="page-item">
             <button class="btn btn-link page-link" role="link" @onclick=@(async () => await NavigateToPage("previous"))>Previous</button>
         </li>
-        @for (int i = startPage; i <= endPage; i++)
+        @for (var i = _startPage; i <= _endPage; i++)
         {
             var currentPage = i;
-            <li class="page-item @(currentPage==curPage ? "active" : "")">
-                <button class="btn btn-link page-link" role="link" @onclick=@(async () => await refreshRecords(currentPage))>@currentPage</button>
+            <li class="page-item @(currentPage==CurrentPage ? "active" : "")">
+                <button class="btn btn-link page-link" role="link" @onclick=@(async () => await RefreshDataAsync(currentPage))>@currentPage</button>
             </li>
         }
         <li class="page-item">
             <button class="btn btn-link page-link" role="link" @onclick=@(async () => await NavigateToPage("next"))>Next</button>
         </li>
         <li class="page-item">
-            <button class="btn btn-link page-link" role="link" @onclick=@(async () => await refreshRecords(TotalPages))>Last</button>
+            <button class="btn btn-link page-link" role="link" @onclick=@(async () => await RefreshDataAsync(TotalPages))>Last</button>
         </li>
     </ul>
 </nav>
 
 @code {
-    //[Parameter] public Guid Id { get; set; }
-    //private ForumPageModel Model { get; set; }
+    [Parameter]
+    public int TotalPages { get; set; }
 
-    [Parameter] public int TotalPages { get; set; }
+    [Parameter]
+    public int CurrentPage { get; set; } = 1;
 
-    [Parameter] public EventCallback<int> OnClickCallback { get; set; }
+    [Parameter]
+    public EventCallback<int> OnLoadDataCallback { get; set; }
+
+    private const int PagerSize = 10;
+
+    private int _startPage;
+    private int _endPage;
 
     protected override void OnParametersSet()
     {
-        //display total page buttons
-        pagerSize = 10;
-        //pageSize = 2;
-        curPage = 1;
-        //articleModel = await articleManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir, searchTerm);
-        //totalRecords = await articleManager.Count(searchTerm);
-        //Model = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}?page={curPage}");
-        //totalRecords = 10;
-        //totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
-        //pageSize = Model.Data.PageSize;
-        //totalRecords = Model.Data.TotalRecords;
-        //totalPages = TotalPages;
-        SetPagerSize("forward");
-        //StateHasChanged();
+        Set_pagerSize("forward");
     }
 
-    //int totalPages;
-    //int totalRecords;
-    int curPage;
-    int pagerSize;
-    //int pageSize;
-    int startPage;
-    int endPage;
-    string sortColumnName = "ID";
-    string sortDir = "DESC";
-
-    public async Task refreshRecords(int currentPage)
+    public async Task RefreshDataAsync(int page)
     {
-        await OnClickCallback.InvokeAsync(currentPage);
-        //Model = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}?page={currentPage}");
-        //articleModel = await articleManager.ListAll((currentPage - 1) * pageSize, pageSize, sortColumnName, sortDir, searchTerm);
-        curPage = currentPage;
-        //pageSize = Model.Data.PageSize;
-        //totalRecords = Model.Data.TotalRecords;
-        //totalPages = TotalPages;
+        await OnLoadDataCallback.InvokeAsync(page);
+        CurrentPage = page;
         StateHasChanged();
     }
 
-    public void SetPagerSize(string direction)
+    public void Set_pagerSize(string direction)
     {
-        if (direction == "forward" && endPage < TotalPages)
+        if (direction == "forward" && _endPage < TotalPages)
         {
-            startPage = endPage + 1;
-            if (endPage + pagerSize < TotalPages)
+            _startPage = _endPage + 1;
+            if (_endPage + PagerSize < TotalPages)
             {
-                endPage = startPage + pagerSize - 1;
+                _endPage = _startPage + PagerSize - 1;
             }
             else
             {
-                endPage = TotalPages;
+                _endPage = TotalPages;
             }
-            this.StateHasChanged();
+            StateHasChanged();
         }
-        else if (direction == "back" && startPage > 1)
+        else if (direction == "back" && _startPage > 1)
         {
-            endPage = startPage - 1;
-            startPage = startPage - pagerSize;
+            _endPage = _startPage - 1;
+            _startPage = _startPage - PagerSize;
         }
         else
         {
-            startPage = 1;
-            endPage = TotalPages;
+            _startPage = 1;
+            _endPage = TotalPages;
         }
     }
 
@@ -101,26 +82,27 @@
     {
         if (direction == "next")
         {
-            if (curPage < TotalPages)
+            if (CurrentPage < TotalPages)
             {
-                if (curPage == endPage)
+                if (CurrentPage == _endPage)
                 {
-                    SetPagerSize("forward");
+                    Set_pagerSize("forward");
                 }
-                curPage += 1;
+                CurrentPage += 1;
             }
         }
         else if (direction == "previous")
         {
-            if (curPage > 1)
+            if (CurrentPage > 1)
             {
-                if (curPage == startPage)
+                if (CurrentPage == _startPage)
                 {
-                    SetPagerSize("back");
+                    Set_pagerSize("back");
                 }
-                curPage -= 1;
+                CurrentPage -= 1;
             }
         }
-        await refreshRecords(curPage);
+
+        await RefreshDataAsync(CurrentPage);
     }
 }
