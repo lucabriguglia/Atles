@@ -31,7 +31,7 @@
 {
     <Loading />
 }
-else if (Model.Topics.Count == 0)
+else if (Model.Data.Items.Count == 0)
 {
     <NoRecords Text="No topics found for this forum." />
 }
@@ -47,7 +47,7 @@ else
             </tr>
         </thead>
         <tbody>
-            @foreach (var item in Model.Topics)
+            @foreach (var item in Model.Data.Items)
             {
                 <tr>
                     <td class="text-center">&nbsp;</td>
@@ -61,79 +61,64 @@ else
 
     <nav aria-label="Page navigation">
         <ul class="pagination justify-content-center">
-            <li class="page-item disabled">
-                <a class="page-link" href="#" tabindex="-1" @onclick=@(async ()=>await NavigateToPage("previous"))>&laquo;</a>
+            <li class="page-item">
+                <button class="btn btn-link page-link" role="link" @onclick=@(async () => await refreshRecords(1))>First</button>
+            </li>
+            <li class="page-item">
+                <button class="btn btn-link page-link" role="link" @onclick=@(async () => await NavigateToPage("previous"))>Previous</button>
             </li>
             @for (int i = startPage; i <= endPage; i++)
             {
                 var currentPage = i;
-                <li class="page-item">
-                    <button class="btn btn-link page-link" role="link" @onclick=@(async () =>await refreshRecords(currentPage))>@currentPage</button>
-                    <a class="page-link" href="#" @onclick=@(async () =>await refreshRecords(currentPage))>@currentPage</a>
+                <li class="page-item @(currentPage==curPage ? "active" : "")">
+                    <button class="btn btn-link page-link" role="link" @onclick=@(async () => await refreshRecords(currentPage))>@currentPage</button>
                 </li>
             }
+        <li class="page-item">
+            <button class="btn btn-link page-link" role="link" @onclick=@(async () => await NavigateToPage("next"))>Next</button>
+        </li>
             <li class="page-item">
-                <a class="page-link" href="#" @onclick=@(async ()=>await NavigateToPage("next"))>&raquo;</a>
+                <button class="btn btn-link page-link" role="link" @onclick=@(async () => await refreshRecords(Model.Data.TotalPages))>Last</button>
             </li>
         </ul>
     </nav>
 
-    @*<div class="pagination">
-        <button class="btn btn-custom" @onclick=@(async ()=>await NavigateToPage("previous"))>Prev</button>
-
-        @for (int i = startPage; i <= endPage; i++)
-        {
-            var currentPage = i;
-            <button class="btn btn-custom pagebutton @(currentPage==curPage?"btn-danger":"")" @onclick=@(async () =>await refreshRecords(currentPage))>
-                @currentPage
-            </button>
-        }
-
-        <button class="btn btn-custom" @onclick=@(async ()=>await NavigateToPage("next"))>Next</button>
-    </div>*@
-
-
-
-
+    @*<p>Page size: @Model.Data.PageSize</p>
+    <p>Total records: @Model.Data.TotalRecords</p>
+    <p>Total pages: @Model.Data.TotalPages</p>
+    <p>Cur page: @curPage</p>
+    <p>Pager size: @pagerSize</p>
+    <p>Start page: @startPage</p>
+    <p>End page: @endPage</p>*@
 }
 
 @code {
     [Parameter] public Guid Id { get; set; }
     private ForumPageModel Model { get; set; }
 
-    //protected override async Task OnParametersSetAsync()
-    //{
-    //    Model = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}");
-    //}
-
     protected override async Task OnInitializedAsync()
     {
         //display total page buttons
-        pagerSize = 3;
-        pageSize = 2;
+        pagerSize = 10;
+        //pageSize = 2;
         curPage = 1;
         //articleModel = await articleManager.ListAll((curPage - 1) * pageSize, pageSize, sortColumnName, sortDir, searchTerm);
         //totalRecords = await articleManager.Count(searchTerm);
         Model = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}?page={curPage}");
-        totalRecords = 10;
-        totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
+        //totalRecords = 10;
+        //totalPages = (int)Math.Ceiling(totalRecords / (decimal)pageSize);
+        //pageSize = Model.Data.PageSize;
+        //totalRecords = Model.Data.TotalRecords;
+        //totalPages = Model.Data.TotalPages;
         SetPagerSize("forward");
+        //StateHasChanged();
     }
 
-
-
-
-
-
-
-
-
-
-    int totalPages;
-    int totalRecords;
+    //int totalPages;
+    //int totalRecords;
     int curPage;
     int pagerSize;
-    int pageSize;
+    //int pageSize;
     int startPage;
     int endPage;
     string sortColumnName = "ID";
@@ -144,21 +129,24 @@ else
         Model = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}?page={currentPage}");
         //articleModel = await articleManager.ListAll((currentPage - 1) * pageSize, pageSize, sortColumnName, sortDir, searchTerm);
         curPage = currentPage;
-        this.StateHasChanged();
+        //pageSize = Model.Data.PageSize;
+        //totalRecords = Model.Data.TotalRecords;
+        //totalPages = Model.Data.TotalPages;
+        StateHasChanged();
     }
 
     public void SetPagerSize(string direction)
     {
-        if (direction == "forward" && endPage < totalPages)
+        if (direction == "forward" && endPage < Model.Data.TotalPages)
         {
             startPage = endPage + 1;
-            if (endPage + pagerSize < totalPages)
+            if (endPage + pagerSize < Model.Data.TotalPages)
             {
                 endPage = startPage + pagerSize - 1;
             }
             else
             {
-                endPage = totalPages;
+                endPage = Model.Data.TotalPages;
             }
             this.StateHasChanged();
         }
@@ -170,7 +158,7 @@ else
         else
         {
             startPage = 1;
-            endPage = totalPages;
+            endPage = Model.Data.TotalPages;
         }
     }
 
@@ -178,7 +166,7 @@ else
     {
         if (direction == "next")
         {
-            if (curPage < totalPages)
+            if (curPage < Model.Data.TotalPages)
             {
                 if (curPage == endPage)
                 {

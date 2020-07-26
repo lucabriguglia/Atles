@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
@@ -95,25 +96,23 @@ namespace Atlas.Data.Builders.Public
                 .Take(options.PageSize)
                 .ToListAsync();
 
-            var totalRecords = await _dbContext.Topics
-                .Where(x =>
-                    x.ForumId == forum.Id &&
-                    x.Status == StatusType.Published)
-                .CountAsync();
-
-            foreach (var topic in topics)
-            {
-                result.Topics.Add(new ForumPageModel.TopicModel
+            var items = topics.Select(topic => new ForumPageModel.TopicModel
                 {
                     Id = topic.Id,
                     Title = topic.Title,
                     TotalReplies = topic.RepliesCount,
                     MemberId = topic.Member.Id,
                     MemberDisplayName = topic.Member.DisplayName
-                });
-            }
+                })
+                .ToList();
 
-            result.Data = new PaginatedData<ForumPageModel.TopicModel>(result.Topics.ToList(), totalRecords);
+            var totalRecords = await _dbContext.Topics
+                .Where(x =>
+                    x.ForumId == forum.Id &&
+                    x.Status == StatusType.Published)
+                .CountAsync();
+
+            result.Data = new PaginatedData<ForumPageModel.TopicModel>(items, totalRecords);
 
             return result;
         }

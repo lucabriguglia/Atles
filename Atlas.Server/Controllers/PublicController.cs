@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Net;
-using System.Net.Http;
 using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Domain.Replies;
@@ -94,11 +92,6 @@ namespace Atlas.Server.Controllers
         [HttpPost("save-topic")]
         public async Task<ActionResult> SaveTopic(PostPageModel model)
         {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 

@@ -29,28 +29,29 @@ namespace Atlas.Models
 
     public class PaginatedData<T> where T : class
     {
-        public int TotalPages => (int)Math.Ceiling(TotalRecords / (decimal)PageSize);
-        public int TotalRecords { get; }
+        public int TotalPages { get; set; }
+        public int TotalRecords { get; set; }
         //public int CurrentPage { get; set; } = 1;
-        public int PageSize { get; } = 2;
-        //public int PagerSize { get; set; }
+        public int PageSize { get; set; } = 2;
+
+        public int PagerSize { get; set; } = 10;
         //public int StartPage { get; set; }
         //public int EndPage { get; set; }
 
         //public int Skip => (CurrentPage - 1) * PageSize;
 
-        private readonly List<T> _items;
-        public ReadOnlyCollection<T> Items => _items.AsReadOnly();
+        public IList<T> Items { get; set; } = new List<T>();
 
         public PaginatedData()
         {
             
         }
 
-        public PaginatedData(List<T> items, int totalRecords)
+        public PaginatedData(IList<T> items, int totalRecords)
         {
-            _items = items;
+            Items = items;
             TotalRecords = totalRecords;
+            TotalPages = (int)Math.Ceiling(TotalRecords / (decimal)PageSize);
         }
     }
 }
