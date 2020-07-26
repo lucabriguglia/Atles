@@ -2,7 +2,7 @@
 {
     public class PaginationOptions
     {
-        private const int DefaultPageSize = 2;
+        private const int DefaultPageSize = 10;
 
         public int CurrentPage { get; set; } = 1;
         public int PageSize { get; set; } = DefaultPageSize;
