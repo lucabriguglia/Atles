@@ -43,7 +43,6 @@ else
     private const string Title = "New Topic";
     [Parameter] public Guid ForumId { get; set; }
     private PostPageModel Model { get; set; }
-    private string Preview { get; set; } = string.Empty;
 
     protected override async Task OnInitializedAsync()
     {
@@ -54,16 +53,6 @@ else
     {
         await Http.PostAsJsonAsync("api/public/save-topic", Model);
         NavigationManager.NavigateTo($"/forum/{ForumId}");
-    }
-
-    private async Task PreviewAsync()
-    {
-        if (!string.IsNullOrWhiteSpace(Model.Topic.Content))
-        {
-            Preview = null;
-            var response = await Http.PostAsJsonAsync("api/public/preview", Model.Topic.Content);
-            Preview = await response.Content.ReadAsStringAsync();
-        }
     }
 
     private void Cancel()
