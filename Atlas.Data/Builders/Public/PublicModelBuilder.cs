@@ -101,7 +101,8 @@ namespace Atlas.Data.Builders.Public
                     Title = topic.Title,
                     TotalReplies = topic.RepliesCount,
                     MemberId = topic.Member.Id,
-                    MemberDisplayName = topic.Member.DisplayName
+                    MemberDisplayName = topic.Member.DisplayName,
+                    TimeStamp = topic.TimeStamp
                 })
                 .ToList();
 
@@ -170,7 +171,8 @@ namespace Atlas.Data.Builders.Public
                     Title = topic.Title,
                     Content = Markdown.ToHtml(topic.Content),
                     MemberId = topic.Member.Id,
-                    MemberDisplayName = topic.Member.DisplayName
+                    MemberDisplayName = topic.Member.DisplayName,
+                    TimeStamp = topic.TimeStamp
                 }
             };
 
@@ -178,7 +180,7 @@ namespace Atlas.Data.Builders.Public
                 .Where(x => 
                     x.TopicId == topicId && 
                     x.Status == StatusType.Published)
-                .OrderByDescending(x => x.TimeStamp)
+                .OrderBy(x => x.TimeStamp)
                 .Skip(options.Skip)
                 .Take(options.PageSize)
                 .ToListAsync();
@@ -188,9 +190,9 @@ namespace Atlas.Data.Builders.Public
                     Id = reply.Id,
                     Content = Markdown.ToHtml(reply.Content),
                     MemberId = reply.Member.Id,
-                    MemberDisplayName = reply.Member.DisplayName
-                })
-                .ToList();
+                    MemberDisplayName = reply.Member.DisplayName,
+                    TimeStamp = reply.TimeStamp
+                }).ToList();
 
             var totalRecords = await _dbContext.Replies
                 .Where(x =>

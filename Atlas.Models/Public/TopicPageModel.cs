@@ -24,6 +24,7 @@ namespace Atlas.Models.Public
             public string Content { get; set; }
             public Guid MemberId { get; set; }
             public string MemberDisplayName { get; set; }
+            public DateTime TimeStamp { get; set; }
         }
 
         public class ReplyModel
@@ -32,6 +33,7 @@ namespace Atlas.Models.Public
             public string Content { get; set; }
             public Guid MemberId { get; set; }
             public string MemberDisplayName { get; set; }
+            public DateTime TimeStamp { get; set; }
         }
 
         public class PostModel

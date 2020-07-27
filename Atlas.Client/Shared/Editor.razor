@@ -13,7 +13,7 @@
         <div class="tab-pane fade show active" id="text" role="tabpanel" aria-labelledby="text-tab">
             <InputTextArea id="content" @bind-Value="Value" @oninput="OnValueChanged" Rows="@Rows" Class="form-control" Style="border:none;" Placeholder="Your text here..." />
         </div>
-        <div class="tab-pane fade pt-3 pl-3" id="preview" role="tabpanel" aria-labelledby="preview-tab">
+        <div class="tab-pane fade pt-3 pl-4" id="preview" role="tabpanel" aria-labelledby="preview-tab">
             @if (Preview == null)
             {
                 <Loading></Loading>

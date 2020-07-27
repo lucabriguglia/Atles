@@ -21,27 +21,24 @@
 }
 else
 {
-    <div class="card border-secondary mb-3">
+    <div class="card mb-3">
         @*<div class="card-header">
             @Model?.Topic.Title
         </div>*@
         <div class="card-body">
-
-            <div class="row">
-                <div class="col-md-6">
+            <div class="row mb-3">
+                <div class="col-md-6 small font-weight-bold">
                     @Model.Topic.MemberDisplayName
                 </div>
-                <div class="col-md-6 text-right">
-
+                <div class="col-md-6 text-right small">
+                    @Model.Topic.TimeStamp.ToShortDateString() @Model.Topic.TimeStamp.ToShortTimeString()
                 </div>
             </div>
-
-
-            @((MarkupString)Model.Topic.Content)
+            <p class="card-text">@((MarkupString)Model.Topic.Content)</p>
         </div>
     </div>
 
-    <h4 class="mb-2">Replies</h4>
+    <h5 class="mb-3">Replies</h5>
 
     if (Model.Replies.Items.Count == 0)
     {
@@ -53,7 +50,15 @@ else
         {
             <div class="card">
                 <div class="card-body">
-                    @((MarkupString)reply.Content)
+                    <div class="row mb-3">
+                        <div class="col-md-6 small font-weight-bold">
+                            @reply.MemberDisplayName
+                        </div>
+                        <div class="col-md-6 text-right small font-italic">
+                            @reply.TimeStamp.ToShortDateString() @reply.TimeStamp.ToShortTimeString()
+                        </div>
+                    </div>
+                    <p class="card-text">@((MarkupString)reply.Content)</p>
                 </div>
             </div>
         }
@@ -65,7 +70,7 @@ else
 
     <AuthorizeView>
         <Authorized>
-            <h4 class="mb-2">Reply</h4>
+            <h5 class="mb-3">Reply</h5>
             <div class="row">
                 <div class="col-md-8">
                     <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveAsync">

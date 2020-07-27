@@ -21,6 +21,7 @@ namespace Atlas.Models.Public
             public int TotalReplies { get; set; }
             public Guid MemberId { get; set; }
             public string MemberDisplayName { get; set; }
+            public DateTime TimeStamp { get; set; }
         }
     }
 }
