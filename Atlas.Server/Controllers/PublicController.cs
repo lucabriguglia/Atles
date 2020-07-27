@@ -62,7 +62,7 @@ namespace Atlas.Server.Controllers
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var model = await _modelBuilder.BuildTopicPageModelAsync(site.Id, forumId, topicId, new PaginationOptions(page, 1));
+            var model = await _modelBuilder.BuildTopicPageModelAsync(site.Id, forumId, topicId, new PaginationOptions(page));
 
             if (model == null)
             {
