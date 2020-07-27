@@ -21,26 +21,37 @@
 }
 else
 {
-    <div class="card mb-3">
+    <div class="card border-secondary mb-3">
         @*<div class="card-header">
             @Model?.Topic.Title
         </div>*@
         <div class="card-body">
+
+            <div class="row">
+                <div class="col-md-6">
+                    @Model.Topic.MemberDisplayName
+                </div>
+                <div class="col-md-6 text-right">
+
+                </div>
+            </div>
+
+
             @((MarkupString)Model.Topic.Content)
         </div>
     </div>
 
-    <h4>Replies</h4>
+    <h4 class="mb-2">Replies</h4>
 
     if (Model.Replies.Items.Count == 0)
     {
-        <NoRecords Text="No replies yet for this topic."></NoRecords>
+        <NoRecords Text="No replies found for this topic."></NoRecords>
     }
     else
     {
         @foreach (var reply in Model.Replies.Items)
         {
-            <div class="card mb-1">
+            <div class="card">
                 <div class="card-body">
                     @((MarkupString)reply.Content)
                 </div>
@@ -50,18 +61,16 @@ else
         <div class="mt-3">
             <Pager TotalPages="Model.Replies.TotalPages" OnLoadDataCallback="@LoadDataAsync"></Pager>
         </div>
-        
     }
 
     <AuthorizeView>
         <Authorized>
-            <hr />
-            <h3>Reply</h3>
+            <h4 class="mb-2">Reply</h4>
             <div class="row">
                 <div class="col-md-8">
                     <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveAsync">
                         <DataAnnotationsValidator />
-                        <Editor @bind-Value="@Model.Post.Content"></Editor>
+                        <Editor @bind-Value="@Model.Post.Content" Rows="10"></Editor>
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />
                         </div>

@@ -143,30 +143,12 @@ namespace Atlas.Data.Builders.Public
 
         public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, PaginationOptions options)
         {
-            var forum = await _dbContext.Forums
-                .FirstOrDefaultAsync(x =>
-                    x.Id == forumId &&
-                    x.Category.SiteId == siteId &&
-                    x.Status == StatusType.Published);
-
-            if (forum == null)
-            {
-                return null;
-            }
-
-            var result = new TopicPageModel
-            {
-                Forum = new TopicPageModel.ForumModel
-                {
-                    Id = forum.Id,
-                    Name = forum.Name
-                }
-            };
-
             var topic = await _dbContext.Topics
+                .Include(x => x.Forum)
                 .Include(x => x.Member)
                 .FirstOrDefaultAsync(x =>
-                    x.ForumId == forumId &&
+                    x.Forum.Category.SiteId == siteId &&
+                    x.Forum.Id == forumId &&
                     x.Id == topicId &&
                     x.Status == StatusType.Published);
 
@@ -175,13 +157,21 @@ namespace Atlas.Data.Builders.Public
                 return null;
             }
 
-            result.Topic = new TopicPageModel.TopicModel
+            var result = new TopicPageModel
             {
-                Id = topic.Id,
-                Title = topic.Title,
-                Content = Markdown.ToHtml(topic.Content),
-                MemberId = topic.Member.Id,
-                MemberDisplayName = topic.Member.DisplayName
+                Forum = new TopicPageModel.ForumModel
+                {
+                    Id = topic.Forum.Id, 
+                    Name = topic.Forum.Name
+                },
+                Topic = new TopicPageModel.TopicModel
+                {
+                    Id = topic.Id,
+                    Title = topic.Title,
+                    Content = Markdown.ToHtml(topic.Content),
+                    MemberId = topic.Member.Id,
+                    MemberDisplayName = topic.Member.DisplayName
+                }
             };
 
             var replies = await _dbContext.Replies

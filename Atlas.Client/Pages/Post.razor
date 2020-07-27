@@ -28,7 +28,7 @@ else
                     <InputText id="title" @bind-Value="Model.Topic.Title" Class="form-control" />
                     <ValidationMessage For="@(() => Model.Topic.Title)" />
                 </div>
-                <Editor @bind-Value="@Model.Topic.Content"></Editor>
+                <Editor @bind-Value="@Model.Topic.Content" Rows="20"></Editor>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
                     <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
