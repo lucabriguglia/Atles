@@ -24,3 +24,14 @@ footer p {
 .nav-tabs {
     margin-bottom: 0;
 }
+
+.navbar-brand {
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    background-color: #343a40 !important;
+    box-shadow: none;
+}
+
+[role="main"] {
+    padding-top: 0;
+}

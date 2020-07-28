@@ -1,4 +1,7 @@
 ﻿@inherits LayoutComponentBase
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+@inject NavigationManager Navigation
+@inject SignOutSessionStateManager SignOutManager
 @inject IJSRuntime JSRuntime
 
 <header>
@@ -10,11 +13,33 @@
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
-                <LoginDisplay />
-                <ul class="navbar-nav flex-grow-1">
+                <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a class="nav-link text-dark" href="/">Home</a>
+                        <a href="/" class="nav-link text-light">Home</a>
                     </li>
+                    <AuthorizeView Policy="Admin">
+                        <li class="nav-item">
+                            <a href="/admin" class="nav-link text-light">Admin</a>
+                        </li>
+                    </AuthorizeView>
+                    <AuthorizeView>
+                        <Authorized>
+                            <li class="nav-item">
+                                <a href="authentication/profile" class="nav-link text-light">Account</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="#" class="nav-link text-light" @onclick="BeginSignOut">Log out</a>
+                            </li>
+                        </Authorized>
+                        <NotAuthorized>
+                            <li class="nav-item">
+                                <a href="authentication/login" class="btn btn-outline-secondary text-light mr-1">Log in</a>
+                            </li>
+                            <li class="nav-item">
+                                <a href="authentication/register" class="btn btn-outline-secondary text-light">Register</a>
+                            </li>
+                        </NotAuthorized>
+                    </AuthorizeView>
                 </ul>
             </div>
         </div>
@@ -29,7 +54,7 @@
 
 <footer class="border-top footer text-muted">
     <div class="container">
-        &copy; @DateTime.UtcNow.Year - Atlas | <a href="/privacy">Privacy</a>
+        &copy; @DateTime.UtcNow.Year - Atlas - <a href="/privacy">Privacy</a>
     </div>
 </footer>
 
@@ -37,5 +62,11 @@
     protected override void OnInitialized()
     {
         JSRuntime.InvokeVoidAsync("addCssFile", "public");
+    }
+
+    private async Task BeginSignOut(MouseEventArgs args)
+    {
+        await SignOutManager.SetSignOutState();
+        Navigation.NavigateTo("authentication/logout");
     }
 }
