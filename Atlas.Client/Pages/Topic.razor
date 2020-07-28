@@ -76,6 +76,9 @@ else
                         <Editor @bind-Value="@Model.Post.Content" Rows="10"></Editor>
                         <div class="form-group">
                             <input type="submit" value="Save" class="btn btn-primary" />
+                            <div class="small float-right mt-2">
+                                <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>Guide</a>
+                            </div>
                         </div>
                         <ValidationSummary />
                     </EditForm>

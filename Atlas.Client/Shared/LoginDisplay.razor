@@ -5,24 +5,24 @@
 
 <AuthorizeView Policy="Admin">
     <li class="nav-item">
-        <a href="/admin" class="nav-link text-light">Admin</a>
+        <a href="/admin" class="nav-link">Admin</a>
     </li>
 </AuthorizeView>
 <AuthorizeView>
     <Authorized>
         <li class="nav-item">
-            <a href="authentication/profile" class="nav-link text-light">Account</a>
+            <a href="authentication/profile" class="nav-link">Account</a>
         </li>
         <li class="nav-item">
-            <a href="#" class="nav-link text-light" @onclick="BeginSignOut">Log out</a>
+            <a href="#" class="nav-link" @onclick="BeginSignOut">Log out</a>
         </li>
     </Authorized>
     <NotAuthorized>
         <li class="nav-item">
-            <a href="authentication/login" class="btn btn-outline-secondary text-light mr-1">Log in</a>
+            <a href="authentication/login" class="btn btn-outline-secondary mr-1">Log in</a>
         </li>
         <li class="nav-item">
-            <a href="authentication/register" class="btn btn-outline-secondary text-light">Register</a>
+            <a href="authentication/register" class="btn btn-outline-secondary">Register</a>
         </li>
     </NotAuthorized>
 </AuthorizeView>
