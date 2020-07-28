@@ -125,6 +125,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     Id = table.Column<Guid>(nullable: false),
                     CategoryId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
+                    Description = table.Column<string>(nullable: true),
                     SortOrder = table.Column<int>(nullable: false),
                     TopicsCount = table.Column<int>(nullable: false),
                     RepliesCount = table.Column<int>(nullable: false),

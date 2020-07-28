@@ -11,6 +11,7 @@ namespace Atlas.Domain.Forums
         public Guid Id { get; private set; }
         public Guid CategoryId { get; private set; }
         public string Name { get; private set; }
+        public string Description { get; private set; }
         public int SortOrder { get; private set; }
         public int TopicsCount { get; private set; }
         public int RepliesCount { get; private set; }
@@ -27,30 +28,32 @@ namespace Atlas.Domain.Forums
             
         }
 
-        public Forum(Guid id, Guid categoryId, string name, int sortOrder, Guid? permissionSetId = null)
+        public Forum(Guid id, Guid categoryId, string name, string description, int sortOrder, Guid? permissionSetId = null)
         {
-            New(id, categoryId, name, sortOrder, permissionSetId);
+            New(id, categoryId, name, description, sortOrder, permissionSetId);
         }
 
-        public Forum(Guid categoryId, string name, int sortOrder, Guid? permissionSetId = null)
+        public Forum(Guid categoryId, string name, string description, int sortOrder, Guid? permissionSetId = null)
         {
-            New(Guid.NewGuid(), categoryId, name, sortOrder, permissionSetId);
+            New(Guid.NewGuid(), categoryId, name, description, sortOrder, permissionSetId);
         }
 
-        private void New(Guid id, Guid categoryId, string name, int sortOrder, Guid? permissionSetId = null)
+        private void New(Guid id, Guid categoryId, string name, string description, int sortOrder, Guid? permissionSetId = null)
         {
             Id = id;
             CategoryId = categoryId;
             Name = name;
+            Description = description;
             SortOrder = sortOrder;
             PermissionSetId = permissionSetId;
             Status = StatusType.Published;
         }
 
-        public void UpdateDetails(Guid categoryId, string name, Guid? permissionSetId = null)
+        public void UpdateDetails(Guid categoryId, string name, string description, Guid? permissionSetId = null)
         {
             CategoryId = categoryId;
             Name = name;
+            Description = description;
             PermissionSetId = permissionSetId;
         }
 

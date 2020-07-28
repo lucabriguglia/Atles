@@ -22,6 +22,11 @@
                 <ValidationMessage For="@(() => Model.Forum.Name)" />
             </div>
             <div class="form-group">
+                <label for="description" class="control-label">Description</label>
+                <InputTextArea id="description" @bind-Value="Model.Forum.Description" Class="form-control" Rows="5" />
+                <ValidationMessage For="@(() => Model.Forum.Description)" />
+            </div>
+            <div class="form-group">
                 <label for="permissionSetId" class="control-label">Permission Set</label>
                 <select id="permissionSetId" @bind="Model.Forum.PermissionSetId" class="form-control">
                     <option value="@Guid.Empty" selected="">&lt;inherit from category&gt;</option>

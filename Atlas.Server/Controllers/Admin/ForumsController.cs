@@ -73,6 +73,7 @@ namespace Atlas.Server.Controllers.Admin
             {
                 CategoryId = model.CategoryId,
                 Name = model.Name,
+                Description = model.Description,
                 PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
                 SiteId = site.Id,
                 MemberId = member.Id
@@ -109,6 +110,7 @@ namespace Atlas.Server.Controllers.Admin
                 Id = model.Id,
                 CategoryId = model.CategoryId,
                 Name = model.Name,
+                Description = model.Description,
                 PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
                 SiteId = site.Id,
                 MemberId = member.Id

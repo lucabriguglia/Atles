@@ -28,7 +28,7 @@ namespace Atlas.Tests.Domain.Categories.Validators
         [Test]
         public void Should_have_validation_error_when_name_is_too_long()
         {
-            var command = Fixture.Build<UpdateCategory>().With(x => x.Name, new string('*', 101)).Create();
+            var command = Fixture.Build<UpdateCategory>().With(x => x.Name, new string('*', 51)).Create();
 
             var categoryRules = new Mock<ICategoryRules>();
             var permissionSetRules = new Mock<IPermissionSetRules>();

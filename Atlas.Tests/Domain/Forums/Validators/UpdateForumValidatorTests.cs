@@ -28,7 +28,7 @@ namespace Atlas.Tests.Domain.Forums.Validators
         [Test]
         public void Should_have_validation_error_when_name_is_too_long()
         {
-            var command = Fixture.Build<UpdateForum>().With(x => x.Name, new string('*', 101)).Create();
+            var command = Fixture.Build<UpdateForum>().With(x => x.Name, new string('*', 51)).Create();
 
             var forumRules = new Mock<IForumRules>();
             var permissionSetRules = new Mock<IPermissionSetRules>();
@@ -51,6 +51,19 @@ namespace Atlas.Tests.Domain.Forums.Validators
             var sut = new UpdateForumValidator(forumRules.Object, permissionSetRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
+        }
+
+        [Test]
+        public void Should_have_validation_error_when_description_is_too_long()
+        {
+            var command = Fixture.Build<UpdateForum>().With(x => x.Description, new string('*', 201)).Create();
+
+            var forumRules = new Mock<IForumRules>();
+            var permissionSetRules = new Mock<IPermissionSetRules>();
+
+            var sut = new UpdateForumValidator(forumRules.Object, permissionSetRules.Object);
+
+            sut.ShouldHaveValidationErrorFor(x => x.Description, command);
         }
 
         [Test]

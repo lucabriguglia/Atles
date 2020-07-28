@@ -19,6 +19,7 @@ namespace Atlas.Models.Public
         {
             public Guid Id { get; set; }
             public string Name { get; set; }
+            public string Description { get; set; }
             public int TotalTopics { get; set; }
             public int TotalReplies { get; set; }
         }

@@ -126,7 +126,7 @@ namespace Atlas.Server.Services
             }));
 
             // Forum
-            var forum = new Forum(category.Id, "Welcome", 1);
+            var forum = new Forum(category.Id, "Welcome", "My Forum", 1);
             _dbContext.Forums.Add(forum);
             _dbContext.Events.Add(new Event(new ForumCreated
             {

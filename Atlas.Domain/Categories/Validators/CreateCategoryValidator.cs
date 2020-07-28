@@ -10,7 +10,7 @@ namespace Atlas.Domain.Categories.Validators
         {
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Category name is required.")
-                .Length(1, 100).WithMessage("Category name length must be between 1 and 100 characters.")
+                .Length(1, 50).WithMessage("Category name length must be between 1 and 50 characters.")
                 .MustAsync((c, p, cancellation) => rules.IsNameUniqueAsync(c.SiteId, p))
                     .WithMessage(c => $"A category with name {c.Name} already exists.");
 

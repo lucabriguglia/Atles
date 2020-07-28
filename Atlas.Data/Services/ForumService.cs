@@ -43,6 +43,7 @@ namespace Atlas.Data.Services
             var forum = new Forum(command.Id,
                 command.CategoryId,
                 command.Name,
+                command.Description,
                 sortOrder,
                 command.PermissionSetId);
 
@@ -92,7 +93,7 @@ namespace Atlas.Data.Services
                 forum.Reorder(newCategoryForumsCount + 1);
             }
 
-            forum.UpdateDetails(command.CategoryId, command.Name, command.PermissionSetId);
+            forum.UpdateDetails(command.CategoryId, command.Name, command.Description, command.PermissionSetId);
             _dbContext.Events.Add(new Event(new ForumUpdated
             {
                 SiteId = command.SiteId,

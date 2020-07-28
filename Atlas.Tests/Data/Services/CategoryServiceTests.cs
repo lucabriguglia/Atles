@@ -209,8 +209,8 @@ namespace Atlas.Tests.Data.Services
             var category3 = new Category(siteId, "Category 3", 3);
             var category4 = new Category(siteId, "Category 4", 4);
 
-            var forum1 = new Forum(category2.Id, "Forum 1", 1);
-            var forum2 = new Forum(category2.Id, "Forum 2", 2);
+            var forum1 = new Forum(category2.Id, "Forum 1", "My Forum", 1);
+            var forum2 = new Forum(category2.Id, "Forum 2", "My Forum", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {

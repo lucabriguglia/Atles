@@ -54,6 +54,7 @@ namespace Atlas.Data.Builders.Public
                     {
                         Id = forum.Id,
                         Name = forum.Name,
+                        Description = forum.Description,
                         TotalTopics = forum.TopicsCount,
                         TotalReplies = forum.RepliesCount
                     }).ToList();

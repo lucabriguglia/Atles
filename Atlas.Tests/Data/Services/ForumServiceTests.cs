@@ -62,7 +62,7 @@ namespace Atlas.Tests.Data.Services
             var siteId = Guid.NewGuid();
 
             var category = new Category(categoryId, siteId, "Category", 1);
-            var forum = new Forum(categoryId, "Forum 1", 1);
+            var forum = new Forum(categoryId, "Forum 1", "Forum 1", 1);
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -114,8 +114,8 @@ namespace Atlas.Tests.Data.Services
 
             var category = new Category(categoryId, siteId, "Category", 1);
 
-            var forum1 = new Forum(categoryId, "Forum 1", 1);
-            var forum2 = new Forum(categoryId, "Forum 2", 2);
+            var forum1 = new Forum(categoryId, "Forum 1", "Forum 1", 1);
+            var forum2 = new Forum(categoryId, "Forum 2", "Forum 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -168,8 +168,8 @@ namespace Atlas.Tests.Data.Services
 
             var category = new Category(categoryId, siteId, "Category", 1);
 
-            var forum1 = new Forum(categoryId, "Forum 1", 1);
-            var forum2 = new Forum(categoryId, "Forum 2", 2);
+            var forum1 = new Forum(categoryId, "Forum 1", "Forum 1", 1);
+            var forum2 = new Forum(categoryId, "Forum 2", "Forum 2", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -222,10 +222,10 @@ namespace Atlas.Tests.Data.Services
 
             var category = new Category(categoryId, siteId, "Category", 1);
 
-            var forum1 = new Forum(categoryId, "Forum 1", 1);
-            var forum2 = new Forum(categoryId, "Forum 2", 2);
-            var forum3 = new Forum(categoryId, "Forum 3", 3);
-            var forum4 = new Forum(categoryId, "Forum 4", 4);
+            var forum1 = new Forum(categoryId, "Forum 1", "Forum 1", 1);
+            var forum2 = new Forum(categoryId, "Forum 2", "Forum 2", 2);
+            var forum3 = new Forum(categoryId, "Forum 3", "Forum 3", 3);
+            var forum4 = new Forum(categoryId, "Forum 4", "Forum 4", 4);
 
             using (var dbContext = new AtlasDbContext(options))
             {
