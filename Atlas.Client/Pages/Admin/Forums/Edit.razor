@@ -1,4 +1,5 @@
-﻿@page "/admin/forums/edit/{id:guid}"
+﻿@layout AdminLayout
+@page "/admin/forums/edit/{id:guid}"
 @using Atlas.Models.Admin.Forums
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http

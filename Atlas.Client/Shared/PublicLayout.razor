@@ -1,13 +1,41 @@
 ﻿@inherits LayoutComponentBase
-@*<div class="sidebar">
-        <NavMenu />
-    </div>*@
+@inject IJSRuntime JSRuntime
 
-<div class="main">
-    <div class="top-row px-4 auth">
-        <LoginDisplay />
-    </div>
-    <div class="content px-4">
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" href="/">Atlas</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <LoginDisplay />
+                <ul class="navbar-nav flex-grow-1">
+                    <li class="nav-item">
+                        <a class="nav-link text-dark" href="/">Home</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main role="main" class="pb-3">
+    <div class="container">
         @Body
     </div>
-</div>
+</main>
+
+<footer class="border-top footer text-muted">
+    <div class="container">
+        &copy; @DateTime.UtcNow.Year - Atlas | <a href="/privacy">Privacy</a>
+    </div>
+</footer>
+
+@code {
+    protected override void OnInitialized()
+    {
+        JSRuntime.InvokeVoidAsync("addCssFile", "public");
+    }
+}

@@ -1,5 +1,4 @@
-﻿@*@layout PublicLayout*@
-@page "/forum/{forumId:guid}/{topicId:guid}"
+﻿@page "/forum/{forumId:guid}/{topicId:guid}"
 @using Atlas.Models.Public
 @inject HttpClient Http
 @inject AnonymousService Service;
@@ -22,9 +21,6 @@
 else
 {
     <div class="card mb-3">
-        @*<div class="card-header">
-            @Model?.Topic.Title
-        </div>*@
         <div class="card-body">
             <div class="row mb-3">
                 <div class="col-md-6 small font-weight-bold">
@@ -64,23 +60,6 @@ else
                 }
             </ul>
         </div>
-
-        @*@foreach (var reply in Model.Replies.Items)
-        {
-            <div class="card">
-                <div class="card-body">
-                    <div class="row mb-3 small">
-                        <div class="col-md-6 font-weight-bold">
-                            @reply.MemberDisplayName
-                        </div>
-                        <div class="col-md-6 text-right">
-                            @reply.TimeStamp.ToShortDateString() @reply.TimeStamp.ToShortTimeString()
-                        </div>
-                    </div>
-                    <div class="card-text">@((MarkupString)reply.Content)</div>
-                </div>
-            </div>
-        }*@
 
         <div class="mt-3">
             <Pager TotalPages="Model.Replies.TotalPages" OnLoadDataCallback="@LoadDataAsync"></Pager>

@@ -1,4 +1,5 @@
-﻿@page "/admin/settings"
+﻿@layout AdminLayout
+@page "/admin/settings"
 @using Atlas.Models.Admin.Site
 @attribute [Authorize(Policy = "Admin")]
 @inject NavigationManager NavigationManager

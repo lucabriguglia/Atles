@@ -1,5 +1,4 @@
-﻿@*@layout PublicLayout*@
-@page "/"
+﻿@page "/"
 @using Atlas.Models.Public
 @inject AnonymousService Service;
 
@@ -30,9 +29,9 @@ else
                             <h5 class="card-title"><a href="/forum/@forum.Id">@forum.Name</a></h5>
                             <p class="card-text">Description</p>
                             <div class="small">
-                                <text class="font-weight-bold">@forum.TotalTopics</text> Topics
+                                <span class="font-weight-bold">@forum.TotalTopics</span> Topics
                                 &nbsp;&nbsp;
-                                <text class="font-weight-bold">@forum.TotalReplies</text> Replies
+                                <span class="font-weight-bold">@forum.TotalReplies</span> Replies
                             </div>
                         </li>
                     }
@@ -40,30 +39,6 @@ else
             </div>
         </div>
     }
-
-    @*@foreach (var category in Model.Categories)
-    {
-        <div class="mb-3">
-            @if (Model.Categories.Count > 1)
-            {
-                <h4 class="mb-3">@category.Name</h4>
-            }
-            @foreach (var forum in category.Forums)
-            {
-                <div class="card">
-                    <div class="card-body">
-                        <h5 class="card-title"><a href="/forum/@forum.Id">@forum.Name</a></h5>
-                        <p class="card-text">Description</p>
-                        <div class="small">
-                            <text class="font-weight-bold">@forum.TotalTopics</text> Topics
-                            &nbsp;&nbsp;
-                            <text class="font-weight-bold">@forum.TotalReplies</text> Replies
-                        </div>
-                    </div>
-                </div>
-            }
-        </div>
-    }*@
 }
 
 @code {

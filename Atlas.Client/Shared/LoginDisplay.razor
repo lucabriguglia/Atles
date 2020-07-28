@@ -5,17 +5,17 @@
 @inject SignOutSessionStateManager SignOutManager
 
 <AuthorizeView Policy="Admin">
-    <a href="/admin">Admin</a>
+    <a href="/admin" class="text-light">Admin</a>
 </AuthorizeView>
 
 <AuthorizeView>
     <Authorized>
-        <a href="authentication/profile">Account</a>
-        <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>
+        <a href="authentication/profile" class="text-light">Account</a>
+        <button class="nav-link btn btn-link text-light" @onclick="BeginSignOut">Log out</button>
     </Authorized>
     <NotAuthorized>
-        <a href="authentication/register">Register</a>
-        <a href="authentication/login">Log in</a>
+        <a href="authentication/register" class="text-light">Register</a>
+        <a href="authentication/login" class="text-light">Log in</a>
     </NotAuthorized>
 </AuthorizeView>
 

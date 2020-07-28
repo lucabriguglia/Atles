@@ -1,4 +1,5 @@
-﻿@page "/admin/roles"
+﻿@layout AdminLayout
+@page "/admin/roles"
 @attribute [Authorize(Policy = "Admin")]
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
@@ -13,5 +14,5 @@
 </nav>
 
 @code {
-        private const string Title = "Roles";
+    private const string Title = "Roles";
 }
