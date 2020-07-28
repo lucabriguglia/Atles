@@ -43,7 +43,7 @@ namespace Atlas.Tests.Data.Rules
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var category = new Category(siteId, categoryName, 1);
+                var category = new Category(siteId, categoryName, 1, Guid.NewGuid());
                 dbContext.Categories.Add(category);
                 await dbContext.SaveChangesAsync();
             }
@@ -66,8 +66,8 @@ namespace Atlas.Tests.Data.Rules
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var category1 = new Category(siteId, "Category 1", 1);
-                var category2 = new Category(categoryId, siteId, "Category 2", 2);
+                var category1 = new Category(siteId, "Category 1", 1, Guid.NewGuid());
+                var category2 = new Category(categoryId, siteId, "Category 2", 2, Guid.NewGuid());
                 dbContext.Categories.Add(category1);
                 dbContext.Categories.Add(category2);
                 await dbContext.SaveChangesAsync();

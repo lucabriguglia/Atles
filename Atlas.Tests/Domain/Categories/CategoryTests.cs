@@ -72,7 +72,7 @@ namespace Atlas.Tests.Domain.Categories
         [Test]
         public void Move_up_throws_exception_when_sort_order_is_one()
         {
-            var sut = new Category(Guid.NewGuid(), "My Category", 1);
+            var sut = new Category(Guid.NewGuid(), "My Category", 1, Guid.NewGuid());
 
             Assert.Throws<ApplicationException>(() => sut.MoveUp());
         }

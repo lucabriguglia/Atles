@@ -15,7 +15,7 @@ namespace Atlas.Domain.Categories
         public int TopicsCount { get; private set; }
         public int RepliesCount { get; private set; }
         public StatusType Status { get; private set; }
-        public Guid? PermissionSetId { get; private set; }
+        public Guid PermissionSetId { get; private set; }
 
         public virtual Site Site { get; set; }
         public virtual PermissionSet PermissionSet { get; set; }
@@ -27,17 +27,17 @@ namespace Atlas.Domain.Categories
 
         }
 
-        public Category(Guid id, Guid siteId, string name, int sortOrder, Guid? permissionSetId = null)
+        public Category(Guid id, Guid siteId, string name, int sortOrder, Guid permissionSetId)
         {
             New(id, siteId, name, sortOrder, permissionSetId);
         }
 
-        public Category(Guid siteId, string name, int sortOrder, Guid? permissionSetId = null)
+        public Category(Guid siteId, string name, int sortOrder, Guid permissionSetId)
         {
             New(Guid.NewGuid(), siteId, name, sortOrder, permissionSetId);
         }
 
-        private void New(Guid id, Guid siteId, string name, int sortOrder, Guid? permissionSetId = null)
+        private void New(Guid id, Guid siteId, string name, int sortOrder, Guid permissionSetId)
         {
             Id = id;
             SiteId = siteId;
@@ -47,7 +47,7 @@ namespace Atlas.Domain.Categories
             Status = StatusType.Published;
         }
 
-        public void UpdateDetails(string name, Guid? permissionSetId = null)
+        public void UpdateDetails(string name, Guid permissionSetId)
         {
             Name = name;
             PermissionSetId = permissionSetId;

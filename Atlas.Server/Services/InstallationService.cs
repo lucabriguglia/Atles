@@ -112,7 +112,7 @@ namespace Atlas.Server.Services
             }));
 
             // Category
-            var category = new Category(site.Id, "General", 1);
+            var category = new Category(site.Id, "General", 1, permissionSet.Id);
             _dbContext.Categories.Add(category);
             _dbContext.Events.Add(new Event(new CategoryCreated
             {

@@ -15,9 +15,8 @@ namespace Atlas.Domain.Categories.Validators
                     .WithMessage(c => $"A category with name {c.Name} already exists.");
 
             RuleFor(c => c.PermissionSetId)
-                .MustAsync((c, p, cancellation) => permissionSetRules.IsValid(c.SiteId, p.Value))
-                    .WithMessage(c => $"Permission set with id {c.PermissionSetId} does not exist.")
-                    .When(c => c.PermissionSetId != null);
+                .MustAsync((c, p, cancellation) => permissionSetRules.IsValid(c.SiteId, p))
+                    .WithMessage(c => $"Permission set with id {c.PermissionSetId} does not exist.");
         }
     }
 }

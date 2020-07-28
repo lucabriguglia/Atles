@@ -30,7 +30,7 @@ namespace Atlas.Tests.Data.Services
             var categoryId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
 
-            var category = new Category(categoryId, Guid.NewGuid(), "Category", 1);
+            var category = new Category(categoryId, Guid.NewGuid(), "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
 
             using (var dbContext = new AtlasDbContext(options))
@@ -83,7 +83,7 @@ namespace Atlas.Tests.Data.Services
             var categoryId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
 
-            var category = new Category(categoryId, siteId, "Category", 1);
+            var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
             var topic = new Topic(forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
 
@@ -138,7 +138,7 @@ namespace Atlas.Tests.Data.Services
             var categoryId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
 
-            var category = new Category(categoryId, siteId, "Category", 1);
+            var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
             var topic = new Topic(forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
 

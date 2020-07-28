@@ -104,8 +104,8 @@ namespace Atlas.Tests.Data.Services
 
             var siteId = Guid.NewGuid();
 
-            var category1 = new Category(siteId, "Category 1", 1);
-            var category2 = new Category(siteId, "Category 2", 2);
+            var category1 = new Category(siteId, "Category 1", 1, Guid.NewGuid());
+            var category2 = new Category(siteId, "Category 2", 2, Guid.NewGuid());
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -154,8 +154,8 @@ namespace Atlas.Tests.Data.Services
 
             var siteId = Guid.NewGuid();
 
-            var category1 = new Category(siteId, "Category 1", 1);
-            var category2 = new Category(siteId, "Category 2", 2);
+            var category1 = new Category(siteId, "Category 1", 1, Guid.NewGuid());
+            var category2 = new Category(siteId, "Category 2", 2, Guid.NewGuid());
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -204,10 +204,10 @@ namespace Atlas.Tests.Data.Services
 
             var siteId = Guid.NewGuid();
 
-            var category1 = new Category(siteId, "Category 1", 1);
-            var category2 = new Category(siteId, "Category 2", 2);
-            var category3 = new Category(siteId, "Category 3", 3);
-            var category4 = new Category(siteId, "Category 4", 4);
+            var category1 = new Category(siteId, "Category 1", 1, Guid.NewGuid());
+            var category2 = new Category(siteId, "Category 2", 2, Guid.NewGuid());
+            var category3 = new Category(siteId, "Category 3", 3, Guid.NewGuid());
+            var category4 = new Category(siteId, "Category 4", 4, Guid.NewGuid());
 
             var forum1 = new Forum(category2.Id, "Forum 1", "My Forum", 1);
             var forum2 = new Forum(category2.Id, "Forum 2", "My Forum", 2);

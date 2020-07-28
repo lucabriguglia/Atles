@@ -17,7 +17,8 @@ namespace Atlas.Models.Admin.Categories
             [StringLength(100)]
             public string Name { get; set; }
 
-            public Guid PermissionSetId { get; set; } = Guid.Empty;
+            [Required]
+            public Guid PermissionSetId { get; set; }
         }
 
         public class PermissionSetModel

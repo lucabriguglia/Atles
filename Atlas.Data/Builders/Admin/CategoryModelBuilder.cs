@@ -34,10 +34,6 @@ namespace Atlas.Data.Builders.Admin
                         x.Status != StatusType.Deleted)
                     .CountAsync();
 
-                var permissionSetName = !category.HasPermissionSet()
-                    ? "Default (from Site)"
-                    : category.PermissionSetName();
-
                 result.Categories.Add(new IndexPageModel.CategoryModel
                 {
                     Id = category.Id,
@@ -46,7 +42,7 @@ namespace Atlas.Data.Builders.Admin
                     TotalForums = forumsCount,
                     TotalTopics = category.TopicsCount,
                     TotalReplies = category.RepliesCount,
-                    PermissionSetName = permissionSetName
+                    PermissionSetName = category.PermissionSetName()
                 });
             }
 
@@ -74,7 +70,7 @@ namespace Atlas.Data.Builders.Admin
                 {
                     Id = category.Id,
                     Name = category.Name,
-                    PermissionSetId = category.PermissionSetId ?? Guid.Empty
+                    PermissionSetId = category.PermissionSetId
                 };
             }
 

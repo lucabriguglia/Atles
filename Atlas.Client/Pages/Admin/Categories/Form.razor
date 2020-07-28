@@ -16,7 +16,6 @@
             <div class="form-group">
                 <label for="permissionSetId" class="control-label">Permission Set</label>
                 <select id="permissionSetId" @bind="Model.Category.PermissionSetId" class="form-control">
-                    <option value="@Guid.Empty" selected="">&lt;inherit from site settings&gt;</option>
                     @foreach (var item in Model.PermissionSets)
                     {
                         <option value="@item.Id">@item.Name</option>

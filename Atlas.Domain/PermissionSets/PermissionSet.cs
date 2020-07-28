@@ -27,6 +27,7 @@ namespace Atlas.Domain.PermissionSets
             SiteId = siteId;
             Name = name;
             Permissions = permissions;
+            Status = StatusType.Published;
         }
 
         public void UpdateName(string name)

@@ -6,6 +6,6 @@ namespace Atlas.Domain.Categories.Commands
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public Guid? PermissionSetId { get; set; }
+        public Guid PermissionSetId { get; set; }
     }
 }

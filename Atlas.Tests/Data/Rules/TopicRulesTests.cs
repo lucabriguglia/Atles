@@ -17,8 +17,8 @@ namespace Atlas.Tests.Data.Rules
         public async Task Should_return_true_when_topic_is_valid()
         {
             var options = Shared.CreateContextOptions();
-            var category = new Category(Guid.NewGuid(), Guid.NewGuid(), "Category", 1);
-            var forum = new Forum(Guid.NewGuid(), category.Id, "Forum", "My Forum", 1);
+            var category = new Category(Guid.NewGuid(), Guid.NewGuid(), "Category", 1, Guid.NewGuid());
+            var forum = new Forum(Guid.NewGuid(), category.Id, "Forum", "My Forum", 1, Guid.NewGuid());
             var topic = new Topic(Guid.NewGuid(), forum.Id, Guid.NewGuid(), "Title", "Content", StatusType.Published);
 
             using (var dbContext = new AtlasDbContext(options))

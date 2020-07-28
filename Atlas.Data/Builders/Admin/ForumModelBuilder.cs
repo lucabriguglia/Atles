@@ -58,9 +58,7 @@ namespace Atlas.Data.Builders.Admin
             foreach (var forum in forums)
             {
                 var permissionSetName = !forum.HasPermissionSet()
-                    ? !currentCategory.HasPermissionSet()
-                        ? "Default (from Site)"
-                        : $"{currentCategory.PermissionSetName()} (from Category)"
+                    ? $"{currentCategory.PermissionSetName()} (from Category)"
                     : forum.PermissionSetName();
 
                 result.Forums.Add(new IndexPageModel.ForumModel

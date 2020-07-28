@@ -56,7 +56,7 @@ namespace Atlas.Server.Controllers.Admin
             var command = new CreateCategory
             {
                 Name = model.Name,
-                PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
+                PermissionSetId = model.PermissionSetId,
                 SiteId = site.Id,
                 MemberId = member.Id
             };
@@ -91,7 +91,7 @@ namespace Atlas.Server.Controllers.Admin
             {
                 Id = model.Id,
                 Name = model.Name,
-                PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
+                PermissionSetId = model.PermissionSetId,
                 SiteId = site.Id,
                 MemberId = member.Id
             };

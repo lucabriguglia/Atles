@@ -61,7 +61,7 @@ namespace Atlas.Tests.Domain.Categories.Validators
             var categoryRules = new Mock<ICategoryRules>();
 
             var permissionSetRules = new Mock<IPermissionSetRules>();
-            permissionSetRules.Setup(x => x.IsValid(command.SiteId, command.PermissionSetId.Value)).ReturnsAsync(false);
+            permissionSetRules.Setup(x => x.IsValid(command.SiteId, command.PermissionSetId)).ReturnsAsync(false);
 
             var sut = new UpdateCategoryValidator(categoryRules.Object, permissionSetRules.Object);
 
