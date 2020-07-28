@@ -5,7 +5,6 @@ using System;
 using System.Threading.Tasks;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
-using AutoFixture;
 
 namespace Atlas.Tests.Data.Rules
 {

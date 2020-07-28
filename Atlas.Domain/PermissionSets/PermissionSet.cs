@@ -23,20 +23,26 @@ namespace Atlas.Domain.PermissionSets
 
         public PermissionSet(Guid siteId, string name, ICollection<Permission> permissions)
         {
-            Id = Guid.NewGuid();
+            New(Guid.NewGuid(), siteId, name, permissions);
+        }
+
+        public PermissionSet(Guid id, Guid siteId, string name, ICollection<Permission> permissions)
+        {
+            New(id, siteId, name, permissions);
+        }
+
+        public void New(Guid id, Guid siteId, string name, ICollection<Permission> permissions)
+        {
+            Id = id;
             SiteId = siteId;
             Name = name;
             Permissions = permissions;
             Status = StatusType.Published;
         }
 
-        public void UpdateName(string name)
+        public void UpdateDetails(string name, List<Permission> permissions)
         {
             Name = name;
-        }
-
-        public void UpdatePermissions(List<Permission> permissions)
-        {
             Permissions.Clear();
             Permissions = permissions;
         }

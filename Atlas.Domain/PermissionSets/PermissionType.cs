@@ -2,7 +2,7 @@
 {
     public enum PermissionType
     {
-        ViewSection = 0,
+        ViewForum = 0,
         ViewTopics = 1,
         Read = 2,
         Start = 3,

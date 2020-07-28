@@ -15,6 +15,16 @@ namespace Atlas.Data.Rules
             _dbContext = dbContext;
         }
 
+        public Task<bool> IsNameUniqueAsync(Guid siteId, string name)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<bool> IsNameUniqueAsync(Guid siteId, string name, Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<bool> IsValid(Guid siteId, Guid id)
         {
             var any = await _dbContext.PermissionSets
