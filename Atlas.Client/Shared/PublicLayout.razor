@@ -1,7 +1,4 @@
 ﻿@inherits LayoutComponentBase
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@inject NavigationManager Navigation
-@inject SignOutSessionStateManager SignOutManager
 @inject IJSRuntime JSRuntime
 
 <header>
@@ -17,29 +14,7 @@
                     <li class="nav-item">
                         <a href="/" class="nav-link text-light">Home</a>
                     </li>
-                    <AuthorizeView Policy="Admin">
-                        <li class="nav-item">
-                            <a href="/admin" class="nav-link text-light">Admin</a>
-                        </li>
-                    </AuthorizeView>
-                    <AuthorizeView>
-                        <Authorized>
-                            <li class="nav-item">
-                                <a href="authentication/profile" class="nav-link text-light">Account</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="#" class="nav-link text-light" @onclick="BeginSignOut">Log out</a>
-                            </li>
-                        </Authorized>
-                        <NotAuthorized>
-                            <li class="nav-item">
-                                <a href="authentication/login" class="btn btn-outline-secondary text-light mr-1">Log in</a>
-                            </li>
-                            <li class="nav-item">
-                                <a href="authentication/register" class="btn btn-outline-secondary text-light">Register</a>
-                            </li>
-                        </NotAuthorized>
-                    </AuthorizeView>
+                    <LoginDisplay/>
                 </ul>
             </div>
         </div>
@@ -62,11 +37,5 @@
     protected override void OnInitialized()
     {
         JSRuntime.InvokeVoidAsync("addCssFile", "public");
-    }
-
-    private async Task BeginSignOut(MouseEventArgs args)
-    {
-        await SignOutManager.SetSignOutState();
-        Navigation.NavigateTo("authentication/logout");
     }
 }
