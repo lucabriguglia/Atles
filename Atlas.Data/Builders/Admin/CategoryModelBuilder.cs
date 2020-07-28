@@ -53,6 +53,10 @@ namespace Atlas.Data.Builders.Admin
         {
             var result = new FormComponentModel();
 
+            var permissionSets = await _dbContext.PermissionSets
+                .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
+                .ToListAsync();
+
             if (id != null)
             {
                 var category = await _dbContext.Categories
@@ -73,10 +77,13 @@ namespace Atlas.Data.Builders.Admin
                     PermissionSetId = category.PermissionSetId
                 };
             }
-
-            var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
-                .ToListAsync();
+            else
+            {
+                result.Category = new FormComponentModel.CategoryModel
+                {
+                    PermissionSetId = permissionSets.FirstOrDefault()?.Id ?? Guid.Empty
+                };
+            }
 
             foreach (var permissionSet in permissionSets)
             {

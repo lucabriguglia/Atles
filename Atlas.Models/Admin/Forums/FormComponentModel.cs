@@ -14,6 +14,7 @@ namespace Atlas.Models.Admin.Forums
         {
             public Guid Id { get; set; }
 
+            [Required]
             public Guid CategoryId { get; set; }
 
             [Required]

@@ -98,7 +98,7 @@ namespace Atlas.Data.Builders.Admin
                 });
             }
 
-            var selectedCategoryId = categoryId ?? categories.FirstOrDefault().Id;
+            var selectedCategoryId = categoryId ?? categories.FirstOrDefault()?.Id ?? Guid.Empty;
 
             result.Forum = new FormComponentModel.ForumModel
             {
