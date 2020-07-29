@@ -187,6 +187,7 @@ namespace Atlas.Data.Builders.Public
             };
 
             var replies = await _dbContext.Replies
+                .Include(x => x.Member)
                 .Where(x => 
                     x.TopicId == topicId && 
                     x.Status == StatusType.Published)
