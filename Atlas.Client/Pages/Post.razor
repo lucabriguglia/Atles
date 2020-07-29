@@ -1,5 +1,6 @@
 ﻿@page "/forum/{forumId:guid}/post"
 @using Atlas.Models.Public
+@attribute [Authorize]
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
 
