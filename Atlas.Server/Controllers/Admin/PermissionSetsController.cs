@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Atlas.Server.Controllers.Admin
 {
     [Authorize(Policy = "Admin")]
-    [Route("api/admin/categories")]
+    [Route("api/admin/permission-sets")]
     [ApiController]
     public class PermissionSetsController : ControllerBase
     {
@@ -43,7 +43,7 @@ namespace Atlas.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildFormModelAsync(site.Id);
+            return await _modelBuilder.BuildCreateFormModelAsync(site.Id);
         }
 
         [HttpPost("save")]
@@ -70,7 +70,7 @@ namespace Atlas.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var result = await _modelBuilder.BuildFormModelAsync(site.Id, id);
+            var result = await _modelBuilder.BuildEditFormModelAsync(site.Id, id);
 
             if (result == null)
             {

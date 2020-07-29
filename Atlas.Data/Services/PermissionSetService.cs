@@ -60,6 +60,7 @@ namespace Atlas.Data.Services
             await _updateValidator.ValidateCommandAsync(command);
 
             var permissionSet = await _dbContext.PermissionSets
+                .Include(x => x.Permissions)
                 .FirstOrDefaultAsync(x =>
                     x.SiteId == command.SiteId &&
                     x.Id == command.Id &&
@@ -68,6 +69,11 @@ namespace Atlas.Data.Services
             if (permissionSet == null)
             {
                 throw new DataException($"Permission Set with Id {command.Id} not found.");
+            }
+
+            foreach (var permission in permissionSet.Permissions)
+            {
+                _dbContext.Permissions.Remove(permission);
             }
 
             permissionSet.UpdateDetails(command.Name, command.Permissions);

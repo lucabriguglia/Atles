@@ -32,7 +32,7 @@ namespace Atlas.Tests.Data.Services
                     {
                         new PermissionCommand
                         {
-                            Type = PermissionType.Pin,
+                            Type = PermissionType.Start,
                             RoleId = Guid.NewGuid().ToString()
                         }
                     }
@@ -87,7 +87,7 @@ namespace Atlas.Tests.Data.Services
                     {
                         new PermissionCommand
                         {
-                            Type = PermissionType.Pin,
+                            Type = PermissionType.Start,
                             RoleId = Guid.NewGuid().ToString()
                         }
                     }

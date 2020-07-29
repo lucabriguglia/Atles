@@ -1,5 +1,4 @@
 ﻿using System.Collections.Generic;
-using Atlas.Domain.PermissionSets;
 using Atlas.Domain.PermissionSets.Commands;
 
 namespace Atlas.Models.Admin.PermissionSets
@@ -10,29 +9,19 @@ namespace Atlas.Models.Admin.PermissionSets
         {
             var result = new List<PermissionCommand>();
 
-            foreach (var model in models)
+            foreach (var permission in models)
             {
-                result.Add(new PermissionCommand
+                foreach (var permissionType in permission.PermissionTypes)
                 {
-                    Type = model.Type,
-                    RoleId = model.RoleId
-                });
-            }
-
-            return result;
-        }
-
-        public static ICollection<FormComponentModel.PermissionModel> ToPermissionModels(this ICollection<Permission> entities)
-        {
-            var result = new List<FormComponentModel.PermissionModel>();
-
-            foreach (var entity in entities)
-            {
-                result.Add(new FormComponentModel.PermissionModel
-                {
-                    Type = entity.Type,
-                    RoleId = entity.RoleId
-                });
+                    if (permissionType.Selected)
+                    {
+                        result.Add(new PermissionCommand
+                        {
+                            Type = permissionType.Type,
+                            RoleId = permission.RoleId
+                        });
+                    }
+                }
             }
 
             return result;

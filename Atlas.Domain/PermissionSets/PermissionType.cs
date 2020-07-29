@@ -9,8 +9,8 @@
         Reply = 4,
         Edit = 5,
         Delete = 6,
-        Pin = 7,
-        Lock = 8,
+        //Pin = 7,
+        //Lock = 8,
         Moderate = 9
     }
 }

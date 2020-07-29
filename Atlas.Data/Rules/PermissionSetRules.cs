@@ -42,5 +42,10 @@ namespace Atlas.Data.Rules
                                x.Status == StatusType.Published);
             return any;
         }
+
+        public async Task<bool> IsInUse(Guid siteId, Guid id)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

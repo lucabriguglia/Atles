@@ -50,7 +50,7 @@ namespace Atlas.Tests.Domain.PermissionSets
             const string name = "Updated Permission Set";
             var permissions = new List<PermissionCommand> {new PermissionCommand
             {
-                Type = PermissionType.Pin, 
+                Type = PermissionType.Start, 
                 RoleId = Guid.NewGuid().ToString()
             }};
 

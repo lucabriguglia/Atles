@@ -11,6 +11,7 @@ namespace Atlas.Models.Admin.PermissionSets
         {
             public Guid Id { get; set; }
             public string Name { get; set; }
+            public bool IsInUse { get; set; }
         }
     }
 }
