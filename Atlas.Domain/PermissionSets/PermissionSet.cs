@@ -40,7 +40,7 @@ namespace Atlas.Domain.PermissionSets
             Status = StatusType.Published;
         }
 
-        public void UpdateDetails(string name, List<Permission> permissions)
+        public void UpdateDetails(string name, ICollection<Permission> permissions)
         {
             Name = name;
             Permissions.Clear();

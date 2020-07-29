@@ -15,14 +15,23 @@ namespace Atlas.Data.Rules
             _dbContext = dbContext;
         }
 
-        public Task<bool> IsNameUniqueAsync(Guid siteId, string name)
+        public async Task<bool> IsNameUniqueAsync(Guid siteId, string name)
         {
-            throw new NotImplementedException();
+            var any = await _dbContext.PermissionSets
+                .AnyAsync(x => x.SiteId == siteId &&
+                               x.Name == name &&
+                               x.Status != StatusType.Deleted);
+            return !any;
         }
 
-        public Task<bool> IsNameUniqueAsync(Guid siteId, string name, Guid id)
+        public async Task<bool> IsNameUniqueAsync(Guid siteId, string name, Guid id)
         {
-            throw new NotImplementedException();
+            var any = await _dbContext.PermissionSets
+                .AnyAsync(x => x.SiteId == siteId &&
+                               x.Name == name &&
+                               x.Status != StatusType.Deleted &&
+                               x.Id != id);
+            return !any;
         }
 
         public async Task<bool> IsValid(Guid siteId, Guid id)
