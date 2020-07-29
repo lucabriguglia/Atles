@@ -51,8 +51,6 @@ namespace Atlas.Data.Services
                 }));
 
             await _dbContext.SaveChangesAsync();
-
-            _cacheManager.Remove(CacheKeys.PermissionSets(command.SiteId));
         }
 
         public async Task UpdateAsync(UpdatePermissionSet command)
@@ -91,7 +89,7 @@ namespace Atlas.Data.Services
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.PermissionSets(command.SiteId));
+            _cacheManager.Remove(CacheKeys.PermissionSet(command.Id));
         }
 
         public async Task DeleteAsync(DeletePermissionSet command)
@@ -117,7 +115,7 @@ namespace Atlas.Data.Services
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.PermissionSets(command.SiteId));
+            _cacheManager.Remove(CacheKeys.PermissionSet(command.Id));
         }
     }
 }

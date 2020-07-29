@@ -7,21 +7,21 @@ namespace Atlas.Client.Clients
 
     public abstract class ServiceBase
     {
-        protected readonly HttpClient _httpClient;
+        protected readonly HttpClient HttpClient;
 
         public ServiceBase(HttpClient httpClient)
         {
-            _httpClient = httpClient;
+            HttpClient = httpClient;
         }
 
         public async Task<T> GetFromJsonAsync<T>(string requestUri) where T : class
         {
-            return await _httpClient.GetFromJsonAsync<T>(requestUri);
+            return await HttpClient.GetFromJsonAsync<T>(requestUri);
         }
 
         public async Task PostAsJsonAsync(string requestUri, object data)
         {
-            await _httpClient.PostAsJsonAsync(requestUri, data);
+            await HttpClient.PostAsJsonAsync(requestUri, data);
         }
     }
 }

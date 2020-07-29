@@ -1,11 +1,13 @@
-﻿using Atlas.Domain.PermissionSets;
+﻿using System.Collections.Generic;
+using Atlas.Domain.PermissionSets;
 
 namespace Atlas.Models.Public
 {
     public class PermissionModel
     {
-        public string RoleId { get; set; }
-        public string RoleName { get; set; }
         public PermissionType Type { get; set; }
+        public bool AllUsers { get; set; }
+        public bool RegisteredUsers { get; set; }
+        public IList<RoleModel> Roles { get; set; } = new List<RoleModel>();
     }
 }

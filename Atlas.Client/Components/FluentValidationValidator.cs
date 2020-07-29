@@ -42,7 +42,7 @@ namespace Atlas.Client.Components
 		/// </summary>
 		public override async Task SetParametersAsync(ParameterView parameters)
 		{
-			// Keep a reference to the original values so we can check if they have changed
+            // Keep a reference to the original values so we can check if they have changed
 			EditContext previousEditContext = EditContext;
 			Type previousValidatorType = ValidatorType;
 

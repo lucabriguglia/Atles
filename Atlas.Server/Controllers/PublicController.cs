@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Domain;
+using Atlas.Domain.PermissionSets;
 using Atlas.Domain.Replies;
 using Atlas.Domain.Replies.Commands;
 using Atlas.Domain.Topics;
@@ -22,16 +23,18 @@ namespace Atlas.Server.Controllers
         private readonly IPublicModelBuilder _modelBuilder;
         private readonly ITopicService _topicService;
         private readonly IReplyService _replyService;
+        private readonly ISecurityService _securityService;
 
         public PublicController(IContextService contextService, 
             IPublicModelBuilder modelBuilder, 
             ITopicService topicService, 
-            IReplyService replyService)
+            IReplyService replyService, ISecurityService securityService)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
             _topicService = topicService;
             _replyService = replyService;
+            _securityService = securityService;
         }
 
         [HttpGet("index-model")]
@@ -54,7 +57,12 @@ namespace Atlas.Server.Controllers
                 return NotFound();
             }
 
+            var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, model.Permissions);
 
+            if (!canViewForum)
+            {
+                return Unauthorized();
+            }
 
             return model;
         }

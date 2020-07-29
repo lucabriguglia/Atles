@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
+using Atlas.Domain.PermissionSets;
 using Atlas.Models;
 using Atlas.Models.Public;
 using Markdig;
@@ -143,7 +144,8 @@ namespace Atlas.Data.Builders.Public
                 {
                     Id = forum.Id,
                     Name = forum.Name
-                }
+                },
+                Permissions = await BuildPermissionModels(siteId, forum.PermissionSetId ?? forum.Category.PermissionSetId)
             };
 
             return result;
@@ -180,7 +182,8 @@ namespace Atlas.Data.Builders.Public
                     MemberId = topic.Member.Id,
                     MemberDisplayName = topic.Member.DisplayName,
                     TimeStamp = topic.TimeStamp
-                }
+                },
+                Permissions = await BuildPermissionModels(siteId, topic.Forum.PermissionSetId ?? topic.Forum.Category.PermissionSetId)
             };
 
             var replies = await _dbContext.Replies
@@ -232,14 +235,33 @@ namespace Atlas.Data.Builders.Public
 
                 var roles = await _roles.GetRoleModels();
 
-                foreach (var permission in permissionSet.Permissions)
+                foreach (PermissionType permissionType in Enum.GetValues(typeof(PermissionType)))
                 {
-                    result.Add(new PermissionModel
+                    var permissionModel = new PermissionModel
                     {
-                        RoleId = permission.RoleId,
-                        RoleName = roles.FirstOrDefault(x => x.Id == permission.RoleId)?.Name ?? string.Empty,
-                        Type = permission.Type
-                    });
+                        Type = permissionType
+                    };
+
+                    var permissions = permissionSet.Permissions.Where(x => x.Type == permissionType);
+
+                    permissionModel.AllUsers = permissions.FirstOrDefault(x => x.RoleId == Consts.RoleIdAll) != null;
+                    permissionModel.RegisteredUsers = permissions.FirstOrDefault(x => x.RoleId == Consts.RoleIdRegistered) != null;
+
+                    foreach (var permission in permissions)
+                    {
+                        var role = roles.FirstOrDefault(x => x.Id == permission.RoleId);
+
+                        if (role != null)
+                        {
+                            permissionModel.Roles.Add(new RoleModel
+                            {
+                                Id = role.Id,
+                                Name = role.Name
+                            });
+                        }
+                    }
+
+                    result.Add(permissionModel);
                 }
 
                 return result;

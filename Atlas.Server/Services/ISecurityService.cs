@@ -1,10 +1,12 @@
-﻿namespace Atlas.Server.Services
+﻿using System.Collections.Generic;
+using Atlas.Domain.PermissionSets;
+using Atlas.Models.Public;
+
+namespace Atlas.Server.Services
 {
     public interface ISecurityService
     {
-    }
-
-    public class SecurityService : ISecurityService
-    {
+        bool HasPermission(PermissionModel model);
+        bool HasPermission(PermissionType type, IList<PermissionModel> models);
     }
 }

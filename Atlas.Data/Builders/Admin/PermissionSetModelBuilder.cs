@@ -6,7 +6,6 @@ using System.Threading.Tasks;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models;
 using Atlas.Models.Admin.PermissionSets;
-using Microsoft.AspNetCore.Identity;
 
 namespace Atlas.Data.Builders.Admin
 {
@@ -14,7 +13,6 @@ namespace Atlas.Data.Builders.Admin
     {
         private readonly AtlasDbContext _dbContext;
         private readonly IRoleModelBuilder _roleManager;
-
         public PermissionSetModelBuilder(AtlasDbContext dbContext, IRoleModelBuilder roleManager)
         {
             _dbContext = dbContext;
