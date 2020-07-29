@@ -54,6 +54,8 @@ namespace Atlas.Server.Controllers
                 return NotFound();
             }
 
+
+
             return model;
         }
 

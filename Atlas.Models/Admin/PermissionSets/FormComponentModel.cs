@@ -24,7 +24,7 @@ namespace Atlas.Models.Admin.PermissionSets
         {
             public string RoleId { get; set; }
             public string RoleName { get; set; }
-            public bool Disabled { get; set; }
+            //public bool Disabled { get; set; }
 
             public IList<PermissionTypeModel> PermissionTypes { get; set; } = new List<PermissionTypeModel>();
         }
@@ -33,6 +33,7 @@ namespace Atlas.Models.Admin.PermissionSets
         {
             public PermissionType Type { get; set; }
             public bool Selected { get; set; }
+            public bool Disabled { get; set; }
         }
     }
 }

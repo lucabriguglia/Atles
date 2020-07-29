@@ -1,10 +1,13 @@
 ﻿using System;
+using System.Collections.Generic;
 
 namespace Atlas.Models.Public
 {
     public class ForumPageModel
     {
         public ForumModel Forum { get; set; } = new ForumModel();
+
+        public IList<PermissionModel> Permissions { get; set; } = new List<PermissionModel>();
 
         public PaginatedData<TopicModel> Topics { get; set; } = new PaginatedData<TopicModel>();
 

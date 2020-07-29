@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
@@ -14,11 +15,13 @@ namespace Atlas.Data.Builders.Public
     {
         private readonly AtlasDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
+        private readonly IRoleModelBuilder _roles;
 
-        public PublicModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager)
+        public PublicModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager, IRoleModelBuilder roles)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
+            _roles = roles;
         }
 
         public async Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId)
@@ -67,6 +70,7 @@ namespace Atlas.Data.Builders.Public
         public async Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId, PaginationOptions options)
         {
             var forum = await _dbContext.Forums
+                .Include(x => x.Category)
                 .FirstOrDefaultAsync(x =>
                     x.Id == forumId &&
                     x.Category.SiteId == siteId &&
@@ -83,7 +87,8 @@ namespace Atlas.Data.Builders.Public
                 {
                     Id = forum.Id,
                     Name = forum.Name
-                }
+                },
+                Permissions = await BuildPermissionModels(siteId, forum.PermissionSetId ?? forum.Category.PermissionSetId)
             };
 
             var topics = await _dbContext.Topics
@@ -121,6 +126,7 @@ namespace Atlas.Data.Builders.Public
         public async Task<PostPageModel> BuildPostPageModelAsync(Guid siteId, Guid forumId)
         {
             var forum = await _dbContext.Forums
+                .Include(x => x.Category)
                 .FirstOrDefaultAsync(x =>
                     x.Id == forumId &&
                     x.Category.SiteId == siteId &&
@@ -146,7 +152,7 @@ namespace Atlas.Data.Builders.Public
         public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, PaginationOptions options)
         {
             var topic = await _dbContext.Topics
-                .Include(x => x.Forum)
+                .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Member)
                 .FirstOrDefaultAsync(x =>
                     x.Forum.Category.SiteId == siteId &&
@@ -204,6 +210,40 @@ namespace Atlas.Data.Builders.Public
             result.Replies = new PaginatedData<TopicPageModel.ReplyModel>(items, totalRecords, options.PageSize);
 
             return result;
+        }
+
+        private async Task<IList<PermissionModel>> BuildPermissionModels(Guid siteId, Guid permissionSetId)
+        {
+            return await _cacheManager.GetOrSetAsync(CacheKeys.PermissionSet(permissionSetId), async () =>
+            {
+                var result = new List<PermissionModel>();
+
+                var permissionSet = await _dbContext.PermissionSets
+                    .Include(x => x.Permissions)
+                    .FirstOrDefaultAsync(x =>
+                        x.SiteId == siteId &&
+                        x.Id == permissionSetId &&
+                        x.Status != StatusType.Deleted);
+
+                if (permissionSet == null)
+                {
+                    return result;
+                }
+
+                var roles = await _roles.GetRoleModels();
+
+                foreach (var permission in permissionSet.Permissions)
+                {
+                    result.Add(new PermissionModel
+                    {
+                        RoleId = permission.RoleId,
+                        RoleName = roles.FirstOrDefault(x => x.Id == permission.RoleId)?.Name ?? string.Empty,
+                        Type = permission.Type
+                    });
+                }
+
+                return result;
+            });
         }
     }
 }

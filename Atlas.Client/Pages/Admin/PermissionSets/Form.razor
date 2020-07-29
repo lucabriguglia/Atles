@@ -34,7 +34,7 @@
                             @foreach (var permissionType in permission.PermissionTypes)
                             {
                                 <td class="text-center">
-                                    @if (permission.Disabled)
+                                    @if (permissionType.Disabled)
                                     {
                                         <InputCheckbox @bind-Value="@permissionType.Selected" Disabled="disabled" />
                                     }
