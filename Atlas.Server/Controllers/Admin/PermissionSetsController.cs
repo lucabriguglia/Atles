@@ -55,7 +55,7 @@ namespace Atlas.Server.Controllers.Admin
             var command = new CreatePermissionSet
             {
                 Name = model.Name,
-                Permissions = model.Permissions,
+                Permissions = model.Permissions.ToPermissionCommands(),
                 SiteId = site.Id,
                 MemberId = member.Id
             };
@@ -90,7 +90,7 @@ namespace Atlas.Server.Controllers.Admin
             {
                 Id = model.Id,
                 Name = model.Name,
-                Permissions = model.Permissions,
+                Permissions = model.Permissions.ToPermissionCommands(),
                 SiteId = site.Id,
                 MemberId = member.Id
             };

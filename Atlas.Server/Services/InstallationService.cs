@@ -9,6 +9,7 @@ using Atlas.Domain.Forums;
 using Atlas.Domain.Forums.Events;
 using Atlas.Domain.Members;
 using Atlas.Domain.PermissionSets;
+using Atlas.Domain.PermissionSets.Commands;
 using Atlas.Domain.PermissionSets.Events;
 using Atlas.Domain.Sites;
 using Atlas.Domain.Sites.Events;
@@ -100,7 +101,7 @@ namespace Atlas.Server.Services
             }));
 
             // Permission Set
-            var permissionSet = new PermissionSet(site.Id, "Default", new List<Permission>());
+            var permissionSet = new PermissionSet(site.Id, "Default", new List<PermissionCommand>());
             _dbContext.PermissionSets.Add(permissionSet);
             _dbContext.Events.Add(new Event(new PermissionSetCreated
             {

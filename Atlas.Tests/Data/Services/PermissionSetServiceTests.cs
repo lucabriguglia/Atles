@@ -14,7 +14,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.PermissionSets.Commands;
-using Atlas.Domain.Forums;
 
 namespace Atlas.Tests.Data.Services
 {
@@ -26,7 +25,18 @@ namespace Atlas.Tests.Data.Services
         {
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
-                var command = Fixture.Create<CreatePermissionSet>();
+                var command = new CreatePermissionSet
+                {
+                    Name = "Permission Set",
+                    Permissions = new List<PermissionCommand>
+                    {
+                        new PermissionCommand
+                        {
+                            Type = PermissionType.Pin,
+                            RoleId = Guid.NewGuid().ToString()
+                        }
+                    }
+                };
 
                 var cacheManager = new Mock<ICacheManager>();
 
@@ -58,7 +68,7 @@ namespace Atlas.Tests.Data.Services
         public async Task Should_update_permission_set_and_add_event()
         {
             var options = Shared.CreateContextOptions();
-            var permissionSet = Fixture.Create<PermissionSet>();
+            var permissionSet = new PermissionSet(Guid.NewGuid(), Guid.NewGuid(), "Default", new List<PermissionCommand>());
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -68,10 +78,20 @@ namespace Atlas.Tests.Data.Services
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var command = Fixture.Build<UpdatePermissionSet>()
-                        .With(x => x.Id, permissionSet.Id)
-                        .With(x => x.SiteId, permissionSet.SiteId)
-                    .Create();
+                var command = new UpdatePermissionSet
+                {
+                    SiteId = permissionSet.SiteId,
+                    Id = permissionSet.Id,
+                    Name = "Permission Set",
+                    Permissions = new List<PermissionCommand>
+                    {
+                        new PermissionCommand
+                        {
+                            Type = PermissionType.Pin,
+                            RoleId = Guid.NewGuid().ToString()
+                        }
+                    }
+                };
 
                 var cacheManager = new Mock<ICacheManager>();
 
@@ -105,7 +125,7 @@ namespace Atlas.Tests.Data.Services
 
             var siteId = Guid.NewGuid();
 
-            var permissionSet = new PermissionSet(siteId, "Permission Set", new List<Permission>());
+            var permissionSet = new PermissionSet(siteId, "Permission Set", new List<PermissionCommand>());
 
             using (var dbContext = new AtlasDbContext(options))
             {

@@ -18,7 +18,7 @@ namespace Atlas.Tests.Data.Services
     public class SiteServiceTests : TestFixtureBase
     {
         [Test]
-        public async Task Should_update_forum_and_add_event()
+        public async Task Should_update_site_and_add_event()
         {
             var options = Shared.CreateContextOptions();
             var site = Fixture.Create<Site>();

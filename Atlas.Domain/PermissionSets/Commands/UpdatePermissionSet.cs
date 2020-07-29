@@ -7,6 +7,6 @@ namespace Atlas.Domain.PermissionSets.Commands
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
-        public ICollection<Permission> Permissions { get; set; } = new List<Permission>();
+        public ICollection<PermissionCommand> Permissions { get; set; } = new List<PermissionCommand>();
     }
 }

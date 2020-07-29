@@ -57,7 +57,7 @@ namespace Atlas.Data.Builders.Admin
                 {
                     Id = permissionSet.Id,
                     Name = permissionSet.Name,
-                    Permissions = permissionSet.Permissions
+                    Permissions = permissionSet.Permissions.ToPermissionModels()
                 };
             }
 

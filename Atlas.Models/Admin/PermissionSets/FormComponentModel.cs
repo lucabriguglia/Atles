@@ -17,7 +17,13 @@ namespace Atlas.Models.Admin.PermissionSets
             [StringLength(50)]
             public string Name { get; set; }
 
-            public ICollection<Permission> Permissions { get; set; }
+            public ICollection<PermissionModel> Permissions { get; set; }
+        }
+
+        public class PermissionModel
+        {
+            public PermissionType Type { get; set; }
+            public string RoleId { get; set; }
         }
     }
 }

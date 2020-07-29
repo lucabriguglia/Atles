@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Domain.PermissionSets;
+using Atlas.Domain.PermissionSets.Commands;
 using Atlas.Domain.Sites;
 
 namespace Atlas.Tests.Data.Rules
@@ -46,7 +47,7 @@ namespace Atlas.Tests.Data.Rules
             using (var dbContext = new AtlasDbContext(options))
             {
                 var site = new Site(siteId, "Name", "Title");
-                var permissionSet = new PermissionSet(siteId, permissionSetName, new List<Permission>());
+                var permissionSet = new PermissionSet(siteId, permissionSetName, new List<PermissionCommand>());
                 dbContext.Sites.Add(site);
                 dbContext.PermissionSets.Add(permissionSet);
                 await dbContext.SaveChangesAsync();
@@ -71,8 +72,8 @@ namespace Atlas.Tests.Data.Rules
             using (var dbContext = new AtlasDbContext(options))
             {
                 var site = new Site(siteId, "Name", "Title");
-                var permissionSet1 = new PermissionSet(siteId, "Permission Set 1", new List<Permission>());
-                var permissionSet2 = new PermissionSet(permissionSetId, siteId, "Permission Set 2", new List<Permission>());
+                var permissionSet1 = new PermissionSet(siteId, "Permission Set 1", new List<PermissionCommand>());
+                var permissionSet2 = new PermissionSet(permissionSetId, siteId, "Permission Set 2", new List<PermissionCommand>());
                 dbContext.Sites.Add(site);
                 dbContext.PermissionSets.Add(permissionSet1);
                 dbContext.PermissionSets.Add(permissionSet2);
@@ -93,7 +94,7 @@ namespace Atlas.Tests.Data.Rules
         {
             var options = Shared.CreateContextOptions();
             var site = new Site(Guid.NewGuid(), "Name", "Title");
-            var permissionSet = new PermissionSet(Guid.NewGuid(), site.Id, "Permission Set", new List<Permission>());
+            var permissionSet = new PermissionSet(Guid.NewGuid(), site.Id, "Permission Set", new List<PermissionCommand>());
 
             using (var dbContext = new AtlasDbContext(options))
             {

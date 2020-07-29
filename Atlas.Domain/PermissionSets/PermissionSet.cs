@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
+using Atlas.Domain.PermissionSets.Commands;
 
 namespace Atlas.Domain.PermissionSets
 {
@@ -21,30 +22,39 @@ namespace Atlas.Domain.PermissionSets
             
         }
 
-        public PermissionSet(Guid siteId, string name, ICollection<Permission> permissions)
+        public PermissionSet(Guid siteId, string name, ICollection<PermissionCommand> permissions)
         {
             New(Guid.NewGuid(), siteId, name, permissions);
         }
 
-        public PermissionSet(Guid id, Guid siteId, string name, ICollection<Permission> permissions)
+        public PermissionSet(Guid id, Guid siteId, string name, ICollection<PermissionCommand> permissions)
         {
             New(id, siteId, name, permissions);
         }
 
-        public void New(Guid id, Guid siteId, string name, ICollection<Permission> permissions)
+        public void New(Guid id, Guid siteId, string name, ICollection<PermissionCommand> permissions)
         {
             Id = id;
             SiteId = siteId;
             Name = name;
-            Permissions = permissions;
             Status = StatusType.Published;
+            AddPermissions(permissions);
         }
 
-        public void UpdateDetails(string name, ICollection<Permission> permissions)
+        private void AddPermissions(ICollection<PermissionCommand> permissions)
+        {
+            Permissions = new List<Permission>();
+
+            foreach (var permission in permissions)
+            {
+                Permissions.Add(new Permission(Id, permission.Type, permission.RoleId));
+            }
+        }
+
+        public void UpdateDetails(string name, ICollection<PermissionCommand> permissions)
         {
             Name = name;
-            Permissions.Clear();
-            Permissions = permissions;
+            AddPermissions(permissions);
         }
 
         public void Delete()

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Atlas.Domain;
 using Atlas.Domain.PermissionSets;
+using Atlas.Domain.PermissionSets.Commands;
 using AutoFixture;
 using NUnit.Framework;
 
@@ -17,7 +19,7 @@ namespace Atlas.Tests.Domain.PermissionSets
             const string name = "New Permission Set";
             var permissions = new List<Permission>();
 
-            var sut = new PermissionSet(siteId, name, new List<Permission>());
+            var sut = new PermissionSet(siteId, name, new List<PermissionCommand>());
 
             Assert.AreEqual(siteId, sut.SiteId, nameof(sut.SiteId));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
@@ -30,7 +32,7 @@ namespace Atlas.Tests.Domain.PermissionSets
             var id = Guid.NewGuid();
             var siteId = Guid.NewGuid();
             const string name = "New Permission Set";
-            var permissions = new List<Permission>();
+            var permissions = new List<PermissionCommand>();
 
             var sut = new PermissionSet(id, siteId, name, permissions);
 
@@ -46,12 +48,16 @@ namespace Atlas.Tests.Domain.PermissionSets
             var sut = Fixture.Create<PermissionSet>();
 
             const string name = "Updated Permission Set";
-            var permissions = new List<Permission>{new Permission(sut.Id, PermissionType.Pin, Guid.NewGuid().ToString())};
+            var permissions = new List<PermissionCommand> {new PermissionCommand
+            {
+                Type = PermissionType.Pin, 
+                RoleId = Guid.NewGuid().ToString()
+            }};
 
             sut.UpdateDetails(name, permissions);
 
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
-            Assert.AreEqual(permissions, sut.Permissions, nameof(sut.Permissions));
+            Assert.AreEqual(permissions.FirstOrDefault().RoleId, sut.Permissions.FirstOrDefault().RoleId, nameof(sut.Permissions));
         }
 
         [Test]
