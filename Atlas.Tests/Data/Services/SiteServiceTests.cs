@@ -1,4 +1,5 @@
-﻿using Atlas.Data;
+﻿using System;
+using Atlas.Data;
 using Atlas.Data.Caching;
 using Atlas.Data.Services;
 using Atlas.Domain.Sites.Commands;
@@ -21,7 +22,7 @@ namespace Atlas.Tests.Data.Services
         public async Task Should_update_site_and_add_event()
         {
             var options = Shared.CreateContextOptions();
-            var site = Fixture.Create<Site>();
+            var site = new Site(Guid.NewGuid(), "Name", "Title");
 
             using (var dbContext = new AtlasDbContext(options))
             {

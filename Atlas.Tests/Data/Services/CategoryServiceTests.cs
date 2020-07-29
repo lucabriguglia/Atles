@@ -9,11 +9,14 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 using System;
+using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Categories.Commands;
 using Atlas.Domain.Forums;
+using Atlas.Domain.PermissionSets;
+using Atlas.Domain.PermissionSets.Commands;
 
 namespace Atlas.Tests.Data.Services
 {
@@ -57,10 +60,12 @@ namespace Atlas.Tests.Data.Services
         public async Task Should_update_category_and_add_event()
         {
             var options = Shared.CreateContextOptions();
-            var category = Fixture.Create<Category>();
+            var permissionSet = new PermissionSet(Guid.NewGuid(), Guid.NewGuid(), "Default", new List<PermissionCommand>());
+            var category = new Category(Guid.NewGuid(), permissionSet.SiteId, "Category", 1, permissionSet.Id);
 
             using (var dbContext = new AtlasDbContext(options))
             {
+                dbContext.PermissionSets.Add(permissionSet);
                 dbContext.Categories.Add(category);
                 await dbContext.SaveChangesAsync();
             }
