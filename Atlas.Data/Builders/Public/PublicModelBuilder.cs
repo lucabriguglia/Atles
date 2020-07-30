@@ -80,6 +80,8 @@ namespace Atlas.Data.Builders.Public
                 return null;
             }
 
+            var permissionModels = await _permissionModelBuilder.BuildPermissionModels(siteId, forum.PermissionSetId ?? forum.Category.PermissionSetId);
+
             var result = new ForumPageModel
             {
                 Forum = new ForumPageModel.ForumModel
@@ -87,7 +89,7 @@ namespace Atlas.Data.Builders.Public
                     Id = forum.Id,
                     Name = forum.Name
                 },
-                Permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, forum.PermissionSetId ?? forum.Category.PermissionSetId)
+                Permissions = permissionModels
             };
 
             var topics = await _dbContext.Topics

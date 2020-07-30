@@ -7,6 +7,7 @@ namespace Atlas.Models
     {
         public PermissionType Type { get; set; }
         public bool AllUsers { get; set; }
-        public IList<RoleModel> Roles { get; set; } = new List<RoleModel>();
+        public bool RegisteredUsers { get; set; }
+        public IList<string> Roles { get; set; } = new List<string>();
     }
 }

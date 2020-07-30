@@ -13,91 +13,98 @@
 }
 else
 {
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item"><a href="/forum/@ForumId">@Model.Forum.Name</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Model.Topic.Title</li>
-        </ol>
-    </nav>
-
-    <h4 class="mb-3">@Model.Topic.Title</h4>
-
-    <div class="card mb-3">
-        <div class="card-body">
-            <div class="row mb-3">
-                <div class="col-md-6 small font-weight-bold">
-                    @Model.Topic.MemberDisplayName
-                </div>
-                <div class="col-md-6 text-right small">
-                    @Model.Topic.TimeStamp.ToShortDateString() @Model.Topic.TimeStamp.ToShortTimeString()
-                </div>
-            </div>
-            <p class="card-text">@((MarkupString)Model.Topic.Content)</p>
-        </div>
-    </div>
-
-    <h5 class="mb-3">Replies</h5>
-
-    if (Model.Replies.Items.Count == 0)
+    if (CanRead)
     {
-        <NoRecords Text="No replies found for this topic."></NoRecords>
-    }
-    else
-    {
-        <div class="card">
-            <ul class="list-group list-group-flush">
-                @foreach (var reply in Model.Replies.Items)
-                {
-                    <li class="list-group-item py-3">
-                        <div class="row mb-3 small">
-                            <div class="col-md-6 font-weight-bold">
-                                @reply.MemberDisplayName
-                            </div>
-                            <div class="col-md-6 text-right">
-                                @reply.TimeStamp.ToShortDateString() @reply.TimeStamp.ToShortTimeString()
-                            </div>
-                        </div>
-                        <div class="card-text">@((MarkupString)reply.Content)</div>
-                    </li>
-                }
-            </ul>
-        </div>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/forum/@ForumId">@Model.Forum.Name</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Topic.Title</li>
+            </ol>
+        </nav>
 
-        <div class="mt-3">
-            <Pager TotalPages="Model.Replies.TotalPages" OnLoadDataCallback="@LoadDataAsync"></Pager>
-        </div>
-    }
+        <h4 class="mb-3">@Model.Topic.Title</h4>
 
-    if (CanReply)
-    {
-        <h5 class="mb-3">Reply</h5>
-        <div class="row">
-            <div class="col-md-8">
-                <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveAsync">
-                    <DataAnnotationsValidator />
-                    <Editor @bind-Value="@Model.Post.Content" Rows="10"></Editor>
-                    <div class="form-group">
-                        <input type="submit" value="Save" class="btn btn-primary" />
-                        <div class="small float-right mt-2">
-                            <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>Guide</a>
-                        </div>
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6 small font-weight-bold">
+                        @Model.Topic.MemberDisplayName
                     </div>
-                    <ValidationSummary />
-                </EditForm>
+                    <div class="col-md-6 text-right small">
+                        @Model.Topic.TimeStamp.ToShortDateString() @Model.Topic.TimeStamp.ToShortTimeString()
+                    </div>
+                </div>
+                <p class="card-text">@((MarkupString)Model.Topic.Content)</p>
             </div>
         </div>
+
+        <h5 class="mb-3">Replies</h5>
+
+        if (Model.Replies.Items.Count == 0)
+        {
+            <NoRecords Text="No replies found for this topic."></NoRecords>
+        }
+        else
+        {
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    @foreach (var reply in Model.Replies.Items)
+                    {
+                        <li class="list-group-item py-3">
+                            <div class="row mb-3 small">
+                                <div class="col-md-6 font-weight-bold">
+                                    @reply.MemberDisplayName
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    @reply.TimeStamp.ToShortDateString() @reply.TimeStamp.ToShortTimeString()
+                                </div>
+                            </div>
+                            <div class="card-text">@((MarkupString)reply.Content)</div>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="mt-3">
+                <Pager TotalPages="Model.Replies.TotalPages" OnLoadDataCallback="@LoadDataAsync"></Pager>
+            </div>
+        }
+
+        if (CanReply)
+        {
+            <h5 class="mb-3">Reply</h5>
+            <div class="row">
+                <div class="col-md-8">
+                    <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveAsync">
+                        <DataAnnotationsValidator />
+                        <Editor @bind-Value="@Model.Post.Content" Rows="10"></Editor>
+                        <div class="form-group">
+                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <div class="small float-right mt-2">
+                                <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>Guide</a>
+                            </div>
+                        </div>
+                        <ValidationSummary />
+                    </EditForm>
+                </div>
+            </div>
+        }
+        else
+        {
+            <AuthorizeView>
+                <Authorized>
+                    <p class="mt-3">You are not authorized to reply.</p>
+                </Authorized>
+                <NotAuthorized>
+                    <p class="mt-3"><a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to reply.</p>
+                </NotAuthorized>
+            </AuthorizeView>
+        }
     }
     else
     {
-        <AuthorizeView>
-            <Authorized>
-                <p class="mt-3">You are not authorized to reply.</p>
-            </Authorized>
-            <NotAuthorized>
-                <p class="mt-3"><a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to reply.</p>
-            </NotAuthorized>
-        </AuthorizeView>        
+        <AccessDenied />
     }
 }
 
@@ -113,12 +120,15 @@ else
 
     private TopicPageModel Model { get; set; }
 
+    public bool CanRead { get; set; }
     public bool CanReply { get; set; }
 
     private async Task LoadDataAsync(int page)
     {
-        Model = await Service.GetFromJsonAsync<TopicPageModel>($"api/public/forum/{ForumId}/{TopicId}?page={page}");
-        CanReply = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Reply, Model.Permissions);
+        var data = await Service.GetFromJsonAsync<TopicPageModel>($"api/public/forum/{ForumId}/{TopicId}?page={page}");
+        CanRead = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Read, data.Permissions);
+        CanReply = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Reply, data.Permissions);
+        Model = CanRead ? data : new TopicPageModel();
     }
 
     protected override async Task OnInitializedAsync()

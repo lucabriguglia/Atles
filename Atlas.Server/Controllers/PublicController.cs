@@ -81,6 +81,7 @@ namespace Atlas.Server.Controllers
         public async Task<ActionResult<PostPageModel>> Post(Guid forumId)
         {
             var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
 
             var model = await _modelBuilder.BuildPostPageModelAsync(site.Id, forumId);
 

@@ -72,7 +72,7 @@ else
     }
     else
     {
-<AccessDenied />
+        <AccessDenied />
     }
 }
 
@@ -89,17 +89,8 @@ else
 
     private async Task LoadDataAsync(int page)
     {
-        try
-        {
-
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e);
-            throw;
-        }
         var data = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}?page={page}");
-        CanViewForum = true; //await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.ViewForum, Model.Permissions);
+        CanViewForum = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.ViewForum, data.Permissions);
         Model = CanViewForum ? data : new ForumPageModel();
     }
 

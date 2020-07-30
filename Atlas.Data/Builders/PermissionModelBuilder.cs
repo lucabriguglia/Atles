@@ -6,6 +6,7 @@ using Atlas.Data.Caching;
 using Atlas.Domain;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data.Builders
@@ -14,13 +15,15 @@ namespace Atlas.Data.Builders
     {
         private readonly AtlasDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
-        private readonly IRoleModelBuilder _roles;
+        private readonly RoleManager<IdentityRole> _roleManager;
 
-        public PermissionModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager, IRoleModelBuilder roles)
+        public PermissionModelBuilder(AtlasDbContext dbContext, 
+            ICacheManager cacheManager,
+            RoleManager<IdentityRole> roleManager)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
-            _roles = roles;
+            _roleManager = roleManager;
         }
 
         public async Task<IList<PermissionModel>> BuildPermissionModels(Guid siteId, Guid permissionSetId)
@@ -41,7 +44,7 @@ namespace Atlas.Data.Builders
                     return result;
                 }
 
-                var roles = await _roles.GetRoleModels();
+                var roles = await _roleManager.Roles.ToListAsync();
 
                 foreach (PermissionType permissionType in Enum.GetValues(typeof(PermissionType)))
                 {
@@ -53,6 +56,7 @@ namespace Atlas.Data.Builders
                     var permissions = permissionSet.Permissions.Where(x => x.Type == permissionType);
 
                     permissionModel.AllUsers = permissions.FirstOrDefault(x => x.RoleId == Consts.RoleIdAll) != null;
+                    permissionModel.RegisteredUsers = permissions.FirstOrDefault(x => x.RoleId == Consts.RoleIdRegistered) != null;
 
                     foreach (var permission in permissions)
                     {
@@ -60,11 +64,7 @@ namespace Atlas.Data.Builders
 
                         if (role != null)
                         {
-                            permissionModel.Roles.Add(new RoleModel
-                            {
-                                Id = role.Id,
-                                Name = role.Name
-                            });
+                            permissionModel.Roles.Add(role.Name);
                         }
                     }
 

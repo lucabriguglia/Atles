@@ -18,9 +18,14 @@ namespace Atlas.Client.Services
                 return true;
             }
 
+            if (model.RegisteredUsers)
+            {
+                return authenticationState.User.Identity.IsAuthenticated;
+            }
+
             foreach (var role in model.Roles)
             {
-                if (authenticationState.User.IsInRole(role.Name))
+                if (authenticationState.User.IsInRole(role))
                 {
                     return true;
                 }

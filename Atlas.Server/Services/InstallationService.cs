@@ -45,11 +45,6 @@ namespace Atlas.Server.Services
                 await roleManager.CreateAsync(new IdentityRole(Consts.RoleNameAdmin));
             }
 
-            if (await roleManager.RoleExistsAsync(Consts.RoleNameRegistered) == false)
-            {
-                await roleManager.CreateAsync(new IdentityRole(Consts.RoleNameRegistered));
-            }
-
             if (_configuration["CreateDefaultAdminUser"].ToLowerInvariant() != "true")
             {
                 return;

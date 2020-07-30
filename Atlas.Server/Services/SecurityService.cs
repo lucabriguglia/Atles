@@ -31,9 +31,14 @@ namespace Atlas.Server.Services
                 return true;
             }
 
+            if (model.RegisteredUsers)
+            {
+                return _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
+            }
+
             foreach (var role in model.Roles)
             {
-                if (_httpContextAccessor.HttpContext.User.IsInRole(role.Name))
+                if (_httpContextAccessor.HttpContext.User.IsInRole(role))
                 {
                     return true;
                 }
