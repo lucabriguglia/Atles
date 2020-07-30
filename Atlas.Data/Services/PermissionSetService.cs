@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
@@ -95,6 +96,8 @@ namespace Atlas.Data.Services
         public async Task DeleteAsync(DeletePermissionSet command)
         {
             var permissionSet = await _dbContext.PermissionSets
+                .Include(x => x.Categories)
+                .Include(x => x.Forums)
                 .FirstOrDefaultAsync(x =>
                     x.SiteId == command.SiteId &&
                     x.Id == command.Id &&
@@ -102,7 +105,12 @@ namespace Atlas.Data.Services
 
             if (permissionSet == null)
             {
-                throw new DataException($"Permission Set with Id {command.Id} not found.");
+                throw new DataException($"Permission set with Id {command.Id} not found.");
+            }
+
+            if (permissionSet.Categories.Any() || permissionSet.Forums.Any())
+            {
+                throw new DataException($"Permission set with Id {command.Id} is in use and cannot be deleted.");
             }
 
             permissionSet.Delete();

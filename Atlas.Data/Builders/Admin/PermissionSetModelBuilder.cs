@@ -24,6 +24,8 @@ namespace Atlas.Data.Builders.Admin
             var result = new IndexPageModel();
 
             var permissionSets = await _dbContext.PermissionSets
+                .Include(x => x.Categories)
+                .Include(x => x.Forums)
                 .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
                 .ToListAsync();
 
@@ -33,7 +35,7 @@ namespace Atlas.Data.Builders.Admin
                 {
                     Id = permissionSet.Id,
                     Name = permissionSet.Name,
-                    IsInUse = true
+                    IsInUse = permissionSet.Categories.Any() || permissionSet.Forums.Any()
                 });
             }
 
