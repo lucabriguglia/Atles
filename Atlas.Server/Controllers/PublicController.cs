@@ -77,13 +77,12 @@ namespace Atlas.Server.Controllers
         }
 
         [Authorize]
-        [HttpGet("forum/{forumId}/post")]
-        public async Task<ActionResult<PostPageModel>> Post(Guid forumId)
+        [HttpGet("forum/{forumId}/new-topic")]
+        public async Task<ActionResult<PostPageModel>> NewTopic(Guid forumId)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
 
-            var model = await _modelBuilder.BuildPostPageModelAsync(site.Id, forumId);
+            var model = await _modelBuilder.BuildNewPostPageModelAsync(site.Id, forumId);
 
             if (model == null)
             {
@@ -101,8 +100,33 @@ namespace Atlas.Server.Controllers
         }
 
         [Authorize]
-        [HttpPost("save-topic")]
-        public async Task<ActionResult> SaveTopic(PostPageModel model)
+        [HttpGet("forum/{forumId}/edit-topic/{topicId}")]
+        public async Task<ActionResult<PostPageModel>> EditTopic(Guid forumId, Guid topicId)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var model = await _modelBuilder.BuildEditPostPageModelAsync(site.Id, forumId, topicId);
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            var canEdit = await _securityService.HasPermission(PermissionType.Edit, site.Id, model.Forum.Id);
+            var authorized = canEdit && model.Topic.MemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
+
+            if (!authorized)
+            {
+                return Unauthorized();
+            }
+
+            return model;
+        }
+
+        [Authorize]
+        [HttpPost("create-topic")]
+        public async Task<ActionResult> CreateTopic(PostPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
@@ -125,6 +149,36 @@ namespace Atlas.Server.Controllers
             };
 
             await _topicService.CreateAsync(command);
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("update-topic")]
+        public async Task<ActionResult> UpdateTopic(PostPageModel model)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var canEdit = await _securityService.HasPermission(PermissionType.Edit, site.Id, model.Forum.Id);
+            var authorized = canEdit && model.Topic.MemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
+
+            if (!authorized)
+            {
+                return Unauthorized();
+            }
+
+            var command = new UpdateTopic
+            {
+                ForumId = model.Forum.Id,
+                Title = model.Topic.Title,
+                Content = model.Topic.Content,
+                Status = StatusType.Published,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
+
+            await _topicService.UpdateAsync(command);
 
             return Ok();
         }

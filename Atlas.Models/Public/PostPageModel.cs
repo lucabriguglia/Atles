@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Atlas.Models.Public
@@ -26,6 +25,8 @@ namespace Atlas.Models.Public
 
             [Required]
             public string Content { get; set; }
+
+            public Guid MemberId { get; set; }
         }
     }
 }

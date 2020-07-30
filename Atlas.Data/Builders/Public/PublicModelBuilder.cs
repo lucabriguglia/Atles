@@ -124,7 +124,7 @@ namespace Atlas.Data.Builders.Public
             return result;
         }
 
-        public async Task<PostPageModel> BuildPostPageModelAsync(Guid siteId, Guid forumId)
+        public async Task<PostPageModel> BuildNewPostPageModelAsync(Guid siteId, Guid forumId)
         {
             var forum = await _dbContext.Forums
                 .Include(x => x.Category)
@@ -144,6 +144,41 @@ namespace Atlas.Data.Builders.Public
                 {
                     Id = forum.Id,
                     Name = forum.Name
+                }
+            };
+
+            return result;
+        }
+
+        public async Task<PostPageModel> BuildEditPostPageModelAsync(Guid siteId, Guid forumId, Guid topicId)
+        {
+            var topic = await _dbContext.Topics
+                .Include(x => x.Forum).ThenInclude(x => x.Category)
+                .Include(x => x.Member)
+                .FirstOrDefaultAsync(x =>
+                    x.Forum.Category.SiteId == siteId &&
+                    x.Forum.Id == forumId &&
+                    x.Id == topicId &&
+                    x.Status == StatusType.Published);
+
+            if (topic == null)
+            {
+                return null;
+            }
+
+            var result = new PostPageModel
+            {
+                Forum = new PostPageModel.ForumModel
+                {
+                    Id = topic.Forum.Id,
+                    Name = topic.Forum.Name
+                },
+                Topic = new PostPageModel.TopicModel
+                {
+                    Id = topic.Id,
+                    Title = topic.Title,
+                    Content = Markdown.ToHtml(topic.Content),
+                    MemberId = topic.Member.Id
                 }
             };
 
