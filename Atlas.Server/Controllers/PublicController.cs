@@ -89,7 +89,7 @@ namespace Atlas.Server.Controllers
                 return NotFound();
             }
 
-            var canPost = _securityService.HasPermission(PermissionType.Start, model.Permissions);
+            var canPost = await _securityService.HasPermission(PermissionType.Start, site.Id, model.Forum.Id);
 
             if (!canPost)
             {
@@ -106,7 +106,12 @@ namespace Atlas.Server.Controllers
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            // TODO: Validate action
+            var canPost = await _securityService.HasPermission(PermissionType.Start, site.Id, model.Forum.Id);
+
+            if (!canPost)
+            {
+                return Unauthorized();
+            }
 
             var command = new CreateTopic
             {
@@ -130,7 +135,12 @@ namespace Atlas.Server.Controllers
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            // TODO: Validate action
+            var canReply = await _securityService.HasPermission(PermissionType.Reply, site.Id, model.Forum.Id);
+
+            if (!canReply)
+            {
+                return Unauthorized();
+            }
 
             var command = new CreateReply
             {

@@ -92,10 +92,10 @@ else
     {
         <AuthorizeView>
             <Authorized>
-                <p>You are not authorized to reply.</p>
+                <p class="mt-3">You are not authorized to reply.</p>
             </Authorized>
             <NotAuthorized>
-                <p><a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to reply.</p>
+                <p class="mt-3"><a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to reply.</p>
             </NotAuthorized>
         </AuthorizeView>        
     }
@@ -118,10 +118,7 @@ else
     private async Task LoadDataAsync(int page)
     {
         Model = await Service.GetFromJsonAsync<TopicPageModel>($"api/public/forum/{ForumId}/{TopicId}?page={page}");
-
         CanReply = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Reply, Model.Permissions);
-
-        StateHasChanged();
     }
 
     protected override async Task OnInitializedAsync()

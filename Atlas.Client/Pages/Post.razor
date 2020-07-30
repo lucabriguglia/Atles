@@ -45,7 +45,10 @@ else
 
 @code {
     private const string Title = "New Topic";
-    [Parameter] public Guid ForumId { get; set; }
+
+    [Parameter] 
+    public Guid ForumId { get; set; }
+
     private PostPageModel Model { get; set; }
 
     protected override async Task OnInitializedAsync()

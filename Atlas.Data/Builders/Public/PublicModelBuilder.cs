@@ -142,8 +142,7 @@ namespace Atlas.Data.Builders.Public
                 {
                     Id = forum.Id,
                     Name = forum.Name
-                },
-                Permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, forum.PermissionSetId ?? forum.Category.PermissionSetId)
+                }
             };
 
             return result;
