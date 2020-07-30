@@ -28,7 +28,8 @@ namespace Atlas.Server.Controllers
         public PublicController(IContextService contextService, 
             IPublicModelBuilder modelBuilder, 
             ITopicService topicService, 
-            IReplyService replyService, ISecurityService securityService)
+            IReplyService replyService, 
+            ISecurityService securityService)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;

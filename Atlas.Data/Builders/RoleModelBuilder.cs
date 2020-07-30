@@ -22,7 +22,7 @@ namespace Atlas.Data.Builders
             var result = new List<RoleModel>
             {
                 new RoleModel {Id = Consts.RoleIdAll, Name = "All Users"},
-                new RoleModel {Id = Consts.RoleIdRegistered, Name = "Registered Users"},
+                //new RoleModel {Id = Consts.RoleIdRegistered, Name = "Registered Users"},
                 //new RoleModel {Id = Consts.RoleIdAnonymous, Name = "Anonymous Users"}
             };
 

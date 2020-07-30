@@ -34,6 +34,8 @@ namespace Atlas.Client
 
             builder.Services.AddApiAuthorization();
 
+            builder.Services.AddOptions();
+
             builder.Services.AddAuthorizationCore(options =>
             {
                 options.AddPolicy("Admin", policy =>

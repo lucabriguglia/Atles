@@ -40,9 +40,14 @@ namespace Atlas.Server.Services
             var roleManager = _serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = _serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-            if (await roleManager.RoleExistsAsync("Admin") == false)
+            if (await roleManager.RoleExistsAsync(Consts.RoleNameAdmin) == false)
             {
-                await roleManager.CreateAsync(new IdentityRole("Admin"));
+                await roleManager.CreateAsync(new IdentityRole(Consts.RoleNameAdmin));
+            }
+
+            if (await roleManager.RoleExistsAsync(Consts.RoleNameRegistered) == false)
+            {
+                await roleManager.CreateAsync(new IdentityRole(Consts.RoleNameRegistered));
             }
 
             if (_configuration["CreateDefaultAdminUser"].ToLowerInvariant() != "true")
@@ -71,9 +76,9 @@ namespace Atlas.Server.Services
             var code = await userManager.GenerateEmailConfirmationTokenAsync(user);
             await userManager.ConfirmEmailAsync(user, code);
 
-            await userManager.AddToRoleAsync(user, "Admin");
+            await userManager.AddToRoleAsync(user, Consts.RoleNameAdmin);
 
-            var member = new Member(user.Id, "Admin");
+            var member = new Member(user.Id, Consts.RoleNameAdmin);
             _dbContext.Members.Add(member);
             await _dbContext.SaveChangesAsync();
         }

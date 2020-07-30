@@ -43,7 +43,7 @@ namespace Atlas.Data.Rules
             return any;
         }
 
-        public async Task<bool> IsInUse(Guid siteId, Guid id)
+        public Task<bool> IsInUse(Guid siteId, Guid id)
         {
             throw new NotImplementedException();
         }

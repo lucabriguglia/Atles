@@ -1,8 +1,11 @@
 ﻿@page "/forum/{forumId:guid}/{topicId:guid}"
+@using Atlas.Client.Services
+@using Atlas.Domain.PermissionSets
 @using Atlas.Models.Public
 @inject HttpClient Http
 @inject AnonymousService Service;
 @inject NavigationManager Navigation
+@inject ISecurityService SecurityService
 
 @if (Model == null)
 {
@@ -66,39 +69,58 @@ else
         </div>
     }
 
-    <AuthorizeView>
-        <Authorized>
-            <h5 class="mb-3">Reply</h5>
-            <div class="row">
-                <div class="col-md-8">
-                    <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveAsync">
-                        <DataAnnotationsValidator />
-                        <Editor @bind-Value="@Model.Post.Content" Rows="10"></Editor>
-                        <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
-                            <div class="small float-right mt-2">
-                                <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>Guide</a>
-                            </div>
+    if (CanReply)
+    {
+        <h5 class="mb-3">Reply</h5>
+        <div class="row">
+            <div class="col-md-8">
+                <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveAsync">
+                    <DataAnnotationsValidator />
+                    <Editor @bind-Value="@Model.Post.Content" Rows="10"></Editor>
+                    <div class="form-group">
+                        <input type="submit" value="Save" class="btn btn-primary" />
+                        <div class="small float-right mt-2">
+                            <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>Guide</a>
                         </div>
-                        <ValidationSummary />
-                    </EditForm>
-                </div>
+                    </div>
+                    <ValidationSummary />
+                </EditForm>
             </div>
-        </Authorized>
-        <NotAuthorized>
-            <a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to reply.
-        </NotAuthorized>
-    </AuthorizeView>
+        </div>
+    }
+    else
+    {
+        <AuthorizeView>
+            <Authorized>
+                <p>You are not authorized to reply.</p>
+            </Authorized>
+            <NotAuthorized>
+                <p><a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to reply.</p>
+            </NotAuthorized>
+        </AuthorizeView>        
+    }
 }
 
 @code {
-    [Parameter] public Guid ForumId { get; set; }
-    [Parameter] public Guid TopicId { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    [Parameter]
+    public Guid ForumId { get; set; }
+
+    [Parameter]
+    public Guid TopicId { get; set; }
+
     private TopicPageModel Model { get; set; }
+
+    public bool CanReply { get; set; }
 
     private async Task LoadDataAsync(int page)
     {
         Model = await Service.GetFromJsonAsync<TopicPageModel>($"api/public/forum/{ForumId}/{TopicId}?page={page}");
+
+        CanReply = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Reply, Model.Permissions);
+
         StateHasChanged();
     }
 

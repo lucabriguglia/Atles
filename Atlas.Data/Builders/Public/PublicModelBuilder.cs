@@ -1,10 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
-using Atlas.Domain.PermissionSets;
 using Atlas.Models;
 using Atlas.Models.Public;
 using Markdig;
@@ -16,13 +14,13 @@ namespace Atlas.Data.Builders.Public
     {
         private readonly AtlasDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
-        private readonly IRoleModelBuilder _roles;
+        private readonly IPermissionModelBuilder _permissionModelBuilder;
 
-        public PublicModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager, IRoleModelBuilder roles)
+        public PublicModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager, IPermissionModelBuilder permissionModelBuilder)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
-            _roles = roles;
+            _permissionModelBuilder = permissionModelBuilder;
         }
 
         public async Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId)
@@ -89,7 +87,7 @@ namespace Atlas.Data.Builders.Public
                     Id = forum.Id,
                     Name = forum.Name
                 },
-                Permissions = await BuildPermissionModels(siteId, forum.PermissionSetId ?? forum.Category.PermissionSetId)
+                Permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, forum.PermissionSetId ?? forum.Category.PermissionSetId)
             };
 
             var topics = await _dbContext.Topics
@@ -145,7 +143,7 @@ namespace Atlas.Data.Builders.Public
                     Id = forum.Id,
                     Name = forum.Name
                 },
-                Permissions = await BuildPermissionModels(siteId, forum.PermissionSetId ?? forum.Category.PermissionSetId)
+                Permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, forum.PermissionSetId ?? forum.Category.PermissionSetId)
             };
 
             return result;
@@ -183,7 +181,7 @@ namespace Atlas.Data.Builders.Public
                     MemberDisplayName = topic.Member.DisplayName,
                     TimeStamp = topic.TimeStamp
                 },
-                Permissions = await BuildPermissionModels(siteId, topic.Forum.PermissionSetId ?? topic.Forum.Category.PermissionSetId)
+                Permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, topic.Forum.PermissionSetId ?? topic.Forum.Category.PermissionSetId)
             };
 
             var replies = await _dbContext.Replies
@@ -214,59 +212,6 @@ namespace Atlas.Data.Builders.Public
             result.Replies = new PaginatedData<TopicPageModel.ReplyModel>(items, totalRecords, options.PageSize);
 
             return result;
-        }
-
-        private async Task<IList<PermissionModel>> BuildPermissionModels(Guid siteId, Guid permissionSetId)
-        {
-            return await _cacheManager.GetOrSetAsync(CacheKeys.PermissionSet(permissionSetId), async () =>
-            {
-                var result = new List<PermissionModel>();
-
-                var permissionSet = await _dbContext.PermissionSets
-                    .Include(x => x.Permissions)
-                    .FirstOrDefaultAsync(x =>
-                        x.SiteId == siteId &&
-                        x.Id == permissionSetId &&
-                        x.Status != StatusType.Deleted);
-
-                if (permissionSet == null)
-                {
-                    return result;
-                }
-
-                var roles = await _roles.GetRoleModels();
-
-                foreach (PermissionType permissionType in Enum.GetValues(typeof(PermissionType)))
-                {
-                    var permissionModel = new PermissionModel
-                    {
-                        Type = permissionType
-                    };
-
-                    var permissions = permissionSet.Permissions.Where(x => x.Type == permissionType);
-
-                    permissionModel.AllUsers = permissions.FirstOrDefault(x => x.RoleId == Consts.RoleIdAll) != null;
-                    permissionModel.RegisteredUsers = permissions.FirstOrDefault(x => x.RoleId == Consts.RoleIdRegistered) != null;
-
-                    foreach (var permission in permissions)
-                    {
-                        var role = roles.FirstOrDefault(x => x.Id == permission.RoleId);
-
-                        if (role != null)
-                        {
-                            permissionModel.Roles.Add(new RoleModel
-                            {
-                                Id = role.Id,
-                                Name = role.Name
-                            });
-                        }
-                    }
-
-                    result.Add(permissionModel);
-                }
-
-                return result;
-            });
         }
     }
 }

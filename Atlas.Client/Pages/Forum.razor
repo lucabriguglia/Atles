@@ -1,7 +1,11 @@
 ﻿@page "/forum/{id:guid}"
+@using System.Security.Claims
+@using Atlas.Client.Services
+@using Atlas.Domain.PermissionSets
 @using Atlas.Models.Public
-@inject AnonymousService Service;
+@inject AnonymousService Service
 @inject NavigationManager Navigation
+@inject ISecurityService SecurityService
 
 @if (Model == null)
 {
@@ -9,69 +13,94 @@
 }
 else
 {
-    <nav aria-label="breadcrumb">
-        <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Model?.Forum.Name</li>
-        </ol>
-    </nav>
-
-    <div class="row">
-        <div class="col-md-6">
-            <h4 class="mb-3">@Model?.Forum.Name</h4>
-        </div>
-        <div class="col-md-6 text-right mb-3">
-            <AuthorizeView>
-                <Authorized>
-                    <a href="/forum/@Model?.Forum.Id/post" class="btn btn-primary" role="button">New Topic</a>
-                </Authorized>
-                <NotAuthorized>
-                    <a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to start a new discussion.
-                </NotAuthorized>
-            </AuthorizeView>
-        </div>
-    </div>
-
-    if (Model.Topics.Items.Count == 0)
+    if (CanViewForum)
     {
-        <NoRecords Text="No topics found for this forum." />
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model?.Forum.Name</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="mb-3">@Model?.Forum.Name</h4>
+            </div>
+            <div class="col-md-6 text-right mb-3">
+                <AuthorizeView>
+                    <Authorized>
+                        <a href="/forum/@Model?.Forum.Id/post" class="btn btn-primary" role="button">New Topic</a>
+                    </Authorized>
+                    <NotAuthorized>
+                        <a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to start a new discussion.
+                    </NotAuthorized>
+                </AuthorizeView>
+            </div>
+        </div>
+
+        if (Model.Topics.Items.Count == 0)
+        {
+            <NoRecords Text="No topics found for this forum." />
+        }
+        else
+        {
+            <div class="card">
+                <ul class="list-group list-group-flush">
+                    @foreach (var item in Model.Topics.Items)
+                    {
+                        <li class="list-group-item py-3">
+                            <p class="card-text"><a href="/forum/@Model.Forum.Id/@item.Id">@item.Title</a></p>
+                            <div class="row small">
+                                <div class="col-md-6 font-weight-bold">
+                                    @item.MemberDisplayName
+                                </div>
+                                <div class="col-md-6 text-right">
+                                    @item.TimeStamp.ToShortDateString() @item.TimeStamp.ToShortTimeString()
+                                    &nbsp;&nbsp;
+                                    <span class="font-weight-bold">@item.TotalReplies</span> Replies
+                                </div>
+                            </div>
+                        </li>
+                    }
+                </ul>
+            </div>
+
+            <div class="mt-3">
+                <Pager TotalPages="Model.Topics.TotalPages" OnLoadDataCallback="@LoadDataAsync"></Pager>
+            </div>
+        }
     }
     else
     {
-        <div class="card">
-            <ul class="list-group list-group-flush">
-                @foreach (var item in Model.Topics.Items)
-                {
-                    <li class="list-group-item py-3">
-                        <p class="card-text"><a href="/forum/@Model.Forum.Id/@item.Id">@item.Title</a></p>
-                        <div class="row small">
-                            <div class="col-md-6 font-weight-bold">
-                                @item.MemberDisplayName
-                            </div>
-                            <div class="col-md-6 text-right">
-                                @item.TimeStamp.ToShortDateString() @item.TimeStamp.ToShortTimeString()
-                                &nbsp;&nbsp;
-                                <span class="font-weight-bold">@item.TotalReplies</span> Replies
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>
-        </div>
-
-        <div class="mt-3">
-            <Pager TotalPages="Model.Topics.TotalPages" OnLoadDataCallback="@LoadDataAsync"></Pager>
-        </div>
+        <p>You are not authorized to access this resource.</p>
     }
 }
 
 @code {
-    [Parameter] public Guid Id { get; set; }
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    [Parameter]
+    public Guid Id { get; set; }
+
     private ForumPageModel Model { get; set; }
+
+    public bool CanViewForum { get; set; }
 
     private async Task LoadDataAsync(int page)
     {
-        Model = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}?page={page}");
+        try
+        {
+
+        }
+        catch (Exception e)
+        {
+            Console.WriteLine(e);
+            throw;
+        }
+        var data = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}?page={page}");
+        CanViewForum = true; //await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.ViewForum, Model.Permissions);
+        Model = CanViewForum ? data : new ForumPageModel();
     }
 
     protected override async Task OnInitializedAsync()

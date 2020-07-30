@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Atlas.Domain.PermissionSets;
-using Atlas.Models.Public;
+using Atlas.Models;
 using Microsoft.AspNetCore.Http;
 
 namespace Atlas.Server.Services
@@ -20,11 +20,6 @@ namespace Atlas.Server.Services
             if (model.AllUsers)
             {
                 return true;
-            }
-
-            if (model.RegisteredUsers)
-            {
-                return _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
             }
 
             foreach (var role in model.Roles)
