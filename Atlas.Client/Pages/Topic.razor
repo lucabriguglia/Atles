@@ -23,7 +23,14 @@ else
             </ol>
         </nav>
 
-        <h4 class="mb-3">@Model.Topic.Title</h4>
+        <div class="row">
+            <div class="col-md-8">
+                <h3 class="mb-3">@Model.Topic.Title</h3>
+            </div>
+            <div class="col-md-4 text-right mb-3">
+                <a href="/forum/@Model.Forum.Id/post/@Model.Topic.Id/edit" class="btn btn-secondary" role="button">Edit</a>
+            </div>
+        </div>
 
         <div class="card mb-3">
             <div class="card-body">
@@ -37,10 +44,6 @@ else
                 </div>
                 <p class="card-text">@((MarkupString)Model.Topic.Content)</p>
             </div>
-        </div>
-
-        <div>
-            <a href="/forum/@Model.Forum.Id/post/@Model.Topic.Id/edit" class="btn btn-secondary" role="button">Edit</a>
         </div>
 
         <h5 class="mb-3">Replies</h5>

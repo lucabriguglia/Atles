@@ -177,7 +177,7 @@ namespace Atlas.Data.Builders.Public
                 {
                     Id = topic.Id,
                     Title = topic.Title,
-                    Content = Markdown.ToHtml(topic.Content),
+                    Content = topic.Content,
                     MemberId = topic.Member.Id
                 }
             };

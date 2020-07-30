@@ -32,7 +32,7 @@ else
                 </div>
                 <Editor @bind-Value="@Model.Topic.Content" Rows="20"></Editor>
                 <div class="form-group">
-                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <input type="submit" value="@Button" class="btn btn-primary" />
                     <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
                     <div class="small float-right mt-2">
                         <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>Guide</a>
@@ -45,7 +45,8 @@ else
 }
 
 @code {
-    private const string Title = "New Topic";
+    private string Title => TopicId != null ? "Update Topic" : "Create New Topic";
+    private string Button => TopicId != null ? "Update" : "Create";
 
     [Parameter]
     public Guid ForumId { get; set; }

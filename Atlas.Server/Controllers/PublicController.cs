@@ -170,6 +170,7 @@ namespace Atlas.Server.Controllers
 
             var command = new UpdateTopic
             {
+                Id = model.Topic.Id,
                 ForumId = model.Forum.Id,
                 Title = model.Topic.Title,
                 Content = model.Topic.Content,

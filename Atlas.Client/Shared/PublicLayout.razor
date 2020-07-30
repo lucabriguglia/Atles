@@ -29,7 +29,16 @@
 
 <footer class="border-top footer text-muted small">
     <div class="container">
-        &copy; @DateTime.UtcNow.Year - Atlas - <a href="/privacy">Privacy</a> - <a href="/terms">Terms of Use</a>
+        <div class="row">
+                <div class="col-md-6">
+                    &copy; @DateTime.UtcNow.Year - Atlas - <a href="/privacy">Privacy</a> - <a href="/terms">Terms of Use</a>
+                </div>
+                <div class="col-md-6 text-right mb-3">
+                    @* <PleaseDoNotRemove> *@
+                    Powered by <a href="https://github.com/lucabriguglia/Atlas" title="Powered by Atlas">Atlas</a>
+                    @* </PleaseDoNotRemove> *@
+                </div>
+        </div>
     </div>
 </footer>
 
