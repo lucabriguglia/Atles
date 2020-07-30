@@ -2,18 +2,18 @@
 @using Atlas.Models.Public
 @inject AnonymousService Service;
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Home</li>
-    </ol>
-</nav>
-
 @if (Model == null)
 {
     <Loading />
 }
 else
 {
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Home</li>
+        </ol>
+    </nav>
+
     @foreach (var category in Model.Categories)
     {
         <div class="mb-3">

@@ -4,22 +4,22 @@
 @inject AnonymousService Service;
 @inject NavigationManager Navigation
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item"><a href="/forum/@ForumId">@Model?.Forum.Name</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Model?.Topic.Title</li>
-    </ol>
-</nav>
-
-<h4 class="mb-3">@Model?.Topic.Title</h4>
-
 @if (Model == null)
 {
     <Loading />
 }
 else
 {
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/forum/@ForumId">@Model.Forum.Name</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Topic.Title</li>
+        </ol>
+    </nav>
+
+    <h4 class="mb-3">@Model.Topic.Title</h4>
+
     <div class="card mb-3">
         <div class="card-body">
             <div class="row mb-3">
