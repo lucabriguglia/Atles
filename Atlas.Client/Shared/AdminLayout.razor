@@ -5,7 +5,7 @@
 @inject SignOutSessionStateManager SignOutManager
 
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/">Atlas</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin">Atlas</a>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <button class="nav-link btn btn-link" @onclick="BeginSignOut">Log out</button>
@@ -45,6 +45,11 @@
                     <li class="nav-item px-3">
                         <NavLink class="nav-link" href="/admin/settings">
                             <i class="fas fa-cog mr-2" style="font-size:1.5rem;"></i> Settings
+                        </NavLink>
+                    </li>
+                    <li class="nav-item px-3">
+                        <NavLink class="nav-link" href="/">
+                            <i class="fas fa-globe mr-2" style="font-size:1.5rem;"></i> Public
                         </NavLink>
                     </li>
                 </ul>
