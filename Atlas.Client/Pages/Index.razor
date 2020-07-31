@@ -42,6 +42,9 @@ else
 }
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
     private IndexPageModel Model { get; set; }
 
     protected override async Task OnInitializedAsync()

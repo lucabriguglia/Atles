@@ -223,13 +223,13 @@ else
 
     protected async Task DeleteTopicAsync(MouseEventArgs e)
     {
-        await Http.DeleteAsync($"api/public/delete-topic/{ForumId}/{TopicId}/{CurrentUserId}");
+        await Http.DeleteAsync($"api/public/delete-topic/{ForumId}/{TopicId}");
         Navigation.NavigateTo($"/forum/{ForumId}");
     }
 
     protected async Task DeleteReplyAsync(MouseEventArgs e)
     {
-        await Http.DeleteAsync($"api/public/delete-reply/{ForumId}/{TopicId}/{DeleteReplyId}/{CurrentUserId}");
+        await Http.DeleteAsync($"api/public/delete-reply/{ForumId}/{TopicId}/{DeleteReplyId}");
         await OnInitializedAsync();
     }
 

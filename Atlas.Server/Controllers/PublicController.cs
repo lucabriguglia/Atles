@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.Replies;
@@ -12,6 +14,7 @@ using Atlas.Server.Services;
 using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Server.Controllers
 {
@@ -24,22 +27,25 @@ namespace Atlas.Server.Controllers
         private readonly ITopicService _topicService;
         private readonly IReplyService _replyService;
         private readonly ISecurityService _securityService;
+        private readonly AtlasDbContext _dbContext;
 
         public PublicController(IContextService contextService, 
             IPublicModelBuilder modelBuilder, 
             ITopicService topicService, 
             IReplyService replyService, 
-            ISecurityService securityService)
+            ISecurityService securityService, 
+            AtlasDbContext dbContext)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
             _topicService = topicService;
             _replyService = replyService;
             _securityService = securityService;
+            _dbContext = dbContext;
         }
 
         [HttpGet("index-model")]
-        public async Task<IndexPageModel> Index()
+        public async Task<IndexPageModel> Index([FromQuery] int? page = 1)
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -160,14 +166,6 @@ namespace Atlas.Server.Controllers
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var canEdit = await _securityService.HasPermission(PermissionType.Edit, site.Id, model.Forum.Id);
-            var authorized = canEdit && model.Topic.MemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
-
-            if (!authorized)
-            {
-                return Unauthorized();
-            }
-
             var command = new UpdateTopic
             {
                 Id = model.Topic.Id,
@@ -179,24 +177,34 @@ namespace Atlas.Server.Controllers
                 MemberId = member.Id
             };
 
-            await _topicService.UpdateAsync(command);
+            var topicMemberId = await _dbContext.Topics
+                .Where(x =>
+                    x.Id == command.Id &&
+                    x.ForumId == command.ForumId &&
+                    x.Forum.Category.SiteId == command.SiteId &&
+                    x.Status != StatusType.Deleted)
+                .Select(x => x.MemberId)
+                .FirstOrDefaultAsync();
 
-            return Ok();
-        }
-
-        [HttpDelete("delete-topic/{forumId}/{topicId}/{userId}")]
-        public async Task<ActionResult> DeleteTopic(Guid forumId, Guid topicId, string userId)
-        {
-            var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
-
-            var canDelete = await _securityService.HasPermission(PermissionType.Delete, site.Id, forumId);
-            var authorized = canDelete && userId == member.UserId || User.IsInRole(Consts.RoleNameAdmin);
+            var canEdit = await _securityService.HasPermission(PermissionType.Edit, site.Id, model.Forum.Id);
+            var authorized = canEdit && topicMemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
 
             if (!authorized)
             {
                 return Unauthorized();
             }
+
+            await _topicService.UpdateAsync(command);
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete("delete-topic/{forumId}/{topicId}")]
+        public async Task<ActionResult> DeleteTopic(Guid forumId, Guid topicId)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
 
             var command = new DeleteTopic
             {
@@ -205,6 +213,23 @@ namespace Atlas.Server.Controllers
                 SiteId = site.Id,
                 MemberId = member.Id
             };
+
+            var topicMemberId = await _dbContext.Topics
+                .Where(x =>
+                    x.Id == command.Id &&
+                    x.ForumId == command.ForumId &&
+                    x.Forum.Category.SiteId == command.SiteId &&
+                    x.Status != StatusType.Deleted)
+                .Select(x => x.MemberId)
+                .FirstOrDefaultAsync();
+
+            var canDelete = await _securityService.HasPermission(PermissionType.Delete, site.Id, forumId);
+            var authorized = canDelete && topicMemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
+
+            if (!authorized)
+            {
+                return Unauthorized();
+            }
 
             await _topicService.DeleteAsync(command);
 
@@ -247,14 +272,6 @@ namespace Atlas.Server.Controllers
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var canEdit = await _securityService.HasPermission(PermissionType.Edit, site.Id, model.Forum.Id);
-            var authorized = canEdit && model.Post.MemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
-
-            if (!authorized)
-            {
-                return Unauthorized();
-            }
-
             var command = new UpdateReply
             {
                 Id = model.Post.Id.Value,
@@ -266,24 +283,35 @@ namespace Atlas.Server.Controllers
                 MemberId = member.Id
             };
 
-            await _replyService.UpdateAsync(command);
+            var replyMemberId = await _dbContext.Replies
+                .Where(x =>
+                    x.Id == command.Id &&
+                    x.TopicId == command.TopicId &&
+                    x.Topic.ForumId == command.ForumId &&
+                    x.Topic.Forum.Category.SiteId == command.SiteId &&
+                    x.Status != StatusType.Deleted)
+                .Select(x => x.MemberId)
+                .FirstOrDefaultAsync();
 
-            return Ok();
-        }
-
-        [HttpDelete("delete-reply/{forumId}/{topicId}/{replyId}/{userId}")]
-        public async Task<ActionResult> DeleteReply(Guid forumId, Guid topicId, Guid replyId, string userId)
-        {
-            var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
-
-            var canDelete = await _securityService.HasPermission(PermissionType.Delete, site.Id, forumId);
-            var authorized = canDelete && userId == member.UserId || User.IsInRole(Consts.RoleNameAdmin);
+            var canEdit = await _securityService.HasPermission(PermissionType.Edit, site.Id, model.Forum.Id);
+            var authorized = canEdit && replyMemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
 
             if (!authorized)
             {
                 return Unauthorized();
             }
+
+            await _replyService.UpdateAsync(command);
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpDelete("delete-reply/{forumId}/{topicId}/{replyId}")]
+        public async Task<ActionResult> DeleteReply(Guid forumId, Guid topicId, Guid replyId)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
 
             var command = new DeleteReply
             {
@@ -293,6 +321,24 @@ namespace Atlas.Server.Controllers
                 SiteId = site.Id,
                 MemberId = member.Id
             };
+
+            var replyMemberId = await _dbContext.Replies
+                .Where(x =>
+                    x.Id == command.Id &&
+                    x.TopicId == command.TopicId &&
+                    x.Topic.ForumId == command.ForumId &&
+                    x.Topic.Forum.Category.SiteId == command.SiteId &&
+                    x.Status != StatusType.Deleted)
+                .Select(x => x.MemberId)
+                .FirstOrDefaultAsync();
+
+            var canDelete = await _securityService.HasPermission(PermissionType.Delete, site.Id, forumId);
+            var authorized = canDelete && replyMemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
+
+            if (!authorized)
+            {
+                return Unauthorized();
+            }
 
             await _replyService.DeleteAsync(command);
 

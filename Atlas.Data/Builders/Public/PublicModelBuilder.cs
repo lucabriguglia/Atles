@@ -177,8 +177,7 @@ namespace Atlas.Data.Builders.Public
                 {
                     Id = topic.Id,
                     Title = topic.Title,
-                    Content = topic.Content,
-                    MemberId = topic.Member.Id
+                    Content = topic.Content
                 }
             };
 
