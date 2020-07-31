@@ -33,6 +33,8 @@ namespace Atlas.Models.Public
         {
             public Guid Id { get; set; }
             public string Content { get; set; }
+            public string OriginalContent { get; set; }
+            public string UserId { get; set; }
             public Guid MemberId { get; set; }
             public string MemberDisplayName { get; set; }
             public DateTime TimeStamp { get; set; }
@@ -40,8 +42,12 @@ namespace Atlas.Models.Public
 
         public class PostModel
         {
+            public Guid? Id { get; set; }
+
             [Required]
             public string Content { get; set; }
+
+            public Guid MemberId { get; set; }
         }
     }
 }

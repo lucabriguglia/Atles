@@ -234,6 +234,8 @@ namespace Atlas.Data.Builders.Public
                 {
                     Id = reply.Id,
                     Content = Markdown.ToHtml(reply.Content),
+                    OriginalContent = reply.Content,
+                    UserId = reply.Member.UserId,
                     MemberId = reply.Member.Id,
                     MemberDisplayName = reply.Member.DisplayName,
                     TimeStamp = reply.TimeStamp

@@ -185,8 +185,8 @@ namespace Atlas.Server.Controllers
         }
 
         [Authorize]
-        [HttpPost("save-reply")]
-        public async Task<ActionResult> SaveReply(TopicPageModel model)
+        [HttpPost("create-reply")]
+        public async Task<ActionResult> CreateReply(TopicPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
@@ -209,6 +209,36 @@ namespace Atlas.Server.Controllers
             };
 
             await _replyService.CreateAsync(command);
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("update-reply")]
+        public async Task<ActionResult> UpdateReply(TopicPageModel model)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var canEdit = await _securityService.HasPermission(PermissionType.Edit, site.Id, model.Forum.Id);
+            var authorized = canEdit && model.Post.MemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
+
+            if (!authorized)
+            {
+                return Unauthorized();
+            }
+
+            var command = new UpdateReply
+            {
+                ForumId = model.Forum.Id,
+                TopicId = model.Topic.Id,
+                Content = model.Post.Content,
+                Status = StatusType.Published,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
+
+            await _replyService.UpdateAsync(command);
 
             return Ok();
         }

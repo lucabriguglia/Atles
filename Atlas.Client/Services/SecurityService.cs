@@ -1,6 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Domain;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models;
 using Microsoft.AspNetCore.Components.Authorization;

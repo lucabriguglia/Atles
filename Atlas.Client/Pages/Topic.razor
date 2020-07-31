@@ -1,5 +1,7 @@
 ﻿@page "/forum/{forumId:guid}/{topicId:guid}"
+@using System.Security.Claims
 @using Atlas.Client.Services
+@using Atlas.Domain
 @using Atlas.Domain.PermissionSets
 @using Atlas.Models.Public
 @inject HttpClient Http
@@ -28,7 +30,10 @@ else
                 <h3 class="mb-3">@Model.Topic.Title</h3>
             </div>
             <div class="col-md-4 text-right mb-3">
-                <a href="/forum/@Model.Forum.Id/post/@Model.Topic.Id/edit" class="btn btn-secondary" role="button">Edit</a>
+                @if (CanEdit)
+                {
+                    <a href="/forum/@Model.Forum.Id/post/@Model.Topic.Id/edit" class="btn btn-secondary" role="button">Edit</a>
+                }
             </div>
         </div>
 
@@ -64,6 +69,10 @@ else
                                     @reply.MemberDisplayName
                                 </div>
                                 <div class="col-md-6 text-right">
+                                    @if (CanEditReply(reply.UserId))
+                                    {
+                                        <button type="button" class="btn btn-link" @onclick="() => Edit(reply.Id, reply.OriginalContent)">Edit</button> |
+                                    }
                                     @reply.TimeStamp.ToShortDateString() @reply.TimeStamp.ToShortTimeString()
                                 </div>
                             </div>
@@ -80,14 +89,15 @@ else
 
         if (CanReply)
         {
-            <h5 class="mb-3">Reply</h5>
+            <h5 class="mb-3">@ReplyTitle</h5>
             <div class="row">
                 <div class="col-md-8">
-                    <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveAsync">
+                    <a id="reply"></a>
+                    <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="OnValidSubmit">
                         <DataAnnotationsValidator />
                         <Editor @bind-Value="@Model.Post.Content" Rows="10"></Editor>
                         <div class="form-group">
-                            <input type="submit" value="Save" class="btn btn-primary" />
+                            <input type="submit" value="@ReplyButton" class="btn btn-primary" />
                             <div class="small float-right mt-2">
                                 <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>Guide</a>
                             </div>
@@ -125,16 +135,25 @@ else
     [Parameter]
     public Guid TopicId { get; set; }
 
+    private string ReplyTitle => Model.Post.Id != null ? "Update Reply" : "New Reply";
+    private string ReplyButton => Model.Post.Id != null ? "Update" : "Save";
+
     private TopicPageModel Model { get; set; }
 
     public bool CanRead { get; set; }
     public bool CanReply { get; set; }
+    public bool CanEdit { get; set; }
+
+    public ClaimsPrincipal CurrentUser { get; set; }
+    public string CurrentUserId { get; set; } = Guid.Empty.ToString();
 
     private async Task LoadDataAsync(int page)
     {
         var data = await Service.GetFromJsonAsync<TopicPageModel>($"api/public/forum/{ForumId}/{TopicId}?page={page}");
         CanRead = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Read, data.Permissions);
         CanReply = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Reply, data.Permissions);
+        CanEdit = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Edit, data.Permissions);
+
         Model = CanRead ? data : new TopicPageModel();
     }
 
@@ -143,9 +162,43 @@ else
         await LoadDataAsync(1);
     }
 
-    private async Task SaveAsync()
+    private void Edit(Guid id, string content)
     {
-        await Http.PostAsJsonAsync("api/public/save-reply", Model);
+        Model.Post.Id = id;
+        Model.Post.Content = content;
+        Navigation.NavigateTo("#reply");
+    }
+
+    private async Task OnValidSubmit()
+    {
+        var requestUri = Model.Post.Id != null
+            ? "api/public/update-reply"
+            : "api/public/create-reply";
+
+        await Http.PostAsJsonAsync(requestUri, Model);
         await OnInitializedAsync();
+    }
+
+    private void Cancel()
+    {
+        Model.Post.Id = null;
+        Model.Post.Content = null;
+    }
+
+    private async Task SetCurrentUserId()
+    {
+        var authenticationState = await AuthenticationStateTask;
+        CurrentUser = authenticationState.User;
+
+        if (CurrentUser.Identity.IsAuthenticated)
+        {
+            CurrentUserId = authenticationState.User.Identities.First().Claims
+            .FirstOrDefault(x => x.Type == "sub")?.Value;
+        }
+    }
+
+    private bool CanEditReply(string replyUserId)
+    {
+        return CanEdit && replyUserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 }

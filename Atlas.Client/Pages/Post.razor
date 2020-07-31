@@ -46,7 +46,7 @@ else
 
 @code {
     private string Title => TopicId != null ? "Update Topic" : "Create New Topic";
-    private string Button => TopicId != null ? "Update" : "Create";
+    private string Button => TopicId != null ? "Update" : "Save";
 
     [Parameter]
     public Guid ForumId { get; set; }
