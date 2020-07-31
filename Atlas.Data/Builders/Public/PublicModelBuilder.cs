@@ -14,30 +14,29 @@ namespace Atlas.Data.Builders.Public
     {
         private readonly AtlasDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
-        private readonly IPermissionModelBuilder _permissionModelBuilder;
 
-        public PublicModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager, IPermissionModelBuilder permissionModelBuilder)
+        public PublicModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
-            _permissionModelBuilder = permissionModelBuilder;
         }
 
-        public async Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId)
+        public async Task<IndexPageModelToFilter> BuildIndexPageModelToFilterAsync(Guid siteId)
         {
-            var model = new IndexPageModel
+            var model = new IndexPageModelToFilter
             {
                 Categories = await _cacheManager.GetOrSetAsync(CacheKeys.Categories(siteId), async () =>
                 {
                     var categories = await _dbContext.Categories
-                        .Include(x => x.PermissionSet)
                         .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
 
-                    return categories.Select(category => new IndexPageModel.CategoryModel
+                    return categories.Select(category => new IndexPageModelToFilter.CategoryModel
                     {
-                        Id = category.Id, Name = category.Name
+                        Id = category.Id, 
+                        Name = category.Name,
+                        PermissionSetId = category.PermissionSetId
                     }).ToList();
                 })
             };
@@ -47,18 +46,18 @@ namespace Atlas.Data.Builders.Public
                 category.Forums = await _cacheManager.GetOrSetAsync(CacheKeys.Forums(category.Id), async () =>
                 {
                     var forums = await _dbContext.Forums
-                        .Include(x => x.PermissionSet)
                         .Where(x => x.CategoryId == category.Id && x.Status == StatusType.Published)
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
 
-                    return forums.Select(forum => new IndexPageModel.ForumModel
+                    return forums.Select(forum => new IndexPageModelToFilter.ForumModel
                     {
                         Id = forum.Id,
                         Name = forum.Name,
                         Description = forum.Description,
                         TotalTopics = forum.TopicsCount,
-                        TotalReplies = forum.RepliesCount
+                        TotalReplies = forum.RepliesCount,
+                        PermissionSetId = forum.PermissionSetId
                     }).ToList();
                 });
             }
@@ -80,16 +79,13 @@ namespace Atlas.Data.Builders.Public
                 return null;
             }
 
-            var permissionModels = await _permissionModelBuilder.BuildPermissionModels(siteId, forum.PermissionSetId ?? forum.Category.PermissionSetId);
-
             var result = new ForumPageModel
             {
                 Forum = new ForumPageModel.ForumModel
                 {
                     Id = forum.Id,
                     Name = forum.Name
-                },
-                Permissions = permissionModels
+                }
             };
 
             var topics = await _dbContext.Topics

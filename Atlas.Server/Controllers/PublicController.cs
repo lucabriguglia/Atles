@@ -51,8 +51,12 @@ namespace Atlas.Server.Controllers
         public async Task<IndexPageModel> Index()
         {
             var site = await _contextService.CurrentSiteAsync();
-            var request = Request;
-            return await _modelBuilder.BuildIndexPageModelAsync(site.Id);
+
+            var modelToFilter = await _modelBuilder.BuildIndexPageModelToFilterAsync(site.Id);
+
+            var filteredModel = await GetFilteredModel(site.Id, modelToFilter);
+
+            return filteredModel;
         }
 
         [HttpGet("forum/{id}")]
@@ -375,6 +379,39 @@ namespace Atlas.Server.Controllers
         public async Task<string> Preview([FromBody]string content)
         {
             return await Task.FromResult(Markdown.ToHtml(content));
+        }
+
+        private async Task<IndexPageModel> GetFilteredModel(Guid siteId, IndexPageModelToFilter modelToFilter)
+        {
+            var result = new IndexPageModel();
+
+            foreach (var categoryToFilter in modelToFilter.Categories)
+            {
+                var category = new IndexPageModel.CategoryModel { Name = categoryToFilter.Name };
+
+                foreach (var forumToFilter in categoryToFilter.Forums)
+                {
+                    var permissionSetId = forumToFilter.PermissionSetId ?? categoryToFilter.PermissionSetId;
+                    var permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, permissionSetId);
+                    var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
+                    if (!canViewForum) continue;
+                    var canRead = _securityService.HasPermission(PermissionType.Read, permissions);
+                    var forum = new IndexPageModel.ForumModel
+                    {
+                        Id = forumToFilter.Id,
+                        Name = forumToFilter.Name,
+                        Description = forumToFilter.Description,
+                        TotalTopics = forumToFilter.TotalTopics,
+                        TotalReplies = forumToFilter.TotalReplies,
+                        CanRead = canRead
+                    };
+                    category.Forums.Add(forum);
+                }
+
+                result.Categories.Add(category);
+            }
+
+            return result;
         }
     }
 }

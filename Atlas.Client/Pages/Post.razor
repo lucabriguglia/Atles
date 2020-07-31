@@ -11,7 +11,7 @@
 }
 else
 {
-    if (DisplayForum)
+    if (DisplayPage)
     {
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -63,7 +63,7 @@ else
 
     private PostPageModel Model { get; set; }
 
-    public bool DisplayPage{ get; set; }
+    public bool DisplayPage { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
