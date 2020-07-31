@@ -80,6 +80,9 @@ namespace Atlas.Server.Controllers
                 return NotFound();
             }
 
+            model.CanRead = _securityService.HasPermission(PermissionType.Read, permissions);
+            model.CanStart = _securityService.HasPermission(PermissionType.Start, permissions);
+
             return model;
         }
 

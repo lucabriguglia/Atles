@@ -26,14 +26,21 @@ else
                 <h4 class="mb-3">@Model?.Forum.Name</h4>
             </div>
             <div class="col-md-6 text-right mb-3">
-                <AuthorizeView>
-                    <Authorized>
-                        <a href="/forum/@Model?.Forum.Id/post" class="btn btn-primary" role="button">New Topic</a>
-                    </Authorized>
-                    <NotAuthorized>
-                        <a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to start a new discussion.
-                    </NotAuthorized>
-                </AuthorizeView>
+                @if (Model.CanRead)
+                {
+                    <a href="/forum/@Model?.Forum.Id/post" class="btn btn-primary" role="button">New Topic</a>
+                }
+                else
+                {
+                    <AuthorizeView>
+                        <Authorized>
+                            You are not authorized to start a new discussion.
+                        </Authorized>
+                        <NotAuthorized>
+                            <a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to start a new discussion.
+                        </NotAuthorized>
+                    </AuthorizeView>
+                }
             </div>
         </div>
 
@@ -48,7 +55,16 @@ else
                     @foreach (var item in Model.Topics.Items)
                     {
                         <li class="list-group-item py-3">
-                            <p class="card-text"><a href="/forum/@Model.Forum.Id/@item.Id">@item.Title</a></p>
+                            <p class="card-text">
+                                @if (Model.CanRead)
+                                {
+                                    <a href="/forum/@Model.Forum.Id/@item.Id">@item.Title</a>
+                                }
+                                else
+                                {
+                                    @item.Title
+                                }
+                            </p>
                             <div class="row small">
                                 <div class="col-md-6 font-weight-bold">
                                     @item.MemberDisplayName

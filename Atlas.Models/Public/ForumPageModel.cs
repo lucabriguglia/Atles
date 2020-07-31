@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Atlas.Models.Public
 {
@@ -8,6 +7,9 @@ namespace Atlas.Models.Public
         public ForumModel Forum { get; set; } = new ForumModel();
 
         public PaginatedData<TopicModel> Topics { get; set; } = new PaginatedData<TopicModel>();
+
+        public bool CanRead { get; set; }
+        public bool CanStart { get; set; }
 
         public class ForumModel
         {
