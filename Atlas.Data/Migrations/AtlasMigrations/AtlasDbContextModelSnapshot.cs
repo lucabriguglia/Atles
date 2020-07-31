@@ -28,7 +28,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("PermissionSetId")
+                    b.Property<Guid>("PermissionSetId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<int>("RepliesCount")
@@ -138,6 +138,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RepliesCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
                         .HasColumnType("int");
 
                     b.Property<int>("TopicsCount")
@@ -275,7 +278,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.HasOne("Atlas.Domain.PermissionSets.PermissionSet", "PermissionSet")
                         .WithMany("Categories")
                         .HasForeignKey("PermissionSetId")
-                        .OnDelete(DeleteBehavior.NoAction);
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
 
                     b.HasOne("Atlas.Domain.Sites.Site", "Site")
                         .WithMany("Categories")

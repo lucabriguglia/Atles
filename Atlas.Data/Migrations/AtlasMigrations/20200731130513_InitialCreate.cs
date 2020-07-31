@@ -15,7 +15,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     UserId = table.Column<string>(nullable: true),
                     DisplayName = table.Column<string>(nullable: true),
                     TopicsCount = table.Column<int>(nullable: false),
-                    RepliesCount = table.Column<int>(nullable: false)
+                    RepliesCount = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -101,7 +102,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     TopicsCount = table.Column<int>(nullable: false),
                     RepliesCount = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    PermissionSetId = table.Column<Guid>(nullable: true)
+                    PermissionSetId = table.Column<Guid>(nullable: false)
                 },
                 constraints: table =>
                 {

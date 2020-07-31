@@ -127,11 +127,11 @@ namespace Atlas.Data.Builders.Admin
             return result;
         }
 
+        // TODO: Add Moderate
         private static bool IsEditingPermissionType(PermissionType permissionType) =>
             permissionType == PermissionType.Start ||
             permissionType == PermissionType.Reply ||
             permissionType == PermissionType.Edit ||
-            permissionType == PermissionType.Delete ||
-            permissionType == PermissionType.Moderate;
+            permissionType == PermissionType.Delete;
     }
 }
