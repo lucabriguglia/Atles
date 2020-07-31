@@ -21,7 +21,7 @@ namespace Atlas.Models.Public
             public string Description { get; set; }
             public int TotalTopics { get; set; }
             public int TotalReplies { get; set; }
-            public bool CanRead { get; set; }
+            public bool CanViewTopics { get; set; }
         }
     }
 }

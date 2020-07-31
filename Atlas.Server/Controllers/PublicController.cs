@@ -395,7 +395,7 @@ namespace Atlas.Server.Controllers
                     var permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, permissionSetId);
                     var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
                     if (!canViewForum) continue;
-                    var canRead = _securityService.HasPermission(PermissionType.Read, permissions);
+                    var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
                     var forum = new IndexPageModel.ForumModel
                     {
                         Id = forumToFilter.Id,
@@ -403,7 +403,7 @@ namespace Atlas.Server.Controllers
                         Description = forumToFilter.Description,
                         TotalTopics = forumToFilter.TotalTopics,
                         TotalReplies = forumToFilter.TotalReplies,
-                        CanRead = canRead
+                        CanViewTopics = canViewTopics
                     };
                     category.Forums.Add(forum);
                 }

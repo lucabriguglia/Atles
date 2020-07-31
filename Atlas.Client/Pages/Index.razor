@@ -30,7 +30,7 @@ else
                         {
                             <li class="list-group-item py-3">
                                 <h5 class="card-title">
-                                    @if (forum.CanRead)
+                                    @if (forum.CanViewTopics)
                                     {
                                         <a href="/forum/@forum.Id">@forum.Name</a>
                                     }
