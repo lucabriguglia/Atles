@@ -10,6 +10,7 @@ namespace Atlas.Server.Services
     {
         bool HasPermission(PermissionModel model);
         bool HasPermission(PermissionType type, IList<PermissionModel> models);
+        [Obsolete("Use IPermissionModelBuilder.BuildPermissionModelsByForumId instead to get permissions and then call ISecurityService.HasPermission.")]
         Task<bool> HasPermission(PermissionType permissionType, Guid siteId, Guid forumId);
     }
 }

@@ -60,7 +60,7 @@ namespace Atlas.Server.Controllers
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var permissions = await _permissionModelBuilder.BuildPermissionModels(site.Id, id);
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, id);
 
             var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
 
@@ -84,7 +84,7 @@ namespace Atlas.Server.Controllers
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var permissions = await _permissionModelBuilder.BuildPermissionModels(site.Id, forumId);
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
 
             var canRead = _securityService.HasPermission(PermissionType.Read, permissions);
 

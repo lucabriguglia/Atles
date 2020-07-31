@@ -177,7 +177,8 @@ namespace Atlas.Data.Builders.Public
                 {
                     Id = topic.Id,
                     Title = topic.Title,
-                    Content = topic.Content
+                    Content = topic.Content,
+                    MemberId = topic.Member.Id
                 }
             };
 
@@ -216,8 +217,7 @@ namespace Atlas.Data.Builders.Public
                     MemberDisplayName = topic.Member.DisplayName,
                     TimeStamp = topic.TimeStamp,
                     UserId = topic.Member.UserId
-                },
-                Permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, topic.Forum.PermissionSetId ?? topic.Forum.Category.PermissionSetId)
+                }
             };
 
             var replies = await _dbContext.Replies

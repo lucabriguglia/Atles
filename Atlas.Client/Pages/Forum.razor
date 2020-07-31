@@ -1,7 +1,5 @@
 ﻿@page "/forum/{id:guid}"
-@using System.Security.Claims
 @using Atlas.Client.Services
-@using Atlas.Domain.PermissionSets
 @using Atlas.Models.Public
 @inject AnonymousService Service;
 @inject HttpClient Http
@@ -14,7 +12,7 @@
 }
 else
 {
-    if (DisplayForum)
+    if (DisplayPage)
     {
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -86,7 +84,7 @@ else
 
     private ForumPageModel Model { get; set; }
 
-    public bool DisplayForum { get; set; }
+    public bool DisplayPage { get; set; }
 
     private async Task LoadDataAsync(int page)
     {
@@ -106,12 +104,12 @@ else
                 Model = await Service.GetFromJsonAsync<ForumPageModel>(requestUri);
             }
 
-            DisplayForum = true;
+            DisplayPage = true;
         }
         catch (Exception)
         {
             Model = new ForumPageModel();
-            DisplayForum = false;
+            DisplayPage = false;
         }
     }
 

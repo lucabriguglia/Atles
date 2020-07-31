@@ -15,7 +15,7 @@
 }
 else
 {
-    if (DisplayTopic)
+    if (DisplayPage)
     {
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -165,7 +165,7 @@ else
 
     private TopicPageModel Model { get; set; }
 
-    public bool DisplayTopic { get; set; }
+    public bool DisplayPage { get; set; }
 
     public Guid DeleteReplyId { get; set; }
 
@@ -190,7 +190,7 @@ else
                 Model = await Service.GetFromJsonAsync<TopicPageModel>(requestUri);
             }
 
-            DisplayTopic = true;
+            DisplayPage = true;
 
             var authenticationState = await AuthenticationStateTask;
             CurrentUser = authenticationState.User;
@@ -203,7 +203,7 @@ else
         catch (Exception)
         {
             Model = new TopicPageModel();
-            DisplayTopic = false;
+            DisplayPage = false;
         }
     }
 
