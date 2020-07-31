@@ -173,7 +173,7 @@ else
         Model.Post.Id = id;
         Model.Post.Content = content;
         Model.Post.MemberId = memberId;
-        await JSRuntime.InvokeVoidAsync("scrollToAnchor", "reply");
+        await JSRuntime.InvokeVoidAsync("scrollToTarget", "reply");
     }
 
     private async Task OnValidSubmit()
@@ -186,7 +186,7 @@ else
 
         if (Model.Post.Id != null)
         {
-            await JSRuntime.InvokeVoidAsync("scrollToAnchor", Model.Post.Id.Value);
+            await JSRuntime.InvokeVoidAsync("scrollToTarget", Model.Post.Id.Value);
         }
 
         await OnInitializedAsync();
