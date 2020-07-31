@@ -46,6 +46,7 @@ namespace Atlas.Server.Services
             {
                 await roleManager.CreateAsync(new IdentityRole(Consts.RoleNameAdmin));
             }
+            var roleAdmin = await roleManager.FindByNameAsync(Consts.RoleNameAdmin);
 
             // Users
             var userAdmin = await userManager.FindByEmailAsync(_configuration["DefaultAdminUserEmail"]);
@@ -151,7 +152,16 @@ namespace Atlas.Server.Services
                 Name = permissionSetMembersOnly.Name
             }));
 
-            var permissionSetAdminOnly = new PermissionSet(site.Id, "Admin Only", new List<PermissionCommand>());
+            var permissionSetAdminOnly = new PermissionSet(site.Id, "Admin Only", new List<PermissionCommand>
+            {
+                new PermissionCommand{Type = PermissionType.ViewForum, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.ViewTopics, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Read, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Start, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Reply, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Edit, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Delete, RoleId = roleAdmin.Id}
+            });
             _dbContext.PermissionSets.Add(permissionSetAdminOnly);
             _dbContext.Events.Add(new Event(new PermissionSetCreated
             {

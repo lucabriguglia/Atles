@@ -37,7 +37,7 @@ else
                 }
                 @if (CanDeleteTopic())
                 {
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal">Delete</button>
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal-delete-topic">Delete</button>
                 }
             </div>
         </div>
@@ -79,14 +79,18 @@ else
                                 </div>
                             </div>
                             <div class="card-text">@((MarkupString)reply.Content)</div>
-                            @if (CanEditReply(reply.UserId))
-                            {
                                 <div class="row">
                                     <div class="col-md-12 text-right">
-                                        <a href="#" @onclick:preventDefault="true" @onclick="() => Edit(reply.Id, reply.OriginalContent, reply.MemberId)">Edit</a>
+                                        @if (CanEditReply(reply.UserId))
+                                        {
+                                            <a href="#" @onclick:preventDefault="true" @onclick="() => Edit(reply.Id, reply.OriginalContent, reply.MemberId)">Edit</a>
+                                        }
+                                        @if (CanDeleteReply(reply.UserId))
+                                        {
+                                            <a href="#" @onclick:preventDefault="true" @onclick="() => SetDeleteReplyId(reply.Id)" data-toggle="modal" data-target="#confirm-modal-delete-reply">Delete</a>
+                                        }
                                     </div>
                                 </div>
-                            }
                         </li>
                     }
                 </ul>
@@ -129,10 +133,17 @@ else
             </AuthorizeView>
         }
 
-        <ConfirmModal Title="Delete Topic"
+        <ConfirmModal Id="confirm-modal-delete-topic" 
+                      Title="Delete Topic"
                       Body="Are you sure you want to delete this Topic?"
-                      Button="Delete"
+                      Button="Delete Topic"
                       OnClickCallback="@DeleteTopicAsync" />
+
+        <ConfirmModal Id="confirm-modal-delete-reply" 
+                      Title="Delete Reply"
+                      Body="Are you sure you want to delete this Reply?"
+                      Button="Delete Reply"
+                      OnClickCallback="@DeleteReplyAsync" />
     }
     else
     {
@@ -160,6 +171,8 @@ else
     public bool CanEdit { get; set; }
     public bool CanDelete { get; set; }
 
+    public Guid DeleteReplyId { get; set; }
+
     public ClaimsPrincipal CurrentUser { get; set; }
     public string CurrentUserId { get; set; } = Guid.Empty.ToString();
 
@@ -177,6 +190,11 @@ else
     protected override async Task OnInitializedAsync()
     {
         await LoadDataAsync(1);
+    }
+
+    protected void SetDeleteReplyId(Guid Id)
+    {
+        DeleteReplyId = Id;
     }
 
     private async Task Edit(Guid id, string content, Guid memberId)
@@ -207,6 +225,12 @@ else
     {
         await Http.DeleteAsync($"api/public/delete-topic/{ForumId}/{TopicId}/{CurrentUserId}");
         Navigation.NavigateTo($"/forum/{ForumId}");
+    }
+
+    protected async Task DeleteReplyAsync(MouseEventArgs e)
+    {
+        await Http.DeleteAsync($"api/public/delete-reply/{ForumId}/{TopicId}/{DeleteReplyId}/{CurrentUserId}");
+        await OnInitializedAsync();
     }
 
     private void Cancel()
