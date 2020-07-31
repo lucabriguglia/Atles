@@ -1,6 +1,8 @@
 ﻿@page "/"
+@using System.ComponentModel.Design
 @using Atlas.Models.Public
 @inject AnonymousService Service;
+@inject HttpClient Http
 
 @if (Model == null)
 {
@@ -49,6 +51,18 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await Service.GetFromJsonAsync<IndexPageModel>("api/public/index-model");
+        var authState = await AuthenticationStateTask;
+        var user = authState.User;
+
+        const string requestUri = "api/public/index-model";
+
+        if (user.Identity.IsAuthenticated)
+        {
+            Model = await Http.GetFromJsonAsync<IndexPageModel>(requestUri);
+        }
+        else
+        {
+            Model = await Service.GetFromJsonAsync<IndexPageModel>(requestUri);
+        }
     }
 }

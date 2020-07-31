@@ -74,5 +74,22 @@ namespace Atlas.Data.Builders
                 return result;
             });
         }
+
+        public async Task<IList<PermissionModel>> BuildPermissionModelsByForumId(Guid siteId, Guid forumId)
+        {
+            var permission = await _dbContext.Forums.Where(x =>
+                    x.Id == forumId &&
+                    x.Category.SiteId == siteId &&
+                    x.Status == StatusType.Published)
+                .Select(x => new { Id = x.PermissionSetId ?? x.Category.PermissionSetId })
+                .FirstOrDefaultAsync();
+
+            if (permission == null)
+            {
+                return new List<PermissionModel>();
+            }
+
+            return await BuildPermissionModels(siteId, permission.Id);
+        }
     }
 }

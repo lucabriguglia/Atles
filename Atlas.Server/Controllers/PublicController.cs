@@ -28,13 +28,15 @@ namespace Atlas.Server.Controllers
         private readonly IReplyService _replyService;
         private readonly ISecurityService _securityService;
         private readonly AtlasDbContext _dbContext;
+        private readonly IPermissionModelBuilder _permissionModelBuilder;
 
         public PublicController(IContextService contextService, 
             IPublicModelBuilder modelBuilder, 
             ITopicService topicService, 
             IReplyService replyService, 
             ISecurityService securityService, 
-            AtlasDbContext dbContext)
+            AtlasDbContext dbContext, 
+            IPermissionModelBuilder permissionModelBuilder)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
@@ -42,13 +44,14 @@ namespace Atlas.Server.Controllers
             _replyService = replyService;
             _securityService = securityService;
             _dbContext = dbContext;
+            _permissionModelBuilder = permissionModelBuilder;
         }
 
         [HttpGet("index-model")]
-        public async Task<IndexPageModel> Index([FromQuery] int? page = 1)
+        public async Task<IndexPageModel> Index()
         {
             var site = await _contextService.CurrentSiteAsync();
-
+            var request = Request;
             return await _modelBuilder.BuildIndexPageModelAsync(site.Id);
         }
 
@@ -56,6 +59,15 @@ namespace Atlas.Server.Controllers
         public async Task<ActionResult<ForumPageModel>> Forum(Guid id, [FromQuery] int? page = 1)
         {
             var site = await _contextService.CurrentSiteAsync();
+
+            var permissions = await _permissionModelBuilder.BuildPermissionModels(site.Id, id);
+
+            var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
+
+            if (!canViewTopics)
+            {
+                return Unauthorized();
+            }
 
             var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id, new PaginationOptions(page));
 
@@ -72,12 +84,25 @@ namespace Atlas.Server.Controllers
         {
             var site = await _contextService.CurrentSiteAsync();
 
+            var permissions = await _permissionModelBuilder.BuildPermissionModels(site.Id, forumId);
+
+            var canRead = _securityService.HasPermission(PermissionType.Read, permissions);
+
+            if (!canRead)
+            {
+                return Unauthorized();
+            }
+
             var model = await _modelBuilder.BuildTopicPageModelAsync(site.Id, forumId, topicId, new PaginationOptions(page));
 
             if (model == null)
             {
                 return NotFound();
             }
+
+            model.CanEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
+            model.CanReply = _securityService.HasPermission(PermissionType.Reply, permissions);
+            model.CanDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
 
             return model;
         }

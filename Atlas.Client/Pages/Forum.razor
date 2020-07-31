@@ -3,7 +3,8 @@
 @using Atlas.Client.Services
 @using Atlas.Domain.PermissionSets
 @using Atlas.Models.Public
-@inject AnonymousService Service
+@inject AnonymousService Service;
+@inject HttpClient Http
 @inject NavigationManager Navigation
 @inject ISecurityService SecurityService
 
@@ -13,7 +14,7 @@
 }
 else
 {
-    if (CanViewForum)
+    if (DisplayForum)
     {
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -72,7 +73,7 @@ else
     }
     else
     {
-        <AccessDenied />
+        <SomethingWrong />
     }
 }
 
@@ -85,13 +86,33 @@ else
 
     private ForumPageModel Model { get; set; }
 
-    public bool CanViewForum { get; set; }
+    public bool DisplayForum { get; set; }
 
     private async Task LoadDataAsync(int page)
     {
-        var data = await Service.GetFromJsonAsync<ForumPageModel>($"api/public/forum/{Id}?page={page}");
-        CanViewForum = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.ViewForum, data.Permissions);
-        Model = CanViewForum ? data : new ForumPageModel();
+        var authState = await AuthenticationStateTask;
+        var user = authState.User;
+
+        try
+        {
+            var requestUri = $"api/public/forum/{Id}?page={page}";
+
+            if (user.Identity.IsAuthenticated)
+            {
+                Model = await Http.GetFromJsonAsync<ForumPageModel>(requestUri);
+            }
+            else
+            {
+                Model = await Service.GetFromJsonAsync<ForumPageModel>(requestUri);
+            }
+
+            DisplayForum = true;
+        }
+        catch (Exception)
+        {
+            Model = new ForumPageModel();
+            DisplayForum = false;
+        }
     }
 
     protected override async Task OnInitializedAsync()

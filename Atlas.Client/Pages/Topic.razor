@@ -2,7 +2,6 @@
 @using System.Security.Claims
 @using Atlas.Client.Services
 @using Atlas.Domain
-@using Atlas.Domain.PermissionSets
 @using Atlas.Models.Public
 @inject HttpClient Http
 @inject AnonymousService Service;
@@ -16,7 +15,7 @@
 }
 else
 {
-    if (CanRead)
+    if (DisplayTopic)
     {
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
@@ -101,7 +100,7 @@ else
             </div>
         }
 
-        if (CanReply)
+        if (Model.CanReply)
         {
             <h5 class="mb-3">@ReplyTitle</h5>
             <div class="row">
@@ -147,7 +146,7 @@ else
     }
     else
     {
-        <AccessDenied />
+        <SomethingWrong />
     }
 }
 
@@ -166,10 +165,7 @@ else
 
     private TopicPageModel Model { get; set; }
 
-    public bool CanRead { get; set; }
-    public bool CanReply { get; set; }
-    public bool CanEdit { get; set; }
-    public bool CanDelete { get; set; }
+    public bool DisplayTopic { get; set; }
 
     public Guid DeleteReplyId { get; set; }
 
@@ -178,13 +174,37 @@ else
 
     private async Task LoadDataAsync(int page)
     {
-        var data = await Service.GetFromJsonAsync<TopicPageModel>($"api/public/forum/{ForumId}/{TopicId}?page={page}");
-        CanRead = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Read, data.Permissions);
-        CanReply = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Reply, data.Permissions);
-        CanEdit = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Edit, data.Permissions);
-        CanDelete = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Delete, data.Permissions);
-        await SetCurrentUser();
-        Model = CanRead ? data : new TopicPageModel();
+        var authState = await AuthenticationStateTask;
+        var user = authState.User;
+
+        try
+        {
+            var requestUri = $"api/public/forum/{ForumId}/{TopicId}?page={page}";
+
+            if (user.Identity.IsAuthenticated)
+            {
+                Model = await Http.GetFromJsonAsync<TopicPageModel>(requestUri);
+            }
+            else
+            {
+                Model = await Service.GetFromJsonAsync<TopicPageModel>(requestUri);
+            }
+
+            DisplayTopic = true;
+
+            var authenticationState = await AuthenticationStateTask;
+            CurrentUser = authenticationState.User;
+
+            if (CurrentUser.Identity.IsAuthenticated)
+            {
+                CurrentUserId = authenticationState.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+            }
+        }
+        catch (Exception)
+        {
+            Model = new TopicPageModel();
+            DisplayTopic = false;
+        }
     }
 
     protected override async Task OnInitializedAsync()
@@ -240,35 +260,23 @@ else
         Model.Topic.MemberId = Guid.Empty;
     }
 
-    private async Task SetCurrentUser()
-    {
-        var authenticationState = await AuthenticationStateTask;
-        CurrentUser = authenticationState.User;
-
-        if (CurrentUser.Identity.IsAuthenticated)
-        {
-            CurrentUserId = authenticationState.User.Identities.First().Claims
-            .FirstOrDefault(x => x.Type == "sub")?.Value;
-        }
-    }
-
     private bool CanEditTopic()
     {
-        return CanEdit && Model.Topic.UserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+        return Model.CanEdit && Model.Topic.UserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 
     private bool CanDeleteTopic()
     {
-        return CanDelete && Model.Topic.UserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+        return Model.CanDelete && Model.Topic.UserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 
     private bool CanEditReply(string replyUserId)
     {
-        return CanEdit && replyUserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+        return Model.CanEdit && replyUserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 
     private bool CanDeleteReply(string replyUserId)
     {
-        return CanDelete && replyUserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+        return Model.CanDelete && replyUserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 }

@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
-using Atlas.Domain;
+using System.Security.Claims;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models;
-using Microsoft.AspNetCore.Components.Authorization;
 
 namespace Atlas.Client.Services
 {
     public class SecurityService : ISecurityService
     {
-        public async Task<bool> HasPermission(Task<AuthenticationState> authenticationStateTask, PermissionModel model)
+        public bool HasPermission(ClaimsPrincipal user, PermissionModel model)
         {
-            var authenticationState = await authenticationStateTask;
-
             if (model.AllUsers)
             {
                 return true;
@@ -22,12 +17,12 @@ namespace Atlas.Client.Services
 
             if (model.RegisteredUsers)
             {
-                return authenticationState.User.Identity.IsAuthenticated;
+                return user.Identity.IsAuthenticated;
             }
 
             foreach (var role in model.Roles)
             {
-                if (authenticationState.User.IsInRole(role))
+                if (user.IsInRole(role))
                 {
                     return true;
                 }
@@ -36,11 +31,11 @@ namespace Atlas.Client.Services
             return false;
         }
 
-        public async Task<bool> HasPermission(Task<AuthenticationState> authenticationStateTask, PermissionType permissionType, IList<PermissionModel> models)
+        public bool HasPermission(ClaimsPrincipal user, PermissionType permissionType, IList<PermissionModel> models)
         {
             var model = models.FirstOrDefault(x => x.Type == permissionType);
 
-            return model != null && await HasPermission(authenticationStateTask, model);
+            return model != null && HasPermission(user, model);
         }
     }
 }
