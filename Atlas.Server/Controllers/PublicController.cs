@@ -184,7 +184,7 @@ namespace Atlas.Server.Controllers
             return Ok();
         }
 
-        [HttpDelete("delete/{forumId}/{topicId}/{userId}")]
+        [HttpDelete("delete-topic/{forumId}/{topicId}/{userId}")]
         public async Task<ActionResult> DeleteTopic(Guid forumId, Guid topicId, string userId)
         {
             var site = await _contextService.CurrentSiteAsync();
@@ -271,7 +271,7 @@ namespace Atlas.Server.Controllers
             return Ok();
         }
 
-        [HttpDelete("delete/{forumId}/{topicId}/{replyId}/{userId}")]
+        [HttpDelete("delete-reply/{forumId}/{topicId}/{replyId}/{userId}")]
         public async Task<ActionResult> DeleteReply(Guid forumId, Guid topicId, Guid replyId, string userId)
         {
             var site = await _contextService.CurrentSiteAsync();

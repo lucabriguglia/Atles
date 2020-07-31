@@ -205,7 +205,7 @@ else
 
     protected async Task DeleteTopicAsync(MouseEventArgs e)
     {
-        await Http.DeleteAsync($"delete/{ForumId}/{TopicId}/{CurrentUserId}");
+        await Http.DeleteAsync($"api/public/delete-topic/{ForumId}/{TopicId}/{CurrentUserId}");
         Navigation.NavigateTo($"/forum/{ForumId}");
     }
 

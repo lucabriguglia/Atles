@@ -49,30 +49,45 @@ namespace Atlas.Server.Services
 
             // Users
             var userAdmin = await userManager.FindByEmailAsync(_configuration["DefaultAdminUserEmail"]);
-
-            if (userAdmin != null)
+            if (userAdmin == null)
             {
                 userAdmin = new IdentityUser
                 {
                     Email = _configuration["DefaultAdminUserEmail"],
                     UserName = _configuration["DefaultAdminUserName"]
                 };
-
                 await userManager.CreateAsync(userAdmin, _configuration["DefaultAdminUserPassword"]);
-
                 var code = await userManager.GenerateEmailConfirmationTokenAsync(userAdmin);
                 await userManager.ConfirmEmailAsync(userAdmin, code);
             }
-
             await userManager.AddToRoleAsync(userAdmin, Consts.RoleNameAdmin);
+
+            var userNormal = await userManager.FindByEmailAsync(_configuration["DefaultNormalUserEmail"]);
+            if (userNormal == null)
+            {
+                userNormal = new IdentityUser
+                {
+                    Email = _configuration["DefaultNormalUserEmail"],
+                    UserName = _configuration["DefaultNormalUserName"]
+                };
+                await userManager.CreateAsync(userNormal, _configuration["DefaultNormalUserPassword"]);
+                var code = await userManager.GenerateEmailConfirmationTokenAsync(userNormal);
+                await userManager.ConfirmEmailAsync(userNormal, code);
+            }
 
             // Members
             var memberAdmin = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userAdmin.Id);
-
             if (memberAdmin == null)
             {
-                memberAdmin = new Member(userAdmin.Id, "Admin");
+                memberAdmin = new Member(userAdmin.Id, _configuration["DefaultAdminUserDisplayName"]);
                 _dbContext.Members.Add(memberAdmin);
+            }
+
+            var memberNormal = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userNormal.Id);
+            if (memberNormal == null)
+            {
+                memberNormal = new Member(userNormal.Id, _configuration["DefaultNormalUserDisplayName"]);
+                _dbContext.Members.Add(memberNormal);
             }
 
             // Site
@@ -98,7 +113,7 @@ namespace Atlas.Server.Services
             // Permission Sets
             var permissionSetDefault = new PermissionSet(site.Id, "Default", new List<PermissionCommand>
             {
-                new PermissionCommand{Type = PermissionType.ViewTopics, RoleId = Consts.RoleIdAll},
+                new PermissionCommand{Type = PermissionType.ViewForum, RoleId = Consts.RoleIdAll},
                 new PermissionCommand{Type = PermissionType.ViewTopics, RoleId = Consts.RoleIdAll},
                 new PermissionCommand{Type = PermissionType.Read, RoleId = Consts.RoleIdAll},
                 new PermissionCommand{Type = PermissionType.Start, RoleId = Consts.RoleIdRegistered},
@@ -118,7 +133,7 @@ namespace Atlas.Server.Services
 
             var permissionSetMembersOnly = new PermissionSet(site.Id, "Members Only", new List<PermissionCommand>
             {
-                new PermissionCommand{Type = PermissionType.ViewTopics, RoleId = Consts.RoleIdRegistered},
+                new PermissionCommand{Type = PermissionType.ViewForum, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.ViewTopics, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.Read, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.Start, RoleId = Consts.RoleIdRegistered},
@@ -216,6 +231,7 @@ namespace Atlas.Server.Services
                     topicWelcome.Content,
                     topicWelcome.Status
                 }));
+            forumWelcome.IncreaseTopicsCount();
 
             // Save all changes
             await _dbContext.SaveChangesAsync();
