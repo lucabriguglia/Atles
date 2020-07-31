@@ -8,6 +8,7 @@
 @inject AnonymousService Service;
 @inject NavigationManager Navigation
 @inject ISecurityService SecurityService
+@inject IJSRuntime JSRuntime
 
 @if (Model == null)
 {
@@ -30,7 +31,7 @@ else
                 <h3 class="mb-3">@Model.Topic.Title</h3>
             </div>
             <div class="col-md-4 text-right mb-3">
-                @if (CanEdit)
+                @if (CanEditTopic())
                 {
                     <a href="/forum/@Model.Forum.Id/post/@Model.Topic.Id/edit" class="btn btn-secondary" role="button">Edit</a>
                 }
@@ -64,19 +65,24 @@ else
                     @foreach (var reply in Model.Replies.Items)
                     {
                         <li class="list-group-item py-3">
+                            <a id="@reply.Id"></a>
                             <div class="row mb-3 small">
                                 <div class="col-md-6 font-weight-bold">
                                     @reply.MemberDisplayName
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    @if (CanEditReply(reply.UserId))
-                                    {
-                                        <button type="button" class="btn btn-link" @onclick="() => Edit(reply.Id, reply.OriginalContent)">Edit</button> |
-                                    }
                                     @reply.TimeStamp.ToShortDateString() @reply.TimeStamp.ToShortTimeString()
                                 </div>
                             </div>
                             <div class="card-text">@((MarkupString)reply.Content)</div>
+                            @if (CanEditReply(reply.UserId))
+                            {
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        <a href="#" @onclick:preventDefault="true" @onclick="() => Edit(reply.Id, reply.OriginalContent, reply.MemberId)">Edit</a>
+                                    </div>
+                                </div>
+                            }
                         </li>
                     }
                 </ul>
@@ -153,7 +159,7 @@ else
         CanRead = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Read, data.Permissions);
         CanReply = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Reply, data.Permissions);
         CanEdit = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Edit, data.Permissions);
-
+        await SetCurrentUser();
         Model = CanRead ? data : new TopicPageModel();
     }
 
@@ -162,11 +168,12 @@ else
         await LoadDataAsync(1);
     }
 
-    private void Edit(Guid id, string content)
+    private async Task Edit(Guid id, string content, Guid memberId)
     {
         Model.Post.Id = id;
         Model.Post.Content = content;
-        Navigation.NavigateTo("#reply");
+        Model.Post.MemberId = memberId;
+        await JSRuntime.InvokeVoidAsync("scrollToAnchor", "reply");
     }
 
     private async Task OnValidSubmit()
@@ -176,6 +183,12 @@ else
             : "api/public/create-reply";
 
         await Http.PostAsJsonAsync(requestUri, Model);
+
+        if (Model.Post.Id != null)
+        {
+            await JSRuntime.InvokeVoidAsync("scrollToAnchor", Model.Post.Id.Value);
+        }
+
         await OnInitializedAsync();
     }
 
@@ -183,9 +196,10 @@ else
     {
         Model.Post.Id = null;
         Model.Post.Content = null;
+        Model.Topic.MemberId = Guid.Empty;
     }
 
-    private async Task SetCurrentUserId()
+    private async Task SetCurrentUser()
     {
         var authenticationState = await AuthenticationStateTask;
         CurrentUser = authenticationState.User;
@@ -195,6 +209,11 @@ else
             CurrentUserId = authenticationState.User.Identities.First().Claims
             .FirstOrDefault(x => x.Type == "sub")?.Value;
         }
+    }
+
+    private bool CanEditTopic()
+    {
+        return CanEdit && Model.Topic.UserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 
     private bool CanEditReply(string replyUserId)

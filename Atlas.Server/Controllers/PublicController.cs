@@ -230,6 +230,7 @@ namespace Atlas.Server.Controllers
 
             var command = new UpdateReply
             {
+                Id = model.Post.Id.Value,
                 ForumId = model.Forum.Id,
                 TopicId = model.Topic.Id,
                 Content = model.Post.Content,

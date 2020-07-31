@@ -215,7 +215,8 @@ namespace Atlas.Data.Builders.Public
                     Content = Markdown.ToHtml(topic.Content),
                     MemberId = topic.Member.Id,
                     MemberDisplayName = topic.Member.DisplayName,
-                    TimeStamp = topic.TimeStamp
+                    TimeStamp = topic.TimeStamp,
+                    UserId = topic.Member.UserId
                 },
                 Permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, topic.Forum.PermissionSetId ?? topic.Forum.Category.PermissionSetId)
             };

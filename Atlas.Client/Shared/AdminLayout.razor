@@ -62,9 +62,9 @@
 </div>
 
 @code {
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        JSRuntime.InvokeVoidAsync("addCssFile", "admin");
+        await JSRuntime.InvokeVoidAsync("addCssFile", "admin");
     }
 
     private void NavigateToAccount(MouseEventArgs args)

@@ -43,8 +43,8 @@
 </footer>
 
 @code {
-    protected override void OnInitialized()
+    protected override async Task OnInitializedAsync()
     {
-        JSRuntime.InvokeVoidAsync("addCssFile", "public");
+        await JSRuntime.InvokeVoidAsync("addCssFile", "public");
     }
 }
