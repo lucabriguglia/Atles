@@ -8,7 +8,7 @@
 @inject AnonymousService Service;
 @inject NavigationManager Navigation
 @inject ISecurityService SecurityService
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JsRuntime
 
 @if (Model == null)
 {
@@ -34,6 +34,10 @@ else
                 @if (CanEditTopic())
                 {
                     <a href="/forum/@Model.Forum.Id/post/@Model.Topic.Id/edit" class="btn btn-secondary" role="button">Edit</a>
+                }
+                @if (CanDeleteTopic())
+                {
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal">Delete</button>
                 }
             </div>
         </div>
@@ -124,6 +128,11 @@ else
                 </NotAuthorized>
             </AuthorizeView>
         }
+
+        <ConfirmModal Title="Delete Topic"
+                      Body="Are you sure you want to delete this Topic?"
+                      Button="Delete"
+                      OnClickCallback="@DeleteTopicAsync" />
     }
     else
     {
@@ -149,6 +158,7 @@ else
     public bool CanRead { get; set; }
     public bool CanReply { get; set; }
     public bool CanEdit { get; set; }
+    public bool CanDelete { get; set; }
 
     public ClaimsPrincipal CurrentUser { get; set; }
     public string CurrentUserId { get; set; } = Guid.Empty.ToString();
@@ -159,6 +169,7 @@ else
         CanRead = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Read, data.Permissions);
         CanReply = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Reply, data.Permissions);
         CanEdit = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Edit, data.Permissions);
+        CanDelete = await SecurityService.HasPermission(AuthenticationStateTask, PermissionType.Delete, data.Permissions);
         await SetCurrentUser();
         Model = CanRead ? data : new TopicPageModel();
     }
@@ -173,7 +184,7 @@ else
         Model.Post.Id = id;
         Model.Post.Content = content;
         Model.Post.MemberId = memberId;
-        await JSRuntime.InvokeVoidAsync("scrollToTarget", "reply");
+        await JsRuntime.InvokeVoidAsync("scrollToTarget", "reply");
     }
 
     private async Task OnValidSubmit()
@@ -186,10 +197,16 @@ else
 
         if (Model.Post.Id != null)
         {
-            await JSRuntime.InvokeVoidAsync("scrollToTarget", Model.Post.Id.Value);
+            await JsRuntime.InvokeVoidAsync("scrollToTarget", Model.Post.Id.Value);
         }
 
         await OnInitializedAsync();
+    }
+
+    protected async Task DeleteTopicAsync(MouseEventArgs e)
+    {
+        await Http.DeleteAsync($"delete/{ForumId}/{TopicId}/{CurrentUserId}");
+        Navigation.NavigateTo($"/forum/{ForumId}");
     }
 
     private void Cancel()
@@ -216,8 +233,18 @@ else
         return CanEdit && Model.Topic.UserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 
+    private bool CanDeleteTopic()
+    {
+        return CanDelete && Model.Topic.UserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+    }
+
     private bool CanEditReply(string replyUserId)
     {
         return CanEdit && replyUserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+    }
+
+    private bool CanDeleteReply(string replyUserId)
+    {
+        return CanDelete && replyUserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 }

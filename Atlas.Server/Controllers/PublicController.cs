@@ -184,6 +184,33 @@ namespace Atlas.Server.Controllers
             return Ok();
         }
 
+        [HttpDelete("delete/{forumId}/{topicId}/{userId}")]
+        public async Task<ActionResult> DeleteTopic(Guid forumId, Guid topicId, string userId)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var canDelete = await _securityService.HasPermission(PermissionType.Delete, site.Id, forumId);
+            var authorized = canDelete && userId == member.UserId || User.IsInRole(Consts.RoleNameAdmin);
+
+            if (!authorized)
+            {
+                return Unauthorized();
+            }
+
+            var command = new DeleteTopic
+            {
+                Id = topicId,
+                ForumId = forumId,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
+
+            await _topicService.DeleteAsync(command);
+
+            return Ok();
+        }
+
         [Authorize]
         [HttpPost("create-reply")]
         public async Task<ActionResult> CreateReply(TopicPageModel model)
@@ -240,6 +267,34 @@ namespace Atlas.Server.Controllers
             };
 
             await _replyService.UpdateAsync(command);
+
+            return Ok();
+        }
+
+        [HttpDelete("delete/{forumId}/{topicId}/{replyId}/{userId}")]
+        public async Task<ActionResult> DeleteReply(Guid forumId, Guid topicId, Guid replyId, string userId)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var canDelete = await _securityService.HasPermission(PermissionType.Delete, site.Id, forumId);
+            var authorized = canDelete && userId == member.UserId || User.IsInRole(Consts.RoleNameAdmin);
+
+            if (!authorized)
+            {
+                return Unauthorized();
+            }
+
+            var command = new DeleteReply
+            {
+                Id = replyId,
+                TopicId = topicId,
+                ForumId = forumId,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
+
+            await _replyService.DeleteAsync(command);
 
             return Ok();
         }
