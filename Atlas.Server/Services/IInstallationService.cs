@@ -4,7 +4,6 @@ namespace Atlas.Server.Services
 {
     public interface IInstallationService
     {
-        Task EnsureAdminUserInitializedAsync();
         Task EnsureDefaultSiteInitializedAsync();
     }
 }

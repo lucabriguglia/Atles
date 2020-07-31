@@ -111,7 +111,6 @@ namespace Atlas.Server
 
             atlasDbContext.Database.Migrate();
             applicationDbContext.Database.Migrate();
-            installationService.EnsureAdminUserInitializedAsync().Wait();
             installationService.EnsureDefaultSiteInitializedAsync().Wait();
         }
     }

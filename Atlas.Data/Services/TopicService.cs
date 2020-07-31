@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
-using Atlas.Domain.Replies;
 using Atlas.Domain.Topics;
 using Atlas.Domain.Topics.Commands;
 using FluentValidation;
