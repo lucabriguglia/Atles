@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Mvc;
 namespace Atlas.Server.Controllers.Admin
 {
     [Authorize(Policy = "Admin")]
-    [Route("api/admin/categories")]
+    [Route("api/admin/members")]
     [ApiController]
     public class MembersController : ControllerBase
     {
