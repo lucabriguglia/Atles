@@ -42,15 +42,15 @@ namespace Atlas.Tests.Data.Rules
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var member = new Member(displayName);
-                dbContext.Categories.Add(category);
+                var member = new Member(Guid.NewGuid().ToString(), displayName);
+                dbContext.Members.Add(member);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var sut = new MemberRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(siteId, displayName);
+                var actual = await sut.IsDisplayNameUniqueAsync(displayName);
 
                 Assert.IsFalse(actual);
             }
@@ -60,22 +60,21 @@ namespace Atlas.Tests.Data.Rules
         public async Task Should_return_false_when_display_name_is_not_unique_for_existing_member()
         {
             var options = Shared.CreateContextOptions();
-            var siteId = Guid.NewGuid();
-            var categoryId = Guid.NewGuid();
+            var memberId = Guid.NewGuid();
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var category1 = new Member(siteId, "Member 1", 1, Guid.NewGuid());
-                var category2 = new Member(categoryId, siteId, "Member 2", 2, Guid.NewGuid());
-                dbContext.Categories.Add(category1);
-                dbContext.Categories.Add(category2);
+                var member1 = new Member(Guid.NewGuid().ToString(), "Member 1");
+                var member2 = new Member(memberId, Guid.NewGuid().ToString(), "Member 2");
+                dbContext.Members.Add(member1);
+                dbContext.Members.Add(member2);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var sut = new MemberRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(siteId, "Member 1", categoryId);
+                var actual = await sut.IsDisplayNameUniqueAsync("Member 1", memberId);
 
                 Assert.IsFalse(actual);
             }

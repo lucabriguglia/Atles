@@ -41,7 +41,7 @@ namespace Atlas.Tests.Domain.Members.Validators
             var command = Fixture.Create<UpdateMember>();
 
             var memberRules = new Mock<IMemberRules>();
-            memberRules.Setup(x => x.IsDisplayNameUniqueAsync(command.SiteId, command.DisplayName, command.Id)).ReturnsAsync(false);
+            memberRules.Setup(x => x.IsDisplayNameUniqueAsync(command.DisplayName, command.Id)).ReturnsAsync(false);
 
             var sut = new UpdateMemberValidator(memberRules.Object);
 
