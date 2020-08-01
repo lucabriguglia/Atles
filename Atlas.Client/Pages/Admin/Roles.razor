@@ -1,0 +1,124 @@
+﻿@layout AdminLayout
+@page "/admin/roles"
+@using Atlas.Models.Admin.Roles
+@attribute [Authorize(Policy = "Admin")]
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Title</li>
+        </ol>
+    </nav>
+
+    <h3 class="mb-3">@Title</h3>
+
+    if (Model.Roles.Count == 0)
+    {
+        <NoRecords />
+    }
+    else
+    {
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">&nbsp;</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var item in Model.Roles)
+                {
+                    <tr>
+                        <td>@item.Name</td>
+                        <td>
+                            <button type="button" class="btn btn-secondary" role="button" @onclick="() => Edit(item.Id, item.Name)">Edit</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">Delete</button>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+
+        <ConfirmModal Title="Delete Role"
+                      Body="Are you sure you want to delete this Role?"
+                      Button="Delete"
+                      OnClickCallback="@DeleteAsync" />
+    }
+
+    <h3 class="mb-3">@EditTitle</h3>
+
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm Model="Model.EditRole" OnValidSubmit="OnSubmit">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label for="name" class="control-label">Name</label>
+                    <InputText id="name" @bind-Value="Model.EditRole.Name" Class="form-control" />
+                    <ValidationMessage For="@(() => Model.EditRole.Name)" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="@EditButton" class="btn btn-primary" />
+                    @if (IsEdit)
+                    {
+                        <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                    }                    
+                </div>
+            </EditForm>
+        </div>
+    </div>
+}
+
+@code {
+    private const string Title = "Roles";
+    private IndexPageModel Model { get; set; }
+    public bool IsEdit { get; set; }
+    private string EditTitle => IsEdit ? "Update Role" : "New Role";
+    private string EditButton => IsEdit ? "Update" : "Create";
+    private string DeleteId { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        IsEdit = false;
+        Model = await Http.GetFromJsonAsync<IndexPageModel>("api/admin/roles/list");
+    }
+
+    private void Edit(string id, string name)
+    {
+        IsEdit = true;
+        Model.EditRole.Id = id;
+        Model.EditRole.Name = name;
+    }
+
+    private async Task OnSubmit()
+    {
+        var action = IsEdit ? "update" : "create";
+        await Http.PostAsJsonAsync($"api/admin/roles/{action}", Model.EditRole);
+        await OnInitializedAsync();
+    }
+
+    private void Cancel()
+    {
+        IsEdit = false;
+        Model.EditRole.Id = null;
+        Model.EditRole.Name = null;
+    }
+
+    protected async Task DeleteAsync(MouseEventArgs e)
+    {
+        await Http.DeleteAsync($"api/admin/roles/delete/{DeleteId}");
+        await OnInitializedAsync();
+    }
+
+    protected void SetDeleteId(string id)
+    {
+        DeleteId = id;
+    }
+}

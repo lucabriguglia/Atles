@@ -1,0 +1,79 @@
+﻿@page "/"
+@using Atlas.Models.Public
+@inject AnonymousService Service;
+@inject HttpClient Http
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Home</li>
+        </ol>
+    </nav>
+
+    @foreach (var category in Model.Categories)
+    {
+        if (category.Forums.Count > 0)
+        {
+            <div class="mb-3">
+                @if (Model.Categories.Count > 1)
+                {
+                    <h4 class="mb-3">@category.Name</h4>
+                }
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var forum in category.Forums)
+                        {
+                            <li class="list-group-item py-3">
+                                <h5 class="card-title">
+                                    @if (forum.CanViewTopics)
+                                    {
+                                        <a href="/forum/@forum.Id">@forum.Name</a>
+                                    }
+                                    else
+                                    {
+                                        @forum.Name
+                                    }
+                                </h5>
+                                <p class="card-text">@forum.Description</p>
+                                <div class="small">
+                                    <span class="font-weight-bold">@forum.TotalTopics</span> Topics
+                                    &nbsp;&nbsp;
+                                    <span class="font-weight-bold">@forum.TotalReplies</span> Replies
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            </div>
+        }
+    }
+}
+
+@code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    private IndexPageModel Model { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var authState = await AuthenticationStateTask;
+        var user = authState.User;
+
+        const string requestUri = "api/public/index-model";
+
+        if (user.Identity.IsAuthenticated)
+        {
+            Model = await Http.GetFromJsonAsync<IndexPageModel>(requestUri);
+        }
+        else
+        {
+            Model = await Service.GetFromJsonAsync<IndexPageModel>(requestUri);
+        }
+    }
+}

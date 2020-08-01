@@ -1,0 +1,47 @@
+﻿@layout AdminLayout
+@page "/admin/forums/create"
+@page "/admin/forums/create/{categoryId:guid}"
+@using Atlas.Models.Admin.Forums
+@attribute [Authorize(Policy = "Admin")]
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+        <li class="breadcrumb-item"><a href="/admin/forums">Forums</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Title</li>
+    </ol>
+</nav>
+
+<h3 class="mb-3">@Title</h3>
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <Form Model="Model" Button="Save" OnValidSubmit="@SaveAsync"></Form>
+}
+
+@code {
+    private const string Title = "Create Forum";
+    [Parameter] public Guid? CategoryId { get; set; } = null;
+    private FormComponentModel Model { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        var requestUri = CategoryId == null
+            ? $"api/admin/forums/create"
+            : $"api/admin/forums/create/{CategoryId}";
+
+        Model = await Http.GetFromJsonAsync<FormComponentModel>(requestUri);
+    }
+
+    private async Task SaveAsync()
+    {
+        await Http.PostAsJsonAsync($"api/admin/forums/save", Model.Forum);
+        NavigationManager.NavigateTo($"/admin/forums/{Model.Forum.CategoryId}");
+    }
+}

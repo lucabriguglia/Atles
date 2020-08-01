@@ -1,0 +1,61 @@
+﻿@inject HttpClient Http
+
+<div class="form-group">
+    <ul class="nav nav-tabs" id="tabLinks" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="text-tab" data-toggle="tab" href="#text" role="tab" aria-controls="text" aria-selected="true">Text</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="preview-tab" data-toggle="tab" href="#preview" role="tab" aria-controls="preview" aria-selected="false" @onclick="@PreviewAsync">Preview</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="tabContent">
+        <div class="tab-pane fade show active" id="text" role="tabpanel" aria-labelledby="text-tab">
+            <InputTextArea id="content" @bind-Value="Value" @oninput="OnValueChanged" Rows="@Rows" Class="form-control" Style="border:none;" Placeholder="Your text here..." />
+        </div>
+        <div class="tab-pane fade pt-3 pl-4" id="preview" role="tabpanel" aria-labelledby="preview-tab">
+            @if (Preview == null)
+            {
+                <Loading></Loading>
+            }
+            else
+            {
+                @((MarkupString)Preview)
+            }
+        </div>
+    </div>
+    <ValidationMessage For="@(() => Value)" />
+</div>
+
+@code {
+    [Parameter]
+    public string Value { get; set; }
+
+    [Parameter]
+    public int Rows { get; set; }
+
+    [Parameter]
+    public EventCallback<string> ValueChanged { get; set; }
+
+    private string Preview { get; set; } = string.Empty;
+
+    private async Task PreviewAsync()
+    {
+        if (!string.IsNullOrWhiteSpace(Value))
+        {
+            Preview = null;
+            var response = await Http.PostAsJsonAsync("api/public/preview", Value);
+            Preview = await response.Content.ReadAsStringAsync();
+        }
+        else
+        {
+            Preview = "<p>&nbsp;</p>";
+        }
+    }
+
+    private Task OnValueChanged(ChangeEventArgs e)
+    {
+        Value = e.Value.ToString();
+        return ValueChanged.InvokeAsync(Value);
+    }
+}

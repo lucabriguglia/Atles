@@ -1,0 +1,43 @@
+﻿@layout AdminLayout
+@page "/admin/categories/edit/{id:guid}"
+@using Atlas.Models.Admin.Categories
+@attribute [Authorize(Policy = "Admin")]
+@inject HttpClient Http
+@inject NavigationManager NavigationManager
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin">Home</a></li>
+        <li class="breadcrumb-item"><a href="/admin/categories">Categories</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Title</li>
+    </ol>
+</nav>
+
+<h3 class="mb-3">@Title</h3>
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <Form Model="Model" Button="Update" OnValidSubmit="@UpdateAsync"></Form>
+    <TargetEvents Id="Id"></TargetEvents>
+}
+
+@code {
+    private const string Title = "Edit Category";
+    [Parameter] public Guid Id { get; set; }
+    private FormComponentModel Model { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Model = await Http.GetFromJsonAsync<FormComponentModel>($"api/admin/categories/edit/{Id}");
+    }
+
+    private async Task UpdateAsync()
+    {
+        await Http.PostAsJsonAsync($"api/admin/categories/update", Model.Category);
+        NavigationManager.NavigateTo("/admin/categories");
+    }
+}

@@ -1,0 +1,120 @@
+﻿@layout AdminLayout
+@using Atlas.Domain.PermissionSets
+@using Atlas.Models.Admin.PermissionSets
+@inject NavigationManager NavigationManager
+@inject HttpClient Http
+
+<div class="row">
+    <div class="col-md-8">
+        <EditForm EditContext="@_editContext" OnSubmit="OnSubmit">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label for="name" class="control-label">Name</label>
+                <InputText id="name" @bind-Value="Model.PermissionSet.Name" Class="form-control" />
+                <ValidationMessage For="@(() => Model.PermissionSet.Name)" />
+            </div>
+            <div class="form-group">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col">Role</th>
+                            @for (int i = 0; i < Enum.GetValues(typeof(PermissionType)).Length; i++)
+                            {
+                                <th class="text-center">@Enum.GetValues(typeof(PermissionType)).GetValue(i)</th>
+                            }
+                        </tr>
+                    </thead>
+                    <tbody>
+                    @foreach (var permission in Model.PermissionSet.Permissions)
+                    {
+                        <tr>
+                            <td>
+                                @permission.RoleName
+                            </td>
+                            @foreach (var permissionType in permission.PermissionTypes)
+                            {
+                                <td class="text-center">
+                                    @if (permissionType.Disabled)
+                                    {
+                                        <InputCheckbox @bind-Value="@permissionType.Selected" Disabled="disabled" />
+                                    }
+                                    else
+                                    {
+                                        <InputCheckbox @bind-Value="@permissionType.Selected" />
+                                    }
+                                </td>
+                            }
+                        </tr>
+                    }
+                    </tbody>
+                </table>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="@Button" class="btn btn-primary" />
+                <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+            </div>
+            <ValidationSummary />
+        </EditForm>
+    </div>
+</div>
+
+@code {
+    [Parameter] public FormComponentModel Model { get; set; }
+    [Parameter] public string Button { get; set; } = "Save";
+    [Parameter] public EventCallback OnValidSubmit { get; set; }
+
+    private EditContext _editContext;
+    private ValidationMessageStore _validationMessageStore;
+    private string _currentName;
+
+    protected override void OnInitialized()
+    {
+        _editContext = new EditContext(Model.PermissionSet);
+        _editContext.OnFieldChanged += HandleFieldChanged;
+        _validationMessageStore = new ValidationMessageStore(_editContext);
+        _currentName = Model.PermissionSet.Name;
+    }
+
+    private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
+    {
+        _validationMessageStore.Clear(e.FieldIdentifier);
+    }
+
+    private async Task OnSubmit()
+    {
+        if (_editContext.Validate())
+        {
+            if (await NameIsUnique(_editContext))
+            {
+                await OnValidSubmit.InvokeAsync(null);
+            }
+            else
+            {
+                var fieldIdentifier = new FieldIdentifier(_editContext.Model, "Name");
+                _validationMessageStore.Clear(fieldIdentifier);
+                _validationMessageStore.Add(fieldIdentifier, "A permission set with the same name already exists.");
+                _editContext.NotifyValidationStateChanged();
+            }
+        }
+    }
+
+    private async Task<bool> NameIsUnique(EditContext editContext)
+    {
+        var nameProp = editContext.Model.GetType().GetProperty("Name");
+        var nameVal = nameProp.GetValue(editContext.Model).ToString();
+
+        var isNameUnique = nameVal == _currentName || await Http.GetFromJsonAsync<bool>($"api/admin/permission-sets/is-name-unique/{nameVal}");
+
+        return isNameUnique;
+    }
+
+    public void Dispose()
+    {
+        _editContext.OnFieldChanged -= HandleFieldChanged;
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/admin/permission-sets");
+    }
+}

@@ -1,9 +1,23 @@
-# Atlas
-Super simple ASP.NET Core forum software built using Blazor WebAssembly.
-The first alpha version will be merged to the default branch from branch "experiments". 
+# Atlas (Alpha)
+Super simple ASP.NET Core Blazor forum software
 
 ## Technology
 
 - Blazor WebAssembly 3.2.0
 - Entity Framework Core 3.1
-- SQL Server
+- SQL Server (more to come)
+
+## Features
+
+- Granular permissions
+- Markdown editor
+- You can use your own ASP.NET Identity
+
+## Run on local
+
+- Clone the repository
+- Run the Atlas.Server project
+- Database and default data will created automatically
+- Login with either:
+  - **Admin User**: admin@default.com / !P455w0rd?
+  - **Normal User**: user@default.com / !P455w0rd?

@@ -1,0 +1,49 @@
+﻿app {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    padding-top: 1.5rem;
+    padding-bottom: 1.5rem;
+}
+
+footer p {
+    margin-bottom: .25rem;
+}
+
+.tab-pane {
+    border-left: 1px solid #ddd;
+    border-right: 1px solid #ddd;
+    border-bottom: 1px solid #ddd;
+    border-radius: 0px 0px 5px 5px;
+    padding: 10px;
+}
+
+.nav-tabs {
+    margin-bottom: 0;
+}
+
+.navbar-brand {
+    padding-top: .3125rem;
+    padding-bottom: .3125rem;
+    background-color: #343a40 !important;
+    box-shadow: none;
+}
+
+[role="main"] {
+    padding-top: 0;
+}
+
+.valid.modified:not([type=checkbox]) {
+    outline: 1px solid #26b050;
+}
+
+.invalid {
+    outline: 1px solid red;
+}
+
+.validation-message {
+    color: red;
+}

@@ -1,0 +1,52 @@
+﻿@using Atlas.Models.Admin.Events
+@attribute [Authorize(Policy = "Admin")]
+@inject HttpClient Http
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <a class="btn btn-outline-info mb-3" data-toggle="collapse" href="#events" role="button" aria-expanded="false" aria-controls="events">
+        View Events
+    </a>
+    <div class="collapse" id="events">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">Event</th>
+                    <th scope="col">Data</th>
+                    <th scope="col">By</th>
+                    <th scope="col">Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var _event in Model.Events)
+                {
+                    <tr>
+                        <td>@_event.Type</td>
+                        <td>
+                            @foreach (var item in _event.Data)
+                            {
+                                <div><strong>@item.Key</strong>: @item.Value</div>
+                            }
+                        </td>
+                        <td>@_event.MemberName</td>
+                        <td>@_event.TimeStamp</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}
+
+@code {
+    [Parameter] public Guid Id { get; set; }
+    private TargetEventsComponentModel Model { get; set; }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        Model = await Http.GetFromJsonAsync<TargetEventsComponentModel>($"api/admin/events/target-model/{Id}");
+    }
+}
