@@ -24,9 +24,15 @@ else
     <Form Model="Model" Button="Save" OnValidSubmit="@SaveAsync"></Form>
 }
 
+@if (Error)
+{
+    <SomethingWrong />
+}
+
 @code {
     private const string Title = "Create New Member";
     private CreatePageModel Model { get; set; }
+    public bool Error { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -35,7 +41,14 @@ else
 
     private async Task SaveAsync()
     {
-        await Http.PostAsJsonAsync($"api/admin/members/save", Model.Member);
-        NavigationManager.NavigateTo("/admin/members");
+        try
+        {
+            await Http.PostAsJsonAsync($"api/admin/members/save", Model.Member);
+            NavigationManager.NavigateTo("/admin/members");
+        }
+        catch (Exception e)
+        {
+            Error = true;
+        }
     }
 }

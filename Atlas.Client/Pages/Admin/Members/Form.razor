@@ -13,6 +13,21 @@
                 <ValidationMessage For="@(() => Model.Member.DisplayName)" />
             </div>
             <div class="form-group">
+                <label for="email" class="control-label">Email</label>
+                <InputText id="email" @bind-Value="Model.Member.Email" Class="form-control" />
+                <ValidationMessage For="@(() => Model.Member.Email)" />
+            </div>
+            <div class="form-group">
+                <label for="password" class="control-label">Password</label>
+                <InputText id="password" @bind-Value="Model.Member.Password" Type="password" Class="form-control" />
+                <ValidationMessage For="@(() => Model.Member.Password)" />
+            </div>
+            <div class="form-group">
+                <label for="confirmPassword" class="control-label">Confirm Password</label>
+                <InputText id="confirmPassword" @bind-Value="Model.Member.ConfirmPassword" Type="password" Class="form-control" />
+                <ValidationMessage For="@(() => Model.Member.ConfirmPassword)" />
+            </div>
+            <div class="form-group">
                 <input type="submit" value="@Button" class="btn btn-primary" />
                 <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
             </div>

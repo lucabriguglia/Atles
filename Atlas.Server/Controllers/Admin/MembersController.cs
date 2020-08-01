@@ -51,17 +51,16 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpPost("save")]
-        public async Task<ActionResult> Save(CreatePageModel model)
+        public async Task<ActionResult> Save(CreatePageModel.MemberModel model)
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var user = new IdentityUser { UserName = model.User.Email, Email = model.User.Email };
-            var createResult = await _userManager.CreateAsync(user, model.User.Password);
+            var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+            var createResult = await _userManager.CreateAsync(user, model.Password);
 
             if (!createResult.Succeeded) return BadRequest();
 
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
             var confirmResult = await _userManager.ConfirmEmailAsync(user, code);
 
             var site = await _contextService.CurrentSiteAsync();
@@ -71,7 +70,7 @@ namespace Atlas.Server.Controllers.Admin
             {
                 UserId = user.Id,
                 Email = user.Email,
-                DisplayName = model.Member.DisplayName,
+                DisplayName = model.DisplayName,
                 SiteId = site.Id,
                 MemberId = member.Id
             };

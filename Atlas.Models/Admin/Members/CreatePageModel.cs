@@ -4,11 +4,14 @@ namespace Atlas.Models.Admin.Members
 {
     public class CreatePageModel
     {
-        public UserModel User { get; set; } = new UserModel();
         public MemberModel Member { get; set; } = new MemberModel();
 
-        public class UserModel
+        public class MemberModel
         {
+            [Required]
+            [StringLength(50)]
+            public string DisplayName { get; set; }
+
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]
@@ -24,13 +27,6 @@ namespace Atlas.Models.Admin.Members
             [Display(Name = "Confirm password")]
             [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
             public string ConfirmPassword { get; set; }
-        }
-
-        public class MemberModel
-        {
-            [Required]
-            [StringLength(50)]
-            public string DisplayName { get; set; }
         }
     }
 }
