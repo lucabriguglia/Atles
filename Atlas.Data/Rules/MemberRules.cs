@@ -15,18 +15,18 @@ namespace Atlas.Data.Rules
             _dbContext = dbContext;
         }
 
-        public async Task<bool> IsDisplayNameUniqueAsync(string name)
+        public async Task<bool> IsDisplayNameUniqueAsync(string displayName)
         {
             var any = await _dbContext.Members
-                .AnyAsync(x => x.DisplayName == name && 
+                .AnyAsync(x => x.DisplayName == displayName && 
                                x.Status != StatusType.Deleted);
             return !any;
         }
 
-        public async Task<bool> IsDisplayNameUniqueAsync(string name, Guid id)
+        public async Task<bool> IsDisplayNameUniqueAsync(string displayName, Guid id)
         {
             var any = await _dbContext.Members
-                .AnyAsync(x => x.DisplayName == name && 
+                .AnyAsync(x => x.DisplayName == displayName && 
                                x.Status != StatusType.Deleted &&
                                x.Id != id);
             return !any;
