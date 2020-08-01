@@ -1,5 +1,5 @@
 # Atlas (Alpha)
-Super simple ASP.NET Core forum software
+Super simple ASP.NET Core Blazor forum software
 
 ## Technology
 
@@ -11,5 +11,13 @@ Super simple ASP.NET Core forum software
 
 - Granular permissions
 - Markdown editor
-- You can use your own ASP.NET Idenity
+- You can use your own ASP.NET Identity
 
+## Run on local
+
+- Clone the repository
+- Run the Atlas.Server project
+- Database and default data will created automatically
+- Login with either:
+  - **Admin User**: admin@default.com / !P455w0rd?
+  - **Normal User**: user@default.com / !P455w0rd?
