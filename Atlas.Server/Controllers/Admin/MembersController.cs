@@ -1,11 +1,14 @@
 ﻿using System;
+using System.Text;
 using System.Threading.Tasks;
 using Atlas.Domain.Members;
 using Atlas.Domain.Members.Commands;
 using Atlas.Models.Admin.Members;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.WebUtilities;
 
 namespace Atlas.Server.Controllers.Admin
 {
@@ -18,16 +21,19 @@ namespace Atlas.Server.Controllers.Admin
         private readonly IMemberService _memberService;
         private readonly IMemberRules _memberRules;
         private readonly IMemberModelBuilder _modelBuilder;
+        private readonly UserManager<IdentityUser> _userManager;
 
         public MembersController(IContextService contextService,
             IMemberService memberService,
             IMemberRules memberRules,
-            IMemberModelBuilder modelBuilder)
+            IMemberModelBuilder modelBuilder, 
+            UserManager<IdentityUser> userManager)
         {
             _contextService = contextService;
             _memberService = memberService;
             _memberRules = memberRules;
             _modelBuilder = modelBuilder;
+            _userManager = userManager;
         }
 
         [HttpGet("index-model")]
@@ -39,23 +45,33 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpGet("create")]
-        public async Task<FormComponentModel> Create()
+        public async Task<CreatePageModel> Create()
         {
-            return await _modelBuilder.BuildFormModelAsync();
+            return await _modelBuilder.BuildCreatePageModelAsync();
         }
 
         [HttpPost("save")]
-        public async Task<ActionResult> Save(FormComponentModel.MemberModel model)
+        public async Task<ActionResult> Save(CreatePageModel model)
         {
+            if (!ModelState.IsValid) return BadRequest();
+
+            var user = new IdentityUser { UserName = model.User.Email, Email = model.User.Email };
+            var createResult = await _userManager.CreateAsync(user, model.User.Password);
+
+            if (!createResult.Succeeded) return BadRequest();
+
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+            code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));
+            var confirmResult = await _userManager.ConfirmEmailAsync(user, code);
+
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            // TODO: Register user using user manager
-
             var command = new CreateMember
             {
-                UserId = Guid.NewGuid().ToString(),
-                DisplayName = model.DisplayName,
+                UserId = user.Id,
+                Email = user.Email,
+                DisplayName = model.Member.DisplayName,
                 SiteId = site.Id,
                 MemberId = member.Id
             };
@@ -66,9 +82,9 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpGet("edit/{id}")]
-        public async Task<ActionResult<FormComponentModel>> Edit(Guid id)
+        public async Task<ActionResult<EditPageModel>> Edit(Guid id)
         {
-            var result = await _modelBuilder.BuildFormModelAsync(id);
+            var result = await _modelBuilder.BuildEditPageModelAsync(id);
 
             if (result == null)
             {
@@ -79,7 +95,7 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpPost("update")]
-        public async Task<ActionResult> Update(FormComponentModel.MemberModel model)
+        public async Task<ActionResult> Update(EditPageModel.MemberModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();

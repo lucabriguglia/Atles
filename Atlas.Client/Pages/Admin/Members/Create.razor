@@ -26,11 +26,11 @@ else
 
 @code {
     private const string Title = "Create New Member";
-    private FormComponentModel Model { get; set; }
+    private CreatePageModel Model { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await Http.GetFromJsonAsync<FormComponentModel>("api/admin/members/create");
+        Model = await Http.GetFromJsonAsync<CreatePageModel>("api/admin/members/create");
     }
 
     private async Task SaveAsync()

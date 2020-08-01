@@ -40,34 +40,34 @@ namespace Atlas.Data.Builders.Admin
             return result;
         }
 
-        public async Task<FormComponentModel> BuildFormModelAsync(Guid? id = null)
+        public async Task<CreatePageModel> BuildCreatePageModelAsync()
         {
-            var result = new FormComponentModel();
+            await Task.CompletedTask;
 
-            if (id != null)
+            var result = new CreatePageModel();
+
+            return result;
+        }
+
+        public async Task<EditPageModel> BuildEditPageModelAsync(Guid id)
+        {
+            var result = new EditPageModel();
+
+            var member = await _dbContext.Members
+                .FirstOrDefaultAsync(x =>
+                    x.Id == id && 
+                    x.Status != StatusType.Deleted);
+
+            if (member == null)
             {
-                var member = await _dbContext.Members
-                    .FirstOrDefaultAsync(x =>
-                        x.Id == id && 
-                        x.Status != StatusType.Deleted);
-
-                if (member == null)
-                {
-                    return null;
-                }
-
-                result.Member = new FormComponentModel.MemberModel
-                {
-                    Id = member.Id,
-                    DisplayName = member.DisplayName
-                };
+                return null;
             }
-            else
+
+            result.Member = new EditPageModel.MemberModel
             {
-                result.Member = new FormComponentModel.MemberModel
-                {
-                };
-            }
+                Id = member.Id,
+                DisplayName = member.DisplayName
+            };
 
             return result;
         }

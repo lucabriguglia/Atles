@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Atlas.Models.Admin.Members
 {
-    public class FormComponentModel
+    public class EditPageModel
     {
         public MemberModel Member { get; set; } = new MemberModel();
 

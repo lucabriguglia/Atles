@@ -6,6 +6,7 @@ namespace Atlas.Models.Admin.Members
     public interface IMemberModelBuilder
     {
         Task<IndexPageModel> BuildIndexPageModelAsync();
-        Task<FormComponentModel> BuildFormModelAsync(Guid? id = null);
+        Task<CreatePageModel> BuildCreatePageModelAsync();
+        Task<EditPageModel> BuildEditPageModelAsync(Guid id);
     }
 }

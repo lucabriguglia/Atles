@@ -1,0 +1,36 @@
+﻿using System.ComponentModel.DataAnnotations;
+
+namespace Atlas.Models.Admin.Members
+{
+    public class CreatePageModel
+    {
+        public UserModel User { get; set; } = new UserModel();
+        public MemberModel Member { get; set; } = new MemberModel();
+
+        public class UserModel
+        {
+            [Required]
+            [EmailAddress]
+            [Display(Name = "Email")]
+            public string Email { get; set; }
+
+            [Required]
+            [StringLength(100, ErrorMessage = "The {0} must be at least {2} and at max {1} characters long.", MinimumLength = 6)]
+            [DataType(DataType.Password)]
+            [Display(Name = "Password")]
+            public string Password { get; set; }
+
+            [DataType(DataType.Password)]
+            [Display(Name = "Confirm password")]
+            [Compare("Password", ErrorMessage = "The password and confirmation password do not match.")]
+            public string ConfirmPassword { get; set; }
+        }
+
+        public class MemberModel
+        {
+            [Required]
+            [StringLength(50)]
+            public string DisplayName { get; set; }
+        }
+    }
+}
