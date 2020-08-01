@@ -17,7 +17,7 @@ Super simple ASP.NET Core Blazor forum software
 
 - Clone the repository
 - Run the Atlas.Server project
-- Database and default data will created automatically
+- Database and default data will be created automatically
 - Login with either:
   - **Admin User**: admin@default.com / !P455w0rd?
   - **Normal User**: user@default.com / !P455w0rd?
