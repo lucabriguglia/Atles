@@ -29,6 +29,7 @@ namespace Atlas.Data.Services
 
             var member = new Member(command.Id,
                 command.UserId,
+                command.Email,
                 command.DisplayName);
 
             _dbContext.Members.Add(member);
@@ -41,6 +42,7 @@ namespace Atlas.Data.Services
                 new
                 {
                     command.UserId,
+                    command.Email,
                     command.DisplayName
                 }));
 

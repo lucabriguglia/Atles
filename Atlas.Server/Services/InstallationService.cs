@@ -48,6 +48,12 @@ namespace Atlas.Server.Services
             }
             var roleAdmin = await roleManager.FindByNameAsync(Consts.RoleNameAdmin);
 
+            if (await roleManager.RoleExistsAsync(Consts.RoleNameModerator) == false)
+            {
+                await roleManager.CreateAsync(new IdentityRole(Consts.RoleNameModerator));
+            }
+            var roleModerator = await roleManager.FindByNameAsync(Consts.RoleNameModerator);
+
             // Users
             var userAdmin = await userManager.FindByEmailAsync(_configuration["DefaultAdminUserEmail"]);
             if (userAdmin == null)
@@ -76,19 +82,40 @@ namespace Atlas.Server.Services
                 await userManager.ConfirmEmailAsync(userNormal, code);
             }
 
+            var userModerator = await userManager.FindByEmailAsync(_configuration["DefaultModeratorUserEmail"]);
+            if (userModerator == null)
+            {
+                userModerator = new IdentityUser
+                {
+                    Email = _configuration["DefaultModeratorUserEmail"],
+                    UserName = _configuration["DefaultModeratorUserName"]
+                };
+                await userManager.CreateAsync(userModerator, _configuration["DefaultModeratorUserPassword"]);
+                var code = await userManager.GenerateEmailConfirmationTokenAsync(userModerator);
+                await userManager.ConfirmEmailAsync(userModerator, code);
+            }
+            await userManager.AddToRoleAsync(userModerator, Consts.RoleNameModerator);
+
             // Members
             var memberAdmin = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userAdmin.Id);
             if (memberAdmin == null)
             {
-                memberAdmin = new Member(userAdmin.Id, _configuration["DefaultAdminUserDisplayName"]);
+                memberAdmin = new Member(userAdmin.Id, _configuration["DefaultAdminUserEmail"], _configuration["DefaultAdminUserDisplayName"]);
                 _dbContext.Members.Add(memberAdmin);
             }
 
             var memberNormal = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userNormal.Id);
             if (memberNormal == null)
             {
-                memberNormal = new Member(userNormal.Id, _configuration["DefaultNormalUserDisplayName"]);
+                memberNormal = new Member(userNormal.Id, _configuration["DefaultNormalUserEmail"], _configuration["DefaultNormalUserDisplayName"]);
                 _dbContext.Members.Add(memberNormal);
+            }
+
+            var memberModerator = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userModerator.Id);
+            if (memberModerator == null)
+            {
+                memberModerator = new Member(userModerator.Id, _configuration["DefaultModeratorUserEmail"], _configuration["DefaultModeratorUserDisplayName"]);
+                _dbContext.Members.Add(memberModerator);
             }
 
             // Site
@@ -120,7 +147,8 @@ namespace Atlas.Server.Services
                 new PermissionCommand{Type = PermissionType.Start, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.Reply, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.Edit, RoleId = Consts.RoleIdRegistered},
-                new PermissionCommand{Type = PermissionType.Delete, RoleId = Consts.RoleIdRegistered}
+                new PermissionCommand{Type = PermissionType.Delete, RoleId = Consts.RoleIdRegistered},
+                new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleModerator.Id}
             });
             _dbContext.PermissionSets.Add(permissionSetDefault);
             _dbContext.Events.Add(new Event(new PermissionSetCreated
@@ -140,7 +168,8 @@ namespace Atlas.Server.Services
                 new PermissionCommand{Type = PermissionType.Start, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.Reply, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.Edit, RoleId = Consts.RoleIdRegistered},
-                new PermissionCommand{Type = PermissionType.Delete, RoleId = Consts.RoleIdRegistered}
+                new PermissionCommand{Type = PermissionType.Delete, RoleId = Consts.RoleIdRegistered},
+                new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleModerator.Id}
             });
             _dbContext.PermissionSets.Add(permissionSetMembersOnly);
             _dbContext.Events.Add(new Event(new PermissionSetCreated
@@ -160,7 +189,8 @@ namespace Atlas.Server.Services
                 new PermissionCommand{Type = PermissionType.Start, RoleId = roleAdmin.Id},
                 new PermissionCommand{Type = PermissionType.Reply, RoleId = roleAdmin.Id},
                 new PermissionCommand{Type = PermissionType.Edit, RoleId = roleAdmin.Id},
-                new PermissionCommand{Type = PermissionType.Delete, RoleId = roleAdmin.Id}
+                new PermissionCommand{Type = PermissionType.Delete, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleAdmin.Id}
             });
             _dbContext.PermissionSets.Add(permissionSetAdminOnly);
             _dbContext.Events.Add(new Event(new PermissionSetCreated
@@ -241,7 +271,9 @@ namespace Atlas.Server.Services
                     topicWelcome.Content,
                     topicWelcome.Status
                 }));
+            categoryGeneral.IncreaseTopicsCount();
             forumWelcome.IncreaseTopicsCount();
+            memberAdmin.IncreaseTopicsCount();
 
             // Save all changes
             await _dbContext.SaveChangesAsync();

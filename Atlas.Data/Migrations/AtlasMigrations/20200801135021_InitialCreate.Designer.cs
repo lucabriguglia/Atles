@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atlas.Data.Migrations.AtlasMigrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20200731130513_InitialCreate")]
+    [Migration("20200801135021_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,6 +137,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RepliesCount")

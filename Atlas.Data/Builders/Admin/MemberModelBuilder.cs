@@ -31,6 +31,7 @@ namespace Atlas.Data.Builders.Admin
                 {
                     Id = member.Id,
                     DisplayName = member.DisplayName,
+                    Email = member.Email,
                     TotalTopics = member.TopicsCount,
                     TotalReplies = member.RepliesCount
                 });

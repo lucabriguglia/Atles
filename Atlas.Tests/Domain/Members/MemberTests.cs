@@ -13,11 +13,13 @@ namespace Atlas.Tests.Domain.Members
         public void New()
         {
             var userId = Guid.NewGuid().ToString();
+            const string email = "abc@def.ghi";
             const string displayName = "Display Name";
 
-            var sut = new Member(userId, displayName);
+            var sut = new Member(userId, email, displayName);
 
             Assert.AreEqual(userId, sut.UserId, nameof(sut.UserId));
+            Assert.AreEqual(email, sut.Email, nameof(sut.Email));
             Assert.AreEqual(displayName, sut.DisplayName, nameof(sut.DisplayName));
             Assert.AreEqual(StatusType.Active, sut.Status, nameof(sut.Status));
         }
@@ -27,12 +29,14 @@ namespace Atlas.Tests.Domain.Members
         {
             var id = Guid.NewGuid();
             var userId = Guid.NewGuid().ToString();
+            const string email = "abc@def.ghi";
             const string displayName = "Display Name";
 
-            var sut = new Member(id, userId, displayName);
+            var sut = new Member(id, userId, email, displayName);
 
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
             Assert.AreEqual(userId, sut.UserId, nameof(sut.UserId));
+            Assert.AreEqual(email, sut.Email, nameof(sut.Email));
             Assert.AreEqual(displayName, sut.DisplayName, nameof(sut.DisplayName));
             Assert.AreEqual(StatusType.Active, sut.Status, nameof(sut.Status));
         }

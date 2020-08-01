@@ -42,7 +42,7 @@ namespace Atlas.Tests.Data.Rules
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var member = new Member(Guid.NewGuid().ToString(), displayName);
+                var member = new Member(Guid.NewGuid().ToString(), "me@email.com", displayName);
                 dbContext.Members.Add(member);
                 await dbContext.SaveChangesAsync();
             }
@@ -64,8 +64,8 @@ namespace Atlas.Tests.Data.Rules
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var member1 = new Member(Guid.NewGuid().ToString(), "Member 1");
-                var member2 = new Member(memberId, Guid.NewGuid().ToString(), "Member 2");
+                var member1 = new Member(Guid.NewGuid().ToString(), "me@email.com", "Member 1");
+                var member2 = new Member(memberId, Guid.NewGuid().ToString(), "me@email.com", "Member 2");
                 dbContext.Members.Add(member1);
                 dbContext.Members.Add(member2);
                 await dbContext.SaveChangesAsync();
