@@ -70,7 +70,7 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await Http.GetFromJsonAsync<IndexPageModel>("api/admin/members/list");
+        Model = await Http.GetFromJsonAsync<IndexPageModel>("api/admin/members/index-model");
     }
 
     protected void SetDeleteId(Guid Id)

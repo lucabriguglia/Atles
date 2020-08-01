@@ -30,7 +30,7 @@ namespace Atlas.Server.Controllers.Admin
             _modelBuilder = modelBuilder;
         }
 
-        [HttpGet("list")]
+        [HttpGet("index-model")]
         public async Task<IndexPageModel> List()
         {
             // TODO: Add pagination and search
