@@ -96,28 +96,6 @@ namespace Atlas.Server.Services
             }
             await userManager.AddToRoleAsync(userModerator, Consts.RoleNameModerator);
 
-            // Members
-            var memberAdmin = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userAdmin.Id);
-            if (memberAdmin == null)
-            {
-                memberAdmin = new Member(userAdmin.Id, _configuration["DefaultAdminUserEmail"], _configuration["DefaultAdminUserDisplayName"]);
-                _dbContext.Members.Add(memberAdmin);
-            }
-
-            var memberNormal = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userNormal.Id);
-            if (memberNormal == null)
-            {
-                memberNormal = new Member(userNormal.Id, _configuration["DefaultNormalUserEmail"], _configuration["DefaultNormalUserDisplayName"]);
-                _dbContext.Members.Add(memberNormal);
-            }
-
-            var memberModerator = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userModerator.Id);
-            if (memberModerator == null)
-            {
-                memberModerator = new Member(userModerator.Id, _configuration["DefaultModeratorUserEmail"], _configuration["DefaultModeratorUserDisplayName"]);
-                _dbContext.Members.Add(memberModerator);
-            }
-
             // Site
             var site = await _dbContext.Sites.FirstOrDefaultAsync(x => x.Name == "Default");
 
@@ -137,6 +115,61 @@ namespace Atlas.Server.Services
                 Name = site.Name,
                 Title = site.Title
             }));
+
+            // Members
+            var memberAdmin = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userAdmin.Id);
+            if (memberAdmin == null)
+            {
+                memberAdmin = new Member(userAdmin.Id, _configuration["DefaultAdminUserEmail"], _configuration["DefaultAdminUserDisplayName"]);
+                _dbContext.Members.Add(memberAdmin);
+                _dbContext.Events.Add(new Event(site.Id,
+                    null,
+                    EventType.Created,
+                    typeof(Member),
+                    memberAdmin.Id,
+                    new
+                    {
+                        memberAdmin.UserId,
+                        memberAdmin.Email,
+                        memberAdmin.DisplayName
+                    }));
+            }
+
+            var memberNormal = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userNormal.Id);
+            if (memberNormal == null)
+            {
+                memberNormal = new Member(userNormal.Id, _configuration["DefaultNormalUserEmail"], _configuration["DefaultNormalUserDisplayName"]);
+                _dbContext.Members.Add(memberNormal);
+                _dbContext.Events.Add(new Event(site.Id,
+                    null,
+                    EventType.Created,
+                    typeof(Member),
+                    memberNormal.Id,
+                    new
+                    {
+                        memberNormal.UserId,
+                        memberNormal.Email,
+                        memberNormal.DisplayName
+                    }));
+            }
+
+            var memberModerator = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userModerator.Id);
+            if (memberModerator == null)
+            {
+                memberModerator = new Member(userModerator.Id, _configuration["DefaultModeratorUserEmail"], _configuration["DefaultModeratorUserDisplayName"]);
+                _dbContext.Members.Add(memberModerator);
+                _dbContext.Events.Add(new Event(site.Id,
+                    null,
+                    EventType.Created,
+                    typeof(Member),
+                    memberModerator.Id,
+                    new
+                    {
+                        memberModerator.UserId,
+                        memberModerator.Email,
+                        memberModerator.DisplayName
+                    }));
+            }
 
             // Permission Sets
             var permissionSetDefault = new PermissionSet(site.Id, "Default", new List<PermissionCommand>

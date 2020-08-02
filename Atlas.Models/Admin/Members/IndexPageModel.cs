@@ -1,11 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 
 namespace Atlas.Models.Admin.Members
 {
     public class IndexPageModel
     {
-        public IList<MemberModel> Members { get; set; } = new List<MemberModel>();
+        public PaginatedData<MemberModel> Members { get; set; } = new PaginatedData<MemberModel>();
 
         public class MemberModel
         {

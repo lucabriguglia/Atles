@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Atlas.Domain.Members;
 using Atlas.Domain.Members.Commands;
+using Atlas.Models;
 using Atlas.Models.Admin.Members;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -35,11 +36,11 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpGet("index-model")]
-        public async Task<IndexPageModel> List()
+        public async Task<IndexPageModel> List([FromQuery] int? page = 1)
         {
-            // TODO: Add pagination and search
+            // TODO: Add search
 
-            return await _modelBuilder.BuildIndexPageModelAsync();
+            return await _modelBuilder.BuildIndexPageModelAsync(new PaginationOptions(page));
         }
 
         [HttpGet("create")]
