@@ -4,14 +4,10 @@ namespace Atlas.Models.Admin.Members
 {
     public class CreatePageModel
     {
-        public MemberModel Member { get; set; } = new MemberModel();
+        public UserModel User { get; set; } = new UserModel();
 
-        public class MemberModel
+        public class UserModel
         {
-            [Required]
-            [StringLength(50)]
-            public string DisplayName { get; set; }
-
             [Required]
             [EmailAddress]
             [Display(Name = "Email")]

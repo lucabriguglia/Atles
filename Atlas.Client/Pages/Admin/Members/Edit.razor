@@ -31,11 +31,11 @@ else
     [Parameter] 
     public Guid Id { get; set; }
 
-    private CreatePageModel Model { get; set; }
+    private EditPageModel Model { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        Model = await Http.GetFromJsonAsync<CreatePageModel>($"api/admin/members/edit/{Id}");
+        Model = await Http.GetFromJsonAsync<EditPageModel>($"api/admin/members/edit/{Id}");
     }
 
     private async Task UpdateAsync()

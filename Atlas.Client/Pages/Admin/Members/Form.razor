@@ -5,27 +5,12 @@
 
 <div class="row">
     <div class="col-md-4">
-        <EditForm EditContext="@_editContext" OnSubmit="OnSubmit">
+        <EditForm Id="member-form" EditContext="@_editContext" OnSubmit="OnSubmit">
             <DataAnnotationsValidator />
             <div class="form-group">
                 <label for="displayName" class="control-label">Display Name</label>
                 <InputText id="displayName" @bind-Value="Model.Member.DisplayName" Class="form-control" />
                 <ValidationMessage For="@(() => Model.Member.DisplayName)" />
-            </div>
-            <div class="form-group">
-                <label for="email" class="control-label">Email</label>
-                <InputText id="email" @bind-Value="Model.Member.Email" Class="form-control" />
-                <ValidationMessage For="@(() => Model.Member.Email)" />
-            </div>
-            <div class="form-group">
-                <label for="password" class="control-label">Password</label>
-                <InputText id="password" @bind-Value="Model.Member.Password" Type="password" Class="form-control" />
-                <ValidationMessage For="@(() => Model.Member.Password)" />
-            </div>
-            <div class="form-group">
-                <label for="confirmPassword" class="control-label">Confirm Password</label>
-                <InputText id="confirmPassword" @bind-Value="Model.Member.ConfirmPassword" Type="password" Class="form-control" />
-                <ValidationMessage For="@(() => Model.Member.ConfirmPassword)" />
             </div>
             <div class="form-group">
                 <input type="submit" value="@Button" class="btn btn-primary" />
@@ -37,7 +22,7 @@
 </div>
 
 @code {
-    [Parameter] public CreatePageModel Model { get; set; }
+    [Parameter] public EditPageModel Model { get; set; }
     [Parameter] public string Button { get; set; } = "Save";
     [Parameter] public EventCallback OnValidSubmit { get; set; }
 
@@ -70,7 +55,7 @@
             {
                 var fieldIdentifier = new FieldIdentifier(_editContext.Model, "DisplayName");
                 _validationMessageStore.Clear(fieldIdentifier);
-                _validationMessageStore.Add(fieldIdentifier, $"A member with the same display name already exists.");
+                _validationMessageStore.Add(fieldIdentifier, "A member with the same display name already exists.");
                 _editContext.NotifyValidationStateChanged();
             }
         }

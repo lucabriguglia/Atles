@@ -21,7 +21,33 @@
 }
 else
 {
-    <Form Model="Model" Button="Save" OnValidSubmit="@SaveAsync"></Form>
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm Id="user-form" Model="Model.User" OnSubmit="SaveAsync">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label for="email" class="control-label">Email</label>
+                    <InputText id="email" @bind-Value="Model.User.Email" Class="form-control" />
+                    <ValidationMessage For="@(() => Model.User.Email)" />
+                </div>
+                <div class="form-group">
+                    <label for="password" class="control-label">Password</label>
+                    <InputText id="password" @bind-Value="Model.User.Password" Type="password" Class="form-control" />
+                    <ValidationMessage For="@(() => Model.User.Password)" />
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword" class="control-label">Confirm Password</label>
+                    <InputText id="confirmPassword" @bind-Value="Model.User.ConfirmPassword" Type="password" Class="form-control" />
+                    <ValidationMessage For="@(() => Model.User.ConfirmPassword)" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                </div>
+                <ValidationSummary />
+            </EditForm>
+        </div>
+    </div>
 }
 
 @if (Error)
@@ -43,12 +69,18 @@ else
     {
         try
         {
-            await Http.PostAsJsonAsync($"api/admin/members/save", Model.Member);
-            NavigationManager.NavigateTo("/admin/members");
+            var response = await Http.PostAsJsonAsync("api/admin/members/save", Model.User);
+            var memberId = await response.Content.ReadAsStringAsync();
+            NavigationManager.NavigateTo($"/admin/members/edit/{memberId}");
         }
         catch (Exception e)
         {
             Error = true;
         }
+    }
+
+    private void Cancel()
+    {
+        NavigationManager.NavigateTo("/admin/members");
     }
 }

@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text;
 using System.Threading.Tasks;
 using Atlas.Domain.Members;
 using Atlas.Domain.Members.Commands;
@@ -8,7 +7,6 @@ using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.WebUtilities;
 
 namespace Atlas.Server.Controllers.Admin
 {
@@ -51,12 +49,12 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpPost("save")]
-        public async Task<ActionResult> Save(CreatePageModel.MemberModel model)
+        public async Task<ActionResult> Save(CreatePageModel model)
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-            var createResult = await _userManager.CreateAsync(user, model.Password);
+            var user = new IdentityUser { UserName = model.User.Email, Email = model.User.Email };
+            var createResult = await _userManager.CreateAsync(user, model.User.Password);
 
             if (!createResult.Succeeded) return BadRequest();
 
@@ -70,14 +68,13 @@ namespace Atlas.Server.Controllers.Admin
             {
                 UserId = user.Id,
                 Email = user.Email,
-                DisplayName = model.DisplayName,
                 SiteId = site.Id,
                 MemberId = member.Id
             };
 
             await _memberService.CreateAsync(command);
 
-            return Ok();
+            return Ok(command.Id);
         }
 
         [HttpGet("edit/{id}")]

@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Domain.Members;
@@ -27,10 +28,12 @@ namespace Atlas.Data.Services
         {
             await _createValidator.ValidateCommandAsync(command);
 
+            var displayName = await GenerateDisplayName();
+
             var member = new Member(command.Id,
                 command.UserId,
                 command.Email,
-                command.DisplayName);
+                displayName);
 
             _dbContext.Members.Add(member);
 
@@ -43,10 +46,36 @@ namespace Atlas.Data.Services
                 {
                     command.UserId,
                     command.Email,
-                    command.DisplayName
+                    displayName
                 }));
 
             await _dbContext.SaveChangesAsync();
+        }
+
+        private async Task<string> GenerateDisplayName()
+        {
+            var displayName = string.Empty;
+            var exists = true;
+            var repeat = 0;
+            var random = new Random();
+
+            while (exists && repeat < 5)
+            {
+                displayName = $"User{random.Next(100000)}";
+                exists = await _dbContext.Members.AnyAsync(x => x.DisplayName == displayName);
+                repeat++;
+                if (exists)
+                {
+                    displayName = string.Empty;
+                }
+            }
+
+            if (displayName == string.Empty)
+            {
+                displayName = Guid.NewGuid().ToString();
+            }
+
+            return displayName;
         }
 
         public async Task UpdateAsync(UpdateMember command)

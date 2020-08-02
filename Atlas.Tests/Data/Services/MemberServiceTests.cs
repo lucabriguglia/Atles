@@ -51,7 +51,7 @@ namespace Atlas.Tests.Data.Services
         public async Task Should_update_member_and_add_event()
         {
             var options = Shared.CreateContextOptions();
-            var member = new Member(Guid.NewGuid(), Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+            var member = new Member(Guid.NewGuid(), Guid.NewGuid().ToString(), "me@email.com");
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -94,7 +94,7 @@ namespace Atlas.Tests.Data.Services
 
             var memberId = Guid.NewGuid();
 
-            var member = new Member(memberId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+            var member = new Member(memberId, Guid.NewGuid().ToString(), "me@email.com");
 
             using (var dbContext = new AtlasDbContext(options))
             {
