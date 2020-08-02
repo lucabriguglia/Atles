@@ -18,7 +18,15 @@ else
 
     <h4 class="mb-3">@Model.Member.DisplayName</h4>
 
-    <p>Topics: @Model.Member.TotalTopics - Replies: @Model.Member.TotalReplies</p>
+    <div class="row m-0">
+        <div class="border border-secondary rounded p-2 bg-light text-center mr-2" style="width: 8rem;">
+            Topics <span class="font-weight-bold">@Model.Member.TotalTopics</span>
+        </div>
+
+        <div class="border border-secondary rounded p-2 bg-light text-center" style="width: 8rem;">
+            Replies <span class="font-weight-bold">@Model.Member.TotalReplies</span>
+        </div>
+    </div>
 }
 
 @code {

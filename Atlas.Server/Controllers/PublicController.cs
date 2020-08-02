@@ -73,7 +73,7 @@ namespace Atlas.Server.Controllers
                 return Unauthorized();
             }
 
-            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id, new PaginationOptions(page));
+            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id, new QueryOptions(page));
 
             if (model == null)
             {
@@ -100,7 +100,7 @@ namespace Atlas.Server.Controllers
                 return Unauthorized();
             }
 
-            var model = await _modelBuilder.BuildTopicPageModelAsync(site.Id, forumId, topicId, new PaginationOptions(page));
+            var model = await _modelBuilder.BuildTopicPageModelAsync(site.Id, forumId, topicId, new QueryOptions(page));
 
             if (model == null)
             {

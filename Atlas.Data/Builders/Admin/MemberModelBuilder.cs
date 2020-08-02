@@ -17,12 +17,18 @@ namespace Atlas.Data.Builders.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<IndexPageModel> BuildIndexPageModelAsync(PaginationOptions options)
+        public async Task<IndexPageModel> BuildIndexPageModelAsync(QueryOptions options)
         {
             var result = new IndexPageModel();
 
-            var members = await _dbContext.Members
-                .Where(x => x.Status != StatusType.Deleted)
+            var query = _dbContext.Members.Where(x => x.Status == StatusType.Active);
+
+            if (!string.IsNullOrWhiteSpace(options.Search))
+            {
+                query = query.Where(x => x.DisplayName.Contains(options.Search) || x.Email.Contains(options.Search));
+            }
+
+            var members = await query
                 .OrderBy(x => x.DisplayName)
                 .Skip(options.Skip)
                 .Take(options.PageSize)
@@ -38,11 +44,16 @@ namespace Atlas.Data.Builders.Admin
             })
             .ToList();
 
-            var totalRecords = await _dbContext.Members
-                .Where(x => x.Status == StatusType.Active)
-                .CountAsync();
+            var countQuery = _dbContext.Members.Where(x => x.Status == StatusType.Active);
 
-            result.Members = new PaginatedData<IndexPageModel.MemberModel>(items, totalRecords, options.PageSize);
+            if (!string.IsNullOrWhiteSpace(options.Search))
+            {
+                countQuery = countQuery.Where(x => x.DisplayName.Contains(options.Search) || x.Email.Contains(options.Search));
+            }
+
+            var totalRecords = await countQuery.CountAsync();
+
+            result.Members = new PaginatedData<IndexPageModel.MemberModel>(items, totalRecords, options.PageSize, options.Search);
 
             return result;
         }

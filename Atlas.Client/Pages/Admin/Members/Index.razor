@@ -31,6 +31,20 @@ else if (Model.Members.Items.Count == 0)
 }
 else
 {
+    <div class="row">
+        <div class="col-sm-4 input-group mb-3 ml-auto">
+            <input type="text" class="form-control" placeholder="Search members" @bind="Search">
+            <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="ClearSearch">
+                <i class="fa fa-times"></i>
+            </button>
+            <div class="input-group-append">
+                <button class="btn btn-secondary" type="button" @onclick="SearchAsync">
+                    <i class="fa fa-search"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+
     <a id="members"></a>
     <table class="table table-bordered table-hover">
         <thead>
@@ -75,6 +89,7 @@ else
     private const string Title = "Members";
     private IndexPageModel Model { get; set; }
     private Guid DeleteId { get; set; }
+    public string Search { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -83,13 +98,28 @@ else
 
     private async Task LoadDataAsync(int page)
     {
-        Model = await Http.GetFromJsonAsync<IndexPageModel>($"api/admin/members/index-model?page={page}");
+        Model = await Http.GetFromJsonAsync<IndexPageModel>($"api/admin/members/index-model?page={page}&search={Search}");
     }
 
     private async Task ChangePage(int page)
     {
         await JsRuntime.InvokeVoidAsync("scrollToTarget", "members");
         await LoadDataAsync(page);
+    }
+
+    private async Task SearchAsync()
+    {
+        Model = null;
+        StateHasChanged();
+        await OnInitializedAsync();
+    }
+
+    private async Task ClearSearch()
+    {
+        Search = null;
+        Model = null;
+        StateHasChanged();
+        await OnInitializedAsync();
     }
 
     protected void SetDeleteId(Guid Id)

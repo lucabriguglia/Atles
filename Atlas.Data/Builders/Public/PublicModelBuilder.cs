@@ -65,7 +65,7 @@ namespace Atlas.Data.Builders.Public
             return model;
         }
 
-        public async Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId, PaginationOptions options)
+        public async Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId, QueryOptions options)
         {
             var forum = await _dbContext.Forums
                 .Include(x => x.Category)
@@ -181,7 +181,7 @@ namespace Atlas.Data.Builders.Public
             return result;
         }
 
-        public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, PaginationOptions options)
+        public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, QueryOptions options)
         {
             var topic = await _dbContext.Topics
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
