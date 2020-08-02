@@ -49,12 +49,12 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpPost("save")]
-        public async Task<ActionResult> Save(CreatePageModel model)
+        public async Task<ActionResult> Save(CreatePageModel.UserModel model)
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var user = new IdentityUser { UserName = model.User.Email, Email = model.User.Email };
-            var createResult = await _userManager.CreateAsync(user, model.User.Password);
+            var user = new IdentityUser { UserName = model.Email, Email = model.Email };
+            var createResult = await _userManager.CreateAsync(user, model.Password);
 
             if (!createResult.Succeeded) return BadRequest();
 

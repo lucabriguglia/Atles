@@ -40,7 +40,7 @@ else
 
     private async Task UpdateAsync()
     {
-        await Http.PostAsJsonAsync($"api/admin/members/update", Model.Member);
+        await Http.PostAsJsonAsync("api/admin/members/update", Model.Member);
         NavigationManager.NavigateTo("/admin/members");
     }
 }

@@ -1,5 +1,6 @@
 ﻿@layout AdminLayout
 @page "/admin/members/create"
+@using System.Text.Json
 @using Atlas.Models.Admin.Members
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
@@ -23,7 +24,7 @@ else
 {
     <div class="row">
         <div class="col-md-4">
-            <EditForm Id="user-form" Model="Model.User" OnSubmit="SaveAsync">
+            <EditForm Model="Model.User" OnValidSubmit="SaveAsync">
                 <DataAnnotationsValidator />
                 <div class="form-group">
                     <label for="email" class="control-label">Email</label>
@@ -67,13 +68,14 @@ else
 
     private async Task SaveAsync()
     {
-        try
+        var response = await Http.PostAsJsonAsync("api/admin/members/save", Model.User);
+        if (response.IsSuccessStatusCode)
         {
-            var response = await Http.PostAsJsonAsync("api/admin/members/save", Model.User);
-            var memberId = await response.Content.ReadAsStringAsync();
+            var content = await response.Content.ReadAsStringAsync();
+            var memberId = JsonSerializer.Deserialize<Guid>(content);
             NavigationManager.NavigateTo($"/admin/members/edit/{memberId}");
         }
-        catch (Exception e)
+        else
         {
             Error = true;
         }
