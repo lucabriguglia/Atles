@@ -8,5 +8,6 @@
         public const string RoleNameAll = "All Users";
         public const string RoleNameRegistered = "Registered Users";
         public const string RoleNameAdmin = "Admin";
+        public const string RoleNameModerator = "Moderator";
     }
 }

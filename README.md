@@ -1,4 +1,4 @@
-# Atlas (alpha)
+# Atlas (Aalpha)
 A forum software built using ASP.NET Core Blazor WebAssembly.
 
 ## Technology
@@ -21,3 +21,5 @@ A forum software built using ASP.NET Core Blazor WebAssembly.
 - Login with either:
   - **Admin User**: admin@default.com / !P455w0rd?
   - **Normal User**: user@default.com / !P455w0rd?
+
+**Note**: Please delete any databases previously created. It's still an alpha version and many changes occur between commits.

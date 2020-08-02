@@ -9,6 +9,7 @@ namespace Atlas.Domain.Members
     {
         public Guid Id { get; private set; }
         public string UserId { get; private set; }
+        public string Email { get; private set; }
         public string DisplayName { get; private set; }
         public int TopicsCount { get; private set; }
         public int RepliesCount { get; private set; }
@@ -23,20 +24,21 @@ namespace Atlas.Domain.Members
             
         }
 
-        public Member(Guid id, string userId, string displayName)
+        public Member(Guid id, string userId, string email, string displayName)
         {
-            New(id, userId, displayName);
+            New(id, userId, email, displayName);
         }
 
-        public Member(string userId, string displayName)
+        public Member(string userId, string email, string displayName)
         {
-            New(Guid.NewGuid(), userId, displayName);
+            New(Guid.NewGuid(), userId, email, displayName);
         }
 
-        private void New(Guid id, string userId, string displayName)
+        private void New(Guid id, string userId, string email, string displayName)
         {
             Id = id;
             UserId = userId;
+            Email = email;
             DisplayName = displayName;
             Status = StatusType.Active;
         }

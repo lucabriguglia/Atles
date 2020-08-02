@@ -13,6 +13,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     UserId = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
                     DisplayName = table.Column<string>(nullable: true),
                     TopicsCount = table.Column<int>(nullable: false),
                     RepliesCount = table.Column<int>(nullable: false),

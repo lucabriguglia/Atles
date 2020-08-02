@@ -17,18 +17,18 @@ else
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">Home</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@Model?.Forum.Name</li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Forum.Name</li>
             </ol>
         </nav>
 
         <div class="row">
             <div class="col-md-6">
-                <h4 class="mb-3">@Model?.Forum.Name</h4>
+                <h4 class="mb-3">@Model.Forum.Name</h4>
             </div>
             <div class="col-md-6 text-right mb-3">
                 @if (Model.CanRead)
                 {
-                    <a href="/forum/@Model?.Forum.Id/post" class="btn btn-primary" role="button">New Topic</a>
+                    <a href="/forum/@Model.Forum.Id/post" class="btn btn-primary" role="button">New Topic</a>
                 }
                 else
                 {
@@ -67,7 +67,7 @@ else
                             </p>
                             <div class="row small">
                                 <div class="col-md-6 font-weight-bold">
-                                    @item.MemberDisplayName
+                                    <a href="/member/@item.MemberId">@item.MemberDisplayName</a>
                                 </div>
                                 <div class="col-md-6 text-right">
                                     @item.TimeStamp.ToShortDateString() @item.TimeStamp.ToShortTimeString()

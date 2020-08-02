@@ -16,6 +16,7 @@ using Atlas.Domain.Replies;
 using Atlas.Domain.Replies.Commands;
 using Atlas.Domain.Topics;
 using Atlas.Data.Services;
+using Atlas.Domain.Members;
 
 namespace Atlas.Tests.Data.Services
 {
@@ -30,16 +31,19 @@ namespace Atlas.Tests.Data.Services
             var categoryId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
             var topicId = Guid.NewGuid();
+            var memberId = Guid.NewGuid();
 
             var category = new Category(categoryId, Guid.NewGuid(), "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
             var topic = new Topic(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
+            var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
                 dbContext.Topics.Add(topic);
+                dbContext.Members.Add(member);
                 await dbContext.SaveChangesAsync();
             }
 
@@ -48,6 +52,7 @@ namespace Atlas.Tests.Data.Services
                 var command = Fixture.Build<CreateReply>()
                         .With(x => x.ForumId, forum.Id)
                         .With(x => x.TopicId, topicId)
+                        .With(x => x.MemberId, memberId)
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
@@ -72,6 +77,7 @@ namespace Atlas.Tests.Data.Services
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
                 var updatedTopic = await dbContext.Topics.FirstOrDefaultAsync(x => x.Id == topic.Id);
+                var updatedMember = await dbContext.Members.FirstOrDefaultAsync(x => x.Id == memberId);
 
                 createValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.NotNull(reply);
@@ -79,6 +85,7 @@ namespace Atlas.Tests.Data.Services
                 Assert.AreEqual(category.RepliesCount + 1, updatedCategory.RepliesCount);
                 Assert.AreEqual(forum.RepliesCount + 1, updatedForum.RepliesCount);
                 Assert.AreEqual(topic.RepliesCount + 1, updatedTopic.RepliesCount);
+                Assert.AreEqual(member.RepliesCount + 1, updatedMember.RepliesCount);
             }
         }
 

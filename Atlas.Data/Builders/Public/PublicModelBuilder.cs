@@ -65,7 +65,7 @@ namespace Atlas.Data.Builders.Public
             return model;
         }
 
-        public async Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId, PaginationOptions options)
+        public async Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId, QueryOptions options)
         {
             var forum = await _dbContext.Forums
                 .Include(x => x.Category)
@@ -181,7 +181,7 @@ namespace Atlas.Data.Builders.Public
             return result;
         }
 
-        public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, PaginationOptions options)
+        public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, QueryOptions options)
         {
             var topic = await _dbContext.Topics
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
@@ -244,6 +244,31 @@ namespace Atlas.Data.Builders.Public
                 .CountAsync();
 
             result.Replies = new PaginatedData<TopicPageModel.ReplyModel>(items, totalRecords, options.PageSize);
+
+            return result;
+        }
+
+        public async Task<MemberPageModel> BuildMemberPageModelAsync(Guid memberId)
+        {
+            var result = new MemberPageModel();
+
+            var member = await _dbContext.Members
+                .FirstOrDefaultAsync(x =>
+                    x.Id == memberId &&
+                    x.Status != StatusType.Deleted);
+
+            if (member == null)
+            {
+                return null;
+            }
+
+            result.Member = new MemberPageModel.MemberModel
+            {
+                Id = member.Id,
+                DisplayName = member.DisplayName,
+                TotalTopics = member.TopicsCount,
+                TotalReplies = member.RepliesCount
+            };
 
             return result;
         }

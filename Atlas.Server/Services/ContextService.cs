@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Atlas.Data;
@@ -47,13 +48,17 @@ namespace Atlas.Server.Services
                 var userId = _httpContextAccessor.HttpContext.User.Identities.First().Claims
                     .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
+                var userEmail = _httpContextAccessor.HttpContext.User.Identities.First().Claims
+                    .FirstOrDefault(x => x.Type == ClaimTypes.Email)?.Value;
+
                 if (!string.IsNullOrEmpty(userId))
                 {
                     member = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userId);
 
                     if (member == null)
                     {
-                        member = new Member(userId, "User");
+                        var membersCount = await _dbContext.Members.CountAsync();
+                        member = new Member(userId, userEmail, $"User{membersCount + 1}");
                         _dbContext.Members.Add(member);
                         await _dbContext.SaveChangesAsync();
                     }

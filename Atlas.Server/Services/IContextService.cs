@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Domain;
 using Atlas.Domain.Members;
 using Atlas.Domain.Sites;
 

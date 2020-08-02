@@ -60,6 +60,9 @@ namespace Atlas.Data.Services
             topic.Forum.IncreaseRepliesCount();
             topic.Forum.Category.IncreaseRepliesCount();
 
+            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == reply.MemberId);
+            member.IncreaseRepliesCount();
+
             await _dbContext.SaveChangesAsync();
         }
 
