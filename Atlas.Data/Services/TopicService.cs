@@ -56,6 +56,9 @@ namespace Atlas.Data.Services
             forum.IncreaseTopicsCount();
             forum.Category.IncreaseTopicsCount();
 
+            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == topic.MemberId);
+            member.IncreaseTopicsCount();
+
             await _dbContext.SaveChangesAsync();
         }
 

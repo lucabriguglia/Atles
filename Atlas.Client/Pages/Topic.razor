@@ -45,7 +45,7 @@ else
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-md-6 small font-weight-bold">
-                        @Model.Topic.MemberDisplayName
+                        <a href="/member/@Model.Topic.MemberId">@Model.Topic.MemberDisplayName</a>
                     </div>
                     <div class="col-md-6 text-right small">
                         @Model.Topic.TimeStamp.ToShortDateString() @Model.Topic.TimeStamp.ToShortTimeString()
@@ -71,7 +71,7 @@ else
                             <a id="@reply.Id"></a>
                             <div class="row mb-3 small">
                                 <div class="col-md-6 font-weight-bold">
-                                    @reply.MemberDisplayName
+                                    <a href="/member/@reply.MemberId">@reply.MemberDisplayName</a>
                                 </div>
                                 <div class="col-md-6 text-right">
                                     @reply.TimeStamp.ToShortDateString() @reply.TimeStamp.ToShortTimeString()

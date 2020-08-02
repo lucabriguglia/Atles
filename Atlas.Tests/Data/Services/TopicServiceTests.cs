@@ -12,6 +12,7 @@ using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
+using Atlas.Domain.Members;
 using Atlas.Domain.Topics;
 using Atlas.Domain.Topics.Commands;
 using TopicService = Atlas.Data.Services.TopicService;
@@ -28,20 +29,26 @@ namespace Atlas.Tests.Data.Services
 
             var categoryId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
+            var memberId = Guid.NewGuid();
 
             var category = new Category(categoryId, Guid.NewGuid(), "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
+            var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
+                dbContext.Members.Add(member);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var command = Fixture.Build<CreateTopic>().With(x => x.ForumId, forum.Id).Create();
+                var command = Fixture.Build<CreateTopic>()
+                        .With(x => x.ForumId, forum.Id)
+                        .With(x => x.MemberId, memberId)
+                    .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
 
@@ -64,12 +71,15 @@ namespace Atlas.Tests.Data.Services
 
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
+                var updatedMember = await dbContext.Members.FirstOrDefaultAsync(x => x.Id == memberId);
 
                 createValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.NotNull(topic);
                 Assert.NotNull(@event);
                 Assert.AreEqual(category.TopicsCount + 1, updatedCategory.TopicsCount);
                 Assert.AreEqual(forum.TopicsCount + 1, updatedForum.TopicsCount);
+                Assert.AreEqual(forum.TopicsCount + 1, updatedForum.TopicsCount);
+                Assert.AreEqual(member.TopicsCount + 1, updatedMember.TopicsCount);
             }
         }
 

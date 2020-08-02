@@ -10,5 +10,6 @@ namespace Atlas.Models.Public
         Task<PostPageModel> BuildNewPostPageModelAsync(Guid siteId, Guid forumId);
         Task<PostPageModel> BuildEditPostPageModelAsync(Guid siteId, Guid forumId, Guid topicId);
         Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, PaginationOptions options);
+        Task<MemberPageModel> BuildMemberPageModelAsync(Guid memberId);
     }
 }

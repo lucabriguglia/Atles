@@ -247,5 +247,30 @@ namespace Atlas.Data.Builders.Public
 
             return result;
         }
+
+        public async Task<MemberPageModel> BuildMemberPageModelAsync(Guid memberId)
+        {
+            var result = new MemberPageModel();
+
+            var member = await _dbContext.Members
+                .FirstOrDefaultAsync(x =>
+                    x.Id == memberId &&
+                    x.Status != StatusType.Deleted);
+
+            if (member == null)
+            {
+                return null;
+            }
+
+            result.Member = new MemberPageModel.MemberModel
+            {
+                Id = member.Id,
+                DisplayName = member.DisplayName,
+                TotalTopics = member.TopicsCount,
+                TotalReplies = member.RepliesCount
+            };
+
+            return result;
+        }
     }
 }

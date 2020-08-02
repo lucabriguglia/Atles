@@ -1,0 +1,34 @@
+﻿@page "/member/{id:guid}"
+@using Atlas.Models.Public
+
+@inject AnonymousService Service;
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Member.DisplayName</li>
+        </ol>
+    </nav>
+
+    <h4 class="mb-3">@Model.Member.DisplayName</h4>
+
+    <p>Topics: @Model.Member.TotalTopics - Replies: @Model.Member.TotalReplies</p>
+}
+
+@code {
+    [Parameter]
+    public Guid Id { get; set; }
+
+    private MemberPageModel Model { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        Model = await Service.GetFromJsonAsync<MemberPageModel>($"api/public/member/{Id}");
+    }
+}
