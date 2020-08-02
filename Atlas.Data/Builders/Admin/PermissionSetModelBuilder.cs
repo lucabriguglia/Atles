@@ -13,6 +13,7 @@ namespace Atlas.Data.Builders.Admin
     {
         private readonly AtlasDbContext _dbContext;
         private readonly IRoleModelBuilder _roleManager;
+
         public PermissionSetModelBuilder(AtlasDbContext dbContext, IRoleModelBuilder roleManager)
         {
             _dbContext = dbContext;

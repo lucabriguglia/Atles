@@ -9,7 +9,7 @@ namespace Atlas.Domain.Sites.Validators
         {
             RuleFor(c => c.Title)
                 .NotEmpty().WithMessage("Site title is required.")
-                .Length(1, 100).WithMessage("Site title length must be between 1 and 100 characters.");
+                .Length(1, 100).WithMessage("Site title must be at least 1 and at max 50 characters long.");
         }
     }
 }

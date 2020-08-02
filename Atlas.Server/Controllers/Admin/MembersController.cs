@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Domain.Members;
 using Atlas.Domain.Members.Commands;
@@ -90,17 +91,43 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpPost("update")]
-        public async Task<ActionResult> Update(EditPageModel.MemberModel model)
+        public async Task<ActionResult> Update(EditPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
+            var user = await _userManager.FindByIdAsync(model.Member.UserId);
+
+            if (user == null)
+            {
+                return BadRequest("Membership user not found.");
+            }
+
+            foreach (var role in model.Roles)
+            {
+                if (role.Selected)
+                {
+                    if (!await _userManager.IsInRoleAsync(user, role.Name))
+                    {
+                        await _userManager.AddToRoleAsync(user, role.Name);
+                    }
+                }
+                else
+                {
+                    if (await _userManager.IsInRoleAsync(user, role.Name))
+                    {
+                        await _userManager.RemoveFromRoleAsync(user, role.Name);
+                    }
+                }
+            }
+
             var command = new UpdateMember
             {
-                Id = model.Id,
-                DisplayName = model.DisplayName,
+                Id = model.Member.Id,
+                DisplayName = model.Member.DisplayName,
                 SiteId = site.Id,
-                MemberId = member.Id
+                MemberId = member.Id,
+                Roles = model.Roles.Where(x => x.Selected).Select(x => x.Name).ToList()
             };
 
             await _memberService.UpdateAsync(command);

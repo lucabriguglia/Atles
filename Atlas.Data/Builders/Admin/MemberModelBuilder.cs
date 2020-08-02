@@ -1,20 +1,28 @@
 ﻿using Atlas.Domain;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Models.Admin.Members;
 using Atlas.Models;
+using Microsoft.AspNetCore.Identity;
 
 namespace Atlas.Data.Builders.Admin
 {
     public class MemberModelBuilder : IMemberModelBuilder
     {
         private readonly AtlasDbContext _dbContext;
+        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public MemberModelBuilder(AtlasDbContext dbContext)
+        public MemberModelBuilder(AtlasDbContext dbContext, 
+            RoleManager<IdentityRole> roleManager, 
+            UserManager<IdentityUser> userManager)
         {
             _dbContext = dbContext;
+            _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         public async Task<IndexPageModel> BuildIndexPageModelAsync(QueryOptions options)
@@ -84,8 +92,27 @@ namespace Atlas.Data.Builders.Admin
             result.Member = new EditPageModel.MemberModel
             {
                 Id = member.Id,
-                DisplayName = member.DisplayName
+                DisplayName = member.DisplayName,
+                UserId = member.UserId
             };
+
+            var user = await _userManager.FindByIdAsync(member.UserId);
+
+            if (user == null)
+            {
+                throw new DataException($"Membership user for member with id {member.Id} not found.");
+            }
+
+            foreach (var role in await _roleManager.Roles.ToListAsync())
+            {
+                var selected = await _userManager.IsInRoleAsync(user, role.Name);
+
+                result.Roles.Add(new EditPageModel.RoleModel
+                {
+                    Name = role.Name,
+                    Selected = selected
+                });
+            }
 
             return result;
         }
