@@ -33,7 +33,7 @@ else
 {
     <div class="row">
         <div class="col-sm-4 input-group mb-3 ml-auto">
-            <input type="text" class="form-control" placeholder="Search members" @bind="Search">
+            <input type="text" class="form-control" placeholder="Search members" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUp">
             <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="ClearSearch">
                 <i class="fa fa-times"></i>
             </button>
@@ -107,6 +107,14 @@ else
         await LoadDataAsync(page);
     }
 
+    private async Task MyKeyUp(KeyboardEventArgs key)
+    {
+        if (key.Code == "Enter")
+        {
+            await SearchAsync();
+        }
+    }
+
     private async Task SearchAsync()
     {
         Model = null;
@@ -116,10 +124,13 @@ else
 
     private async Task ClearSearch()
     {
-        Search = null;
-        Model = null;
-        StateHasChanged();
-        await OnInitializedAsync();
+        if(!string.IsNullOrWhiteSpace(Search))
+        {
+            Search = string.Empty;
+            Model = null;
+            StateHasChanged();
+            await OnInitializedAsync();
+        }
     }
 
     protected void SetDeleteId(Guid Id)
