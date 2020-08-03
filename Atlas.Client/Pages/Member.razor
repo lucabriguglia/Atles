@@ -19,7 +19,7 @@ else
 
     <div class="row">
         <div class="col-md-2 text-center">
-            <Avatar GravatarHash="@Model.Member.GravatarHash" GravatarSize="120"></Avatar>
+            <Avatar GravatarHash="@Model.Member.GravatarHash" GravatarSize="128" Class="mb-3"></Avatar>
 
             <h4 class="mb-4">@Model.Member.DisplayName</h4>
 
@@ -57,10 +57,7 @@ else
                                     }
                                 </p>
                                 <div class="row small">
-                                    <div class="col-md-6 font-weight-bold">
-                                        <a href="/member/@Model.Member.Id">@Model.Member.DisplayName</a>
-                                    </div>
-                                    <div class="col-md-6 text-right">
+                                    <div class="col-md-12">
                                         @topic.TimeStamp.ToShortDateString() @topic.TimeStamp.ToShortTimeString()
                                         &nbsp;&nbsp;
                                         <span class="font-weight-bold">@topic.TotalReplies</span> Replies

@@ -76,7 +76,7 @@ else
             Model = await Http.GetFromJsonAsync<PostPageModel>(requestUri);
             DisplayPage = true;
         }
-        catch (Exception e)
+        catch (Exception)
         {
             Model = new PostPageModel();
             DisplayPage = false;

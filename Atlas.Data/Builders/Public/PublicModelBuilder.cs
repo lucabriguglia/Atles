@@ -110,7 +110,8 @@ namespace Atlas.Data.Builders.Public
                     TotalReplies = topic.RepliesCount,
                     MemberId = topic.Member.Id,
                     MemberDisplayName = topic.Member.DisplayName,
-                    TimeStamp = topic.TimeStamp
+                    TimeStamp = topic.TimeStamp,
+                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email)
                 })
                 .ToList();
 
@@ -217,7 +218,8 @@ namespace Atlas.Data.Builders.Public
                     MemberId = topic.Member.Id,
                     MemberDisplayName = topic.Member.DisplayName,
                     TimeStamp = topic.TimeStamp,
-                    UserId = topic.Member.UserId
+                    UserId = topic.Member.UserId,
+                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email)
                 }
             };
 
@@ -239,8 +241,9 @@ namespace Atlas.Data.Builders.Public
                     UserId = reply.Member.UserId,
                     MemberId = reply.Member.Id,
                     MemberDisplayName = reply.Member.DisplayName,
-                    TimeStamp = reply.TimeStamp
-                }).ToList();
+                    TimeStamp = reply.TimeStamp,
+                    GravatarHash = _gravatarService.HashEmailForGravatar(reply.Member.Email)
+            }).ToList();
 
             var totalRecords = await _dbContext.Replies
                 .Where(x =>

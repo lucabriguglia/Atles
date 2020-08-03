@@ -26,10 +26,14 @@ else
         </nav>
 
         <div class="row">
-            <div class="col-md-8">
+            <div class="col-md-6">
                 <h3 class="mb-3">@Model.Topic.Title</h3>
             </div>
-            <div class="col-md-4 text-right mb-3">
+            <div class="col-md-6 text-right mb-3">
+                @if (Model.CanReply)
+                {
+                    <a href="#" @onclick:preventDefault="true" @onclick="New" class="btn btn-primary" role="button">New Reply</a>
+                }
                 @if (CanEditTopic())
                 {
                     <a href="/forum/@Model.Forum.Id/post/@Model.Topic.Id/edit" class="btn btn-secondary" role="button">Edit</a>
@@ -45,6 +49,7 @@ else
             <div class="card-body">
                 <div class="row mb-3">
                     <div class="col-md-6 small font-weight-bold">
+                        <Avatar GravatarHash="@Model.Topic.GravatarHash" GravatarSize="32" Class="mr-1"></Avatar>
                         <a href="/member/@Model.Topic.MemberId">@Model.Topic.MemberDisplayName</a>
                     </div>
                     <div class="col-md-6 text-right small">
@@ -71,6 +76,7 @@ else
                             <a id="@reply.Id"></a>
                             <div class="row mb-3 small">
                                 <div class="col-md-6 font-weight-bold">
+                                    <Avatar GravatarHash="@reply.GravatarHash" GravatarSize="32" Class="mr-1"></Avatar>
                                     <a href="/member/@reply.MemberId">@reply.MemberDisplayName</a>
                                 </div>
                                 <div class="col-md-6 text-right">
@@ -215,6 +221,11 @@ else
     protected void SetDeleteReplyId(Guid Id)
     {
         DeleteReplyId = Id;
+    }
+
+    private async Task New()
+    {
+        await JsRuntime.InvokeVoidAsync("scrollToTarget", "reply");
     }
 
     private async Task Edit(Guid id, string content, Guid memberId)

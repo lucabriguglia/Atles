@@ -25,6 +25,7 @@ namespace Atlas.Models.Public
             public Guid MemberId { get; set; }
             public string MemberDisplayName { get; set; }
             public DateTime TimeStamp { get; set; }
+            public string GravatarHash { get; set; }
         }
     }
 }
