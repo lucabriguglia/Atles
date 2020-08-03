@@ -1,5 +1,6 @@
-﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-
+﻿@using System.Security.Cryptography
+@using System.Text
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 
@@ -10,11 +11,14 @@
 </AuthorizeView>
 <AuthorizeView>
     <Authorized>
-        <li class="nav-item">
-            <a href="authentication/profile" class="nav-link">Account</a>
-        </li>
-        <li class="nav-item">
-            <a href="#" class="nav-link" @onclick="BeginSignOut">Log out</a>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <Avatar GravatarHash="@GravatarHash" GravatarSize="24"></Avatar>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="authentication/profile">Account</a>
+                <a class="dropdown-item" href="#" @onclick="BeginSignOut">Log out</a>
+            </div>
         </li>
     </Authorized>
     <NotAuthorized>
@@ -28,6 +32,28 @@
 </AuthorizeView>
 
 @code{
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
+    public string GravatarHash { get; set; }
+
+    protected override async Task OnInitializedAsync()
+    {
+        // TODO: Add GravatarHash as default claim
+        var authState = await AuthenticationStateTask;
+        var user = authState.User;
+
+        if (user.Identity.IsAuthenticated)
+        {
+            var emailClaim = user.Claims.FirstOrDefault(x => x.Type == "name");
+            var md5Hasher = MD5.Create();
+            var data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(emailClaim.Value));
+            var sBuilder = new StringBuilder();
+            for (var i = 0; i < data.Length; i++) sBuilder.Append(data[i].ToString("x2"));
+            GravatarHash = sBuilder.ToString();
+        }
+    }
+
     private async Task BeginSignOut(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();

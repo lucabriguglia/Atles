@@ -1,12 +1,10 @@
 ﻿@page "/forum/{forumId:guid}/{topicId:guid}"
 @using System.Security.Claims
-@using Atlas.Client.Services
 @using Atlas.Domain
 @using Atlas.Models.Public
 @inject HttpClient Http
 @inject AnonymousService Service;
 @inject NavigationManager Navigation
-@inject ISecurityService SecurityService
 @inject IJSRuntime JsRuntime
 
 @if (Model == null)

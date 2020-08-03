@@ -1,10 +1,8 @@
 ﻿@page "/forum/{id:guid}"
-@using Atlas.Client.Services
 @using Atlas.Models.Public
 @inject AnonymousService Service;
 @inject HttpClient Http
 @inject NavigationManager Navigation
-@inject ISecurityService SecurityService
 
 @if (Model == null)
 {

@@ -2,7 +2,6 @@ using System;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Atlas.Client.Clients;
-using Atlas.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -41,8 +40,6 @@ namespace Atlas.Client
                 options.AddPolicy("Admin", policy =>
                     policy.RequireRole("Admin"));
             });
-
-            builder.Services.AddTransient<ISecurityService, SecurityService>();
 
             await builder.Build().RunAsync();
         }
