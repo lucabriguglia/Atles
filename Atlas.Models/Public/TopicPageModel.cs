@@ -13,6 +13,7 @@ namespace Atlas.Models.Public
         public bool CanReply { get; set; }
         public bool CanEdit { get; set; }
         public bool CanDelete { get; set; }
+        public bool CanModerate { get; set; }
 
         public class ForumModel
         {
@@ -29,6 +30,7 @@ namespace Atlas.Models.Public
             public string MemberDisplayName { get; set; }
             public DateTime TimeStamp { get; set; }
             public string UserId { get; set; }
+            public string GravatarHash { get; set; }
         }
 
         public class ReplyModel
@@ -40,6 +42,7 @@ namespace Atlas.Models.Public
             public Guid MemberId { get; set; }
             public string MemberDisplayName { get; set; }
             public DateTime TimeStamp { get; set; }
+            public string GravatarHash { get; set; }
         }
 
         public class PostModel

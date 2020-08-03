@@ -63,8 +63,6 @@ namespace Atlas.Server.Controllers.Admin
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(string id)
         {
-            // TODO: Check if role is in use
-
             var identityRole = await _roleManager.Roles.FirstOrDefaultAsync(x => x.Id == id);
 
             if (identityRole == null)

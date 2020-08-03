@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Atlas.Data;
@@ -16,14 +15,17 @@ namespace Atlas.Server.Services
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICacheManager _cacheManager;
         private readonly AtlasDbContext _dbContext;
+        private readonly IMemberService _memberService;
 
         public ContextService(IHttpContextAccessor httpContextAccessor, 
             ICacheManager cacheManager,
-            AtlasDbContext dbContext)
+            AtlasDbContext dbContext, 
+            IMemberService memberService)
         {
             _httpContextAccessor = httpContextAccessor;
             _cacheManager = cacheManager;
             _dbContext = dbContext;
+            _memberService = memberService;
         }
 
         public async Task<Site> CurrentSiteAsync() =>
@@ -57,8 +59,8 @@ namespace Atlas.Server.Services
 
                     if (member == null)
                     {
-                        var membersCount = await _dbContext.Members.CountAsync();
-                        member = new Member(userId, userEmail, $"User{membersCount + 1}");
+                        var displayName = await _memberService.GenerateDisplayName();
+                        member = new Member(userId, userEmail, displayName);
                         _dbContext.Members.Add(member);
                         await _dbContext.SaveChangesAsync();
                     }

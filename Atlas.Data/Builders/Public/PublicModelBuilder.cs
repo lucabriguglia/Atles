@@ -5,6 +5,7 @@ using Atlas.Data.Caching;
 using Atlas.Domain;
 using Atlas.Models;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Members;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,7 +17,9 @@ namespace Atlas.Data.Builders.Public
         private readonly ICacheManager _cacheManager;
         private readonly IGravatarService _gravatarService;
 
-        public PublicModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager, IGravatarService gravatarService)
+        public PublicModelBuilder(AtlasDbContext dbContext, 
+            ICacheManager cacheManager, 
+            IGravatarService gravatarService)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
@@ -107,7 +110,8 @@ namespace Atlas.Data.Builders.Public
                     TotalReplies = topic.RepliesCount,
                     MemberId = topic.Member.Id,
                     MemberDisplayName = topic.Member.DisplayName,
-                    TimeStamp = topic.TimeStamp
+                    TimeStamp = topic.TimeStamp,
+                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email)
                 })
                 .ToList();
 
@@ -214,7 +218,8 @@ namespace Atlas.Data.Builders.Public
                     MemberId = topic.Member.Id,
                     MemberDisplayName = topic.Member.DisplayName,
                     TimeStamp = topic.TimeStamp,
-                    UserId = topic.Member.UserId
+                    UserId = topic.Member.UserId,
+                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email)
                 }
             };
 
@@ -236,8 +241,9 @@ namespace Atlas.Data.Builders.Public
                     UserId = reply.Member.UserId,
                     MemberId = reply.Member.Id,
                     MemberDisplayName = reply.Member.DisplayName,
-                    TimeStamp = reply.TimeStamp
-                }).ToList();
+                    TimeStamp = reply.TimeStamp,
+                    GravatarHash = _gravatarService.HashEmailForGravatar(reply.Member.Email)
+            }).ToList();
 
             var totalRecords = await _dbContext.Replies
                 .Where(x =>
@@ -250,9 +256,9 @@ namespace Atlas.Data.Builders.Public
             return result;
         }
 
-        public async Task<MemberPageModel> BuildMemberPageModelAsync(Guid siteId, Guid memberId)
+        public async Task<MemberPageModelToFilter> BuildMemberPageModelToFilterAsync(Guid siteId, Guid memberId)
         {
-            var result = new MemberPageModel();
+            var result = new MemberPageModelToFilter();
 
             var member = await _dbContext.Members
                 .FirstOrDefaultAsync(x =>
@@ -264,7 +270,7 @@ namespace Atlas.Data.Builders.Public
                 return null;
             }
 
-            result.Member = new MemberPageModel.MemberModel
+            result.Member = new MemberModel
             {
                 Id = member.Id,
                 DisplayName = member.DisplayName,
@@ -273,27 +279,52 @@ namespace Atlas.Data.Builders.Public
                 GravatarHash = _gravatarService.HashEmailForGravatar(member.Email)
             };
 
-            var lastTopics = await _dbContext.Topics
+            result.MemberTopicModelsToFilter = await BuildMemberTopicModelsToFilterAsync(siteId, memberId, 0);
+
+            result.TotalMemberTopics = member.TopicsCount;
+
+            return result;
+        }
+
+        public async Task<MemberTopicModelsToFilter> BuildMemberTopicModelsToFilterAsync(Guid siteId, Guid memberId, int skip)
+        {
+            var result = new MemberTopicModelsToFilter();
+
+            var topics = await _dbContext.Topics
                 .Where(x =>
                     x.Forum.Category.SiteId == siteId &&
-                    x.MemberId == member.Id &&
+                    x.MemberId == memberId &&
                     x.Status == StatusType.Published)
                 .OrderByDescending(x => x.TimeStamp)
+                .Skip(skip)
                 .Take(5)
+                .Select(t => new
+                {
+                    t.Id,
+                    t.ForumId,
+                    t.Title,
+                    t.TimeStamp,
+                    t.RepliesCount,
+                    ForumPermissionSetId = t.Forum.PermissionSetId,
+                    CategoryPermissionSetId = t.Forum.Category.PermissionSetId
+                })
                 .ToListAsync();
 
-            foreach (var topic in lastTopics)
+            foreach (var topic in topics)
             {
-                // TODO: Check permissions
-
-                result.LastTopics.Add(new MemberPageModel.TopicModel
+                result.Topics.Add(new MemberTopicModel
                 {
                     Id = topic.Id,
                     ForumId = topic.ForumId,
                     Title = topic.Title,
                     TimeStamp = topic.TimeStamp,
-                    TotalReplies = topic.RepliesCount,
-                    CanRead = true
+                    TotalReplies = topic.RepliesCount
+                });
+
+                result.TopicPermissions.Add(new TopicPermission
+                {
+                    TopicId = topic.Id,
+                    PermissionSetId = topic.ForumPermissionSetId ?? topic.CategoryPermissionSetId
                 });
             }
 

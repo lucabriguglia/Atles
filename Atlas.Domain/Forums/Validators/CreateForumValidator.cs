@@ -18,8 +18,6 @@ namespace Atlas.Domain.Forums.Validators
                 .Length(1, 200).WithMessage("Forum description length must be between 1 and 200 characters.")
                 .When(c => !string.IsNullOrWhiteSpace(c.Description));
 
-            // TODO: Validate Category
-
             RuleFor(c => c.PermissionSetId)
                 .MustAsync((c, p, cancellation) => permissionSetRules.IsValid(c.SiteId, p.Value))
                     .WithMessage(c => $"Permission set with id {c.PermissionSetId} does not exist.")

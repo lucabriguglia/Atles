@@ -97,6 +97,7 @@ namespace Atlas.Data.Services
         public async Task DeleteAsync(DeleteTopic command)
         {
             var topic = await _dbContext.Topics
+                .Include(x => x.Member)
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
@@ -118,6 +119,7 @@ namespace Atlas.Data.Services
 
             topic.Forum.DecreaseTopicsCount();
             topic.Forum.Category.DecreaseTopicsCount();
+            topic.Member.DecreaseTopicsCount();
 
             await _dbContext.SaveChangesAsync();
         }

@@ -1,7 +1,6 @@
 using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Atlas.Client.Clients;
 using Atlas.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -27,11 +26,6 @@ namespace Atlas.Client
                 client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); 
             });
 
-            builder.Services.AddHttpClient<AuthenticatedService>(client =>
-            {
-                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
-            }).AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
-
             builder.Services.AddApiAuthorization();
 
             builder.Services.AddOptions();
@@ -41,8 +35,6 @@ namespace Atlas.Client
                 options.AddPolicy("Admin", policy =>
                     policy.RequireRole("Admin"));
             });
-
-            builder.Services.AddTransient<ISecurityService, SecurityService>();
 
             await builder.Build().RunAsync();
         }

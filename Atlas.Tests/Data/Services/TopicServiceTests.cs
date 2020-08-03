@@ -146,19 +146,23 @@ namespace Atlas.Tests.Data.Services
             var siteId = Guid.NewGuid();
             var categoryId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
+            var memberId = Guid.NewGuid();
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
-            var topic = new Topic(forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
+            var topic = new Topic(forumId, memberId, "Title", "Content", StatusType.Published);
+            var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
             category.IncreaseTopicsCount();
             forum.IncreaseTopicsCount();
+            member.IncreaseTopicsCount();
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
                 dbContext.Topics.Add(topic);
+                dbContext.Members.Add(member);
 
                 await dbContext.SaveChangesAsync();
             }
@@ -187,11 +191,13 @@ namespace Atlas.Tests.Data.Services
 
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
+                var updatedMember = await dbContext.Members.FirstOrDefaultAsync(x => x.Id == member.Id);
 
                 Assert.AreEqual(StatusType.Deleted, topicDeleted.Status);
                 Assert.NotNull(topicEvent);
                 Assert.AreEqual(0, updatedCategory.TopicsCount);
                 Assert.AreEqual(0, updatedForum.TopicsCount);
+                Assert.AreEqual(0, updatedMember.TopicsCount);
             }
         }
     }

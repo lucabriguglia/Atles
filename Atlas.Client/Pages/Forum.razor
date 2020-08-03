@@ -1,10 +1,9 @@
 ﻿@page "/forum/{id:guid}"
 @using Atlas.Client.Services
 @using Atlas.Models.Public
-@inject AnonymousService Service;
+@inject AnonymousService AnonymousService;
 @inject HttpClient Http
 @inject NavigationManager Navigation
-@inject ISecurityService SecurityService
 
 @if (Model == null)
 {
@@ -67,6 +66,7 @@ else
                             </p>
                             <div class="row small">
                                 <div class="col-md-6 font-weight-bold">
+                                    <Avatar GravatarHash="@item.GravatarHash" GravatarSize="32" Class="mr-1"></Avatar>
                                     <a href="/member/@item.MemberId">@item.MemberDisplayName</a>
                                 </div>
                                 <div class="col-md-6 text-right">
@@ -117,7 +117,7 @@ else
             }
             else
             {
-                Model = await Service.GetFromJsonAsync<ForumPageModel>(requestUri);
+                Model = await AnonymousService.GetFromJsonAsync<ForumPageModel>(requestUri);
             }
 
             DisplayPage = true;

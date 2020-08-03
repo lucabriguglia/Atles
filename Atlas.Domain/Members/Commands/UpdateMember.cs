@@ -7,6 +7,6 @@ namespace Atlas.Domain.Members.Commands
     {
         public Guid Id { get; set; }
         public string DisplayName { get; set; }
-        public IList<string> Roles { get; set; }
+        public IList<string> Roles { get; set; } = null;
     }
 }

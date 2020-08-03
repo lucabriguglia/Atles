@@ -1,7 +1,8 @@
 ﻿@page "/"
 @page "/public"
+@using Atlas.Client.Services
 @using Atlas.Models.Public
-@inject AnonymousService Service;
+@inject AnonymousService AnonymousService;
 @inject HttpClient Http
 
 @if (Model == null)
@@ -74,7 +75,7 @@ else
         }
         else
         {
-            Model = await Service.GetFromJsonAsync<IndexPageModel>(requestUri);
+            Model = await AnonymousService.GetFromJsonAsync<IndexPageModel>(requestUri);
         }
     }
 }
