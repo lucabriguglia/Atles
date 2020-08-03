@@ -2,8 +2,8 @@
 @using System.Security.Claims
 @using Atlas.Domain
 @using Atlas.Models.Public
-@inject HttpClient Http
-@inject AnonymousService Service;
+@inject AnonymousService AnonymousService;
+@inject AuthenticatedService AuthenticatedService;
 @inject NavigationManager Navigation
 @inject IJSRuntime JsRuntime
 
@@ -187,11 +187,11 @@ else
 
             if (user.Identity.IsAuthenticated)
             {
-                Model = await Http.GetFromJsonAsync<TopicPageModel>(requestUri);
+                Model = await AuthenticatedService.GetFromJsonAsync<TopicPageModel>(requestUri);
             }
             else
             {
-                Model = await Service.GetFromJsonAsync<TopicPageModel>(requestUri);
+                Model = await AnonymousService.GetFromJsonAsync<TopicPageModel>(requestUri);
             }
 
             DisplayPage = true;
@@ -240,7 +240,7 @@ else
             ? "api/public/update-reply"
             : "api/public/create-reply";
 
-        await Http.PostAsJsonAsync(requestUri, Model);
+        await AuthenticatedService.PostAsJsonAsync(requestUri, Model);
 
         if (Model.Post.Id != null)
         {
@@ -252,13 +252,13 @@ else
 
     protected async Task DeleteTopicAsync(MouseEventArgs e)
     {
-        await Http.DeleteAsync($"api/public/delete-topic/{ForumId}/{TopicId}");
+        await AuthenticatedService.DeleteAsync($"api/public/delete-topic/{ForumId}/{TopicId}");
         Navigation.NavigateTo($"/forum/{ForumId}");
     }
 
     protected async Task DeleteReplyAsync(MouseEventArgs e)
     {
-        await Http.DeleteAsync($"api/public/delete-reply/{ForumId}/{TopicId}/{DeleteReplyId}");
+        await AuthenticatedService.DeleteAsync($"api/public/delete-reply/{ForumId}/{TopicId}/{DeleteReplyId}");
         await OnInitializedAsync();
     }
 

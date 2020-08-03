@@ -1,7 +1,7 @@
 ﻿@page "/forum/{id:guid}"
 @using Atlas.Models.Public
-@inject AnonymousService Service;
-@inject HttpClient Http
+@inject AnonymousService AnonymousService;
+@inject AuthenticatedService AuthenticatedService
 @inject NavigationManager Navigation
 
 @if (Model == null)
@@ -112,11 +112,11 @@ else
 
             if (user.Identity.IsAuthenticated)
             {
-                Model = await Http.GetFromJsonAsync<ForumPageModel>(requestUri);
+                Model = await AuthenticatedService.GetFromJsonAsync<ForumPageModel>(requestUri);
             }
             else
             {
-                Model = await Service.GetFromJsonAsync<ForumPageModel>(requestUri);
+                Model = await AnonymousService.GetFromJsonAsync<ForumPageModel>(requestUri);
             }
 
             DisplayPage = true;

@@ -1,8 +1,8 @@
 ﻿@page "/member"
 @page "/member/{id:guid}"
 @using Atlas.Models.Public.Members
-@inject HttpClient Http
-@inject AnonymousService Service;
+@inject AnonymousService AnonymousService;
+@inject AuthenticatedService AuthenticatedService
 
 @if (Model == null)
 {
@@ -90,11 +90,11 @@ else
 
         if (user.Identity.IsAuthenticated)
         {
-            Model = await Http.GetFromJsonAsync<MemberPageModel>(requestUri);
+            Model = await AuthenticatedService.GetFromJsonAsync<MemberPageModel>(requestUri);
         }
         else
         {
-            Model = await Service.GetFromJsonAsync<MemberPageModel>(requestUri);
+            Model = await AnonymousService.GetFromJsonAsync<MemberPageModel>(requestUri);
         }
     }
 }
