@@ -1,9 +1,10 @@
 ﻿@page "/forum/{forumId:guid}/{topicId:guid}"
 @using System.Security.Claims
+@using Atlas.Client.Services
 @using Atlas.Domain
 @using Atlas.Models.Public
 @inject AnonymousService AnonymousService;
-@inject AuthenticatedService AuthenticatedService;
+@inject HttpClient Http
 @inject NavigationManager Navigation
 @inject IJSRuntime JsRuntime
 
@@ -82,18 +83,18 @@ else
                                 </div>
                             </div>
                             <div class="card-text">@((MarkupString)reply.Content)</div>
-                                <div class="row">
-                                    <div class="col-md-12 text-right">
-                                        @if (CanEditReply(reply.UserId))
-                                        {
-                                            <a href="#" @onclick:preventDefault="true" @onclick="() => Edit(reply.Id, reply.OriginalContent, reply.MemberId)">Edit</a>
-                                        }
-                                        @if (CanDeleteReply(reply.UserId))
-                                        {
-                                            <a href="#" @onclick:preventDefault="true" @onclick="() => SetDeleteReplyId(reply.Id)" data-toggle="modal" data-target="#confirm-modal-delete-reply">Delete</a>
-                                        }
-                                    </div>
+                            <div class="row">
+                                <div class="col-md-12 text-right">
+                                    @if (CanEditReply(reply.UserId))
+                                    {
+                                        <a href="#" @onclick:preventDefault="true" @onclick="() => Edit(reply.Id, reply.OriginalContent, reply.MemberId)">Edit</a>
+                                    }
+                                    @if (CanDeleteReply(reply.UserId))
+                                    {
+                                        <a href="#" @onclick:preventDefault="true" @onclick="() => SetDeleteReplyId(reply.Id)" data-toggle="modal" data-target="#confirm-modal-delete-reply">Delete</a>
+                                    }
                                 </div>
+                            </div>
                         </li>
                     }
                 </ul>
@@ -136,13 +137,13 @@ else
             </AuthorizeView>
         }
 
-        <ConfirmModal Id="confirm-modal-delete-topic" 
+        <ConfirmModal Id="confirm-modal-delete-topic"
                       Title="Delete Topic"
                       Body="Are you sure you want to delete this Topic?"
                       Button="Delete Topic"
                       OnClickCallback="@DeleteTopicAsync" />
 
-        <ConfirmModal Id="confirm-modal-delete-reply" 
+        <ConfirmModal Id="confirm-modal-delete-reply"
                       Title="Delete Reply"
                       Body="Are you sure you want to delete this Reply?"
                       Button="Delete Reply"
@@ -187,7 +188,7 @@ else
 
             if (user.Identity.IsAuthenticated)
             {
-                Model = await AuthenticatedService.GetFromJsonAsync<TopicPageModel>(requestUri);
+                Model = await Http.GetFromJsonAsync<TopicPageModel>(requestUri);
             }
             else
             {
@@ -240,7 +241,7 @@ else
             ? "api/public/update-reply"
             : "api/public/create-reply";
 
-        await AuthenticatedService.PostAsJsonAsync(requestUri, Model);
+        await Http.PostAsJsonAsync(requestUri, Model);
 
         if (Model.Post.Id != null)
         {
@@ -252,13 +253,13 @@ else
 
     protected async Task DeleteTopicAsync(MouseEventArgs e)
     {
-        await AuthenticatedService.DeleteAsync($"api/public/delete-topic/{ForumId}/{TopicId}");
+        await Http.DeleteAsync($"api/public/delete-topic/{ForumId}/{TopicId}");
         Navigation.NavigateTo($"/forum/{ForumId}");
     }
 
     protected async Task DeleteReplyAsync(MouseEventArgs e)
     {
-        await AuthenticatedService.DeleteAsync($"api/public/delete-reply/{ForumId}/{TopicId}/{DeleteReplyId}");
+        await Http.DeleteAsync($"api/public/delete-reply/{ForumId}/{TopicId}/{DeleteReplyId}");
         await OnInitializedAsync();
     }
 
@@ -271,21 +272,21 @@ else
 
     private bool CanEditTopic()
     {
-        return Model.CanEdit && Model.Topic.UserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+        return Model.CanEdit && Model.Topic.UserId == CurrentUserId || Model.CanModerate || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 
     private bool CanDeleteTopic()
     {
-        return Model.CanDelete && Model.Topic.UserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+        return Model.CanDelete && Model.Topic.UserId == CurrentUserId || Model.CanModerate || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 
     private bool CanEditReply(string replyUserId)
     {
-        return Model.CanEdit && replyUserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+        return Model.CanEdit && replyUserId == CurrentUserId || Model.CanModerate || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 
     private bool CanDeleteReply(string replyUserId)
     {
-        return Model.CanDelete && replyUserId == CurrentUserId || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+        return Model.CanDelete && replyUserId == CurrentUserId || Model.CanModerate || CurrentUser.IsInRole(Consts.RoleNameAdmin);
     }
 }

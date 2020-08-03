@@ -1,8 +1,9 @@
 ﻿@page "/"
 @page "/public"
+@using Atlas.Client.Services
 @using Atlas.Models.Public
 @inject AnonymousService AnonymousService;
-@inject AuthenticatedService AuthenticatedService
+@inject HttpClient Http
 
 @if (Model == null)
 {
@@ -70,7 +71,7 @@ else
 
         if (user.Identity.IsAuthenticated)
         {
-            Model = await AuthenticatedService.GetFromJsonAsync<IndexPageModel>(requestUri);
+            Model = await Http.GetFromJsonAsync<IndexPageModel>(requestUri);
         }
         else
         {

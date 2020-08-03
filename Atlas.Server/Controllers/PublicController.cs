@@ -110,6 +110,7 @@ namespace Atlas.Server.Controllers
             model.CanEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
             model.CanReply = _securityService.HasPermission(PermissionType.Reply, permissions);
             model.CanDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
+            model.CanModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
 
             return model;
         }
@@ -151,8 +152,10 @@ namespace Atlas.Server.Controllers
                 return NotFound();
             }
 
-            var canEdit = await _securityService.HasPermission(PermissionType.Edit, site.Id, model.Forum.Id);
-            var authorized = canEdit && model.Topic.MemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
+            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var authorized = canEdit && model.Topic.MemberId == member.Id || canModerate || User.IsInRole(Consts.RoleNameAdmin);
 
             if (!authorized)
             {
@@ -218,8 +221,10 @@ namespace Atlas.Server.Controllers
                 .Select(x => x.MemberId)
                 .FirstOrDefaultAsync();
 
-            var canEdit = await _securityService.HasPermission(PermissionType.Edit, site.Id, model.Forum.Id);
-            var authorized = canEdit && topicMemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
+            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var authorized = canEdit && topicMemberId == member.Id || canModerate || User.IsInRole(Consts.RoleNameAdmin);
 
             if (!authorized)
             {
@@ -255,8 +260,10 @@ namespace Atlas.Server.Controllers
                 .Select(x => x.MemberId)
                 .FirstOrDefaultAsync();
 
-            var canDelete = await _securityService.HasPermission(PermissionType.Delete, site.Id, forumId);
-            var authorized = canDelete && topicMemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
+            var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var authorized = canDelete && topicMemberId == member.Id || canModerate || User.IsInRole(Consts.RoleNameAdmin);
 
             if (!authorized)
             {
@@ -325,8 +332,10 @@ namespace Atlas.Server.Controllers
                 .Select(x => x.MemberId)
                 .FirstOrDefaultAsync();
 
-            var canEdit = await _securityService.HasPermission(PermissionType.Edit, site.Id, model.Forum.Id);
-            var authorized = canEdit && replyMemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
+            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var authorized = canEdit && replyMemberId == member.Id || canModerate || User.IsInRole(Consts.RoleNameAdmin);
 
             if (!authorized)
             {
@@ -364,8 +373,10 @@ namespace Atlas.Server.Controllers
                 .Select(x => x.MemberId)
                 .FirstOrDefaultAsync();
 
-            var canDelete = await _securityService.HasPermission(PermissionType.Delete, site.Id, forumId);
-            var authorized = canDelete && replyMemberId == member.Id || User.IsInRole(Consts.RoleNameAdmin);
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
+            var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var authorized = canDelete && replyMemberId == member.Id || canModerate || User.IsInRole(Consts.RoleNameAdmin);
 
             if (!authorized)
             {

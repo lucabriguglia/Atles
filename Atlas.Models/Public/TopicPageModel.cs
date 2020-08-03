@@ -13,6 +13,7 @@ namespace Atlas.Models.Public
         public bool CanReply { get; set; }
         public bool CanEdit { get; set; }
         public bool CanDelete { get; set; }
+        public bool CanModerate { get; set; }
 
         public class ForumModel
         {
