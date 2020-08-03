@@ -1,4 +1,4 @@
-# Atlas (Aalpha)
+# Atlas (alpha)
 A forum software built using ASP.NET Core Blazor WebAssembly.
 
 ## Technology
