@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Atlas.Models.Public.Members;
 
 namespace Atlas.Models.Public
 {
@@ -10,6 +12,7 @@ namespace Atlas.Models.Public
         Task<PostPageModel> BuildNewPostPageModelAsync(Guid siteId, Guid forumId);
         Task<PostPageModel> BuildEditPostPageModelAsync(Guid siteId, Guid forumId, Guid topicId);
         Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, QueryOptions options);
-        Task<MemberPageModel> BuildMemberPageModelAsync(Guid siteId, Guid memberId);
+        Task<MemberPageModelToFilter> BuildMemberPageModelToFilterAsync(Guid siteId, Guid memberId);
+        Task<MemberTopicModelsToFilter> BuildMemberTopicModelsToFilterAsync(Guid siteId, Guid memberId, int skip);
     }
 }

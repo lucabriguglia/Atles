@@ -1,6 +1,7 @@
 ﻿@page "/member/{id:guid}"
 @using Atlas.Models.Public
-
+@using Atlas.Models.Public.Members
+@inject HttpClient Http
 @inject AnonymousService Service;
 
 @if (Model == null)
@@ -22,11 +23,11 @@ else
 
             <h4 class="mb-4">@Model.Member.DisplayName</h4>
 
-            <div class="border border-secondary rounded p-2 bg-light text-center mb-3 mx-auto" style="width: 8rem;">
+            <div class="form-control rounded bg-light text-center mb-3 mx-auto" style="width: 8rem;">
                 Topics: <span class="font-weight-bold">@Model.Member.TotalTopics</span>
             </div>
 
-            <div class="border border-secondary rounded p-2 bg-light text-center mx-auto" style="width: 8rem;">
+            <div class="form-control rounded bg-light text-center mx-auto" style="width: 8rem;">
                 Replies: <span class="font-weight-bold">@Model.Member.TotalReplies</span>
             </div>
 
@@ -57,7 +58,7 @@ else
                                 </p>
                                 <div class="row small">
                                     <div class="col-md-6 font-weight-bold">
-                                        &nbsp;
+                                        <a href="/member/@Model.Member.Id">@Model.Member.DisplayName</a>
                                     </div>
                                     <div class="col-md-6 text-right">
                                         @topic.TimeStamp.ToShortDateString() @topic.TimeStamp.ToShortTimeString()
@@ -75,6 +76,9 @@ else
 }
 
 @code {
+    [CascadingParameter]
+    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
     [Parameter]
     public Guid Id { get; set; }
 
@@ -82,6 +86,18 @@ else
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await Service.GetFromJsonAsync<MemberPageModel>($"api/public/member/{Id}");
+        var authState = await AuthenticationStateTask;
+        var user = authState.User;
+
+        var requestUri = $"api/public/member/{Id}";
+
+        if (user.Identity.IsAuthenticated)
+        {
+            Model = await Http.GetFromJsonAsync<MemberPageModel>(requestUri);
+        }
+        else
+        {
+            Model = await Service.GetFromJsonAsync<MemberPageModel>(requestUri);
+        }
     }
 }

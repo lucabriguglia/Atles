@@ -54,7 +54,7 @@ namespace Atlas.Server.Controllers
 
             var modelToFilter = await _modelBuilder.BuildIndexPageModelToFilterAsync(site.Id);
 
-            var filteredModel = await GetFilteredModel(site.Id, modelToFilter);
+            var filteredModel = await GetFilteredIndexModel(site.Id, modelToFilter);
 
             return filteredModel;
         }
@@ -384,7 +384,7 @@ namespace Atlas.Server.Controllers
             return await Task.FromResult(Markdown.ToHtml(content));
         }
 
-        private async Task<IndexPageModel> GetFilteredModel(Guid siteId, IndexPageModelToFilter modelToFilter)
+        private async Task<IndexPageModel> GetFilteredIndexModel(Guid siteId, IndexPageModelToFilter modelToFilter)
         {
             var result = new IndexPageModel();
 

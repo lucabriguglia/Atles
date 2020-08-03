@@ -1,6 +1,11 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Domain.PermissionSets;
+using Atlas.Models;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Members;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -12,11 +17,18 @@ namespace Atlas.Server.Controllers
     {
         private readonly IContextService _contextService;
         private readonly IPublicModelBuilder _modelBuilder;
+        private readonly IPermissionModelBuilder _permissionModelBuilder;
+        private readonly ISecurityService _securityService;
 
-        public MemberController(IContextService contextService, IPublicModelBuilder modelBuilder)
+        public MemberController(IContextService contextService, 
+            IPublicModelBuilder modelBuilder, 
+            IPermissionModelBuilder permissionModelBuilder, 
+            ISecurityService securityService)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
+            _permissionModelBuilder = permissionModelBuilder;
+            _securityService = securityService;
         }
 
         [HttpGet("{id}")]
@@ -24,14 +36,73 @@ namespace Atlas.Server.Controllers
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var model = await _modelBuilder.BuildMemberPageModelAsync(site.Id, id);
+            var modelToFilter = await _modelBuilder.BuildMemberPageModelToFilterAsync(site.Id, id);
 
-            if (model == null)
+            if (modelToFilter == null)
             {
                 return NotFound();
             }
 
-            return model;
+            var result = new MemberPageModel
+            {
+                Member = new MemberModel
+                {
+                    Id = modelToFilter.Member.Id,
+                    DisplayName = modelToFilter.Member.DisplayName,
+                    TotalTopics = modelToFilter.Member.TotalTopics,
+                    TotalReplies = modelToFilter.Member.TotalReplies,
+                    GravatarHash = modelToFilter.Member.GravatarHash
+                },
+                LastTopics = await GetFilteredMemberTopicModels(site.Id, modelToFilter.MemberTopicModelsToFilter)
+            };
+
+            const int maxNumberOfTopicsToReturn = 5;
+            var repeat = 0;
+
+            while (result.LastTopics.Count < maxNumberOfTopicsToReturn && 
+                   result.LastTopics.Count < modelToFilter.TotalMemberTopics &&
+                   modelToFilter.TotalMemberTopics >= (repeat + 1) * maxNumberOfTopicsToReturn &&
+                   repeat < 3)
+            {
+                repeat++;
+                var furtherMemberTopicModelsToFilter = await _modelBuilder.BuildMemberTopicModelsToFilterAsync(site.Id, id, repeat * maxNumberOfTopicsToReturn);
+                var furtherTopics = await GetFilteredMemberTopicModels(site.Id, furtherMemberTopicModelsToFilter);
+                foreach (var furtherTopic in furtherTopics)
+                {
+                    result.LastTopics.Add(furtherTopic);
+                    if (result.LastTopics.Count == maxNumberOfTopicsToReturn)
+                    {
+                        break;
+                    }
+                }
+            }
+
+            return result;
+        }
+
+        private async Task<IList<MemberTopicModel>> GetFilteredMemberTopicModels(Guid siteId, MemberTopicModelsToFilter memberTopicModelsToFilter)
+        {
+            var result = new List<MemberTopicModel>();
+
+            foreach (var topic in memberTopicModelsToFilter.Topics)
+            {
+                var topicPermission = memberTopicModelsToFilter.TopicPermissions.FirstOrDefault(x => x.TopicId == topic.Id);
+                var permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, topicPermission.PermissionSetId);
+                var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
+                if (!canViewTopics) continue;
+                var canRead = _securityService.HasPermission(PermissionType.Read, permissions);
+                result.Add(new MemberTopicModel
+                {
+                    Id = topic.Id,
+                    ForumId = topic.ForumId,
+                    Title = topic.Title,
+                    TimeStamp = topic.TimeStamp,
+                    TotalReplies = topic.TotalReplies,
+                    CanRead = canRead
+                });
+            }
+
+            return result;
         }
     }
 }
