@@ -39,10 +39,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        // TODO: Add GravatarHash as default claim
         var authState = await AuthenticationStateTask;
         var user = authState.User;
-
         if (user.Identity.IsAuthenticated)
         {
             var emailClaim = user.Claims.FirstOrDefault(x => x.Type == "name");
