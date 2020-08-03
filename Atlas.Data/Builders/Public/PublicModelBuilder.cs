@@ -1,7 +1,5 @@
 ﻿using System;
 using System.Linq;
-using System.Security.Cryptography;
-using System.Text;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
@@ -16,11 +14,13 @@ namespace Atlas.Data.Builders.Public
     {
         private readonly AtlasDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
+        private readonly IGravatarService _gravatarService;
 
-        public PublicModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager)
+        public PublicModelBuilder(AtlasDbContext dbContext, ICacheManager cacheManager, IGravatarService gravatarService)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
+            _gravatarService = gravatarService;
         }
 
         public async Task<IndexPageModelToFilter> BuildIndexPageModelToFilterAsync(Guid siteId)
@@ -250,7 +250,7 @@ namespace Atlas.Data.Builders.Public
             return result;
         }
 
-        public async Task<MemberPageModel> BuildMemberPageModelAsync(Guid memberId)
+        public async Task<MemberPageModel> BuildMemberPageModelAsync(Guid siteId, Guid memberId)
         {
             var result = new MemberPageModel();
 
@@ -270,35 +270,34 @@ namespace Atlas.Data.Builders.Public
                 DisplayName = member.DisplayName,
                 TotalTopics = member.TopicsCount,
                 TotalReplies = member.RepliesCount,
-                GravatarHash = HashEmailForGravatar(member.Email)
+                GravatarHash = _gravatarService.HashEmailForGravatar(member.Email)
             };
 
-            return result;
-        }
+            var lastTopics = await _dbContext.Topics
+                .Where(x =>
+                    x.Forum.Category.SiteId == siteId &&
+                    x.MemberId == member.Id &&
+                    x.Status == StatusType.Published)
+                .OrderByDescending(x => x.TimeStamp)
+                .Take(5)
+                .ToListAsync();
 
-        /// Hashes an email with MD5.  Suitable for use with Gravatar profile
-        /// image urls
-        /// https://www.danesparza.net/2010/10/using-gravatar-images-with-c-asp-net/
-        public static string HashEmailForGravatar(string email)
-        {
-            // Create a new instance of the MD5CryptoServiceProvider object.  
-            MD5 md5Hasher = MD5.Create();
-
-            // Convert the input string to a byte array and compute the hash.  
-            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(email));
-
-            // Create a new Stringbuilder to collect the bytes  
-            // and create a string.  
-            StringBuilder sBuilder = new StringBuilder();
-
-            // Loop through each byte of the hashed data  
-            // and format each one as a hexadecimal string.  
-            for (int i = 0; i < data.Length; i++)
+            foreach (var topic in lastTopics)
             {
-                sBuilder.Append(data[i].ToString("x2"));
+                // TODO: Check permissions
+
+                result.LastTopics.Add(new MemberPageModel.TopicModel
+                {
+                    Id = topic.Id,
+                    ForumId = topic.ForumId,
+                    Title = topic.Title,
+                    TimeStamp = topic.TimeStamp,
+                    TotalReplies = topic.RepliesCount,
+                    CanRead = true
+                });
             }
 
-            return sBuilder.ToString();  // Return the hexadecimal string. 
+            return result;
         }
     }
 }

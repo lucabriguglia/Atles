@@ -22,7 +22,9 @@ namespace Atlas.Server.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<MemberPageModel>> Index(Guid id)
         {
-            var model = await _modelBuilder.BuildMemberPageModelAsync(id);
+            var site = await _contextService.CurrentSiteAsync();
+
+            var model = await _modelBuilder.BuildMemberPageModelAsync(site.Id, id);
 
             if (model == null)
             {

@@ -16,7 +16,7 @@ else
         </ol>
     </nav>
 
-    <div class="row m-0">
+    <div class="row">
         <div class="col-md-2 text-center">
             <Avatar GravatarHash="@Model.Member.GravatarHash" GravatarSize="120"></Avatar>
 
@@ -32,7 +32,44 @@ else
 
         </div>
         <div class="col-md-10">
-            &nbsp;
+            <h4 class="mb-3">Last Topics</h4>
+
+            @if (Model.LastTopics.Count == 0)
+            {
+                <NoRecords Text="No topics found for this user." />
+            }
+            else
+            {
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var topic in Model.LastTopics)
+                        {
+                            <li class="list-group-item py-3">
+                                <p class="card-text">
+                                    @if (topic.CanRead)
+                                    {
+                                        <a href="/forum/@topic.ForumId/@topic.Id">@topic.Title</a>
+                                    }
+                                    else
+                                    {
+                                        @topic.Title
+                                    }
+                                </p>
+                                <div class="row small">
+                                    <div class="col-md-6 font-weight-bold">
+                                        <a href="/member/@Model.Member.Id">@Model.Member.DisplayName</a>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        @topic.TimeStamp.ToShortDateString() @topic.TimeStamp.ToShortTimeString()
+                                        &nbsp;&nbsp;
+                                        <span class="font-weight-bold">@topic.TotalReplies</span> Replies
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
         </div>
     </div>
 }
