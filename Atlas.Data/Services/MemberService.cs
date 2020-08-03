@@ -101,9 +101,21 @@ namespace Atlas.Data.Services
                 command.Id,
                 new
                 {
-                    command.DisplayName,
-                    Roles = string.Join(", ", command.Roles)
+                    command.DisplayName
                 }));
+
+            if (command.Roles != null)
+            {
+                _dbContext.Events.Add(new Event(command.SiteId,
+                    command.MemberId,
+                    EventType.Updated,
+                    typeof(Member),
+                    command.Id,
+                    new
+                    {
+                        Roles = string.Join(", ", command.Roles)
+                    }));
+            }
 
             await _dbContext.SaveChangesAsync();
         }
