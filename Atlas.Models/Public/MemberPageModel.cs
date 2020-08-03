@@ -12,6 +12,7 @@ namespace Atlas.Models.Public
             public string DisplayName { get; set; }
             public int TotalTopics { get; set; }
             public int TotalReplies { get; set; }
+            public string GravatarHash { get; set; }
         }
     }
 }
