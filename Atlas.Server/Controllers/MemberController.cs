@@ -31,12 +31,30 @@ namespace Atlas.Server.Controllers
             _securityService = securityService;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<MemberPageModel>> Index(Guid id)
+        [HttpGet]
+        [Route("")]
+        [Route("{id}")]
+        public async Task<ActionResult<MemberPageModel>> Index(Guid? id = null)
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var modelToFilter = await _modelBuilder.BuildMemberPageModelToFilterAsync(site.Id, id);
+            var memberId = Guid.Empty;
+
+            if (id == null)
+            {
+                var member = await _contextService.CurrentMemberAsync();
+
+                if (member != null)
+                {
+                    memberId = member.Id;
+                }
+            }
+            else
+            {
+                memberId = id.Value;
+            }
+
+            var modelToFilter = await _modelBuilder.BuildMemberPageModelToFilterAsync(site.Id, memberId);
 
             if (modelToFilter == null)
             {
@@ -65,7 +83,7 @@ namespace Atlas.Server.Controllers
                    repeat < 3)
             {
                 repeat++;
-                var furtherMemberTopicModelsToFilter = await _modelBuilder.BuildMemberTopicModelsToFilterAsync(site.Id, id, repeat * maxNumberOfTopicsToReturn);
+                var furtherMemberTopicModelsToFilter = await _modelBuilder.BuildMemberTopicModelsToFilterAsync(site.Id, memberId, repeat * maxNumberOfTopicsToReturn);
                 var furtherTopics = await GetFilteredMemberTopicModels(site.Id, furtherMemberTopicModelsToFilter);
                 foreach (var furtherTopic in furtherTopics)
                 {

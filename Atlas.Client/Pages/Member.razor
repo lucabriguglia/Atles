@@ -1,5 +1,5 @@
-﻿@page "/member/{id:guid}"
-@using Atlas.Models.Public
+﻿@page "/member"
+@page "/member/{id:guid}"
 @using Atlas.Models.Public.Members
 @inject HttpClient Http
 @inject AnonymousService Service;
@@ -77,7 +77,7 @@ else
     private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
     [Parameter]
-    public Guid Id { get; set; }
+    public Guid? Id { get; set; }
 
     private MemberPageModel Model { get; set; }
 
@@ -86,7 +86,7 @@ else
         var authState = await AuthenticationStateTask;
         var user = authState.User;
 
-        var requestUri = $"api/public/member/{Id}";
+        var requestUri = Id == null ? "api/public/member" : $"api/public/member/{Id.Value}";
 
         if (user.Identity.IsAuthenticated)
         {

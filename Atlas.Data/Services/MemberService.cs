@@ -1,13 +1,11 @@
 ﻿using System;
 using System.Data;
-using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Domain.Members;
 using Atlas.Domain.Members.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace Atlas.Data.Services
 {
@@ -54,7 +52,7 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        private async Task<string> GenerateDisplayName()
+        public async Task<string> GenerateDisplayName()
         {
             var displayName = string.Empty;
             var exists = true;
