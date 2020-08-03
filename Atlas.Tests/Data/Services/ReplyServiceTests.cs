@@ -156,15 +156,18 @@ namespace Atlas.Tests.Data.Services
             var categoryId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
             var topicId = Guid.NewGuid();
+            var memberId = Guid.NewGuid();
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, categoryId, "Forum", "My Forum", 1);
             var topic = new Topic(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
-            var reply = new Reply(Guid.NewGuid(), topicId, Guid.NewGuid(), "Content", StatusType.Published);
+            var reply = new Reply(Guid.NewGuid(), topicId, memberId, "Content", StatusType.Published);
+            var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
             category.IncreaseRepliesCount();
             forum.IncreaseRepliesCount();
             topic.IncreaseRepliesCount();
+            member.IncreaseRepliesCount();
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -172,6 +175,7 @@ namespace Atlas.Tests.Data.Services
                 dbContext.Forums.Add(forum);
                 dbContext.Topics.Add(topic);
                 dbContext.Replies.Add(reply);
+                dbContext.Members.Add(member);
                 await dbContext.SaveChangesAsync();
             }
 
@@ -201,12 +205,14 @@ namespace Atlas.Tests.Data.Services
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
                 var updatedTopic = await dbContext.Topics.FirstOrDefaultAsync(x => x.Id == topic.Id);
+                var updatedMember = await dbContext.Members.FirstOrDefaultAsync(x => x.Id == member.Id);
 
                 Assert.AreEqual(StatusType.Deleted, replyDeleted.Status);
                 Assert.NotNull(replyEvent);
                 Assert.AreEqual(0, updatedCategory.RepliesCount);
                 Assert.AreEqual(0, updatedForum.RepliesCount);
                 Assert.AreEqual(0, updatedTopic.RepliesCount);
+                Assert.AreEqual(0, updatedMember.RepliesCount);
             }
         }
     }

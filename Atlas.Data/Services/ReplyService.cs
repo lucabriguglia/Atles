@@ -102,6 +102,7 @@ namespace Atlas.Data.Services
         public async Task DeleteAsync(DeleteReply command)
         {
             var reply = await _dbContext.Replies
+                .Include(x => x.Member)
                 .Include(x => x.Topic)
                     .ThenInclude(x => x.Forum)
                         .ThenInclude(x => x.Category)
@@ -128,6 +129,7 @@ namespace Atlas.Data.Services
             reply.Topic.DecreaseRepliesCount();
             reply.Topic.Forum.DecreaseRepliesCount();
             reply.Topic.Forum.Category.DecreaseRepliesCount();
+            reply.Member.DecreaseRepliesCount();
 
             await _dbContext.SaveChangesAsync();
         }
