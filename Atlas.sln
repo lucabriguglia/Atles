@@ -30,9 +30,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{707C6370-0
 		docs\index.md = docs\index.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlas.Domain.Tests", "test\Atlas.Domain.Tests\Atlas.Domain.Tests.csproj", "{C72D981B-4499-4DAD-976E-634B02B95B26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Domain.Tests", "test\Atlas.Domain.Tests\Atlas.Domain.Tests.csproj", "{C72D981B-4499-4DAD-976E-634B02B95B26}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atlas.Data.Tests", "test\Atlas.Data.Tests\Atlas.Data.Tests.csproj", "{3DABE5C5-A015-4217-91EE-5282E829AEF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Data.Tests", "test\Atlas.Data.Tests\Atlas.Data.Tests.csproj", "{3DABE5C5-A015-4217-91EE-5282E829AEF8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
