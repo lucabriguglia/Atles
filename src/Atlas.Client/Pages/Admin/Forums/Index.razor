@@ -29,7 +29,7 @@
             <div class="input-group-prepend">
                 <label class="input-group-text" for="categoryId">Category</label>
             </div>
-            <select class="custom-select" id="categoryId" @onchange="CategoryChanged">
+            <select class="custom-select" id="categoryId" @onchange="CategoryChangedAsync">
                 @foreach (var option in Model.Categories)
                 {
                     <option value=@option.Id selected=@(CategoryId == option.Id)>@option.Name</option>
@@ -67,13 +67,13 @@ else
                     <td class="text-center">
                         @if (item.SortOrder > 1)
                         {
-                            <button type="button" class="btn btn-link btn-sm" @onclick="() => MoveUp(item.Id)">
+                            <button type="button" class="btn btn-link btn-sm" @onclick="@(async () => await MoveUpAsync(item.Id))">
                                 <span class="fas fa-arrow-up"></span>
                             </button>
                         }
                         @if (item.SortOrder < Model.Forums.Count)
                         {
-                            <button type="button" class="btn btn-link btn-sm" @onclick="() => MoveDown(item.Id)">
+                            <button type="button" class="btn btn-link btn-sm" @onclick="@(async () => await MoveDownAsync(item.Id))">
                                 <span class="fas fa-arrow-down"></span>
                             </button>
                         }
@@ -112,20 +112,20 @@ else
         Model = await Http.GetFromJsonAsync<IndexPageModel>(requestUri);
     }
 
-    private async Task CategoryChanged(ChangeEventArgs args)
+    private async Task CategoryChangedAsync(ChangeEventArgs args)
     {
         CategoryId = new Guid(args.Value.ToString());
         Model = await Http.GetFromJsonAsync<IndexPageModel>($"api/admin/forums/index-model/{CategoryId}");
         StateHasChanged();
     }
 
-    private async Task MoveUp(Guid id)
+    private async Task MoveUpAsync(Guid id)
     {
         await Http.PostAsJsonAsync("api/admin/forums/move-up", id);
         await OnInitializedAsync();
     }
 
-    private async Task MoveDown(Guid id)
+    private async Task MoveDownAsync(Guid id)
     {
         await Http.PostAsJsonAsync("api/admin/forums/move-down", id);
         await OnInitializedAsync();

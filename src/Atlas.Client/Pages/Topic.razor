@@ -31,7 +31,7 @@ else
             <div class="col-md-6 text-right mb-3">
                 @if (Model.CanReply)
                 {
-                    <a href="#" @onclick:preventDefault="true" @onclick="New" class="btn btn-primary" role="button">New Reply</a>
+                    <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewAsync())" class="btn btn-primary" role="button">New Reply</a>
                 }
                 @if (CanEditTopic())
                 {
@@ -87,7 +87,7 @@ else
                                 <div class="col-md-12 text-right">
                                     @if (CanEditReply(reply.UserId))
                                     {
-                                        <a href="#" @onclick:preventDefault="true" @onclick="() => Edit(reply.Id, reply.OriginalContent, reply.MemberId)">Edit</a>
+                                        <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await EditAsync(reply.Id, reply.OriginalContent, reply.MemberId))">Edit</a>
                                     }
                                     @if (CanDeleteReply(reply.UserId))
                                     {
@@ -111,7 +111,7 @@ else
             <div class="row">
                 <div class="col-md-8">
                     <a id="reply"></a>
-                    <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="OnValidSubmit">
+                    <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="OnValidSubmitAsync">
                         <DataAnnotationsValidator />
                         <Editor @bind-Value="@Model.Post.Content" Rows="10"></Editor>
                         <div class="form-group">
@@ -222,12 +222,12 @@ else
         DeleteReplyId = Id;
     }
 
-    private async Task New()
+    private async Task NewAsync()
     {
         await JsRuntime.InvokeVoidAsync("scrollToTarget", "reply");
     }
 
-    private async Task Edit(Guid id, string content, Guid memberId)
+    private async Task EditAsync(Guid id, string content, Guid memberId)
     {
         Model.Post.Id = id;
         Model.Post.Content = content;
@@ -235,7 +235,7 @@ else
         await JsRuntime.InvokeVoidAsync("scrollToTarget", "reply");
     }
 
-    private async Task OnValidSubmit()
+    private async Task OnValidSubmitAsync()
     {
         var requestUri = Model.Post.Id != null
             ? "api/public/replies/update-reply"

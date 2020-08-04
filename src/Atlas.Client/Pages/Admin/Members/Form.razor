@@ -5,7 +5,7 @@
 
 <div class="row">
     <div class="col-md-4">
-        <EditForm EditContext="@_editContext" OnSubmit="OnSubmit">
+        <EditForm EditContext="@_editContext" OnSubmit="OnSubmitAsync">
             <DataAnnotationsValidator />
             <div class="form-group">
                 <label for="displayName" class="control-label">Display Name</label>
@@ -52,11 +52,11 @@
         _validationMessageStore.Clear(e.FieldIdentifier);
     }
 
-    private async Task OnSubmit()
+    private async Task OnSubmitAsync()
     {
         if (_editContext.Validate())
         {
-            if (await NameIsUnique(_editContext))
+            if (await NameIsUniqueAsync(_editContext))
             {
                 await OnValidSubmit.InvokeAsync(null);
             }
@@ -70,7 +70,7 @@
         }
     }
 
-    private async Task<bool> NameIsUnique(EditContext editContext)
+    private async Task<bool> NameIsUniqueAsync(EditContext editContext)
     {
         var displayNameProp = editContext.Model.GetType().GetProperty("DisplayName");
         var displayNameVal = displayNameProp.GetValue(editContext.Model).ToString();

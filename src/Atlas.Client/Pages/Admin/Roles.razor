@@ -1,5 +1,6 @@
 ﻿@layout AdminLayout
 @page "/admin/roles"
+@using Atlas.Domain
 @using Atlas.Models.Admin.Roles
 @attribute [Authorize(Policy = "Admin")]
 @inject NavigationManager NavigationManager
@@ -24,7 +25,7 @@ else
             <h3 class="mb-3">@Title</h3>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="#" @onclick:preventDefault="true" @onclick="New" class="btn btn-primary" role="button">New Role</a>
+            <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewAsync())" class="btn btn-primary" role="button">New Role</a>
         </div>
     </div>
 
@@ -47,8 +48,16 @@ else
                     <tr>
                         <td>@item.Name</td>
                         <td>
-                            <button type="button" class="btn btn-secondary" role="button" @onclick="@(async () => await  Edit(item.Id, item.Name))">Edit</button>
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">Delete</button>
+                            @if (item.Name != Consts.RoleNameAdmin)
+                            {
+                                <button type="button" class="btn btn-secondary" role="button" @onclick="@(async () => await  EditAsync(item.Id, item.Name))">Edit</button>
+                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">Delete</button>
+                            }
+                            else
+                            {
+                                <button type="button" class="btn btn-secondary disabled" role="button">Edit</button>
+                                <button type="button" class="btn btn-danger disabled">Delete</button>
+                            }
                         </td>
                     </tr>
                 }
@@ -67,7 +76,7 @@ else
 
     <div class="row">
         <div class="col-md-4">
-            <EditForm Model="Model.EditRole" OnValidSubmit="OnSubmit">
+            <EditForm Model="Model.EditRole" OnValidSubmit="@(async () => await OnValidSubmitAsync())">
                 <DataAnnotationsValidator />
                 <div class="form-group">
                     <label for="name" class="control-label">Name</label>
@@ -100,12 +109,12 @@ else
         Model = await Http.GetFromJsonAsync<IndexPageModel>("api/admin/roles/list");
     }
 
-    private async Task New()
+    private async Task NewAsync()
     {
         await JsRuntime.InvokeVoidAsync("scrollToTarget", "form");
     }
 
-    private async Task Edit(string id, string name)
+    private async Task EditAsync(string id, string name)
     {
         IsEdit = true;
         Model.EditRole.Id = id;
@@ -113,7 +122,7 @@ else
         await JsRuntime.InvokeVoidAsync("scrollToTarget", "form");
     }
 
-    private async Task OnSubmit()
+    private async Task OnValidSubmitAsync()
     {
         var action = IsEdit ? "update" : "create";
         await Http.PostAsJsonAsync($"api/admin/roles/{action}", Model.EditRole);

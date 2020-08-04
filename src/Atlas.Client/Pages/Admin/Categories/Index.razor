@@ -49,13 +49,13 @@ else
                     <td class="text-center">
                         @if (item.SortOrder > 1)
                         {
-                            <button type="button" class="btn btn-link btn-sm" @onclick="() => MoveUp(item.Id)">
+                            <button type="button" class="btn btn-link btn-sm" @onclick="@(async () => await MoveUpAsync(item.Id))">
                                 <span class="fas fa-arrow-up"></span>
                             </button>
                         }
                         @if (item.SortOrder < Model.Categories.Count)
                         {
-                            <button type="button" class="btn btn-link btn-sm" @onclick="() => MoveDown(item.Id)">
+                            <button type="button" class="btn btn-link btn-sm" @onclick="@(async () => await MoveDownAsync(item.Id))">
                                 <span class="fas fa-arrow-down"></span>
                             </button>
                         }
@@ -91,13 +91,13 @@ else
         Model = await Http.GetFromJsonAsync<IndexPageModel>("api/admin/categories/list");
     }
 
-    private async Task MoveUp(Guid id)
+    private async Task MoveUpAsync(Guid id)
     {
         await Http.PostAsJsonAsync("api/admin/categories/move-up", id);
         await OnInitializedAsync();
     }
 
-    private async Task MoveDown(Guid id)
+    private async Task MoveDownAsync(Guid id)
     {
         await Http.PostAsJsonAsync("api/admin/categories/move-down", id);
         await OnInitializedAsync();
