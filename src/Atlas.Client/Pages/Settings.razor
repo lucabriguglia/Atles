@@ -17,22 +17,41 @@ else
 
     <h3>Settings</h3>
 
-    <Avatar GravatarHash="@Model.Member.GravatarHash" GravatarSize="128" Class="mb-3"></Avatar>
-
     <div class="row">
-        <div class="col-md-4">
-            <EditForm EditContext="@_editContext" OnSubmit="OnSubmitAsync">
-                <DataAnnotationsValidator />
-                <div class="form-group">
-                    <label for="displayName" class="control-label">Display Name</label>
-                    <InputText id="displayName" @bind-Value="Model.Member.DisplayName" Class="form-control" />
-                    <ValidationMessage For="@(() => Model.Member.DisplayName)" />
+        <div class="col-md-2 text-center">
+            <Avatar GravatarHash="@Model.Member.GravatarHash" GravatarSize="128" Class="mb-3"></Avatar>
+            <p class="small">Set up your profile image on <a href="https://www.gravatar.com" title="Gravatar">Gravatar</a></p>
+        </div>
+        <div class="col-md-10">
+            <div class="row">
+                <div class="col-md-4">
+                    <EditForm EditContext="@_editContext" OnSubmit="OnSubmitAsync">
+                        <DataAnnotationsValidator />
+                        <div class="form-group">
+                            <label for="displayName" class="control-label">Display Name</label>
+                            <InputText id="displayName" @bind-Value="Model.Member.DisplayName" Class="form-control" />
+                            <ValidationMessage For="@(() => Model.Member.DisplayName)" />
+                        </div>
+                        <div class="form-group">
+                            <input type="submit" value="Update" class="btn btn-primary" />
+                        </div>
+                        <ValidationSummary />
+                    </EditForm>
                 </div>
-                <div class="form-group">
-                    <input type="submit" value="Update" class="btn btn-primary" />
+            </div>
+            @if (Savings)
+            {
+                <Loading />
+            }
+            @if (Saved)
+            {
+                <div class="alert alert-success alert-dismissible fade show" role="alert">
+                    Settings updated!
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
-                <ValidationSummary />
-            </EditForm>
+            }
         </div>
     </div>
 }
@@ -42,7 +61,8 @@ else
     private EditContext _editContext;
     private ValidationMessageStore _validationMessageStore;
     private string _currentDisplayName;
-
+    public bool Savings { get; set; }
+    public bool Saved { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
@@ -52,8 +72,6 @@ else
         _editContext.OnFieldChanged += HandleFieldChanged;
         _validationMessageStore = new ValidationMessageStore(_editContext);
         _currentDisplayName = Model.Member.DisplayName;
-
-
     }
 
     private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
@@ -63,11 +81,16 @@ else
 
     private async Task OnSubmitAsync()
     {
+        Savings = true;
+        Saved = false;
         if (_editContext.Validate())
         {
             if (await NameIsUniqueAsync(_editContext))
             {
                 await Http.PostAsJsonAsync("api/public/settings/update", Model);
+                _currentDisplayName = Model.Member.DisplayName;
+                Savings = false;
+                Saved = true;
             }
             else
             {
