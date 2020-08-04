@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Domain.PermissionSets;
+using Atlas.Domain.Sites;
 using Atlas.Models;
 using Atlas.Models.Public;
 using Atlas.Server.Services;
@@ -41,14 +42,6 @@ namespace Atlas.Server.Controllers.Public
 
             return filteredModel;
         }
-
-        [Authorize]
-        [HttpPost("preview")]
-        public async Task<string> Preview([FromBody]string content)
-        {
-            return await Task.FromResult(Markdown.ToHtml(content));
-        }
-
         private async Task<IndexPageModel> GetFilteredIndexModel(Guid siteId, IndexPageModelToFilter modelToFilter)
         {
             var result = new IndexPageModel();
@@ -80,6 +73,19 @@ namespace Atlas.Server.Controllers.Public
             }
 
             return result;
+        }
+
+        [Authorize]
+        [HttpPost("preview")]
+        public async Task<string> Preview([FromBody]string content)
+        {
+            return await Task.FromResult(Markdown.ToHtml(content));
+        }
+
+        [HttpGet("current-site")]
+        public async Task<SiteModel> CurrentSite()
+        {
+            return await _contextService.CurrentSiteAsync();
         }
     }
 }

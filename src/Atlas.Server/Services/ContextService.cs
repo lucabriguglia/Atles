@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Data.Caching;
 using Atlas.Domain.Members;
-using Atlas.Domain.Sites;
+using Atlas.Models.Public;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
@@ -28,9 +28,18 @@ namespace Atlas.Server.Services
             _memberService = memberService;
         }
 
-        public async Task<Site> CurrentSiteAsync() =>
-            await _cacheManager.GetOrSetAsync(CacheKeys.Site("Default"), () => 
+        public async Task<SiteModel> CurrentSiteAsync()
+        {
+            var currentSite = await _cacheManager.GetOrSetAsync(CacheKeys.Site("Default"), () => 
                 _dbContext.Sites.FirstOrDefaultAsync(x => x.Name == "Default"));
+
+            return new SiteModel
+            {
+                Id = currentSite.Id,
+                Name = currentSite.Name,
+                Title = currentSite.Title
+            };
+        }
 
         public async Task<Member> CurrentMemberAsync()
         {
