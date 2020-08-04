@@ -1,8 +1,8 @@
-﻿@using System.Security.Cryptography
-@using System.Text
+﻿@using Atlas.Models.Public
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
+@inject HttpClient Http
 
 <AuthorizeView Policy="Admin">
     <li class="nav-item">
@@ -44,12 +44,8 @@
         var user = authState.User;
         if (user.Identity.IsAuthenticated)
         {
-            var emailClaim = user.Claims.FirstOrDefault(x => x.Type == "name");
-            var md5Hasher = MD5.Create();
-            var data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(emailClaim.Value));
-            var sBuilder = new StringBuilder();
-            for (var i = 0; i < data.Length; i++) sBuilder.Append(data[i].ToString("x2"));
-            GravatarHash = sBuilder.ToString();
+            var currentMember = await Http.GetFromJsonAsync<CurrentMemberModel>("api/public/current-member");
+            GravatarHash = currentMember.GravatarHash;
         }
     }
 

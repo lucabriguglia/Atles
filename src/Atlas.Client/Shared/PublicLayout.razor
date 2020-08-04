@@ -46,11 +46,11 @@
 </footer>
 
 @code {
-    public SiteModel Site { get; set; }
+    public CurrentSiteModel Site { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         await JSRuntime.InvokeVoidAsync("addCssFile", "public");
-        Site = await AnonymousService.GetFromJsonAsync<SiteModel>("api/public/current-site");
+        Site = await AnonymousService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
     }
 }

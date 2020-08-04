@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Domain.PermissionSets;
-using Atlas.Domain.Sites;
 using Atlas.Models;
 using Atlas.Models.Public;
 using Atlas.Server.Services;
@@ -83,9 +82,16 @@ namespace Atlas.Server.Controllers.Public
         }
 
         [HttpGet("current-site")]
-        public async Task<SiteModel> CurrentSite()
+        public async Task<CurrentSiteModel> CurrentSite()
         {
             return await _contextService.CurrentSiteAsync();
+        }
+
+        [Authorize]
+        [HttpGet("current-member")]
+        public async Task<CurrentMemberModel> CurrentMember()
+        {
+            return await _contextService.CurrentMemberAsync();
         }
     }
 }

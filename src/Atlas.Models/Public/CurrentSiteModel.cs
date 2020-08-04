@@ -2,7 +2,7 @@
 
 namespace Atlas.Models.Public
 {
-    public class SiteModel
+    public class CurrentSiteModel
     {
         public Guid Id { get; set; }
         public string Name { get; set; }
