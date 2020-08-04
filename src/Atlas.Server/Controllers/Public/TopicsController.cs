@@ -83,7 +83,8 @@ namespace Atlas.Server.Controllers.Public
                 return NotFound();
             }
 
-            var canPost = await _securityService.HasPermission(PermissionType.Start, site.Id, model.Forum.Id);
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
+            var canPost = _securityService.HasPermission(PermissionType.Start, permissions);
 
             if (!canPost)
             {
@@ -127,7 +128,8 @@ namespace Atlas.Server.Controllers.Public
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var canPost = await _securityService.HasPermission(PermissionType.Start, site.Id, model.Forum.Id);
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
+            var canPost = _securityService.HasPermission(PermissionType.Start, permissions);
 
             if (!canPost)
             {

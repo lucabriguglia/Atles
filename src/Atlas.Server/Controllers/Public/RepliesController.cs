@@ -45,7 +45,8 @@ namespace Atlas.Server.Controllers.Public
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var canReply = await _securityService.HasPermission(PermissionType.Reply, site.Id, model.Forum.Id);
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
+            var canReply = _securityService.HasPermission(PermissionType.Reply, permissions);
 
             if (!canReply)
             {
