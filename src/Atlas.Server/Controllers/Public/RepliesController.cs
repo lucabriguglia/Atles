@@ -85,7 +85,7 @@ namespace Atlas.Server.Controllers.Public
                 MemberId = member.Id
             };
 
-            var replyMemberId = await _dbContext.Replies
+            var replyMemberId = await _dbContext.Posts
                 .Where(x =>
                     x.Id == command.Id &&
                     x.TopicId == command.TopicId &&
@@ -125,7 +125,7 @@ namespace Atlas.Server.Controllers.Public
                 MemberId = member.Id
             };
 
-            var replyMemberId = await _dbContext.Replies
+            var replyMemberId = await _dbContext.Posts
                 .Where(x =>
                     x.Id == command.Id &&
                     x.TopicId == command.TopicId &&

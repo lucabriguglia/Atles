@@ -1,4 +1,5 @@
 ﻿using System;
+using Atlas.Domain.Posts;
 using AutoFixture;
 using NUnit.Framework;
 
@@ -11,13 +12,15 @@ namespace Atlas.Domain.Tests.Replies
         public void New()
         {
             var topicId = Guid.NewGuid();
+            var forumId = Guid.NewGuid();
             var memberId = Guid.NewGuid();
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            var sut = new Reply(topicId, memberId, content, status);
+            var sut = Post.CreateReply(topicId, forumId, memberId, content, status);
 
             Assert.AreEqual(topicId, sut.TopicId, nameof(sut.TopicId));
+            Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
             Assert.AreEqual(memberId, sut.MemberId, nameof(sut.MemberId));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
@@ -28,14 +31,16 @@ namespace Atlas.Domain.Tests.Replies
         {
             var id = Guid.NewGuid();
             var topicId = Guid.NewGuid();
+            var forumId = Guid.NewGuid();
             var memberId = Guid.NewGuid();
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            var sut = new Reply(id, topicId, memberId, content, status);
+            var sut = Post.CreateReply(id, topicId, forumId, memberId, content, status);
 
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
             Assert.AreEqual(topicId, sut.TopicId, nameof(sut.TopicId));
+            Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
             Assert.AreEqual(memberId, sut.MemberId, nameof(sut.MemberId));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
@@ -44,7 +49,7 @@ namespace Atlas.Domain.Tests.Replies
         [Test]
         public void Update_details()
         {
-            var sut = Fixture.Create<Reply>();
+            var sut = Fixture.Create<Post>();
 
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
@@ -58,7 +63,7 @@ namespace Atlas.Domain.Tests.Replies
         [Test]
         public void Delete()
         {
-            var sut = Fixture.Create<Reply>();
+            var sut = Fixture.Create<Post>();
 
             sut.Delete();
 

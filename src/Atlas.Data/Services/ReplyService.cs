@@ -33,6 +33,7 @@ namespace Atlas.Data.Services
 
             var reply = Post.CreateReply(command.Id,
                 command.TopicId,
+                command.ForumId,
                 command.MemberId,
                 command.Content,
                 command.Status);
@@ -47,6 +48,7 @@ namespace Atlas.Data.Services
                 new 
                 {
                     command.TopicId,
+                    command.ForumId,
                     command.Content,
                     command.Status
                 }));

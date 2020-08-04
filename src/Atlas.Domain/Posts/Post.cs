@@ -44,7 +44,7 @@ namespace Atlas.Domain.Posts
 
         public static Post CreateReply(Guid id, Guid topicId, Guid forumId, Guid memberId, string content, StatusType status)
         {
-            return new Post(id, null, topicId, memberId, null, content, status);
+            return new Post(id, topicId, forumId, memberId, null, content, status);
         }
 
         private Post(Guid id, Guid? topicId, Guid forumId, Guid memberId, string title, string content, StatusType status)

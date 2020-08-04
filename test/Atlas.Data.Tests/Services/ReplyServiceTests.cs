@@ -100,7 +100,7 @@ namespace Atlas.Data.Tests.Services
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, categoryId, "Forum", "My Forum", 1);
             var topic = Post.CreateTopic(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
-            var reply = Post.CreateReply(Guid.NewGuid(), topicId, Guid.NewGuid(), "Content", StatusType.Published);
+            var reply = Post.CreateReply(Guid.NewGuid(), topicId, forumId, Guid.NewGuid(), "Content", StatusType.Published);
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -159,7 +159,7 @@ namespace Atlas.Data.Tests.Services
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, categoryId, "Forum", "My Forum", 1);
             var topic = Post.CreateTopic(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
-            var reply = Post.CreateReply(Guid.NewGuid(), topicId, memberId, "Content", StatusType.Published);
+            var reply = Post.CreateReply(Guid.NewGuid(), topicId, forumId, memberId, "Content", StatusType.Published);
             var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
             category.IncreaseRepliesCount();

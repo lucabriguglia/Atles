@@ -32,7 +32,7 @@ namespace Atlas.Data.Services
         {
             await _createValidator.ValidateCommandAsync(command);
 
-            var topic = new Post(command.Id,
+            var topic = Post.CreateTopic(command.Id,
                 command.ForumId,
                 command.MemberId,
                 command.Title,
