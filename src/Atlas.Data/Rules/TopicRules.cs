@@ -21,6 +21,7 @@ namespace Atlas.Data.Rules
                 .AnyAsync(x => x.ForumId == forumId &&
                                x.Forum.Category.SiteId == siteId &&
                                x.Id == id &&
+                               x.TopicId == null &&
                                x.Status == StatusType.Published);
             return any;
         }

@@ -30,7 +30,7 @@ namespace Atlas.Data
         public DbSet<Member> Members { get; set; }
         public DbSet<PermissionSet> PermissionSets { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<Site> Sites { get; set; }
         public DbSet<Post> Posts { get; set; }
+        public DbSet<Site> Sites { get; set; }
     }
 }

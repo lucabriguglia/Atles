@@ -70,6 +70,7 @@ namespace Atlas.Data.Services
             var topic = await _dbContext.Posts
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
+                    x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
                     x.Status != StatusType.Deleted);
@@ -102,6 +103,7 @@ namespace Atlas.Data.Services
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
+                    x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
                     x.Status != StatusType.Deleted);

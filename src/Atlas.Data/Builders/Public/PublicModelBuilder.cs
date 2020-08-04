@@ -96,6 +96,7 @@ namespace Atlas.Data.Builders.Public
             var topics = await _dbContext.Posts
                 .Include(x => x.Member)
                 .Where(x => 
+                    x.TopicId == null &&
                     x.ForumId == forum.Id && 
                     x.Status == StatusType.Published)
                 .OrderByDescending(x => x.TimeStamp)
@@ -117,6 +118,7 @@ namespace Atlas.Data.Builders.Public
 
             var totalRecords = await _dbContext.Posts
                 .Where(x =>
+                    x.TopicId == null &&
                     x.ForumId == forum.Id &&
                     x.Status == StatusType.Published)
                 .CountAsync();
@@ -158,6 +160,7 @@ namespace Atlas.Data.Builders.Public
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Member)
                 .FirstOrDefaultAsync(x =>
+                    x.TopicId == null &&
                     x.Forum.Category.SiteId == siteId &&
                     x.Forum.Id == forumId &&
                     x.Id == topicId &&
@@ -193,6 +196,7 @@ namespace Atlas.Data.Builders.Public
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Member)
                 .FirstOrDefaultAsync(x =>
+                    x.TopicId == null &&
                     x.Forum.Category.SiteId == siteId &&
                     x.Forum.Id == forumId &&
                     x.Id == topicId &&
@@ -292,6 +296,7 @@ namespace Atlas.Data.Builders.Public
 
             var topics = await _dbContext.Posts
                 .Where(x =>
+                    x.TopicId == null &&
                     x.Forum.Category.SiteId == siteId &&
                     x.MemberId == memberId &&
                     x.Status == StatusType.Published)
