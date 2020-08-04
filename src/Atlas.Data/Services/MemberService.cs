@@ -28,7 +28,7 @@ namespace Atlas.Data.Services
         {
             await _createValidator.ValidateCommandAsync(command);
 
-            var displayName = await GenerateDisplayName();
+            var displayName = await GenerateDisplayNameAsync();
 
             var member = new Member(command.Id,
                 command.UserId,
@@ -52,7 +52,7 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<string> GenerateDisplayName()
+        public async Task<string> GenerateDisplayNameAsync()
         {
             var displayName = string.Empty;
             var exists = true;
