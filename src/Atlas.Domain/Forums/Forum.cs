@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Atlas.Domain.Categories;
 using Atlas.Domain.PermissionSets;
-using Atlas.Domain.Topics;
+using Atlas.Domain.Posts;
 
 namespace Atlas.Domain.Forums
 {
@@ -21,7 +21,7 @@ namespace Atlas.Domain.Forums
         public virtual Category Category { get; set; }
         public virtual PermissionSet PermissionSet { get; set; }
 
-        public virtual ICollection<Topic> Topics { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
 
         public Forum()
         {

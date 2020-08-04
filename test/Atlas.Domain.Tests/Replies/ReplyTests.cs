@@ -1,5 +1,4 @@
 ﻿using System;
-using Atlas.Domain.Replies;
 using AutoFixture;
 using NUnit.Framework;
 

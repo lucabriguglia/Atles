@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Domain.Replies.Commands
+namespace Atlas.Domain.Posts.Commands
 {
     public class UpdateReply : CommandBase
     {

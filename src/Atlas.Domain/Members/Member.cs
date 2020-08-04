@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Atlas.Domain.Replies;
-using Atlas.Domain.Topics;
+using Atlas.Domain.Posts;
 
 namespace Atlas.Domain.Members
 {
@@ -15,8 +14,7 @@ namespace Atlas.Domain.Members
         public int RepliesCount { get; private set; }
         public StatusType Status { get; private set; }
 
-        public virtual ICollection<Topic> Topics { get; set; }
-        public virtual ICollection<Reply> Replies { get; set; }
+        public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Event> Events { get; set; }
 
         public Member()

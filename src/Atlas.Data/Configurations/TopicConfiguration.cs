@@ -1,18 +1,18 @@
-﻿using Atlas.Domain.Topics;
+﻿using Atlas.Domain.Posts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Atlas.Data.Configurations
 {
-    public class TopicConfiguration : IEntityTypeConfiguration<Topic>
+    public class TopicConfiguration : IEntityTypeConfiguration<Post>
     {
-        public void Configure(EntityTypeBuilder<Topic> builder)
+        public void Configure(EntityTypeBuilder<Post> builder)
         {
             builder.ToTable("Topic");
 
             builder
                 .HasOne(x => x.Forum)
-                .WithMany(x => x.Topics)
+                .WithMany(x => x.Posts)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 

@@ -4,8 +4,8 @@ using Atlas.Data.Rules;
 using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
-using Atlas.Domain.Topics;
 using NUnit.Framework;
+using Post = Atlas.Domain.Posts.Post;
 
 namespace Atlas.Data.Tests.Rules
 {
@@ -18,13 +18,13 @@ namespace Atlas.Data.Tests.Rules
             var options = Shared.CreateContextOptions();
             var category = new Category(Guid.NewGuid(), Guid.NewGuid(), "Category", 1, Guid.NewGuid());
             var forum = new Forum(Guid.NewGuid(), category.Id, "Forum", "My Forum", 1, Guid.NewGuid());
-            var topic = new Topic(Guid.NewGuid(), forum.Id, Guid.NewGuid(), "Title", "Content", StatusType.Published);
+            var topic = new Post(Guid.NewGuid(), forum.Id, Guid.NewGuid(), "Title", "Content", StatusType.Published);
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
-                dbContext.Topics.Add(topic);
+                dbContext.Posts.Add(topic);
                 await dbContext.SaveChangesAsync();
             }
 

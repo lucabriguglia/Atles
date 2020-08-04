@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Domain.PermissionSets;
-using Atlas.Domain.Topics;
-using Atlas.Domain.Topics.Commands;
+using Atlas.Domain.Posts;
+using Atlas.Domain.Posts.Commands;
 using Atlas.Models;
 using Atlas.Models.Public;
 using Atlas.Server.Services;
@@ -169,7 +169,7 @@ namespace Atlas.Server.Controllers.Public
                 MemberId = member.Id
             };
 
-            var topicMemberId = await _dbContext.Topics
+            var topicMemberId = await _dbContext.Posts
                 .Where(x =>
                     x.Id == command.Id &&
                     x.ForumId == command.ForumId &&
@@ -208,7 +208,7 @@ namespace Atlas.Server.Controllers.Public
                 MemberId = member.Id
             };
 
-            var topicMemberId = await _dbContext.Topics
+            var topicMemberId = await _dbContext.Posts
                 .Where(x =>
                     x.Id == command.Id &&
                     x.ForumId == command.ForumId &&

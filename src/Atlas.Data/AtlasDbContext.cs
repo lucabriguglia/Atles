@@ -4,10 +4,9 @@ using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
 using Atlas.Domain.Members;
 using Atlas.Domain.PermissionSets;
-using Atlas.Domain.Replies;
 using Atlas.Domain.Sites;
-using Atlas.Domain.Topics;
 using Microsoft.EntityFrameworkCore;
+using Post = Atlas.Domain.Posts.Post;
 
 namespace Atlas.Data
 {
@@ -31,8 +30,7 @@ namespace Atlas.Data
         public DbSet<Member> Members { get; set; }
         public DbSet<PermissionSet> PermissionSets { get; set; }
         public DbSet<Permission> Permissions { get; set; }
-        public DbSet<Reply> Replies { get; set; }
         public DbSet<Site> Sites { get; set; }
-        public DbSet<Topic> Topics { get; set; }
+        public DbSet<Post> Posts { get; set; }
     }
 }

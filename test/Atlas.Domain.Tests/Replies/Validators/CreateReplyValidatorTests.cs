@@ -1,7 +1,7 @@
 ﻿using Atlas.Domain.Forums;
-using Atlas.Domain.Replies.Commands;
-using Atlas.Domain.Replies.Validators;
-using Atlas.Domain.Topics;
+using Atlas.Domain.Posts;
+using Atlas.Domain.Posts.Commands;
+using Atlas.Domain.Posts.Validators;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;

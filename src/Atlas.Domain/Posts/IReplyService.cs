@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Domain.Replies.Commands;
+using Atlas.Domain.Posts.Commands;
 
-namespace Atlas.Domain.Replies
+namespace Atlas.Domain.Posts
 {
     public interface IReplyService
     {

@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using Atlas.Domain.Topics;
+using Atlas.Domain.Posts;
 
 namespace Atlas.Data.Rules
 {
@@ -17,7 +17,7 @@ namespace Atlas.Data.Rules
 
         public async Task<bool> IsValidAsync(Guid siteId, Guid forumId, Guid id)
         {
-            var any = await _dbContext.Topics
+            var any = await _dbContext.Posts
                 .AnyAsync(x => x.ForumId == forumId &&
                                x.Forum.Category.SiteId == siteId &&
                                x.Id == id &&

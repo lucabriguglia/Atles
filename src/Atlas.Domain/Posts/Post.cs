@@ -1,14 +1,15 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Atlas.Domain.Forums;
 using Atlas.Domain.Members;
-using Atlas.Domain.Replies;
 
-namespace Atlas.Domain.Topics
+namespace Atlas.Domain.Posts
 {
-    public class Topic
+    public class Post
     {
         public Guid Id { get; private set; }
+        [ForeignKey("Parent")]
+        public Guid? ParentId { get; private set; }
         public Guid ForumId { get; private set; }
         public string Title { get; private set; }
         public string Content { get; private set; }
@@ -17,22 +18,21 @@ namespace Atlas.Domain.Topics
         public Guid MemberId { get; private set; }
         public DateTime TimeStamp { get; private set; }
 
+        public virtual Post Parent { get; set; }
         public virtual Forum Forum { get; set; }
         public virtual Member Member { get; set; }
 
-        public virtual ICollection<Reply> Replies { get; set; }
-
-        public Topic()
+        public Post()
         {
 
         }
 
-        public Topic(Guid forumId, Guid memberId, string title, string content, StatusType status)
+        public Post(Guid forumId, Guid memberId, string title, string content, StatusType status)
         {
             New(Guid.NewGuid(), forumId, memberId, title, content, status);
         }
 
-        public Topic(Guid id, Guid forumId, Guid memberId, string title, string content, StatusType status)
+        public Post(Guid id, Guid forumId, Guid memberId, string title, string content, StatusType status)
         {
             New(id, forumId, memberId, title, content, status);
         }

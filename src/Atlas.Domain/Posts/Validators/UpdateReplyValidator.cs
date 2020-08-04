@@ -1,7 +1,7 @@
-﻿using Atlas.Domain.Replies.Commands;
+﻿using Atlas.Domain.Posts.Commands;
 using FluentValidation;
 
-namespace Atlas.Domain.Replies.Validators
+namespace Atlas.Domain.Posts.Validators
 {
     public class UpdateReplyValidator : AbstractValidator<UpdateReply>
     {

@@ -2,10 +2,11 @@
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
-using Atlas.Domain.Topics;
-using Atlas.Domain.Topics.Commands;
+using Atlas.Domain.Posts;
+using Atlas.Domain.Posts.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using Post = Atlas.Domain.Posts.Post;
 
 namespace Atlas.Data.Services
 {
@@ -31,18 +32,18 @@ namespace Atlas.Data.Services
         {
             await _createValidator.ValidateCommandAsync(command);
 
-            var topic = new Topic(command.Id,
+            var topic = new Post(command.Id,
                 command.ForumId,
                 command.MemberId,
                 command.Title,
                 command.Content,
                 command.Status);
 
-            _dbContext.Topics.Add(topic);
+            _dbContext.Posts.Add(topic);
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Created,
-                typeof(Topic),
+                typeof(Post),
                 command.Id,
                 new 
                 {
@@ -66,7 +67,7 @@ namespace Atlas.Data.Services
         {
             await _updateValidator.ValidateCommandAsync(command);
 
-            var topic = await _dbContext.Topics
+            var topic = await _dbContext.Posts
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.ForumId == command.ForumId &&
@@ -82,7 +83,7 @@ namespace Atlas.Data.Services
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Updated,
-                typeof(Topic),
+                typeof(Post),
                 command.Id,
                 new
                 {
@@ -96,7 +97,7 @@ namespace Atlas.Data.Services
 
         public async Task DeleteAsync(DeleteTopic command)
         {
-            var topic = await _dbContext.Topics
+            var topic = await _dbContext.Posts
                 .Include(x => x.Member)
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .FirstOrDefaultAsync(x =>
@@ -114,7 +115,7 @@ namespace Atlas.Data.Services
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Deleted,
-                typeof(Topic),
+                typeof(Post),
                 command.Id));
 
             topic.Forum.DecreaseTopicsCount();

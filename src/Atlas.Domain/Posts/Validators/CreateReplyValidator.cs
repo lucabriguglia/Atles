@@ -1,9 +1,8 @@
 ﻿using Atlas.Domain.Forums;
-using Atlas.Domain.Replies.Commands;
-using Atlas.Domain.Topics;
+using Atlas.Domain.Posts.Commands;
 using FluentValidation;
 
-namespace Atlas.Domain.Replies.Validators
+namespace Atlas.Domain.Posts.Validators
 {
     public class CreateReplyValidator : AbstractValidator<CreateReply>
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Domain.Topics.Commands
+namespace Atlas.Domain.Posts.Commands
 {
     public class UpdateTopic : CommandBase
     {

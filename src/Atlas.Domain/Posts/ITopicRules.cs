@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Domain.Topics
+namespace Atlas.Domain.Posts
 {
     public interface ITopicRules
     {

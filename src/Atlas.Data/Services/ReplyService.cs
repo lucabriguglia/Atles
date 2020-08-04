@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
-using Atlas.Domain.Replies;
-using Atlas.Domain.Replies.Commands;
+using Atlas.Domain.Posts;
+using Atlas.Domain.Posts.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -37,12 +37,12 @@ namespace Atlas.Data.Services
                 command.Content,
                 command.Status);
 
-            _dbContext.Replies.Add(reply);
+            _dbContext.Posts.Add(reply);
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Created,
-                typeof(Reply),
+                typeof(Post),
                 command.Id,
                 new 
                 {
@@ -51,7 +51,7 @@ namespace Atlas.Data.Services
                     command.Status
                 }));
 
-            var topic = await _dbContext.Topics
+            var topic = await _dbContext.Posts
                     .Include(x => x.Forum)
                         .ThenInclude(x => x.Category)
                 .FirstOrDefaultAsync(x => x.Id == reply.TopicId);
@@ -70,7 +70,7 @@ namespace Atlas.Data.Services
         {
             await _updateValidator.ValidateCommandAsync(command);
 
-            var reply = await _dbContext.Replies
+            var reply = await _dbContext.Posts
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.TopicId == command.TopicId &&
@@ -88,7 +88,7 @@ namespace Atlas.Data.Services
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Updated,
-                typeof(Reply),
+                typeof(Post),
                 command.Id,
                 new
                 {
@@ -101,7 +101,7 @@ namespace Atlas.Data.Services
 
         public async Task DeleteAsync(DeleteReply command)
         {
-            var reply = await _dbContext.Replies
+            var reply = await _dbContext.Posts
                 .Include(x => x.Member)
                 .Include(x => x.Topic)
                     .ThenInclude(x => x.Forum)
@@ -123,7 +123,7 @@ namespace Atlas.Data.Services
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Deleted,
-                typeof(Reply),
+                typeof(Post),
                 command.Id));
 
             reply.Topic.DecreaseRepliesCount();

@@ -7,15 +7,14 @@ using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
 using Atlas.Domain.Members;
-using Atlas.Domain.Replies;
-using Atlas.Domain.Replies.Commands;
-using Atlas.Domain.Topics;
+using Atlas.Domain.Posts.Commands;
 using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
+using Post = Atlas.Domain.Posts.Post;
 
 namespace Atlas.Data.Tests.Services
 {
@@ -34,14 +33,14 @@ namespace Atlas.Data.Tests.Services
 
             var category = new Category(categoryId, Guid.NewGuid(), "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
-            var topic = new Topic(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
+            var topic = new Post(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
             var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
-                dbContext.Topics.Add(topic);
+                dbContext.Posts.Add(topic);
                 dbContext.Members.Add(member);
                 await dbContext.SaveChangesAsync();
             }
@@ -70,12 +69,12 @@ namespace Atlas.Data.Tests.Services
 
                 await sut.CreateAsync(command);
 
-                var reply = await dbContext.Replies.FirstOrDefaultAsync(x => x.Id == command.Id);
+                var reply = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
-                var updatedTopic = await dbContext.Topics.FirstOrDefaultAsync(x => x.Id == topic.Id);
+                var updatedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == topic.Id);
                 var updatedMember = await dbContext.Members.FirstOrDefaultAsync(x => x.Id == memberId);
 
                 createValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
@@ -100,15 +99,15 @@ namespace Atlas.Data.Tests.Services
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, categoryId, "Forum", "My Forum", 1);
-            var topic = new Topic(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
+            var topic = new Post(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
             var reply = new Reply(Guid.NewGuid(), topicId, Guid.NewGuid(), "Content", StatusType.Published);
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
-                dbContext.Topics.Add(topic);
-                dbContext.Replies.Add(reply);
+                dbContext.Posts.Add(topic);
+                dbContext.Posts.Add(reply);
                 await dbContext.SaveChangesAsync();
             }
 
@@ -137,7 +136,7 @@ namespace Atlas.Data.Tests.Services
 
                 await sut.UpdateAsync(command);
 
-                var updatedReply = await dbContext.Replies.FirstOrDefaultAsync(x => x.Id == command.Id);
+                var updatedReply = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 updateValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
@@ -159,7 +158,7 @@ namespace Atlas.Data.Tests.Services
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, categoryId, "Forum", "My Forum", 1);
-            var topic = new Topic(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
+            var topic = new Post(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
             var reply = new Reply(Guid.NewGuid(), topicId, memberId, "Content", StatusType.Published);
             var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
@@ -172,8 +171,8 @@ namespace Atlas.Data.Tests.Services
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
-                dbContext.Topics.Add(topic);
-                dbContext.Replies.Add(reply);
+                dbContext.Posts.Add(topic);
+                dbContext.Posts.Add(reply);
                 dbContext.Members.Add(member);
                 await dbContext.SaveChangesAsync();
             }
@@ -198,12 +197,12 @@ namespace Atlas.Data.Tests.Services
 
                 await sut.DeleteAsync(command);
 
-                var replyDeleted = await dbContext.Replies.FirstOrDefaultAsync(x => x.Id == reply.Id);
+                var replyDeleted = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == reply.Id);
                 var replyEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == reply.Id);
 
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
-                var updatedTopic = await dbContext.Topics.FirstOrDefaultAsync(x => x.Id == topic.Id);
+                var updatedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == topic.Id);
                 var updatedMember = await dbContext.Members.FirstOrDefaultAsync(x => x.Id == member.Id);
 
                 Assert.AreEqual(StatusType.Deleted, replyDeleted.Status);

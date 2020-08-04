@@ -93,7 +93,7 @@ namespace Atlas.Data.Builders.Public
                 }
             };
 
-            var topics = await _dbContext.Topics
+            var topics = await _dbContext.Posts
                 .Include(x => x.Member)
                 .Where(x => 
                     x.ForumId == forum.Id && 
@@ -115,7 +115,7 @@ namespace Atlas.Data.Builders.Public
                 })
                 .ToList();
 
-            var totalRecords = await _dbContext.Topics
+            var totalRecords = await _dbContext.Posts
                 .Where(x =>
                     x.ForumId == forum.Id &&
                     x.Status == StatusType.Published)
@@ -154,7 +154,7 @@ namespace Atlas.Data.Builders.Public
 
         public async Task<PostPageModel> BuildEditPostPageModelAsync(Guid siteId, Guid forumId, Guid topicId)
         {
-            var topic = await _dbContext.Topics
+            var topic = await _dbContext.Posts
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Member)
                 .FirstOrDefaultAsync(x =>
@@ -189,7 +189,7 @@ namespace Atlas.Data.Builders.Public
 
         public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, QueryOptions options)
         {
-            var topic = await _dbContext.Topics
+            var topic = await _dbContext.Posts
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Member)
                 .FirstOrDefaultAsync(x =>
@@ -223,7 +223,7 @@ namespace Atlas.Data.Builders.Public
                 }
             };
 
-            var replies = await _dbContext.Replies
+            var replies = await _dbContext.Posts
                 .Include(x => x.Member)
                 .Where(x => 
                     x.TopicId == topicId && 
@@ -245,7 +245,7 @@ namespace Atlas.Data.Builders.Public
                     GravatarHash = _gravatarService.HashEmailForGravatar(reply.Member.Email)
             }).ToList();
 
-            var totalRecords = await _dbContext.Replies
+            var totalRecords = await _dbContext.Posts
                 .Where(x =>
                     x.TopicId == topic.Id &&
                     x.Status == StatusType.Published)
@@ -290,7 +290,7 @@ namespace Atlas.Data.Builders.Public
         {
             var result = new MemberTopicModelsToFilter();
 
-            var topics = await _dbContext.Topics
+            var topics = await _dbContext.Posts
                 .Where(x =>
                     x.Forum.Category.SiteId == siteId &&
                     x.MemberId == memberId &&

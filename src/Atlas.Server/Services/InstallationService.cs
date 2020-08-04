@@ -9,11 +9,11 @@ using Atlas.Domain.Members;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.PermissionSets.Commands;
 using Atlas.Domain.Sites;
-using Atlas.Domain.Topics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Post = Atlas.Domain.Posts.Post;
 
 namespace Atlas.Server.Services
 {
@@ -297,12 +297,12 @@ namespace Atlas.Server.Services
                 }));
 
             // Topics
-            var topicWelcome = new Topic(forumWelcome.Id, memberAdmin.Id, "Welcome to Atlas!", "Welcome...", StatusType.Published);
-            _dbContext.Topics.Add(topicWelcome);
+            var topicWelcome = new Post(forumWelcome.Id, memberAdmin.Id, "Welcome to Atlas!", "Welcome...", StatusType.Published);
+            _dbContext.Posts.Add(topicWelcome);
             _dbContext.Events.Add(new Event(site.Id,
                 topicWelcome.MemberId,
                 EventType.Created,
-                typeof(Topic),
+                typeof(Post),
                 topicWelcome.Id,
                 new
                 {
