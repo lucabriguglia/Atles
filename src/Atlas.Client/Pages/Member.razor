@@ -19,7 +19,7 @@ else
     </nav>
 
     <div class="row">
-        <div class="col-md-2 text-center">
+        <div class="col-md-3 text-center">
             <Avatar GravatarHash="@Model.Member.GravatarHash" GravatarSize="128" Class="mb-3"></Avatar>
 
             <h4 class="mb-4">@Model.Member.DisplayName</h4>
@@ -33,7 +33,7 @@ else
             </div>
 
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
             <h4 class="mb-3">Last Topics</h4>
 
             @if (Model.LastTopics.Count == 0)
