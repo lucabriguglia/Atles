@@ -8,7 +8,7 @@ namespace Atlas.Data.Configurations
     {
         public void Configure(EntityTypeBuilder<Post> builder)
         {
-            builder.ToTable("Topic");
+            builder.ToTable("Post");
 
             builder
                 .HasOne(x => x.Forum)

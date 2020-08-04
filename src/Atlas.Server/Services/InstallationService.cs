@@ -312,6 +312,7 @@ namespace Atlas.Server.Services
                     topicWelcome.Status
                 }));
             categoryGeneral.IncreaseTopicsCount();
+            forumWelcome.UpdateLastPost(topicWelcome.Id);
             forumWelcome.IncreaseTopicsCount();
             memberAdmin.IncreaseTopicsCount();
 
