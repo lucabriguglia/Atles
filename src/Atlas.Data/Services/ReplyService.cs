@@ -31,7 +31,7 @@ namespace Atlas.Data.Services
         {
             await _createValidator.ValidateCommandAsync(command);
 
-            var reply = new Reply(command.Id,
+            var reply = Post.CreateReply(command.Id,
                 command.TopicId,
                 command.MemberId,
                 command.Content,

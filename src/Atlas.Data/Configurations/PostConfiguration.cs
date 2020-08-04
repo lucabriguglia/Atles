@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Atlas.Data.Configurations
 {
-    public class TopicConfiguration : IEntityTypeConfiguration<Post>
+    public class PostConfiguration : IEntityTypeConfiguration<Post>
     {
         public void Configure(EntityTypeBuilder<Post> builder)
         {
@@ -18,7 +18,7 @@ namespace Atlas.Data.Configurations
 
             builder
                 .HasOne(x => x.Member)
-                .WithMany(x => x.Topics)
+                .WithMany(x => x.Posts)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
         }

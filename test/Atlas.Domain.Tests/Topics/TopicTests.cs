@@ -1,4 +1,5 @@
 ﻿using System;
+using Atlas.Domain.Posts;
 using AutoFixture;
 using NUnit.Framework;
 
@@ -16,7 +17,7 @@ namespace Atlas.Domain.Tests.Topics
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            var sut = new Posts.Post(forumId, memberId, title, content, status);
+            var sut = Post.CreateTopic(forumId, memberId, title, content, status);
 
             Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
             Assert.AreEqual(memberId, sut.MemberId, nameof(sut.MemberId));
@@ -35,7 +36,7 @@ namespace Atlas.Domain.Tests.Topics
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            var sut = new Posts.Post(id, forumId, memberId, title, content, status);
+            var sut = Post.CreateTopic(id, forumId, memberId, title, content, status);
 
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
             Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
@@ -48,7 +49,7 @@ namespace Atlas.Domain.Tests.Topics
         [Test]
         public void Update_details()
         {
-            var sut = Fixture.Create<Posts.Post>();
+            var sut = Fixture.Create<Post>();
 
             const string title = "Updated Topic";
             const string content = "Blah blah blah...";
@@ -64,7 +65,7 @@ namespace Atlas.Domain.Tests.Topics
         [Test]
         public void Increase_replies_count()
         {
-            var sut = Fixture.Create<Posts.Post>();
+            var sut = Fixture.Create<Post>();
 
             var currentCount = sut.RepliesCount;
 
@@ -76,7 +77,7 @@ namespace Atlas.Domain.Tests.Topics
         [Test]
         public void Decrease_replies_count()
         {
-            var sut = Fixture.Create<Posts.Post>();
+            var sut = Fixture.Create<Post>();
             sut.IncreaseRepliesCount();
 
             var currentCount = sut.RepliesCount;
@@ -89,7 +90,7 @@ namespace Atlas.Domain.Tests.Topics
         [Test]
         public void Decrease_replies_count_less_than_zero()
         {
-            var sut = Fixture.Create<Posts.Post>();
+            var sut = Fixture.Create<Post>();
 
             sut.DecreaseRepliesCount();
 
@@ -99,7 +100,7 @@ namespace Atlas.Domain.Tests.Topics
         [Test]
         public void Delete()
         {
-            var sut = Fixture.Create<Posts.Post>();
+            var sut = Fixture.Create<Post>();
 
             sut.Delete();
 

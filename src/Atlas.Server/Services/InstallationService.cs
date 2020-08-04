@@ -297,7 +297,7 @@ namespace Atlas.Server.Services
                 }));
 
             // Topics
-            var topicWelcome = new Post(forumWelcome.Id, memberAdmin.Id, "Welcome to Atlas!", "Welcome...", StatusType.Published);
+            var topicWelcome = Post.CreateTopic(forumWelcome.Id, memberAdmin.Id, "Welcome to Atlas!", "Welcome...", StatusType.Published);
             _dbContext.Posts.Add(topicWelcome);
             _dbContext.Events.Add(new Event(site.Id,
                 topicWelcome.MemberId,
