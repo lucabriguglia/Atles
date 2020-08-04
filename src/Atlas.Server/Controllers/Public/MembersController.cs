@@ -12,11 +12,11 @@ using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atlas.Server.Controllers
+namespace Atlas.Server.Controllers.Public
 {
-    [Route("api/public/member")]
+    [Route("api/public/members")]
     [ApiController]
-    public class MemberController : ControllerBase
+    public class MembersController : ControllerBase
     {
         private readonly IContextService _contextService;
         private readonly IPublicModelBuilder _modelBuilder;
@@ -24,7 +24,7 @@ namespace Atlas.Server.Controllers
         private readonly ISecurityService _securityService;
         private readonly IMemberService _memberService;
 
-        public MemberController(IContextService contextService, 
+        public MembersController(IContextService contextService, 
             IPublicModelBuilder modelBuilder, 
             IPermissionModelBuilder permissionModelBuilder, 
             ISecurityService securityService, 

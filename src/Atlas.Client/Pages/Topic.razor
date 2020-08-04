@@ -184,7 +184,7 @@ else
 
         try
         {
-            var requestUri = $"api/public/forum/{ForumId}/{TopicId}?page={page}";
+            var requestUri = $"api/public/topics/{ForumId}/{TopicId}?page={page}";
 
             if (user.Identity.IsAuthenticated)
             {
@@ -238,8 +238,8 @@ else
     private async Task OnValidSubmit()
     {
         var requestUri = Model.Post.Id != null
-            ? "api/public/update-reply"
-            : "api/public/create-reply";
+            ? "api/public/replies/update-reply"
+            : "api/public/replies/create-reply";
 
         await Http.PostAsJsonAsync(requestUri, Model);
 
@@ -253,13 +253,13 @@ else
 
     protected async Task DeleteTopicAsync(MouseEventArgs e)
     {
-        await Http.DeleteAsync($"api/public/delete-topic/{ForumId}/{TopicId}");
+        await Http.DeleteAsync($"api/public/topics/delete-topic/{ForumId}/{TopicId}");
         Navigation.NavigateTo($"/forum/{ForumId}");
     }
 
     protected async Task DeleteReplyAsync(MouseEventArgs e)
     {
-        await Http.DeleteAsync($"api/public/delete-reply/{ForumId}/{TopicId}/{DeleteReplyId}");
+        await Http.DeleteAsync($"api/public/replies/delete-reply/{ForumId}/{TopicId}/{DeleteReplyId}");
         await OnInitializedAsync();
     }
 

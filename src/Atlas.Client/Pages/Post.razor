@@ -68,8 +68,8 @@ else
     protected override async Task OnInitializedAsync()
     {
         var requestUri = TopicId != null
-            ? $"api/public/forum/{ForumId}/edit-topic/{TopicId.Value}"
-            : $"api/public/forum/{ForumId}/new-topic";
+            ? $"api/public/topics/{ForumId}/edit-topic/{TopicId.Value}"
+            : $"api/public/topics/{ForumId}/new-topic";
 
         try
         {
@@ -86,8 +86,8 @@ else
     private async Task SaveAsync()
     {
         var requestUri = TopicId != null
-            ? "api/public/update-topic"
-            : "api/public/create-topic";
+            ? "api/public/topics/update-topic"
+            : "api/public/topics/create-topic";
 
         await Http.PostAsJsonAsync(requestUri, Model);
 

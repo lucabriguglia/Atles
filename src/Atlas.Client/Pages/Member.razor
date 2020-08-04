@@ -87,7 +87,7 @@ else
         var authState = await AuthenticationStateTask;
         var user = authState.User;
 
-        var requestUri = Id == null ? "api/public/member" : $"api/public/member/{Id.Value}";
+        var requestUri = Id == null ? "api/public/member" : $"api/public/members/{Id.Value}";
 
         if (user.Identity.IsAuthenticated)
         {
