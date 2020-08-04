@@ -1,5 +1,6 @@
 ﻿@page "/forum/{forumId:guid}/{topicId:guid}"
 @using System.Security.Claims
+@using Atlas.Client.Extensions
 @using Atlas.Client.Services
 @using Atlas.Domain
 @using Atlas.Models.Public
@@ -52,7 +53,7 @@ else
                         <a href="/member/@Model.Topic.MemberId">@Model.Topic.MemberDisplayName</a>
                     </div>
                     <div class="col-md-6 text-right small">
-                        @Model.Topic.TimeStamp.ToShortDateString() @Model.Topic.TimeStamp.ToShortTimeString()
+                        @Model.Topic.TimeStamp.ToForumLocalDateAndTime()
                     </div>
                 </div>
                 <p class="card-text">@((MarkupString)Model.Topic.Content)</p>
@@ -79,7 +80,7 @@ else
                                     <a href="/member/@reply.MemberId">@reply.MemberDisplayName</a>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    @reply.TimeStamp.ToShortDateString() @reply.TimeStamp.ToShortTimeString()
+                                    @reply.TimeStamp.ToForumLocalDateAndTime()
                                 </div>
                             </div>
                             <div class="card-text">@((MarkupString)reply.Content)</div>

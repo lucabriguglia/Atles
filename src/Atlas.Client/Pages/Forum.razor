@@ -1,4 +1,5 @@
 ﻿@page "/forum/{id:guid}"
+@using Atlas.Client.Extensions
 @using Atlas.Client.Services
 @using Atlas.Models.Public
 @inject AnonymousService AnonymousService;
@@ -70,7 +71,7 @@ else
                                     <a href="/member/@item.MemberId">@item.MemberDisplayName</a>
                                 </div>
                                 <div class="col-md-6 text-right">
-                                    @item.TimeStamp.ToShortDateString() @item.TimeStamp.ToShortTimeString()
+                                    @item.TimeStamp.ToForumLocalDateAndTime()
                                     &nbsp;&nbsp;
                                     <span class="font-weight-bold">@item.TotalReplies</span> Replies
                                 </div>
