@@ -1,4 +1,4 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
@@ -17,8 +17,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Atlas.Data\Atlas.Data.csproj" />
-    <ProjectReference Include="..\Atlas.Domain\Atlas.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Atlas.Data\Atlas.Data.csproj" />
+    <ProjectReference Include="..\..\src\Atlas.Domain\Atlas.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

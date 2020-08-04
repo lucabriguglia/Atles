@@ -188,8 +188,7 @@ namespace Atlas.Server.Services
                 permissionSetDefault.Id,
                 new
                 {
-                    permissionSetDefault.Name,
-                    permissionSetDefault.Permissions
+                    permissionSetDefault.Name
                 }));
 
             var permissionSetMembersOnly = new PermissionSet(site.Id, "Members Only", new List<PermissionCommand>
@@ -211,8 +210,7 @@ namespace Atlas.Server.Services
                 permissionSetMembersOnly.Id,
                 new
                 {
-                    permissionSetMembersOnly.Name,
-                    permissionSetMembersOnly.Permissions
+                    permissionSetMembersOnly.Name
                 }));
 
             var permissionSetAdminOnly = new PermissionSet(site.Id, "Admin Only", new List<PermissionCommand>
@@ -234,8 +232,7 @@ namespace Atlas.Server.Services
                 permissionSetAdminOnly.Id,
                 new
                 {
-                    permissionSetAdminOnly.Name,
-                    permissionSetAdminOnly.Permissions
+                    permissionSetAdminOnly.Name
                 }));
 
             // Categories
