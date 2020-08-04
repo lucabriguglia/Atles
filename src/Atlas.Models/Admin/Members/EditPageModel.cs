@@ -13,6 +13,8 @@ namespace Atlas.Models.Admin.Members
         {
             public Guid Id { get; set; }
 
+            public string Email { get; set; }
+
             [Required]
             [StringLength(50)]
             public string DisplayName { get; set; }

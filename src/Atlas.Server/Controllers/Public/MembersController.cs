@@ -3,13 +3,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Domain.Members;
-using Atlas.Domain.Members.Commands;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models;
 using Atlas.Models.Public;
 using Atlas.Models.Public.Members;
 using Atlas.Server.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atlas.Server.Controllers.Public
@@ -127,26 +125,6 @@ namespace Atlas.Server.Controllers.Public
             }
 
             return result;
-        }
-
-        [Authorize]
-        [HttpPost("update-display-name")]
-        public async Task<ActionResult> Update(string displayName)
-        {
-            var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
-
-            var command = new UpdateMember
-            {
-                Id = member.Id,
-                DisplayName = displayName,
-                SiteId = site.Id,
-                MemberId = member.Id
-            };
-
-            await _memberService.UpdateAsync(command);
-
-            return Ok();
         }
     }
 }

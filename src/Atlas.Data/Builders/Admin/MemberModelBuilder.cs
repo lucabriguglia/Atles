@@ -92,6 +92,7 @@ namespace Atlas.Data.Builders.Admin
             result.Member = new EditPageModel.MemberModel
             {
                 Id = member.Id,
+                Email = member.Email,
                 DisplayName = member.DisplayName,
                 UserId = member.UserId
             };

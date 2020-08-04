@@ -330,5 +330,30 @@ namespace Atlas.Data.Builders.Public
 
             return result;
         }
+
+        public async Task<SettingsPageModel> BuildSettingsPageModelAsync(Guid memberId)
+        {
+            var result = new SettingsPageModel();
+
+            var member = await _dbContext.Members
+                .FirstOrDefaultAsync(x =>
+                    x.Id == memberId &&
+                    x.Status != StatusType.Deleted);
+
+            if (member == null)
+            {
+                return null;
+            }
+
+            result.Member = new SettingsPageModel.MemberModel
+            {
+                Id = member.Id,
+                Email = member.Email,
+                DisplayName = member.DisplayName,
+                GravatarHash = _gravatarService.HashEmailForGravatar(member.Email)
+            };
+
+            return result;
+        }
     }
 }
