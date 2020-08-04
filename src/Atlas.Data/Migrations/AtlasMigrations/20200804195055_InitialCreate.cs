@@ -132,7 +132,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     TopicsCount = table.Column<int>(nullable: false),
                     RepliesCount = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    PermissionSetId = table.Column<Guid>(nullable: true)
+                    PermissionSetId = table.Column<Guid>(nullable: true),
+                    LastPostId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -161,7 +162,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     RepliesCount = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
                     MemberId = table.Column<Guid>(nullable: false),
-                    TimeStamp = table.Column<DateTime>(nullable: false)
+                    TimeStamp = table.Column<DateTime>(nullable: false),
+                    LastReplyId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -171,6 +173,12 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         column: x => x.ForumId,
                         principalTable: "Forum",
                         principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Topic_Topic_LastReplyId",
+                        column: x => x.LastReplyId,
+                        principalTable: "Topic",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Topic_Member_MemberId",
                         column: x => x.MemberId,
@@ -205,6 +213,11 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 column: "CategoryId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Forum_LastPostId",
+                table: "Forum",
+                column: "LastPostId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Forum_PermissionSetId",
                 table: "Forum",
                 column: "PermissionSetId");
@@ -215,6 +228,11 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 column: "ForumId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Topic_LastReplyId",
+                table: "Topic",
+                column: "LastReplyId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Topic_MemberId",
                 table: "Topic",
                 column: "MemberId");
@@ -223,10 +241,42 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 name: "IX_Topic_TopicId",
                 table: "Topic",
                 column: "TopicId");
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Forum_Topic_LastPostId",
+                table: "Forum",
+                column: "LastPostId",
+                principalTable: "Topic",
+                principalColumn: "Id",
+                onDelete: ReferentialAction.Restrict);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Category_PermissionSet_PermissionSetId",
+                table: "Category");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Forum_PermissionSet_PermissionSetId",
+                table: "Forum");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Category_Site_SiteId",
+                table: "Category");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Topic_Member_MemberId",
+                table: "Topic");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Forum_Category_CategoryId",
+                table: "Forum");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Forum_Topic_LastPostId",
+                table: "Forum");
+
             migrationBuilder.DropTable(
                 name: "Event");
 
@@ -234,10 +284,10 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 name: "Permission");
 
             migrationBuilder.DropTable(
-                name: "Topic");
+                name: "PermissionSet");
 
             migrationBuilder.DropTable(
-                name: "Forum");
+                name: "Site");
 
             migrationBuilder.DropTable(
                 name: "Member");
@@ -246,10 +296,10 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 name: "Category");
 
             migrationBuilder.DropTable(
-                name: "PermissionSet");
+                name: "Topic");
 
             migrationBuilder.DropTable(
-                name: "Site");
+                name: "Forum");
         }
     }
 }

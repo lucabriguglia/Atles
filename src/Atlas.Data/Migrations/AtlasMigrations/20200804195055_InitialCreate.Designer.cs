@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atlas.Data.Migrations.AtlasMigrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20200804185927_InitialCreate")]
+    [Migration("20200804195055_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -103,6 +103,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<string>("Description")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("LastPostId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
@@ -124,6 +127,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.HasKey("Id");
 
                     b.HasIndex("CategoryId");
+
+                    b.HasIndex("LastPostId");
 
                     b.HasIndex("PermissionSetId");
 
@@ -207,6 +212,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<Guid>("ForumId")
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<Guid?>("LastReplyId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.Property<Guid>("MemberId")
                         .HasColumnType("uniqueidentifier");
 
@@ -228,6 +236,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.HasKey("Id");
 
                     b.HasIndex("ForumId");
+
+                    b.HasIndex("LastReplyId");
 
                     b.HasIndex("MemberId");
 
@@ -284,6 +294,10 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
+                    b.HasOne("Atlas.Domain.Posts.Post", "LastPost")
+                        .WithMany()
+                        .HasForeignKey("LastPostId");
+
                     b.HasOne("Atlas.Domain.PermissionSets.PermissionSet", "PermissionSet")
                         .WithMany("Forums")
                         .HasForeignKey("PermissionSetId")
@@ -306,6 +320,10 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasForeignKey("ForumId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.HasOne("Atlas.Domain.Posts.Post", "LastReply")
+                        .WithMany()
+                        .HasForeignKey("LastReplyId");
 
                     b.HasOne("Atlas.Domain.Members.Member", "Member")
                         .WithMany("Posts")
