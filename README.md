@@ -18,11 +18,11 @@ A forum software built using ASP.NET Core Blazor WebAssembly.
 ## Run on local
 
 - Clone the repository
-- Run the Atlas.Server project
+- Run the **Atlas.Server** project
 - Database and default data will be created automatically
 - Login with any of the following accounts:
   - **Admin User**: admin@default.com / !P455w0rd?
-  - **Normal User**: user@default.com / !P455w0rd?
   - **Moderator User**: moderator@default.com / !P455w0rd?
+  - **Normal User**: user@default.com / !P455w0rd?
 
 **Note**: Please delete any databases previously created if you pull new versions. It's still an alpha and many changes occur between commits.
