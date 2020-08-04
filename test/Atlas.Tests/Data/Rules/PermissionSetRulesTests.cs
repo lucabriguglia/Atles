@@ -26,7 +26,7 @@ namespace Atlas.Tests.Data.Rules
         }
 
         [Test]
-        public async Task Should_return_true_when_name_is_unique_for_existing_permissionSet()
+        public async Task Should_return_true_when_name_is_unique_for_existing_permission_set()
         {
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
@@ -63,7 +63,7 @@ namespace Atlas.Tests.Data.Rules
         }
 
         [Test]
-        public async Task Should_return_false_when_name_is_not_unique_for_existing_permissionSet()
+        public async Task Should_return_false_when_name_is_not_unique_for_existing_permission_set()
         {
             var options = Shared.CreateContextOptions();
             var siteId = Guid.NewGuid();
@@ -90,7 +90,7 @@ namespace Atlas.Tests.Data.Rules
         }
 
         [Test]
-        public async Task Should_return_true_when_permissionSet_is_valid()
+        public async Task Should_return_true_when_permission_set_is_valid()
         {
             var options = Shared.CreateContextOptions();
             var site = new Site(Guid.NewGuid(), "Name", "Title");
@@ -106,9 +106,21 @@ namespace Atlas.Tests.Data.Rules
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
                 var sut = new PermissionSetRules(dbContext);
-                var actual = await sut.IsValid(site.Id, permissionSet.Id);
+                var actual = await sut.IsValidAsync(site.Id, permissionSet.Id);
 
                 Assert.IsTrue(actual);
+            }
+        }
+
+        [Test]
+        public async Task Should_return_false_when_permission_set_is_not_valid()
+        {
+            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            {
+                var sut = new PermissionSetRules(dbContext);
+                var actual = await sut.IsValidAsync(Guid.NewGuid(), Guid.NewGuid());
+
+                Assert.IsFalse(actual);
             }
         }
     }

@@ -34,7 +34,7 @@ namespace Atlas.Data.Rules
             return !any;
         }
 
-        public async Task<bool> IsValid(Guid siteId, Guid id)
+        public async Task<bool> IsValidAsync(Guid siteId, Guid id)
         {
             var any = await _dbContext.PermissionSets
                 .AnyAsync(x => x.SiteId == siteId && 
@@ -43,7 +43,7 @@ namespace Atlas.Data.Rules
             return any;
         }
 
-        public Task<bool> IsInUse(Guid siteId, Guid id)
+        public Task<bool> IsInUseAsync(Guid siteId, Guid id)
         {
             throw new NotImplementedException();
         }

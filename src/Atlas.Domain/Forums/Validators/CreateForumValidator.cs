@@ -19,7 +19,7 @@ namespace Atlas.Domain.Forums.Validators
                 .When(c => !string.IsNullOrWhiteSpace(c.Description));
 
             RuleFor(c => c.PermissionSetId)
-                .MustAsync((c, p, cancellation) => permissionSetRules.IsValid(c.SiteId, p.Value))
+                .MustAsync((c, p, cancellation) => permissionSetRules.IsValidAsync(c.SiteId, p.Value))
                     .WithMessage(c => $"Permission set with id {c.PermissionSetId} does not exist.")
                     .When(c => c.PermissionSetId != null);
         }

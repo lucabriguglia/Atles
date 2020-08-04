@@ -103,12 +103,24 @@ namespace Atlas.Tests.Data.Rules
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            using (var dbContext = new AtlasDbContext(options))
             {
                 var sut = new ForumRules(dbContext);
                 var actual = await sut.IsValidAsync(forum.Category.SiteId, forum.Id);
 
                 Assert.IsTrue(actual);
+            }
+        }
+
+        [Test]
+        public async Task Should_return_false_when_forum_is_not_valid()
+        {
+            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            {
+                var sut = new ForumRules(dbContext);
+                var actual = await sut.IsValidAsync(Guid.NewGuid(), Guid.NewGuid());
+
+                Assert.IsFalse(actual);
             }
         }
     }

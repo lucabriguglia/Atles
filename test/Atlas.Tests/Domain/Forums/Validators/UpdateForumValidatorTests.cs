@@ -74,7 +74,7 @@ namespace Atlas.Tests.Domain.Forums.Validators
             var forumRules = new Mock<IForumRules>();
 
             var permissionSetRules = new Mock<IPermissionSetRules>();
-            permissionSetRules.Setup(x => x.IsValid(command.SiteId, command.PermissionSetId.Value)).ReturnsAsync(false);
+            permissionSetRules.Setup(x => x.IsValidAsync(command.SiteId, command.PermissionSetId.Value)).ReturnsAsync(false);
 
             var sut = new UpdateForumValidator(forumRules.Object, permissionSetRules.Object);
 

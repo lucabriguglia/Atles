@@ -7,7 +7,7 @@ namespace Atlas.Domain.PermissionSets
     {
         Task<bool> IsNameUniqueAsync(Guid siteId, string name);
         Task<bool> IsNameUniqueAsync(Guid siteId, string name, Guid id);
-        Task<bool> IsValid(Guid siteId, Guid id);
-        Task<bool> IsInUse(Guid siteId, Guid id);
+        Task<bool> IsValidAsync(Guid siteId, Guid id);
+        Task<bool> IsInUseAsync(Guid siteId, Guid id);
     }
 }
