@@ -2,10 +2,12 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
+using Atlas.Data.Services;
 using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
 using Atlas.Domain.Members;
+using Atlas.Domain.Posts;
 using Atlas.Domain.Posts.Commands;
 using AutoFixture;
 using FluentValidation;
@@ -13,8 +15,6 @@ using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
-using Post = Atlas.Domain.Posts.Post;
-using TopicService = Atlas.Data.Services.TopicService;
 
 namespace Atlas.Data.Tests.Services
 {
@@ -76,6 +76,7 @@ namespace Atlas.Data.Tests.Services
                 Assert.NotNull(topic);
                 Assert.NotNull(@event);
                 Assert.AreEqual(category.TopicsCount + 1, updatedCategory.TopicsCount);
+                Assert.AreEqual(topic.Id, updatedForum.LastPostId);
                 Assert.AreEqual(forum.TopicsCount + 1, updatedForum.TopicsCount);
                 Assert.AreEqual(forum.TopicsCount + 1, updatedForum.TopicsCount);
                 Assert.AreEqual(member.TopicsCount + 1, updatedMember.TopicsCount);

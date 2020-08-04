@@ -63,6 +63,28 @@ namespace Atlas.Domain.Tests.Topics
         }
 
         [Test]
+        public void Should_update_last_reply()
+        {
+            var sut = Post.CreateTopic(Guid.NewGuid(), Guid.NewGuid(), "Title", "Content", StatusType.Published);
+
+            var lastReplyId = Guid.NewGuid();
+
+            sut.UpdateLastReply(lastReplyId);
+
+            Assert.AreEqual(lastReplyId, sut.LastReplyId, nameof(sut.LastReplyId));
+        }
+
+        [Test]
+        public void Should_not_update_last_reply_if_it_is_not_a_topic()
+        {
+            var sut = Post.CreateReply(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Content", StatusType.Published);
+
+            sut.UpdateLastReply(Guid.NewGuid());
+
+            Assert.IsNull(sut.LastReplyId, nameof(sut.LastReplyId));
+        }
+
+        [Test]
         public void Increase_replies_count()
         {
             var sut = Fixture.Create<Post>();

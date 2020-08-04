@@ -58,7 +58,9 @@ namespace Atlas.Data.Services
                         .ThenInclude(x => x.Category)
                 .FirstOrDefaultAsync(x => x.Id == reply.TopicId);
 
+            topic.UpdateLastReply(reply.Id);
             topic.IncreaseRepliesCount();
+            topic.Forum.UpdateLastPost(reply.Id);
             topic.Forum.IncreaseRepliesCount();
             topic.Forum.Category.IncreaseRepliesCount();
 

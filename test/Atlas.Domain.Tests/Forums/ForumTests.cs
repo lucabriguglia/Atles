@@ -67,6 +67,18 @@ namespace Atlas.Domain.Tests.Forums
         }
 
         [Test]
+        public void Update_last_post()
+        {
+            var sut = Fixture.Create<Forum>();
+
+            var lastPostId = Guid.NewGuid();
+
+            sut.UpdateLastPost(lastPostId);
+
+            Assert.AreEqual(lastPostId, sut.LastPostId, nameof(sut.LastPostId));
+        }
+
+        [Test]
         public void Move_up()
         {
             var sut = Fixture.Create<Forum>();

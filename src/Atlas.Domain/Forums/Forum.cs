@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Atlas.Domain.Categories;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.Posts;
@@ -18,8 +19,12 @@ namespace Atlas.Domain.Forums
         public StatusType Status { get; private set; }
         public Guid? PermissionSetId { get; private set; }
 
+        [ForeignKey("LastPost")]
+        public Guid? LastPostId { get; private set; }
+
         public virtual Category Category { get; set; }
         public virtual PermissionSet PermissionSet { get; set; }
+        public virtual Post LastPost { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
 
@@ -57,6 +62,10 @@ namespace Atlas.Domain.Forums
             PermissionSetId = permissionSetId;
         }
 
+        public void UpdateLastPost(Guid lastPostId)
+        {
+            LastPostId = lastPostId;
+        }
         public void MoveUp()
         {
             if (SortOrder == 1)

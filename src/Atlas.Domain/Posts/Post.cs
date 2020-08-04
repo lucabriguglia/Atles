@@ -18,9 +18,13 @@ namespace Atlas.Domain.Posts
         public Guid MemberId { get; private set; }
         public DateTime TimeStamp { get; private set; }
 
+        [ForeignKey("LastReply")]
+        public Guid? LastReplyId { get; private set; }
+
         public virtual Post Topic { get; set; }
         public virtual Forum Forum { get; set; }
         public virtual Member Member { get; set; }
+        public virtual Post LastReply { get; set; }
 
         public Post()
         {
@@ -72,6 +76,14 @@ namespace Atlas.Domain.Posts
             Status = status;
         }
 
+        public void UpdateLastReply(Guid lastReplyId)
+        {
+            if (IsTopic())
+            {
+                LastReplyId = lastReplyId;
+            }
+        }
+
         public void IncreaseRepliesCount()
         {
             RepliesCount += 1;
@@ -90,6 +102,11 @@ namespace Atlas.Domain.Posts
         public void Delete()
         {
             Status = StatusType.Deleted;
+        }
+
+        public bool IsTopic()
+        {
+            return TopicId == null;
         }
     }
 }

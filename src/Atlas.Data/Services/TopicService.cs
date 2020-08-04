@@ -54,6 +54,7 @@ namespace Atlas.Data.Services
                 }));
 
             var forum = await _dbContext.Forums.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == topic.ForumId);
+            forum.UpdateLastPost(topic.Id);
             forum.IncreaseTopicsCount();
             forum.Category.IncreaseTopicsCount();
 

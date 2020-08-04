@@ -81,8 +81,10 @@ namespace Atlas.Data.Tests.Services
                 Assert.NotNull(reply);
                 Assert.NotNull(@event);
                 Assert.AreEqual(category.RepliesCount + 1, updatedCategory.RepliesCount);
+                Assert.AreEqual(reply.Id, updatedForum.LastPostId);
                 Assert.AreEqual(forum.RepliesCount + 1, updatedForum.RepliesCount);
                 Assert.AreEqual(topic.RepliesCount + 1, updatedTopic.RepliesCount);
+                Assert.AreEqual(reply.Id, updatedTopic.LastReplyId);
                 Assert.AreEqual(member.RepliesCount + 1, updatedMember.RepliesCount);
             }
         }
