@@ -312,11 +312,15 @@ namespace Atlas.Server.Services
                     topicWelcome.Status
                 }));
             categoryGeneral.IncreaseTopicsCount();
-            forumWelcome.UpdateLastPost(topicWelcome.Id);
             forumWelcome.IncreaseTopicsCount();
             memberAdmin.IncreaseTopicsCount();
 
             // Save all changes
+            await _dbContext.SaveChangesAsync();
+
+            // Update last post
+            var forumWelcomeToUpdate = await _dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forumWelcome.Id);
+            forumWelcomeToUpdate.UpdateLastPost(topicWelcome.Id);
             await _dbContext.SaveChangesAsync();
         }
     }

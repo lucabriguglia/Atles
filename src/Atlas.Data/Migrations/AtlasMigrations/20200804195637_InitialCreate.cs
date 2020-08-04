@@ -151,7 +151,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Topic",
+                name: "Post",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
@@ -167,27 +167,27 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Topic", x => x.Id);
+                    table.PrimaryKey("PK_Post", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Topic_Forum_ForumId",
+                        name: "FK_Post_Forum_ForumId",
                         column: x => x.ForumId,
                         principalTable: "Forum",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Topic_Topic_LastReplyId",
+                        name: "FK_Post_Post_LastReplyId",
                         column: x => x.LastReplyId,
-                        principalTable: "Topic",
+                        principalTable: "Post",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Topic_Member_MemberId",
+                        name: "FK_Post_Member_MemberId",
                         column: x => x.MemberId,
                         principalTable: "Member",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_Topic_Topic_TopicId",
+                        name: "FK_Post_Post_TopicId",
                         column: x => x.TopicId,
-                        principalTable: "Topic",
+                        principalTable: "Post",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -223,30 +223,30 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 column: "PermissionSetId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topic_ForumId",
-                table: "Topic",
+                name: "IX_Post_ForumId",
+                table: "Post",
                 column: "ForumId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topic_LastReplyId",
-                table: "Topic",
+                name: "IX_Post_LastReplyId",
+                table: "Post",
                 column: "LastReplyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topic_MemberId",
-                table: "Topic",
+                name: "IX_Post_MemberId",
+                table: "Post",
                 column: "MemberId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Topic_TopicId",
-                table: "Topic",
+                name: "IX_Post_TopicId",
+                table: "Post",
                 column: "TopicId");
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Forum_Topic_LastPostId",
+                name: "FK_Forum_Post_LastPostId",
                 table: "Forum",
                 column: "LastPostId",
-                principalTable: "Topic",
+                principalTable: "Post",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Restrict);
         }
@@ -266,15 +266,15 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 table: "Category");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Topic_Member_MemberId",
-                table: "Topic");
+                name: "FK_Post_Member_MemberId",
+                table: "Post");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Forum_Category_CategoryId",
                 table: "Forum");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Forum_Topic_LastPostId",
+                name: "FK_Forum_Post_LastPostId",
                 table: "Forum");
 
             migrationBuilder.DropTable(
@@ -296,7 +296,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 name: "Category");
 
             migrationBuilder.DropTable(
-                name: "Topic");
+                name: "Post");
 
             migrationBuilder.DropTable(
                 name: "Forum");

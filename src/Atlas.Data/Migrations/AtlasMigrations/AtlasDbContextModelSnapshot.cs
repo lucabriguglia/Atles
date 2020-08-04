@@ -241,7 +241,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
                     b.HasIndex("TopicId");
 
-                    b.ToTable("Topic");
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("Atlas.Domain.Sites.Site", b =>

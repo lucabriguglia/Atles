@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atlas.Data.Migrations.AtlasMigrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20200804195055_InitialCreate")]
+    [Migration("20200804195637_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -243,7 +243,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
                     b.HasIndex("TopicId");
 
-                    b.ToTable("Topic");
+                    b.ToTable("Post");
                 });
 
             modelBuilder.Entity("Atlas.Domain.Sites.Site", b =>
