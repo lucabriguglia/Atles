@@ -4,15 +4,11 @@ using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Domain.Categories;
-using Atlas.Domain.Categories.Events;
 using Atlas.Domain.Forums;
-using Atlas.Domain.Forums.Events;
 using Atlas.Domain.Members;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.PermissionSets.Commands;
-using Atlas.Domain.PermissionSets.Events;
 using Atlas.Domain.Sites;
-using Atlas.Domain.Sites.Events;
 using Atlas.Domain.Topics;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -106,15 +102,16 @@ namespace Atlas.Server.Services
 
             site = new Site("Default", "Atlas");
             _dbContext.Sites.Add(site);
-            _dbContext.Events.Add(new Event(new SiteCreated
-            {
-                SiteId = site.Id,
-                MemberId = null,
-                TargetId = site.Id,
-                TargetType = typeof(Site).Name,
-                Name = site.Name,
-                Title = site.Title
-            }));
+            _dbContext.Events.Add(new Event(site.Id,
+                null,
+                EventType.Created,
+                typeof(Site),
+                site.Id,
+                new
+                {
+                    site.Name,
+                    site.Title
+                }));
 
             // Members
             var memberAdmin = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userAdmin.Id);
@@ -184,14 +181,16 @@ namespace Atlas.Server.Services
                 new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleModerator.Id}
             });
             _dbContext.PermissionSets.Add(permissionSetDefault);
-            _dbContext.Events.Add(new Event(new PermissionSetCreated
-            {
-                SiteId = permissionSetDefault.SiteId,
-                MemberId = null,
-                TargetId = permissionSetDefault.Id,
-                TargetType = typeof(PermissionSet).Name,
-                Name = permissionSetDefault.Name
-            }));
+            _dbContext.Events.Add(new Event(site.Id,
+                null,
+                EventType.Created,
+                typeof(PermissionSet),
+                permissionSetDefault.Id,
+                new
+                {
+                    permissionSetDefault.Name,
+                    permissionSetDefault.Permissions
+                }));
 
             var permissionSetMembersOnly = new PermissionSet(site.Id, "Members Only", new List<PermissionCommand>
             {
@@ -205,14 +204,16 @@ namespace Atlas.Server.Services
                 new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleModerator.Id}
             });
             _dbContext.PermissionSets.Add(permissionSetMembersOnly);
-            _dbContext.Events.Add(new Event(new PermissionSetCreated
-            {
-                SiteId = permissionSetMembersOnly.SiteId,
-                MemberId = null,
-                TargetId = permissionSetMembersOnly.Id,
-                TargetType = typeof(PermissionSet).Name,
-                Name = permissionSetMembersOnly.Name
-            }));
+            _dbContext.Events.Add(new Event(site.Id,
+                null,
+                EventType.Created,
+                typeof(PermissionSet),
+                permissionSetMembersOnly.Id,
+                new
+                {
+                    permissionSetMembersOnly.Name,
+                    permissionSetMembersOnly.Permissions
+                }));
 
             var permissionSetAdminOnly = new PermissionSet(site.Id, "Admin Only", new List<PermissionCommand>
             {
@@ -226,68 +227,77 @@ namespace Atlas.Server.Services
                 new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleAdmin.Id}
             });
             _dbContext.PermissionSets.Add(permissionSetAdminOnly);
-            _dbContext.Events.Add(new Event(new PermissionSetCreated
-            {
-                SiteId = permissionSetAdminOnly.SiteId,
-                MemberId = null,
-                TargetId = permissionSetAdminOnly.Id,
-                TargetType = typeof(PermissionSet).Name,
-                Name = permissionSetAdminOnly.Name
-            }));
+            _dbContext.Events.Add(new Event(site.Id,
+                null,
+                EventType.Created,
+                typeof(PermissionSet),
+                permissionSetAdminOnly.Id,
+                new
+                {
+                    permissionSetAdminOnly.Name,
+                    permissionSetAdminOnly.Permissions
+                }));
 
             // Categories
             var categoryGeneral = new Category(site.Id, "General", 1, permissionSetDefault.Id);
             _dbContext.Categories.Add(categoryGeneral);
-            _dbContext.Events.Add(new Event(new CategoryCreated
-            {
-                SiteId = categoryGeneral.SiteId,
-                MemberId = null,
-                TargetId = categoryGeneral.Id,
-                TargetType = typeof(Category).Name,
-                Name = categoryGeneral.Name,
-                PermissionSetId = categoryGeneral.PermissionSetId,
-                SortOrder = categoryGeneral.SortOrder
-            }));
+            _dbContext.Events.Add(new Event(site.Id,
+                null,
+                EventType.Created,
+                typeof(Category),
+                categoryGeneral.Id,
+                new
+                {
+                    categoryGeneral.Name,
+                    categoryGeneral.PermissionSetId,
+                    categoryGeneral.SortOrder
+                }));
 
             // Forums
             var forumWelcome = new Forum(categoryGeneral.Id, "Welcome", "Welcome Forum", 1);
             _dbContext.Forums.Add(forumWelcome);
-            _dbContext.Events.Add(new Event(new ForumCreated
-            {
-                SiteId = categoryGeneral.SiteId,
-                MemberId = null,
-                TargetId = forumWelcome.Id,
-                TargetType = typeof(Forum).Name,
-                Name = forumWelcome.Name,
-                PermissionSetId = forumWelcome.PermissionSetId,
-                SortOrder = forumWelcome.SortOrder
-            }));
+            _dbContext.Events.Add(new Event(site.Id,
+                null,
+                EventType.Created,
+                typeof(Forum),
+                forumWelcome.Id,
+                new
+                {
+                    forumWelcome.Name,
+                    forumWelcome.CategoryId,
+                    forumWelcome.PermissionSetId,
+                    forumWelcome.SortOrder
+                }));
 
             var forumMembersOnly = new Forum(categoryGeneral.Id, "Members Only", "Members Only Forum", 2, permissionSetMembersOnly.Id);
             _dbContext.Forums.Add(forumMembersOnly);
-            _dbContext.Events.Add(new Event(new ForumCreated
-            {
-                SiteId = categoryGeneral.SiteId,
-                MemberId = null,
-                TargetId = forumMembersOnly.Id,
-                TargetType = typeof(Forum).Name,
-                Name = forumMembersOnly.Name,
-                PermissionSetId = forumMembersOnly.PermissionSetId,
-                SortOrder = forumMembersOnly.SortOrder
-            }));
+            _dbContext.Events.Add(new Event(site.Id,
+                null,
+                EventType.Created,
+                typeof(Forum),
+                forumMembersOnly.Id,
+                new
+                {
+                    forumMembersOnly.Name,
+                    forumMembersOnly.CategoryId,
+                    forumMembersOnly.PermissionSetId,
+                    forumMembersOnly.SortOrder
+                }));
 
             var forumAdminOnly = new Forum(categoryGeneral.Id, "Admin Only", "Admin Only Forum", 3, permissionSetAdminOnly.Id);
             _dbContext.Forums.Add(forumAdminOnly);
-            _dbContext.Events.Add(new Event(new ForumCreated
-            {
-                SiteId = categoryGeneral.SiteId,
-                MemberId = null,
-                TargetId = forumAdminOnly.Id,
-                TargetType = typeof(Forum).Name,
-                Name = forumAdminOnly.Name,
-                PermissionSetId = forumAdminOnly.PermissionSetId,
-                SortOrder = forumAdminOnly.SortOrder
-            }));
+            _dbContext.Events.Add(new Event(site.Id,
+                null,
+                EventType.Created,
+                typeof(Forum),
+                forumAdminOnly.Id,
+                new
+                {
+                    forumAdminOnly.Name,
+                    forumAdminOnly.CategoryId,
+                    forumAdminOnly.PermissionSetId,
+                    forumAdminOnly.SortOrder
+                }));
 
             // Topics
             var topicWelcome = new Topic(forumWelcome.Id, memberAdmin.Id, "Welcome to Atlas!", "Welcome...", StatusType.Published);

@@ -4,7 +4,6 @@ using Atlas.Data.Caching;
 using Atlas.Domain;
 using Atlas.Domain.Sites;
 using Atlas.Domain.Sites.Commands;
-using Atlas.Domain.Sites.Events;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -40,14 +39,15 @@ namespace Atlas.Data.Services
 
             site.UpdateDetails(command.Title);
 
-            _dbContext.Events.Add(new Event(new SiteUpdated
-            {
-                SiteId = command.SiteId,
-                MemberId = command.MemberId,
-                TargetId = site.Id,
-                TargetType = typeof(Site).Name,
-                Title = site.Title
-            }));
+            _dbContext.Events.Add(new Event(site.Id,
+                command.MemberId,
+                EventType.Updated,
+                typeof(Site),
+                site.Id,
+                new
+                {
+                    site.Title
+                }));
 
             await _dbContext.SaveChangesAsync();
 

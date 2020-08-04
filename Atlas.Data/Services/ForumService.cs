@@ -6,7 +6,6 @@ using Atlas.Data.Caching;
 using Atlas.Domain;
 using Atlas.Domain.Forums;
 using Atlas.Domain.Forums.Commands;
-using Atlas.Domain.Forums.Events;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,17 +47,18 @@ namespace Atlas.Data.Services
                 command.PermissionSetId);
 
             _dbContext.Forums.Add(forum);
-            _dbContext.Events.Add(new Event(new ForumCreated
-            {
-                SiteId = command.SiteId,
-                MemberId = command.MemberId,
-                TargetId = forum.Id,
-                TargetType = typeof(Forum).Name,
-                Name = forum.Name,
-                ForumGorupId = forum.CategoryId,
-                PermissionSetId = forum.PermissionSetId,
-                SortOrder = forum.SortOrder
-            }));
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Created,
+                typeof(Forum),
+                forum.Id,
+                new
+                {
+                    forum.Name,
+                    forum.CategoryId,
+                    forum.PermissionSetId,
+                    forum.SortOrder
+                }));
 
             await _dbContext.SaveChangesAsync();
 
@@ -94,16 +94,17 @@ namespace Atlas.Data.Services
             }
 
             forum.UpdateDetails(command.CategoryId, command.Name, command.Description, command.PermissionSetId);
-            _dbContext.Events.Add(new Event(new ForumUpdated
-            {
-                SiteId = command.SiteId,
-                MemberId = command.MemberId,
-                TargetId = forum.Id,
-                TargetType = typeof(Forum).Name,
-                CategoryId = forum.CategoryId,
-                Name = forum.Name,
-                PermissionSetId = forum.PermissionSetId
-            }));
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Updated,
+                typeof(Forum),
+                forum.Id,
+                new
+                {
+                    forum.Name,
+                    forum.CategoryId,
+                    forum.PermissionSetId
+                }));
 
             await _dbContext.SaveChangesAsync();
 
@@ -132,14 +133,15 @@ namespace Atlas.Data.Services
                 forum.MoveDown();
             }
 
-            _dbContext.Events.Add(new Event(new ForumReordered
-            {
-                SiteId = command.SiteId,
-                MemberId = command.MemberId,
-                TargetId = forum.Id,
-                TargetType = typeof(Forum).Name,
-                SortOrder = forum.SortOrder
-            }));
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Reordered,
+                typeof(Forum),
+                forum.Id,
+                new
+                {
+                    forum.SortOrder
+                }));
 
             var sortOrderToReplace = forum.SortOrder;
 
@@ -158,14 +160,15 @@ namespace Atlas.Data.Services
                 adjacentForum.MoveUp();
             }
 
-            _dbContext.Events.Add(new Event(new ForumReordered
-            {
-                SiteId = command.SiteId,
-                MemberId = command.MemberId,
-                TargetId = adjacentForum.Id,
-                TargetType = typeof(Forum).Name,
-                SortOrder = adjacentForum.SortOrder
-            }));
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Reordered,
+                typeof(Forum),
+                adjacentForum.Id,
+                new
+                {
+                    adjacentForum.SortOrder
+                }));
 
             await _dbContext.SaveChangesAsync();
 
@@ -186,13 +189,11 @@ namespace Atlas.Data.Services
             }
 
             forum.Delete();
-            _dbContext.Events.Add(new Event(new ForumDeleted
-            {
-                SiteId = command.SiteId,
-                MemberId = command.MemberId,
-                TargetId = forum.Id,
-                TargetType = typeof(Forum).Name
-            }));
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Deleted,
+                typeof(Forum),
+                forum.Id));
 
             await ReorderForumsInCategory(forum.CategoryId, command.Id, command.SiteId, command.MemberId);
 
@@ -213,14 +214,15 @@ namespace Atlas.Data.Services
             for (int i = 0; i < otherForums.Count; i++)
             {
                 otherForums[i].Reorder(i + 1);
-                _dbContext.Events.Add(new Event(new ForumReordered
-                {
-                    SiteId = siteId,
-                    MemberId = memberId,
-                    TargetId = otherForums[i].Id,
-                    TargetType = typeof(Forum).Name,
-                    SortOrder = otherForums[i].SortOrder
-                }));
+                _dbContext.Events.Add(new Event(siteId,
+                    memberId,
+                    EventType.Reordered,
+                    typeof(Forum),
+                    otherForums[i].Id,
+                    new
+                    {
+                        otherForums[i].SortOrder
+                    }));
             }
         }
     }

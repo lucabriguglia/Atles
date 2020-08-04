@@ -5,9 +5,7 @@ using Atlas.Data.Caching;
 using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Categories.Commands;
-using Atlas.Domain.Categories.Events;
 using Atlas.Domain.Forums;
-using Atlas.Domain.Forums.Events;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -48,16 +46,17 @@ namespace Atlas.Data.Services
                 command.PermissionSetId);
 
             _dbContext.Categories.Add(category);
-            _dbContext.Events.Add(new Event(new CategoryCreated
-            {
-                SiteId = command.SiteId,
-                MemberId = command.MemberId,
-                TargetId = category.Id,
-                TargetType = typeof(Category).Name,
-                Name = category.Name,
-                PermissionSetId = category.PermissionSetId,
-                SortOrder = category.SortOrder
-            }));
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Created,
+                typeof(Category),
+                category.Id,
+                new
+                {
+                    category.Name,
+                    category.PermissionSetId,
+                    category.SortOrder
+                }));
 
             await _dbContext.SaveChangesAsync();
 
@@ -80,15 +79,16 @@ namespace Atlas.Data.Services
             }
 
             category.UpdateDetails(command.Name, command.PermissionSetId);
-            _dbContext.Events.Add(new Event(new CategoryUpdated
-            {
-                SiteId = command.SiteId,
-                MemberId = command.MemberId,
-                TargetId = category.Id,
-                TargetType = typeof(Category).Name,
-                Name = category.Name,
-                PermissionSetId = category.PermissionSetId
-            }));
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Updated,
+                typeof(Category),
+                category.Id,
+                new
+                {
+                    category.Name,
+                    category.PermissionSetId
+                }));
 
             await _dbContext.SaveChangesAsync();
 
@@ -117,14 +117,15 @@ namespace Atlas.Data.Services
                 category.MoveDown();
             }
 
-            _dbContext.Events.Add(new Event(new CategoryReordered
-            {
-                SiteId = command.SiteId,
-                MemberId = command.MemberId,
-                TargetId = category.Id,
-                TargetType = typeof(Category).Name,
-                SortOrder = category.SortOrder
-            }));
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Reordered,
+                typeof(Category),
+                category.Id,
+                new
+                {
+                    category.SortOrder
+                }));
 
             var sortOrderToReplace = category.SortOrder;
 
@@ -143,14 +144,15 @@ namespace Atlas.Data.Services
                 adjacentCategory.MoveUp();
             }
 
-            _dbContext.Events.Add(new Event(new CategoryReordered
-            {
-                SiteId = command.SiteId,
-                MemberId = command.MemberId,
-                TargetId = adjacentCategory.Id,
-                TargetType = typeof(Category).Name,
-                SortOrder = adjacentCategory.SortOrder
-            }));
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Reordered,
+                typeof(Category),
+                adjacentCategory.Id,
+                new
+                {
+                    adjacentCategory.SortOrder
+                }));
 
             await _dbContext.SaveChangesAsync();
 
@@ -172,13 +174,11 @@ namespace Atlas.Data.Services
             }
 
             category.Delete();
-            _dbContext.Events.Add(new Event(new CategoryDeleted
-            {
-                SiteId = command.SiteId,
-                MemberId = command.MemberId,
-                TargetId = category.Id,
-                TargetType = typeof(Category).Name
-            }));
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Deleted,
+                typeof(Category),
+                category.Id));
 
             var otherCategories = await _dbContext.Categories
                 .Where(x =>
@@ -190,26 +190,25 @@ namespace Atlas.Data.Services
             for (int i = 0; i < otherCategories.Count; i++)
             {
                 otherCategories[i].Reorder(i + 1);
-                _dbContext.Events.Add(new Event(new CategoryReordered
-                {
-                    SiteId = command.SiteId,
-                    MemberId = command.MemberId,
-                    TargetId = otherCategories[i].Id,
-                    TargetType = typeof(Category).Name,
-                    SortOrder = otherCategories[i].SortOrder
-                }));
+                _dbContext.Events.Add(new Event(command.SiteId,
+                    command.MemberId,
+                    EventType.Reordered,
+                    typeof(Category),
+                    otherCategories[i].Id,
+                    new
+                    {
+                        otherCategories[i].SortOrder
+                    }));
             }
 
             foreach (var forum in category.Forums)
             {
                 forum.Delete();
-                _dbContext.Events.Add(new Event(new ForumDeleted
-                {
-                    SiteId = command.SiteId,
-                    MemberId = command.MemberId,
-                    TargetId = forum.Id,
-                    TargetType = typeof(Forum).Name
-                }));
+                _dbContext.Events.Add(new Event(command.SiteId,
+                    command.MemberId,
+                    EventType.Deleted,
+                    typeof(Forum),
+                    forum.Id));
             }
 
             await _dbContext.SaveChangesAsync();
