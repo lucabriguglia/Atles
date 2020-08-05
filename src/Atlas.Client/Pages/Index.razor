@@ -1,5 +1,6 @@
 ﻿@page "/"
 @page "/public"
+@using Atlas.Client.Extensions
 @using Atlas.Client.Services
 @using Atlas.Models.Public
 @inject AnonymousService AnonymousService;
@@ -42,10 +43,23 @@ else
                                     }
                                 </h5>
                                 <p class="card-text">@forum.Description</p>
-                                <div class="small">
-                                    <span class="font-weight-bold">@forum.TotalTopics</span> Topics
-                                    &nbsp;&nbsp;
-                                    <span class="font-weight-bold">@forum.TotalReplies</span> Replies
+                                <div class="row small">
+                                    <div class="col-md-6">
+                                        <span class="font-weight-bold">@forum.TotalTopics</span> Topics
+                                        <span class="font-weight-bold ml-2">@forum.TotalReplies</span> Replies
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        @if (forum.HasLastPost())
+                                        {
+                                            <span class="ml-2">
+                                                Latest:
+                                                <a href="/forum/@forum.Id/@forum.LastTopicId.Value" title="@forum.LastTopicTitle">@forum.LastTopicTitle.ToSafeLengthText(15)</a>
+                                                by
+                                                <a href="/member/@forum.LastPostMemberId" title="@forum.LastPostMemberDisplayName">@forum.LastPostMemberDisplayName.ToSafeLengthText(10)</a>
+                                                on @forum.LastPostTimeStamp.Value.ToForumLocalDateAndTime()
+                                            </span>
+                                        }
+                                    </div>
                                 </div>
                             </li>
                         }

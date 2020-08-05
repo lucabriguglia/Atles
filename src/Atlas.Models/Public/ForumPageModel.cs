@@ -26,6 +26,9 @@ namespace Atlas.Models.Public
             public string MemberDisplayName { get; set; }
             public DateTime TimeStamp { get; set; }
             public string GravatarHash { get; set; }
+            public DateTime MostRecentTimeStamp { get; set; }
+            public Guid MostRecentMemberId { get; set; }
+            public string MostRecentMemberDisplayName { get; set; }
         }
     }
 }

@@ -55,32 +55,39 @@ else
                     @foreach (var item in Model.Topics.Items)
                     {
                         <li class="list-group-item py-3">
-                            <p class="card-text">
-                                @if (Model.CanRead)
-                                {
-                                    <a href="/forum/@Model.Forum.Id/@item.Id">@item.Title</a>
-                                }
-                                else
-                                {
-                                    @item.Title
-                                }
-                            </p>
-                            <div class="row small">
-                                <div class="col-md-6 font-weight-bold">
-                                    <Avatar GravatarHash="@item.GravatarHash" GravatarSize="32" Class="mr-1"></Avatar>
-                                    <a href="/member/@item.MemberId">@item.MemberDisplayName</a>
+                            <div class="row">
+                                <div class="col-md-auto pr-1">
+                                    <a href="/member/@item.MemberId" title="@item.MemberDisplayName">
+                                        <Avatar GravatarHash="@item.GravatarHash" GravatarSize="32" Class="mb-2"></Avatar>
+                                    </a>
                                 </div>
-                                <div class="col-md-6 text-right">
-                                    @item.TimeStamp.ToForumLocalDateAndTime()
-                                    &nbsp;&nbsp;
-                                    <span class="font-weight-bold">@item.TotalReplies</span> Replies
+                                <div class="col">
+                                    <p class="card-text">
+                                        @if (Model.CanRead)
+                                        {
+                                            <a href="/forum/@Model.Forum.Id/@item.Id" title="@item.Title">@item.Title.ToSafeLengthText(50)</a>
+                                        }
+                                        else
+                                        {
+                                            <span title="@item.Title"></span>@item.Title.ToSafeLengthText(50)
+                                        }
+                                    </p>
+                                    <div class="row small">
+                                        <div class="col-md-6">
+                                            @item.TimeStamp.ToForumLocalDateAndTime()
+                                            <span class="font-weight-bold ml-2">@item.TotalReplies</span> Replies
+                                        </div>
+                                        <div class="col-md-6 text-right">
+                                            Most recent post by <a href="/member/@item.MostRecentMemberId" title="@item.MostRecentMemberDisplayName">@item.MostRecentMemberDisplayName.ToSafeLengthText(10)</a>
+                                            on @item.MostRecentTimeStamp.ToForumLocalDateAndTime()
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </li>
                     }
                 </ul>
             </div>
-
             <div class="mt-3">
                 <Pager TotalPages="Model.Topics.TotalPages" OnLoadDataCallback="@LoadDataAsync"></Pager>
             </div>

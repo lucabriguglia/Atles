@@ -51,6 +51,8 @@ namespace Atlas.Data.Builders.Public
                 category.Forums = await _cacheManager.GetOrSetAsync(CacheKeys.Forums(category.Id), async () =>
                 {
                     var forums = await _dbContext.Forums
+                        .Include(x => x.LastPost).ThenInclude(x => x.Member)
+                        .Include(x => x.LastPost).ThenInclude(x => x.Topic)
                         .Where(x => x.CategoryId == category.Id && x.Status == StatusType.Published)
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
@@ -62,7 +64,12 @@ namespace Atlas.Data.Builders.Public
                         Description = forum.Description,
                         TotalTopics = forum.TopicsCount,
                         TotalReplies = forum.RepliesCount,
-                        PermissionSetId = forum.PermissionSetId
+                        PermissionSetId = forum.PermissionSetId,
+                        LastTopicId = forum.LastPost?.TopicId == null ? forum.LastPost?.Id : forum.LastPost?.Topic?.Id,
+                        LastTopicTitle = forum.LastPost?.Title ?? forum.LastPost?.Topic?.Title,
+                        LastPostTimeStamp = forum.LastPost?.TimeStamp,
+                        LastPostMemberId = forum.LastPost?.Member?.Id,
+                        LastPostMemberDisplayName = forum.LastPost?.Member?.DisplayName
                     }).ToList();
                 });
             }
@@ -95,6 +102,7 @@ namespace Atlas.Data.Builders.Public
 
             var topics = await _dbContext.Posts
                 .Include(x => x.Member)
+                .Include(x => x.LastReply).ThenInclude(x => x.Member)
                 .Where(x => 
                     x.TopicId == null &&
                     x.ForumId == forum.Id && 
@@ -112,7 +120,10 @@ namespace Atlas.Data.Builders.Public
                     MemberId = topic.Member.Id,
                     MemberDisplayName = topic.Member.DisplayName,
                     TimeStamp = topic.TimeStamp,
-                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email)
+                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email),
+                    MostRecentMemberId = topic.LastReply?.MemberId ?? topic.MemberId,
+                    MostRecentMemberDisplayName = topic.LastReply?.Member?.DisplayName ?? topic.Member.DisplayName,
+                    MostRecentTimeStamp = topic.LastReply?.TimeStamp ?? topic.TimeStamp
                 })
                 .ToList();
 

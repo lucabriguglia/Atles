@@ -8,8 +8,6 @@ namespace Atlas.Domain.Posts
     public class Post
     {
         public Guid Id { get; private set; }
-        [ForeignKey("Topic")]
-        public Guid? TopicId { get; private set; }
         public Guid ForumId { get; private set; }
         public string Title { get; private set; }
         public string Content { get; private set; }
@@ -18,14 +16,17 @@ namespace Atlas.Domain.Posts
         public Guid MemberId { get; private set; }
         public DateTime TimeStamp { get; private set; }
 
+        [ForeignKey("Topic")]
+        public Guid? TopicId { get; private set; }
+
         [ForeignKey("LastReply")]
         public Guid? LastReplyId { get; private set; }
 
         public virtual Post Topic { get; set; }
+        public virtual Post LastReply { get; set; }
         public virtual Forum Forum { get; set; }
         public virtual Member Member { get; set; }
-        public virtual Post LastReply { get; set; }
-
+        
         public Post()
         {
 

@@ -61,7 +61,7 @@ namespace Atlas.Data.Builders.Admin
 
             var totalRecords = await countQuery.CountAsync();
 
-            result.Members = new PaginatedData<IndexPageModel.MemberModel>(items, totalRecords, options.PageSize, options.Search);
+            result.Members = new PaginatedData<IndexPageModel.MemberModel>(items, totalRecords, options.PageSize);
 
             return result;
         }

@@ -63,7 +63,12 @@ namespace Atlas.Server.Controllers.Public
                         Description = forumToFilter.Description,
                         TotalTopics = forumToFilter.TotalTopics,
                         TotalReplies = forumToFilter.TotalReplies,
-                        CanViewTopics = canViewTopics
+                        CanViewTopics = canViewTopics,
+                        LastTopicId = forumToFilter.LastTopicId,
+                        LastTopicTitle = forumToFilter.LastTopicTitle,
+                        LastPostTimeStamp = forumToFilter.LastPostTimeStamp,
+                        LastPostMemberId = forumToFilter.LastPostMemberId,
+                        LastPostMemberDisplayName = forumToFilter.LastPostMemberDisplayName
                     };
                     category.Forums.Add(forum);
                 }
