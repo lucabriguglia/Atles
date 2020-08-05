@@ -89,7 +89,7 @@ else
                                 <div class="col-md-12 text-right">
                                     @if (CanEditReply(reply.UserId))
                                     {
-                                        <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await EditAsync(reply.Id, reply.OriginalContent, reply.MemberId))">Edit</a>
+                                        <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await EditReplyAsync(reply.Id, reply.OriginalContent, reply.MemberId))">Edit</a>
                                     }
                                     @if (CanDeleteReply(reply.UserId))
                                     {
@@ -103,7 +103,7 @@ else
             </div>
 
             <div class="mt-3">
-                <Pager TotalPages="Model.Replies.TotalPages" OnLoadDataCallback="@ChangePageAsync"></Pager>
+                <Pager TotalPages="Model.Replies.TotalPages" CurrentPage="CurrentPage" OnLoadDataCallback="@ChangePageAsync"></Pager>
             </div>
         }
 
@@ -113,13 +113,23 @@ else
             <div class="row">
                 <div class="col-md-8">
                     <a id="reply"></a>
-                    <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="OnValidSubmitAsync">
+                    <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveReplyAsync">
                         <DataAnnotationsValidator />
                         <Editor @bind-Value="@Model.Post.Content" Rows="10"></Editor>
                         <div class="form-group">
-                            <input type="submit" value="@ReplyButton" class="btn btn-primary" />
-                            <div class="small float-right mt-2">
-                                <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>Guide</a>
+                            <div class="row">
+                                <div class="col">
+                                <input type="submit" value="@ReplyButton" class="btn btn-primary" />
+                                </div>
+                                <div class="col text-center">
+                                    @if (Savings)
+                                    {
+                                        <Loading />
+                                    }
+                                </div>
+                                <div class="col small text-right mt-2">
+                                    <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>Guide</a>
+                                </div>
                             </div>
                         </div>
                         <ValidationSummary />
@@ -179,8 +189,12 @@ else
     public ClaimsPrincipal CurrentUser { get; set; }
     public string CurrentUserId { get; set; } = Guid.Empty.ToString();
 
+    public int CurrentPage { get; set; } = 1;
+    public bool Savings { get; set; }
+
     protected async Task ChangePageAsync(int page)
     {
+        CurrentPage = page;
         await JsRuntime.InvokeVoidAsync("scrollToTarget", "replies");
         await LoadDataAsync(page);
     }
@@ -235,7 +249,7 @@ else
         await JsRuntime.InvokeVoidAsync("scrollToTarget", "reply");
     }
 
-    private async Task EditAsync(Guid id, string content, Guid memberId)
+    private async Task EditReplyAsync(Guid id, string content, Guid memberId)
     {
         Model.Post.Id = id;
         Model.Post.Content = content;
@@ -243,20 +257,26 @@ else
         await JsRuntime.InvokeVoidAsync("scrollToTarget", "reply");
     }
 
-    private async Task OnValidSubmitAsync()
+    private async Task SaveReplyAsync()
     {
+        Savings = true;
+
         var requestUri = Model.Post.Id != null
             ? "api/public/replies/update-reply"
             : "api/public/replies/create-reply";
 
         await Http.PostAsJsonAsync(requestUri, Model);
 
+        Savings = false;
+
         if (Model.Post.Id != null)
         {
             await JsRuntime.InvokeVoidAsync("scrollToTarget", Model.Post.Id.Value);
         }
 
-        await OnInitializedAsync();
+        CurrentPage = Model.Replies.TotalPages;
+
+        await LoadDataAsync(CurrentPage);
     }
 
     protected async Task DeleteTopicAsync(MouseEventArgs e)

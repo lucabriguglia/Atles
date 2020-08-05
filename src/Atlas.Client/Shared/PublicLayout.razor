@@ -52,5 +52,6 @@
     {
         await JSRuntime.InvokeVoidAsync("addCssFile", "public");
         Site = await AnonymousService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
+        await JSRuntime.InvokeVoidAsync("changePageTitle", Site.Title);
     }
 }
