@@ -107,7 +107,7 @@ namespace Atlas.Data.Builders.Public
                     x.TopicId == null &&
                     x.ForumId == forum.Id && 
                     x.Status == StatusType.Published)
-                .OrderByDescending(x => x.TimeStamp)
+                .OrderByDescending(x => x.LastReply != null ? x.LastReply.TimeStamp : x.TimeStamp)
                 .Skip(options.Skip)
                 .Take(options.PageSize)
                 .ToListAsync();
@@ -277,8 +277,7 @@ namespace Atlas.Data.Builders.Public
 
             var member = await _dbContext.Members
                 .FirstOrDefaultAsync(x =>
-                    x.Id == memberId &&
-                    x.Status != StatusType.Deleted);
+                    x.Id == memberId);
 
             if (member == null)
             {
@@ -291,7 +290,8 @@ namespace Atlas.Data.Builders.Public
                 DisplayName = member.DisplayName,
                 TotalTopics = member.TopicsCount,
                 TotalReplies = member.RepliesCount,
-                GravatarHash = _gravatarService.HashEmailForGravatar(member.Email)
+                GravatarHash = _gravatarService.HashEmailForGravatar(member.Email),
+                Status = member.Status
             };
 
             result.MemberTopicModelsToFilter = await BuildMemberTopicModelsToFilterAsync(siteId, memberId, 0);
@@ -306,20 +306,23 @@ namespace Atlas.Data.Builders.Public
             var result = new MemberTopicModelsToFilter();
 
             var topics = await _dbContext.Posts
+                .Include(x => x.Forum)
                 .Where(x =>
                     x.TopicId == null &&
                     x.Forum.Category.SiteId == siteId &&
-                    x.MemberId == memberId &&
+                    (x.MemberId == memberId || x.LastReply.MemberId == memberId) &&
                     x.Status == StatusType.Published)
-                .OrderByDescending(x => x.TimeStamp)
+                .OrderByDescending(x => x.LastReply != null ? x.LastReply.TimeStamp : x.TimeStamp)
                 .Skip(skip)
                 .Take(5)
                 .Select(t => new
                 {
                     t.Id,
                     t.ForumId,
+                    ForumName = t.Forum.Name,
                     t.Title,
                     t.TimeStamp,
+                    LastReplyTimeStamp = t.LastReply.TimeStamp,
                     t.RepliesCount,
                     ForumPermissionSetId = t.Forum.PermissionSetId,
                     CategoryPermissionSetId = t.Forum.Category.PermissionSetId
@@ -332,8 +335,9 @@ namespace Atlas.Data.Builders.Public
                 {
                     Id = topic.Id,
                     ForumId = topic.ForumId,
+                    ForumName = topic.ForumName,
                     Title = topic.Title,
-                    TimeStamp = topic.TimeStamp,
+                    TimeStamp = topic.LastReplyTimeStamp > DateTime.MinValue ? topic.LastReplyTimeStamp : topic.TimeStamp,
                     TotalReplies = topic.RepliesCount
                 });
 

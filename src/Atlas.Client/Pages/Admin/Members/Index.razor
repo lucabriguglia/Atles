@@ -1,5 +1,6 @@
 ﻿@layout AdminLayout
 @page "/admin/members"
+@using Atlas.Domain
 @using Atlas.Models.Admin.Members
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
@@ -52,8 +53,9 @@ else
                 <th scope="col">&nbsp;</th>
                 <th scope="col">Display Name</th>
                 <th scope="col">Email</th>
-                <th scope="col">Total Topics</th>
-                <th scope="col">Total Replies</th>
+                <th scope="col" class="text-center">Total Topics</th>
+                <th scope="col" class="text-center">Total Replies</th>
+                <th scope="col" class="text-center">Status</th>
                 <th scope="col">&nbsp;</th>
             </tr>
         </thead>
@@ -66,9 +68,17 @@ else
                     <td>@item.Email</td>
                     <td class="text-center">@item.TotalTopics</td>
                     <td class="text-center">@item.TotalReplies</td>
+                    <td class="text-center">@item.Status</td>
                     <td>
                         <a href="/admin/members/edit/@item.Id" class="btn btn-secondary" role="button">Edit</a>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">Delete</button>
+                        @if (item.Status != StatusType.Deleted)
+                        {
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">Delete</button>
+                        }
+                        else
+                        {
+                            <button type="button" class="btn btn-danger disabled">Delete</button>
+                        }
                     </td>
                 </tr>
             }

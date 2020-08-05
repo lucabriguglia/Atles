@@ -29,7 +29,8 @@ namespace Atlas.Data.Builders.Admin
         {
             var result = new IndexPageModel();
 
-            var query = _dbContext.Members.Where(x => x.Status == StatusType.Active);
+            //var query = _dbContext.Members.Where(x => x.Status == StatusType.Active);
+            var query = _dbContext.Members.Where(x => true);
 
             if (!string.IsNullOrWhiteSpace(options.Search))
             {
@@ -48,7 +49,8 @@ namespace Atlas.Data.Builders.Admin
                 DisplayName = member.DisplayName,
                 Email = member.Email,
                 TotalTopics = member.TopicsCount,
-                TotalReplies = member.RepliesCount
+                TotalReplies = member.RepliesCount,
+                Status = member.Status
             })
             .ToList();
 
@@ -79,10 +81,7 @@ namespace Atlas.Data.Builders.Admin
         {
             var result = new EditPageModel();
 
-            var member = await _dbContext.Members
-                .FirstOrDefaultAsync(x =>
-                    x.Id == id && 
-                    x.Status != StatusType.Deleted);
+            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == id);
 
             if (member == null)
             {
@@ -94,25 +93,24 @@ namespace Atlas.Data.Builders.Admin
                 Id = member.Id,
                 Email = member.Email,
                 DisplayName = member.DisplayName,
-                UserId = member.UserId
+                UserId = member.UserId,
+                Status = member.Status
             };
 
             var user = await _userManager.FindByIdAsync(member.UserId);
 
-            if (user == null)
+            if (user != null)
             {
-                throw new DataException($"Membership user for member with id {member.Id} not found.");
-            }
-
-            foreach (var role in await _roleManager.Roles.ToListAsync())
-            {
-                var selected = await _userManager.IsInRoleAsync(user, role.Name);
-
-                result.Roles.Add(new EditPageModel.RoleModel
+                foreach (var role in await _roleManager.Roles.ToListAsync())
                 {
-                    Name = role.Name,
-                    Selected = selected
-                });
+                    var selected = await _userManager.IsInRoleAsync(user, role.Name);
+
+                    result.Roles.Add(new EditPageModel.RoleModel
+                    {
+                        Name = role.Name,
+                        Selected = selected
+                    });
+                }
             }
 
             return result;

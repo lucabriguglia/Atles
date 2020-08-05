@@ -98,25 +98,23 @@ namespace Atlas.Server.Controllers.Admin
 
             var user = await _userManager.FindByIdAsync(model.Member.UserId);
 
-            if (user == null)
+            if (user != null && model.Roles.Count > 0)
             {
-                return BadRequest("Membership user not found.");
-            }
-
-            foreach (var role in model.Roles)
-            {
-                if (role.Selected)
+                foreach (var role in model.Roles)
                 {
-                    if (!await _userManager.IsInRoleAsync(user, role.Name))
+                    if (role.Selected)
                     {
-                        await _userManager.AddToRoleAsync(user, role.Name);
+                        if (!await _userManager.IsInRoleAsync(user, role.Name))
+                        {
+                            await _userManager.AddToRoleAsync(user, role.Name);
+                        }
                     }
-                }
-                else
-                {
-                    if (await _userManager.IsInRoleAsync(user, role.Name))
+                    else
                     {
-                        await _userManager.RemoveFromRoleAsync(user, role.Name);
+                        if (await _userManager.IsInRoleAsync(user, role.Name))
+                        {
+                            await _userManager.RemoveFromRoleAsync(user, role.Name);
+                        }
                     }
                 }
             }
@@ -148,7 +146,14 @@ namespace Atlas.Server.Controllers.Admin
                 MemberId = member.Id
             };
 
-            await _memberService.DeleteAsync(command);
+            var userId = await _memberService.DeleteAsync(command);
+
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user != null)
+            {
+                await _userManager.DeleteAsync(user);
+            }
 
             return Ok();
         }

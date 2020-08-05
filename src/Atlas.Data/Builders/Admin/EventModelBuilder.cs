@@ -47,27 +47,30 @@ namespace Atlas.Data.Builders.Admin
                     MemberName = @event.Member?.DisplayName ?? "<system>"
                 };
 
-                var parsedData = JObject.Parse(@event.Data);
-
-                var data = new Dictionary<string, string>();
-
-                foreach (var x in parsedData)
+                if (!string.IsNullOrWhiteSpace(@event.Data) && @event.Data != "null")
                 {
-                    if (x.Key != nameof(@event.Id) && 
-                        x.Key != nameof(@event.TargetId) &&
-                        x.Key != nameof(@event.TargetType) &&
-                        x.Key != nameof(@event.SiteId) &&
-                        x.Key != nameof(@event.MemberId))
+                    var parsedData = JObject.Parse(@event.Data);
+
+                    var data = new Dictionary<string, string>();
+
+                    foreach (var x in parsedData)
                     {
-                        var value = !string.IsNullOrWhiteSpace(x.Value.ToString()) 
-                            ? x.Value.ToString()
-                            : "<null>";
+                        if (x.Key != nameof(@event.Id) && 
+                            x.Key != nameof(@event.TargetId) &&
+                            x.Key != nameof(@event.TargetType) &&
+                            x.Key != nameof(@event.SiteId) &&
+                            x.Key != nameof(@event.MemberId))
+                        {
+                            var value = !string.IsNullOrWhiteSpace(x.Value.ToString()) 
+                                ? x.Value.ToString()
+                                : "<null>";
 
-                        data.Add(x.Key, value);
+                            data.Add(x.Key, value);
+                        }
                     }
-                }
 
-                model.Data = data;
+                    model.Data = data;
+                }
 
                 result.Events.Add(model);
             }

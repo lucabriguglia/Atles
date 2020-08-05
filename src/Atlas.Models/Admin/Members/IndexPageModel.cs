@@ -1,4 +1,5 @@
 ﻿using System;
+using Atlas.Domain;
 
 namespace Atlas.Models.Admin.Members
 {
@@ -13,6 +14,7 @@ namespace Atlas.Models.Admin.Members
             public string Email { get; set; }
             public int TotalTopics { get; set; }
             public int TotalReplies { get; set; }
+            public StatusType Status { get; set; }
         }
     }
 }

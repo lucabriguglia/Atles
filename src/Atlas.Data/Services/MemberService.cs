@@ -84,8 +84,7 @@ namespace Atlas.Data.Services
 
             var member = await _dbContext.Members
                 .FirstOrDefaultAsync(x =>
-                    x.Id == command.Id && 
-                    x.Status != StatusType.Deleted);
+                    x.Id == command.Id);
 
             if (member == null)
             {
@@ -104,7 +103,7 @@ namespace Atlas.Data.Services
                     command.DisplayName
                 }));
 
-            if (command.Roles != null)
+            if (command.Roles != null && command.Roles.Count > 0)
             {
                 _dbContext.Events.Add(new Event(command.SiteId,
                     command.MemberId,
@@ -120,7 +119,7 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(DeleteMember command)
+        public async Task<string> DeleteAsync(DeleteMember command)
         {
             var member = await _dbContext.Members
                 .FirstOrDefaultAsync(x =>
@@ -141,6 +140,8 @@ namespace Atlas.Data.Services
                 command.Id));
 
             await _dbContext.SaveChangesAsync();
+
+            return member.UserId;
         }
     }
 }

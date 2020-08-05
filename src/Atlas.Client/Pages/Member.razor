@@ -1,6 +1,7 @@
 ﻿@page "/member"
 @page "/member/{id:guid}"
 @using Atlas.Client.Services
+@using Atlas.Domain
 @using Atlas.Models.Public.Members
 @inject AnonymousService AnonymousService;
 @inject HttpClient Http
@@ -28,17 +29,23 @@ else
                 Topics: <span class="font-weight-bold">@Model.Member.TotalTopics</span>
             </div>
 
-            <div class="form-control rounded bg-light text-center mx-auto" style="width: 8rem;">
+            <div class="form-control rounded bg-light text-center mb-3 mx-auto" style="width: 8rem;">
                 Replies: <span class="font-weight-bold">@Model.Member.TotalReplies</span>
             </div>
 
+            @if (Model.Member.Status != StatusType.Active)
+            {
+                <div class="alert alert-warning mx-auto" style="width: 8rem;" role="alert">
+                    Inactive
+                </div>
+            }
         </div>
         <div class="col-md-9">
-            <h4 class="mb-3">Last Topics</h4>
+            <h4 class="mb-3">Last Posts</h4>
 
             @if (Model.LastTopics.Count == 0)
             {
-                <NoRecords Text="No topics found for this user." />
+                <NoRecords Text="No posts found for this user." />
             }
             else
             {
@@ -58,10 +65,12 @@ else
                                     }
                                 </p>
                                 <div class="row small">
-                                    <div class="col-md-12">
-                                        @topic.TimeStamp.ToShortDateString() @topic.TimeStamp.ToShortTimeString()
-                                        &nbsp;&nbsp;
+                                    <div class="col-md-6">
+                                        <span class="mr-2">@topic.TimeStamp.ToShortDateString() @topic.TimeStamp.ToShortTimeString()</span>
                                         <span class="font-weight-bold">@topic.TotalReplies</span> Replies
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        In <a href="/forum/@topic.ForumId">@topic.ForumName</a>
                                     </div>
                                 </div>
                             </li>

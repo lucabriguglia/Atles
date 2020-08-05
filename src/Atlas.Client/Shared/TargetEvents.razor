@@ -27,9 +27,12 @@ else
                     <tr>
                         <td>@_event.Type</td>
                         <td>
-                            @foreach (var item in _event.Data)
+                            @if (_event.Data != null)
                             {
-                                <div><strong>@item.Key</strong>: @item.Value</div>
+                                @foreach (var item in _event.Data)
+                                {
+                                    <div><strong>@item.Key</strong>: @item.Value</div>
+                                }
                             }
                         </td>
                         <td>@_event.MemberName</td>

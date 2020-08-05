@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using Atlas.Domain;
 
 namespace Atlas.Models.Public.Members
 {
@@ -33,12 +34,14 @@ namespace Atlas.Models.Public.Members
         public int TotalTopics { get; set; }
         public int TotalReplies { get; set; }
         public string GravatarHash { get; set; }
+        public StatusType Status { get; set; }
     }
 
     public class MemberTopicModel
     {
         public Guid Id { get; set; }
         public Guid ForumId { get; set; }
+        public string ForumName { get; set; }
         public string Title { get; set; }
         public DateTime TimeStamp { get; set; }
         public int TotalReplies { get; set; }

@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Atlas.Domain;
 
 namespace Atlas.Models.Admin.Members
 {
@@ -20,6 +21,8 @@ namespace Atlas.Models.Admin.Members
             public string DisplayName { get; set; }
 
             public string UserId { get; set; }
+
+            public StatusType Status { get; set; }
         }
 
         public class RoleModel

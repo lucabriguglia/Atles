@@ -73,7 +73,8 @@ namespace Atlas.Server.Controllers.Public
                     DisplayName = modelToFilter.Member.DisplayName,
                     TotalTopics = modelToFilter.Member.TotalTopics,
                     TotalReplies = modelToFilter.Member.TotalReplies,
-                    GravatarHash = modelToFilter.Member.GravatarHash
+                    GravatarHash = modelToFilter.Member.GravatarHash,
+                    Status = modelToFilter.Member.Status
                 },
                 LastTopics = await GetFilteredMemberTopicModels(site.Id, modelToFilter.MemberTopicModelsToFilter)
             };
@@ -117,6 +118,7 @@ namespace Atlas.Server.Controllers.Public
                 {
                     Id = topic.Id,
                     ForumId = topic.ForumId,
+                    ForumName = topic.ForumName,
                     Title = topic.Title,
                     TimeStamp = topic.TimeStamp,
                     TotalReplies = topic.TotalReplies,
