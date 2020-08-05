@@ -148,7 +148,7 @@ namespace Atlas.Server.Controllers.Public
 
             await _topicService.CreateAsync(command);
 
-            return Ok();
+            return Ok(command.Id);
         }
 
         [Authorize]
@@ -191,7 +191,7 @@ namespace Atlas.Server.Controllers.Public
 
             await _topicService.UpdateAsync(command);
 
-            return Ok();
+            return Ok(command.Id);
         }
 
         [Authorize]

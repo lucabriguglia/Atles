@@ -1,5 +1,6 @@
 ﻿@page "/forum/{forumId:guid}/post"
 @page "/forum/{forumId:guid}/post/{topicid:guid}/edit"
+@using System.Text.Json
 @using Atlas.Models.Public
 @attribute [Authorize]
 @inject HttpClient Http
@@ -89,13 +90,11 @@ else
             ? "api/public/topics/update-topic"
             : "api/public/topics/create-topic";
 
-        await Http.PostAsJsonAsync(requestUri, Model);
+        var response = await Http.PostAsJsonAsync(requestUri, Model);
+        var content = await response.Content.ReadAsStringAsync();
+        var topicId = JsonSerializer.Deserialize<Guid>(content);
 
-        var redirectUri = TopicId != null
-            ? $"/forum/{ForumId}/{TopicId.Value}"
-            : $"/forum/{ForumId}";
-
-        NavigationManager.NavigateTo(redirectUri);
+        NavigationManager.NavigateTo($"/forum/{ForumId}/{topicId}");
     }
 
     private void Cancel()
