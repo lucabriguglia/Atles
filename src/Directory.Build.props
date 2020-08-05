@@ -1,8 +1,0 @@
-<Project>
-	<Import Project="..\Directory.Build.props" Condition="Exists('..\Directory.Build.props')" />
-
-  <PropertyGroup>
-    <Version>0.1-alpha</Version>
-  </PropertyGroup>
-  
-</Project>
