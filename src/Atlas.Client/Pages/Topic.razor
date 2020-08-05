@@ -60,6 +60,7 @@ else
             </div>
         </div>
 
+        <a id="replies"></a>
         <h5 class="mb-3">Replies</h5>
 
         if (Model.Replies.Items.Count == 0)
@@ -102,7 +103,7 @@ else
             </div>
 
             <div class="mt-3">
-                <Pager TotalPages="Model.Replies.TotalPages" OnLoadDataCallback="@LoadDataAsync"></Pager>
+                <Pager TotalPages="Model.Replies.TotalPages" OnLoadDataCallback="@ChangePageAsync"></Pager>
             </div>
         }
 
@@ -177,6 +178,12 @@ else
 
     public ClaimsPrincipal CurrentUser { get; set; }
     public string CurrentUserId { get; set; } = Guid.Empty.ToString();
+
+    protected async Task ChangePageAsync(int page)
+    {
+        await JsRuntime.InvokeVoidAsync("scrollToTarget", "replies");
+        await LoadDataAsync(page);
+    }
 
     private async Task LoadDataAsync(int page)
     {
