@@ -253,11 +253,18 @@ namespace Atlas.Data.Builders.Public
                 }
             };
 
-            var replies = await _dbContext.Posts
+            var repliesQuery = _dbContext.Posts
                 .Include(x => x.Member)
                 .Where(x => 
                     x.TopicId == topicId && 
-                    x.Status == StatusType.Published)
+                    x.Status == StatusType.Published);
+
+            if (!string.IsNullOrWhiteSpace(options.Search))
+            {
+                repliesQuery = repliesQuery.Where(x => x.Content.Contains(options.Search));
+            }
+
+            var replies = await repliesQuery
                 .OrderBy(x => x.TimeStamp)
                 .Skip(options.Skip)
                 .Take(options.PageSize)
@@ -275,11 +282,17 @@ namespace Atlas.Data.Builders.Public
                     GravatarHash = _gravatarService.HashEmailForGravatar(reply.Member.Email)
             }).ToList();
 
-            var totalRecords = await _dbContext.Posts
+            var totalRecordsQuery = _dbContext.Posts
                 .Where(x =>
-                    x.TopicId == topic.Id &&
-                    x.Status == StatusType.Published)
-                .CountAsync();
+                    x.TopicId == topicId &&
+                    x.Status == StatusType.Published);
+
+            if (!string.IsNullOrWhiteSpace(options.Search))
+            {
+                totalRecordsQuery = totalRecordsQuery.Where(x => x.Content.Contains(options.Search));
+            }
+
+            var totalRecords = await totalRecordsQuery.CountAsync();
 
             result.Replies = new PaginatedData<TopicPageModel.ReplyModel>(items, totalRecords, options.PageSize);
 

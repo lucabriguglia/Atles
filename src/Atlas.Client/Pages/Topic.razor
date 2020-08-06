@@ -63,6 +63,20 @@ else
         <a id="replies"></a>
         <h5 class="mb-3">Replies</h5>
 
+        <div class="row">
+            <div class="col-md-6 input-group mb-3">
+                <input type="text" class="form-control" placeholder="Search replies in @Model.Topic.Title" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
+                <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
+                    <i class="fa fa-times"></i>
+                </button>
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
         if (Model.Replies.Items.Count == 0)
         {
             <NoRecords Text="No replies found for this topic."></NoRecords>
@@ -189,8 +203,35 @@ else
     public ClaimsPrincipal CurrentUser { get; set; }
     public string CurrentUserId { get; set; } = Guid.Empty.ToString();
 
-    public int CurrentPage { get; set; } = 1;
     public bool Savings { get; set; }
+    public string Search { get; set; }
+    public int CurrentPage { get; set; } = 1;
+
+    private async Task SearchAsync()
+    {
+        CurrentPage = 1;
+        Model = null;
+        await LoadDataAsync(CurrentPage);
+    }
+
+    private async Task ClearSearchAsync()
+    {
+        if(!string.IsNullOrWhiteSpace(Search))
+        {
+            Search = string.Empty;
+            CurrentPage = 1;
+            Model = null;
+            await LoadDataAsync(CurrentPage);
+        }
+    }
+
+    private async Task MyKeyUpAsync(KeyboardEventArgs key)
+    {
+        if (key.Code == "Enter")
+        {
+            await SearchAsync();
+        }
+    }
 
     protected async Task ChangePageAsync(int page)
     {
@@ -202,13 +243,13 @@ else
     private async Task LoadDataAsync(int page)
     {
         var authState = await AuthenticationStateTask;
-        var user = authState.User;
+        CurrentUser = authState.User;
 
         try
         {
-            var requestUri = $"api/public/topics/{ForumId}/{TopicId}?page={page}";
+            var requestUri = $"api/public/topics/{ForumId}/{TopicId}?page={page}&search={Search}";
 
-            if (user.Identity.IsAuthenticated)
+            if (CurrentUser.Identity.IsAuthenticated)
             {
                 Model = await Http.GetFromJsonAsync<TopicPageModel>(requestUri);
             }
@@ -219,12 +260,9 @@ else
 
             DisplayPage = true;
 
-            var authenticationState = await AuthenticationStateTask;
-            CurrentUser = authenticationState.User;
-
             if (CurrentUser.Identity.IsAuthenticated)
             {
-                CurrentUserId = authenticationState.User.Identities.First().Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+                CurrentUserId = CurrentUser.Identities.First().Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
             }
         }
         catch (Exception)
