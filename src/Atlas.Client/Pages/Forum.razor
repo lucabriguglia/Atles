@@ -1,13 +1,13 @@
 ﻿@page "/forum/{id:guid}"
 @using System.Security.Claims
 @using Atlas.Client.Extensions
-@using Atlas.Client.Services
 @using Atlas.Models
 @using Atlas.Models.Public
-@inject AnonymousService AnonymousService;
+@inject AnonymousService AnonymousService
 @inject HttpClient Http
 @inject NavigationManager Navigation
 @inject IJSRuntime JsRuntime
+@inject IStringLocalizer<PublicResources> Loc
 
 @if (Model == null)
 {
@@ -19,7 +19,7 @@ else
     {
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">Home</a></li>
+                <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@Model.Forum.Name</li>
             </ol>
         </nav>
@@ -29,18 +29,18 @@ else
                 <h4 class="mb-3">@Model.Forum.Name</h4>
             </div>
             <div class="col-md-6 text-right mb-3">
-                @if (Model.CanRead)
+                @if (Model.CanStart)
                 {
-                    <a href="/forum/@Model.Forum.Id/post" class="btn btn-primary" role="button">New Topic</a>
+                    <a href="/forum/@Model.Forum.Id/post" class="btn btn-primary" role="button">@Loc["New Topic"]</a>
                 }
                 else
                 {
                     <AuthorizeView>
                         <Authorized>
-                            You are not authorized to start a new discussion.
+                            @Loc["You are not authorized to start a new discussion."]
                         </Authorized>
                         <NotAuthorized>
-                            <a href="authentication/login?returnUrl=@Uri.EscapeDataString(Navigation.Uri)">Log in</a> to start a new discussion.
+                            @((MarkupString)string.Format(Loc["{0} to start a new discussion"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">Login</a>"))
                         </NotAuthorized>
                     </AuthorizeView>
                 }
@@ -51,7 +51,7 @@ else
 
         <div class="row">
             <div class="col-md-6 input-group mb-3">
-                <input type="text" class="form-control" placeholder="Search topics in @Model.Forum.Name" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
+                <input type="text" class="form-control" placeholder="@string.Format(Loc["Search topics in {0}"], Model.Forum.Name)" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
                 <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
                     <i class="fa fa-times"></i>
                 </button>
@@ -71,7 +71,7 @@ else
         {
             @if (Model.Topics.Items.Count == 0)
             {
-                <NoRecords Text="No topics found for this forum." />
+                <NoRecords Text="@Loc["No topics found for this forum."]" />
             }
             else
             {
@@ -100,11 +100,12 @@ else
                                         <div class="row small">
                                             <div class="col-md-6">
                                                 @item.TimeStamp.ToForumLocalDateAndTime()
-                                                <span class="font-weight-bold ml-2">@item.TotalReplies</span> Replies
+                                                <span class="font-weight-bold ml-2">@item.TotalReplies</span> @Loc["Replies"]
                                             </div>
                                             <div class="col-md-6 text-right">
-                                                Most recent post by <a href="/member/@item.MostRecentMemberId" title="@item.MostRecentMemberDisplayName">@item.MostRecentMemberDisplayName.ToSafeLengthText(10)</a>
-                                                on @item.MostRecentTimeStamp.ToForumLocalDateAndTime()
+                                                @((MarkupString)string.Format(Loc["Most recent post by {0} on {1}"],
+                                                    $"<a href=\"/member/{item.MostRecentMemberId}\" title=\"{item.MostRecentMemberDisplayName}\">{item.MostRecentMemberDisplayName.ToSafeLengthText(10)}</a>",
+                                                    item.MostRecentTimeStamp.ToForumLocalDateAndTime()))
                                             </div>
                                         </div>
                                     </div>

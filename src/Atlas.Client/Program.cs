@@ -1,10 +1,12 @@
 using System;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Atlas.Client.Services;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.JSInterop;
 
 namespace Atlas.Client
 {
@@ -18,7 +20,6 @@ namespace Atlas.Client
             builder.Services.AddHttpClient("Atlas.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
-            // Supply HttpClient instances that include access tokens when making requests to the server project
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Atlas.ServerAPI"));
 
             builder.Services.AddHttpClient<AnonymousService>(client => 
@@ -36,7 +37,27 @@ namespace Atlas.Client
                     policy.RequireRole("Admin"));
             });
 
-            await builder.Build().RunAsync();
+            builder.Services.AddLocalization(options =>
+            {
+                options.ResourcesPath = "Resources";
+            });
+
+            var host = builder.Build();
+
+            //var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
+            //var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
+            //if (result != null)
+            //{
+            //    var culture = new CultureInfo(result);
+            //    CultureInfo.DefaultThreadCurrentCulture = culture;
+            //    CultureInfo.DefaultThreadCurrentUICulture = culture;
+            //}
+
+            var culture = new CultureInfo("en");
+            CultureInfo.DefaultThreadCurrentCulture = culture;
+            CultureInfo.DefaultThreadCurrentUICulture = culture;
+
+            await host.RunAsync();
         }
     }
 }
