@@ -65,32 +65,42 @@ namespace Atlas.Server.Services
             }
             await userManager.AddToRoleAsync(userAdmin, Consts.RoleNameAdmin);
 
-            var userNormal = await userManager.FindByEmailAsync(_configuration["DefaultNormalUserEmail"]);
-            if (userNormal == null)
+            var userNormalId = string.Empty;
+            if (_configuration["CreateDefaultNormalUser"] == "true")
             {
-                userNormal = new IdentityUser
+                var userNormal = await userManager.FindByEmailAsync(_configuration["DefaultNormalUserEmail"]);
+                if (userNormal == null)
                 {
-                    Email = _configuration["DefaultNormalUserEmail"],
-                    UserName = _configuration["DefaultNormalUserName"]
-                };
-                await userManager.CreateAsync(userNormal, _configuration["DefaultNormalUserPassword"]);
-                var code = await userManager.GenerateEmailConfirmationTokenAsync(userNormal);
-                await userManager.ConfirmEmailAsync(userNormal, code);
+                    userNormal = new IdentityUser
+                    {
+                        Email = _configuration["DefaultNormalUserEmail"],
+                        UserName = _configuration["DefaultNormalUserName"]
+                    };
+                    await userManager.CreateAsync(userNormal, _configuration["DefaultNormalUserPassword"]);
+                    var code = await userManager.GenerateEmailConfirmationTokenAsync(userNormal);
+                    await userManager.ConfirmEmailAsync(userNormal, code);
+                    userNormalId = userNormal.Id;
+                }
             }
 
-            var userModerator = await userManager.FindByEmailAsync(_configuration["DefaultModeratorUserEmail"]);
-            if (userModerator == null)
+            var userModeratorId = string.Empty;
+            if (_configuration["CreateDefaultModeratorUser"] == "true")
             {
-                userModerator = new IdentityUser
+                var userModerator = await userManager.FindByEmailAsync(_configuration["DefaultModeratorUserEmail"]);
+                if (userModerator == null)
                 {
-                    Email = _configuration["DefaultModeratorUserEmail"],
-                    UserName = _configuration["DefaultModeratorUserName"]
-                };
-                await userManager.CreateAsync(userModerator, _configuration["DefaultModeratorUserPassword"]);
-                var code = await userManager.GenerateEmailConfirmationTokenAsync(userModerator);
-                await userManager.ConfirmEmailAsync(userModerator, code);
+                    userModerator = new IdentityUser
+                    {
+                        Email = _configuration["DefaultModeratorUserEmail"],
+                        UserName = _configuration["DefaultModeratorUserName"]
+                    };
+                    await userManager.CreateAsync(userModerator, _configuration["DefaultModeratorUserPassword"]);
+                    var code = await userManager.GenerateEmailConfirmationTokenAsync(userModerator);
+                    await userManager.ConfirmEmailAsync(userModerator, code);
+                    userModeratorId = userModerator.Id;
+                }
+                await userManager.AddToRoleAsync(userModerator, Consts.RoleNameModerator);
             }
-            await userManager.AddToRoleAsync(userModerator, Consts.RoleNameModerator);
 
             // Site
             var site = await _dbContext.Sites.FirstOrDefaultAsync(x => x.Name == "Default");
@@ -132,40 +142,46 @@ namespace Atlas.Server.Services
                     }));
             }
 
-            var memberNormal = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userNormal.Id);
-            if (memberNormal == null)
+            if (_configuration["CreateDefaultNormalUser"] == "true")
             {
-                memberNormal = new Member(userNormal.Id, _configuration["DefaultNormalUserEmail"], _configuration["DefaultNormalUserDisplayName"]);
-                _dbContext.Members.Add(memberNormal);
-                _dbContext.Events.Add(new Event(site.Id,
-                    null,
-                    EventType.Created,
-                    typeof(Member),
-                    memberNormal.Id,
-                    new
-                    {
-                        memberNormal.UserId,
-                        memberNormal.Email,
-                        memberNormal.DisplayName
-                    }));
+                var memberNormal = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userNormalId);
+                if (memberNormal == null)
+                {
+                    memberNormal = new Member(userNormalId, _configuration["DefaultNormalUserEmail"], _configuration["DefaultNormalUserDisplayName"]);
+                    _dbContext.Members.Add(memberNormal);
+                    _dbContext.Events.Add(new Event(site.Id,
+                        null,
+                        EventType.Created,
+                        typeof(Member),
+                        memberNormal.Id,
+                        new
+                        {
+                            memberNormal.UserId,
+                            memberNormal.Email,
+                            memberNormal.DisplayName
+                        }));
+                }
             }
 
-            var memberModerator = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userModerator.Id);
-            if (memberModerator == null)
+            if (_configuration["CreateDefaultModeratorUser"] == "true")
             {
-                memberModerator = new Member(userModerator.Id, _configuration["DefaultModeratorUserEmail"], _configuration["DefaultModeratorUserDisplayName"]);
-                _dbContext.Members.Add(memberModerator);
-                _dbContext.Events.Add(new Event(site.Id,
-                    null,
-                    EventType.Created,
-                    typeof(Member),
-                    memberModerator.Id,
-                    new
-                    {
-                        memberModerator.UserId,
-                        memberModerator.Email,
-                        memberModerator.DisplayName
-                    }));
+                var memberModerator = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userModeratorId);
+                if (memberModerator == null)
+                {
+                    memberModerator = new Member(userModeratorId, _configuration["DefaultModeratorUserEmail"], _configuration["DefaultModeratorUserDisplayName"]);
+                    _dbContext.Members.Add(memberModerator);
+                    _dbContext.Events.Add(new Event(site.Id,
+                        null,
+                        EventType.Created,
+                        typeof(Member),
+                        memberModerator.Id,
+                        new
+                        {
+                            memberModerator.UserId,
+                            memberModerator.Email,
+                            memberModerator.DisplayName
+                        }));
+                }
             }
 
             // Permission Sets

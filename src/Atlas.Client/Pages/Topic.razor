@@ -79,7 +79,7 @@ else
 
         if (Model.Replies.Items.Count == 0)
         {
-            <NoRecords Text="No replies found for this topic."></NoRecords>
+            <NoRecords Text="@NoRecordsText"></NoRecords>
         }
         else
         {
@@ -123,7 +123,7 @@ else
 
         if (Model.CanReply)
         {
-            <h5 class="mb-3">@ReplyTitle</h5>
+            <h5 class="mb-3">@ReplyTitleText</h5>
             <div class="row">
                 <div class="col-md-8">
                     <a id="reply"></a>
@@ -133,7 +133,7 @@ else
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                <input type="submit" value="@ReplyButton" class="btn btn-primary" />
+                                <input type="submit" value="@ReplyButtonText" class="btn btn-primary" />
                                 </div>
                                 <div class="col text-center">
                                     @if (Savings)
@@ -191,8 +191,15 @@ else
     [Parameter]
     public Guid TopicId { get; set; }
 
-    private string ReplyTitle => Model.Post.Id != null ? "Update Reply" : "New Reply";
-    private string ReplyButton => Model.Post.Id != null ? "Update" : "Save";
+    private string ReplyTitleText => Model.Post.Id != null 
+        ? "Update Reply" 
+        : "New Reply";
+    private string ReplyButtonText => Model.Post.Id != null 
+        ? "Update" 
+        : "Save";
+    private string NoRecordsText => string.IsNullOrWhiteSpace(Search) 
+        ? "No replies found for this topic." 
+        : "No replies found for current search.";
 
     private TopicPageModel Model { get; set; }
 
