@@ -1,8 +1,9 @@
 ﻿@page "/member"
 @page "/member/{id:guid}"
+@using Atlas.Client.Extensions
 @using Atlas.Client.Services
 @using Atlas.Domain
-@using Atlas.Models.Public.Members
+@using Atlas.Models.Public
 @inject AnonymousService AnonymousService;
 @inject HttpClient Http
 
@@ -43,7 +44,7 @@ else
         <div class="col-md-9">
             <h4 class="mb-3">Last Posts</h4>
 
-            @if (Model.LastTopics.Count == 0)
+            @if (Model.Posts.Items.Count == 0)
             {
                 <NoRecords Text="No posts found for this user." />
             }
@@ -51,26 +52,28 @@ else
             {
                 <div class="card">
                     <ul class="list-group list-group-flush">
-                        @foreach (var topic in Model.LastTopics)
+                        @foreach (var post in Model.Posts.Items)
                         {
                             <li class="list-group-item py-3">
-                                <p class="card-text">
-                                    @if (topic.CanRead)
+                                <div class="card-text">
+                                    @if (post.IsTopic)
                                     {
-                                        <a href="/forum/@topic.ForumId/@topic.Id">@topic.Title</a>
+                                        <a href="/forum/@post.ForumId/@post.TopicId">@post.Title</a>
                                     }
                                     else
                                     {
-                                        @topic.Title
+                                        <a href="/forum/@post.ForumId/@post.TopicId">RE: @post.Title</a>
                                     }
-                                </p>
+                                </div>
+                                <div class="card-text">
+                                    @((MarkupString)post.Content.ToSafeLengthText(150))
+                                </div>
                                 <div class="row small">
                                     <div class="col-md-6">
-                                        <span class="mr-2">@topic.TimeStamp.ToShortDateString() @topic.TimeStamp.ToShortTimeString()</span>
-                                        <span class="font-weight-bold">@topic.TotalReplies</span> Replies
+                                        <span class="mr-2">@post.TimeStamp.ToShortDateString() @post.TimeStamp.ToShortTimeString()</span>
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        In <a href="/forum/@topic.ForumId">@topic.ForumName</a>
+                                        In <a href="/forum/@post.ForumId">@post.ForumName</a>
                                     </div>
                                 </div>
                             </li>

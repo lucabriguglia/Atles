@@ -6,7 +6,6 @@ using Atlas.Data.Caching;
 using Atlas.Domain;
 using Atlas.Models;
 using Atlas.Models.Public;
-using Atlas.Models.Public.Members;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
 
@@ -300,9 +299,9 @@ namespace Atlas.Data.Builders.Public
             return result;
         }
 
-        public async Task<MemberPageModelToFilter> BuildMemberPageModelToFilterAsync(Guid siteId, Guid memberId)
+        public async Task<MemberPageModel> BuildMemberPageModelAsync(Guid memberId, IList<Guid> forumIds)
         {
-            var result = new MemberPageModelToFilter();
+            var result = new MemberPageModel();
 
             var member = await _dbContext.Members
                 .FirstOrDefaultAsync(x =>
@@ -323,59 +322,7 @@ namespace Atlas.Data.Builders.Public
                 Status = member.Status
             };
 
-            result.MemberTopicModelsToFilter = await BuildMemberTopicModelsToFilterAsync(siteId, memberId, 0);
-
-            result.TotalMemberTopics = member.TopicsCount;
-
-            return result;
-        }
-
-        public async Task<MemberTopicModelsToFilter> BuildMemberTopicModelsToFilterAsync(Guid siteId, Guid memberId, int skip)
-        {
-            var result = new MemberTopicModelsToFilter();
-
-            var topics = await _dbContext.Posts
-                .Include(x => x.Forum)
-                .Where(x =>
-                    x.TopicId == null &&
-                    x.Forum.Category.SiteId == siteId &&
-                    (x.MemberId == memberId || x.LastReply.MemberId == memberId) &&
-                    x.Status == StatusType.Published)
-                .OrderByDescending(x => x.LastReply != null ? x.LastReply.TimeStamp : x.TimeStamp)
-                .Skip(skip)
-                .Take(5)
-                .Select(t => new
-                {
-                    t.Id,
-                    t.ForumId,
-                    ForumName = t.Forum.Name,
-                    t.Title,
-                    t.TimeStamp,
-                    LastReplyTimeStamp = t.LastReply.TimeStamp,
-                    t.RepliesCount,
-                    ForumPermissionSetId = t.Forum.PermissionSetId,
-                    CategoryPermissionSetId = t.Forum.Category.PermissionSetId
-                })
-                .ToListAsync();
-
-            foreach (var topic in topics)
-            {
-                result.Topics.Add(new MemberTopicModel
-                {
-                    Id = topic.Id,
-                    ForumId = topic.ForumId,
-                    ForumName = topic.ForumName,
-                    Title = topic.Title,
-                    TimeStamp = topic.LastReplyTimeStamp > DateTime.MinValue ? topic.LastReplyTimeStamp : topic.TimeStamp,
-                    TotalReplies = topic.RepliesCount
-                });
-
-                result.TopicPermissions.Add(new TopicPermission
-                {
-                    TopicId = topic.Id,
-                    PermissionSetId = topic.ForumPermissionSetId ?? topic.CategoryPermissionSetId
-                });
-            }
+            result.Posts = await SearchPostModels(forumIds, new QueryOptions(1), memberId);
 
             return result;
         }
@@ -407,8 +354,16 @@ namespace Atlas.Data.Builders.Public
 
         public async Task<SearchPageModel> BuildSearchPageModelAsync(Guid siteId, IList<Guid> forumIds, QueryOptions options)
         {
-            var result = new SearchPageModel();
+            var result = new SearchPageModel
+            {
+                Posts = await SearchPostModels(forumIds, options)
+            };
 
+            return result;
+        }
+
+        private async Task<PaginatedData<SearchPostModel>> SearchPostModels(IList<Guid> forumIds, QueryOptions options, Guid? memberId = null)
+        {
             var postsQuery = _dbContext.Posts
                 .Where(x =>
                     forumIds.Contains(x.ForumId) &&
@@ -418,6 +373,11 @@ namespace Atlas.Data.Builders.Public
             {
                 postsQuery = postsQuery
                     .Where(x => x.Title.Contains(options.Search) || x.Content.Contains(options.Search));
+            }
+
+            if (memberId != null)
+            {
+                postsQuery = postsQuery.Where(x => x.MemberId == memberId);
             }
 
             var posts = await postsQuery
@@ -435,13 +395,11 @@ namespace Atlas.Data.Builders.Public
                     p.MemberId,
                     MemberDisplayName = p.Member.DisplayName,
                     p.ForumId,
-                    ForumName = p.Forum.Name,
-                    ForumPermissionSetId = p.Forum.PermissionSetId,
-                    CategoryPermissionSetId = p.Forum.Category.PermissionSetId
+                    ForumName = p.Forum.Name
                 })
                 .ToListAsync();
 
-            var items = posts.Select(post => new SearchPageModel.PostModel
+            var items = posts.Select(post => new SearchPostModel
             {
                 Id = post.Id,
                 TopicId = post.TopicId,
@@ -457,9 +415,7 @@ namespace Atlas.Data.Builders.Public
 
             var totalRecords = await postsQuery.CountAsync();
 
-            result.Posts = new PaginatedData<SearchPageModel.PostModel>(items, totalRecords, options.PageSize);
-
-            return result;
+            return new PaginatedData<SearchPostModel>(items, totalRecords, options.PageSize);
         }
     }
 }
