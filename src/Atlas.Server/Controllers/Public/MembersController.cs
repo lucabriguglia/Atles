@@ -57,7 +57,7 @@ namespace Atlas.Server.Controllers.Public
                 memberId = id.Value;
             }
 
-            var indexModelToFilter = await _modelBuilder.BuildIndexPageModelToFilterAsync(site.Id);
+            var indexModelToFilter = await _modelBuilder.BuildPublishedForumsModelAsync(site.Id);
 
             var accessibleForumIds = new List<Guid>();
 

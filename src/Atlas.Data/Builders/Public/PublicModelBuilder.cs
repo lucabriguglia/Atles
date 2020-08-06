@@ -26,9 +26,9 @@ namespace Atlas.Data.Builders.Public
             _gravatarService = gravatarService;
         }
 
-        public async Task<IndexPageModelToFilter> BuildIndexPageModelToFilterAsync(Guid siteId)
+        public async Task<PublishedForumsModel> BuildPublishedForumsModelAsync(Guid siteId)
         {
-            var model = new IndexPageModelToFilter
+            var model = new PublishedForumsModel
             {
                 Categories = await _cacheManager.GetOrSetAsync(CacheKeys.Categories(siteId), async () =>
                 {
@@ -37,7 +37,7 @@ namespace Atlas.Data.Builders.Public
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
 
-                    return categories.Select(category => new IndexPageModelToFilter.CategoryModel
+                    return categories.Select(category => new PublishedForumsModel.CategoryModel
                     {
                         Id = category.Id, 
                         Name = category.Name,
@@ -57,7 +57,7 @@ namespace Atlas.Data.Builders.Public
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
 
-                    return forums.Select(forum => new IndexPageModelToFilter.ForumModel
+                    return forums.Select(forum => new PublishedForumsModel.ForumModel
                     {
                         Id = forum.Id,
                         Name = forum.Name,

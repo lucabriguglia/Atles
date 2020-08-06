@@ -18,12 +18,12 @@ else
         </ol>
     </nav>
 
-    @foreach (var category in Model.Categories)
+    @foreach (var category in Model.PublishedForumsModel.Categories)
     {
         if (category.Forums.Count > 0)
         {
             <div class="mb-3">
-                @if (Model.Categories.Count > 1)
+                @if (Model.PublishedForumsModel.Categories.Count > 1)
                 {
                     <h4 class="mb-3">@category.Name</h4>
                 }
