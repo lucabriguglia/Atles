@@ -95,17 +95,24 @@ namespace Atlas.Data.Builders.Public
             {
                 Forum = new ForumPageModel.ForumModel
                 {
-                    Id = forum.Id,
+                    Id = forum.Id, 
                     Name = forum.Name
-                }
+                },
+                Topics = await BuildForumPageModelTopicsAsync(forumId, options)
             };
 
+
+            return result;
+        }
+
+        public async Task<PaginatedData<ForumPageModel.TopicModel>> BuildForumPageModelTopicsAsync(Guid forumId, QueryOptions options)
+        {
             var topicsQuery = _dbContext.Posts
                 .Include(x => x.Member)
                 .Include(x => x.LastReply).ThenInclude(x => x.Member)
                 .Where(x =>
                     x.TopicId == null &&
-                    x.ForumId == forum.Id &&
+                    x.ForumId == forumId &&
                     x.Status == StatusType.Published);
 
             if (!string.IsNullOrWhiteSpace(options.Search))
@@ -121,24 +128,24 @@ namespace Atlas.Data.Builders.Public
                 .ToListAsync();
 
             var items = topics.Select(topic => new ForumPageModel.TopicModel
-                {
-                    Id = topic.Id,
-                    Title = topic.Title,
-                    TotalReplies = topic.RepliesCount,
-                    MemberId = topic.Member.Id,
-                    MemberDisplayName = topic.Member.DisplayName,
-                    TimeStamp = topic.TimeStamp,
-                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email),
-                    MostRecentMemberId = topic.LastReply?.MemberId ?? topic.MemberId,
-                    MostRecentMemberDisplayName = topic.LastReply?.Member?.DisplayName ?? topic.Member.DisplayName,
-                    MostRecentTimeStamp = topic.LastReply?.TimeStamp ?? topic.TimeStamp
-                })
+            {
+                Id = topic.Id,
+                Title = topic.Title,
+                TotalReplies = topic.RepliesCount,
+                MemberId = topic.Member.Id,
+                MemberDisplayName = topic.Member.DisplayName,
+                TimeStamp = topic.TimeStamp,
+                GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email),
+                MostRecentMemberId = topic.LastReply?.MemberId ?? topic.MemberId,
+                MostRecentMemberDisplayName = topic.LastReply?.Member?.DisplayName ?? topic.Member.DisplayName,
+                MostRecentTimeStamp = topic.LastReply?.TimeStamp ?? topic.TimeStamp
+            })
                 .ToList();
 
             var totalRecordsQuery = _dbContext.Posts
                 .Where(x =>
                     x.TopicId == null &&
-                    x.ForumId == forum.Id &&
+                    x.ForumId == forumId &&
                     x.Status == StatusType.Published);
 
             if (!string.IsNullOrWhiteSpace(options.Search))
@@ -149,7 +156,7 @@ namespace Atlas.Data.Builders.Public
 
             var totalRecords = await totalRecordsQuery.CountAsync();
 
-            result.Topics = new PaginatedData<ForumPageModel.TopicModel>(items, totalRecords, options.PageSize);
+            var result = new PaginatedData<ForumPageModel.TopicModel>(items, totalRecords, options.PageSize);
 
             return result;
         }

@@ -55,5 +55,25 @@ namespace Atlas.Server.Controllers.Public
 
             return model;
         }
+
+        [HttpGet("{id}/topics")]
+        public async Task<ActionResult<PaginatedData<ForumPageModel.TopicModel>>> Topics(Guid id, [FromQuery] int? page = 1, [FromQuery] string search = null)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, id);
+
+            var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
+            var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
+
+            if (!canViewForum || !canViewTopics)
+            {
+                return Unauthorized();
+            }
+
+            var result = await _modelBuilder.BuildForumPageModelTopicsAsync(id, new QueryOptions(search, page));
+
+            return result;
+        }
     }
 }
