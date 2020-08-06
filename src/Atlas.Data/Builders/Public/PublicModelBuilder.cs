@@ -253,10 +253,17 @@ namespace Atlas.Data.Builders.Public
                 }
             };
 
+            result.Replies = await BuildTopicPageModelRepliesAsync(topicId, options);
+
+            return result;
+        }
+
+        public async Task<PaginatedData<TopicPageModel.ReplyModel>> BuildTopicPageModelRepliesAsync(Guid topicId, QueryOptions options)
+        {
             var repliesQuery = _dbContext.Posts
                 .Include(x => x.Member)
-                .Where(x => 
-                    x.TopicId == topicId && 
+                .Where(x =>
+                    x.TopicId == topicId &&
                     x.Status == StatusType.Published);
 
             if (!string.IsNullOrWhiteSpace(options.Search))
@@ -271,15 +278,15 @@ namespace Atlas.Data.Builders.Public
                 .ToListAsync();
 
             var items = replies.Select(reply => new TopicPageModel.ReplyModel
-                {
-                    Id = reply.Id,
-                    Content = Markdown.ToHtml(reply.Content),
-                    OriginalContent = reply.Content,
-                    UserId = reply.Member.UserId,
-                    MemberId = reply.Member.Id,
-                    MemberDisplayName = reply.Member.DisplayName,
-                    TimeStamp = reply.TimeStamp,
-                    GravatarHash = _gravatarService.HashEmailForGravatar(reply.Member.Email)
+            {
+                Id = reply.Id,
+                Content = Markdown.ToHtml(reply.Content),
+                OriginalContent = reply.Content,
+                UserId = reply.Member.UserId,
+                MemberId = reply.Member.Id,
+                MemberDisplayName = reply.Member.DisplayName,
+                TimeStamp = reply.TimeStamp,
+                GravatarHash = _gravatarService.HashEmailForGravatar(reply.Member.Email)
             }).ToList();
 
             var totalRecordsQuery = _dbContext.Posts
@@ -294,7 +301,7 @@ namespace Atlas.Data.Builders.Public
 
             var totalRecords = await totalRecordsQuery.CountAsync();
 
-            result.Replies = new PaginatedData<TopicPageModel.ReplyModel>(items, totalRecords, options.PageSize);
+            var result = new PaginatedData<TopicPageModel.ReplyModel>(items, totalRecords, options.PageSize);
 
             return result;
         }

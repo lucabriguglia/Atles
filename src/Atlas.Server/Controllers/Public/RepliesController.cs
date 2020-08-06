@@ -98,7 +98,7 @@ namespace Atlas.Server.Controllers.Public
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
             var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
-            var authorized = canEdit && replyMemberId == member.Id || canModerate || User.IsInRole(Consts.RoleNameAdmin);
+            var authorized = canEdit && replyMemberId == member.Id || canModerate;
 
             if (!authorized)
             {
@@ -138,7 +138,7 @@ namespace Atlas.Server.Controllers.Public
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
             var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
-            var authorized = canDelete && replyMemberId == member.Id || canModerate || User.IsInRole(Consts.RoleNameAdmin);
+            var authorized = canDelete && replyMemberId == member.Id || canModerate;
 
             if (!authorized)
             {
