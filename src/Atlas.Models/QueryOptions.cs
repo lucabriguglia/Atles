@@ -17,15 +17,17 @@
 
         public QueryOptions(int? currentPage, int? pageSize = DefaultPageSize)
         {
-            CurrentPage = currentPage ?? 1;
+            CurrentPage = SetCurrentPage(currentPage);
             PageSize = pageSize ?? DefaultPageSize;
         }
 
         public QueryOptions(string search, int? currentPage, int? pageSize = DefaultPageSize)
         {
             Search = search;
-            CurrentPage = currentPage ?? 1;
+            CurrentPage = SetCurrentPage(currentPage);
             PageSize = pageSize ?? DefaultPageSize;
         }
+
+        private static int SetCurrentPage(int? currentPage) => currentPage == null || currentPage.Value < 1 ? 1 : currentPage.Value;
     }
 }
