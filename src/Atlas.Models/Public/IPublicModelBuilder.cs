@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Models.Public.Members;
 
@@ -14,5 +15,6 @@ namespace Atlas.Models.Public
         Task<MemberPageModelToFilter> BuildMemberPageModelToFilterAsync(Guid siteId, Guid memberId);
         Task<MemberTopicModelsToFilter> BuildMemberTopicModelsToFilterAsync(Guid siteId, Guid memberId, int skip);
         Task<SettingsPageModel> BuildSettingsPageModelAsync(Guid memberId);
+        Task<SearchPageModel> BuildSearchPageModelAsync(Guid siteId, IList<Guid> forumIds, QueryOptions options);
     }
 }

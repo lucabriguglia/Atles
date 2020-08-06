@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models;
@@ -41,6 +42,7 @@ namespace Atlas.Server.Controllers.Public
 
             return filteredModel;
         }
+
         private async Task<IndexPageModel> GetFilteredIndexModel(Guid siteId, IndexPageModelToFilter modelToFilter)
         {
             var result = new IndexPageModel();
@@ -97,6 +99,36 @@ namespace Atlas.Server.Controllers.Public
         public async Task<CurrentMemberModel> CurrentMember()
         {
             return await _contextService.CurrentMemberAsync();
+        }
+
+        [HttpGet("search")]
+        public async Task<SearchPageModel> Search([FromQuery] int page = 1, [FromQuery] string search = null)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+
+            var indexModelToFilter = await _modelBuilder.BuildIndexPageModelToFilterAsync(site.Id);
+
+            var accessibleForumIds = new List<Guid>();
+
+            foreach (var category in indexModelToFilter.Categories)
+            {
+                foreach (var forum in category.Forums)
+                {
+                    var permissionSetId = forum.PermissionSetId ?? category.PermissionSetId;
+                    var permissions = await _permissionModelBuilder.BuildPermissionModels(site.Id, permissionSetId);
+                    var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
+                    var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
+                    var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions);
+                    if (canViewForum && canViewTopics && canViewRead)
+                    {
+                        accessibleForumIds.Add(forum.Id);
+                    }
+                }
+            }
+
+            var model = await _modelBuilder.BuildSearchPageModelAsync(site.Id, accessibleForumIds, new QueryOptions(search, page));
+
+            return model;
         }
     }
 }

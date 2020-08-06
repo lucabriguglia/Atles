@@ -35,9 +35,10 @@ namespace Atlas.Server.Controllers.Public
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, id);
 
+            var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
             var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
 
-            if (!canViewTopics)
+            if (!canViewForum || !canViewTopics)
             {
                 return Unauthorized();
             }

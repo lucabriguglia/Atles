@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
@@ -400,6 +401,63 @@ namespace Atlas.Data.Builders.Public
                 DisplayName = member.DisplayName,
                 GravatarHash = _gravatarService.HashEmailForGravatar(member.Email)
             };
+
+            return result;
+        }
+
+        public async Task<SearchPageModel> BuildSearchPageModelAsync(Guid siteId, IList<Guid> forumIds, QueryOptions options)
+        {
+            var result = new SearchPageModel();
+
+            var postsQuery = _dbContext.Posts
+                .Where(x =>
+                    forumIds.Contains(x.ForumId) &&
+                    x.Status == StatusType.Published);
+
+            if (!string.IsNullOrWhiteSpace(options.Search))
+            {
+                postsQuery = postsQuery
+                    .Where(x => x.Title.Contains(options.Search) || x.Content.Contains(options.Search));
+            }
+
+            var posts = await postsQuery
+                .OrderByDescending(x => x.TimeStamp)
+                .Skip(options.Skip)
+                .Take(options.PageSize)
+                .Select(p => new
+                {
+                    p.Id,
+                    TopicId = p.TopicId ?? p.Id,
+                    IsTopic = p.TopicId == null,
+                    Title = p.Title ?? p.Topic.Title,
+                    p.Content,
+                    p.TimeStamp,
+                    p.MemberId,
+                    MemberDisplayName = p.Member.DisplayName,
+                    p.ForumId,
+                    ForumName = p.Forum.Name,
+                    ForumPermissionSetId = p.Forum.PermissionSetId,
+                    CategoryPermissionSetId = p.Forum.Category.PermissionSetId
+                })
+                .ToListAsync();
+
+            var items = posts.Select(post => new SearchPageModel.PostModel
+            {
+                Id = post.Id,
+                TopicId = post.TopicId,
+                IsTopic = post.IsTopic,
+                Title = post.Title,
+                Content = Markdown.ToHtml(post.Content),
+                TimeStamp = post.TimeStamp,
+                MemberId = post.MemberId,
+                MemberDisplayName = post.MemberDisplayName,
+                ForumId = post.ForumId,
+                ForumName = post.ForumName
+            }).ToList();
+
+            var totalRecords = await postsQuery.CountAsync();
+
+            result.Posts = new PaginatedData<SearchPageModel.PostModel>(items, totalRecords, options.PageSize);
 
             return result;
         }

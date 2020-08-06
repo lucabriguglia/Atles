@@ -40,6 +40,8 @@ namespace Atlas.Server.Controllers.Public
         [Route("{id}")]
         public async Task<ActionResult<MemberPageModel>> Index(Guid? id = null)
         {
+            // *** TO BE REFACTORED *** //
+
             var site = await _contextService.CurrentSiteAsync();
 
             var memberId = Guid.Empty;
@@ -111,6 +113,8 @@ namespace Atlas.Server.Controllers.Public
             {
                 var topicPermission = memberTopicModelsToFilter.TopicPermissions.FirstOrDefault(x => x.TopicId == topic.Id);
                 var permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, topicPermission.PermissionSetId);
+                var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
+                if (!canViewForum) continue;
                 var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
                 if (!canViewTopics) continue;
                 var canRead = _securityService.HasPermission(PermissionType.Read, permissions);

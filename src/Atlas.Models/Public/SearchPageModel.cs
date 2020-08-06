@@ -6,24 +6,18 @@ namespace Atlas.Models.Public
     {
         public PaginatedData<PostModel> Posts { get; set; } = new PaginatedData<PostModel>();
 
-        public class ForumModel
-        {
-            public Guid Id { get; set; }
-            public string Name { get; set; }
-        }
-
         public class PostModel
         {
             public Guid Id { get; set; }
+            public Guid TopicId { get; set; }
+            public bool IsTopic { get; set; }
             public string Title { get; set; }
-            public int TotalReplies { get; set; }
+            public string Content { get; set; }
+            public DateTime TimeStamp { get; set; }
             public Guid MemberId { get; set; }
             public string MemberDisplayName { get; set; }
-            public DateTime TimeStamp { get; set; }
-            public string GravatarHash { get; set; }
-            public DateTime MostRecentTimeStamp { get; set; }
-            public Guid MostRecentMemberId { get; set; }
-            public string MostRecentMemberDisplayName { get; set; }
+            public Guid ForumId { get; set; }
+            public string ForumName { get; set; }
         }
     }
 }
