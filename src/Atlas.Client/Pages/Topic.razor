@@ -103,7 +103,7 @@ else
             </div>
 
             <div class="mt-3">
-                <Pager TotalPages="Model.Replies.TotalPages" CurrentPage="CurrentPage" OnLoadDataCallback="@ChangePageAsync"></Pager>
+                <Pager TotalPages="@Model.Replies.TotalPages" CurrentPage="@CurrentPage" OnLoadDataCallback="@ChangePageAsync"></Pager>
             </div>
         }
 

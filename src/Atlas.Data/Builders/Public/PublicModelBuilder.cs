@@ -100,13 +100,21 @@ namespace Atlas.Data.Builders.Public
                 }
             };
 
-            var topics = await _dbContext.Posts
+            var topicsQuery = _dbContext.Posts
                 .Include(x => x.Member)
                 .Include(x => x.LastReply).ThenInclude(x => x.Member)
-                .Where(x => 
+                .Where(x =>
                     x.TopicId == null &&
-                    x.ForumId == forum.Id && 
-                    x.Status == StatusType.Published)
+                    x.ForumId == forum.Id &&
+                    x.Status == StatusType.Published);
+
+            if (!string.IsNullOrWhiteSpace(options.Search))
+            {
+                topicsQuery = topicsQuery
+                    .Where(x => x.Title.Contains(options.Search) || x.Content.Contains(options.Search));
+            }
+
+            var topics = await topicsQuery
                 .OrderByDescending(x => x.LastReply != null ? x.LastReply.TimeStamp : x.TimeStamp)
                 .Skip(options.Skip)
                 .Take(options.PageSize)
@@ -127,12 +135,19 @@ namespace Atlas.Data.Builders.Public
                 })
                 .ToList();
 
-            var totalRecords = await _dbContext.Posts
+            var totalRecordsQuery = _dbContext.Posts
                 .Where(x =>
                     x.TopicId == null &&
                     x.ForumId == forum.Id &&
-                    x.Status == StatusType.Published)
-                .CountAsync();
+                    x.Status == StatusType.Published);
+
+            if (!string.IsNullOrWhiteSpace(options.Search))
+            {
+                totalRecordsQuery = totalRecordsQuery
+                    .Where(x => x.Title.Contains(options.Search) || x.Content.Contains(options.Search));
+            }
+
+            var totalRecords = await totalRecordsQuery.CountAsync();
 
             result.Topics = new PaginatedData<ForumPageModel.TopicModel>(items, totalRecords, options.PageSize);
 

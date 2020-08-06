@@ -33,7 +33,7 @@ else if (Model.Members.Items.Count == 0)
 else
 {
     <div class="row">
-        <div class="col-sm-4 input-group mb-3 ml-auto">
+        <div class="col-md-6 input-group mb-3">
             <input type="text" class="form-control" placeholder="Search members" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
             <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
                 <i class="fa fa-times"></i>

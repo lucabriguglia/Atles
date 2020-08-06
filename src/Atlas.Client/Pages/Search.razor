@@ -1,0 +1,60 @@
+﻿@page "/search"
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">Home</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Search</li>
+    </ol>
+</nav>
+
+<h3 class="mb-3">Search</h3>
+
+<div class="row">
+    <div class="col-md-8 input-group mb-3">
+        <input type="text" class="form-control" placeholder="Search" @bind-value="SearchTerm" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
+        <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
+            <i class="fa fa-times"></i>
+        </button>
+        <div class="input-group-append">
+            <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
+                <i class="fa fa-search"></i>
+            </button>
+        </div>
+    </div>
+</div>
+
+@if (IsSearching)
+{
+    <Loading />
+}
+
+@code {
+    public string SearchTerm { get; set; }
+    public bool IsSearching { get; set; }
+
+    private async Task MyKeyUpAsync(KeyboardEventArgs key)
+    {
+        if (key.Code == "Enter")
+        {
+            await SearchAsync();
+        }
+    }
+
+    private async Task SearchAsync()
+    {
+        //Model = null;
+        StateHasChanged();
+        await OnInitializedAsync();
+    }
+
+    private async Task ClearSearchAsync()
+    {
+        if(!string.IsNullOrWhiteSpace(SearchTerm))
+        {
+            SearchTerm = string.Empty;
+            //Model = null;
+            StateHasChanged();
+            await OnInitializedAsync();
+        }
+    }
+}

@@ -29,7 +29,6 @@ namespace Atlas.Data.Builders.Admin
         {
             var result = new IndexPageModel();
 
-            //var query = _dbContext.Members.Where(x => x.Status == StatusType.Active);
             var query = _dbContext.Members.Where(x => true);
 
             if (!string.IsNullOrWhiteSpace(options.Search))

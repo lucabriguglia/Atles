@@ -29,7 +29,7 @@ namespace Atlas.Server.Controllers.Public
         }
 
         [HttpGet("{id}")]
-        public async Task<ActionResult<ForumPageModel>> Forum(Guid id, [FromQuery] int? page = 1)
+        public async Task<ActionResult<ForumPageModel>> Forum(Guid id, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -42,7 +42,7 @@ namespace Atlas.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id, new QueryOptions(page));
+            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id, new QueryOptions(search, page));
 
             if (model == null)
             {
