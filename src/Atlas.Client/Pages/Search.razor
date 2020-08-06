@@ -30,6 +30,8 @@
     </div>
 </div>
 
+<a id="posts"></a>
+
 @if (Model == null)
 {
     <Loading />
@@ -42,7 +44,6 @@ else
     }
     else
     {
-        <a id="posts"></a>
         <div class="card">
             <ul class="list-group list-group-flush">
                 @foreach (var post in Model.Posts.Items)

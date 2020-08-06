@@ -51,7 +51,7 @@ namespace Atlas.Data.Services
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.Site(site.Name));
+            _cacheManager.Remove(CacheKeys.CurrentSite(site.Name));
         }
     }
 }

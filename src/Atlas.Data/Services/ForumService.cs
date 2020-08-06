@@ -62,7 +62,8 @@ namespace Atlas.Data.Services
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.Forums(command.CategoryId));
+            _cacheManager.Remove(CacheKeys.Forums(command.CategoryId)); 
+            _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
         }
 
         public async Task UpdateAsync(UpdateForum command)
@@ -109,6 +110,7 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.Forums(command.CategoryId));
+            _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
         }
 
         public async Task MoveAsync(MoveForum command)
@@ -200,6 +202,7 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.Forums(forum.CategoryId));
+            _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
         }
 
         private async Task ReorderForumsInCategory(Guid categoryId, Guid forumIdToExclude, Guid siteId, Guid memberId)

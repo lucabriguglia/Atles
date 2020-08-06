@@ -36,20 +36,20 @@ namespace Atlas.Server.Controllers.Public
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var publishedForums = await _modelBuilder.BuildPublishedForumsModelAsync(site.Id);
+            var modelToFilter = await _modelBuilder.BuildPublishedForumsModelAsync(site.Id);
 
-            var filteredModel = await GetFilteredIndexModel(site.Id, publishedForums);
+            var filteredModel = await GetFilteredIndexModel(site.Id, modelToFilter);
 
             return filteredModel;
         }
 
-        private async Task<IndexPageModel> GetFilteredIndexModel(Guid siteId, PublishedForumsModel modelToFilter)
+        private async Task<IndexPageModel> GetFilteredIndexModel(Guid siteId, IndexPageModel modelToFilter)
         {
             var result = new IndexPageModel();
 
             foreach (var categoryToFilter in modelToFilter.Categories)
             {
-                var category = new PublishedForumsModel.CategoryModel { Name = categoryToFilter.Name };
+                var category = new IndexPageModel.CategoryModel { Name = categoryToFilter.Name };
 
                 foreach (var forumToFilter in categoryToFilter.Forums)
                 {
@@ -58,7 +58,7 @@ namespace Atlas.Server.Controllers.Public
                     var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
                     if (!canViewForum) continue;
                     var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
-                    var forum = new PublishedForumsModel.ForumModel
+                    var forum = new IndexPageModel.ForumModel
                     {
                         Id = forumToFilter.Id,
                         Name = forumToFilter.Name,
@@ -75,7 +75,7 @@ namespace Atlas.Server.Controllers.Public
                     category.Forums.Add(forum);
                 }
 
-                result.PublishedForumsModel.Categories.Add(category);
+                result.Categories.Add(category);
             }
 
             return result;
@@ -106,23 +106,19 @@ namespace Atlas.Server.Controllers.Public
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var indexModelToFilter = await _modelBuilder.BuildPublishedForumsModelAsync(site.Id);
+            var currentForums = await _contextService.CurrentForumsAsync();
 
             var accessibleForumIds = new List<Guid>();
 
-            foreach (var category in indexModelToFilter.Categories)
+            foreach (var forum in currentForums)
             {
-                foreach (var forum in category.Forums)
+                var permissions = await _permissionModelBuilder.BuildPermissionModels(site.Id, forum.PermissionSetId);
+                var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
+                var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
+                var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions);
+                if (canViewForum && canViewTopics && canViewRead)
                 {
-                    var permissionSetId = forum.PermissionSetId ?? category.PermissionSetId;
-                    var permissions = await _permissionModelBuilder.BuildPermissionModels(site.Id, permissionSetId);
-                    var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
-                    var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
-                    var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions);
-                    if (canViewForum && canViewTopics && canViewRead)
-                    {
-                        accessibleForumIds.Add(forum.Id);
-                    }
+                    accessibleForumIds.Add(forum.Id);
                 }
             }
 

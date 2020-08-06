@@ -57,23 +57,19 @@ namespace Atlas.Server.Controllers.Public
                 memberId = id.Value;
             }
 
-            var indexModelToFilter = await _modelBuilder.BuildPublishedForumsModelAsync(site.Id);
+            var currentForums = await _contextService.CurrentForumsAsync();
 
             var accessibleForumIds = new List<Guid>();
 
-            foreach (var category in indexModelToFilter.Categories)
+            foreach (var forum in currentForums)
             {
-                foreach (var forum in category.Forums)
+                var permissions = await _permissionModelBuilder.BuildPermissionModels(site.Id, forum.PermissionSetId);
+                var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
+                var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
+                var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions);
+                if (canViewForum && canViewTopics && canViewRead)
                 {
-                    var permissionSetId = forum.PermissionSetId ?? category.PermissionSetId;
-                    var permissions = await _permissionModelBuilder.BuildPermissionModels(site.Id, permissionSetId);
-                    var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
-                    var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
-                    var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions);
-                    if (canViewForum && canViewTopics && canViewRead)
-                    {
-                        accessibleForumIds.Add(forum.Id);
-                    }
+                    accessibleForumIds.Add(forum.Id);
                 }
             }
 

@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Atlas.Models.Public;
 
 namespace Atlas.Server.Services
@@ -7,5 +8,6 @@ namespace Atlas.Server.Services
     {
         Task<CurrentSiteModel> CurrentSiteAsync();
         Task<CurrentMemberModel> CurrentMemberAsync();
+        Task<IList<CurrentForumModel>> CurrentForumsAsync();
     }
 }

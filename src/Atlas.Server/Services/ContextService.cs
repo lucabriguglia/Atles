@@ -1,9 +1,11 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Data.Builders;
 using Atlas.Data.Caching;
+using Atlas.Domain;
 using Atlas.Models.Public;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +32,7 @@ namespace Atlas.Server.Services
 
         public async Task<CurrentSiteModel> CurrentSiteAsync()
         {
-            var currentSite = await _cacheManager.GetOrSetAsync(CacheKeys.Site("Default"), () => 
+            var currentSite = await _cacheManager.GetOrSetAsync(CacheKeys.CurrentSite("Default"), () => 
                 _dbContext.Sites.FirstOrDefaultAsync(x => x.Name == "Default"));
 
             return new CurrentSiteModel
@@ -71,6 +73,29 @@ namespace Atlas.Server.Services
             }
 
             return result;
+        }
+
+        public async Task<IList<CurrentForumModel>> CurrentForumsAsync()
+        {
+            var site = await CurrentSiteAsync();
+
+            return await _cacheManager.GetOrSetAsync(CacheKeys.CurrentForums(site.Id), async () =>
+            {
+                var forums = await _dbContext.Forums
+                    .Where(x => x.Category.SiteId == site.Id && x.Status == StatusType.Published)
+                    .Select(x => new
+                    {
+                        x.Id,
+                        PermissionSetId = x.PermissionSetId ?? x.Category.PermissionSetId
+                    })
+                    .ToListAsync();
+
+                return forums.Select(forum => new CurrentForumModel
+                {
+                    Id = forum.Id,
+                    PermissionSetId = forum.PermissionSetId
+                }).ToList();
+            });
         }
     }
 }
