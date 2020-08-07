@@ -1,12 +1,13 @@
 ﻿@page "/terms"
+@inject IStringLocalizer<PublicResources> Loc
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Terms of Use</li>
+        <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Loc["Terms of Use"]</li>
     </ol>
 </nav>
 
-<h4 class="mb-3">Terms of Use</h4>
+<h4 class="mb-3">@Loc["Terms of Use"]</h4>
 
-<p>Terms of Use</p>
+<p>@Loc["Terms of Use"]</p>

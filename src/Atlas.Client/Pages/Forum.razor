@@ -40,7 +40,7 @@ else
                             @Loc["You are not authorized to start a new discussion."]
                         </Authorized>
                         <NotAuthorized>
-                            @((MarkupString)string.Format(Loc["{0} to start a new discussion"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">Login</a>"))
+                            @((MarkupString)string.Format(Loc["{0} to start a new discussion"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">{Loc["Login"]}</a>"))
                         </NotAuthorized>
                     </AuthorizeView>
                 }

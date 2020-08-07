@@ -7,10 +7,10 @@ using System.Threading.Tasks;
 
 namespace Atlas.Client.Components
 {
-	/// <summary>
-	/// https://blazor-university.com/forms/writing-custom-validation/
-	/// </summary>
-	public class FluentValidationValidator : ComponentBase
+    /// <summary>
+		/// https://blazor-university.com/forms/writing-custom-validation/
+		/// </summary>
+		public class FluentValidationValidator : ComponentBase
 	{
 		/// <summary>
 		/// The EditContext cascaded to us from the EditForm component.

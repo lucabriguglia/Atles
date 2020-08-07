@@ -27,6 +27,13 @@ namespace Atlas.Client
                 client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); 
             });
 
+            builder.Services.AddHttpClient<AuthenticatedService>(client =>
+            {
+                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+            }).AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+            builder.Services.AddScoped<ApiService>();
+
             builder.Services.AddApiAuthorization();
 
             builder.Services.AddOptions();

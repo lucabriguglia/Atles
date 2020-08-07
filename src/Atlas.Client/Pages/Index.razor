@@ -1,9 +1,8 @@
 ﻿@page "/"
 @page "/public"
 @using Atlas.Models.Public
-@inject AnonymousService AnonymousService;
-@inject HttpClient Http
 @inject IStringLocalizer<PublicResources> Loc
+@inject ApiService ApiService
 
 @if (Model == null)
 {
@@ -69,25 +68,10 @@ else
 }
 
 @code {
-    [CascadingParameter]
-    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
     private IndexPageModel Model { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthenticationStateTask;
-        var user = authState.User;
-
-        const string requestUri = "api/public/index-model";
-
-        if (user.Identity.IsAuthenticated)
-        {
-            Model = await Http.GetFromJsonAsync<IndexPageModel>(requestUri);
-        }
-        else
-        {
-            Model = await AnonymousService.GetFromJsonAsync<IndexPageModel>(requestUri);
-        }
+        Model = await ApiService.GetFromJsonAsync<IndexPageModel>("api/public/index-model");
     }
 }

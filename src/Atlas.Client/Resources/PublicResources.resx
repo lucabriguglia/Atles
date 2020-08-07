@@ -117,32 +117,140 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Are you sure you want to delete this Reply?" xml:space="preserve">
+    <value>Are you sure you want to delete this Reply?</value>
+  </data>
+  <data name="Are you sure you want to delete this Topic?" xml:space="preserve">
+    <value>Are you sure you want to delete this Topic?</value>
+  </data>
+  <data name="By {0} on {1} in {2}" xml:space="preserve">
+    <value>By {0} on {1} in {2}</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="Create New Topic" xml:space="preserve">
+    <value>Create New Topic</value>
+  </data>
+  <data name="Delete" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="Delete Reply" xml:space="preserve">
+    <value>Delete Reply</value>
+  </data>
+  <data name="Delete Topic" xml:space="preserve">
+    <value>Delete Topic</value>
+  </data>
+  <data name="Display Name" xml:space="preserve">
+    <value>Display Name</value>
+  </data>
+  <data name="Display name already taken." xml:space="preserve">
+    <value>Display name already taken.</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Guide" xml:space="preserve">
+    <value>Guide</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
+  </data>
+  <data name="Inactive" xml:space="preserve">
+    <value>Inactive</value>
   </data>
   <data name="Latest: {0} by {1} on {2}" xml:space="preserve">
     <value>Latest: {0} by {1} on {2}</value>
   </data>
+  <data name="Login" xml:space="preserve">
+    <value>Login</value>
+  </data>
+  <data name="Logout" xml:space="preserve">
+    <value>Logout</value>
+  </data>
   <data name="Most recent post by {0} on {1}" xml:space="preserve">
     <value>Most recent post by {0} on {1}</value>
+  </data>
+  <data name="New Reply" xml:space="preserve">
+    <value>New Reply</value>
   </data>
   <data name="New Topic" xml:space="preserve">
     <value>New Topic</value>
   </data>
+  <data name="No posts found for current search." xml:space="preserve">
+    <value>No posts found for current search.</value>
+  </data>
+  <data name="No posts found for this user." xml:space="preserve">
+    <value>No posts found for this user.</value>
+  </data>
+  <data name="No replies found for current search." xml:space="preserve">
+    <value>No replies found for current search.</value>
+  </data>
+  <data name="No replies found for this topic." xml:space="preserve">
+    <value>No replies found for this topic.</value>
+  </data>
   <data name="No topics found for this forum." xml:space="preserve">
     <value>No topics found for this forum.</value>
+  </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="RE" xml:space="preserve">
+    <value>RE</value>
   </data>
   <data name="Replies" xml:space="preserve">
     <value>Replies</value>
   </data>
+  <data name="Save" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="Search" xml:space="preserve">
+    <value>Search</value>
+  </data>
+  <data name="Search all posts" xml:space="preserve">
+    <value>Search all posts</value>
+  </data>
+  <data name="Search replies" xml:space="preserve">
+    <value>Search replies</value>
+  </data>
   <data name="Search topics in {0}" xml:space="preserve">
     <value>Search topics in {0}</value>
+  </data>
+  <data name="Set up your profile image on {0}" xml:space="preserve">
+    <value>Set up your profile image on {0}</value>
+  </data>
+  <data name="Settings" xml:space="preserve">
+    <value>Settings</value>
+  </data>
+  <data name="Settings updated!" xml:space="preserve">
+    <value>Settings updated!</value>
+  </data>
+  <data name="Terms of Use" xml:space="preserve">
+    <value>Terms of Use</value>
+  </data>
+  <data name="Title" xml:space="preserve">
+    <value>Title</value>
   </data>
   <data name="Topics" xml:space="preserve">
     <value>Topics</value>
   </data>
+  <data name="Update" xml:space="preserve">
+    <value>Update</value>
+  </data>
+  <data name="Update Reply" xml:space="preserve">
+    <value>Update Reply</value>
+  </data>
+  <data name="Update Topic" xml:space="preserve">
+    <value>Update Topic</value>
+  </data>
+  <data name="You are not authorized to reply." xml:space="preserve">
+    <value>You are not authorized to reply.</value>
+  </data>
   <data name="You are not authorized to start a new discussion." xml:space="preserve">
     <value>You are not authorized to start a new discussion.</value>
+  </data>
+  <data name="{0} to reply" xml:space="preserve">
+    <value>{0} to reply</value>
   </data>
   <data name="{0} to start a new discussion" xml:space="preserve">
     <value>{0} to start a new discussion</value>

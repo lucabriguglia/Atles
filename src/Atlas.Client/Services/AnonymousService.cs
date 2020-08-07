@@ -13,7 +13,7 @@ namespace Atlas.Client.Services
             _httpClient = httpClient;
         }
 
-        public virtual async Task<T> GetFromJsonAsync<T>(string requestUri) where T : class
+        public async Task<T> GetFromJsonAsync<T>(string requestUri) where T : class
         {
             return await _httpClient.GetFromJsonAsync<T>(requestUri);
         }

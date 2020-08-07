@@ -1,11 +1,11 @@
 ﻿@page "/member"
 @page "/member/{id:guid}"
 @using Atlas.Client.Extensions
-@using Atlas.Client.Services
 @using Atlas.Domain
 @using Atlas.Models.Public
 @inject AnonymousService AnonymousService;
 @inject HttpClient Http
+@inject IStringLocalizer<PublicResources> Loc
 
 @if (Model == null)
 {
@@ -15,7 +15,7 @@ else
 {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
             <li class="breadcrumb-item active" aria-current="page">@Model.Member.DisplayName</li>
         </ol>
     </nav>
@@ -27,18 +27,18 @@ else
             <h4 class="mb-4">@Model.Member.DisplayName</h4>
 
             <div class="form-control rounded bg-light text-center mb-3 mx-auto" style="width: 8rem;">
-                Topics: <span class="font-weight-bold">@Model.Member.TotalTopics</span>
+                @Loc["Topics"]: <span class="font-weight-bold">@Model.Member.TotalTopics</span>
             </div>
 
             <div class="form-control rounded bg-light text-center mb-3 mx-auto" style="width: 8rem;">
-                Replies: <span class="font-weight-bold">@Model.Member.TotalReplies</span>
+                @Loc["Replies"]: <span class="font-weight-bold">@Model.Member.TotalReplies</span>
             </div>
 
             @if (Model.Member.Status != StatusType.Active)
             {
-                <div class="alert alert-warning mx-auto" style="width: 8rem;" role="alert">
-                    Inactive
-                </div>
+        <div class="alert alert-warning mx-auto" style="width: 8rem;" role="alert">
+            @Loc["Inactive"]
+        </div>
             }
         </div>
         <div class="col-md-9">
@@ -46,7 +46,7 @@ else
 
             @if (Model.Posts.Items.Count == 0)
             {
-                <NoRecords Text="No posts found for this user." />
+                <NoRecords Text="@Loc["No posts found for this user."]" />
             }
             else
             {
@@ -62,7 +62,7 @@ else
                                     }
                                     else
                                     {
-                                        <a href="/forum/@post.ForumId/@post.TopicId">RE: @post.Title</a>
+                                <a href="/forum/@post.ForumId/@post.TopicId">@Loc["RE"]: @post.Title</a>
                                     }
                                 </div>
                                 <div class="card-text">
