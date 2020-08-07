@@ -1,12 +1,14 @@
 ﻿@* Based on: https://www.thecodehubs.com/visual-studio-blazor-template-with-dapper-and-net-core-3-1/*@
 
+@inject IStringLocalizer<SharedResources> Loc
+
 <nav aria-label="Pager">
     <ul class="pagination">
         <li class="page-item @(CurrentPage == 1 ? "disabled" : "")">
-            <button class="btn btn-link page-link" role="link" @onclick="@(async () => await NavigateToPage("first"))">First</button>
+            <button class="btn btn-link page-link" role="link" @onclick="@(async () => await NavigateToPage("first"))">@Loc["First"]</button>
         </li>
         <li class="page-item @(CurrentPage == 1 ? "disabled" : "")">
-            <button class="btn btn-link page-link" role="link" @onclick="@(async () => await NavigateToPage("previous"))">Previous</button>
+            <button class="btn btn-link page-link" role="link" @onclick="@(async () => await NavigateToPage("previous"))">@Loc["Previous"]</button>
         </li>
         @for (var i = _startPage; i <= _endPage; i++)
         {
@@ -16,10 +18,10 @@
             </li>
         }
         <li class="page-item @(CurrentPage == TotalPages ? "disabled" : "")">
-            <button class="btn btn-link page-link" role="link" @onclick="@(async () => await NavigateToPage("next"))">Next</button>
+            <button class="btn btn-link page-link" role="link" @onclick="@(async () => await NavigateToPage("next"))">@Loc["Next"]</button>
         </li>
         <li class="page-item @(CurrentPage == TotalPages ? "disabled" : "")">
-            <button class="btn btn-link page-link" role="link" @onclick="@(async () => await NavigateToPage("last"))">Last</button>
+            <button class="btn btn-link page-link" role="link" @onclick="@(async () => await NavigateToPage("last"))">@Loc["Last"]</button>
         </li>
     </ul>
 </nav>

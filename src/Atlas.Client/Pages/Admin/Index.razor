@@ -2,10 +2,11 @@
 @page "/admin"
 @page "/admin/dashboard"
 @attribute [Authorize(Policy = "Admin")]
+@inject IStringLocalizer<AdminResources> Loc
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item active" aria-current="page">Home</li>
+        <li class="breadcrumb-item active" aria-current="page">@Loc["Home"]</li>
     </ol>
 </nav>
 

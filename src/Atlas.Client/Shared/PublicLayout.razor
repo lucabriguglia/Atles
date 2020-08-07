@@ -1,8 +1,8 @@
-﻿@using Atlas.Client.Services
-@using Atlas.Models.Public
+﻿@using Atlas.Models.Public
 @inherits LayoutComponentBase
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JsRuntime
 @inject AnonymousService AnonymousService
+@inject IStringLocalizer<PublicResources> Loc
 
 <header>
     <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
@@ -15,10 +15,10 @@
             <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item">
-                        <a href="/" class="nav-link">Home</a>
+                        <a href="/" class="nav-link">@Loc["Home"]</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/search" class="nav-link">Search</a>
+                        <a href="/search" class="nav-link">@Loc["Search"]</a>
                     </li>
                     <LoginDisplay />
                 </ul>
@@ -37,7 +37,7 @@
     <div class="container">
         <div class="row">
             <div class="col-md-6">
-                &copy; @DateTime.UtcNow.Year - @Site?.Title - <a href="/privacy">Privacy</a> - <a href="/terms">Terms of Use</a>
+                &copy; @DateTime.UtcNow.Year - @Site?.Title - <a href="/privacy">@Loc["Privacy"]</a> - <a href="/terms">@Loc["Terms of Use"]</a>
             </div>
             <div class="col-md-6 text-right mb-3">
                 @* <PleaseDoNotRemove> *@
@@ -53,8 +53,8 @@
 
     protected override async Task OnInitializedAsync()
     {
-        await JSRuntime.InvokeVoidAsync("addCssFile", "public");
+        await JsRuntime.InvokeVoidAsync("addCssFile", "public");
         Site = await AnonymousService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
-        await JSRuntime.InvokeVoidAsync("changePageTitle", Site.Title);
+        await JsRuntime.InvokeVoidAsync("changePageTitle", Site.Title);
     }
 }

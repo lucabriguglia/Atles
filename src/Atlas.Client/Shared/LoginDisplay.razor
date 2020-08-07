@@ -3,12 +3,8 @@
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 @inject HttpClient Http
+@inject IStringLocalizer<SharedResources> Loc
 
-<AuthorizeView Policy="Admin">
-    <li class="nav-item">
-        <a href="/admin/dashboard" class="nav-link">Admin</a>
-    </li>
-</AuthorizeView>
 <AuthorizeView>
     <Authorized>
         <li class="nav-item dropdown">
@@ -16,19 +12,23 @@
                 <Avatar GravatarHash="@GravatarHash" GravatarSize="24"></Avatar>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
-                <a class="dropdown-item" href="/member">Profile</a>
-                <a class="dropdown-item" href="/settings">Settings</a>
-                <a class="dropdown-item" href="authentication/profile">Account</a>
-                <a class="dropdown-item" href="#" @onclick="BeginSignOut">Log out</a>
+                <a class="dropdown-item" href="/member">@Loc["Profile"]</a>
+                <a class="dropdown-item" href="/settings">@Loc["Settings"]</a>
+                <a class="dropdown-item" href="authentication/profile">@Loc["Account"]</a>
+                @if(IsAdmin)
+                {
+                    <a class="dropdown-item" href="/admin/dashboard">@Loc["Admin"]</a>
+                }
+                <a class="dropdown-item" href="#" @onclick="BeginSignOut">@Loc["Logout"]</a>
             </div>
         </li>
     </Authorized>
     <NotAuthorized>
         <li class="nav-item">
-            <a href="authentication/login" class="btn btn-outline-secondary mr-1 mb-1">Login</a>
+            <a href="authentication/login" class="btn btn-outline-secondary mr-1 mb-1">@Loc["Login"]</a>
         </li>
         <li class="nav-item">
-            <a href="authentication/register" class="btn btn-outline-secondary mb-1">Register</a>
+            <a href="authentication/register" class="btn btn-outline-secondary mb-1">@Loc["Register"]</a>
         </li>
     </NotAuthorized>
 </AuthorizeView>
@@ -39,6 +39,8 @@
 
     public string GravatarHash { get; set; }
 
+    public bool IsAdmin { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         var authState = await AuthenticationStateTask;
@@ -47,6 +49,7 @@
         {
             var currentMember = await Http.GetFromJsonAsync<CurrentMemberModel>("api/public/current-member");
             GravatarHash = currentMember.GravatarHash;
+            IsAdmin = user.IsInRole(Consts.RoleNameAdmin);
         }
     }
 
