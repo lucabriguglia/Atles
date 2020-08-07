@@ -153,6 +153,9 @@
   <data name="Edit" xml:space="preserve">
     <value>Edit</value>
   </data>
+  <data name="Edit Reply" xml:space="preserve">
+    <value>Edit Reply</value>
+  </data>
   <data name="Guide" xml:space="preserve">
     <value>Guide</value>
   </data>
@@ -170,9 +173,6 @@
   </data>
   <data name="Most recent post by {0} on {1}" xml:space="preserve">
     <value>Most recent post by {0} on {1}</value>
-  </data>
-  <data name="New Reply" xml:space="preserve">
-    <value>New Reply</value>
   </data>
   <data name="New Topic" xml:space="preserve">
     <value>New Topic</value>
@@ -200,6 +200,9 @@
   </data>
   <data name="Replies" xml:space="preserve">
     <value>Replies</value>
+  </data>
+  <data name="Reply" xml:space="preserve">
+    <value>Reply</value>
   </data>
   <data name="Save" xml:space="preserve">
     <value>Save</value>
@@ -236,9 +239,6 @@
   </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
-  </data>
-  <data name="Update Reply" xml:space="preserve">
-    <value>Update Reply</value>
   </data>
   <data name="Update Topic" xml:space="preserve">
     <value>Update Topic</value>

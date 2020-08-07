@@ -1,7 +1,6 @@
 ﻿@page "/forum/{forumId:guid}/{topicId:guid}"
 @using System.Security.Claims
 @using Atlas.Client.Extensions
-@using Atlas.Domain
 @using Atlas.Models
 @using Atlas.Models.Public
 @inject AnonymousService AnonymousService
@@ -33,7 +32,7 @@ else
             <div class="col-md-6 text-right mb-3">
                 @if (Model.CanReply)
                 {
-                <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewAsync())" class="btn btn-primary" role="button">@Loc["New Reply"]</a>
+                <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewAsync())" class="btn btn-primary" role="button">@Loc["Reply"]</a>
                 }
                 @if (CanEditTopic())
                 {
@@ -142,6 +141,10 @@ else
                             <div class="row">
                                 <div class="col">
                                     <input type="submit" value="@ReplyButtonText" class="btn btn-primary" />
+                                    @if ((Model.Post.Id != null))
+                                    {
+                                        <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
+                                    }
                                 </div>
                                 <div class="col text-center">
                                     @if (Savings)
@@ -200,8 +203,8 @@ else
     public Guid TopicId { get; set; }
 
     private string ReplyTitleText => Model.Post.Id != null
-        ? Loc["Update Reply"]
-        : Loc["New Reply"];
+        ? Loc["Edit Reply"]
+        : Loc["Reply"];
     private string ReplyButtonText => Model.Post.Id != null
         ? Loc["Update"]
         : Loc["Save"];
