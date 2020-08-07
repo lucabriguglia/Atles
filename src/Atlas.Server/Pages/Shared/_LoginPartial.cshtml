@@ -11,13 +11,14 @@
     }
 }
 
-@if (SignInManager.IsSignedIn(User))
+@*@if (SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
         <a class="nav-link" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="/">Logout</a>
     </li>
-}
-else
+}*@
+
+@if (!SignInManager.IsSignedIn(User))
 {
     <li class="nav-item">
         <a class="btn btn-outline-secondary mr-1 mb-1" asp-area="Identity" asp-page="/Account/Login" asp-route-returnUrl="@returnUrl">Login</a>

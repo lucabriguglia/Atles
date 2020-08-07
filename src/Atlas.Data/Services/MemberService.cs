@@ -37,8 +37,12 @@ namespace Atlas.Data.Services
 
             _dbContext.Members.Add(member);
 
+            var memberIdForEvent = command.MemberId == Guid.Empty 
+                ? member.Id 
+                : command.MemberId;
+
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                memberIdForEvent,
                 EventType.Created,
                 typeof(Member),
                 command.Id,

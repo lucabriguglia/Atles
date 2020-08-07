@@ -94,6 +94,7 @@ else
             }
             else
             {
+                Savings = false;
                 var fieldIdentifier = new FieldIdentifier(_editContext.Model, "DisplayName");
                 _validationMessageStore.Clear(fieldIdentifier);
                 _validationMessageStore.Add(fieldIdentifier, Loc["Display name already taken."]);
