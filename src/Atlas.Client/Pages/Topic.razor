@@ -166,7 +166,7 @@ else
                     <p class="mt-3">@Loc["You are not authorized to reply."]</p>
                 </Authorized>
                 <NotAuthorized>
-                    @((MarkupString)string.Format(Loc["{0} to reply"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">{Loc["Login"]}</a>"))
+                    @((MarkupString)string.Format(Loc["{0} to reply"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">{Loc["Log in"]}</a>"))
                 </NotAuthorized>
             </AuthorizeView>
         }

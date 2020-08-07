@@ -19,13 +19,13 @@
                 {
                     <a class="dropdown-item" href="/admin/dashboard">@Loc["Admin"]</a>
                 }
-                <a class="dropdown-item" href="#" @onclick="BeginSignOut">@Loc["Logout"]</a>
+                <a class="dropdown-item" href="#" @onclick="BeginSignOut">@Loc["Log out"]</a>
             </div>
         </li>
     </Authorized>
     <NotAuthorized>
         <li class="nav-item">
-            <a href="authentication/login" class="btn btn-outline-secondary mr-1 mb-1">@Loc["Login"]</a>
+            <a href="authentication/login" class="btn btn-outline-secondary mr-1 mb-1">@Loc["Log in"]</a>
         </li>
         <li class="nav-item">
             <a href="authentication/register" class="btn btn-outline-secondary mb-1">@Loc["Register"]</a>

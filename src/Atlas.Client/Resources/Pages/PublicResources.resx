@@ -165,8 +165,8 @@
   <data name="Latest: {0} by {1} on {2}" xml:space="preserve">
     <value>Latest: {0} by {1} on {2}</value>
   </data>
-  <data name="Login" xml:space="preserve">
-    <value>Login</value>
+  <data name="Log in" xml:space="preserve">
+    <value>Log in</value>
   </data>
   <data name="Most recent post by {0} on {1}" xml:space="preserve">
     <value>Most recent post by {0} on {1}</value>

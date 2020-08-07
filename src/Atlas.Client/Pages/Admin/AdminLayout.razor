@@ -1,6 +1,6 @@
 ﻿@inherits LayoutComponentBase
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@inject IJSRuntime JSRuntime
+@inject IJSRuntime JsRuntime
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 
@@ -69,7 +69,7 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        await JSRuntime.InvokeVoidAsync("addCssFile", "admin");
+        await JsRuntime.InvokeVoidAsync("addCssFile", "admin");
     }
 
     private void NavigateToAccount(MouseEventArgs args)
