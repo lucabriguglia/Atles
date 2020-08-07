@@ -190,11 +190,22 @@ namespace Atlas.Server.Services
                 new PermissionCommand{Type = PermissionType.ViewForum, RoleId = Consts.RoleIdAll},
                 new PermissionCommand{Type = PermissionType.ViewTopics, RoleId = Consts.RoleIdAll},
                 new PermissionCommand{Type = PermissionType.Read, RoleId = Consts.RoleIdAll},
+
                 new PermissionCommand{Type = PermissionType.Start, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.Reply, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.Edit, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.Delete, RoleId = Consts.RoleIdRegistered},
-                new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleModerator.Id}
+
+                new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleModerator.Id},
+
+                new PermissionCommand{Type = PermissionType.ViewForum, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.ViewTopics, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Read, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Start, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Reply, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Edit, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Delete, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleAdmin.Id}
             });
             _dbContext.PermissionSets.Add(permissionSetDefault);
             _dbContext.Events.Add(new Event(site.Id,
@@ -216,7 +227,17 @@ namespace Atlas.Server.Services
                 new PermissionCommand{Type = PermissionType.Reply, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.Edit, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand{Type = PermissionType.Delete, RoleId = Consts.RoleIdRegistered},
-                new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleModerator.Id}
+
+                new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleModerator.Id},
+
+                new PermissionCommand{Type = PermissionType.ViewForum, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.ViewTopics, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Read, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Start, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Reply, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Edit, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Delete, RoleId = roleAdmin.Id},
+                new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleAdmin.Id}
             });
             _dbContext.PermissionSets.Add(permissionSetMembersOnly);
             _dbContext.Events.Add(new Event(site.Id,
