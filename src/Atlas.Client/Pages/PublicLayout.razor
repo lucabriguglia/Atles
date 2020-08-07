@@ -1,7 +1,7 @@
 ﻿@using Atlas.Models.Public
 @inherits LayoutComponentBase
 @inject IJSRuntime JsRuntime
-@inject AnonymousService AnonymousService
+@inject ApiService ApiService
 @inject IStringLocalizer<PublicResources> Loc
 
 <header>
@@ -54,7 +54,7 @@
     protected override async Task OnInitializedAsync()
     {
         await JsRuntime.InvokeVoidAsync("addCssFile", "public");
-        Site = await AnonymousService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
+        Site = await ApiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
         await JsRuntime.InvokeVoidAsync("changePageTitle", Site.Title);
     }
 }

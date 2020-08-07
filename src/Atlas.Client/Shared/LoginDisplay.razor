@@ -4,6 +4,7 @@
 @inject SignOutSessionStateManager SignOutManager
 @inject HttpClient Http
 @inject IStringLocalizer<SharedResources> Loc
+@inject AuthenticationStateProvider AuthenticationStateProvider
 
 <AuthorizeView>
     <Authorized>
@@ -15,10 +16,11 @@
                 <a class="dropdown-item" href="/member">@Loc["Profile"]</a>
                 <a class="dropdown-item" href="/settings">@Loc["Settings"]</a>
                 <a class="dropdown-item" href="authentication/profile">@Loc["Account"]</a>
-                @if(IsAdmin)
-                {
-                    <a class="dropdown-item" href="/admin/dashboard">@Loc["Admin"]</a>
-                }
+                <AuthorizeView Policy="Admin">
+                    <Authorized Context="AdminContext">
+                        <a class="dropdown-item" href="/admin/dashboard">@Loc["Admin"]</a>
+                    </Authorized>                    
+                </AuthorizeView>
                 <a class="dropdown-item" href="#" @onclick="BeginSignOut">@Loc["Log out"]</a>
             </div>
         </li>
@@ -34,22 +36,16 @@
 </AuthorizeView>
 
 @code{
-    [CascadingParameter]
-    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
-    public string GravatarHash { get; set; }
-
-    public bool IsAdmin { get; set; }
+    private string GravatarHash { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        var authState = await AuthenticationStateTask;
+        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
         var user = authState.User;
         if (user.Identity.IsAuthenticated)
         {
             var currentMember = await Http.GetFromJsonAsync<CurrentMemberModel>("api/public/current-member");
             GravatarHash = currentMember.GravatarHash;
-            IsAdmin = user.IsInRole(Consts.RoleNameAdmin);
         }
     }
 
