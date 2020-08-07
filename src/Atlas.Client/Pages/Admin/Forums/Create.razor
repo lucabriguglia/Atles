@@ -5,16 +5,17 @@
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject IStringLocalizer<AdminResources> Loc
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-        <li class="breadcrumb-item"><a href="/admin/forums">Forums</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Title</li>
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item"><a href="/admin/forums">@Loc["Forums"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Loc["Create New Forum"]</li>
     </ol>
 </nav>
 
-<h3 class="mb-3">@Title</h3>
+<h3 class="mb-3">@Loc["Create New Forum"]</h3>
 
 @if (Model == null)
 {
@@ -22,18 +23,17 @@
 }
 else
 {
-    <Form Model="Model" Button="Save" OnValidSubmit="@SaveAsync"></Form>
+    <Form Model="Model" Button="@Loc["Save"]" OnValidSubmit="@SaveAsync"></Form>
 }
 
 @code {
-    private const string Title = "Create Forum";
     [Parameter] public Guid? CategoryId { get; set; } = null;
     private FormComponentModel Model { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
         var requestUri = CategoryId == null
-            ? $"api/admin/forums/create"
+            ? "api/admin/forums/create"
             : $"api/admin/forums/create/{CategoryId}";
 
         Model = await Http.GetFromJsonAsync<FormComponentModel>(requestUri);
@@ -41,7 +41,7 @@ else
 
     private async Task SaveAsync()
     {
-        await Http.PostAsJsonAsync($"api/admin/forums/save", Model.Forum);
+        await Http.PostAsJsonAsync("api/admin/forums/save", Model.Forum);
         NavigationManager.NavigateTo($"/admin/forums/{Model.Forum.CategoryId}");
     }
 }

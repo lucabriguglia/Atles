@@ -4,16 +4,17 @@
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject IStringLocalizer<AdminResources> Loc
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-        <li class="breadcrumb-item"><a href="/admin/forums">Forums</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Title</li>
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item"><a href="/admin/forums">@Loc["Forums"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Loc["Edit Forum"]</li>
     </ol>
 </nav>
 
-<h3 class="mb-3">@Title</h3>
+<h3 class="mb-3">@Loc["Edit Forum"]</h3>
 
 @if (Model == null)
 {
@@ -21,12 +22,11 @@
 }
 else
 {
-    <Form Model="Model" Button="Update" OnValidSubmit="@UpdateAsync"></Form>
+    <Form Model="Model" Button="@Loc["Update"]" OnValidSubmit="@UpdateAsync"></Form>
     <TargetEvents Id="Id"></TargetEvents>
 }
 
 @code {
-    private const string Title = "Edit Forum";
     [Parameter] public Guid Id { get; set; }
     private FormComponentModel Model { get; set; }
 

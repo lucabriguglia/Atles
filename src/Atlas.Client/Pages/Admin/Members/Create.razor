@@ -5,16 +5,17 @@
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject IStringLocalizer<AdminResources> Loc
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-        <li class="breadcrumb-item"><a href="/admin/members">Members</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Title</li>
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item"><a href="/admin/members">@Loc["Members"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Loc["Create New Member"]</li>
     </ol>
 </nav>
 
-<h3 class="mb-3">@Title</h3>
+<h3 class="mb-3">@Loc["Create New Member"]</h3>
 
 @if (Model == null)
 {
@@ -27,23 +28,23 @@ else
             <EditForm Model="Model.User" OnValidSubmit="@(async () => await SaveAsync())">
                 <DataAnnotationsValidator />
                 <div class="form-group">
-                    <label for="email" class="control-label">Email</label>
+                    <label for="email" class="control-label">@Loc["Email"]</label>
                     <InputText id="email" @bind-Value="Model.User.Email" Class="form-control" />
                     <ValidationMessage For="@(() => Model.User.Email)" />
                 </div>
                 <div class="form-group">
-                    <label for="password" class="control-label">Password</label>
+                    <label for="password" class="control-label">@Loc["Password"]</label>
                     <InputText id="password" @bind-Value="Model.User.Password" Type="password" Class="form-control" />
                     <ValidationMessage For="@(() => Model.User.Password)" />
                 </div>
                 <div class="form-group">
-                    <label for="confirmPassword" class="control-label">Confirm Password</label>
+                    <label for="confirmPassword" class="control-label">@Loc["Confirm Password"]</label>
                     <InputText id="confirmPassword" @bind-Value="Model.User.ConfirmPassword" Type="password" Class="form-control" />
                     <ValidationMessage For="@(() => Model.User.ConfirmPassword)" />
                 </div>
                 <div class="form-group">
                     <input type="submit" value="Save" class="btn btn-primary" />
-                    <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                    <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
                 </div>
                 <ValidationSummary />
             </EditForm>
@@ -57,7 +58,6 @@ else
 }
 
 @code {
-    private const string Title = "Create New Member";
     private CreatePageModel Model { get; set; }
     public bool Error { get; set; }
 

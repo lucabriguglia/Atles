@@ -1,11 +1,11 @@
 ﻿@layout AdminLayout
 @page "/admin/roles"
-@using Atlas.Domain
 @using Atlas.Models.Admin.Roles
 @attribute [Authorize(Policy = "Admin")]
 @inject NavigationManager NavigationManager
 @inject HttpClient Http
 @inject IJSRuntime JsRuntime
+@inject IStringLocalizer<AdminResources> Loc
 
 @if (Model == null)
 {
@@ -15,17 +15,17 @@ else
 {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Title</li>
+            <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Loc["Roles"]</li>
         </ol>
     </nav>
 
     <div class="row">
         <div class="col-md-6">
-            <h3 class="mb-3">@Title</h3>
+            <h3 class="mb-3">@Loc["Roles"]</h3>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewAsync())" class="btn btn-primary" role="button">New Role</a>
+            <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewAsync())" class="btn btn-primary" role="button">@Loc["Create New"]</a>
         </div>
     </div>
 
@@ -38,7 +38,7 @@ else
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Name</th>
+                    <th scope="col">@Loc["Name"]</th>
                     <th scope="col">&nbsp;</th>
                 </tr>
             </thead>
@@ -50,13 +50,13 @@ else
                         <td>
                             @if (item.Name != Consts.RoleNameAdmin)
                             {
-                                <button type="button" class="btn btn-secondary" role="button" @onclick="@(async () => await  EditAsync(item.Id, item.Name))">Edit</button>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">Delete</button>
+                            <button type="button" class="btn btn-secondary" role="button" @onclick="@(async () => await  EditAsync(item.Id, item.Name))">@Loc["Edit"]</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
                             }
                             else
                             {
-                                <button type="button" class="btn btn-secondary disabled" role="button">Edit</button>
-                                <button type="button" class="btn btn-danger disabled">Delete</button>
+                        <button type="button" class="btn btn-secondary disabled" role="button">@Loc["Edit"]</button>
+                        <button type="button" class="btn btn-danger disabled">@Loc["Delete"]</button>
                             }
                         </td>
                     </tr>
@@ -64,9 +64,9 @@ else
             </tbody>
         </table>
 
-        <ConfirmModal Title="Delete Role"
-                      Body="Are you sure you want to delete this Role?"
-                      Button="Delete"
+        <ConfirmModal Title="@Loc["Delete"]"
+                      Body="@Loc["Are you sure you want to delete this role?"]"
+                      Button="@Loc["Delete"]"
                       OnClickCallback="@DeleteAsync" />
     }
 
@@ -87,7 +87,7 @@ else
                     <input type="submit" value="@EditButton" class="btn btn-primary" />
                     @if (IsEdit)
                     {
-                        <button type="button" class="btn btn-secondary" @onclick="Cancel">Cancel</button>
+                <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Delete"]</button>
                     }
                 </div>
             </EditForm>
@@ -96,11 +96,10 @@ else
 }
 
 @code {
-    private const string Title = "Roles";
     private IndexPageModel Model { get; set; }
     public bool IsEdit { get; set; }
-    private string EditTitle => IsEdit ? "Update Role" : "New Role";
-    private string EditButton => IsEdit ? "Update" : "Create";
+    private string EditTitle => IsEdit ? Loc["Edit Role"] : Loc["Create New Role"];
+    private string EditButton => IsEdit ? Loc["Update"] : Loc["Save"];
     private string DeleteId { get; set; }
 
     protected override async Task OnInitializedAsync()

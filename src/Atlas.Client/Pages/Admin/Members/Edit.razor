@@ -4,16 +4,17 @@
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
 @inject NavigationManager NavigationManager
+@inject IStringLocalizer<AdminResources> Loc
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/admin/dashboard">Home</a></li>
-        <li class="breadcrumb-item"><a href="/admin/members">Members</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Title</li>
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item"><a href="/admin/members">@Loc["Members"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Loc["Edit Member"]</li>
     </ol>
 </nav>
 
-<h3 class="mb-3">@Title</h3>
+<h3 class="mb-3">@Loc["Edit Member"]</h3>
 
 @if (Model == null)
 {
@@ -26,9 +27,8 @@ else
 }
 
 @code {
-    private const string Title = "Edit Member";
 
-    [Parameter] 
+    [Parameter]
     public Guid Id { get; set; }
 
     private EditPageModel Model { get; set; }
