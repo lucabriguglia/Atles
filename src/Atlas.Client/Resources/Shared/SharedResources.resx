@@ -123,8 +123,20 @@
   <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
+  <data name="By" xml:space="preserve">
+    <value>By</value>
+  </data>
   <data name="Close" xml:space="preserve">
     <value>Close</value>
+  </data>
+  <data name="Data" xml:space="preserve">
+    <value>Data</value>
+  </data>
+  <data name="Date" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="Event" xml:space="preserve">
+    <value>Event</value>
   </data>
   <data name="First" xml:space="preserve">
     <value>First</value>
@@ -167,6 +179,9 @@
   </data>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
+  </data>
+  <data name="View Events" xml:space="preserve">
+    <value>View Events</value>
   </data>
   <data name="You are not authorized to access this resource." xml:space="preserve">
     <value>You are not authorized to access this resource.</value>

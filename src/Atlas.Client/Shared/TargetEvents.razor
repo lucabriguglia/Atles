@@ -1,6 +1,7 @@
 ﻿@using Atlas.Models.Admin.Events
 @attribute [Authorize(Policy = "Admin")]
 @inject HttpClient Http
+@inject IStringLocalizer<SharedResources> Loc
 
 @if (Model == null)
 {
@@ -9,16 +10,16 @@
 else
 {
     <a class="btn btn-outline-info mb-3" data-toggle="collapse" href="#events" role="button" aria-expanded="false" aria-controls="events">
-        View Events
+        @Loc["View Events"]
     </a>
     <div class="collapse" id="events">
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th scope="col">Event</th>
-                    <th scope="col">Data</th>
-                    <th scope="col">By</th>
-                    <th scope="col">Date</th>
+                    <th scope="col">@Loc["Event"]</th>
+                    <th scope="col">@Loc["Data"]</th>
+                    <th scope="col">@Loc["By"]</th>
+                    <th scope="col">@Loc["Date"]</th>
                 </tr>
             </thead>
             <tbody>
@@ -29,9 +30,9 @@ else
                         <td>
                             @if (_event.Data != null)
                             {
-                                @foreach (var item in _event.Data)
+                                @foreach (var (key, value) in _event.Data)
                                 {
-                                    <div><strong>@item.Key</strong>: @item.Value</div>
+                                    <div><strong>@key</strong>: @value</div>
                                 }
                             }
                         </td>
