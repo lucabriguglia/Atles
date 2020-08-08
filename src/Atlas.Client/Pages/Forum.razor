@@ -1,10 +1,7 @@
 ﻿@page "/forum/{id:guid}"
-@using Atlas.Client.Extensions
-@using Atlas.Models
+@inherits PageBase
 @using Atlas.Models.Public
 @inject ApiService ApiService
-@inject NavigationManager Navigation
-@inject IJSRuntime JsRuntime
 @inject IStringLocalizer<PublicResources> Loc
 
 @if (Model == null)
@@ -15,108 +12,7 @@ else
 {
     if (DisplayPage)
     {
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb">
-                <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
-                <li class="breadcrumb-item active" aria-current="page">@Model.Forum.Name</li>
-            </ol>
-        </nav>
-
-        <div class="row">
-            <div class="col-md-6">
-                <h4 class="mb-3">@Model.Forum.Name</h4>
-            </div>
-            <div class="col-md-6 text-right mb-3">
-                @if (Model.CanStart)
-                {
-                    <a href="/forum/@Model.Forum.Id/post" class="btn btn-primary" role="button">@Loc["New Topic"]</a>
-                }
-                else
-                {
-                    <AuthorizeView>
-                        <Authorized>
-                            @Loc["You are not authorized to start a new discussion."]
-                        </Authorized>
-                        <NotAuthorized>
-                            @((MarkupString)string.Format(Loc["{0} to start a new discussion"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">{Loc["Login"]}</a>"))
-                        </NotAuthorized>
-                    </AuthorizeView>
-                }
-            </div>
-        </div>
-
-        <a id="topics"></a>
-
-        <div class="row">
-            <div class="col-md-6 input-group mb-3">
-                <input type="text" class="form-control" placeholder="@string.Format(Loc["Search topics in {0}"], Model.Forum.Name)" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
-                <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
-                    <i class="fa fa-times"></i>
-                </button>
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
-            </div>
-        </div>
-
-        @if (Model.Topics == null)
-        {
-            <Loading />
-        }
-        else
-        {
-            @if (Model.Topics.Items.Count == 0)
-            {
-                <NoRecords Text="@Loc["No topics found for this forum."]" />
-            }
-            else
-            {
-                <div class="card">
-                    <ul class="list-group list-group-flush">
-                        @foreach (var item in Model.Topics.Items)
-                        {
-                            <li class="list-group-item py-3">
-                                <div class="row">
-                                    <div class="col-md-auto pr-1">
-                                        <a href="/member/@item.MemberId" title="@item.MemberDisplayName">
-                                            <Avatar GravatarHash="@item.GravatarHash" GravatarSize="32" Class="mb-2"></Avatar>
-                                        </a>
-                                    </div>
-                                    <div class="col">
-                                        <p class="card-text">
-                                            @if (Model.CanRead)
-                                            {
-                                                <a href="/forum/@Model.Forum.Id/@item.Id" title="@item.Title">@item.Title.ToSafeLengthText(50)</a>
-                                            }
-                                            else
-                                            {
-                                                <span title="@item.Title"></span>@item.Title.ToSafeLengthText(50)
-                                            }
-                                        </p>
-                                        <div class="row small">
-                                            <div class="col-md-6">
-                                                @item.TimeStamp.ToForumLocalDateAndTime()
-                                                <span class="font-weight-bold ml-2">@item.TotalReplies</span> @Loc["Replies"]
-                                            </div>
-                                            <div class="col-md-6 text-right">
-                                                @((MarkupString)string.Format(Loc["Most recent post by {0} on {1}"],
-                                                    $"<a href=\"/member/{item.MostRecentMemberId}\" title=\"{item.MostRecentMemberDisplayName}\">{item.MostRecentMemberDisplayName.ToSafeLengthText(10)}</a>",
-                                                    item.MostRecentTimeStamp.ToForumLocalDateAndTime()))
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </li>
-                        }
-                    </ul>
-                </div>
-                <div class="mt-3">
-                    <Pager TotalPages="@Model.Topics.TotalPages" CurrentPage="@CurrentPage" OnLoadDataCallback="@ChangePageAsync"></Pager>
-                </div>
-            }
-        }
+        @AddComponent("ForumComponent", new Dictionary<string, object> { { "Model", Model}, { "Id", Id} })
     }
     else
     {
@@ -132,51 +28,11 @@ else
 
     public bool DisplayPage { get; set; }
 
-    public int CurrentPage { get; set; } = 1;
-    public string Search { get; set; }
-
-    private async Task SearchAsync()
-    {
-        CurrentPage = 1;
-        await LoadTopicsAsync();
-    }
-
-    private async Task ClearSearchAsync()
-    {
-        if (!string.IsNullOrWhiteSpace(Search))
-        {
-            Search = string.Empty;
-            CurrentPage = 1;
-            await LoadTopicsAsync();
-        }
-    }
-
-    private async Task MyKeyUpAsync(KeyboardEventArgs key)
-    {
-        if (key.Code == "Enter")
-        {
-            await SearchAsync();
-        }
-    }
-
-    protected async Task ChangePageAsync(int page)
-    {
-        await JsRuntime.InvokeVoidAsync("scrollToTarget", "topics");
-        CurrentPage = page;
-        await LoadTopicsAsync();
-    }
-
-    private async Task LoadTopicsAsync()
-    {
-        Model.Topics = null;
-        Model.Topics = await ApiService.GetFromJsonAsync<PaginatedData<ForumPageModel.TopicModel>>($"api/public/forums/{Id}/topics?page={CurrentPage}&search={Search}");
-    }
-
     protected override async Task OnInitializedAsync()
     {
         try
         {
-            Model = await ApiService.GetFromJsonAsync<ForumPageModel>($"api/public/forums/{Id}?page=1&search={Search}");
+            Model = await ApiService.GetFromJsonAsync<ForumPageModel>($"api/public/forums/{Id}?page=1");
             DisplayPage = true;
         }
         catch (Exception)
