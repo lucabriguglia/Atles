@@ -1,10 +1,8 @@
 ﻿@page "/forum/{id:guid}"
-@using System.Security.Claims
 @using Atlas.Client.Extensions
 @using Atlas.Models
 @using Atlas.Models.Public
-@inject AnonymousService AnonymousService
-@inject HttpClient Http
+@inject ApiService ApiService
 @inject NavigationManager Navigation
 @inject IJSRuntime JsRuntime
 @inject IStringLocalizer<PublicResources> Loc
@@ -127,26 +125,20 @@ else
 }
 
 @code {
-    [CascadingParameter]
-    private Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
     [Parameter]
     public Guid Id { get; set; }
 
     private ForumPageModel Model { get; set; }
 
     public bool DisplayPage { get; set; }
-    public string Search { get; set; }
-    public int CurrentPage { get; set; } = 1;
 
-    public ClaimsPrincipal CurrentUser { get; set; }
-    public string CurrentUserId { get; set; } = Guid.Empty.ToString();
+    public int CurrentPage { get; set; } = 1;
+    public string Search { get; set; }
 
     private async Task SearchAsync()
     {
         CurrentPage = 1;
-        Model = null;
-        await LoadDataAsync(CurrentPage);
+        await LoadTopicsAsync();
     }
 
     private async Task ClearSearchAsync()
@@ -155,8 +147,7 @@ else
         {
             Search = string.Empty;
             CurrentPage = 1;
-            Model = null;
-            await LoadDataAsync(CurrentPage);
+            await LoadTopicsAsync();
         }
     }
 
@@ -170,41 +161,22 @@ else
 
     protected async Task ChangePageAsync(int page)
     {
-        CurrentPage = page;
-        Model.Topics = null;
-
-        var requestUri = $"api/public/forums/{Id}/topics?page={page}&search={Search}";
-
-        if (CurrentUser.Identity.IsAuthenticated)
-        {
-            Model.Topics = await Http.GetFromJsonAsync<PaginatedData<ForumPageModel.TopicModel>>(requestUri);
-        }
-        else
-        {
-            Model.Topics = await AnonymousService.GetFromJsonAsync<PaginatedData<ForumPageModel.TopicModel>>(requestUri);
-        }
-
         await JsRuntime.InvokeVoidAsync("scrollToTarget", "topics");
+        CurrentPage = page;
+        await LoadTopicsAsync();
     }
 
-    private async Task LoadDataAsync(int page)
+    private async Task LoadTopicsAsync()
     {
-        var authState = await AuthenticationStateTask;
-        CurrentUser = authState.User;
+        Model.Topics = null;
+        Model.Topics = await ApiService.GetFromJsonAsync<PaginatedData<ForumPageModel.TopicModel>>($"api/public/forums/{Id}/topics?page={CurrentPage}&search={Search}");
+    }
 
+    protected override async Task OnInitializedAsync()
+    {
         try
         {
-            var requestUri = $"api/public/forums/{Id}?page={page}&search={Search}";
-
-            if (CurrentUser.Identity.IsAuthenticated)
-            {
-                Model = await Http.GetFromJsonAsync<ForumPageModel>(requestUri);
-            }
-            else
-            {
-                Model = await AnonymousService.GetFromJsonAsync<ForumPageModel>(requestUri);
-            }
-
+            Model = await ApiService.GetFromJsonAsync<ForumPageModel>($"api/public/forums/{Id}?page=1&search={Search}");
             DisplayPage = true;
         }
         catch (Exception)
@@ -212,10 +184,5 @@ else
             Model = new ForumPageModel();
             DisplayPage = false;
         }
-    }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadDataAsync(1);
     }
 }
