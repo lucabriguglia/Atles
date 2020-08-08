@@ -1,5 +1,4 @@
-﻿@using Atlas.Models.Public
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+﻿@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 @inject HttpClient Http
@@ -10,7 +9,7 @@
     <Authorized>
         <li class="nav-item dropdown">
             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <Avatar GravatarHash="@GravatarHash" GravatarSize="24"></Avatar>
+                <Avatar GravatarSize="24" CurrentMember="true"></Avatar>
             </a>
             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
                 <a class="dropdown-item" href="/member">@Loc["Profile"]</a>
@@ -36,19 +35,6 @@
 </AuthorizeView>
 
 @code{
-    private string GravatarHash { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-        var user = authState.User;
-        if (user.Identity.IsAuthenticated)
-        {
-            var currentMember = await Http.GetFromJsonAsync<CurrentMemberModel>("api/public/current-member");
-            GravatarHash = currentMember.GravatarHash;
-        }
-    }
-
     private async Task BeginSignOut(MouseEventArgs args)
     {
         await SignOutManager.SetSignOutState();
