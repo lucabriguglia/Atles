@@ -1,4 +1,4 @@
-﻿@page "/member/{id:guid}"
+﻿@page "/profile"
 @using Atlas.Models.Public
 @inject ApiService ApiService
 @inject IStringLocalizer<PublicResources> Loc
@@ -13,13 +13,10 @@ else
 }
 
 @code {
-    [Parameter]
-    public Guid Id { get; set; }
-
     private MemberPageModel Model { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await ApiService.GetFromJsonAsync<MemberPageModel>($"api/public/members/{Id}");
+        Model = await ApiService.GetFromJsonAsync<MemberPageModel>("api/public/members");
     }
 }
