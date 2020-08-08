@@ -10,7 +10,7 @@
 }
 else
 {
-    @AddComponent("MemberComponent", Model);
+    @AddComponent("MemberComponent", new Dictionary<string, object> { { "Model", Model } });
 }
 
 @code {

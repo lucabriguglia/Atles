@@ -1,4 +1,5 @@
 ﻿@page "/member/{id:guid}"
+@inherits PageBase
 @using Atlas.Models.Public
 @inject ApiService ApiService
 @inject IStringLocalizer<PublicResources> Loc
@@ -9,7 +10,7 @@
 }
 else
 {
-    <MemberModel Model="@Model"/>
+    @AddComponent("MemberComponent", new Dictionary<string, object> { { "Model", Model } });
 }
 
 @code {
