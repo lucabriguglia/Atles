@@ -1,7 +1,4 @@
-﻿@using Atlas.Models.Public
-@inherits LayoutComponentBase
-@inject IJSRuntime JsRuntime
-@inject ApiService ApiService
+﻿@inherits LayoutBase
 @inject IStringLocalizer<PublicResources> Loc
 
 <CascadingValue Value="Site">
@@ -49,14 +46,3 @@
         </div>
     </footer>
 </CascadingValue>
-
-@code {
-    public CurrentSiteModel Site { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await JsRuntime.InvokeVoidAsync("addCssFile", "public");
-        Site = await ApiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
-        await JsRuntime.InvokeVoidAsync("changePageTitle", Site.Title);
-    }
-}
