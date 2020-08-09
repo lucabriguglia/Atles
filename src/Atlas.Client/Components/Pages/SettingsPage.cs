@@ -2,7 +2,7 @@
 using Atlas.Models.Public;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Atlas.Client.Components
+namespace Atlas.Client.Components.Pages
 {
     public abstract class SettingsPage : PageBase
     {

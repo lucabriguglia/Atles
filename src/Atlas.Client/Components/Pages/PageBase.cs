@@ -7,7 +7,7 @@ using Atlas.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace Atlas.Client.Components
+namespace Atlas.Client.Components.Pages
 {
     public abstract class PageBase : ComponentBase
     {

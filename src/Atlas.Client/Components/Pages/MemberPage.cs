@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Atlas.Models.Public;
 using Microsoft.AspNetCore.Components;
 
-namespace Atlas.Client.Components
+namespace Atlas.Client.Components.Pages
 {
     public abstract class MemberPage : PageBase
     {

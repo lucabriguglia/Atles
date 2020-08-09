@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Models.Public;
 
-namespace Atlas.Client.Components
+namespace Atlas.Client.Components.Pages
 {
     public abstract class IndexPage : PageBase
     {
