@@ -1,8 +1,5 @@
 ﻿@page "/forum/{id:guid}"
-@inherits PageBase
-@using Atlas.Models.Public
-@inject ApiService ApiService
-@inject IStringLocalizer<PublicResources> Loc
+@inherits ForumPage
 
 @if (Model == null)
 {
@@ -17,28 +14,5 @@ else
     else
     {
         <SomethingWrong />
-    }
-}
-
-@code {
-    [Parameter]
-    public Guid Id { get; set; }
-
-    private ForumPageModel Model { get; set; }
-
-    public bool DisplayPage { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        try
-        {
-            Model = await ApiService.GetFromJsonAsync<ForumPageModel>($"api/public/forums/{Id}?page=1");
-            DisplayPage = true;
-        }
-        catch (Exception)
-        {
-            Model = new ForumPageModel();
-            DisplayPage = false;
-        }
     }
 }
