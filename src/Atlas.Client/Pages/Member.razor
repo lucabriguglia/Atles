@@ -1,8 +1,5 @@
 ﻿@page "/member/{id:guid}"
-@inherits PageBase
-@using Atlas.Models.Public
-@inject ApiService ApiService
-@inject IStringLocalizer<PublicResources> Loc
+@inherits MemberPage
 
 @if (Model == null)
 {
@@ -11,16 +8,4 @@
 else
 {
     @AddComponent("MemberComponent", new Dictionary<string, object> { { "Model", Model } });
-}
-
-@code {
-    [Parameter]
-    public Guid Id { get; set; }
-
-    private MemberPageModel Model { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Model = await ApiService.GetFromJsonAsync<MemberPageModel>($"api/public/members/{Id}");
-    }
 }
