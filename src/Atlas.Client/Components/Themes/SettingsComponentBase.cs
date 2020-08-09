@@ -9,9 +9,9 @@ namespace Atlas.Client.Components.Themes
     {
         [Parameter] public SettingsPageModel Model { get; set; }
 
-        public EditContext EditContext { get; set; }
-        public ValidationMessageStore ValidationMessageStore { get; set; }
-        public string CurrentDisplayName { get; set; }
+        protected EditContext EditContext { get; set; }
+        protected ValidationMessageStore ValidationMessageStore { get; set; }
+        protected string CurrentDisplayName { get; set; }
 
         protected bool Savings { get; set; }
         protected bool Saved { get; set; }

@@ -32,7 +32,7 @@ namespace Atlas.Client.Services
             return await _anonymousService.GetFromJsonAsync<T>(requestUri);
         }
 
-        public async Task<HttpResponseMessage> PostAsJsonAsync(string requestUri, object data)
+        public async Task<HttpResponseMessage> PostAsJsonAsync<T>(string requestUri, T data)
         {
             return await _authenticatedService.PostAsJsonAsync(requestUri, data);
         }
