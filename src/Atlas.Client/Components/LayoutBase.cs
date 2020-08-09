@@ -22,13 +22,5 @@ namespace Atlas.Client.Components
             await JsRuntime.InvokeVoidAsync("changePageTitle", Site.Title);
             await JsRuntime.InvokeVoidAsync("addCssFile", Site.CssPublic, Site.CssAdmin);
         }
-
-        //protected RenderFragment AddLayout(string layout) => builder =>
-        //{
-        //    var type = Type.GetType($"Atlas.Client.Themes.{Site.Theme}.{layout}, {typeof(Program).Assembly.FullName}");
-
-        //    builder.OpenComponent(0, type);
-        //    builder.CloseComponent();
-        //};
     }
 }
