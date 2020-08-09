@@ -10,8 +10,8 @@ namespace Atlas.Client.Components.Themes
 {
     public class ForumComponentBase : ThemeComponentBase
     {
+        [Parameter] public Guid Id { get; set; }
         [Parameter] public ForumPageModel Model { get; set; }
-        [Parameter]  public Guid Id { get; set; }
 
         public int CurrentPage { get; set; } = 1;
         public string Search { get; set; }

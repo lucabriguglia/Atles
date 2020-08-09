@@ -1,0 +1,33 @@
+﻿@inherits PostComponentBase
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item"><a href="/forum/@ForumId">@Model.Forum.Name</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@TitleText</li>
+    </ol>
+</nav>
+
+<h3 class="mb-3">@TitleText</h3>
+
+<div class="row">
+    <div class="col-md-8">
+        <EditForm Model="@Model.Topic" OnValidSubmit="SaveAsync">
+            <DataAnnotationsValidator />
+            <div class="form-group">
+                <label for="title" class="control-label">@Loc["Title"]</label>
+                <InputText id="title" @bind-Value="Model.Topic.Title" Class="form-control" />
+                <ValidationMessage For="@(() => Model.Topic.Title)" />
+            </div>
+            <Editor @bind-Value="@Model.Topic.Content" Rows="20"></Editor>
+            <div class="form-group">
+                <input type="submit" value="@ButtonText" class="btn btn-primary" />
+                <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
+                <div class="small float-right mt-2">
+                    <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>@Loc["Guide"]</a>
+                </div>
+            </div>
+            <ValidationSummary />
+        </EditForm>
+    </div>
+</div>

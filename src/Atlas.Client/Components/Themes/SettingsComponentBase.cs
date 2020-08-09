@@ -8,12 +8,23 @@ namespace Atlas.Client.Components.Themes
     public class SettingsComponentBase : ThemeComponentBase
     {
         [Parameter] public SettingsPageModel Model { get; set; }
-        [Parameter] public EditContext EditContext { get; set; }
-        [Parameter] public ValidationMessageStore ValidationMessageStore { get; set; }
-        [Parameter] public string CurrentDisplayName { get; set; }
+
+        public EditContext EditContext { get; set; }
+        public ValidationMessageStore ValidationMessageStore { get; set; }
+        public string CurrentDisplayName { get; set; }
 
         protected bool Savings { get; set; }
         protected bool Saved { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+
+            EditContext = new EditContext(Model.Member);
+            EditContext.OnFieldChanged += HandleFieldChanged;
+            ValidationMessageStore = new ValidationMessageStore(EditContext);
+            CurrentDisplayName = Model.Member.DisplayName;
+        }
 
         protected async Task OnSubmitAsync()
         {
@@ -48,6 +59,16 @@ namespace Atlas.Client.Components.Themes
             var isDisplayNameUnique = displayNameVal == CurrentDisplayName || await ApiService.GetFromJsonAsync<bool>($"api/public/settings/is-display-name-unique/{displayNameVal}");
 
             return isDisplayNameUnique;
+        }
+
+        private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
+        {
+            ValidationMessageStore.Clear(e.FieldIdentifier);
+        }
+
+        public void Dispose()
+        {
+            EditContext.OnFieldChanged -= HandleFieldChanged;
         }
     }
 }

@@ -29,7 +29,6 @@ namespace Atlas.Server.Controllers.Public
             _memberRules = memberRules;
         }
 
-        [Authorize]
         [HttpGet("edit")]
         public async Task<SettingsPageModel> Edit()
         {
@@ -40,7 +39,6 @@ namespace Atlas.Server.Controllers.Public
             return model;
         }
 
-        [Authorize]
         [HttpPost("update")]
         public async Task<ActionResult> Update(SettingsPageModel model)
         {
