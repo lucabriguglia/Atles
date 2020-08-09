@@ -37,10 +37,10 @@ namespace Atlas.Client.Components
 
             if (models != null)
             {
-                for (int i = 0; i < models.Count; i++)
+                for (var i = 0; i < models.Count; i++)
                 {
-                    var item = models.ElementAt(i);
-                    builder.AddAttribute(i + 1, item.Key, item.Value);
+                    var (key, value) = models.ElementAt(i);
+                    builder.AddAttribute(i + 1, key, value);
                 }
             }
             

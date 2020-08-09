@@ -8,5 +8,8 @@
 }
 else
 {
-    @AddComponent("IndexComponent", new Dictionary<string, object> {{ "Model", Model }});
+    @AddComponent("IndexComponent", new Dictionary<string, object>
+    {
+        { nameof(Model), Model }
+    });
 }

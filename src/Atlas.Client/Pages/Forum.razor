@@ -9,7 +9,11 @@ else
 {
     if (DisplayPage)
     {
-        @AddComponent("ForumComponent", new Dictionary<string, object> { { "Model", Model}, { "Id", Id} })
+        @AddComponent("ForumComponent", new Dictionary<string, object>
+        {
+            { nameof(Model), Model}, 
+            { nameof(Id), Id}
+        })
     }
     else
     {

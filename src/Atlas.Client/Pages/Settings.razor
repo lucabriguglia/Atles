@@ -9,9 +9,9 @@ else
 {
     @AddComponent("SettingsComponent", new Dictionary<string, object>
     {
-        { "Model", Model },
-        { "EditContext", EditContext },
-        { "ValidationMessageStore", ValidationMessageStore },
-        { "CurrentDisplayName", CurrentDisplayName }
+        { nameof(Model), Model },
+        { nameof(EditContext), EditContext },
+        { nameof(ValidationMessageStore), ValidationMessageStore },
+        { nameof(CurrentDisplayName), CurrentDisplayName }
     });
 }
