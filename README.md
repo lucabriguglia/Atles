@@ -11,6 +11,8 @@ A forum software built using ASP.NET Core Blazor WebAssembly.
 
 ## Features
 
+- Themes
+- Multi language
 - Granular permissions
 - Markdown editor
 - You can use your own ASP.NET Identity

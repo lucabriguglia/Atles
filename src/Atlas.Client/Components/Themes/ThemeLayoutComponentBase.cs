@@ -5,7 +5,6 @@ namespace Atlas.Client.Components.Themes
 {
     public abstract class ThemeLayoutComponentBase : LayoutComponentBase
     {
-        [CascadingParameter]
-        protected CurrentSiteModel Site { get; set; }
+        [CascadingParameter] protected CurrentSiteModel Site { get; set; }
     }
 }

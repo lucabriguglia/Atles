@@ -1,5 +1,4 @@
-﻿using Atlas.Client.Services;
-using Atlas.Models;
+﻿using Atlas.Models;
 using Atlas.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -11,17 +10,8 @@ namespace Atlas.Client.Components.Themes
 {
     public class ForumComponentBase : ThemeComponentBase
     {
-        [Inject]
-        public ApiService ApiService { get; set; }
-
-        [Inject]
-        public IJSRuntime JsRuntime { get; set; }
-
-        [Parameter]
-        public ForumPageModel Model { get; set; }
-
-        [Parameter]
-        public Guid Id { get; set; }
+        [Parameter] public ForumPageModel Model { get; set; }
+        [Parameter]  public Guid Id { get; set; }
 
         public int CurrentPage { get; set; } = 1;
         public string Search { get; set; }

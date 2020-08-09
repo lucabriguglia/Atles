@@ -5,7 +5,6 @@ namespace Atlas.Client.Components.Themes
 {
     public class MemberComponentBase : ThemeComponentBase
     {
-        [Parameter]
-        public MemberPageModel Model { get; set; }
+        [Parameter] public MemberPageModel Model { get; set; }
     }
 }

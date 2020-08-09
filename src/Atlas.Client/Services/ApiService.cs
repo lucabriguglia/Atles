@@ -19,7 +19,7 @@ namespace Atlas.Client.Services
             _authenticationStateProvider = authenticationStateProvider;
         }
 
-        public async Task<T> GetFromJsonAsync<T>(string requestUri) where T : class
+        public async Task<T> GetFromJsonAsync<T>(string requestUri)
         {
             var state = await _authenticationStateProvider.GetAuthenticationStateAsync();
             var user = state.User;
