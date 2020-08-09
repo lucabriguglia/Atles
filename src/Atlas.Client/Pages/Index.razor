@@ -1,9 +1,6 @@
 ﻿@page "/"
 @page "/public"
-@inherits PageBase
-@using Atlas.Models.Public
-@inject IStringLocalizer<PublicResources> Loc
-@inject ApiService ApiService
+@inherits IndexPage
 
 @if (Model == null)
 {
@@ -12,13 +9,4 @@
 else
 {
     @AddComponent("IndexComponent", new Dictionary<string, object> {{ "Model", Model }});
-}
-
-@code {
-    private IndexPageModel Model { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Model = await ApiService.GetFromJsonAsync<IndexPageModel>("api/public/index-model");
-    }
 }

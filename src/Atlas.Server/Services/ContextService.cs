@@ -40,7 +40,9 @@ namespace Atlas.Server.Services
                 Id = currentSite.Id,
                 Name = currentSite.Name,
                 Title = currentSite.Title,
-                Theme = "Default"
+                Theme = "Default",
+                CssPublic = "public",
+                CssAdmin = "admin"
             };
         }
 

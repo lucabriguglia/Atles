@@ -37,13 +37,21 @@
     </style>
 
     <script>
-        window.addCssFile = (fileName) => {
-            var head = document.getElementsByTagName('HEAD')[0];
-            var link = document.createElement('link');
-            link.rel = 'stylesheet';
-            link.type = 'text/css';
-            link.href = 'css/' + fileName + '.css';
-            head.appendChild(link); 
+        window.addCssFile = (fileNameToAdd, fileNameToRemove) => {
+            var hrefToAdd = 'css/' + fileNameToAdd + '.css';
+            if (!$("link[href='" + hrefToAdd + "']").length){
+                var head = document.getElementsByTagName('HEAD')[0];
+                var link = document.createElement('link');
+                link.rel = 'stylesheet';
+                link.type = 'text/css';
+                link.href = hrefToAdd;
+                head.appendChild(link); 
+            }
+
+            var hrefToRemove = 'css/' + fileNameToRemove + '.css';
+            if ($("link[href='" + hrefToRemove + "']").length){
+                $("link[rel=stylesheet][href='" + hrefToRemove + "']").remove();
+            }
         };
 
         window.scrollToTarget = (target) => {

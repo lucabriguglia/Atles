@@ -1,15 +1,33 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
+using Atlas.Client.Services;
 using Atlas.Models.Public;
 using Microsoft.AspNetCore.Components;
+using Microsoft.JSInterop;
 
 namespace Atlas.Client.Components
 {
     public abstract class PageBase : ComponentBase
     {
+        [Inject]
+        public IJSRuntime JsRuntime { get; set; }
+
+        [Inject]
+        public ApiService ApiService { get; set; }
+
         [CascadingParameter] 
         protected CurrentSiteModel Site { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            if (Site == null)
+            {
+                Site = await ApiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
+                await JsRuntime.InvokeVoidAsync("changePageTitle", Site.Title);
+            }
+        }
 
         protected RenderFragment AddComponent(string component, Dictionary<string, object> models = null) => builder =>
         {
