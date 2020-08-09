@@ -4,11 +4,11 @@
 
 @if (Model == null)
 {
-    <Loading />
+   <Loading />
 }
 else
 {
-    @AddComponent("IndexComponent", new Dictionary<string, object>
+    @AddComponent("Index", new Dictionary<string, object>
     {
         { nameof(Model), Model }
     });

@@ -5,6 +5,6 @@ namespace Atlas.Client.Components.Themes
 {
     public class IndexComponentBase : ThemeComponentBase
     {
-        [Parameter]  public IndexPageModel Model { get; set; }
+        [Parameter] public IndexPageModel Model { get; set; }
     }
 }
