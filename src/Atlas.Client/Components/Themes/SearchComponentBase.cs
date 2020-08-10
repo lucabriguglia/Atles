@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Models.Public;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
@@ -8,10 +7,15 @@ namespace Atlas.Client.Components.Themes
 {
     public class SearchComponentBase : ThemeComponentBase
     {
-        [Parameter] public SearchPageModel Model { get; set; }
+        protected SearchPageModel Model { get; set; }
 
         protected string SearchTerm { get; set; }
         protected int CurrentPage { get; set; } = 1;
+
+        protected override async Task OnInitializedAsync()
+        {
+            Model = await ApiService.GetFromJsonAsync<SearchPageModel>("api/public/search?page=1");
+        }
 
         protected async Task MyKeyUpAsync(KeyboardEventArgs key)
         {

@@ -11,10 +11,25 @@ namespace Atlas.Client.Components.Themes
     public class ForumComponentBase : ThemeComponentBase
     {
         [Parameter] public Guid Id { get; set; }
-        [Parameter] public ForumPageModel Model { get; set; }
 
-        public int CurrentPage { get; set; } = 1;
-        public string Search { get; set; }
+        protected ForumPageModel Model { get; set; }
+        protected int CurrentPage { get; set; } = 1;
+        protected string Search { get; set; }
+        protected bool DisplayPage { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            try
+            {
+                Model = await ApiService.GetFromJsonAsync<ForumPageModel>($"api/public/forums/{Id}?page=1");
+                DisplayPage = true;
+            }
+            catch (Exception)
+            {
+                Model = new ForumPageModel();
+                DisplayPage = false;
+            }
+        }
 
         protected async Task SearchAsync()
         {

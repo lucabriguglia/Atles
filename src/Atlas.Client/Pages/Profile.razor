@@ -1,14 +1,5 @@
 ﻿@page "/profile"
+
 @inherits ProfilePage
 
-@if (Model == null)
-{
-    <Loading />
-}
-else
-{
-    @AddComponent("Member", new Dictionary<string, object>
-    {
-        { nameof(Model), Model }
-    });
-}
+@AddComponent("Member")

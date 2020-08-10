@@ -1,10 +1,12 @@
 ﻿using System;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Models;
 using Atlas.Models.Public;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
@@ -12,9 +14,13 @@ namespace Atlas.Client.Components.Themes
 {
     public class TopicComponentBase : ThemeComponentBase
     {
-        [Parameter] public TopicPageModel Model { get; set; }
+        [CascadingParameter]
+        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
+
         [Parameter] public Guid ForumId { get; set; }
         [Parameter] public Guid TopicId { get; set; }
+
+        protected TopicPageModel Model { get; set; }
 
         protected string ReplyTitleText => Model.Post.Id != null
             ? Loc["Edit Reply"]
@@ -36,6 +42,30 @@ namespace Atlas.Client.Components.Themes
         protected bool Savings { get; set; }
         protected string Search { get; set; }
         protected int CurrentPage { get; set; } = 1;
+        protected bool DisplayPage { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            var authState = await AuthenticationStateTask;
+            CurrentUser = authState.User;
+
+            try
+            {
+                Model = await ApiService.GetFromJsonAsync<TopicPageModel>($"api/public/topics/{ForumId}/{TopicId}?page=1");
+
+                DisplayPage = true;
+
+                if (CurrentUser.Identity.IsAuthenticated)
+                {
+                    CurrentUserId = CurrentUser.Identities.First().Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
+                }
+            }
+            catch (Exception)
+            {
+                Model = new TopicPageModel();
+                DisplayPage = false;
+            }
+        }
 
         private async Task LoadDataAsync()
         {

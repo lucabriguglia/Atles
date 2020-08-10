@@ -1,14 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Models.Public;
-using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace Atlas.Client.Components.Themes
 {
     public class SettingsComponentBase : ThemeComponentBase
     {
-        [Parameter] public SettingsPageModel Model { get; set; }
-
+        protected SettingsPageModel Model { get; set; }
         protected EditContext EditContext { get; set; }
         protected ValidationMessageStore ValidationMessageStore { get; set; }
         protected string CurrentDisplayName { get; set; }
@@ -19,6 +17,8 @@ namespace Atlas.Client.Components.Themes
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
+
+            Model = await ApiService.GetFromJsonAsync<SettingsPageModel>("api/public/settings/edit");
 
             EditContext = new EditContext(Model.Member);
             EditContext.OnFieldChanged += HandleFieldChanged;

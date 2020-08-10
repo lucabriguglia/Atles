@@ -1,170 +1,184 @@
 ﻿@inherits TopicComponentBase
 
-<nav aria-label="breadcrumb">
-    <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
-        <li class="breadcrumb-item"><a href="/forum/@ForumId">@Model.Forum.Name</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Model.Topic.Title</li>
-    </ol>
-</nav>
-
-<div class="row">
-    <div class="col-md-6">
-        <h3 class="mb-3">@Model.Topic.Title</h3>
-    </div>
-    <div class="col-md-6 text-right mb-3">
-        @if (Model.CanReply)
-        {
-            <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewReplyAsync())" class="btn btn-primary" role="button">@Loc["Reply"]</a>
-        }
-        @if (CanEditTopic())
-        {
-            <a href="/forum/@Model.Forum.Id/post/@Model.Topic.Id/edit" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
-        }
-        @if (CanDeleteTopic())
-        {
-            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal-delete-topic">@Loc["Delete"]</button>
-        }
-    </div>
-</div>
-
-<div class="card mb-3">
-    <div class="card-body">
-        <div class="row mb-3">
-            <div class="col-md-6 small font-weight-bold">
-                <Avatar GravatarHash="@Model.Topic.GravatarHash" GravatarSize="32" Class="mr-1"></Avatar>
-                <a href="/member/@Model.Topic.MemberId">@Model.Topic.MemberDisplayName</a>
-            </div>
-            <div class="col-md-6 text-right small">
-                @Model.Topic.TimeStamp.ToForumLocalDateAndTime()
-            </div>
-        </div>
-        <p class="card-text">@((MarkupString)Model.Topic.Content)</p>
-    </div>
-</div>
-
-<a id="replies"></a>
-<h5 class="mb-3">@Loc["Replies"]</h5>
-
-<div class="row">
-    <div class="col-md-6 input-group mb-3">
-        <input type="text" class="form-control" placeholder="@Loc["Search replies"]" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
-        <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
-            <i class="fa fa-times"></i>
-        </button>
-        <div class="input-group-append">
-            <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
-                <i class="fa fa-search"></i>
-            </button>
-        </div>
-    </div>
-</div>
-
-@if (Model.Replies == null)
+@if (Model == null)
 {
     <Loading />
 }
 else
 {
-    if (Model.Replies.Items.Count == 0)
+    if (DisplayPage)
     {
-        <NoRecords Text="@NoRecordsText"></NoRecords>
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
+                <li class="breadcrumb-item"><a href="/forum/@ForumId">@Model.Forum.Name</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Topic.Title</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h3 class="mb-3">@Model.Topic.Title</h3>
+            </div>
+            <div class="col-md-6 text-right mb-3">
+                @if (Model.CanReply)
+                {
+                    <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewReplyAsync())" class="btn btn-primary" role="button">@Loc["Reply"]</a>
+                }
+                @if (CanEditTopic())
+                {
+                    <a href="/forum/@Model.Forum.Id/post/@Model.Topic.Id/edit" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
+                }
+                @if (CanDeleteTopic())
+                {
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal-delete-topic">@Loc["Delete"]</button>
+                }
+            </div>
+        </div>
+
+        <div class="card mb-3">
+            <div class="card-body">
+                <div class="row mb-3">
+                    <div class="col-md-6 small font-weight-bold">
+                        <Avatar GravatarHash="@Model.Topic.GravatarHash" GravatarSize="32" Class="mr-1"></Avatar>
+                        <a href="/member/@Model.Topic.MemberId">@Model.Topic.MemberDisplayName</a>
+                    </div>
+                    <div class="col-md-6 text-right small">
+                        @Model.Topic.TimeStamp.ToForumLocalDateAndTime()
+                    </div>
+                </div>
+                <p class="card-text">@((MarkupString)Model.Topic.Content)</p>
+            </div>
+        </div>
+
+        <a id="replies"></a>
+        <h5 class="mb-3">@Loc["Replies"]</h5>
+
+        <div class="row">
+            <div class="col-md-6 input-group mb-3">
+                <input type="text" class="form-control" placeholder="@Loc["Search replies"]" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
+                <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
+                    <i class="fa fa-times"></i>
+                </button>
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.Replies == null)
+        {
+            <Loading />
+        }
+        else
+        {
+            if (Model.Replies.Items.Count == 0)
+            {
+                <NoRecords Text="@NoRecordsText"></NoRecords>
+            }
+            else
+            {
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var reply in Model.Replies.Items)
+                        {
+                            <li class="list-group-item py-3">
+                                <a id="@reply.Id"></a>
+                                <div class="row mb-3 small">
+                                    <div class="col-md-6 font-weight-bold">
+                                        <Avatar GravatarHash="@reply.GravatarHash" GravatarSize="32" Class="mr-1"></Avatar>
+                                        <a href="/member/@reply.MemberId">@reply.MemberDisplayName</a>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        @reply.TimeStamp.ToForumLocalDateAndTime()
+                                    </div>
+                                </div>
+                                <div class="card-text">@((MarkupString)reply.Content)</div>
+                                <div class="row">
+                                    <div class="col-md-12 text-right">
+                                        @if (CanEditReply(reply.UserId))
+                                        {
+                                            <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await EditReplyAsync(reply.Id, reply.OriginalContent, reply.MemberId))">@Loc["Edit"]</a>
+                                        }
+                                        @if (CanDeleteReply(reply.UserId))
+                                        {
+                                            <a href="#" @onclick:preventDefault="true" @onclick="() => SetDeleteReplyId(reply.Id)" data-toggle="modal" data-target="#confirm-modal-delete-reply">@Loc["Delete"]</a>
+                                        }
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+
+                <div class="mt-3">
+                    <Pager TotalPages="@Model.Replies.TotalPages" CurrentPage="@CurrentPage" OnLoadDataCallback="@ChangePageAsync"></Pager>
+                </div>
+            }
+        }
+
+        @if (Model.CanReply)
+        {
+            <h5 class="mb-3">@ReplyTitleText</h5>
+            <div class="row">
+                <div class="col-md-8">
+                    <a id="reply"></a>
+                    <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveReplyAsync">
+                        <DataAnnotationsValidator />
+                        <Editor @bind-Value="@Model.Post.Content" Rows="10"></Editor>
+                        <div class="form-group">
+                            <div class="row">
+                                <div class="col">
+                                    <input type="submit" value="@ReplyButtonText" class="btn btn-primary" />
+                                    @if ((Model.Post.Id != null))
+                                    {
+                                        <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
+                                    }
+                                </div>
+                                <div class="col text-center">
+                                    @if (Savings)
+                                    {
+                                        <Loading />
+                                    }
+                                </div>
+                                <div class="col small text-right mt-2">
+                                    <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>@Loc["Guide"]</a>
+                                </div>
+                            </div>
+                        </div>
+                        <ValidationSummary />
+                    </EditForm>
+                </div>
+            </div>
+        }
+        else
+        {
+            <AuthorizeView>
+                <Authorized>
+                    <p class="mt-3">@Loc["You are not authorized to reply."]</p>
+                </Authorized>
+                <NotAuthorized>
+                    @((MarkupString)string.Format(Loc["{0} to reply"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">{Loc["Log in"]}</a>"))
+                </NotAuthorized>
+            </AuthorizeView>
+        }
+
+        <ConfirmModal Id="confirm-modal-delete-topic"
+                      Title="@Loc["Delete Topic"]"
+                      Body="@Loc["Are you sure you want to delete this Topic?"]"
+                      Button="@Loc["Delete Topic"]"
+                      OnClickCallback="@DeleteTopicAsync" />
+
+        <ConfirmModal Id="confirm-modal-delete-reply"
+                      Title="@Loc["Delete Reply"]"
+                      Body="@Loc["Are you sure you want to delete this Reply?"]"
+                      Button="@Loc["Delete Reply"]"
+                      OnClickCallback="@DeleteReplyAsync" />
     }
     else
     {
-        <div class="card">
-            <ul class="list-group list-group-flush">
-                @foreach (var reply in Model.Replies.Items)
-                {
-                    <li class="list-group-item py-3">
-                        <a id="@reply.Id"></a>
-                        <div class="row mb-3 small">
-                            <div class="col-md-6 font-weight-bold">
-                                <Avatar GravatarHash="@reply.GravatarHash" GravatarSize="32" Class="mr-1"></Avatar>
-                                <a href="/member/@reply.MemberId">@reply.MemberDisplayName</a>
-                            </div>
-                            <div class="col-md-6 text-right">
-                                @reply.TimeStamp.ToForumLocalDateAndTime()
-                            </div>
-                        </div>
-                        <div class="card-text">@((MarkupString)reply.Content)</div>
-                        <div class="row">
-                            <div class="col-md-12 text-right">
-                                @if (CanEditReply(reply.UserId))
-                                {
-                                    <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await EditReplyAsync(reply.Id, reply.OriginalContent, reply.MemberId))">@Loc["Edit"]</a>
-                                }
-                                @if (CanDeleteReply(reply.UserId))
-                                {
-                                    <a href="#" @onclick:preventDefault="true" @onclick="() => SetDeleteReplyId(reply.Id)" data-toggle="modal" data-target="#confirm-modal-delete-reply">@Loc["Delete"]</a>
-                                }
-                            </div>
-                        </div>
-                    </li>
-                }
-            </ul>
-        </div>
-
-        <div class="mt-3">
-            <Pager TotalPages="@Model.Replies.TotalPages" CurrentPage="@CurrentPage" OnLoadDataCallback="@ChangePageAsync"></Pager>
-        </div>
+        <SomethingWrong />
     }
 }
-
-@if (Model.CanReply)
-{
-    <h5 class="mb-3">@ReplyTitleText</h5>
-    <div class="row">
-        <div class="col-md-8">
-            <a id="reply"></a>
-            <EditForm Context="PostContext" Model="@Model.Post" OnValidSubmit="SaveReplyAsync">
-                <DataAnnotationsValidator />
-                <Editor @bind-Value="@Model.Post.Content" Rows="10"></Editor>
-                <div class="form-group">
-                    <div class="row">
-                        <div class="col">
-                            <input type="submit" value="@ReplyButtonText" class="btn btn-primary" />
-                            @if ((Model.Post.Id != null))
-                            {
-                                <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
-                            }
-                        </div>
-                        <div class="col text-center">
-                            @if (Savings)
-                            {
-                                <Loading />
-                            }
-                        </div>
-                        <div class="col small text-right mt-2">
-                            <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>@Loc["Guide"]</a>
-                        </div>
-                    </div>
-                </div>
-                <ValidationSummary />
-            </EditForm>
-        </div>
-    </div>
-}
-else
-{
-    <AuthorizeView>
-        <Authorized>
-            <p class="mt-3">@Loc["You are not authorized to reply."]</p>
-        </Authorized>
-        <NotAuthorized>
-            @((MarkupString)string.Format(Loc["{0} to reply"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">{Loc["Log in"]}</a>"))
-        </NotAuthorized>
-    </AuthorizeView>
-}
-
-<ConfirmModal Id="confirm-modal-delete-topic"
-              Title="@Loc["Delete Topic"]"
-              Body="@Loc["Are you sure you want to delete this Topic?"]"
-              Button="@Loc["Delete Topic"]"
-              OnClickCallback="@DeleteTopicAsync" />
-
-<ConfirmModal Id="confirm-modal-delete-reply"
-              Title="@Loc["Delete Reply"]"
-              Body="@Loc["Are you sure you want to delete this Reply?"]"
-              Button="@Loc["Delete Reply"]"
-              OnClickCallback="@DeleteReplyAsync" />

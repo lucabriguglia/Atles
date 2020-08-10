@@ -1,24 +1,10 @@
 ﻿@page "/forum/{forumId:guid}/post"
 @page "/forum/{forumId:guid}/post/{topicid:guid}/edit"
+
 @inherits PostPage
 
-@if (Model == null)
+@AddComponent("Post", new Dictionary<string, object>
 {
-    <Loading />
-}
-else
-{
-    if (DisplayPage)
-    {
-        @AddComponent("Post", new Dictionary<string, object>
-        {
-            { nameof(Model), Model },
-            { nameof(ForumId), ForumId },
-            { nameof(TopicId), TopicId }
-        })
-    }
-    else
-    {
-        <SomethingWrong />
-    }
-}
+    { nameof(ForumId), ForumId },
+    { nameof(TopicId), TopicId }
+})

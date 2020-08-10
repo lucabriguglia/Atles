@@ -10,10 +10,33 @@ namespace Atlas.Client.Components.Themes
     {
         [Parameter] public Guid ForumId { get; set; }
         [Parameter] public Guid? TopicId { get; set; }
-        [Parameter] public PostPageModel Model { get; set; }
+
+        protected PostPageModel Model { get; set; }
 
         protected string TitleText => TopicId != null ? Loc["Update Topic"] : Loc["Create New Topic"];
         protected string ButtonText => TopicId != null ? Loc["Update"] : Loc["Save"];
+
+        protected bool DisplayPage { get; set; }
+
+        protected override async Task OnInitializedAsync()
+        {
+            await base.OnInitializedAsync();
+
+            var requestUri = TopicId != null
+                ? $"api/public/topics/{ForumId}/edit-topic/{TopicId.Value}"
+                : $"api/public/topics/{ForumId}/new-topic";
+
+            try
+            {
+                Model = await ApiService.GetFromJsonAsync<PostPageModel>(requestUri);
+                DisplayPage = true;
+            }
+            catch (Exception)
+            {
+                Model = new PostPageModel();
+                DisplayPage = false;
+            }
+        }
 
         protected async Task SaveAsync()
         {

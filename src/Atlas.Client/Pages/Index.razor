@@ -1,15 +1,6 @@
 ﻿@page "/"
 @page "/public"
+
 @inherits IndexPage
 
-@if (Model == null)
-{
-   <Loading />
-}
-else
-{
-    @AddComponent("Index", new Dictionary<string, object>
-    {
-        { nameof(Model), Model }
-    });
-}
+@AddComponent("Index")

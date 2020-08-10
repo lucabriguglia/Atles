@@ -1,14 +1,5 @@
 ﻿@page "/settings"
+
 @inherits SettingsPage
 
-@if (Model == null)
-{
-    <Loading />
-}
-else
-{
-    @AddComponent("Settings", new Dictionary<string, object>
-    {
-        { nameof(Model), Model }
-    });
-}
+@AddComponent("Settings")

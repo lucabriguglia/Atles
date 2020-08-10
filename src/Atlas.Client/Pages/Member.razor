@@ -1,14 +1,8 @@
 ﻿@page "/member/{id:guid}"
+
 @inherits MemberPage
 
-@if (Model == null)
+@AddComponent("Member", new Dictionary<string, object>
 {
-    <Loading />
-}
-else
-{
-    @AddComponent("Member", new Dictionary<string, object>
-    {
-        { nameof(Model), Model }
-    });
-}
+    { nameof(Id), Id }
+})
