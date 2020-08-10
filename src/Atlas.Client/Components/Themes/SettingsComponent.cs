@@ -26,7 +26,7 @@ namespace Atlas.Client.Components.Themes
             CurrentDisplayName = Model.Member.DisplayName;
         }
 
-        protected async Task OnSubmitAsync()
+        protected async Task UpdateAsync()
         {
             Savings = true;
             Saved = false;
