@@ -1,9 +1,6 @@
-﻿@layout AdminLayout
-@page "/admin/permission-sets"
-@using Atlas.Models.Admin.PermissionSets
-@attribute [Authorize(Policy = "Admin")]
-@inject HttpClient Http
-@inject IStringLocalizer<AdminResources> Loc
+﻿@page "/admin/permission-sets"
+
+@inherits Atlas.Client.Components.Admin.PermissionSets.IndexPage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -47,11 +44,11 @@ else
                         <a href="/admin/permission-sets/edit/@item.Id" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
                         @if (!item.IsInUse)
                         {
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
                         }
                         else
                         {
-                    <a href="#" role="button" class="btn btn-danger disabled">@Loc["Delete"]</a>
+                            <a href="#" role="button" class="btn btn-danger disabled">@Loc["Delete"]</a>
                         }
                     </td>
                 </tr>
@@ -63,25 +60,4 @@ else
                   Body="@Loc["Are you sure you want to delete this permission set?"]"
                   Button="@Loc["Delete"]"
                   OnClickCallback="@DeleteAsync" />
-}
-
-@code {
-    private IndexPageModel Model { get; set; }
-    private Guid DeleteId { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Model = await Http.GetFromJsonAsync<IndexPageModel>("api/admin/permission-sets/list");
-    }
-
-    protected void SetDeleteId(Guid Id)
-    {
-        DeleteId = Id;
-    }
-
-    protected async Task DeleteAsync(MouseEventArgs e)
-    {
-        await Http.DeleteAsync($"api/admin/permission-sets/delete/{DeleteId}");
-        await OnInitializedAsync();
-    }
 }

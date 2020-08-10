@@ -11,14 +11,10 @@ namespace Atlas.Client.Components.Pages
 {
     public abstract class PageBase : ComponentBase
     {
-        [Inject]
-        public IJSRuntime JsRuntime { get; set; }
+        [CascadingParameter] protected CurrentSiteModel Site { get; set; }
 
-        [Inject]
-        public ApiService ApiService { get; set; }
-
-        [CascadingParameter] 
-        protected CurrentSiteModel Site { get; set; }
+        [Inject] public IJSRuntime JsRuntime { get; set; }
+        [Inject] public ApiService ApiService { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

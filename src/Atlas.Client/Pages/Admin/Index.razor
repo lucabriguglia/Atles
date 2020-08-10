@@ -1,8 +1,7 @@
-﻿@layout AdminLayout
-@page "/admin"
+﻿@page "/admin"
 @page "/admin/dashboard"
-@attribute [Authorize(Policy = "Admin")]
-@inject IStringLocalizer<AdminResources> Loc
+
+@inherits Atlas.Client.Components.Admin.IndexPage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">

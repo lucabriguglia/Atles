@@ -1,10 +1,6 @@
-﻿@layout AdminLayout
-@page "/admin/permission-sets/create"
-@using Atlas.Models.Admin.PermissionSets
-@attribute [Authorize(Policy = "Admin")]
-@inject HttpClient Http
-@inject NavigationManager NavigationManager
-@inject IStringLocalizer<AdminResources> Loc
+﻿@page "/admin/permission-sets/create"
+
+@inherits Atlas.Client.Components.Admin.PermissionSets.CreatePage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -23,19 +19,4 @@
 else
 {
     <Form Model="Model" Button="@Loc["Save"]" OnValidSubmit="@SaveAsync"></Form>
-}
-
-@code {
-    private FormComponentModel Model { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Model = await Http.GetFromJsonAsync<FormComponentModel>("api/admin/permission-sets/create");
-    }
-
-    private async Task SaveAsync()
-    {
-        await Http.PostAsJsonAsync($"api/admin/permission-sets/save", Model.PermissionSet);
-        NavigationManager.NavigateTo("/admin/permission-sets");
-    }
 }

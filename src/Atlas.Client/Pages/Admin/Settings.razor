@@ -1,10 +1,6 @@
-﻿@layout AdminLayout
-@page "/admin/settings"
-@using Atlas.Models.Admin.Site
-@attribute [Authorize(Policy = "Admin")]
-@inject NavigationManager NavigationManager
-@inject HttpClient Http
-@inject IStringLocalizer<AdminResources> Loc
+﻿@page "/admin/settings"
+
+@inherits Atlas.Client.Components.Admin.SettingsPage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -57,19 +53,4 @@ else
     </div>
 
     <TargetEvents Id="Model.Site.Id"></TargetEvents>
-}
-
-@code {
-    private SettingsPageModel Model { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Model = await Http.GetFromJsonAsync<SettingsPageModel>("api/admin/sites/settings");
-    }
-
-    private async Task UpdateAsync()
-    {
-        await Http.PostAsJsonAsync("api/admin/sites/update", Model);
-        NavigationManager.NavigateTo("/admin/dashboard");
-    }
 }
