@@ -1,10 +1,7 @@
-﻿@layout AdminLayout
-@page "/admin/forums"
+﻿@page "/admin/forums"
 @page "/admin/forums/{categoryId:guid}"
-@using Atlas.Models.Admin.Forums
-@attribute [Authorize(Policy = "Admin")]
-@inject HttpClient Http
-@inject IStringLocalizer<AdminResources> Loc
+
+@inherits Atlas.Client.Components.Admin.Forums.IndexPage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -95,49 +92,4 @@ else
                   Body="@Loc["Are you sure you want to delete this forum?"]"
                   Button="@Loc["Delete"]"
                   OnClickCallback="@DeleteAsync" />
-}
-
-@code {
-    [Parameter] public Guid? CategoryId { get; set; }
-    private IndexPageModel Model { get; set; }
-    private Guid DeleteId { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        var requestUri = CategoryId == null
-            ? "api/admin/forums/index-model"
-            : $"api/admin/forums/index-model/{CategoryId}";
-
-        Model = await Http.GetFromJsonAsync<IndexPageModel>(requestUri);
-    }
-
-    private async Task CategoryChangedAsync(ChangeEventArgs args)
-    {
-        CategoryId = new Guid(args.Value.ToString());
-        Model = await Http.GetFromJsonAsync<IndexPageModel>($"api/admin/forums/index-model/{CategoryId}");
-        StateHasChanged();
-    }
-
-    private async Task MoveUpAsync(Guid id)
-    {
-        await Http.PostAsJsonAsync("api/admin/forums/move-up", id);
-        await OnInitializedAsync();
-    }
-
-    private async Task MoveDownAsync(Guid id)
-    {
-        await Http.PostAsJsonAsync("api/admin/forums/move-down", id);
-        await OnInitializedAsync();
-    }
-
-    protected void SetDeleteId(Guid Id)
-    {
-        DeleteId = Id;
-    }
-
-    protected async Task DeleteAsync(MouseEventArgs e)
-    {
-        await Http.DeleteAsync($"api/admin/forums/delete/{DeleteId}");
-        await OnInitializedAsync();
-    }
 }
