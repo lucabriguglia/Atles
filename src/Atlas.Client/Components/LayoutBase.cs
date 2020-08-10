@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Atlas.Client.Services;
 using Atlas.Models.Public;
 using Microsoft.AspNetCore.Components;
@@ -22,5 +23,14 @@ namespace Atlas.Client.Components
             await JsRuntime.InvokeVoidAsync("changePageTitle", Site.Title);
             await JsRuntime.InvokeVoidAsync("addCssFile", Site.CssPublic, Site.CssAdmin);
         }
+
+        protected RenderFragment AddLayout(string name, RenderFragment body) => builder =>
+        {
+            var type = Type.GetType($"Atlas.Client.Themes.{Site.Theme}.{name}Layout, {typeof(Program).Assembly.FullName}");
+
+            builder.OpenComponent(0, type);
+            builder.AddAttribute(1, "Body", body);
+            builder.CloseComponent();
+        };
     }
 }

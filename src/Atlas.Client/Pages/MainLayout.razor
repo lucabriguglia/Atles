@@ -1,0 +1,8 @@
+﻿@inherits LayoutBase
+
+<CascadingValue Value="Site">
+    @if (Site != null)
+    {
+        @AddLayout("Public", Body)
+    }
+</CascadingValue>
