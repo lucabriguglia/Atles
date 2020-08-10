@@ -52,6 +52,6 @@ namespace Atlas.Client.Components.Pages
             builder.CloseComponent();
         };
 
-        private static Type GetType(string theme, string name) => Type.GetType($"Atlas.Client.Themes.{theme}.{name}Component, {typeof(Program).Assembly.FullName}");
+        private static Type GetType(string theme, string name) => Type.GetType($"Atlas.Client.Themes.{theme}.{name}, {typeof(Program).Assembly.FullName}");
     }
 }

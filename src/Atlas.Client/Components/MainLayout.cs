@@ -35,6 +35,6 @@ namespace Atlas.Client.Components
             builder.CloseComponent();
         };
 
-        private static Type GetLayoutType(string theme, string name) => Type.GetType($"Atlas.Client.Themes.{theme}.{name}LayoutComponent, {typeof(Program).Assembly.FullName}");
+        private static Type GetLayoutType(string theme, string name) => Type.GetType($"Atlas.Client.Themes.{theme}.{name}Layout, {typeof(Program).Assembly.FullName}");
     }
 }
