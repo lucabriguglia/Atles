@@ -381,7 +381,8 @@ namespace Atlas.Data.Builders.Public
             var postsQuery = _dbContext.Posts
                 .Where(x =>
                     forumIds.Contains(x.ForumId) &&
-                    x.Status == StatusType.Published);
+                    x.Status == StatusType.Published &&
+                    (x.Topic == null || x.Topic.Status == StatusType.Published));
 
             if (!string.IsNullOrWhiteSpace(options.Search))
             {
