@@ -12,7 +12,7 @@ using Microsoft.JSInterop;
 
 namespace Atlas.Client.Components.Themes
 {
-    public class TopicComponentBase : ThemeComponentBase
+    public abstract class TopicComponent : ThemeComponentBase
     {
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }

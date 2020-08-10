@@ -7,13 +7,10 @@ using Microsoft.JSInterop;
 
 namespace Atlas.Client.Components
 {
-    public abstract class LayoutBase : LayoutComponentBase
+    public abstract class MainLayout : LayoutComponentBase
     {
-        [Inject] 
-        public IJSRuntime JsRuntime { get; set; }
-
-        [Inject] 
-        public ApiService ApiService { get; set; }
+        [Inject] public IJSRuntime JsRuntime { get; set; }
+        [Inject] public ApiService ApiService { get; set; }
 
         protected CurrentSiteModel Site { get; set; }
 
@@ -26,16 +23,18 @@ namespace Atlas.Client.Components
 
         protected RenderFragment AddLayout(string name, RenderFragment body) => builder =>
         {
-            var type = Type.GetType($"Atlas.Client.Themes.{Site.Theme}.{name}Layout, {typeof(Program).Assembly.FullName}");
+            var type = GetLayoutType(Site.Theme, name);
 
             if (type == null)
             {
-                type = Type.GetType($"Atlas.Client.Themes.Default.{name}Layout, {typeof(Program).Assembly.FullName}");
+                type = GetLayoutType("Default", name);
             }
 
             builder.OpenComponent(0, type);
             builder.AddAttribute(1, "Body", body);
             builder.CloseComponent();
         };
+
+        private static Type GetLayoutType(string theme, string name) => Type.GetType($"Atlas.Client.Themes.{theme}.{name}LayoutComponent, {typeof(Program).Assembly.FullName}");
     }
 }

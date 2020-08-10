@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace Atlas.Client.Components.Themes
 {
-    public class ForumComponentBase : ThemeComponentBase
+    public abstract class ForumComponent : ThemeComponentBase
     {
         [Parameter] public Guid Id { get; set; }
 

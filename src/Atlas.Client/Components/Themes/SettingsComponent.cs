@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Components.Forms;
 
 namespace Atlas.Client.Components.Themes
 {
-    public class SettingsComponentBase : ThemeComponentBase
+    public abstract class SettingsComponent : ThemeComponentBase
     {
         protected SettingsPageModel Model { get; set; }
         protected EditContext EditContext { get; set; }

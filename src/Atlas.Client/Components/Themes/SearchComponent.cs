@@ -5,7 +5,7 @@ using Microsoft.JSInterop;
 
 namespace Atlas.Client.Components.Themes
 {
-    public class SearchComponentBase : ThemeComponentBase
+    public abstract class SearchComponent : ThemeComponentBase
     {
         protected SearchPageModel Model { get; set; }
 

@@ -3,7 +3,7 @@ using Atlas.Models.Public;
 
 namespace Atlas.Client.Components.Themes
 {
-    public class IndexComponentBase : ThemeComponentBase
+    public abstract class IndexComponent : ThemeComponentBase
     {
         protected IndexPageModel Model { get; set; }
 

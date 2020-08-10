@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Themes
 {
-    public abstract class ThemeLayoutComponentBase : LayoutComponentBase
+    public abstract class PublicLayoutComponent : LayoutComponentBase
     {
         [CascadingParameter] protected CurrentSiteModel Site { get; set; }
     }

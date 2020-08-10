@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Themes
 {
-    public class PostComponentBase : ThemeComponentBase
+    public abstract class PostComponent : ThemeComponentBase
     {
         [Parameter] public Guid ForumId { get; set; }
         [Parameter] public Guid? TopicId { get; set; }

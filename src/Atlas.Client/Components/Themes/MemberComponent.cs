@@ -5,7 +5,7 @@ using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Themes
 {
-    public class MemberComponentBase : ThemeComponentBase
+    public abstract class MemberComponent : ThemeComponentBase
     {
         [Parameter] public Guid? Id { get; set; }
 

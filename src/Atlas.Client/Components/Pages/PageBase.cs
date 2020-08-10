@@ -31,11 +31,11 @@ namespace Atlas.Client.Components.Pages
 
         protected RenderFragment AddComponent(string name, Dictionary<string, object> models = null) => builder =>
         {
-            var type = Type.GetType($"Atlas.Client.Themes.{Site.Theme}.{name}Component, {typeof(Program).Assembly.FullName}");
+            var type = GetType(Site.Theme, name);
 
             if (type == null)
             {
-                type = Type.GetType($"Atlas.Client.Themes.Default.{name}Component, {typeof(Program).Assembly.FullName}");
+                type = GetType("Default", name);
             }
 
             builder.OpenComponent(0, type);
@@ -51,5 +51,7 @@ namespace Atlas.Client.Components.Pages
             
             builder.CloseComponent();
         };
+
+        private static Type GetType(string theme, string name) => Type.GetType($"Atlas.Client.Themes.{theme}.{name}Component, {typeof(Program).Assembly.FullName}");
     }
 }
