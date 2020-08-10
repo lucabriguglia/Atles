@@ -156,6 +156,9 @@
   <data name="Edit Reply" xml:space="preserve">
     <value>Edit Reply</value>
   </data>
+  <data name="Forum" xml:space="preserve">
+    <value>Forum</value>
+  </data>
   <data name="Guide" xml:space="preserve">
     <value>Guide</value>
   </data>

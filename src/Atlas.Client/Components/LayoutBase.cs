@@ -28,6 +28,11 @@ namespace Atlas.Client.Components
         {
             var type = Type.GetType($"Atlas.Client.Themes.{Site.Theme}.{name}Layout, {typeof(Program).Assembly.FullName}");
 
+            if (type == null)
+            {
+                type = Type.GetType($"Atlas.Client.Themes.Default.{name}Layout, {typeof(Program).Assembly.FullName}");
+            }
+
             builder.OpenComponent(0, type);
             builder.AddAttribute(1, "Body", body);
             builder.CloseComponent();

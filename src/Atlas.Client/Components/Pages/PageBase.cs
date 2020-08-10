@@ -33,6 +33,11 @@ namespace Atlas.Client.Components.Pages
         {
             var type = Type.GetType($"Atlas.Client.Themes.{Site.Theme}.{name}Component, {typeof(Program).Assembly.FullName}");
 
+            if (type == null)
+            {
+                type = Type.GetType($"Atlas.Client.Themes.Default.{name}Component, {typeof(Program).Assembly.FullName}");
+            }
+
             builder.OpenComponent(0, type);
 
             if (models != null)
