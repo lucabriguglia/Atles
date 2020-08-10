@@ -1,10 +1,6 @@
-﻿@layout AdminLayout
-@page "/admin/categories/edit/{id:guid}"
-@using Atlas.Models.Admin.Categories
-@attribute [Authorize(Policy = "Admin")]
-@inject HttpClient Http
-@inject NavigationManager NavigationManager
-@inject IStringLocalizer<AdminResources> Loc
+﻿@page "/admin/categories/edit/{id:guid}"
+
+@inherits Atlas.Client.Components.Admin.Categories.EditPage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -24,20 +20,4 @@ else
 {
     <Form Model="Model" Button="@Loc["Update"]" OnValidSubmit="@UpdateAsync"></Form>
     <TargetEvents Id="Id"></TargetEvents>
-}
-
-@code {
-    [Parameter] public Guid Id { get; set; }
-    private FormComponentModel Model { get; set; }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        Model = await Http.GetFromJsonAsync<FormComponentModel>($"api/admin/categories/edit/{Id}");
-    }
-
-    private async Task UpdateAsync()
-    {
-        await Http.PostAsJsonAsync($"api/admin/categories/update", Model.Category);
-        NavigationManager.NavigateTo("/admin/categories");
-    }
 }

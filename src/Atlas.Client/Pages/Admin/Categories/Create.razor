@@ -1,10 +1,6 @@
-﻿@layout AdminLayout
-@page "/admin/categories/create"
-@using Atlas.Models.Admin.Categories
-@attribute [Authorize(Policy = "Admin")]
-@inject HttpClient Http
-@inject NavigationManager NavigationManager
-@inject IStringLocalizer<AdminResources> Loc
+﻿@page "/admin/categories/create"
+
+@inherits Atlas.Client.Components.Admin.Categories.CreatePage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -23,19 +19,4 @@
 else
 {
     <Form Model="Model" Button="@Loc["Save"]" OnValidSubmit="@SaveAsync"></Form>
-}
-
-@code {
-    private FormComponentModel Model { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Model = await Http.GetFromJsonAsync<FormComponentModel>("api/admin/categories/create");
-    }
-
-    private async Task SaveAsync()
-    {
-        await Http.PostAsJsonAsync($"api/admin/categories/save", Model.Category);
-        NavigationManager.NavigateTo("/admin/categories");
-    }
 }

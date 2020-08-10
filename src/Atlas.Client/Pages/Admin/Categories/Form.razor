@@ -1,12 +1,8 @@
-﻿@layout AdminLayout
-@using Atlas.Models.Admin.Categories
-@inject NavigationManager NavigationManager
-@inject HttpClient Http
-@inject IStringLocalizer<AdminResources> Loc
+﻿@inherits Atlas.Client.Components.Admin.Categories.FormComponent
 
 <div class="row">
     <div class="col-md-4">
-        <EditForm EditContext="@_editContext" OnSubmit="OnSubmitAsync">
+        <EditForm EditContext="@EditContext" OnSubmit="OnSubmitAsync">
             <DataAnnotationsValidator />
             @*<FluentValidationValidator ValidatorType=typeof(Atlas.Domain.Forum.Validators.CreateForumClientValidator) />*@
             <div class="form-group">
@@ -31,64 +27,3 @@
         </EditForm>
     </div>
 </div>
-
-@code {
-    [Parameter] public FormComponentModel Model { get; set; }
-    [Parameter] public string Button { get; set; }
-    [Parameter] public EventCallback OnValidSubmit { get; set; }
-
-    private EditContext _editContext;
-    private ValidationMessageStore _validationMessageStore;
-    private string _currentName;
-
-    protected override void OnInitialized()
-    {
-        _editContext = new EditContext(Model.Category);
-        _editContext.OnFieldChanged += HandleFieldChanged;
-        _validationMessageStore = new ValidationMessageStore(_editContext);
-        _currentName = Model.Category.Name;
-    }
-
-    private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
-    {
-        _validationMessageStore.Clear(e.FieldIdentifier);
-    }
-
-    private async Task OnSubmitAsync()
-    {
-        if (_editContext.Validate())
-        {
-            if (await NameIsUniqueAsync(_editContext))
-            {
-                await OnValidSubmit.InvokeAsync(null);
-            }
-            else
-            {
-                var fieldIdentifier = new FieldIdentifier(_editContext.Model, "Name");
-                _validationMessageStore.Clear(fieldIdentifier);
-                _validationMessageStore.Add(fieldIdentifier, Loc["A category with the same name already exists."]);
-                _editContext.NotifyValidationStateChanged();
-            }
-        }
-    }
-
-    private async Task<bool> NameIsUniqueAsync(EditContext editContext)
-    {
-        var nameProp = editContext.Model.GetType().GetProperty("Name");
-        var nameVal = nameProp.GetValue(editContext.Model).ToString();
-
-        var isNameUnique = nameVal == _currentName || await Http.GetFromJsonAsync<bool>($"api/admin/categories/is-name-unique/{nameVal}");
-
-        return isNameUnique;
-    }
-
-    public void Dispose()
-    {
-        _editContext.OnFieldChanged -= HandleFieldChanged;
-    }
-
-    private void Cancel()
-    {
-        NavigationManager.NavigateTo("/admin/categories");
-    }
-}

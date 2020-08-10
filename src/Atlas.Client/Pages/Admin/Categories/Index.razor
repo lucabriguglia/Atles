@@ -1,9 +1,6 @@
-﻿@layout AdminLayout
-@page "/admin/categories"
-@using Atlas.Models.Admin.Categories
-@attribute [Authorize(Policy = "Admin")]
-@inject HttpClient Http
-@inject IStringLocalizer<AdminResources> Loc
+﻿@page "/admin/categories"
+
+@inherits Atlas.Client.Components.Admin.Categories.IndexPage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -80,37 +77,4 @@ else
                   Body="@Loc["Are you sure you want to delete this category and all associated forums?"]"
                   Button="@Loc["Delete"]"
                   OnClickCallback="@DeleteAsync" />
-}
-
-@code {
-    private IndexPageModel Model { get; set; }
-    private Guid DeleteId { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Model = await Http.GetFromJsonAsync<IndexPageModel>("api/admin/categories/list");
-    }
-
-    private async Task MoveUpAsync(Guid id)
-    {
-        await Http.PostAsJsonAsync("api/admin/categories/move-up", id);
-        await OnInitializedAsync();
-    }
-
-    private async Task MoveDownAsync(Guid id)
-    {
-        await Http.PostAsJsonAsync("api/admin/categories/move-down", id);
-        await OnInitializedAsync();
-    }
-
-    protected void SetDeleteId(Guid Id)
-    {
-        DeleteId = Id;
-    }
-
-    protected async Task DeleteAsync(MouseEventArgs e)
-    {
-        await Http.DeleteAsync($"api/admin/categories/delete/{DeleteId}");
-        await OnInitializedAsync();
-    }
 }
