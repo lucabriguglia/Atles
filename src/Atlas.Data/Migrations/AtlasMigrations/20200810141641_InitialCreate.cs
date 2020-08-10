@@ -44,7 +44,11 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 {
                     Id = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true)
+                    Title = table.Column<string>(nullable: true),
+                    PublicTheme = table.Column<string>(nullable: true),
+                    PublicCss = table.Column<string>(nullable: true),
+                    AdminTheme = table.Column<string>(nullable: true),
+                    AdminCss = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -155,7 +159,6 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    TopicId = table.Column<Guid>(nullable: true),
                     ForumId = table.Column<Guid>(nullable: false),
                     Title = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
@@ -163,6 +166,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     Status = table.Column<int>(nullable: false),
                     MemberId = table.Column<Guid>(nullable: false),
                     TimeStamp = table.Column<DateTime>(nullable: false),
+                    TopicId = table.Column<Guid>(nullable: true),
                     LastReplyId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>

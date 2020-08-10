@@ -51,7 +51,9 @@ namespace Atlas.Server.Controllers.Admin
             {
                 SiteId = site.Id,
                 MemberId = member.Id,
-                Title = model.Title
+                Title = model.Site.Title,
+                Theme = model.Site.Theme,
+                Css = model.Site.Css
             };
 
             await _siteService.UpdateAsync(command);

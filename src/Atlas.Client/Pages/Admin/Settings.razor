@@ -23,12 +23,30 @@ else
 {
     <div class="row">
         <div class="col-md-4">
-            <EditForm Model="Model" OnValidSubmit="UpdateAsync">
+            <EditForm Model="Model.Site" OnValidSubmit="UpdateAsync">
                 <DataAnnotationsValidator />
                 <div class="form-group">
-                    <label for="title" class="control-label">Title</label>
-                    <InputText id="title" @bind-Value="Model.Title" Class="form-control" />
-                    <ValidationMessage For="@(() => Model.Title)" />
+                    <label for="title" class="control-label">@Loc["Title"]</label>
+                    <InputText id="title" @bind-Value="Model.Site.Title" Class="form-control" />
+                    <ValidationMessage For="@(() => Model.Site.Title)" />
+                </div>
+                <div class="form-group">
+                    <label for="theme" class="control-label">@Loc["Theme"]</label>
+                    <select id="theme" @bind="Model.Site.Theme" class="form-control">
+                        @foreach (var item in Model.Themes)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="css" class="control-label">@Loc["CSS"]</label>
+                    <select id="css" @bind="Model.Site.Css" class="form-control">
+                        @foreach (var item in Model.Css)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
                 </div>
                 <div class="form-group">
                     <input type="submit" value="@Loc["Update"]" class="btn btn-primary" />
@@ -38,7 +56,7 @@ else
         </div>
     </div>
 
-    <TargetEvents Id="Model.SiteId"></TargetEvents>
+    <TargetEvents Id="Model.Site.Id"></TargetEvents>
 }
 
 @code {

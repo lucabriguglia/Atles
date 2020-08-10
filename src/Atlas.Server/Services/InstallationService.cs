@@ -8,12 +8,12 @@ using Atlas.Domain.Forums;
 using Atlas.Domain.Members;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.PermissionSets.Commands;
+using Atlas.Domain.Posts;
 using Atlas.Domain.Sites;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Post = Atlas.Domain.Posts.Post;
 
 namespace Atlas.Server.Services
 {
@@ -120,7 +120,11 @@ namespace Atlas.Server.Services
                 new
                 {
                     site.Name,
-                    site.Title
+                    site.Title,
+                    site.PublicTheme,
+                    site.PublicCss,
+                    site.AdminTheme,
+                    site.AdminCss
                 }));
 
             // Members

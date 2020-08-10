@@ -1,9 +1,11 @@
 ﻿@inherits LayoutComponentBase
+@using Atlas.Models.Public
 @using Microsoft.AspNetCore.Components.WebAssembly.Authentication
 @inject IJSRuntime JsRuntime
 @inject NavigationManager Navigation
 @inject SignOutSessionStateManager SignOutManager
 @inject IStringLocalizer<AdminResources> Loc
+@inject ApiService ApiService
 
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin/dashboard">Atlas</a>
@@ -70,7 +72,8 @@
 @code {
     protected override async Task OnInitializedAsync()
     {
-        await JsRuntime.InvokeVoidAsync("addCssFile", "admin", "public");
+        var site = await ApiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
+        await JsRuntime.InvokeVoidAsync("addCssFile", site.CssAdmin, site.CssPublic);
     }
 
     private void NavigateToAccount(MouseEventArgs args)

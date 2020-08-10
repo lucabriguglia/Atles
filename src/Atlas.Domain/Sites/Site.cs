@@ -9,6 +9,10 @@ namespace Atlas.Domain.Sites
         public Guid Id { get; private set; }
         public string Name { get; private set; }
         public string Title { get; private set; }
+        public string PublicTheme { get; private set; }
+        public string PublicCss { get; private set; }
+        public string AdminTheme { get; private set; }
+        public string AdminCss { get; private set; }
 
         public virtual ICollection<Category> Categories { get; set; }
 
@@ -32,11 +36,17 @@ namespace Atlas.Domain.Sites
             Id = id;
             Name = name;
             Title = title;
+            PublicTheme = "Default";
+            PublicCss = "public.css";
+            AdminTheme = "Default";
+            AdminCss = "admin.css";
         }
 
-        public void UpdateDetails(string title)
+        public void UpdateDetails(string title, string theme, string css)
         {
             Title = title;
+            PublicTheme = theme;
+            PublicCss = css;
         }
     }
 }

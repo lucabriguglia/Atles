@@ -38,7 +38,7 @@
 
     <script>
         window.addCssFile = (fileNameToAdd, fileNameToRemove) => {
-            var hrefToAdd = 'css/' + fileNameToAdd + '.css';
+            var hrefToAdd = 'css/' + fileNameToAdd;
             if (!$("link[href='" + hrefToAdd + "']").length){
                 var head = document.getElementsByTagName('HEAD')[0];
                 var link = document.createElement('link');
@@ -48,7 +48,7 @@
                 head.appendChild(link); 
             }
 
-            var hrefToRemove = 'css/' + fileNameToRemove + '.css';
+            var hrefToRemove = 'css/' + fileNameToRemove;
             if ($("link[href='" + hrefToRemove + "']").length){
                 $("link[rel=stylesheet][href='" + hrefToRemove + "']").remove();
             }

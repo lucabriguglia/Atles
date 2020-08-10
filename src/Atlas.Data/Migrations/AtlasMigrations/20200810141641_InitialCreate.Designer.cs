@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atlas.Data.Migrations.AtlasMigrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20200804195637_InitialCreate")]
+    [Migration("20200810141641_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -252,7 +252,19 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AdminCss")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AdminTheme")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PublicCss")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PublicTheme")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")

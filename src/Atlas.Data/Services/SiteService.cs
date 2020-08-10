@@ -37,7 +37,7 @@ namespace Atlas.Data.Services
                 throw new DataException($"Site with Id {command.SiteId} not found.");
             }
 
-            site.UpdateDetails(command.Title);
+            site.UpdateDetails(command.Title, command.Theme, command.Css);
 
             _dbContext.Events.Add(new Event(site.Id,
                 command.MemberId,
@@ -46,7 +46,9 @@ namespace Atlas.Data.Services
                 site.Id,
                 new
                 {
-                    site.Title
+                    site.Title,
+                    site.PublicTheme,
+                    site.PublicCss
                 }));
 
             await _dbContext.SaveChangesAsync();

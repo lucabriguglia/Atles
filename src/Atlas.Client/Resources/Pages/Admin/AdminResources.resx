@@ -177,6 +177,9 @@
   <data name="Create New Role" xml:space="preserve">
     <value>Create New Role</value>
   </data>
+  <data name="CSS" xml:space="preserve">
+    <value>CSS</value>
+  </data>
   <data name="Delete" xml:space="preserve">
     <value>Delete</value>
   </data>
@@ -251,6 +254,9 @@
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
+  </data>
+  <data name="Theme" xml:space="preserve">
+    <value>Theme</value>
   </data>
   <data name="Total Forums" xml:space="preserve">
     <value>Total Forums</value>

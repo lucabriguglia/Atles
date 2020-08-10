@@ -19,19 +19,16 @@ namespace Atlas.Server.Services
         private readonly ICacheManager _cacheManager;
         private readonly AtlasDbContext _dbContext;
         private readonly IGravatarService _gravatarService;
-        private readonly IConfiguration _configuration;
 
         public ContextService(IHttpContextAccessor httpContextAccessor, 
             ICacheManager cacheManager,
             AtlasDbContext dbContext,
-            IGravatarService gravatarService, 
-            IConfiguration configuration)
+            IGravatarService gravatarService)
         {
             _httpContextAccessor = httpContextAccessor;
             _cacheManager = cacheManager;
             _dbContext = dbContext;
             _gravatarService = gravatarService;
-            _configuration = configuration;
         }
 
         public async Task<CurrentSiteModel> CurrentSiteAsync()
@@ -44,9 +41,9 @@ namespace Atlas.Server.Services
                 Id = currentSite.Id,
                 Name = currentSite.Name,
                 Title = currentSite.Title,
-                Theme = _configuration["Theme"],
-                CssPublic = "public",
-                CssAdmin = "admin"
+                Theme = currentSite.PublicTheme,
+                CssPublic = currentSite.PublicCss,
+                CssAdmin = currentSite.AdminCss
             };
         }
 

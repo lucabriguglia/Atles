@@ -1,17 +1,22 @@
 ﻿using System;
+using System.IO;
+using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Models.Admin.Site;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 
 namespace Atlas.Data.Builders.Admin
 {
     public class SiteModelBuilder : ISiteModelBuilder
     {
         private readonly AtlasDbContext _dbContext;
+        private readonly IConfiguration _configuration;
 
-        public SiteModelBuilder(AtlasDbContext dbContext)
+        public SiteModelBuilder(AtlasDbContext dbContext, IConfiguration configuration)
         {
             _dbContext = dbContext;
+            _configuration = configuration;
         }
 
         public async Task<SettingsPageModel> BuildSettingsPageModelAsync(Guid siteId)
@@ -23,10 +28,20 @@ namespace Atlas.Data.Builders.Admin
                 return null;
             }
 
+            var themes = _configuration["Themes"].Split(',');
+            var css = _configuration["CSS"].Split(',');
+
             return new SettingsPageModel
             {
-                SiteId = site.Id,
-                Title = site.Title
+                Themes = themes.ToList(),
+                Css = css.ToList(),
+                Site = new SettingsPageModel.SiteModel
+                {
+                    Id = site.Id,
+                    Title = site.Title,
+                    Theme = site.PublicTheme,
+                    Css = site.PublicCss
+                }
             };
         }
     }

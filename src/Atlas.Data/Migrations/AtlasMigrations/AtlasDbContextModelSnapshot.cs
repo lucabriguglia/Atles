@@ -250,7 +250,19 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<string>("AdminCss")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("AdminTheme")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PublicCss")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("PublicTheme")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")

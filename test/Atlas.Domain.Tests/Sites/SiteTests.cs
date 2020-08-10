@@ -18,6 +18,10 @@ namespace Atlas.Domain.Tests.Sites
 
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
             Assert.AreEqual(title, sut.Title, nameof(sut.Title));
+            Assert.AreEqual("Default", sut.PublicTheme, nameof(sut.PublicTheme));
+            Assert.AreEqual("public.css", sut.PublicCss, nameof(sut.PublicCss));
+            Assert.AreEqual("Default", sut.AdminTheme, nameof(sut.AdminTheme));
+            Assert.AreEqual("admin.css", sut.AdminCss, nameof(sut.AdminCss));
         }
 
         [Test]
@@ -32,6 +36,10 @@ namespace Atlas.Domain.Tests.Sites
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
             Assert.AreEqual(title, sut.Title, nameof(sut.Title));
+            Assert.AreEqual("Default", sut.PublicTheme, nameof(sut.PublicTheme));
+            Assert.AreEqual("public.css", sut.PublicCss, nameof(sut.PublicCss));
+            Assert.AreEqual("Default", sut.AdminTheme, nameof(sut.AdminTheme));
+            Assert.AreEqual("admin.css", sut.AdminCss, nameof(sut.AdminCss));
         }
 
         [Test]
@@ -40,10 +48,14 @@ namespace Atlas.Domain.Tests.Sites
             var sut = Fixture.Create<Site>();
 
             const string title = "New Title";
+            const string theme = "New Theme";
+            const string css = "New CSS";
 
-            sut.UpdateDetails(title);
+            sut.UpdateDetails(title, theme, css);
 
             Assert.AreEqual(title, sut.Title, nameof(sut.Title));
+            Assert.AreEqual(theme, sut.PublicTheme, nameof(sut.PublicTheme));
+            Assert.AreEqual(css, sut.PublicCss, nameof(sut.PublicCss));
         }
     }
 }
