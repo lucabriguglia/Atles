@@ -1,11 +1,6 @@
-﻿@layout AdminLayout
-@page "/admin/members/create"
-@using System.Text.Json
-@using Atlas.Models.Admin.Members
-@attribute [Authorize(Policy = "Admin")]
-@inject HttpClient Http
-@inject NavigationManager NavigationManager
-@inject IStringLocalizer<AdminResources> Loc
+﻿@page "/admin/members/create"
+
+@inherits Atlas.Client.Components.Admin.Members.CreatePage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -55,34 +50,4 @@ else
 @if (Error)
 {
     <SomethingWrong />
-}
-
-@code {
-    private CreatePageModel Model { get; set; }
-    public bool Error { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        Model = await Http.GetFromJsonAsync<CreatePageModel>("api/admin/members/create");
-    }
-
-    private async Task SaveAsync()
-    {
-        var response = await Http.PostAsJsonAsync("api/admin/members/save", Model.User);
-        if (response.IsSuccessStatusCode)
-        {
-            var content = await response.Content.ReadAsStringAsync();
-            var memberId = JsonSerializer.Deserialize<Guid>(content);
-            NavigationManager.NavigateTo($"/admin/members/edit/{memberId}");
-        }
-        else
-        {
-            Error = true;
-        }
-    }
-
-    private void Cancel()
-    {
-        NavigationManager.NavigateTo("/admin/members");
-    }
 }

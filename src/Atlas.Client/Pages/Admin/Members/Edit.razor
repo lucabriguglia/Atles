@@ -1,10 +1,6 @@
-﻿@layout AdminLayout
-@page "/admin/members/edit/{id:guid}"
-@using Atlas.Models.Admin.Members
-@attribute [Authorize(Policy = "Admin")]
-@inject HttpClient Http
-@inject NavigationManager NavigationManager
-@inject IStringLocalizer<AdminResources> Loc
+﻿@page "/admin/members/edit/{id:guid}"
+
+@inherits Atlas.Client.Components.Admin.Members.EditPage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -24,23 +20,4 @@ else
 {
     <Form Model="Model" Button="Update" OnValidSubmit="@UpdateAsync"></Form>
     <TargetEvents Id="Id"></TargetEvents>
-}
-
-@code {
-
-    [Parameter]
-    public Guid Id { get; set; }
-
-    private EditPageModel Model { get; set; }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        Model = await Http.GetFromJsonAsync<EditPageModel>($"api/admin/members/edit/{Id}");
-    }
-
-    private async Task UpdateAsync()
-    {
-        await Http.PostAsJsonAsync("api/admin/members/update", Model);
-        NavigationManager.NavigateTo("/admin/members");
-    }
 }

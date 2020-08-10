@@ -1,12 +1,8 @@
-﻿@layout AdminLayout
-@using Atlas.Models.Admin.Members
-@inject NavigationManager NavigationManager
-@inject HttpClient Http
-@inject IStringLocalizer<AdminResources> Loc
+﻿@inherits Atlas.Client.Components.Admin.Members.FormComponent
 
 <div class="row">
     <div class="col-md-4">
-        <EditForm EditContext="@_editContext" OnSubmit="OnSubmitAsync">
+        <EditForm EditContext="@EditContext" OnSubmit="OnSubmitAsync">
             <DataAnnotationsValidator />
             <div class="form-group">
                 <label for="displayName" class="control-label">@Loc["Display Name"]</label>
@@ -37,64 +33,3 @@
         </EditForm>
     </div>
 </div>
-
-@code {
-    [Parameter] public EditPageModel Model { get; set; }
-    [Parameter] public string Button { get; set; }
-    [Parameter] public EventCallback OnValidSubmit { get; set; }
-
-    private EditContext _editContext;
-    private ValidationMessageStore _validationMessageStore;
-    private string _currentDisplayName;
-
-    protected override void OnInitialized()
-    {
-        _editContext = new EditContext(Model.Member);
-        _editContext.OnFieldChanged += HandleFieldChanged;
-        _validationMessageStore = new ValidationMessageStore(_editContext);
-        _currentDisplayName = Model.Member.DisplayName;
-    }
-
-    private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
-    {
-        _validationMessageStore.Clear(e.FieldIdentifier);
-    }
-
-    private async Task OnSubmitAsync()
-    {
-        if (_editContext.Validate())
-        {
-            if (await NameIsUniqueAsync(_editContext))
-            {
-                await OnValidSubmit.InvokeAsync(null);
-            }
-            else
-            {
-                var fieldIdentifier = new FieldIdentifier(_editContext.Model, "DisplayName");
-                _validationMessageStore.Clear(fieldIdentifier);
-                _validationMessageStore.Add(fieldIdentifier, Loc["A member with the same display name already exists."]);
-                _editContext.NotifyValidationStateChanged();
-            }
-        }
-    }
-
-    private async Task<bool> NameIsUniqueAsync(EditContext editContext)
-    {
-        var displayNameProp = editContext.Model.GetType().GetProperty("DisplayName");
-        var displayNameVal = displayNameProp.GetValue(editContext.Model).ToString();
-
-        var isDisplayNameUnique = displayNameVal == _currentDisplayName || await Http.GetFromJsonAsync<bool>($"api/admin/members/is-display-name-unique/{displayNameVal}");
-
-        return isDisplayNameUnique;
-    }
-
-    public void Dispose()
-    {
-        _editContext.OnFieldChanged -= HandleFieldChanged;
-    }
-
-    private void Cancel()
-    {
-        NavigationManager.NavigateTo("/admin/members");
-    }
-}

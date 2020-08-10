@@ -31,10 +31,4 @@
     <ServiceWorker Include="wwwroot\service-worker.js" PublishedContent="wwwroot\service-worker.published.js" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Components\Admin\Categories\" />
-    <Folder Include="Components\Admin\Forums\" />
-    <Folder Include="Components\Admin\Members\" />
-  </ItemGroup>
-
 </Project>

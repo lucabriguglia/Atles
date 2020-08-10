@@ -1,10 +1,6 @@
-﻿@layout AdminLayout
-@page "/admin/members"
-@using Atlas.Models.Admin.Members
-@attribute [Authorize(Policy = "Admin")]
-@inject HttpClient Http
-@inject IJSRuntime JsRuntime
-@inject IStringLocalizer<AdminResources> Loc
+﻿@page "/admin/members"
+
+@inherits Atlas.Client.Components.Admin.Members.IndexPage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
@@ -73,11 +69,11 @@ else
                         <a href="/admin/members/edit/@item.Id" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
                         @if (item.Status != StatusType.Deleted)
                         {
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
+                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
                         }
                         else
                         {
-                    <button type="button" class="btn btn-danger disabled">@Loc["Delete"]</button>
+                            <button type="button" class="btn btn-danger disabled">@Loc["Delete"]</button>
                         }
                     </td>
                 </tr>
@@ -93,65 +89,4 @@ else
                   Body="@Loc["Are you sure you want to delete this member?"]"
                   Button="@Loc["Delete"]"
                   OnClickCallback="@DeleteAsync" />
-}
-
-@code {
-    private IndexPageModel Model { get; set; }
-    private Guid DeleteId { get; set; }
-    public string Search { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        await LoadDataAsync(1);
-    }
-
-    private async Task LoadDataAsync(int page)
-    {
-        Model = await Http.GetFromJsonAsync<IndexPageModel>($"api/admin/members/index-model?page={page}&search={Search}");
-    }
-
-    private async Task ChangePageAsync(int page)
-    {
-        await JsRuntime.InvokeVoidAsync("scrollToTarget", "members");
-        await LoadDataAsync(page);
-    }
-
-    private async Task MyKeyUpAsync(KeyboardEventArgs key)
-    {
-        if (key.Code == "Enter")
-        {
-            await SearchAsync();
-        }
-    }
-
-    private async Task SearchAsync()
-    {
-        Model = null;
-        StateHasChanged();
-        await OnInitializedAsync();
-    }
-
-    private async Task ClearSearchAsync()
-    {
-        if (!string.IsNullOrWhiteSpace(Search))
-        {
-            Search = string.Empty;
-            Model = null;
-            StateHasChanged();
-            await OnInitializedAsync();
-        }
-    }
-
-    protected void SetDeleteId(Guid Id)
-    {
-        DeleteId = Id;
-    }
-
-    protected async Task DeleteAsync(MouseEventArgs e)
-    {
-        await Http.DeleteAsync($"api/admin/members/delete/{DeleteId}");
-        Model = null;
-        StateHasChanged();
-        await OnInitializedAsync();
-    }
 }
