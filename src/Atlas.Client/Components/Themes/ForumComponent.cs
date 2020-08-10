@@ -64,7 +64,6 @@ namespace Atlas.Client.Components.Themes
 
         private async Task LoadTopicsAsync()
         {
-            Model.Topics = null;
             Model.Topics = await ApiService.GetFromJsonAsync<PaginatedData<ForumPageModel.TopicModel>>($"api/public/forums/{Id}/topics?page={CurrentPage}&search={Search}");
         }
     }
