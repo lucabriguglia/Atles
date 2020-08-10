@@ -62,7 +62,7 @@ namespace Atlas.Domain.Forums
             PermissionSetId = permissionSetId;
         }
 
-        public void UpdateLastPost(Guid lastPostId)
+        public void UpdateLastPost(Guid? lastPostId)
         {
             LastPostId = lastPostId;
         }

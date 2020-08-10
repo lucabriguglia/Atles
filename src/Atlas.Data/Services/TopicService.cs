@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
@@ -102,6 +103,7 @@ namespace Atlas.Data.Services
             var topic = await _dbContext.Posts
                 .Include(x => x.Member)
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
+                .Include(x => x.Forum).ThenInclude(x => x.LastPost)
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.TopicId == null &&
@@ -124,6 +126,26 @@ namespace Atlas.Data.Services
             topic.Forum.DecreaseTopicsCount();
             topic.Forum.Category.DecreaseTopicsCount();
             topic.Member.DecreaseTopicsCount();
+
+            if (topic.Forum.LastPost != null && (topic.Id == topic.Forum.LastPostId || topic.Id == topic.Forum.LastPost.TopicId))
+            {
+                var newLastPost = await _dbContext.Posts
+                    .Where(x => x.ForumId == topic.ForumId && 
+                                x.Status == StatusType.Published &&
+                                (x.Topic == null || x.Topic.Status == StatusType.Published) &&
+                                x.Id != topic.Id)
+                    .OrderByDescending(x => x.TimeStamp)
+                    .FirstOrDefaultAsync();
+
+                if (newLastPost != null)
+                {
+                    topic.Forum.UpdateLastPost(newLastPost.Id);
+                }
+                else
+                {
+                    topic.Forum.UpdateLastPost(null);
+                }
+            }
 
             await _dbContext.SaveChangesAsync();
         }

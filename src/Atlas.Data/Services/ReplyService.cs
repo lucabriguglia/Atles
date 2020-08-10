@@ -1,4 +1,5 @@
 ﻿using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
@@ -107,9 +108,8 @@ namespace Atlas.Data.Services
         {
             var reply = await _dbContext.Posts
                 .Include(x => x.Member)
-                .Include(x => x.Topic)
-                    .ThenInclude(x => x.Forum)
-                        .ThenInclude(x => x.Category)
+                .Include(x => x.Topic).ThenInclude(x => x.Forum).ThenInclude(x => x.Category)
+                .Include(x => x.Topic).ThenInclude(x => x.Forum).ThenInclude(x => x.LastPost)
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.TopicId == command.TopicId &&
@@ -134,6 +134,26 @@ namespace Atlas.Data.Services
             reply.Topic.Forum.DecreaseRepliesCount();
             reply.Topic.Forum.Category.DecreaseRepliesCount();
             reply.Member.DecreaseRepliesCount();
+
+            if (reply.Topic.Forum.LastPost != null && (reply.Id == reply.Topic.Forum.LastPostId || reply.Id == reply.Topic.Forum.LastPost.TopicId))
+            {
+                var newLastPost = await _dbContext.Posts
+                    .Where(x => x.ForumId == reply.Topic.ForumId &&
+                                x.Status == StatusType.Published &&
+                                (x.Topic == null || x.Topic.Status == StatusType.Published) &&
+                                x.Id != reply.Id)
+                    .OrderByDescending(x => x.TimeStamp)
+                    .FirstOrDefaultAsync();
+
+                if (newLastPost != null)
+                {
+                    reply.Topic.Forum.UpdateLastPost(newLastPost.Id);
+                }
+                else
+                {
+                    reply.Topic.Forum.UpdateLastPost(null);
+                }
+            }
 
             await _dbContext.SaveChangesAsync();
         }
