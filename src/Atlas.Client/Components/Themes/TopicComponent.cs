@@ -69,7 +69,6 @@ namespace Atlas.Client.Components.Themes
 
         private async Task LoadDataAsync()
         {
-            Model.Replies = null;
             Model.Replies = await ApiService.GetFromJsonAsync<PaginatedData<TopicPageModel.ReplyModel>>($"api/public/topics/{ForumId}/{TopicId}/replies?page={CurrentPage}&search={Search}");
         }
 
