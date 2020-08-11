@@ -33,6 +33,7 @@ namespace Atlas.Data.Builders.Public
                 Categories = await _cacheManager.GetOrSetAsync(CacheKeys.Categories(siteId), async () =>
                 {
                     var categories = await _dbContext.Categories
+                        .Include(x => x.Forums)
                         .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
@@ -41,37 +42,54 @@ namespace Atlas.Data.Builders.Public
                     {
                         Id = category.Id, 
                         Name = category.Name,
-                        PermissionSetId = category.PermissionSetId
+                        PermissionSetId = category.PermissionSetId,
+                        ForumIds = category.Forums
+                            .Where(x => x.Status == StatusType.Published)
+                            .OrderBy(x => x.SortOrder)
+                            .Select(x => x.Id)
+                            .ToList()
                     }).ToList();
                 })
             };
 
             foreach (var category in model.Categories)
             {
-                category.Forums = await _cacheManager.GetOrSetAsync(CacheKeys.Forums(category.Id), async () =>
-                {
-                    var forums = await _dbContext.Forums
-                        .Include(x => x.LastPost).ThenInclude(x => x.Member)
-                        .Include(x => x.LastPost).ThenInclude(x => x.Topic)
-                        .Where(x => x.CategoryId == category.Id && x.Status == StatusType.Published)
-                        .OrderBy(x => x.SortOrder)
-                        .ToListAsync();
+                category.Forums = new List<IndexPageModel.ForumModel>();
 
-                    return forums.Select(forum => new IndexPageModel.ForumModel
+                foreach (var forumId in category.ForumIds)
+                {
+                    var forum = await _cacheManager.GetOrSetAsync(CacheKeys.Forum(forumId), async () =>
                     {
-                        Id = forum.Id,
-                        Name = forum.Name,
-                        Description = forum.Description,
-                        TotalTopics = forum.TopicsCount,
-                        TotalReplies = forum.RepliesCount,
-                        PermissionSetId = forum.PermissionSetId,
-                        LastTopicId = forum.LastPost?.TopicId == null ? forum.LastPost?.Id : forum.LastPost?.Topic?.Id,
-                        LastTopicTitle = forum.LastPost?.Title ?? forum.LastPost?.Topic?.Title,
-                        LastPostTimeStamp = forum.LastPost?.TimeStamp,
-                        LastPostMemberId = forum.LastPost?.Member?.Id,
-                        LastPostMemberDisplayName = forum.LastPost?.Member?.DisplayName
-                    }).ToList();
-                });
+                        var entity = await _dbContext.Forums
+                            .Include(x => x.LastPost).ThenInclude(x => x.Member)
+                            .Include(x => x.LastPost).ThenInclude(x => x.Topic)
+                            .Where(x => x.Id == forumId && x.Status == StatusType.Published)
+                            .OrderBy(x => x.SortOrder)
+                            .FirstOrDefaultAsync();
+
+                        if (entity != null)
+                        {
+                            return new IndexPageModel.ForumModel
+                            {
+                                Id = entity.Id,
+                                Name = entity.Name,
+                                Description = entity.Description,
+                                TotalTopics = entity.TopicsCount,
+                                TotalReplies = entity.RepliesCount,
+                                PermissionSetId = entity.PermissionSetId,
+                                LastTopicId = entity.LastPost?.TopicId == null ? entity.LastPost?.Id : entity.LastPost?.Topic?.Id,
+                                LastTopicTitle = entity.LastPost?.Title ?? entity.LastPost?.Topic?.Title,
+                                LastPostTimeStamp = entity.LastPost?.TimeStamp,
+                                LastPostMemberId = entity.LastPost?.Member?.Id,
+                                LastPostMemberDisplayName = entity.LastPost?.Member?.DisplayName
+                            };
+                        }
+
+                        return new IndexPageModel.ForumModel();
+                    });
+
+                    category.Forums.Add(forum);
+                }
             }
 
             return model;

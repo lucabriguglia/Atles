@@ -63,6 +63,8 @@ namespace Atlas.Data.Services
             member.IncreaseTopicsCount();
 
             await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.Forum(forum.Id));
         }
 
         public async Task UpdateAsync(UpdateTopic command)
@@ -96,6 +98,8 @@ namespace Atlas.Data.Services
                 }));
 
             await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.Forum(topic.ForumId));
         }
 
         public async Task DeleteAsync(DeleteTopic command)
@@ -148,6 +152,8 @@ namespace Atlas.Data.Services
             }
 
             await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.Forum(topic.ForumId));
         }
     }
 }

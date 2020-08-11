@@ -14,6 +14,8 @@ namespace Atlas.Models.Public
 
             public Guid PermissionSetId { get; set; }
 
+            public IList<Guid> ForumIds { get; set; } = new List<Guid>();
+
             public IList<ForumModel> Forums { get; set; } = new List<ForumModel>();
         }
 
