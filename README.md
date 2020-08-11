@@ -43,4 +43,4 @@ You can log in with either accounts:
   - **Moderator User**: moderator@default.com / !P455w0rd?
   - **Normal User**: user@default.com / !P455w0rd?
 
-**Note**: Please delete any databases previously created if you pull new versions. It's still an alpha and many changes occur between commits.
+**Note**: Please delete any databases previously created if you pull new versions. It's still a beta and some breaking changes might occur between commits.
