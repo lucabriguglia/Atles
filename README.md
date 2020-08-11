@@ -5,6 +5,20 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 
 ![Forums Admin](docs/assets/img/admin-forums.png)
 
+## Demo (public site only)
+
+**Azure Website**: https://atlas-demo.azurewebsites.net/
+
+You can log in with either accounts:
+
+**Normal User**
+- **Email**: user@default.com
+- **Password**: !P455w0rd?
+
+**Moderator User**
+- **Email**: moderator@default.com
+- **Password**: !P455w0rd?
+
 ## Technology
 
 - Blazor WebAssembly 3.2.0
@@ -29,4 +43,4 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
   - **Moderator User**: moderator@default.com / !P455w0rd?
   - **Normal User**: user@default.com / !P455w0rd?
 
-**Note**: Please delete any databases previously created if you pull new versions. It's still an alpha and many changes occur between commits.
+**Note**: Please delete any databases previously created if you pull new versions. It's still a beta and some breaking changes might occur between commits.
