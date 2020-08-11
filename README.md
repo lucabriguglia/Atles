@@ -5,7 +5,7 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 
 ![Forums Admin](docs/assets/img/admin-forums.png)
 
-## Demo
+## Demo (public site only)
 
 **Azure Website**: https://atlas-demo.azurewebsites.net/
 
