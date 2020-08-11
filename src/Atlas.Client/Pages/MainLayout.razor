@@ -1,8 +1,10 @@
 ﻿@inherits Atlas.Client.Components.MainLayout
 
-<CascadingValue Value="Site">
-    @if (Site != null)
-    {
-        @AddLayout("Public", Body)
-    }
+<CascadingValue Value="Member">
+    <CascadingValue Value="Site">
+        @if (Site != null)
+        {
+            @AddLayout("Public", Body)
+        }
+    </CascadingValue>
 </CascadingValue>

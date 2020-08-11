@@ -11,6 +11,7 @@ namespace Atlas.Client.Components.Pages
 {
     public abstract class PageBase : ComponentBase
     {
+        [CascadingParameter] protected CurrentMemberModel Member { get; set; }
         [CascadingParameter] protected CurrentSiteModel Site { get; set; }
 
         [Inject] public IJSRuntime JsRuntime { get; set; }

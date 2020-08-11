@@ -94,7 +94,6 @@ namespace Atlas.Server.Controllers.Public
             return await _contextService.CurrentSiteAsync();
         }
 
-        [Authorize]
         [HttpGet("current-member")]
         public async Task<CurrentMemberModel> CurrentMember()
         {
