@@ -1,4 +1,4 @@
-﻿@inject IStringLocalizer<SharedResources> Loc
+﻿@inherits Atlas.Client.Components.Shared.ConfirmModalComponent
 
 <form method="post">
     <div class="modal fade" id="@Id" tabindex="-1" role="dialog" aria-labelledby="confirm-modal-title" aria-hidden="true">
@@ -21,20 +21,3 @@
         </div>
     </div>
 </form>
-
-@code {
-    [Parameter]
-    public string Id { get; set; } = "confirm-modal";
-
-    [Parameter]
-    public string Title { get; set; }
-
-    [Parameter]
-    public string Body { get; set; }
-
-    [Parameter]
-    public string Button { get; set; }
-
-    [Parameter]
-    public EventCallback<MouseEventArgs> OnClickCallback { get; set; }
-}

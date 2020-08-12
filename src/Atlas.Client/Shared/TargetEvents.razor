@@ -1,7 +1,4 @@
-﻿@using Atlas.Models.Admin.Events
-@attribute [Authorize(Policy = "Admin")]
-@inject HttpClient Http
-@inject IStringLocalizer<SharedResources> Loc
+﻿@inherits Atlas.Client.Components.Shared.TargetEventsComponent
 
 @if (Model == null)
 {
@@ -43,14 +40,4 @@ else
             </tbody>
         </table>
     </div>
-}
-
-@code {
-    [Parameter] public Guid Id { get; set; }
-    private TargetEventsComponentModel Model { get; set; }
-
-    protected override async Task OnParametersSetAsync()
-    {
-        Model = await Http.GetFromJsonAsync<TargetEventsComponentModel>($"api/admin/events/target-model/{Id}");
-    }
 }

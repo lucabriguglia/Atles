@@ -1,33 +1,3 @@
-﻿@using Atlas.Models.Public
-@inject HttpClient Http
-@inject AuthenticationStateProvider AuthenticationStateProvider
+﻿@inherits Atlas.Client.Components.Shared.AvatarComponent
 
 <img src="https://www.gravatar.com/avatar/@(GravatarHash)?s=@(GravatarSize)&d=https://lucabriguglia.github.io/Atlas.CDN/avatar-@(GravatarSize).png" class="rounded-circle bg-secondary border @(Class)" />
-
-@code{
-    [Parameter]
-    public string GravatarHash { get; set; }
-
-    [Parameter]
-    public int GravatarSize { get; set; }
-
-    [Parameter]
-    public string Class { get; set; }
-
-    [Parameter]
-    public bool CurrentMember { get; set; }
-
-    protected override async Task OnInitializedAsync()
-    {
-        if (CurrentMember)
-        {
-            var authState = await AuthenticationStateProvider.GetAuthenticationStateAsync();
-            var user = authState.User;
-            if (user.Identity.IsAuthenticated)
-            {
-                var currentMember = await Http.GetFromJsonAsync<CurrentMemberModel>("api/public/current-member");
-                GravatarHash = currentMember.GravatarHash;
-            }
-        }
-    }
-}

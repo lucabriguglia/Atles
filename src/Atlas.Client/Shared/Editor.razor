@@ -1,5 +1,4 @@
-﻿@inject HttpClient Http
-@inject IStringLocalizer<SharedResources> Loc
+﻿@inherits Atlas.Client.Components.Shared.EditorComponent
 
 <div class="form-group">
     <ul class="nav nav-tabs" id="tabLinks" role="tablist">
@@ -27,36 +26,3 @@
     </div>
     <ValidationMessage For="@(() => Value)" />
 </div>
-
-@code {
-    [Parameter]
-    public string Value { get; set; }
-
-    [Parameter]
-    public int Rows { get; set; }
-
-    [Parameter]
-    public EventCallback<string> ValueChanged { get; set; }
-
-    private string Preview { get; set; } = string.Empty;
-
-    private async Task PreviewAsync()
-    {
-        if (!string.IsNullOrWhiteSpace(Value))
-        {
-            Preview = null;
-            var response = await Http.PostAsJsonAsync("api/public/preview", Value);
-            Preview = await response.Content.ReadAsStringAsync();
-        }
-        else
-        {
-            Preview = "<p>&nbsp;</p>";
-        }
-    }
-
-    private Task OnValueChanged(ChangeEventArgs e)
-    {
-        Value = e.Value.ToString();
-        return ValueChanged.InvokeAsync(Value);
-    }
-}
