@@ -7,6 +7,7 @@ using Atlas.Data.Builders;
 using Atlas.Data.Caching;
 using Atlas.Domain;
 using Atlas.Models.Public;
+using Markdig;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -44,7 +45,9 @@ namespace Atlas.Server.Services
                 Theme = currentSite.PublicTheme,
                 CssPublic = currentSite.PublicCss,
                 CssAdmin = currentSite.AdminCss,
-                Language = currentSite.Language
+                Language = currentSite.Language,
+                Privacy = Markdown.ToHtml(currentSite.Privacy),
+                Terms = Markdown.ToHtml(currentSite.Terms)
             };
         }
 

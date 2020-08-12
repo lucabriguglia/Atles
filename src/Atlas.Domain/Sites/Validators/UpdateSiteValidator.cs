@@ -22,6 +22,12 @@ namespace Atlas.Domain.Sites.Validators
             RuleFor(c => c.Language)
                 .NotEmpty().WithMessage("Site language is required.")
                 .Length(1, 10).WithMessage("Site language must be at least 1 and at max 10 characters long.");
+
+            RuleFor(c => c.Privacy)
+                .NotEmpty().WithMessage("Site privacy is required.");
+
+            RuleFor(c => c.Terms)
+                .NotEmpty().WithMessage("Site terms is required.");
         }
     }
 }

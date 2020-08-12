@@ -30,6 +30,12 @@ namespace Atlas.Models.Admin.Site
             [Required]
             [StringLength(10)]
             public string Language { get; set; }
+
+            [Required]
+            public string Privacy { get; set; }
+
+            [Required]
+            public string Terms { get; set; }
         }
     }
 }

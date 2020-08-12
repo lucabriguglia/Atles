@@ -216,6 +216,9 @@
   <data name="Forums" xml:space="preserve">
     <value>Forums</value>
   </data>
+  <data name="General" xml:space="preserve">
+    <value>General</value>
+  </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
@@ -258,6 +261,9 @@
   <data name="Phone Number Confirmed" xml:space="preserve">
     <value>Phone Number Confirmed</value>
   </data>
+  <data name="Privacy" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
   <data name="Public" xml:space="preserve">
     <value>Public</value>
   </data>
@@ -278,6 +284,9 @@
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>
+  </data>
+  <data name="Terms" xml:space="preserve">
+    <value>Terms</value>
   </data>
   <data name="Theme" xml:space="preserve">
     <value>Theme</value>

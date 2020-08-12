@@ -23,6 +23,8 @@ namespace Atlas.Domain.Tests.Sites
             Assert.AreEqual("Default", sut.AdminTheme, nameof(sut.AdminTheme));
             Assert.AreEqual("admin.css", sut.AdminCss, nameof(sut.AdminCss));
             Assert.AreEqual("en", sut.Language, nameof(sut.Language));
+            Assert.AreEqual("Privacy statement...", sut.Privacy, nameof(sut.Privacy));
+            Assert.AreEqual("Terms of service...", sut.Terms, nameof(sut.Terms));
         }
 
         [Test]
@@ -42,6 +44,8 @@ namespace Atlas.Domain.Tests.Sites
             Assert.AreEqual("Default", sut.AdminTheme, nameof(sut.AdminTheme));
             Assert.AreEqual("admin.css", sut.AdminCss, nameof(sut.AdminCss));
             Assert.AreEqual("en", sut.Language, nameof(sut.Language));
+            Assert.AreEqual("Privacy statement...", sut.Privacy, nameof(sut.Privacy));
+            Assert.AreEqual("Terms of service...", sut.Terms, nameof(sut.Terms));
         }
 
         [Test]
@@ -53,13 +57,17 @@ namespace Atlas.Domain.Tests.Sites
             const string theme = "New Theme";
             const string css = "New CSS";
             const string language = "it";
+            const string privacy = "Privacy";
+            const string terms = "Terms";
 
-            sut.UpdateDetails(title, theme, css, language);
+            sut.UpdateDetails(title, theme, css, language, privacy, terms);
 
             Assert.AreEqual(title, sut.Title, nameof(sut.Title));
             Assert.AreEqual(theme, sut.PublicTheme, nameof(sut.PublicTheme));
             Assert.AreEqual(css, sut.PublicCss, nameof(sut.PublicCss));
             Assert.AreEqual(language, sut.Language, nameof(sut.Language));
+            Assert.AreEqual(privacy, sut.Privacy, nameof(sut.Privacy));
+            Assert.AreEqual(terms, sut.Terms, nameof(sut.Terms));
         }
     }
 }

@@ -43,7 +43,9 @@ namespace Atlas.Data.Builders.Admin
                     Title = site.Title,
                     Theme = site.PublicTheme,
                     Css = site.PublicCss,
-                    Language = site.Language
+                    Language = site.Language,
+                    Privacy = site.Privacy,
+                    Terms = site.Terms
                 }
             };
         }

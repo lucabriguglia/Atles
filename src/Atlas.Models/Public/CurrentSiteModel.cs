@@ -11,5 +11,7 @@ namespace Atlas.Models.Public
         public string CssPublic { get; set; }
         public string CssAdmin { get; set; }
         public string Language { get; set; }
+        public string Privacy { get; set; }
+        public string Terms { get; set; }
     }
 }

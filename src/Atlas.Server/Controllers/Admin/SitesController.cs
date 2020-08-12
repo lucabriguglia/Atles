@@ -54,7 +54,9 @@ namespace Atlas.Server.Controllers.Admin
                 Title = model.Site.Title,
                 Theme = model.Site.Theme,
                 Css = model.Site.Css,
-                Language = model.Site.Language
+                Language = model.Site.Language,
+                Privacy = model.Site.Privacy,
+                Terms = model.Site.Terms
             };
 
             await _siteService.UpdateAsync(command);

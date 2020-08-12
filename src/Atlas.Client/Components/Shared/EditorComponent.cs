@@ -5,6 +5,7 @@ namespace Atlas.Client.Components.Shared
 {
     public abstract class EditorComponent : SharedComponentBase
     {
+        [Parameter] public string Id { get; set; } = "Content";
         [Parameter] public string Value { get; set; }
         [Parameter] public int Rows { get; set; }
         [Parameter] public EventCallback<string> ValueChanged { get; set; }
