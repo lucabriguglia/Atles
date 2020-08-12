@@ -29,7 +29,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{71898E1F-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{707C6370-09DC-4970-9F9C-9BAC63BEF65B}"
 	ProjectSection(SolutionItems) = preProject
+		docs\Configuration.md = docs\Configuration.md
+		docs\Deployment.md = docs\Deployment.md
 		docs\index.md = docs\index.md
+		docs\Localization.md = docs\Localization.md
+		docs\Themes.md = docs\Themes.md
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atlas.Domain.Tests", "test\Atlas.Domain.Tests\Atlas.Domain.Tests.csproj", "{C72D981B-4499-4DAD-976E-634B02B95B26}"
