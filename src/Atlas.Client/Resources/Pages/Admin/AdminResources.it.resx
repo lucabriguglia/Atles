@@ -129,6 +129,9 @@
   <data name="A permission set with the same name already exists." xml:space="preserve">
     <value>Un set di permessi con lo stesso nome esiste gia'.</value>
   </data>
+  <data name="Access Failed Count" xml:space="preserve">
+    <value>Numero di Accessi Falliti</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
@@ -207,6 +210,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Email Confirmed" xml:space="preserve">
+    <value>Email Confermata</value>
+  </data>
   <data name="Forums" xml:space="preserve">
     <value>Forum</value>
   </data>
@@ -218,6 +224,12 @@
   </data>
   <data name="Language" xml:space="preserve">
     <value>Lingua</value>
+  </data>
+  <data name="Lockout Enabled" xml:space="preserve">
+    <value>Lockout Abilitato</value>
+  </data>
+  <data name="Lockout End" xml:space="preserve">
+    <value>Fine Lockout</value>
   </data>
   <data name="Log out" xml:space="preserve">
     <value>Esci</value>
@@ -239,6 +251,12 @@
   </data>
   <data name="Permission Sets" xml:space="preserve">
     <value>Set Permessi</value>
+  </data>
+  <data name="Phone Number" xml:space="preserve">
+    <value>Numero di Telefono</value>
+  </data>
+  <data name="Phone Number Confirmed" xml:space="preserve">
+    <value>Numero di Telefono Confermato</value>
   </data>
   <data name="Public" xml:space="preserve">
     <value>Pubblico</value>
@@ -276,7 +294,19 @@
   <data name="Total Topics" xml:space="preserve">
     <value>Dicussioni</value>
   </data>
+  <data name="Two Factor Enabled" xml:space="preserve">
+    <value>Two Factor Abilitato</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>Aggiorna</value>
+  </data>
+  <data name="User Name" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="UserI d" xml:space="preserve">
+    <value>User Id</value>
+  </data>
+  <data name="View Info" xml:space="preserve">
+    <value>Visualizza Informazioni</value>
   </data>
 </root>

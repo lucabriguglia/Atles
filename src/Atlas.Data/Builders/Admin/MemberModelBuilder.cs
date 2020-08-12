@@ -89,9 +89,13 @@ namespace Atlas.Data.Builders.Admin
             result.Member = new EditPageModel.MemberModel
             {
                 Id = member.Id,
-                Email = member.Email,
-                DisplayName = member.DisplayName,
+                DisplayName = member.DisplayName
+            };
+
+            result.Info = new EditPageModel.InfoModel
+            {
                 UserId = member.UserId,
+                Email = member.Email,
                 Status = member.Status
             };
 
@@ -109,6 +113,15 @@ namespace Atlas.Data.Builders.Admin
                         Selected = selected
                     });
                 }
+
+                result.Info.UserName = user.UserName;
+                result.Info.EmailConfirmed = user.EmailConfirmed;
+                result.Info.PhoneNumber = user.PhoneNumber;
+                result.Info.PhoneNumberConfirmed = user.PhoneNumberConfirmed;
+                result.Info.TwoFactorEnabled = user.TwoFactorEnabled;
+                result.Info.LockoutEnabled = user.LockoutEnabled;
+                result.Info.AccessFailedCount = user.AccessFailedCount;
+                result.Info.LockoutEnd = user.LockoutEnd;
             }
 
             return result;

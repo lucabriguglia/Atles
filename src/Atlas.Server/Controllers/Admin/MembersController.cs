@@ -96,7 +96,7 @@ namespace Atlas.Server.Controllers.Admin
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var user = await _userManager.FindByIdAsync(model.Member.UserId);
+            var user = await _userManager.FindByIdAsync(model.Info.UserId);
 
             if (user != null && model.Roles.Count > 0)
             {

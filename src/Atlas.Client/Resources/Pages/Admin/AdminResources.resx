@@ -129,6 +129,9 @@
   <data name="A permission set with the same name already exists." xml:space="preserve">
     <value>A permission set with the same name already exists.</value>
   </data>
+  <data name="Access Failed Count" xml:space="preserve">
+    <value>Access Failed Count</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
@@ -207,6 +210,9 @@
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
+  <data name="Email Confirmed" xml:space="preserve">
+    <value>Email Confirmed</value>
+  </data>
   <data name="Forums" xml:space="preserve">
     <value>Forums</value>
   </data>
@@ -218,6 +224,12 @@
   </data>
   <data name="Language" xml:space="preserve">
     <value>Language</value>
+  </data>
+  <data name="Lockout Enabled" xml:space="preserve">
+    <value>Lockout Enabled</value>
+  </data>
+  <data name="Lockout End" xml:space="preserve">
+    <value>Lockout End</value>
   </data>
   <data name="Log out" xml:space="preserve">
     <value>Log out</value>
@@ -239,6 +251,12 @@
   </data>
   <data name="Permission Sets" xml:space="preserve">
     <value>Permission Sets</value>
+  </data>
+  <data name="Phone Number" xml:space="preserve">
+    <value>Phone Number</value>
+  </data>
+  <data name="Phone Number Confirmed" xml:space="preserve">
+    <value>Phone Number Confirmed</value>
   </data>
   <data name="Public" xml:space="preserve">
     <value>Public</value>
@@ -276,7 +294,19 @@
   <data name="Total Topics" xml:space="preserve">
     <value>Total Topics</value>
   </data>
+  <data name="Two Factor Enabled" xml:space="preserve">
+    <value>Two Factor Enabled</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>
+  </data>
+  <data name="User Name" xml:space="preserve">
+    <value>User Name</value>
+  </data>
+  <data name="UserI d" xml:space="preserve">
+    <value>User Id</value>
+  </data>
+  <data name="View Info" xml:space="preserve">
+    <value>View Info</value>
   </data>
 </root>
