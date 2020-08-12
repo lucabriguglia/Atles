@@ -43,7 +43,8 @@ namespace Atlas.Server.Services
                 Title = currentSite.Title,
                 Theme = currentSite.PublicTheme,
                 CssPublic = currentSite.PublicCss,
-                CssAdmin = currentSite.AdminCss
+                CssAdmin = currentSite.AdminCss,
+                Language = currentSite.Language
             };
         }
 

@@ -53,7 +53,8 @@ namespace Atlas.Server.Controllers.Admin
                 MemberId = member.Id,
                 Title = model.Site.Title,
                 Theme = model.Site.Theme,
-                Css = model.Site.Css
+                Css = model.Site.Css,
+                Language = model.Site.Language
             };
 
             await _siteService.UpdateAsync(command);

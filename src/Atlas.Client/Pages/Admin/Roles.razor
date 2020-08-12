@@ -74,7 +74,7 @@ else
             <EditForm Model="Model.EditRole" OnValidSubmit="@(async () => await SaveAsync())">
                 <DataAnnotationsValidator />
                 <div class="form-group">
-                    <label for="name" class="control-label">Name</label>
+                    <label for="name" class="control-label">@Loc["Name"]</label>
                     <InputText id="name" @bind-Value="Model.EditRole.Name" Class="form-control" />
                     <ValidationMessage For="@(() => Model.EditRole.Name)" />
                 </div>
@@ -82,7 +82,7 @@ else
                     <input type="submit" value="@EditButton" class="btn btn-primary" />
                     @if (IsEdit)
                     {
-                        <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Delete"]</button>
+                        <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
                     }
                 </div>
             </EditForm>

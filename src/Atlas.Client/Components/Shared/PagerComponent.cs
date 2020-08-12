@@ -4,6 +4,9 @@ using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Shared
 {
+    /// <summary>
+    /// Based on: https://www.thecodehubs.com/visual-studio-blazor-template-with-dapper-and-net-core-3-1/
+    /// </summary>
     public abstract class PagerComponent : SharedComponentBase
     {
         [Parameter] public int TotalPages { get; set; }

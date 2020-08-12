@@ -208,24 +208,25 @@ namespace Atlas.Data.Services
 
         private async Task ReorderForumsInCategory(Guid categoryId, Guid forumIdToExclude, Guid siteId, Guid memberId)
         {
-            var otherForums = await _dbContext.Forums
+            var forums = await _dbContext.Forums
                 .Where(x =>
                     x.CategoryId == categoryId &&
                     x.Id != forumIdToExclude &&
                     x.Status != StatusType.Deleted)
+                .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
-            for (int i = 0; i < otherForums.Count; i++)
+            for (int i = 0; i < forums.Count; i++)
             {
-                otherForums[i].Reorder(i + 1);
+                forums[i].Reorder(i + 1);
                 _dbContext.Events.Add(new Event(siteId,
                     memberId,
                     EventType.Reordered,
                     typeof(Forum),
-                    otherForums[i].Id,
+                    forums[i].Id,
                     new
                     {
-                        otherForums[i].SortOrder
+                        forums[i].SortOrder
                     }));
             }
         }

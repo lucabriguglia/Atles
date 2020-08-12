@@ -24,7 +24,7 @@ namespace Atlas.Client.Components.Themes
 
         protected string ReplyTitleText => Model.Post.Id != null
             ? Loc["Edit Reply"]
-            : Loc["Reply"];
+            : Loc["New Reply"];
 
         protected string ReplyButtonText => Model.Post.Id != null
             ? Loc["Update"]

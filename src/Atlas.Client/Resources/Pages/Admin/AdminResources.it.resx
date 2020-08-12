@@ -118,165 +118,165 @@
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
   <data name="A category with the same name already exists." xml:space="preserve">
-    <value>A category with the same name already exists.</value>
+    <value>Una categoria con lo stesso nome esiste gia'.</value>
   </data>
   <data name="A forum with the same name already exists." xml:space="preserve">
-    <value>A forum with the same name already exists.</value>
+    <value>Un forum con lo stesso nome esiste gia'.</value>
   </data>
   <data name="A member with the same display name already exists." xml:space="preserve">
-    <value>A member with the same display name already exists.</value>
+    <value>Un utente con lo stesso nome esiste gia'.</value>
   </data>
   <data name="A permission set with the same name already exists." xml:space="preserve">
-    <value>A permission set with the same name already exists.</value>
+    <value>Un set di permessi con lo stesso nome esiste gia'.</value>
   </data>
   <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
   <data name="Are you sure you want to delete this category and all associated forums?" xml:space="preserve">
-    <value>Are you sure you want to delete this category and all associated forums?</value>
+    <value>Sicuri di voler eliminare questa categoria e tutti i foum associati?</value>
   </data>
   <data name="Are you sure you want to delete this forum?" xml:space="preserve">
-    <value>Are you sure you want to delete this forum?</value>
+    <value>Sicuri di voler eliminare questo forum?</value>
   </data>
   <data name="Are you sure you want to delete this member?" xml:space="preserve">
-    <value>Are you sure you want to delete this member?</value>
+    <value>Sicuri di voler eliminare questo utente?</value>
   </data>
   <data name="Are you sure you want to delete this permission set?" xml:space="preserve">
-    <value>Are you sure you want to delete this permission set?</value>
+    <value>Sicuri di voler eliminare questo set di permessi?</value>
   </data>
   <data name="Are you sure you want to delete this role?" xml:space="preserve">
-    <value>Are you sure you want to delete this role?</value>
+    <value>Sicuri di voler eliminare questo ruolo?</value>
   </data>
   <data name="Cancel" xml:space="preserve">
-    <value>Cancel</value>
+    <value>Cancella</value>
   </data>
   <data name="Categories" xml:space="preserve">
-    <value>Categories</value>
+    <value>Categorie</value>
   </data>
   <data name="Category" xml:space="preserve">
-    <value>Category</value>
+    <value>Categoria</value>
   </data>
   <data name="Confirm Password" xml:space="preserve">
-    <value>Confirm Password</value>
+    <value>Conferma Password</value>
   </data>
   <data name="Create New" xml:space="preserve">
-    <value>Create New</value>
+    <value>Crea Nuovo</value>
   </data>
   <data name="Create New Category" xml:space="preserve">
-    <value>Create New Category</value>
+    <value>Crea Nuova Categoria</value>
   </data>
   <data name="Create New Forum" xml:space="preserve">
-    <value>Create New Forum</value>
+    <value>Crea Nuovo Forum</value>
   </data>
   <data name="Create New Member" xml:space="preserve">
-    <value>Create New Member</value>
+    <value>Crea Nuovo Utente</value>
   </data>
   <data name="Create New Permission Set" xml:space="preserve">
-    <value>Create New Permission Set</value>
+    <value>Crea Nuovo Set Permessi</value>
   </data>
   <data name="Create New Role" xml:space="preserve">
-    <value>Create New Role</value>
+    <value>Crea Nuovo Ruolo</value>
   </data>
   <data name="CSS" xml:space="preserve">
     <value>CSS</value>
   </data>
   <data name="Delete" xml:space="preserve">
-    <value>Delete</value>
+    <value>Elimina</value>
   </data>
   <data name="Display Name" xml:space="preserve">
     <value>Display Name</value>
   </data>
   <data name="Edit" xml:space="preserve">
-    <value>Edit</value>
+    <value>Modifica</value>
   </data>
   <data name="Edit Category" xml:space="preserve">
-    <value>Edit Category</value>
+    <value>Modifica Categoria</value>
   </data>
   <data name="Edit Forum" xml:space="preserve">
-    <value>Edit Forum</value>
+    <value>Modifica Forum</value>
   </data>
   <data name="Edit Member" xml:space="preserve">
-    <value>Edit Member</value>
+    <value>Modifica Utente</value>
   </data>
   <data name="Edit Permission Set" xml:space="preserve">
-    <value>Edit Permission Set</value>
+    <value>Modifica Set Permessi</value>
   </data>
   <data name="Edit Role" xml:space="preserve">
-    <value>Edit Role</value>
+    <value>Modifica Ruolo</value>
   </data>
   <data name="Email" xml:space="preserve">
     <value>Email</value>
   </data>
   <data name="Forums" xml:space="preserve">
-    <value>Forums</value>
+    <value>Forum</value>
   </data>
   <data name="Home" xml:space="preserve">
     <value>Home</value>
   </data>
   <data name="Inherit from Category" xml:space="preserve">
-    <value>Inherit from Category</value>
+    <value>Eredita da Categoria</value>
   </data>
   <data name="Language" xml:space="preserve">
-    <value>Language</value>
+    <value>Lingua</value>
   </data>
   <data name="Log out" xml:space="preserve">
-    <value>Log out</value>
+    <value>Esci</value>
   </data>
   <data name="Members" xml:space="preserve">
-    <value>Members</value>
+    <value>Utenti</value>
   </data>
   <data name="Name" xml:space="preserve">
-    <value>Name</value>
+    <value>Nome</value>
   </data>
   <data name="No forums found for the selected category." xml:space="preserve">
-    <value>No forums found for the selected category.</value>
+    <value>Nessun forum trovato per la categoria selezionata</value>
   </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
   <data name="Permission Set" xml:space="preserve">
-    <value>Permission Set</value>
+    <value>Set Permessi</value>
   </data>
   <data name="Permission Sets" xml:space="preserve">
-    <value>Permission Sets</value>
+    <value>Set Permessi</value>
   </data>
   <data name="Public" xml:space="preserve">
-    <value>Public</value>
+    <value>Pubblico</value>
   </data>
   <data name="Role" xml:space="preserve">
-    <value>Role</value>
+    <value>Ruolo</value>
   </data>
   <data name="Roles" xml:space="preserve">
-    <value>Roles</value>
+    <value>Ruoli</value>
   </data>
   <data name="Save" xml:space="preserve">
-    <value>Save</value>
+    <value>Salva</value>
   </data>
   <data name="Search members" xml:space="preserve">
-    <value>Search members</value>
+    <value>Cerca utenti</value>
   </data>
   <data name="Settings" xml:space="preserve">
-    <value>Settings</value>
+    <value>Impostazioni</value>
   </data>
   <data name="Status" xml:space="preserve">
-    <value>Status</value>
+    <value>Stato</value>
   </data>
   <data name="Theme" xml:space="preserve">
-    <value>Theme</value>
+    <value>Tema</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value>Title</value>
+    <value>Titolo</value>
   </data>
   <data name="Total Forums" xml:space="preserve">
-    <value>Total Forums</value>
+    <value>Forum</value>
   </data>
   <data name="Total Replies" xml:space="preserve">
-    <value>Total Replies</value>
+    <value>Risposte</value>
   </data>
   <data name="Total Topics" xml:space="preserve">
-    <value>Total Topics</value>
+    <value>Dicussioni</value>
   </data>
   <data name="Update" xml:space="preserve">
-    <value>Update</value>
+    <value>Aggiorna</value>
   </data>
 </root>

@@ -13,7 +13,7 @@ namespace Atlas.Client.Components.Themes
 
         protected PostPageModel Model { get; set; }
 
-        protected string TitleText => TopicId != null ? Loc["Update Topic"] : Loc["Create New Topic"];
+        protected string TitleText => TopicId != null ? Loc["Edit Topic"] : Loc["Create New Topic"];
         protected string ButtonText => TopicId != null ? Loc["Update"] : Loc["Save"];
 
         protected bool DisplayPage { get; set; }

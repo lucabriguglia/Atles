@@ -12,7 +12,7 @@
             @if (Model.Roles.Count > 0)
             {
                 <div class="form-group">
-                    <label for="displayName" class="control-label">Roles</label>
+                    <label for="roles" class="control-label">@Loc["Roles"]</label>
                     <div class="overflow-auto form-control py-3" style="height: 10rem;">
                         @foreach (var role in Model.Roles)
                         {

@@ -9,6 +9,7 @@ namespace Atlas.Models.Admin.Site
         public SiteModel Site { get; set; } = new SiteModel();
         public IList<string> Themes { get; set; } = new List<string>();
         public IList<string> Css { get; set; } = new List<string>();
+        public IList<string> Languages { get; set; } = new List<string>();
 
         public class SiteModel
         {
@@ -25,6 +26,10 @@ namespace Atlas.Models.Admin.Site
             [Required]
             [StringLength(250)]
             public string Css { get; set; }
+
+            [Required]
+            [StringLength(10)]
+            public string Language { get; set; }
         }
     }
 }

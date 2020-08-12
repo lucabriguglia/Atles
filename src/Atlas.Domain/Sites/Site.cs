@@ -13,6 +13,7 @@ namespace Atlas.Domain.Sites
         public string PublicCss { get; private set; }
         public string AdminTheme { get; private set; }
         public string AdminCss { get; private set; }
+        public string Language { get; private set; }
 
         public virtual ICollection<Category> Categories { get; set; }
 
@@ -40,13 +41,15 @@ namespace Atlas.Domain.Sites
             PublicCss = "public.css";
             AdminTheme = "Default";
             AdminCss = "admin.css";
+            Language = "en";
         }
 
-        public void UpdateDetails(string title, string theme, string css)
+        public void UpdateDetails(string title, string theme, string css, string language)
         {
             Title = title;
             PublicTheme = theme;
             PublicCss = css;
+            Language = language;
         }
     }
 }

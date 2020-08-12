@@ -68,5 +68,25 @@ namespace Atlas.Domain.Tests.Sites.Validators
 
             sut.ShouldHaveValidationErrorFor(x => x.Css, command);
         }
+
+        [Test]
+        public void Should_have_validation_error_when_language_is_empty()
+        {
+            var command = Fixture.Build<UpdateSite>().With(x => x.Language, string.Empty).Create();
+
+            var sut = new UpdateSiteValidator();
+
+            sut.ShouldHaveValidationErrorFor(x => x.Language, command);
+        }
+
+        [Test]
+        public void Should_have_validation_error_when_language_is_too_long()
+        {
+            var command = Fixture.Build<UpdateSite>().With(x => x.Language, new string('*', 11)).Create();
+
+            var sut = new UpdateSiteValidator();
+
+            sut.ShouldHaveValidationErrorFor(x => x.Language, command);
+        }
     }
 }

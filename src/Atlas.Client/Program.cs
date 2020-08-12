@@ -3,6 +3,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Atlas.Client.Services;
+using Atlas.Models.Public;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -51,16 +52,12 @@ namespace Atlas.Client
 
             var host = builder.Build();
 
-            //var jsInterop = host.Services.GetRequiredService<IJSRuntime>();
-            //var result = await jsInterop.InvokeAsync<string>("blazorCulture.get");
-            //if (result != null)
-            //{
-            //    var culture = new CultureInfo(result);
-            //    CultureInfo.DefaultThreadCurrentCulture = culture;
-            //    CultureInfo.DefaultThreadCurrentUICulture = culture;
-            //}
+            var apiService = host.Services.GetRequiredService<ApiService>();
 
-            var culture = new CultureInfo("en");
+            var site = await apiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
+
+            var cultureName = site.Language ?? "en";
+            var culture = new CultureInfo(cultureName);
             CultureInfo.DefaultThreadCurrentCulture = culture;
             CultureInfo.DefaultThreadCurrentUICulture = culture;
 

@@ -45,6 +45,15 @@ else
                     </select>
                 </div>
                 <div class="form-group">
+                    <label for="language" class="control-label">@Loc["Language"]</label>
+                    <select id="language" @bind="Model.Site.Language" class="form-control">
+                        @foreach (var item in Model.Languages)
+                        {
+                            <option value="@item">@item</option>
+                        }
+                    </select>
+                </div>
+                <div class="form-group">
                     <input type="submit" value="@Loc["Update"]" class="btn btn-primary" />
                 </div>
                 <ValidationSummary />

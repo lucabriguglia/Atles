@@ -30,17 +30,20 @@ namespace Atlas.Data.Builders.Admin
 
             var themes = _configuration["Themes"].Split(',');
             var css = _configuration["CSS"].Split(',');
+            var languages = _configuration["Languages"].Split(',');
 
             return new SettingsPageModel
             {
                 Themes = themes.ToList(),
                 Css = css.ToList(),
+                Languages = languages.ToList(),
                 Site = new SettingsPageModel.SiteModel
                 {
                     Id = site.Id,
                     Title = site.Title,
                     Theme = site.PublicTheme,
-                    Css = site.PublicCss
+                    Css = site.PublicCss,
+                    Language = site.Language
                 }
             };
         }
