@@ -204,6 +204,9 @@
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
   </data>
+  <data name="Privacy Statement" xml:space="preserve">
+    <value>Privacy Statement</value>
+  </data>
   <data name="RE" xml:space="preserve">
     <value>RE</value>
   </data>
@@ -237,8 +240,11 @@
   <data name="Settings updated!" xml:space="preserve">
     <value>Settings updated!</value>
   </data>
-  <data name="Terms of Use" xml:space="preserve">
-    <value>Terms of Use</value>
+  <data name="Terms" xml:space="preserve">
+    <value>Terms</value>
+  </data>
+  <data name="Terms of Service" xml:space="preserve">
+    <value>Terms of Service</value>
   </data>
   <data name="Title" xml:space="preserve">
     <value>Title</value>
