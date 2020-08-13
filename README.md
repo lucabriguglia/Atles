@@ -4,9 +4,9 @@
 
 A forum software built with ASP.NET Core Blazor WebAssembly.
 
-**Official Website**: [Atlas](https://atlas-blazor.azurewebsites.net/)
+**Official Website**: [Atlas](https://atlas-blazor.azurewebsites.net/).
 
-**Documentation**: [Atlas Wiki](https://lucabriguglia.github.io/Atlas)
+**Documentation**: [Atlas Wiki](https://lucabriguglia.github.io/Atlas).
 
 ![Forums Admin](docs/assets/img/admin-forums.png)
 
@@ -14,7 +14,7 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 
 - Blazor WebAssembly 3.2.0
 - Entity Framework Core 3.1
-- SQL Server (more to come)
+- SQL Server _(more to come)_
 
 ## Features
 
