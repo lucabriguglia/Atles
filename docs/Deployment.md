@@ -1,6 +1,7 @@
 # Deployment
 
 Please follow these instructions in order to deploy Atlas to a web server.
+The target framework is **.NET Core 3.1**.
 
 - [Certificate](#certificate)
 - [Mail Settings](#mail-settings)

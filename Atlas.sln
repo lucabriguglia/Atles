@@ -29,7 +29,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{71898E1F-3
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{707C6370-09DC-4970-9F9C-9BAC63BEF65B}"
 	ProjectSection(SolutionItems) = preProject
-		docs\Configuration.md = docs\Configuration.md
 		docs\Deployment.md = docs\Deployment.md
 		docs\index.md = docs\index.md
 		docs\Localization.md = docs\Localization.md
@@ -46,9 +45,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{84E69FCB-0CE
 	ProjectSection(SolutionItems) = preProject
 		docs\assets\img\admin-forums.png = docs\assets\img\admin-forums.png
 		docs\assets\img\admin-settings-css.png = docs\assets\img\admin-settings-css.png
+		docs\assets\img\admin-settings-language.png = docs\assets\img\admin-settings-language.png
 		docs\assets\img\admin-settings-theme.png = docs\assets\img\admin-settings-theme.png
 		docs\assets\img\classic-theme.png = docs\assets\img\classic-theme.png
 		docs\assets\img\my-theme.png = docs\assets\img\my-theme.png
+		docs\assets\img\resources.png = docs\assets\img\resources.png
 	EndProjectSection
 EndProject
 Global
