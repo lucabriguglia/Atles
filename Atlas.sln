@@ -45,6 +45,10 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{84E69FCB-0CE0-4F91-B24C-20F6656DC88E}"
 	ProjectSection(SolutionItems) = preProject
 		docs\assets\img\admin-forums.png = docs\assets\img\admin-forums.png
+		docs\assets\img\admin-settings-css.png = docs\assets\img\admin-settings-css.png
+		docs\assets\img\admin-settings-theme.png = docs\assets\img\admin-settings-theme.png
+		docs\assets\img\classic-theme.png = docs\assets\img\classic-theme.png
+		docs\assets\img\my-theme.png = docs\assets\img\my-theme.png
 	EndProjectSection
 EndProject
 Global
