@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atlas.Data.Migrations.AtlasMigrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    [Migration("20200810141641_InitialCreate")]
+    [Migration("20200813085546_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -258,13 +258,22 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<string>("AdminTheme")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Language")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Privacy")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PublicCss")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("PublicTheme")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Terms")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Title")

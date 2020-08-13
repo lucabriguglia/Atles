@@ -48,7 +48,10 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     PublicTheme = table.Column<string>(nullable: true),
                     PublicCss = table.Column<string>(nullable: true),
                     AdminTheme = table.Column<string>(nullable: true),
-                    AdminCss = table.Column<string>(nullable: true)
+                    AdminCss = table.Column<string>(nullable: true),
+                    Language = table.Column<string>(nullable: true),
+                    Privacy = table.Column<string>(nullable: true),
+                    Terms = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
