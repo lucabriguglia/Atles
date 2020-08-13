@@ -6,7 +6,7 @@ namespace Atlas.Models.Public
 {
     public interface IPublicModelBuilder
     {
-        Task<IndexPageModel> BuildPublishedForumsModelAsync(Guid siteId);
+        Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId);
         Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId, QueryOptions options);
         Task<PaginatedData<ForumPageModel.TopicModel>> BuildForumPageModelTopicsAsync(Guid forumId, QueryOptions options);
         Task<PostPageModel> BuildNewPostPageModelAsync(Guid siteId, Guid forumId);

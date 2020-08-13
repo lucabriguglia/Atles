@@ -26,7 +26,7 @@ namespace Atlas.Data.Builders.Public
             _gravatarService = gravatarService;
         }
 
-        public async Task<IndexPageModel> BuildPublishedForumsModelAsync(Guid siteId)
+        public async Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId)
         {
             var model = new IndexPageModel
             {
@@ -275,10 +275,9 @@ namespace Atlas.Data.Builders.Public
                     TimeStamp = topic.TimeStamp,
                     UserId = topic.Member.UserId,
                     GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email)
-                }
+                },
+                Replies = await BuildTopicPageModelRepliesAsync(topicId, options)
             };
-
-            result.Replies = await BuildTopicPageModelRepliesAsync(topicId, options);
 
             return result;
         }

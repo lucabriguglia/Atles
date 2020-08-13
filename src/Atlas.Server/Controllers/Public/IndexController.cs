@@ -36,7 +36,7 @@ namespace Atlas.Server.Controllers.Public
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var modelToFilter = await _modelBuilder.BuildPublishedForumsModelAsync(site.Id);
+            var modelToFilter = await _modelBuilder.BuildIndexPageModelAsync(site.Id);
 
             var filteredModel = await GetFilteredIndexModel(site.Id, modelToFilter);
 
