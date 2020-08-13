@@ -34,6 +34,27 @@ namespace Atlas.Server.Services
 
         public async Task EnsureDefaultSiteInitializedAsync()
         {
+            if (await _dbContext.Sites.AnyAsync(x => x.Name == "Default"))
+            {
+                return;
+            }
+
+            var site = new Site("Default", "Atlas");
+            _dbContext.Sites.Add(site);
+            _dbContext.Events.Add(new Event(site.Id,
+                null,
+                EventType.Created,
+                typeof(Site),
+                site.Id,
+                new
+                {
+                    site.Name,
+                    site.Title,
+                    site.PublicTheme,
+                    site.PublicCss,
+                    site.AdminTheme,
+                    site.AdminCss
+                }));
             var roleManager = _serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var userManager = _serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
@@ -101,31 +122,6 @@ namespace Atlas.Server.Services
                 }
                 await userManager.AddToRoleAsync(userModerator, Consts.RoleNameModerator);
             }
-
-            // Site
-            var site = await _dbContext.Sites.FirstOrDefaultAsync(x => x.Name == "Default");
-
-            if (site != null)
-            {
-                return;
-            }
-
-            site = new Site("Default", "Atlas");
-            _dbContext.Sites.Add(site);
-            _dbContext.Events.Add(new Event(site.Id,
-                null,
-                EventType.Created,
-                typeof(Site),
-                site.Id,
-                new
-                {
-                    site.Name,
-                    site.Title,
-                    site.PublicTheme,
-                    site.PublicCss,
-                    site.AdminTheme,
-                    site.AdminCss
-                }));
 
             // Members
             var memberAdmin = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userAdmin.Id);
