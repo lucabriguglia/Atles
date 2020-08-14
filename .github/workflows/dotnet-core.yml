@@ -7,8 +7,6 @@ on:
     branches: [ master ]
 
 env:
-  AZURE_WEBAPP_NAME: atlas-blazor
-  AZURE_WEBAPP_PACKAGE_PATH: './src/Atlas.Client'
   DOTNET_VERSION: '3.1.301'
 
 jobs:
@@ -33,13 +31,3 @@ jobs:
 
     - name: Test
       run: dotnet test --no-restore --verbosity normal
-
-    - name: Publish
-      run: dotnet publish -c Release -o ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp
-
-    - name: Deploy
-      uses: azure/webapps-deploy@v2
-      with: 
-        app-name: ${{ env.AZURE_WEBAPP_NAME }}
-        publish-profile: ${{ secrets.APP_SERVICE_PUBLISH_PROFILE  }}
-        package: ${{ env.AZURE_WEBAPP_PACKAGE_PATH }}/myapp
