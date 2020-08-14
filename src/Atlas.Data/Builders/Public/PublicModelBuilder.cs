@@ -140,7 +140,8 @@ namespace Atlas.Data.Builders.Public
             }
 
             var topics = await topicsQuery
-                .OrderByDescending(x => x.LastReply != null ? x.LastReply.TimeStamp : x.TimeStamp)
+                .OrderByDescending(x => x.Pinned)
+                    .ThenByDescending(x => x.LastReply != null ? x.LastReply.TimeStamp : x.TimeStamp)
                 .Skip(options.Skip)
                 .Take(options.PageSize)
                 .ToListAsync();
@@ -156,9 +157,11 @@ namespace Atlas.Data.Builders.Public
                 GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email),
                 MostRecentMemberId = topic.LastReply?.MemberId ?? topic.MemberId,
                 MostRecentMemberDisplayName = topic.LastReply?.Member?.DisplayName ?? topic.Member.DisplayName,
-                MostRecentTimeStamp = topic.LastReply?.TimeStamp ?? topic.TimeStamp
+                MostRecentTimeStamp = topic.LastReply?.TimeStamp ?? topic.TimeStamp,
+                Pinned = topic.Pinned,
+                Locked = topic.Locked
             })
-                .ToList();
+            .ToList();
 
             var totalRecordsQuery = _dbContext.Posts
                 .Where(x =>
@@ -234,7 +237,8 @@ namespace Atlas.Data.Builders.Public
                     Id = topic.Id,
                     Title = topic.Title,
                     Content = topic.Content,
-                    MemberId = topic.Member.Id
+                    MemberId = topic.Member.Id,
+                    Locked = topic.Locked
                 }
             };
 
@@ -274,7 +278,9 @@ namespace Atlas.Data.Builders.Public
                     MemberDisplayName = topic.Member.DisplayName,
                     TimeStamp = topic.TimeStamp,
                     UserId = topic.Member.UserId,
-                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email)
+                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email),
+                    Pinned = topic.Pinned,
+                    Locked = topic.Locked
                 },
                 Replies = await BuildTopicPageModelRepliesAsync(topicId, options)
             };

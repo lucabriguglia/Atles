@@ -58,7 +58,7 @@ namespace Atlas.Data.Builders.Admin
                 foreach (PermissionType permissionType in Enum.GetValues(typeof(PermissionType)))
                 {
                     var disabled = roleModel.Name == Consts.RoleNameAdmin ||
-                                   roleModel.Id == Consts.RoleIdAll && IsEditingPermissionType(permissionType);
+                                   roleModel.Id == Consts.RoleIdAll && IsReadingPermissionType(permissionType);
 
                     permissionModel.PermissionTypes.Add(new FormComponentModel.PermissionTypeModel
                     {
@@ -112,7 +112,7 @@ namespace Atlas.Data.Builders.Admin
                                    || roleModel.Name == Consts.RoleNameAdmin;
 
                     var disabled = roleModel.Name == Consts.RoleNameAdmin ||
-                                   roleModel.Id == Consts.RoleIdAll && IsEditingPermissionType(permissionType); 
+                                   roleModel.Id == Consts.RoleIdAll && !IsReadingPermissionType(permissionType); 
 
                     permissionModel.PermissionTypes.Add(new FormComponentModel.PermissionTypeModel
                     {
@@ -128,11 +128,9 @@ namespace Atlas.Data.Builders.Admin
             return result;
         }
 
-        private static bool IsEditingPermissionType(PermissionType permissionType) =>
-            permissionType == PermissionType.Start ||
-            permissionType == PermissionType.Reply ||
-            permissionType == PermissionType.Edit ||
-            permissionType == PermissionType.Delete ||
-            permissionType == PermissionType.Moderate;
+        private static bool IsReadingPermissionType(PermissionType permissionType) =>
+            permissionType == PermissionType.ViewTopics ||
+            permissionType == PermissionType.ViewTopics ||
+            permissionType == PermissionType.Read;
     }
 }

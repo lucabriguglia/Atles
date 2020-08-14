@@ -85,6 +85,7 @@ namespace Atlas.Data.Services
             }
 
             topic.UpdateDetails(command.Title, command.Content, command.Status);
+
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Updated,
@@ -100,6 +101,60 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.Forum(topic.ForumId));
+        }
+
+        public async Task PinAsync(PinTopic command)
+        {
+            var topic = await _dbContext.Posts
+                .FirstOrDefaultAsync(x =>
+                    x.Id == command.Id &&
+                    x.TopicId == null &&
+                    x.ForumId == command.ForumId &&
+                    x.Forum.Category.SiteId == command.SiteId &&
+                    x.Status != StatusType.Deleted);
+
+            if (topic == null)
+            {
+                throw new DataException($"Topic with Id {command.Id} not found.");
+            }
+
+            topic.Pin(command.Pinned);
+
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Pinned,
+                typeof(Post),
+                command.Id));
+
+            await _dbContext.SaveChangesAsync();
+
+            _cacheManager.Remove(CacheKeys.Forum(topic.ForumId));
+        }
+
+        public async Task LockAsync(LockTopic command)
+        {
+            var topic = await _dbContext.Posts
+                .FirstOrDefaultAsync(x =>
+                    x.Id == command.Id &&
+                    x.TopicId == null &&
+                    x.ForumId == command.ForumId &&
+                    x.Forum.Category.SiteId == command.SiteId &&
+                    x.Status != StatusType.Deleted);
+
+            if (topic == null)
+            {
+                throw new DataException($"Topic with Id {command.Id} not found.");
+            }
+
+            topic.Lock(command.Locked);
+
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Locked,
+                typeof(Post),
+                command.Id));
+
+            await _dbContext.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(DeleteTopic command)
@@ -121,6 +176,7 @@ namespace Atlas.Data.Services
             }
 
             topic.Delete();
+
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Deleted,

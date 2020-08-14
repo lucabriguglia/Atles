@@ -119,6 +119,28 @@ namespace Atlas.Domain.Tests.Topics
             Assert.AreEqual(0, sut.RepliesCount, nameof(sut.RepliesCount));
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Pin(bool pinned)
+        {
+            var sut = Fixture.Create<Post>();
+
+            sut.Pin(pinned);
+
+            Assert.AreEqual(pinned, sut.Pinned, nameof(sut.Pinned));
+        }
+
+        [TestCase(true)]
+        [TestCase(false)]
+        public void Lock(bool locked)
+        {
+            var sut = Fixture.Create<Post>();
+
+            sut.Lock(locked);
+
+            Assert.AreEqual(locked, sut.Locked, nameof(sut.Locked));
+        }
+
         [Test]
         public void Delete()
         {

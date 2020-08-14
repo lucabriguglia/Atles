@@ -22,6 +22,14 @@ namespace Atlas.Client.Components.Themes
 
         protected TopicPageModel Model { get; set; }
 
+        protected string PinButtonText => Model.Topic.Pinned
+            ? Loc["Unpin"]
+            : Loc["Pin"];
+
+        protected string LockButtonText => Model.Topic.Locked
+            ? Loc["Unlock"]
+            : Loc["Lock"];
+
         protected string ReplyTitleText => Model.Post.Id != null
             ? Loc["Edit Reply"]
             : Loc["New Reply"];
@@ -113,6 +121,18 @@ namespace Atlas.Client.Components.Themes
             await JsRuntime.InvokeVoidAsync("scrollToTarget", "reply");
         }
 
+        protected async Task PinAsync()
+        {
+            await ApiService.PostAsJsonAsync($"api/public/topics/pin-topic/{ForumId}/{TopicId}", !Model.Topic.Pinned);
+            Model.Topic.Pinned = !Model.Topic.Pinned;
+        }
+
+        protected async Task LockAsync()
+        {
+            await ApiService.PostAsJsonAsync($"api/public/topics/lock-topic/{ForumId}/{TopicId}", !Model.Topic.Locked);
+            Model.Topic.Locked = !Model.Topic.Locked;
+        }
+
         protected async Task EditReplyAsync(Guid id, string content, Guid memberId)
         {
             Model.Post.Id = id;
@@ -169,22 +189,27 @@ namespace Atlas.Client.Components.Themes
 
         protected bool CanEditTopic()
         {
-            return Model.CanEdit && Model.Topic.UserId == CurrentUserId || Model.CanModerate || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+            return Model.CanEdit && Model.Topic.UserId == CurrentUserId && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanDeleteTopic()
         {
-            return Model.CanDelete && Model.Topic.UserId == CurrentUserId || Model.CanModerate || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+            return Model.CanDelete && Model.Topic.UserId == CurrentUserId && !Model.Topic.Locked || Model.CanModerate;
+        }
+
+        protected bool CanCreateReply()
+        {
+            return Model.CanReply && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanEditReply(string replyUserId)
         {
-            return Model.CanEdit && replyUserId == CurrentUserId || Model.CanModerate || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+            return Model.CanEdit && replyUserId == CurrentUserId && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanDeleteReply(string replyUserId)
         {
-            return Model.CanDelete && replyUserId == CurrentUserId || Model.CanModerate || CurrentUser.IsInRole(Consts.RoleNameAdmin);
+            return Model.CanDelete && replyUserId == CurrentUserId && !Model.Topic.Locked || Model.CanModerate;
         }
     }
 }

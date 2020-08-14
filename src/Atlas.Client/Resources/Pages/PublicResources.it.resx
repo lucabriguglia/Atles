@@ -252,14 +252,20 @@
   <data name="Topics" xml:space="preserve">
     <value>Discussioni</value>
   </data>
+  <data name="Unlock" xml:space="preserve">
+    <value>Sblocca</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>Stacca</value>
+  </data>
   <data name="Update" xml:space="preserve">
     <value>Aggiorna</value>
   </data>
-  <data name="You are not authorized to reply." xml:space="preserve">
-    <value>Non siete autorizzati a rispondere.</value>
+  <data name="You are not authorized to reply" xml:space="preserve">
+    <value>Non siete autorizzati a rispondere</value>
   </data>
-  <data name="You are not authorized to start a new discussion." xml:space="preserve">
-    <value>Non siete autorizzati a creare una nuova discussione.</value>
+  <data name="You are not authorized to start a new discussion" xml:space="preserve">
+    <value>Non siete autorizzati a creare una nuova discussione</value>
   </data>
   <data name="{0} to reply" xml:space="preserve">
     <value>{0} per rispondere</value>

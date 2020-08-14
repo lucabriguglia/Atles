@@ -28,9 +28,11 @@ else
                 {
                     <AuthorizeView>
                         <Authorized>
+                            <i class="fas fa-comment-slash mr-1"></i>
                             @Loc["You are not authorized to start a new discussion."]
                         </Authorized>
                         <NotAuthorized>
+                            <i class="fas fa-sign-in-alt mr-1"></i>
                             @((MarkupString)string.Format(Loc["{0} to start a new discussion"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">{Loc["Login"]}</a>"))
                         </NotAuthorized>
                     </AuthorizeView>
@@ -79,6 +81,14 @@ else
                                     </div>
                                     <div class="col">
                                         <p class="card-text">
+                                            @if (item.Pinned)
+                                            {
+                                                <i class="fas fa-thumbtack mr-2"></i>
+                                            }
+                                            @if (item.Locked)
+                                            {
+                                                <i class="fas fa-lock mr-2"></i>
+                                            }
                                             @if (Model.CanRead)
                                             {
                                                 <a href="/forum/@Model.Forum.Id/@item.Id" title="@item.Title">@item.Title.ToSafeLengthText(50)</a>

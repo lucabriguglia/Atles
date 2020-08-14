@@ -29,6 +29,8 @@ namespace Atlas.Models.Public
             public DateTime MostRecentTimeStamp { get; set; }
             public Guid MostRecentMemberId { get; set; }
             public string MostRecentMemberDisplayName { get; set; }
+            public bool Pinned { get; set; }
+            public bool Locked { get; set; }
         }
     }
 }

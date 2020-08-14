@@ -15,6 +15,8 @@ namespace Atlas.Domain.Posts
         public StatusType Status { get; private set; }
         public Guid MemberId { get; private set; }
         public DateTime TimeStamp { get; private set; }
+        public bool Pinned { get; private set; }
+        public bool Locked { get; private set; }
 
         [ForeignKey("Topic")]
         public Guid? TopicId { get; private set; }
@@ -98,6 +100,16 @@ namespace Atlas.Domain.Posts
             {
                 RepliesCount = 0;
             }
+        }
+
+        public void Pin(bool pinned)
+        {
+            Pinned = pinned;
+        }
+
+        public void Lock(bool locked)
+        {
+            Locked = locked;
         }
 
         public void Delete()

@@ -21,13 +21,18 @@ else
                 <h3 class="mb-3">@Model.Topic.Title</h3>
             </div>
             <div class="col-md-6 text-right mb-3">
-                @if (Model.CanReply)
+                @if (CanCreateReply())
                 {
                     <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewReplyAsync())" class="btn btn-primary" role="button">@Loc["Reply"]</a>
                 }
                 @if (CanEditTopic())
                 {
                     <a href="/forum/@Model.Forum.Id/post/@Model.Topic.Id/edit" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
+                }
+                @if (Model.CanModerate)
+                {
+                    <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await PinAsync())" class="btn btn-info" role="button">@PinButtonText</a>
+                    <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await LockAsync())" class="btn btn-warning" role="button">@LockButtonText</a>
                 }
                 @if (CanDeleteTopic())
                 {
@@ -119,7 +124,7 @@ else
             }
         }
 
-        @if (Model.CanReply)
+        @if (CanCreateReply())
         {
             <h5 class="mb-3">@ReplyTitleText</h5>
             <div class="row">
@@ -155,14 +160,18 @@ else
         }
         else
         {
-            <AuthorizeView>
-                <Authorized>
-                    <p class="mt-3">@Loc["You are not authorized to reply."]</p>
-                </Authorized>
-                <NotAuthorized>
-                    @((MarkupString)string.Format(Loc["{0} to reply"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">{Loc["Log in"]}</a>"))
-                </NotAuthorized>
-            </AuthorizeView>
+            <p class="mt-4">
+                <AuthorizeView>
+                    <Authorized>
+                        <i class="fas fa-comment-slash mr-1"></i>
+                        @Loc["You are not authorized to reply"]            
+                    </Authorized>
+                    <NotAuthorized>
+                        <i class="fas fa-sign-in-alt mr-1"></i>
+                        @((MarkupString)string.Format(Loc["{0} to reply"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">{Loc["Log in"]}</a>"))
+                    </NotAuthorized>
+                </AuthorizeView>
+            </p>
         }
 
         <ConfirmModal Id="confirm-modal-delete-topic"

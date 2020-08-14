@@ -27,6 +27,8 @@ namespace Atlas.Models.Public
             public string Content { get; set; }
 
             public Guid MemberId { get; set; }
+
+            public bool Locked { get; set; }
         }
     }
 }

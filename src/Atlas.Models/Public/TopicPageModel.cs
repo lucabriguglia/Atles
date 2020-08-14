@@ -13,6 +13,8 @@ namespace Atlas.Models.Public
         public bool CanReply { get; set; }
         public bool CanEdit { get; set; }
         public bool CanDelete { get; set; }
+        public bool CanPin { get; set; }
+        public bool CanLock{ get; set; }
         public bool CanModerate { get; set; }
 
         public class ForumModel
@@ -31,6 +33,8 @@ namespace Atlas.Models.Public
             public DateTime TimeStamp { get; set; }
             public string UserId { get; set; }
             public string GravatarHash { get; set; }
+            public bool Pinned { get; set; }
+            public bool Locked { get; set; }
         }
 
         public class ReplyModel

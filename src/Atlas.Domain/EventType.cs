@@ -6,6 +6,8 @@
         Updated,
         Deleted,
         Restored,
-        Reordered
+        Reordered,
+        Pinned,
+        Locked
     }
 }

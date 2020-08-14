@@ -130,7 +130,7 @@ namespace Atlas.Server.Controllers.Public
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
             var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
-            var authorized = canEdit && model.Topic.MemberId == member.Id || canModerate;
+            var authorized = canEdit && model.Topic.MemberId == member.Id && !model.Topic.Locked || canModerate;
 
             if (!authorized)
             {
@@ -188,20 +188,20 @@ namespace Atlas.Server.Controllers.Public
                 MemberId = member.Id
             };
 
-            var topicMemberId = await _dbContext.Posts
+            var topicInfo = await _dbContext.Posts
                 .Where(x =>
                     x.Id == command.Id &&
                     x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
                     x.Status != StatusType.Deleted)
-                .Select(x => x.MemberId)
+                .Select(x => new { x.MemberId, x.Locked})
                 .FirstOrDefaultAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
             var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
-            var authorized = canEdit && topicMemberId == member.Id || canModerate;
+            var authorized = canEdit && topicInfo.MemberId == member.Id && !topicInfo.Locked || canModerate;
 
             if (!authorized)
             {
@@ -211,6 +211,64 @@ namespace Atlas.Server.Controllers.Public
             await _topicService.UpdateAsync(command);
 
             return Ok(command.Id);
+        }
+
+        [Authorize]
+        [HttpPost("pin-topic/{forumId}/{topicId}")]
+        public async Task<ActionResult> PinTopic(Guid forumId, Guid topicId, [FromBody] bool pinned)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var command = new PinTopic
+            {
+                Id = topicId,
+                ForumId = forumId,
+                Pinned = pinned,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
+
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+
+            if (!canModerate)
+            {
+                return Unauthorized();
+            }
+
+            await _topicService.PinAsync(command);
+
+            return Ok();
+        }
+
+        [Authorize]
+        [HttpPost("lock-topic/{forumId}/{topicId}")]
+        public async Task<ActionResult> LockTopic(Guid forumId, Guid topicId, [FromBody] bool locked)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var command = new LockTopic
+            {
+                Id = topicId,
+                ForumId = forumId,
+                Locked = locked,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
+
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+
+            if (!canModerate)
+            {
+                return Unauthorized();
+            }
+
+            await _topicService.LockAsync(command);
+
+            return Ok();
         }
 
         [Authorize]
