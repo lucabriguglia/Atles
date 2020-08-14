@@ -57,6 +57,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{0C907861-F928-46E5-915E-1F153E1661D4}"
+	ProjectSection(SolutionItems) = preProject
+		sql\ApplicationConnection.Migrations.sql = sql\ApplicationConnection.Migrations.sql
+		sql\AtlasConnection.Migrations.sql = sql\AtlasConnection.Migrations.sql
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
