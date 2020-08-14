@@ -6,6 +6,7 @@ The target framework is **.NET Core 3.1**.
 - [Certificate](#certificate)
 - [Mail Settings](#mail-settings)
 - [Connection Strings](#connection-strings)
+- [Other App Settings](#other-app-strings)
 - [Default Users](#default-users)
 - [web.config](#web-config)
 
@@ -75,6 +76,13 @@ You need to specify two connection strings: `ApplicationConnection` and `AtlasCo
 `ApplicationConnection` is used for ASP.NET Identity data while `AtlasConnection` is used for Atlas data.
 The two connection strings can be the same or different depending on whether you want membership data on a separate database or you want to use existing membership data.
 In case you are going to use an existing ASP.NET Identity database, the Atlas member profile will be created the first time the user logs in.
+
+<a name="other-app-strings"></a>
+## Other App Settings
+
+- `MigrateDatabases` should be set to `false` in a production environment. To migrate your datbase(s) you can use .NET CLI.
+- `EnsureDefaultSiteInitialized` should be set to `true` only for the first time the application runs in production. The setting should be set to `false` after that.
+
 
 <a name="default-users"></a>
 ## Default Users

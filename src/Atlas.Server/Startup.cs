@@ -108,9 +108,16 @@ namespace Atlas.Server
                 endpoints.MapFallbackToFile("index.html");
             });
 
-            atlasDbContext.Database.Migrate();
-            applicationDbContext.Database.Migrate();
-            installationService.EnsureDefaultSiteInitializedAsync().Wait();
+            if (Configuration["MigrateDatabases"] == "true")
+            {
+                atlasDbContext.Database.Migrate();
+                applicationDbContext.Database.Migrate();
+            }
+
+            if (Configuration["EnsureDefaultSiteInitialized"] == "true")
+            {
+                installationService.EnsureDefaultSiteInitializedAsync().Wait();
+            }
         }
     }
 }
