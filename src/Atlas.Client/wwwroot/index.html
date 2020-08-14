@@ -63,10 +63,15 @@
             document.title = title;
         };
 
-        //window.blazorCulture = {
-        //    get: () => window.localStorage['BlazorCulture'],
-        //    set: (value) => window.localStorage['BlazorCulture'] = value
-        //};
+        window.addTagToEditor = (editorId, startTag, endTag) => {
+            var cursorPosStart = $('#' + editorId).prop('selectionStart');
+            var cursorPosEnd = $('#' + editorId).prop('selectionEnd');
+            var content = $('#' + editorId).val();
+            var textBefore = content.substring(0, cursorPosStart);
+            var textSelected = content.substring(cursorPosStart, cursorPosEnd);
+            var textAfter = content.substring(cursorPosEnd, content.length);
+            $('#' + editorId).val(textBefore + startTag + textSelected + endTag + textAfter);
+        };
     </script>
 </head>
 

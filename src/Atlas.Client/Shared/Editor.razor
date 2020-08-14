@@ -11,6 +11,17 @@
     </ul>
     <div class="tab-content" id="@(Id)_tabContent">
         <div class="tab-pane fade show active" id="@(Id)_text" role="tabpanel" aria-labelledby="@(Id)_text-tab">
+            <div class="my-2">
+                <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await Add("**", "**"))" class="btn btn-light" role="button">
+                    <i class="fas fa-bold"></i>
+                </a>
+                <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await Add("_", "_"))" class="btn btn-light" role="button">
+                    <i class="fas fa-italic"></i>
+                </a>
+                <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await Add("# ", ""))" class="btn btn-light" role="button">
+                    <i class="fas fa-heading"></i>1
+                </a>
+            </div>
             <InputTextArea id="@(Id)" @bind-Value="Value" @oninput="OnValueChanged" Rows="@Rows" Class="form-control" Style="border:none;" Placeholder="@Loc["Your text here..."]" />
         </div>
         <div class="tab-pane fade pt-3 pl-4" id="@(Id)_preview" role="tabpanel" aria-labelledby="@(Id)_preview-tab">
@@ -26,3 +37,12 @@
     </div>
     <ValidationMessage For="@(() => Value)" />
 </div>
+
+@code{
+
+    protected async Task Add(string startTag, string endTag)
+    {
+        await JsRuntime.InvokeVoidAsync("addTagToEditor", Id, startTag, endTag);
+    }
+
+}
