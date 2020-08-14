@@ -34,7 +34,7 @@ If a component is not found in a Theme, Atlas will use the one in the Default Th
 
 ![Classic](assets/img/classic-theme.png)
 
-Remember to add the new Theme in app settings as explained above in order for MyTheme to be selectable in Site Settings:
+Remember to add the new Theme in app settings as explained above in order for it to be selectable in Site Settings:
 
 ![Site Settings - Theme](assets/img/admin-settings-theme.png)
 
