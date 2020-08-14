@@ -1,6 +1,10 @@
 ﻿@page "/"
 @page "/public"
+@page "/forums"
 
 @inherits IndexPage
 
-@AddComponent("Index")
+@if (DisplayForums)
+{
+    @AddComponent("Index")
+}

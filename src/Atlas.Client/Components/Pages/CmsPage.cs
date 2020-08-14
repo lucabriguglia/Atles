@@ -1,16 +1,15 @@
 ﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Pages
 {
-    public abstract class IndexPage : PageBase
+    public abstract class CmsPage : PageBase
     {
-        public bool DisplayForums { get; set; }
+        [Parameter] public string Page { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             await base.OnInitializedAsync();
-
-            DisplayForums = true;
         }
     }
 }
