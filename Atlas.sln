@@ -52,6 +52,13 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "img", "img", "{84E69FCB-0CE
 		docs\assets\img\resources.png = docs\assets\img\resources.png
 	EndProjectSection
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".github", ".github", "{043D4E72-366C-4591-AC04-76AB9FBD687B}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{E481A559-D8A9-4F0B-8825-4FC553E99BD9}"
+	ProjectSection(SolutionItems) = preProject
+		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
+	EndProjectSection
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -104,6 +111,7 @@ Global
 		{3DABE5C5-A015-4217-91EE-5282E829AEF8} = {71898E1F-3251-4DE9-AAFE-7D99540F2379}
 		{BE91C094-1F67-4C0B-89A1-88D592CD9AD0} = {707C6370-09DC-4970-9F9C-9BAC63BEF65B}
 		{84E69FCB-0CE0-4F91-B24C-20F6656DC88E} = {BE91C094-1F67-4C0B-89A1-88D592CD9AD0}
+		{E481A559-D8A9-4F0B-8825-4FC553E99BD9} = {043D4E72-366C-4591-AC04-76AB9FBD687B}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2747CCE7-65F1-47E8-8F5F-4598AAA8A5B9}
