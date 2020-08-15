@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Models;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Topics;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;

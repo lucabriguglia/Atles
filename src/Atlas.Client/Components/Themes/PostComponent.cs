@@ -2,6 +2,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Posts;
 using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Themes

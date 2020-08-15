@@ -8,6 +8,8 @@ using Atlas.Domain.Posts;
 using Atlas.Domain.Posts.Commands;
 using Atlas.Models;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Posts;
+using Atlas.Models.Public.Topics;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -20,25 +22,29 @@ namespace Atlas.Server.Controllers.Public
     public class TopicsController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IPublicModelBuilder _modelBuilder;
+        private readonly ITopicModelBuilder _topicModelBuilder;
+        private readonly IPostModelBuilder _postModelBuilder;
         private readonly ITopicService _topicService;
         private readonly ISecurityService _securityService;
         private readonly AtlasDbContext _dbContext;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
 
-        public TopicsController(IContextService contextService, 
-            IPublicModelBuilder modelBuilder, 
+        public TopicsController(IContextService contextService,
+            ITopicModelBuilder topicModelBuilder,
+            IPostModelBuilder postModelBuilder,
             ITopicService topicService,
             ISecurityService securityService, 
             AtlasDbContext dbContext, 
             IPermissionModelBuilder permissionModelBuilder)
         {
             _contextService = contextService;
-            _modelBuilder = modelBuilder;
+            _topicModelBuilder = topicModelBuilder;
+            _postModelBuilder = postModelBuilder;
             _topicService = topicService;
             _securityService = securityService;
             _dbContext = dbContext;
             _permissionModelBuilder = permissionModelBuilder;
+            
         }
 
         [HttpGet("{forumId}/{topicId}")]
@@ -55,7 +61,7 @@ namespace Atlas.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var model = await _modelBuilder.BuildTopicPageModelAsync(site.Id, forumId, topicId, new QueryOptions(search, page));
+            var model = await _topicModelBuilder.BuildTopicPageModelAsync(site.Id, forumId, topicId, new QueryOptions(search, page));
 
             if (model == null)
             {
@@ -84,7 +90,7 @@ namespace Atlas.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var result = await _modelBuilder.BuildTopicPageModelRepliesAsync(topicId, new QueryOptions(search, page));
+            var result = await _topicModelBuilder.BuildTopicPageModelRepliesAsync(topicId, new QueryOptions(search, page));
 
             return result;
         }
@@ -95,7 +101,7 @@ namespace Atlas.Server.Controllers.Public
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var model = await _modelBuilder.BuildNewPostPageModelAsync(site.Id, forumId);
+            var model = await _postModelBuilder.BuildNewPostPageModelAsync(site.Id, forumId);
 
             if (model == null)
             {
@@ -120,7 +126,7 @@ namespace Atlas.Server.Controllers.Public
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var model = await _modelBuilder.BuildEditPostPageModelAsync(site.Id, forumId, topicId);
+            var model = await _postModelBuilder.BuildEditPostPageModelAsync(site.Id, forumId, topicId);
 
             if (model == null)
             {

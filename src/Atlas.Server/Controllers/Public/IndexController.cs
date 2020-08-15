@@ -4,6 +4,8 @@ using System.Threading.Tasks;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Index;
+using Atlas.Models.Public.Search;
 using Atlas.Server.Services;
 using Markdig;
 using Microsoft.AspNetCore.Authorization;
@@ -16,17 +18,20 @@ namespace Atlas.Server.Controllers.Public
     public class IndexController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IPublicModelBuilder _modelBuilder;
+        private readonly IIndexModelBuilder _indexModelBuilder;
+        private readonly ISearchModelBuilder _searchModelBuilder;
         private readonly ISecurityService _securityService;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
 
-        public IndexController(IContextService contextService, 
-            IPublicModelBuilder modelBuilder,
+        public IndexController(IContextService contextService,
+            IIndexModelBuilder indexModelBuilder,
+            ISearchModelBuilder searchModelBuilder,
             ISecurityService securityService,
             IPermissionModelBuilder permissionModelBuilder)
         {
             _contextService = contextService;
-            _modelBuilder = modelBuilder;
+            _indexModelBuilder = indexModelBuilder;
+            _searchModelBuilder = searchModelBuilder;
             _securityService = securityService;
             _permissionModelBuilder = permissionModelBuilder;
         }
@@ -36,7 +41,7 @@ namespace Atlas.Server.Controllers.Public
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var modelToFilter = await _modelBuilder.BuildIndexPageModelAsync(site.Id);
+            var modelToFilter = await _indexModelBuilder.BuildIndexPageModelAsync(site.Id);
 
             var filteredModel = await GetFilteredIndexModel(site.Id, modelToFilter);
 
@@ -121,7 +126,7 @@ namespace Atlas.Server.Controllers.Public
                 }
             }
 
-            var model = await _modelBuilder.BuildSearchPageModelAsync(site.Id, accessibleForumIds, new QueryOptions(search, page));
+            var model = await _searchModelBuilder.BuildSearchPageModelAsync(site.Id, accessibleForumIds, new QueryOptions(search, page));
 
             return model;
         }

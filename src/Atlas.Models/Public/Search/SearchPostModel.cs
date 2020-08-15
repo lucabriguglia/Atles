@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Models.Public
+namespace Atlas.Models.Public.Search
 {
     public class SearchPostModel
     {

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Forums;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -13,12 +14,12 @@ namespace Atlas.Server.Controllers.Public
     public class ForumsController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IPublicModelBuilder _modelBuilder;
+        private readonly IForumModelBuilder _modelBuilder;
         private readonly ISecurityService _securityService;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
 
-        public ForumsController(IContextService contextService, 
-            IPublicModelBuilder modelBuilder,
+        public ForumsController(IContextService contextService,
+            IForumModelBuilder modelBuilder,
             ISecurityService securityService,
             IPermissionModelBuilder permissionModelBuilder)
         {

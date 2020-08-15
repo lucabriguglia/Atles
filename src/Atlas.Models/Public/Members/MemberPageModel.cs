@@ -1,7 +1,8 @@
 ﻿using System;
 using Atlas.Domain;
+using Atlas.Models.Public.Search;
 
-namespace Atlas.Models.Public
+namespace Atlas.Models.Public.Members
 {
     public class MemberPageModel
     {

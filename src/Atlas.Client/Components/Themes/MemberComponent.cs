@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Members;
 using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Themes

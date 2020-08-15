@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Search;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 

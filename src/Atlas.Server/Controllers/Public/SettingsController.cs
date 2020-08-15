@@ -2,6 +2,7 @@
 using Atlas.Domain.Members;
 using Atlas.Domain.Members.Commands;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Members;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -14,12 +15,12 @@ namespace Atlas.Server.Controllers.Public
     public class SettingsController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IPublicModelBuilder _modelBuilder;
+        private readonly IMemberModelBuilder _modelBuilder;
         private readonly IMemberService _memberService;
         private readonly IMemberRules _memberRules;
 
         public SettingsController(IContextService contextService, 
-            IPublicModelBuilder modelBuilder,
+            IMemberModelBuilder modelBuilder,
             IMemberService memberService, 
             IMemberRules memberRules)
         {

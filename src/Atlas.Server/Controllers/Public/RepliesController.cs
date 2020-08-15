@@ -8,6 +8,7 @@ using Atlas.Domain.Posts;
 using Atlas.Domain.Posts.Commands;
 using Atlas.Models;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Topics;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

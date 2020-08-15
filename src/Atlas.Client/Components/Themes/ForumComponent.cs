@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
+using Atlas.Models.Public.Forums;
 
 namespace Atlas.Client.Components.Themes
 {

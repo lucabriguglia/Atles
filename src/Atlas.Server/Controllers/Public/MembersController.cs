@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atlas.Domain.Members;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models;
 using Atlas.Models.Public;
+using Atlas.Models.Public.Members;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,22 +15,19 @@ namespace Atlas.Server.Controllers.Public
     public class MembersController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IPublicModelBuilder _modelBuilder;
+        private readonly IMemberModelBuilder _modelBuilder;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ISecurityService _securityService;
-        private readonly IMemberService _memberService;
 
-        public MembersController(IContextService contextService, 
-            IPublicModelBuilder modelBuilder, 
+        public MembersController(IContextService contextService,
+            IMemberModelBuilder modelBuilder, 
             IPermissionModelBuilder permissionModelBuilder, 
-            ISecurityService securityService, 
-            IMemberService memberService)
+            ISecurityService securityService)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
             _permissionModelBuilder = permissionModelBuilder;
             _securityService = securityService;
-            _memberService = memberService;
         }
 
         [HttpGet]
