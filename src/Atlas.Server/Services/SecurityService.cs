@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Atlas.Domain.PermissionSets;
-using Atlas.Models;
+using Atlas.Models.Public;
 using Microsoft.AspNetCore.Http;
 
 namespace Atlas.Server.Services

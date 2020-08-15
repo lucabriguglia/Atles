@@ -1,4 +1,4 @@
-﻿namespace Atlas.Models
+﻿namespace Atlas.Models.Admin.Roles
 {
     public class RoleModel
     {

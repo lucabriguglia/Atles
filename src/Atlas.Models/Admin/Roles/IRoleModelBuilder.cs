@@ -7,5 +7,6 @@ namespace Atlas.Models.Admin.Roles
     {
         Task<IndexPageModel> BuildIndexPageModelAsync();
         Task<IList<IndexPageModel.UserModel>> BuildUsersInRoleModelsAsync(string roleName);
+        Task<IList<RoleModel>> GetRoleModelsAsync();
     }
 }

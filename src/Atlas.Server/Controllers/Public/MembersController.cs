@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Domain.PermissionSets;
-using Atlas.Models;
 using Atlas.Models.Public;
 using Atlas.Models.Public.Members;
 using Atlas.Server.Services;

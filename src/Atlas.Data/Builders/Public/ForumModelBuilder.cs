@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
 using Atlas.Models;
-using Atlas.Models.Public;
 using Atlas.Models.Public.Forums;
 using Microsoft.EntityFrameworkCore;
 

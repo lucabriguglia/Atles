@@ -10,7 +10,6 @@ using Atlas.Models.Public;
 using Markdig;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 
 namespace Atlas.Server.Services
 {

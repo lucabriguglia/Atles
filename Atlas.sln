@@ -30,6 +30,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{707C6370-0
 		docs\Deployment.md = docs\Deployment.md
 		docs\index.md = docs\index.md
 		docs\Localization.md = docs\Localization.md
+		docs\Release-Notes.md = docs\Release-Notes.md
 		docs\Themes.md = docs\Themes.md
 	EndProjectSection
 EndProject

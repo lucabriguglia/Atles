@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Atlas.Models
+namespace Atlas.Models.Public
 {
     public interface IPermissionModelBuilder
     {

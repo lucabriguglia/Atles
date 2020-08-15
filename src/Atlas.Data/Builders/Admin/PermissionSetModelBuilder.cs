@@ -4,8 +4,9 @@ using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Domain.PermissionSets;
-using Atlas.Models;
 using Atlas.Models.Admin.PermissionSets;
+using Atlas.Models.Admin.Roles;
+using IndexPageModel = Atlas.Models.Admin.PermissionSets.IndexPageModel;
 
 namespace Atlas.Data.Builders.Admin
 {
@@ -47,7 +48,7 @@ namespace Atlas.Data.Builders.Admin
         {
             var result = new FormComponentModel();
 
-            foreach (var roleModel in await _roleManager.GetRoleModels())
+            foreach (var roleModel in await _roleManager.GetRoleModelsAsync())
             {
                 var permissionModel = new FormComponentModel.PermissionModel
                 {
@@ -96,7 +97,7 @@ namespace Atlas.Data.Builders.Admin
                 Name = permissionSet.Name
             };
 
-            foreach (var roleModel in await _roleManager.GetRoleModels())
+            foreach (var roleModel in await _roleManager.GetRoleModelsAsync())
             {
                 var permissionModel = new FormComponentModel.PermissionModel
                 {

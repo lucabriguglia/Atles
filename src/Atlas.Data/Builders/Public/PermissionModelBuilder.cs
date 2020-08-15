@@ -6,10 +6,11 @@ using Atlas.Data.Caching;
 using Atlas.Domain;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models;
+using Atlas.Models.Public;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Builders
+namespace Atlas.Data.Builders.Public
 {
     public class PermissionModelBuilder : IPermissionModelBuilder
     {

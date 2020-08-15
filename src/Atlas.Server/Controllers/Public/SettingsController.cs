@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Domain.Members;
 using Atlas.Domain.Members.Commands;
-using Atlas.Models.Public;
 using Atlas.Models.Public.Members;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
