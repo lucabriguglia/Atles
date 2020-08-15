@@ -6,16 +6,13 @@ using Atlas.Domain.Members.Commands;
 using Atlas.Models;
 using Atlas.Models.Admin.Members;
 using Atlas.Server.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atlas.Server.Controllers.Admin
 {
-    [Authorize(Policy = "Admin")]
     [Route("api/admin/members")]
-    [ApiController]
-    public class MembersController : ControllerBase
+    public class MembersController : AdminControllerBase
     {
         private readonly IContextService _contextService;
         private readonly IMemberService _memberService;
@@ -79,6 +76,19 @@ namespace Atlas.Server.Controllers.Admin
 
         [HttpGet("edit/{id}")]
         public async Task<ActionResult<EditPageModel>> Edit(Guid id)
+        {
+            var result = await _modelBuilder.BuildEditPageModelAsync(id);
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
+        }
+
+        [HttpGet("edit-by-user-id/{id}")]
+        public async Task<ActionResult<EditPageModel>> EditByUserId(string id)
         {
             var result = await _modelBuilder.BuildEditPageModelAsync(id);
 

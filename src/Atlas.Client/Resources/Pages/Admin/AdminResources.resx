@@ -150,6 +150,9 @@
   <data name="Are you sure you want to delete this role?" xml:space="preserve">
     <value>Are you sure you want to delete this role?</value>
   </data>
+  <data name="Are you sure you want to remove the user from the role?" xml:space="preserve">
+    <value>Are you sure you want to remove the user from the role?</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancel</value>
   </data>
@@ -246,6 +249,9 @@
   <data name="No forums found for the selected category." xml:space="preserve">
     <value>No forums found for the selected category.</value>
   </data>
+  <data name="No users found in this role" xml:space="preserve">
+    <value>No users found in this role</value>
+  </data>
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
@@ -266,6 +272,9 @@
   </data>
   <data name="Public" xml:space="preserve">
     <value>Public</value>
+  </data>
+  <data name="Remove" xml:space="preserve">
+    <value>Remove</value>
   </data>
   <data name="Role" xml:space="preserve">
     <value>Role</value>
@@ -314,6 +323,12 @@
   </data>
   <data name="UserI d" xml:space="preserve">
     <value>User Id</value>
+  </data>
+  <data name="Users" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="Users in role {0}" xml:space="preserve">
+    <value>Users in role {0}</value>
   </data>
   <data name="View Info" xml:space="preserve">
     <value>View Info</value>

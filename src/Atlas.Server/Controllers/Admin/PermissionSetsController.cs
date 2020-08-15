@@ -4,15 +4,12 @@ using Atlas.Domain.PermissionSets;
 using Atlas.Domain.PermissionSets.Commands;
 using Atlas.Models.Admin.PermissionSets;
 using Atlas.Server.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atlas.Server.Controllers.Admin
 {
-    [Authorize(Policy = "Admin")]
     [Route("api/admin/permission-sets")]
-    [ApiController]
-    public class PermissionSetsController : ControllerBase
+    public class PermissionSetsController : AdminControllerBase
     {
         private readonly IContextService _contextService;
         private readonly IPermissionSetService _permissionSetService;

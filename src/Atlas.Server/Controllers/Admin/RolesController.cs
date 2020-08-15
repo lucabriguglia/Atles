@@ -1,31 +1,39 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Models.Admin.Roles;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Server.Controllers.Admin
 {
-    [Authorize(Policy = "Admin")]
     [Route("api/admin/roles")]
-    [ApiController]
-    public class RolesController : ControllerBase
+    public class RolesController : AdminControllerBase
     {
         private readonly IRoleModelBuilder _roleModelBuilder;
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public RolesController(IRoleModelBuilder roleModelBuilder, RoleManager<IdentityRole> roleManager)
+        public RolesController(IRoleModelBuilder roleModelBuilder, 
+            RoleManager<IdentityRole> roleManager, 
+            UserManager<IdentityUser> userManager)
         {
             _roleModelBuilder = roleModelBuilder;
             _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         [HttpGet("list")]
         public async Task<IndexPageModel> List()
         {
             return await _roleModelBuilder.BuildIndexPageModelAsync();
+        }
+
+        [HttpGet("users-in-role/{roleName}")]
+        public async Task<IList<IndexPageModel.UserModel>> UsersInRole(string roleName)
+        {
+            return await _roleModelBuilder.BuildUsersInRoleModelsAsync(roleName);
         }
 
         [HttpPost("create")]
@@ -76,6 +84,21 @@ namespace Atlas.Server.Controllers.Admin
             }
 
             await _roleManager.DeleteAsync(identityRole);
+
+            return Ok();
+        }
+
+        [HttpDelete("remove-user-from-role/{userId}/{roleName}")]
+        public async Task<ActionResult> RemoveUserFromRole(string userId, string roleName)
+        {
+            var user = await _userManager.FindByIdAsync(userId);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _userManager.RemoveFromRoleAsync(user, roleName);
 
             return Ok();
         }

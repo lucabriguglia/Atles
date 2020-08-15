@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Atlas.Domain;
 using Atlas.Server.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Atlas.Domain.Forums.Commands;
 using Atlas.Domain.Forums;
@@ -10,10 +9,8 @@ using Atlas.Models.Admin.Forums;
 
 namespace Atlas.Server.Controllers.Admin
 {
-    [Authorize(Policy = "Admin")]
     [Route("api/admin/forums")]
-    [ApiController]
-    public class ForumsController : ControllerBase
+    public class ForumsController : AdminControllerBase
     {
         private readonly IContextService _contextService;
         private readonly IForumService _forumService;

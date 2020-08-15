@@ -9,6 +9,8 @@ namespace Atlas.Models.Admin.Roles
 
         public EditRoleModel EditRole { get; set; } = new EditRoleModel();
 
+        public IList<UserModel> UsersInRole { get; set; } = new List<UserModel>();
+
         public class EditRoleModel
         {
             public string Id { get; set; }
@@ -21,6 +23,12 @@ namespace Atlas.Models.Admin.Roles
         {
             public string Id { get; set; }
             public string Name { get; set; }
+        }
+
+        public class UserModel
+        {
+            public string Id { get; set; }
+            public string Email { get; set; }
         }
     }
 }

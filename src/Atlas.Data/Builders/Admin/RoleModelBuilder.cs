@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Atlas.Models.Admin.Roles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -8,10 +9,12 @@ namespace Atlas.Data.Builders.Admin
     public class RoleModelBuilder : IRoleModelBuilder
     {
         private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly UserManager<IdentityUser> _userManager;
 
-        public RoleModelBuilder(RoleManager<IdentityRole> roleManager)
+        public RoleModelBuilder(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
         {
             _roleManager = roleManager;
+            _userManager = userManager;
         }
 
         public async Task<IndexPageModel> BuildIndexPageModelAsync()
@@ -21,6 +24,18 @@ namespace Atlas.Data.Builders.Admin
             foreach (var role in await _roleManager.Roles.ToListAsync())
             {
                 result.Roles.Add(new IndexPageModel.RoleModel { Id = role.Id, Name = role.Name });
+            }
+
+            return result;
+        }
+
+        public async Task<IList<IndexPageModel.UserModel>> BuildUsersInRoleModelsAsync(string roleName)
+        {
+            var result = new List<IndexPageModel.UserModel>();
+
+            foreach (var user in await _userManager.GetUsersInRoleAsync(roleName))
+            {
+                result.Add(new IndexPageModel.UserModel{Id = user.Id, Email = user.Email});
             }
 
             return result;

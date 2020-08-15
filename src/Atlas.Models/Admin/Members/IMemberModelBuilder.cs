@@ -7,6 +7,7 @@ namespace Atlas.Models.Admin.Members
     {
         Task<IndexPageModel> BuildIndexPageModelAsync(QueryOptions options);
         Task<CreatePageModel> BuildCreatePageModelAsync();
-        Task<EditPageModel> BuildEditPageModelAsync(Guid id);
+        Task<EditPageModel> BuildEditPageModelAsync(Guid memberId);
+        Task<EditPageModel> BuildEditPageModelAsync(string userId);
     }
 }

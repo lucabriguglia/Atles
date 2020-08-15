@@ -3,6 +3,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Domain.Members;
 using Atlas.Models.Admin.Members;
 using Atlas.Models;
 using Microsoft.AspNetCore.Identity;
@@ -75,28 +76,40 @@ namespace Atlas.Data.Builders.Admin
             return result;
         }
 
-        public async Task<EditPageModel> BuildEditPageModelAsync(Guid id)
+        public async Task<EditPageModel> BuildEditPageModelAsync(Guid memberId)
         {
-            var result = new EditPageModel();
+            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == memberId);
 
-            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == id);
+            return await BuildEditPageModelAsync(member);
+        }
 
+        public async Task<EditPageModel> BuildEditPageModelAsync(string userId)
+        {
+            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userId);
+
+            return await BuildEditPageModelAsync(member);
+        }
+
+        private async Task<EditPageModel> BuildEditPageModelAsync(Member member)
+        {
             if (member == null)
             {
                 return null;
             }
 
-            result.Member = new EditPageModel.MemberModel
+            var result = new EditPageModel
             {
-                Id = member.Id,
-                DisplayName = member.DisplayName
-            };
-
-            result.Info = new EditPageModel.InfoModel
-            {
-                UserId = member.UserId,
-                Email = member.Email,
-                Status = member.Status
+                Member = new EditPageModel.MemberModel
+                {
+                    Id = member.Id, 
+                    DisplayName = member.DisplayName
+                },
+                Info = new EditPageModel.InfoModel
+                {
+                    UserId = member.UserId, 
+                    Email = member.Email, 
+                    Status = member.Status
+                }
             };
 
             var user = await _userManager.FindByIdAsync(member.UserId);

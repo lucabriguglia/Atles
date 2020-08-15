@@ -37,15 +37,5 @@ namespace Atlas.Domain
             SiteId = siteId;
             Data = JsonConvert.SerializeObject(data);
         }
-
-        public Event(EventBase @event)
-        {
-            Type = @event.GetType().Name;
-            TargetType = @event.TargetType;
-            TargetId = @event.TargetId;
-            MemberId = @event.MemberId;
-            SiteId = @event.SiteId;
-            Data = JsonConvert.SerializeObject(@event);
-        }
     }
 }

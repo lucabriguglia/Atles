@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Server.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Atlas.Domain.Sites.Commands;
 using Atlas.Domain.Sites;
@@ -8,10 +7,8 @@ using Atlas.Models.Admin.Site;
 
 namespace Atlas.Server.Controllers.Admin
 {
-    [Authorize(Policy = "Admin")]
     [Route("api/admin/sites")]
-    [ApiController]
-    public class SitesController : ControllerBase
+    public class SitesController : AdminControllerBase
     {
         private readonly IContextService _contextService;
         private readonly ISiteService _siteService;

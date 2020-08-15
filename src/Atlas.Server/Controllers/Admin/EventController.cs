@@ -1,16 +1,13 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Server.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using Atlas.Models.Admin.Events;
 
 namespace Atlas.Server.Controllers.Admin
 {
-    [Authorize(Policy = "Admin")]
     [Route("api/admin/events")]
-    [ApiController]
-    public class EventController : ControllerBase
+    public class EventController : AdminControllerBase
     {
         private readonly IContextService _contextService;
         private readonly IEventModelBuilder _modelBuilder;

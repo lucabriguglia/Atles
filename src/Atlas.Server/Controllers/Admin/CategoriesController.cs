@@ -5,15 +5,12 @@ using Atlas.Domain.Categories;
 using Atlas.Domain.Categories.Commands;
 using Atlas.Models.Admin.Categories;
 using Atlas.Server.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atlas.Server.Controllers.Admin
 {
-    [Authorize(Policy = "Admin")]
     [Route("api/admin/categories")]
-    [ApiController]
-    public class CategoriesController : ControllerBase
+    public class CategoriesController : AdminControllerBase
     {
         private readonly IContextService _contextService;
         private readonly ICategoryService _categoryService;
