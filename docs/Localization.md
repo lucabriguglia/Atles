@@ -1,4 +1,4 @@
-# Localization
+## Localization
 
 In order to localise the application in a different language, there are three reource files the need to be created as shwon below:
 Copy/paste the three default files and add the culture suffix.

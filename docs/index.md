@@ -9,3 +9,4 @@ Atlas is a forum software built with ASP.NET Core Blazor WebAssembly.
 - [Themes](Themes)
 - [Localization](Localization)
 - [Deployment](Deployment)
+- [Release Notes](Release-Notes)

@@ -1,4 +1,4 @@
-# Themes
+## Themes
 
 This section explains how to customise the design of the public website.
 
@@ -6,7 +6,7 @@ This section explains how to customise the design of the public website.
 - [Creating a custom Theme](#custom-theme)
 
 <a name="overview"></a>
-## Overview
+### Overview
 
 The look and feel of Atlas can be changed with a combination of Theme and CSS.
 You can use the same CSS file on diffrent Themes.
@@ -22,7 +22,7 @@ Assuming your custom Theme is "MyTheme" and your custom CSS is "mycss.css" (to b
 ```
 
 <a name="custom-theme"></a>
-## Creating a custom Theme
+### Creating a custom Theme
 
 You need to create a new sub-folder in the Themes folder.
 For convenience you can just copy/paste the Default Theme which contains all components:
