@@ -1,6 +1,5 @@
 ﻿@page "/admin/roles"
 
-@using System.ComponentModel.DataAnnotations
 @inherits Atlas.Client.Components.Admin.RolesPage
 
 @if (Model == null)
@@ -83,10 +82,7 @@ else
                     </div>
                     <div class="form-group">
                         <input type="submit" value="@EditButton" class="btn btn-primary" />
-                        @if (IsEdit)
-                        {
-                            <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
-                        }
+                        <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
                     </div>
                 </EditForm>
             </div>

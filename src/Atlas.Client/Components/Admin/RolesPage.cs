@@ -23,6 +23,8 @@ namespace Atlas.Client.Components.Admin
 
         protected override async Task OnInitializedAsync()
         {
+            DisplayForm = false;
+            DisplayMembers = false;
             IsEdit = false;
             Model = await ApiService.GetFromJsonAsync<IndexPageModel>("api/admin/roles/list");
         }
@@ -31,6 +33,9 @@ namespace Atlas.Client.Components.Admin
         {
             DisplayForm = true;
             DisplayMembers = false;
+            IsEdit = false;
+            Model.EditRole.Id = null;
+            Model.EditRole.Name = null;
             await JsRuntime.InvokeVoidAsync("scrollToTarget", "form");
         }
 
