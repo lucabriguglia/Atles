@@ -32,7 +32,7 @@ namespace Atlas.Data.Tests.Services
             var memberId = Guid.NewGuid();
 
             var category = new Category(categoryId, Guid.NewGuid(), "Category", 1, Guid.NewGuid());
-            var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
+            var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
             var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
@@ -100,7 +100,7 @@ namespace Atlas.Data.Tests.Services
             var topicId = Guid.NewGuid();
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
-            var forum = new Forum(forumId, categoryId, "Forum", "My Forum", 1);
+            var forum = new Forum(forumId, categoryId, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
             var reply = Post.CreateReply(Guid.NewGuid(), topicId, forumId, Guid.NewGuid(), "Content", StatusType.Published);
 
@@ -159,7 +159,7 @@ namespace Atlas.Data.Tests.Services
             var memberId = Guid.NewGuid();
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
-            var forum = new Forum(forumId, categoryId, "Forum", "My Forum", 1);
+            var forum = new Forum(forumId, categoryId, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(topicId, forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
             var reply = Post.CreateReply(Guid.NewGuid(), topicId, forumId, memberId, "Content", StatusType.Published);
             var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");

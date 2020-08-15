@@ -10,6 +10,7 @@ namespace Atlas.Domain.Posts
         public Guid Id { get; private set; }
         public Guid ForumId { get; private set; }
         public string Title { get; private set; }
+        public string Slug { get; private set; }
         public string Content { get; private set; }
         public int RepliesCount { get; private set; }
         public StatusType Status { get; private set; }
@@ -104,12 +105,18 @@ namespace Atlas.Domain.Posts
 
         public void Pin(bool pinned)
         {
-            Pinned = pinned;
+            if (IsTopic())
+            {
+                Pinned = pinned;
+            }
         }
 
         public void Lock(bool locked)
         {
-            Locked = locked;
+            if (IsTopic())
+            {
+                Locked = locked;
+            }
         }
 
         public void Delete()

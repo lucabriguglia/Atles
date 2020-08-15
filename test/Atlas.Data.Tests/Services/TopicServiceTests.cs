@@ -31,7 +31,7 @@ namespace Atlas.Data.Tests.Services
             var memberId = Guid.NewGuid();
 
             var category = new Category(categoryId, Guid.NewGuid(), "Category", 1, Guid.NewGuid());
-            var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
+            var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
             using (var dbContext = new AtlasDbContext(options))
@@ -93,7 +93,7 @@ namespace Atlas.Data.Tests.Services
             var forumId = Guid.NewGuid();
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
-            var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
+            var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
 
             using (var dbContext = new AtlasDbContext(options))
@@ -148,7 +148,7 @@ namespace Atlas.Data.Tests.Services
             var forumId = Guid.NewGuid();
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
-            var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
+            var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
 
             using (var dbContext = new AtlasDbContext(options))
@@ -197,7 +197,7 @@ namespace Atlas.Data.Tests.Services
             var forumId = Guid.NewGuid();
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
-            var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
+            var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "Content", StatusType.Published);
 
             using (var dbContext = new AtlasDbContext(options))
@@ -247,7 +247,7 @@ namespace Atlas.Data.Tests.Services
             var memberId = Guid.NewGuid();
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
-            var forum = new Forum(forumId, category.Id, "Forum", "My Forum", 1);
+            var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(forumId, memberId, "Title", "Content", StatusType.Published);
             var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
 

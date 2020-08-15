@@ -288,7 +288,7 @@ namespace Atlas.Server.Services
                 }));
 
             // Forums
-            var forumWelcome = new Forum(categoryGeneral.Id, "Welcome", "Welcome Forum", 1);
+            var forumWelcome = new Forum(categoryGeneral.Id, "Welcome", "welcome", "Welcome Forum", 1);
             _dbContext.Forums.Add(forumWelcome);
             _dbContext.Events.Add(new Event(site.Id,
                 null,
@@ -303,7 +303,7 @@ namespace Atlas.Server.Services
                     forumWelcome.SortOrder
                 }));
 
-            var forumMembersOnly = new Forum(categoryGeneral.Id, "Members Only", "Members Only Forum", 2, permissionSetMembersOnly.Id);
+            var forumMembersOnly = new Forum(categoryGeneral.Id, "Members Only", "members-only", "Members Only Forum", 2, permissionSetMembersOnly.Id);
             _dbContext.Forums.Add(forumMembersOnly);
             _dbContext.Events.Add(new Event(site.Id,
                 null,
@@ -318,7 +318,7 @@ namespace Atlas.Server.Services
                     forumMembersOnly.SortOrder
                 }));
 
-            var forumAdminOnly = new Forum(categoryGeneral.Id, "Admin Only", "Admin Only Forum", 3, permissionSetAdminOnly.Id);
+            var forumAdminOnly = new Forum(categoryGeneral.Id, "Admin Only", "admin-only", "Admin Only Forum", 3, permissionSetAdminOnly.Id);
             _dbContext.Forums.Add(forumAdminOnly);
             _dbContext.Events.Add(new Event(site.Id,
                 null,

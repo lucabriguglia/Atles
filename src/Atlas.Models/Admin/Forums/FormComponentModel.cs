@@ -21,6 +21,10 @@ namespace Atlas.Models.Admin.Forums
             [StringLength(50)]
             public string Name { get; set; }
 
+            [Required]
+            [StringLength(50)]
+            public string Slug { get; set; }
+
             [StringLength(200)]
             public string Description { get; set; }
 

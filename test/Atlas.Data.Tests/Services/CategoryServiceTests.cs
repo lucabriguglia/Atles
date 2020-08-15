@@ -213,8 +213,8 @@ namespace Atlas.Data.Tests.Services
             var category3 = new Category(siteId, "Category 3", 3, Guid.NewGuid());
             var category4 = new Category(siteId, "Category 4", 4, Guid.NewGuid());
 
-            var forum1 = new Forum(category2.Id, "Forum 1", "My Forum", 1);
-            var forum2 = new Forum(category2.Id, "Forum 2", "My Forum", 2);
+            var forum1 = new Forum(category2.Id, "Forum 1", "my-forum-1", "My Forum", 1);
+            var forum2 = new Forum(category2.Id, "Forum 2", "my-forum-2", "My Forum", 2);
 
             using (var dbContext = new AtlasDbContext(options))
             {

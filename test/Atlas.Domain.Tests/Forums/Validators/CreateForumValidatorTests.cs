@@ -54,6 +54,47 @@ namespace Atlas.Domain.Tests.Forums.Validators
         }
 
         [Test]
+        public void Should_have_validation_error_when_slug_is_empty()
+        {
+            var command = Fixture.Build<CreateForum>().With(x => x.Slug, string.Empty).Create();
+
+            var forumRules = new Mock<IForumRules>();
+            var permissionSetRules = new Mock<IPermissionSetRules>();
+
+            var sut = new CreateForumValidator(forumRules.Object, permissionSetRules.Object);
+
+            sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
+        }
+
+        [Test]
+        public void Should_have_validation_error_when_slug_is_too_long()
+        {
+            var command = Fixture.Build<CreateForum>().With(x => x.Slug, new string('*', 51)).Create();
+
+            var forumRules = new Mock<IForumRules>();
+            var permissionSetRules = new Mock<IPermissionSetRules>();
+
+            var sut = new CreateForumValidator(forumRules.Object, permissionSetRules.Object);
+
+            sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
+        }
+
+        [Test]
+        public void Should_have_validation_error_when_slug_is_not_unique()
+        {
+            var command = Fixture.Create<CreateForum>();
+
+            var forumRules = new Mock<IForumRules>();
+            forumRules.Setup(x => x.IsSlugUniqueAsync(command.SiteId, command.Slug)).ReturnsAsync(false);
+
+            var permissionSetRules = new Mock<IPermissionSetRules>();
+
+            var sut = new CreateForumValidator(forumRules.Object, permissionSetRules.Object);
+
+            sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
+        }
+
+        [Test]
         public void Should_have_validation_error_when_description_is_too_long()
         {
             var command = Fixture.Build<CreateForum>().With(x => x.Description, new string('*', 201)).Create();

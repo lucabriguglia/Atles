@@ -45,7 +45,7 @@ namespace Atlas.Data.Tests.Rules
             using (var dbContext = new AtlasDbContext(options))
             {
                 var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
-                var forum = new Forum(categoryId, forumName, "My Forum", 1);
+                var forum = new Forum(categoryId, forumName, "My Forum", "my-forum", 1);
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
                 await dbContext.SaveChangesAsync();
@@ -71,8 +71,8 @@ namespace Atlas.Data.Tests.Rules
             using (var dbContext = new AtlasDbContext(options))
             {
                 var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
-                var forum1 = new Forum(categoryId, "Forum 1", "My Forum", 1);
-                var forum2 = new Forum(forumId, categoryId, "Forum 2", "My Forum", 2);
+                var forum1 = new Forum(categoryId, "Forum 1", "My Forum", "my-forum", 1);
+                var forum2 = new Forum(forumId, categoryId, "Forum 2", "my-forum-2", "My Forum", 2);
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum1);
                 dbContext.Forums.Add(forum2);
@@ -93,7 +93,7 @@ namespace Atlas.Data.Tests.Rules
         {
             var options = Shared.CreateContextOptions();
             var category = new Category(Guid.NewGuid(), Guid.NewGuid(), "Category", 1, Guid.NewGuid());
-            var forum = new Forum(Guid.NewGuid(), category.Id, "Forum", "My Forum", 1);
+            var forum = new Forum(Guid.NewGuid(), category.Id, "Forum", "my-forum", "My Forum", 1);
 
             using (var dbContext = new AtlasDbContext(options))
             {

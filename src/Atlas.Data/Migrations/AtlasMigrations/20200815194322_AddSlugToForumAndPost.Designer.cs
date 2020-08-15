@@ -4,14 +4,16 @@ using Atlas.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Atlas.Data.Migrations.AtlasMigrations
 {
     [DbContext(typeof(AtlasDbContext))]
-    partial class AtlasDbContextModelSnapshot : ModelSnapshot
+    [Migration("20200815194322_AddSlugToForumAndPost")]
+    partial class AddSlugToForumAndPost
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder

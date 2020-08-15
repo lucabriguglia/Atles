@@ -19,6 +19,11 @@
                 <ValidationMessage For="@(() => Model.Forum.Name)" />
             </div>
             <div class="form-group">
+                <label for="slug" class="control-label">@Loc["Slug"]</label>
+                <InputText id="slug" @bind-Value="Model.Forum.Slug" Class="form-control" />
+                <ValidationMessage For="@(() => Model.Forum.Slug)" />
+            </div>
+            <div class="form-group">
                 <label for="description" class="control-label">@Loc["Description"]</label>
                 <InputTextArea id="description" @bind-Value="Model.Forum.Description" Class="form-control" Rows="5" />
                 <ValidationMessage For="@(() => Model.Forum.Description)" />

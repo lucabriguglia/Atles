@@ -1,4 +1,5 @@
-﻿using System.Text;
+﻿using System.Globalization;
+using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Atlas.Domain
@@ -10,7 +11,7 @@ namespace Atlas.Domain
     {
         public static string GenerateSlug(this string phrase)
         {
-            var str = phrase.RemoveAccent().ToLower();
+            var str = phrase.RemoveAccents().ToLower();
             // invalid chars           
             str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
             // convert multiple spaces into one space   
@@ -21,10 +22,18 @@ namespace Atlas.Domain
             return str;
         }
 
-        public static string RemoveAccent(this string txt)
+        private static string RemoveAccents(this string text)
         {
-            var bytes = Encoding.GetEncoding("Cyrillic").GetBytes(txt);
-            return Encoding.ASCII.GetString(bytes);
+            var sbReturn = new StringBuilder();
+            var arrayText = text.Normalize(NormalizationForm.FormD).ToCharArray();
+            foreach (var letter in arrayText)
+            {
+                if (CharUnicodeInfo.GetUnicodeCategory(letter) != UnicodeCategory.NonSpacingMark)
+                {
+                    sbReturn.Append(letter);
+                }
+            }
+            return sbReturn.ToString();
         }
     }
 }

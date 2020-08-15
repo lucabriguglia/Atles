@@ -123,6 +123,9 @@
   <data name="A forum with the same name already exists." xml:space="preserve">
     <value>A forum with the same name already exists.</value>
   </data>
+  <data name="A forum with the same slug already exists." xml:space="preserve">
+    <value>A forum with the same slug already exists.</value>
+  </data>
   <data name="A member with the same display name already exists." xml:space="preserve">
     <value>A member with the same display name already exists.</value>
   </data>
@@ -290,6 +293,9 @@
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
+  </data>
+  <data name="Slug" xml:space="preserve">
+    <value>Slug</value>
   </data>
   <data name="Status" xml:space="preserve">
     <value>Status</value>

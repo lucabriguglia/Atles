@@ -44,5 +44,24 @@ namespace Atlas.Data.Rules
                                x.Status == StatusType.Published);
             return any;
         }
+
+        public async Task<bool> IsSlugUniqueAsync(Guid siteId, string slug)
+        {
+            var any = await _dbContext.Forums
+                .AnyAsync(x => x.Category.SiteId == siteId &&
+                               x.Slug == slug &&
+                               x.Status != StatusType.Deleted);
+            return !any;
+        }
+
+        public async Task<bool> IsSlugUniqueAsync(Guid siteId, string slug, Guid id)
+        {
+            var any = await _dbContext.Forums
+                .AnyAsync(x => x.Category.SiteId == siteId &&
+                               x.Slug == slug &&
+                               x.Status != StatusType.Deleted &&
+                               x.Id != id);
+            return !any;
+        }
     }
 }

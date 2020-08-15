@@ -13,14 +13,16 @@ namespace Atlas.Domain.Tests.Forums
         {
             var categoryId = Guid.NewGuid();
             const string name = "New Forum";
+            const string slug = "new-forum";
             const string description = "New forum description";
             const int sortOrder = 2;
             var permissionSetId = Guid.NewGuid();
 
-            var sut = new Forum(categoryId, name, description, sortOrder, permissionSetId);
+            var sut = new Forum(categoryId, name, slug, description, sortOrder, permissionSetId);
 
             Assert.AreEqual(categoryId, sut.CategoryId, nameof(sut.CategoryId));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
+            Assert.AreEqual(slug, sut.Slug, nameof(sut.Slug));
             Assert.AreEqual(description, sut.Description, nameof(sut.Description));
             Assert.AreEqual(sortOrder, sut.SortOrder, nameof(sut.SortOrder));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
@@ -33,15 +35,17 @@ namespace Atlas.Domain.Tests.Forums
             var id = Guid.NewGuid();
             var categoryId = Guid.NewGuid();
             const string name = "New Forum";
+            const string slug = "new-forum";
             const string description = "New forum description";
             const int sortOrder = 2;
             var permissionSetId = Guid.NewGuid();
 
-            var sut = new Forum(id, categoryId, name, description, sortOrder, permissionSetId);
+            var sut = new Forum(id, categoryId, name, slug, description, sortOrder, permissionSetId);
 
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
             Assert.AreEqual(categoryId, sut.CategoryId, nameof(sut.CategoryId));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
+            Assert.AreEqual(slug, sut.Slug, nameof(sut.Slug));
             Assert.AreEqual(description, sut.Description, nameof(sut.Description));
             Assert.AreEqual(sortOrder, sut.SortOrder, nameof(sut.SortOrder));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
@@ -57,11 +61,13 @@ namespace Atlas.Domain.Tests.Forums
             const string name = "Updated Forum";
             const string description = "Updated Forum";
             var permissionSetId = Guid.NewGuid();
+            const string slug = "updated-forum";
 
-            sut.UpdateDetails(categoryId, name, description, permissionSetId);
+            sut.UpdateDetails(categoryId, name, slug, description, permissionSetId);
 
             Assert.AreEqual(categoryId, sut.CategoryId, nameof(sut.CategoryId));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
+            Assert.AreEqual(slug, sut.Slug, nameof(sut.Slug));
             Assert.AreEqual(description, sut.Description, nameof(sut.Description));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
         }
@@ -93,7 +99,7 @@ namespace Atlas.Domain.Tests.Forums
         [Test]
         public void Move_up_throws_exception_when_sort_order_is_one()
         {
-            var sut = new Forum(Guid.NewGuid(), "My Forum", "My Forum", 1);
+            var sut = new Forum(Guid.NewGuid(), "My Forum", "my-forum", "My Forum", 1);
 
             Assert.Throws<ApplicationException>(() => sut.MoveUp());
         }

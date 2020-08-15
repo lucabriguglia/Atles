@@ -14,6 +14,12 @@ namespace Atlas.Domain.Forums.Validators
                 .MustAsync((c, p, cancellation) => rules.IsNameUniqueAsync(c.SiteId, c.CategoryId, p, c.Id))
                     .WithMessage(c => $"A forum with name {c.Name} already exists.");
 
+            RuleFor(c => c.Slug)
+                .NotEmpty().WithMessage("Forum slug is required.")
+                .Length(1, 50).WithMessage("Forum slug must be at least 1 and at max 50 characters long.")
+                .MustAsync((c, p, cancellation) => rules.IsSlugUniqueAsync(c.SiteId, p, c.Id))
+                .WithMessage(c => $"A forum with slug {c.Slug} already exists.");
+
             RuleFor(c => c.Description)
                 .Length(1, 200).WithMessage("Forum description length must be between 1 and 200 characters.")
                 .When(c => !string.IsNullOrWhiteSpace(c.Description));

@@ -42,6 +42,7 @@ namespace Atlas.Data.Services
             var forum = new Forum(command.Id,
                 command.CategoryId,
                 command.Name,
+                command.Slug,
                 command.Description,
                 sortOrder,
                 command.PermissionSetId);
@@ -55,6 +56,8 @@ namespace Atlas.Data.Services
                 new
                 {
                     forum.Name,
+                    forum.Slug,
+                    forum.Description,
                     forum.CategoryId,
                     forum.PermissionSetId,
                     forum.SortOrder
@@ -94,7 +97,7 @@ namespace Atlas.Data.Services
                 forum.Reorder(newCategoryForumsCount + 1);
             }
 
-            forum.UpdateDetails(command.CategoryId, command.Name, command.Description, command.PermissionSetId);
+            forum.UpdateDetails(command.CategoryId, command.Name, command.Slug, command.Description, command.PermissionSetId);
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Updated,
@@ -103,6 +106,8 @@ namespace Atlas.Data.Services
                 new
                 {
                     forum.Name,
+                    forum.Slug,
+                    forum.Description,
                     forum.CategoryId,
                     forum.PermissionSetId
                 }));

@@ -70,6 +70,7 @@ namespace Atlas.Server.Controllers.Admin
             {
                 CategoryId = model.CategoryId,
                 Name = model.Name,
+                Slug = model.Slug,
                 Description = model.Description,
                 PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
                 SiteId = site.Id,
@@ -107,6 +108,7 @@ namespace Atlas.Server.Controllers.Admin
                 Id = model.Id,
                 CategoryId = model.CategoryId,
                 Name = model.Name,
+                Slug = model.Slug,
                 Description = model.Description,
                 PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
                 SiteId = site.Id,
@@ -188,6 +190,22 @@ namespace Atlas.Server.Controllers.Admin
             var site = await _contextService.CurrentSiteAsync();
             var isNameUnique = await _forumRules.IsNameUniqueAsync(site.Id, categoryId, name, id);
             return Ok(isNameUnique);
+        }
+
+        [HttpGet("is-slug-unique/{slug}")]
+        public async Task<IActionResult> IsNameUnique(string slug)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var isSlugUnique = await _forumRules.IsSlugUniqueAsync(site.Id, slug);
+            return Ok(isSlugUnique);
+        }
+
+        [HttpGet("is-slug-unique/{slug}/{id}")]
+        public async Task<IActionResult> IsNameUnique(string slug, Guid id)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var isSlugUnique = await _forumRules.IsSlugUniqueAsync(site.Id, slug, id);
+            return Ok(isSlugUnique);
         }
     }
 }

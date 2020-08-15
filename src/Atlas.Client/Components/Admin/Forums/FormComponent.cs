@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Atlas.Domain;
 using Atlas.Models.Admin.Forums;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
+using Microsoft.AspNetCore.Components.Web;
 
 namespace Atlas.Client.Components.Admin.Forums
 {
@@ -13,7 +15,9 @@ namespace Atlas.Client.Components.Admin.Forums
 
         protected EditContext EditContext;
         private ValidationMessageStore _validationMessageStore;
+
         private string _currentName;
+        private string _currentSlug;
 
         protected override void OnInitialized()
         {
@@ -21,6 +25,7 @@ namespace Atlas.Client.Components.Admin.Forums
             EditContext.OnFieldChanged += HandleFieldChanged;
             _validationMessageStore = new ValidationMessageStore(EditContext);
             _currentName = Model.Forum.Name;
+            _currentSlug = Model.Forum.Slug;
         }
 
         private void HandleFieldChanged(object sender, FieldChangedEventArgs e)
@@ -32,16 +37,30 @@ namespace Atlas.Client.Components.Admin.Forums
         {
             if (EditContext.Validate())
             {
-                if (await NameIsUniqueAsync(EditContext))
+                var nameIsUnique = await NameIsUniqueAsync(EditContext);
+                var slugIsUnique = await SlugIsUniqueAsync(EditContext);
+
+                if (nameIsUnique && slugIsUnique)
                 {
                     await OnValidSubmit.InvokeAsync(null);
                 }
                 else
                 {
-                    var fieldIdentifier = new FieldIdentifier(EditContext.Model, "Name");
-                    _validationMessageStore.Clear(fieldIdentifier);
-                    _validationMessageStore.Add(fieldIdentifier, Loc["A forum with the same name already exists."]);
-                    EditContext.NotifyValidationStateChanged();
+                    if (!nameIsUnique)
+                    {
+                        var fieldIdentifier = new FieldIdentifier(EditContext.Model, "Name");
+                        _validationMessageStore.Clear(fieldIdentifier);
+                        _validationMessageStore.Add(fieldIdentifier, Loc["A forum with the same name already exists."]);
+                        EditContext.NotifyValidationStateChanged();
+                    }
+
+                    if (!slugIsUnique)
+                    {
+                        var fieldIdentifier = new FieldIdentifier(EditContext.Model, "Slug");
+                        _validationMessageStore.Clear(fieldIdentifier);
+                        _validationMessageStore.Add(fieldIdentifier, Loc["A forum with the same slug already exists."]);
+                        EditContext.NotifyValidationStateChanged();
+                    }
                 }
             }
         }
@@ -54,6 +73,16 @@ namespace Atlas.Client.Components.Admin.Forums
             var isNameUnique = nameVal == _currentName || await ApiService.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{Model.Forum.CategoryId}/{nameVal}");
 
             return isNameUnique;
+        }
+
+        private async Task<bool> SlugIsUniqueAsync(EditContext editContext)
+        {
+            var slugProp = editContext.Model.GetType().GetProperty("Slug");
+            var slugVal = slugProp.GetValue(editContext.Model).ToString();
+
+            var isSlugUnique = slugVal == _currentSlug || await ApiService.GetFromJsonAsync<bool>($"api/admin/forums/is-slug-unique/{slugVal}");
+
+            return isSlugUnique;
         }
 
         public void Dispose()

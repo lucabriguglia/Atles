@@ -141,6 +141,7 @@ namespace Atlas.Data.Builders.Admin
                     Id = forum.Id,
                     CategoryId = forum.CategoryId,
                     Name = forum.Name,
+                    Slug = forum.Slug,
                     Description = forum.Description,
                     PermissionSetId = forum.PermissionSetId ?? Guid.Empty
                 }
