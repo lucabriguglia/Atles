@@ -6,6 +6,7 @@ using Atlas.Models.Public;
 using Atlas.Models.Public.Members;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Atlas.Server.Controllers.Public
 {
@@ -17,16 +18,19 @@ namespace Atlas.Server.Controllers.Public
         private readonly IMemberModelBuilder _modelBuilder;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ISecurityService _securityService;
+        private readonly ILogger<MembersController> _logger;
 
         public MembersController(IContextService contextService,
             IMemberModelBuilder modelBuilder, 
             IPermissionModelBuilder permissionModelBuilder, 
-            ISecurityService securityService)
+            ISecurityService securityService, 
+            ILogger<MembersController> logger)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
             _permissionModelBuilder = permissionModelBuilder;
             _securityService = securityService;
+            _logger = logger;
         }
 
         [HttpGet]
@@ -68,9 +72,21 @@ namespace Atlas.Server.Controllers.Public
                 }
             }
 
-            var result = await _modelBuilder.BuildMemberPageModelAsync(memberId, accessibleForumIds);
+            var model = await _modelBuilder.BuildMemberPageModelAsync(memberId, accessibleForumIds);
 
-            return result;
+            if (model == null)
+            {
+                _logger.LogWarning("Member not found.", new
+                {
+                    SiteId = site.Id,
+                    MemebrId = memberId,
+                    User = User.Identity.Name
+                });
+
+                return NotFound();
+            }
+
+            return model;
         }
     }
 }

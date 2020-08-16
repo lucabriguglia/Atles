@@ -14,6 +14,7 @@ using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Atlas.Server.Controllers.Public
 {
@@ -28,6 +29,7 @@ namespace Atlas.Server.Controllers.Public
         private readonly ISecurityService _securityService;
         private readonly AtlasDbContext _dbContext;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
+        private readonly ILogger<TopicsController> _logger;
 
         public TopicsController(IContextService contextService,
             ITopicModelBuilder topicModelBuilder,
@@ -35,7 +37,8 @@ namespace Atlas.Server.Controllers.Public
             ITopicService topicService,
             ISecurityService securityService, 
             AtlasDbContext dbContext, 
-            IPermissionModelBuilder permissionModelBuilder)
+            IPermissionModelBuilder permissionModelBuilder, 
+            ILogger<TopicsController> logger)
         {
             _contextService = contextService;
             _topicModelBuilder = topicModelBuilder;
@@ -44,7 +47,7 @@ namespace Atlas.Server.Controllers.Public
             _securityService = securityService;
             _dbContext = dbContext;
             _permissionModelBuilder = permissionModelBuilder;
-            
+            _logger = logger;
         }
 
         [HttpGet("{forumSlug}/{topicSlug}")]
@@ -56,6 +59,14 @@ namespace Atlas.Server.Controllers.Public
 
             if (model == null)
             {
+                _logger.LogWarning("Topic not found.", new
+                {
+                    SiteId = site.Id,
+                    ForumSlug = forumSlug,
+                    TopicSlug = topicSlug,
+                    User = User.Identity.Name
+                });
+
                 return NotFound();
             }
 
@@ -65,6 +76,14 @@ namespace Atlas.Server.Controllers.Public
 
             if (!canRead)
             {
+                _logger.LogWarning("Unauthorized access to topic", new
+                {
+                    SiteId = site.Id,
+                    ForumSlug = forumSlug,
+                    TopicSlug = topicSlug,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
@@ -87,6 +106,14 @@ namespace Atlas.Server.Controllers.Public
 
             if (!canRead)
             {
+                _logger.LogWarning("Unauthorized access to topic replies", new
+                {
+                    SiteId = site.Id,
+                    ForumId = forumId,
+                    TopicId = topicId,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
@@ -105,6 +132,13 @@ namespace Atlas.Server.Controllers.Public
 
             if (model == null)
             {
+                _logger.LogWarning("Forum for new topic not found.", new
+                {
+                    SiteId = site.Id,
+                    ForumId = forumId,
+                    User = User.Identity.Name
+                });
+
                 return NotFound();
             }
 
@@ -113,6 +147,13 @@ namespace Atlas.Server.Controllers.Public
 
             if (!canPost)
             {
+                _logger.LogWarning("Unauthorized access to new topic", new
+                {
+                    SiteId = site.Id,
+                    ForumId = forumId,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
@@ -130,6 +171,14 @@ namespace Atlas.Server.Controllers.Public
 
             if (model == null)
             {
+                _logger.LogWarning("Topic to edit not found.", new
+                {
+                    SiteId = site.Id,
+                    ForumId = forumId,
+                    TopicId = topicId,
+                    User = User.Identity.Name
+                });
+
                 return NotFound();
             }
 
@@ -140,6 +189,14 @@ namespace Atlas.Server.Controllers.Public
 
             if (!authorized)
             {
+                _logger.LogWarning("Unauthorized access to edit topic", new
+                {
+                    SiteId = site.Id,
+                    ForumId = forumId,
+                    TopicId = topicId,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
@@ -158,6 +215,13 @@ namespace Atlas.Server.Controllers.Public
 
             if (!canPost)
             {
+                _logger.LogWarning("Unauthorized access to create topic", new
+                {
+                    SiteId = site.Id,
+                    ForumId = model.Forum?.Id,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
@@ -211,6 +275,14 @@ namespace Atlas.Server.Controllers.Public
 
             if (!authorized)
             {
+                _logger.LogWarning("Unauthorized access to update topic", new
+                {
+                    SiteId = site.Id,
+                    ForumId = model.Forum?.Id,
+                    TopicId = model.Topic?.Id,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
@@ -240,6 +312,14 @@ namespace Atlas.Server.Controllers.Public
 
             if (!canModerate)
             {
+                _logger.LogWarning("Unauthorized access to pin topic", new
+                {
+                    SiteId = site.Id,
+                    ForumId = forumId,
+                    TopicId = topicId,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
@@ -269,6 +349,14 @@ namespace Atlas.Server.Controllers.Public
 
             if (!canModerate)
             {
+                _logger.LogWarning("Unauthorized access to lock topic", new
+                {
+                    SiteId = site.Id,
+                    ForumId = forumId,
+                    TopicId = topicId,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
@@ -309,6 +397,14 @@ namespace Atlas.Server.Controllers.Public
 
             if (!authorized)
             {
+                _logger.LogWarning("Unauthorized access to delete topic", new
+                {
+                    SiteId = site.Id,
+                    ForumId = forumId,
+                    TopicId = topicId,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 

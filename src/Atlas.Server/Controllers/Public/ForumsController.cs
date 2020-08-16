@@ -6,6 +6,7 @@ using Atlas.Models.Public;
 using Atlas.Models.Public.Forums;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Atlas.Server.Controllers.Public
 {
@@ -17,16 +18,19 @@ namespace Atlas.Server.Controllers.Public
         private readonly IForumModelBuilder _modelBuilder;
         private readonly ISecurityService _securityService;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
+        private readonly ILogger<ForumsController> _logger;
 
         public ForumsController(IContextService contextService,
             IForumModelBuilder modelBuilder,
             ISecurityService securityService,
-            IPermissionModelBuilder permissionModelBuilder)
+            IPermissionModelBuilder permissionModelBuilder, 
+            ILogger<ForumsController> logger)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
             _securityService = securityService;
             _permissionModelBuilder = permissionModelBuilder;
+            _logger = logger;
         }
 
         [HttpGet("{slug}")]
@@ -38,6 +42,13 @@ namespace Atlas.Server.Controllers.Public
 
             if (model == null)
             {
+                _logger.LogWarning("Forum not found.", new
+                {
+                    SiteId = site.Id,
+                    ForumSlug = slug,
+                    User = User.Identity.Name
+                });
+
                 return NotFound();
             }
 
@@ -48,6 +59,13 @@ namespace Atlas.Server.Controllers.Public
 
             if (!canViewForum || !canViewTopics)
             {
+                _logger.LogWarning("Unauthorized access to forum.", new
+                {
+                    SiteId = site.Id,
+                    ForumSlug = slug,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
@@ -69,6 +87,13 @@ namespace Atlas.Server.Controllers.Public
 
             if (!canViewForum || !canViewTopics)
             {
+                _logger.LogWarning("Unauthorized access to forum topics.", new
+                {
+                    SiteId = site.Id,
+                    ForumId = id,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 

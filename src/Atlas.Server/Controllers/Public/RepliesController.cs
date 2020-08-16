@@ -12,6 +12,7 @@ using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Atlas.Server.Controllers.Public
 {
@@ -25,18 +26,21 @@ namespace Atlas.Server.Controllers.Public
         private readonly ISecurityService _securityService;
         private readonly AtlasDbContext _dbContext;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
+        private readonly ILogger<RepliesController> _logger;
 
         public RepliesController(IContextService contextService,
             IReplyService replyService, 
             ISecurityService securityService, 
             AtlasDbContext dbContext, 
-            IPermissionModelBuilder permissionModelBuilder)
+            IPermissionModelBuilder permissionModelBuilder, 
+            ILogger<RepliesController> logger)
         {
             _contextService = contextService;
             _replyService = replyService;
             _securityService = securityService;
             _dbContext = dbContext;
             _permissionModelBuilder = permissionModelBuilder;
+            _logger = logger;
         }
 
         [HttpPost("create-reply")]
@@ -50,6 +54,14 @@ namespace Atlas.Server.Controllers.Public
 
             if (!canReply)
             {
+                _logger.LogWarning("Unauthorized access to create reply.", new
+                {
+                    SiteId = site.Id,
+                    ForumId = model.Forum?.Id,
+                    TopicId = model.Topic?.Id,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
@@ -102,6 +114,15 @@ namespace Atlas.Server.Controllers.Public
 
             if (!authorized)
             {
+                _logger.LogWarning("Unauthorized access to update reply.", new
+                {
+                    SiteId = site.Id,
+                    ForumId = model.Forum?.Id,
+                    TopicId = model.Topic?.Id,
+                    ReplyId = model.Post?.Id,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
@@ -142,6 +163,15 @@ namespace Atlas.Server.Controllers.Public
 
             if (!authorized)
             {
+                _logger.LogWarning("Unauthorized access to delete reply.", new
+                {
+                    SiteId = site.Id,
+                    ForumId = forumId,
+                    TopicId = topicId,
+                    ReplyId = replyId,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 

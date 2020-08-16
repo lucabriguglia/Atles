@@ -5,6 +5,7 @@ using Atlas.Models.Public.Members;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 
 namespace Atlas.Server.Controllers.Public
 {
@@ -17,16 +18,19 @@ namespace Atlas.Server.Controllers.Public
         private readonly IMemberModelBuilder _modelBuilder;
         private readonly IMemberService _memberService;
         private readonly IMemberRules _memberRules;
+        private readonly ILogger<SettingsController> _logger;
 
         public SettingsController(IContextService contextService, 
             IMemberModelBuilder modelBuilder,
             IMemberService memberService, 
-            IMemberRules memberRules)
+            IMemberRules memberRules, 
+            ILogger<SettingsController> logger)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
             _memberService = memberService;
             _memberRules = memberRules;
+            _logger = logger;
         }
 
         [HttpGet("edit")]
@@ -47,6 +51,13 @@ namespace Atlas.Server.Controllers.Public
 
             if (model.Member.Id != member.Id)
             {
+                _logger.LogWarning("Unauthorized access to update settings.", new
+                {
+                    SiteId = site.Id,
+                    MemberId = model.Member?.Id,
+                    User = User.Identity.Name
+                });
+
                 return Unauthorized();
             }
 
