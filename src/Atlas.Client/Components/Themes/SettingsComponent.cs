@@ -12,7 +12,6 @@ namespace Atlas.Client.Components.Themes
         protected ValidationMessageStore ValidationMessageStore { get; set; }
         protected string CurrentDisplayName { get; set; }
 
-        protected bool Savings { get; set; }
         protected bool Saved { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -29,7 +28,7 @@ namespace Atlas.Client.Components.Themes
 
         protected async Task UpdateAsync()
         {
-            Savings = true;
+            SavingData = true;
             Saved = false;
 
             if (EditContext.Validate())
@@ -37,13 +36,13 @@ namespace Atlas.Client.Components.Themes
                 if (await NameIsUniqueAsync(EditContext))
                 {
                     await ApiService.PostAsJsonAsync("api/public/settings/update", Model);
-                    Savings = false;
+                    SavingData = false;
                     Saved = true;
                     await OnInitializedAsync();
                 }
                 else
                 {
-                    Savings = false;
+                    SavingData = false;
                     var fieldIdentifier = new FieldIdentifier(EditContext.Model, "DisplayName");
                     ValidationMessageStore.Clear(fieldIdentifier);
                     ValidationMessageStore.Add(fieldIdentifier, Loc["Display name already taken."]);

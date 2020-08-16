@@ -29,10 +29,20 @@ else
                     </div>
                     <Editor @bind-Value="@Model.Topic.Content" Rows="20"></Editor>
                     <div class="form-group">
-                        <input type="submit" value="@ButtonText" class="btn btn-primary" />
-                        <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
-                        <div class="small float-right mt-2">
-                            <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>@Loc["Guide"]</a>
+                        <div class="row">
+                            <div class="col">
+                                <input type="submit" value="@ButtonText" class="btn btn-primary @CssClassDisabled" />
+                                <button type="button" class="btn btn-secondary @CssClassDisabled" @onclick="Cancel">@Loc["Cancel"]</button>
+                            </div>
+                            <div class="col text-center">
+                                @if (SavingData)
+                                {
+                                    <Loading />
+                                }
+                            </div>
+                            <div class="col small text-right mt-2">
+                                <a href="https://www.markdownguide.org/cheat-sheet" target="_blank"><i class="fab fa-markdown mr-2" style="font-size: 1.5rem; vertical-align: middle;"></i>@Loc["Guide"]</a>
+                            </div>
                         </div>
                     </div>
                     <ValidationSummary />

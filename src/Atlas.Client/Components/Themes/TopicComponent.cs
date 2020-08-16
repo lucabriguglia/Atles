@@ -47,7 +47,6 @@ namespace Atlas.Client.Components.Themes
         protected ClaimsPrincipal CurrentUser { get; set; }
         protected string CurrentUserId { get; set; } = Guid.Empty.ToString();
 
-        protected bool Savings { get; set; }
         protected string Search { get; set; }
         protected int CurrentPage { get; set; } = 1;
         protected bool DisplayPage { get; set; }
@@ -143,15 +142,11 @@ namespace Atlas.Client.Components.Themes
 
         protected async Task SaveReplyAsync()
         {
-            Savings = true;
-
             var requestUri = Model.Post.Id != null
                 ? "api/public/replies/update-reply"
                 : "api/public/replies/create-reply";
 
-            await ApiService.PostAsJsonAsync(requestUri, Model);
-
-            Savings = false;
+            await SaveDataAsync(() => ApiService.PostAsJsonAsync(requestUri, Model));
 
             if (Model.Post.Id != null)
             {

@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Text.Json;
 using System.Threading.Tasks;
 using Atlas.Client.Services;
-using Atlas.Models.Public;
 using Atlas.Models.Public.Posts;
 using Microsoft.AspNetCore.Components;
 
@@ -46,7 +44,7 @@ namespace Atlas.Client.Components.Themes
                 ? "api/public/topics/update-topic"
                 : "api/public/topics/create-topic";
 
-            var response = await ApiService.PostAsJsonAsync(requestUri, Model);
+            var response = await SaveDataAsync(() => ApiService.PostAsJsonAsync(requestUri, Model));
             var topicSlug = await response.Content.ReadAsStringAsync();
 
             Navigation.NavigateTo(Url.Topic(Model.Forum.Slug, topicSlug));
