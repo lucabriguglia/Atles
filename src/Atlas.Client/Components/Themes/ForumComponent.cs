@@ -1,5 +1,4 @@
 ﻿using Atlas.Models;
-using Atlas.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
@@ -11,7 +10,8 @@ namespace Atlas.Client.Components.Themes
 {
     public abstract class ForumComponent : ThemeComponentBase
     {
-        [Parameter] public Guid Id { get; set; }
+        [Parameter] public Guid? Id { get; set; }
+        [Parameter] public string Slug { get; set; }
 
         protected ForumPageModel Model { get; set; }
         protected int CurrentPage { get; set; } = 1;
@@ -22,7 +22,7 @@ namespace Atlas.Client.Components.Themes
         {
             try
             {
-                Model = await ApiService.GetFromJsonAsync<ForumPageModel>($"api/public/forums/{Id}?page=1");
+                Model = await ApiService.GetFromJsonAsync<ForumPageModel>($"api/public/forums/{Slug}?page=1");
                 DisplayPage = true;
             }
             catch (Exception)
@@ -65,7 +65,7 @@ namespace Atlas.Client.Components.Themes
 
         private async Task LoadTopicsAsync()
         {
-            Model.Topics = await ApiService.GetFromJsonAsync<PaginatedData<ForumPageModel.TopicModel>>($"api/public/forums/{Id}/topics?page={CurrentPage}&search={Search}");
+            Model.Topics = await ApiService.GetFromJsonAsync<PaginatedData<ForumPageModel.TopicModel>>($"api/public/forums/{Model.Forum.Id}/topics?page={CurrentPage}&search={Search}");
         }
     }
 }

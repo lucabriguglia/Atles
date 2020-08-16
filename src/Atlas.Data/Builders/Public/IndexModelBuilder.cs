@@ -71,6 +71,7 @@ namespace Atlas.Data.Builders.Public
                             {
                                 Id = entity.Id,
                                 Name = entity.Name,
+                                Slug = entity.Slug,
                                 Description = entity.Description,
                                 TotalTopics = entity.TopicsCount,
                                 TotalReplies = entity.RepliesCount,

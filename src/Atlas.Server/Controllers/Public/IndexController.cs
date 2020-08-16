@@ -67,6 +67,7 @@ namespace Atlas.Server.Controllers.Public
                     {
                         Id = forumToFilter.Id,
                         Name = forumToFilter.Name,
+                        Slug = forumToFilter.Slug,
                         Description = forumToFilter.Description,
                         TotalTopics = forumToFilter.TotalTopics,
                         TotalReplies = forumToFilter.TotalReplies,

@@ -65,6 +65,7 @@ namespace Atlas.Data.Builders.Admin
                 {
                     Id = forum.Id,
                     Name = forum.Name,
+                    Slug = forum.Slug,
                     SortOrder = forum.SortOrder,
                     TotalTopics = forum.TopicsCount,
                     TotalReplies = forum.RepliesCount,

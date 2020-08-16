@@ -29,12 +29,19 @@ namespace Atlas.Server.Controllers.Public
             _permissionModelBuilder = permissionModelBuilder;
         }
 
-        [HttpGet("{id}")]
-        public async Task<ActionResult<ForumPageModel>> Forum(Guid id, [FromQuery] int? page = 1, [FromQuery] string search = null)
+        [HttpGet("{slug}")]
+        public async Task<ActionResult<ForumPageModel>> Forum(string slug, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, id);
+            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, slug, new QueryOptions(search, page));
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
 
             var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
             var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
@@ -42,13 +49,6 @@ namespace Atlas.Server.Controllers.Public
             if (!canViewForum || !canViewTopics)
             {
                 return Unauthorized();
-            }
-
-            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, id, new QueryOptions(search, page));
-
-            if (model == null)
-            {
-                return NotFound();
             }
 
             model.CanRead = _securityService.HasPermission(PermissionType.Read, permissions);

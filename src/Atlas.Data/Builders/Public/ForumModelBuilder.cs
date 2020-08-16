@@ -24,12 +24,12 @@ namespace Atlas.Data.Builders.Public
             _gravatarService = gravatarService;
         }
 
-        public async Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, Guid forumId, QueryOptions options)
+        public async Task<ForumPageModel> BuildForumPageModelAsync(Guid siteId, string slug, QueryOptions options)
         {
             var forum = await _dbContext.Forums
                 .Include(x => x.Category)
                 .FirstOrDefaultAsync(x =>
-                    x.Id == forumId &&
+                    x.Slug == slug &&
                     x.Category.SiteId == siteId &&
                     x.Status == StatusType.Published);
 
@@ -45,9 +45,8 @@ namespace Atlas.Data.Builders.Public
                     Id = forum.Id,
                     Name = forum.Name
                 },
-                Topics = await BuildForumPageModelTopicsAsync(forumId, options)
+                Topics = await BuildForumPageModelTopicsAsync(forum.Id, options)
             };
-
 
             return result;
         }

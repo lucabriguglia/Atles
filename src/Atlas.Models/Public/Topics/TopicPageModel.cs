@@ -13,14 +13,13 @@ namespace Atlas.Models.Public.Topics
         public bool CanReply { get; set; }
         public bool CanEdit { get; set; }
         public bool CanDelete { get; set; }
-        public bool CanPin { get; set; }
-        public bool CanLock{ get; set; }
         public bool CanModerate { get; set; }
 
         public class ForumModel
         {
             public Guid Id { get; set; }
             public string Name { get; set; }
+            public string Slug { get; set; }
         }
 
         public class TopicModel
