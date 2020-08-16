@@ -130,7 +130,7 @@ namespace Atlas.Data.Builders.Admin
         }
 
         private static bool IsReadingPermissionType(PermissionType permissionType) =>
-            permissionType == PermissionType.ViewTopics ||
+            permissionType == PermissionType.ViewForum ||
             permissionType == PermissionType.ViewTopics ||
             permissionType == PermissionType.Read;
     }
