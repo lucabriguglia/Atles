@@ -8,6 +8,8 @@
         Restored,
         Reordered,
         Pinned,
-        Locked
+        Locked,
+        Suspended,
+        Resumed
     }
 }

@@ -87,6 +87,82 @@ namespace Atlas.Data.Tests.Services
         }
 
         [Test]
+        public async Task Should_suspend_member_and_add_event()
+        {
+            var options = Shared.CreateContextOptions();
+
+            var memberId = Guid.NewGuid();
+
+            var member = new Member(memberId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+
+            using (var dbContext = new AtlasDbContext(options))
+            {
+                dbContext.Members.Add(member);
+                await dbContext.SaveChangesAsync();
+            }
+
+            using (var dbContext = new AtlasDbContext(options))
+            {
+                var command = Fixture.Build<SuspendMember>()
+                    .With(x => x.Id, member.Id)
+                    .Create();
+
+                var createValidator = new Mock<IValidator<CreateMember>>();
+                var updateValidator = new Mock<IValidator<UpdateMember>>();
+
+                var sut = new MemberService(dbContext,
+                    createValidator.Object,
+                    updateValidator.Object);
+
+                await sut.SuspendAsync(command);
+
+                var memberSuspended = await dbContext.Members.FirstOrDefaultAsync(x => x.Id == member.Id);
+                var memberEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == member.Id);
+
+                Assert.AreEqual(StatusType.Suspended, memberSuspended.Status);
+                Assert.NotNull(memberEvent);
+            }
+        }
+
+        [Test]
+        public async Task Should_resume_member_and_add_event()
+        {
+            var options = Shared.CreateContextOptions();
+
+            var memberId = Guid.NewGuid();
+
+            var member = new Member(memberId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+
+            using (var dbContext = new AtlasDbContext(options))
+            {
+                dbContext.Members.Add(member);
+                await dbContext.SaveChangesAsync();
+            }
+
+            using (var dbContext = new AtlasDbContext(options))
+            {
+                var command = Fixture.Build<ResumeMember>()
+                    .With(x => x.Id, member.Id)
+                    .Create();
+
+                var createValidator = new Mock<IValidator<CreateMember>>();
+                var updateValidator = new Mock<IValidator<UpdateMember>>();
+
+                var sut = new MemberService(dbContext,
+                    createValidator.Object,
+                    updateValidator.Object);
+
+                await sut.ResumeAsync(command);
+
+                var memberResumed = await dbContext.Members.FirstOrDefaultAsync(x => x.Id == member.Id);
+                var memberEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == member.Id);
+
+                Assert.AreEqual(StatusType.Active, memberResumed.Status);
+                Assert.NotNull(memberEvent);
+            }
+        }
+
+        [Test]
         public async Task Should_delete_member_and_add_event()
         {
             var options = Shared.CreateContextOptions();

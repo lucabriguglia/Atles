@@ -123,6 +123,52 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task SuspendAsync(SuspendMember command)
+        {
+            var member = await _dbContext.Members
+                .FirstOrDefaultAsync(x =>
+                    x.Id == command.Id &&
+                    x.Status != StatusType.Deleted);
+
+            if (member == null)
+            {
+                throw new DataException($"Member with Id {command.Id} not found.");
+            }
+
+            member.Suspend();
+
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Suspended,
+                typeof(Member),
+                command.Id));
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task ResumeAsync(ResumeMember command)
+        {
+            var member = await _dbContext.Members
+                .FirstOrDefaultAsync(x =>
+                    x.Id == command.Id &&
+                    x.Status != StatusType.Deleted);
+
+            if (member == null)
+            {
+                throw new DataException($"Member with Id {command.Id} not found.");
+            }
+
+            member.Resume();
+
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Resumed,
+                typeof(Member),
+                command.Id));
+
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<string> DeleteAsync(DeleteMember command)
         {
             var member = await _dbContext.Members

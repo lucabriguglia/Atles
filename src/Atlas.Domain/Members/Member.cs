@@ -76,6 +76,16 @@ namespace Atlas.Domain.Members
             }
         }
 
+        public void Suspend()
+        {
+            Status = StatusType.Suspended;
+        }
+
+        public void Resume()
+        {
+            Status = StatusType.Active;
+        }
+
         public void Delete()
         {
             Status = StatusType.Deleted;

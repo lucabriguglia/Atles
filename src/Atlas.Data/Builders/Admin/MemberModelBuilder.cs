@@ -53,7 +53,7 @@ namespace Atlas.Data.Builders.Admin
             })
             .ToList();
 
-            var countQuery = _dbContext.Members.Where(x => x.Status == StatusType.Active);
+            var countQuery = _dbContext.Members.Where(x => true);
 
             if (!string.IsNullOrWhiteSpace(options.Search))
             {

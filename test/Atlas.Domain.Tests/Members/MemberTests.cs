@@ -131,5 +131,25 @@ namespace Atlas.Domain.Tests.Members
 
             Assert.AreEqual(StatusType.Deleted, sut.Status, nameof(sut.Status));
         }
+
+        [Test]
+        public void Suspend()
+        {
+            var sut = Fixture.Create<Member>();
+
+            sut.Suspend();
+
+            Assert.AreEqual(StatusType.Suspended, sut.Status, nameof(sut.Status));
+        }
+
+        [Test]
+        public void Resume()
+        {
+            var sut = Fixture.Create<Member>();
+
+            sut.Resume();
+
+            Assert.AreEqual(StatusType.Active, sut.Status, nameof(sut.Status));
+        }
     }
 }
