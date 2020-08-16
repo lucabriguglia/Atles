@@ -47,25 +47,25 @@ namespace Atlas.Server.Controllers.Public
             
         }
 
-        [HttpGet("{forumId}/{topicId}")]
-        public async Task<ActionResult<TopicPageModel>> Topic(Guid forumId, Guid topicId, [FromQuery] int? page = 1, [FromQuery] string search = null)
+        [HttpGet("{forumSlug}/{topicSlug}")]
+        public async Task<ActionResult<TopicPageModel>> Topic(string forumSlug, string topicSlug, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
+            var model = await _topicModelBuilder.BuildTopicPageModelAsync(site.Id, forumSlug, topicSlug, new QueryOptions(search, page));
+
+            if (model == null)
+            {
+                return NotFound();
+            }
+
+            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
 
             var canRead = _securityService.HasPermission(PermissionType.Read, permissions);
 
             if (!canRead)
             {
                 return Unauthorized();
-            }
-
-            var model = await _topicModelBuilder.BuildTopicPageModelAsync(site.Id, forumId, topicId, new QueryOptions(search, page));
-
-            if (model == null)
-            {
-                return NotFound();
             }
 
             model.CanEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
@@ -171,9 +171,9 @@ namespace Atlas.Server.Controllers.Public
                 MemberId = member.Id
             };
 
-            await _topicService.CreateAsync(command);
+            var slug = await _topicService.CreateAsync(command);
 
-            return Ok(command.Id);
+            return Ok(slug);
         }
 
         [Authorize]
@@ -214,9 +214,9 @@ namespace Atlas.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _topicService.UpdateAsync(command);
+            var slug = await _topicService.UpdateAsync(command);
 
-            return Ok(command.Id);
+            return Ok(slug);
         }
 
         [Authorize]

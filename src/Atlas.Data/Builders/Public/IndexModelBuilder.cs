@@ -78,6 +78,7 @@ namespace Atlas.Data.Builders.Public
                                 PermissionSetId = entity.PermissionSetId,
                                 LastTopicId = entity.LastPost?.TopicId == null ? entity.LastPost?.Id : entity.LastPost?.Topic?.Id,
                                 LastTopicTitle = entity.LastPost?.Title ?? entity.LastPost?.Topic?.Title,
+                                LastTopicSlug = entity.LastPost?.Slug ?? entity.LastPost?.Topic?.Slug,
                                 LastPostTimeStamp = entity.LastPost?.TimeStamp,
                                 LastPostMemberId = entity.LastPost?.Member?.Id,
                                 LastPostMemberDisplayName = entity.LastPost?.Member?.DisplayName

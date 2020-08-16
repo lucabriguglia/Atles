@@ -1,11 +1,10 @@
-﻿using System;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Pages
 {
     public abstract class TopicPage : PageBase
     {
-        [Parameter] public Guid ForumId { get; set; }
-        [Parameter] public Guid TopicId { get; set; }
+        [Parameter] public string ForumSlug { get; set; }
+        [Parameter] public string TopicSlug { get; set; }
     }
 }

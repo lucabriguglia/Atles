@@ -51,11 +51,11 @@ else
                             <div class="card-text">
                                 @if (post.IsTopic)
                                 {
-                                    <a href="/forum/@post.ForumId/@post.TopicId">@post.Title</a>
+                                    <a href="@Url.Topic(post.ForumSlug, post.Slug)">@post.Title</a>
                                 }
                                 else
                                 {
-                                    <a href="/forum/@post.ForumId/@post.TopicId">@Loc["RE"]: @post.Title</a>
+                                    <a href="@Url.Topic(post.ForumSlug, post.Slug)">@Loc["RE"]: @post.Title</a>
                                 }
                             </div>
                             <div class="card-text">

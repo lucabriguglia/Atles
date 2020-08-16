@@ -31,7 +31,7 @@ namespace Atlas.Data.Services
             _updateValidator = updateValidator;
         }
 
-        public async Task CreateAsync(CreateTopic command)
+        public async Task<string> CreateAsync(CreateTopic command)
         {
             await _createValidator.ValidateCommandAsync(command);
 
@@ -75,9 +75,11 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.Forum(forum.Id));
+
+            return slug;
         }
 
-        public async Task UpdateAsync(UpdateTopic command)
+        public async Task<string> UpdateAsync(UpdateTopic command)
         {
             await _updateValidator.ValidateCommandAsync(command);
 
@@ -118,6 +120,8 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.Forum(topic.ForumId));
+
+            return slug;
         }
 
         public async Task<string> GenerateSlugAsync(Guid forumId, string title)

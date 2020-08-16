@@ -11,7 +11,7 @@ else
         <nav aria-label="breadcrumb">
             <ol class="breadcrumb">
                 <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
-                <li class="breadcrumb-item"><a href="/forum/@ForumId">@Model.Forum.Name</a></li>
+                <li class="breadcrumb-item"><a href="@Url.Forum(Model.Forum.Slug)">@Model.Forum.Name</a></li>
                 <li class="breadcrumb-item active" aria-current="page">@TitleText</li>
             </ol>
         </nav>

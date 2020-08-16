@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Atlas.Client.Services;
 using Atlas.Models.Public;
 using Atlas.Models.Public.Posts;
 using Microsoft.AspNetCore.Components;
@@ -46,17 +47,16 @@ namespace Atlas.Client.Components.Themes
                 : "api/public/topics/create-topic";
 
             var response = await ApiService.PostAsJsonAsync(requestUri, Model);
-            var content = await response.Content.ReadAsStringAsync();
-            var topicId = JsonSerializer.Deserialize<Guid>(content);
+            var topicSlug = await response.Content.ReadAsStringAsync();
 
-            Navigation.NavigateTo($"/forum/{ForumId}/{topicId}");
+            Navigation.NavigateTo(Url.Topic(Model.Forum.Slug, topicSlug));
         }
 
         protected void Cancel()
         {
             var cancelUri = TopicId != null
-                ? $"/forum/{ForumId}/{TopicId.Value}"
-                : $"/forum/{ForumId}";
+                ? Url.Topic(Model.Forum.Slug, Model.Topic.Slug)
+                : Url.Forum(Model.Forum.Slug);
 
             Navigation.NavigateTo(cancelUri);
         }

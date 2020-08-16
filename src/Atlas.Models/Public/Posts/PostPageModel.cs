@@ -13,6 +13,7 @@ namespace Atlas.Models.Public.Posts
         {
             public Guid Id { get; set; }
             public string Name { get; set; }
+            public string Slug { get; set; }
         }
 
         public class TopicModel
@@ -22,6 +23,8 @@ namespace Atlas.Models.Public.Posts
             [Required]
             [StringLength(100)]
             public string Title { get; set; }
+
+            public string Slug { get; set; }
 
             [Required]
             public string Content { get; set; }

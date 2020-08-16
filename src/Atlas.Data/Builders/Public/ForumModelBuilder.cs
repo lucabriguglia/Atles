@@ -43,7 +43,8 @@ namespace Atlas.Data.Builders.Public
                 Forum = new ForumPageModel.ForumModel
                 {
                     Id = forum.Id,
-                    Name = forum.Name
+                    Name = forum.Name,
+                    Slug = forum.Slug
                 },
                 Topics = await BuildForumPageModelTopicsAsync(forum.Id, options)
             };
@@ -78,6 +79,7 @@ namespace Atlas.Data.Builders.Public
             {
                 Id = topic.Id,
                 Title = topic.Title,
+                Slug = topic.Slug,
                 TotalReplies = topic.RepliesCount,
                 MemberId = topic.Member.Id,
                 MemberDisplayName = topic.Member.DisplayName,

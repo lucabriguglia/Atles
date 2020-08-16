@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Atlas.Client.Services;
 using Atlas.Models;
 using Atlas.Models.Public.Topics;
 using Microsoft.AspNetCore.Components;
@@ -16,8 +17,8 @@ namespace Atlas.Client.Components.Themes
         [CascadingParameter]
         private Task<AuthenticationState> AuthenticationStateTask { get; set; }
 
-        [Parameter] public Guid ForumId { get; set; }
-        [Parameter] public Guid TopicId { get; set; }
+        [Parameter] public string ForumSlug { get; set; }
+        [Parameter] public string TopicSlug { get; set; }
 
         protected TopicPageModel Model { get; set; }
 
@@ -58,7 +59,7 @@ namespace Atlas.Client.Components.Themes
 
             try
             {
-                Model = await ApiService.GetFromJsonAsync<TopicPageModel>($"api/public/topics/{ForumId}/{TopicId}?page=1");
+                Model = await ApiService.GetFromJsonAsync<TopicPageModel>($"api/public/topics/{ForumSlug}/{TopicSlug}?page=1");
 
                 DisplayPage = true;
 
@@ -76,7 +77,7 @@ namespace Atlas.Client.Components.Themes
 
         private async Task LoadDataAsync()
         {
-            Model.Replies = await ApiService.GetFromJsonAsync<PaginatedData<TopicPageModel.ReplyModel>>($"api/public/topics/{ForumId}/{TopicId}/replies?page={CurrentPage}&search={Search}");
+            Model.Replies = await ApiService.GetFromJsonAsync<PaginatedData<TopicPageModel.ReplyModel>>($"api/public/topics/{Model.Forum.Id}/{Model.Topic.Id}/replies?page={CurrentPage}&search={Search}");
         }
 
         protected async Task SearchAsync()
@@ -122,13 +123,13 @@ namespace Atlas.Client.Components.Themes
 
         protected async Task PinAsync()
         {
-            await ApiService.PostAsJsonAsync($"api/public/topics/pin-topic/{ForumId}/{TopicId}", !Model.Topic.Pinned);
+            await ApiService.PostAsJsonAsync($"api/public/topics/pin-topic/{Model.Forum.Id}/{Model.Topic.Id}", !Model.Topic.Pinned);
             Model.Topic.Pinned = !Model.Topic.Pinned;
         }
 
         protected async Task LockAsync()
         {
-            await ApiService.PostAsJsonAsync($"api/public/topics/lock-topic/{ForumId}/{TopicId}", !Model.Topic.Locked);
+            await ApiService.PostAsJsonAsync($"api/public/topics/lock-topic/{Model.Forum.Id}/{Model.Topic.Id}", !Model.Topic.Locked);
             Model.Topic.Locked = !Model.Topic.Locked;
         }
 
@@ -169,13 +170,13 @@ namespace Atlas.Client.Components.Themes
 
         protected async Task DeleteTopicAsync(MouseEventArgs e)
         {
-            await ApiService.DeleteAsync($"api/public/topics/delete-topic/{ForumId}/{TopicId}");
-            Navigation.NavigateTo($"/forum/{ForumId}");
+            await ApiService.DeleteAsync($"api/public/topics/delete-topic/{Model.Forum.Id}/{Model.Topic.Id}");
+            Navigation.NavigateTo(Url.Forum(Model.Forum.Slug));
         }
 
         protected async Task DeleteReplyAsync(MouseEventArgs e)
         {
-            await ApiService.DeleteAsync($"api/public/replies/delete-reply/{ForumId}/{TopicId}/{DeleteReplyId}");
+            await ApiService.DeleteAsync($"api/public/replies/delete-reply/{Model.Forum.Id}/{Model.Topic.Id}/{DeleteReplyId}");
             await LoadDataAsync();
         }
 

@@ -25,7 +25,7 @@ namespace Atlas.Data.Builders.Public
             _gravatarService = gravatarService;
         }
 
-        public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, Guid forumId, Guid topicId, QueryOptions options)
+        public async Task<TopicPageModel> BuildTopicPageModelAsync(Guid siteId, string forumSlug, string topicSlug, QueryOptions options)
         {
             var topic = await _dbContext.Posts
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
@@ -33,8 +33,8 @@ namespace Atlas.Data.Builders.Public
                 .FirstOrDefaultAsync(x =>
                     x.TopicId == null &&
                     x.Forum.Category.SiteId == siteId &&
-                    x.Forum.Id == forumId &&
-                    x.Id == topicId &&
+                    x.Forum.Slug == forumSlug &&
+                    x.Slug == topicSlug &&
                     x.Status == StatusType.Published);
 
             if (topic == null)
@@ -54,6 +54,7 @@ namespace Atlas.Data.Builders.Public
                 {
                     Id = topic.Id,
                     Title = topic.Title,
+                    Slug = topic.Slug,
                     Content = Markdown.ToHtml(topic.Content),
                     MemberId = topic.Member.Id,
                     MemberDisplayName = topic.Member.DisplayName,
@@ -63,7 +64,7 @@ namespace Atlas.Data.Builders.Public
                     Pinned = topic.Pinned,
                     Locked = topic.Locked
                 },
-                Replies = await BuildTopicPageModelRepliesAsync(topicId, options)
+                Replies = await BuildTopicPageModelRepliesAsync(topic.Id, options)
             };
 
             return result;

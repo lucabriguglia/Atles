@@ -15,12 +15,14 @@ namespace Atlas.Models.Public.Forums
         {
             public Guid Id { get; set; }
             public string Name { get; set; }
+            public string Slug { get; set; }
         }
 
         public class TopicModel
         {
             public Guid Id { get; set; }
             public string Title { get; set; }
+            public string Slug { get; set; }
             public int TotalReplies { get; set; }
             public Guid MemberId { get; set; }
             public string MemberDisplayName { get; set; }

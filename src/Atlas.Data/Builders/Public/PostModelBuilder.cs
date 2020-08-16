@@ -41,7 +41,8 @@ namespace Atlas.Data.Builders.Public
                 Forum = new PostPageModel.ForumModel
                 {
                     Id = forum.Id,
-                    Name = forum.Name
+                    Name = forum.Name,
+                    Slug = forum.Slug
                 }
             };
 
@@ -70,12 +71,14 @@ namespace Atlas.Data.Builders.Public
                 Forum = new PostPageModel.ForumModel
                 {
                     Id = topic.Forum.Id,
-                    Name = topic.Forum.Name
+                    Name = topic.Forum.Name,
+                    Slug = topic.Forum.Slug
                 },
                 Topic = new PostPageModel.TopicModel
                 {
                     Id = topic.Id,
                     Title = topic.Title,
+                    Slug = topic.Slug,
                     Content = topic.Content,
                     MemberId = topic.Member.Id,
                     Locked = topic.Locked

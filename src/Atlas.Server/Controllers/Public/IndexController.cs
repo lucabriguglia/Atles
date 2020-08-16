@@ -73,6 +73,7 @@ namespace Atlas.Server.Controllers.Public
                         TotalReplies = forumToFilter.TotalReplies,
                         LastTopicId = forumToFilter.LastTopicId,
                         LastTopicTitle = forumToFilter.LastTopicTitle,
+                        LastTopicSlug = forumToFilter.LastTopicSlug,
                         LastPostTimeStamp = forumToFilter.LastPostTimeStamp,
                         LastPostMemberId = forumToFilter.LastPostMemberId,
                         LastPostMemberDisplayName = forumToFilter.LastPostMemberDisplayName,

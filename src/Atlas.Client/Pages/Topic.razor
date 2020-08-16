@@ -1,9 +1,9 @@
-﻿@page "/forum/{forumId:guid}/{topicId:guid}"
+﻿@page "/forum/{forumSlug}/{topicSlug}"
 
 @inherits TopicPage
 
 @AddComponent("Topic", new Dictionary<string, object>
 {
-    { nameof(ForumId), ForumId },
-    { nameof(TopicId), TopicId }
+    { nameof(ForumSlug), ForumSlug },
+    { nameof(TopicSlug), TopicSlug }
 })
