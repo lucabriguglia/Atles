@@ -14,5 +14,6 @@ namespace Atlas.Models.Public.Search
         public string MemberDisplayName { get; set; }
         public Guid ForumId { get; set; }
         public string ForumName { get; set; }
+        public string ForumSlug { get; set; }
     }
 }

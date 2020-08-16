@@ -47,7 +47,8 @@ namespace Atlas.Data.Builders.Public
                 Forum = new TopicPageModel.ForumModel
                 {
                     Id = topic.Forum.Id,
-                    Name = topic.Forum.Name
+                    Name = topic.Forum.Name,
+                    Slug = topic.Forum.Slug
                 },
                 Topic = new TopicPageModel.TopicModel
                 {

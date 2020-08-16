@@ -70,7 +70,8 @@ namespace Atlas.Data.Builders.Public
                     p.MemberId,
                     MemberDisplayName = p.Member.DisplayName,
                     p.ForumId,
-                    ForumName = p.Forum.Name
+                    ForumName = p.Forum.Name,
+                    ForumSlug = p.Forum.Slug
                 })
                 .ToListAsync();
 
@@ -85,7 +86,8 @@ namespace Atlas.Data.Builders.Public
                 MemberId = post.MemberId,
                 MemberDisplayName = post.MemberDisplayName,
                 ForumId = post.ForumId,
-                ForumName = post.ForumName
+                ForumName = post.ForumName,
+                ForumSlug = post.ForumSlug
             }).ToList();
 
             var totalRecords = await postsQuery.CountAsync();

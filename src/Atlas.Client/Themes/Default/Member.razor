@@ -66,7 +66,7 @@ else
                                         <span class="mr-2">@post.TimeStamp.ToForumLocalDateAndTime()</span>
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        In <a href="/forum/@post.ForumId">@post.ForumName</a>
+                                        In <a href="@Url.Forum(post.ForumSlug)">@post.ForumName</a>
                                     </div>
                                 </div>
                             </li>
