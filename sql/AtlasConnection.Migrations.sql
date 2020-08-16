@@ -258,3 +258,25 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200815194322_AddSlugToForumAndPost')
+BEGIN
+    ALTER TABLE [Post] ADD [Slug] nvarchar(max) NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200815194322_AddSlugToForumAndPost')
+BEGIN
+    ALTER TABLE [Forum] ADD [Slug] nvarchar(max) NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200815194322_AddSlugToForumAndPost')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20200815194322_AddSlugToForumAndPost', N'3.1.6');
+END;
+
+GO
+
