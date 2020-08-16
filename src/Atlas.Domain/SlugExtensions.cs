@@ -1,39 +1,41 @@
-﻿using System.Globalization;
+﻿using System;
+using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
 namespace Atlas.Domain
 {
-    /// <summary>
-    /// Reference at https://stackoverflow.com/questions/2920744/url-slugify-algorithm-in-c
-    /// </summary>
     public static class SlugExtensions
     {
-        public static string GenerateSlug(this string phrase)
+        public static string ToSlug(this string phrase)
         {
-            var str = phrase.RemoveAccents().ToLower();
-            // invalid chars           
-            str = Regex.Replace(str, @"[^a-z0-9\s-]", "");
-            // convert multiple spaces into one space   
-            str = Regex.Replace(str, @"\s+", " ").Trim();
-            // cut and trim 
-            str = str.Substring(0, str.Length <= 45 ? str.Length : 45).Trim();
-            str = Regex.Replace(str, @"\s", "-"); // hyphens   
-            return str;
-        }
-
-        private static string RemoveAccents(this string text)
-        {
-            var sbReturn = new StringBuilder();
-            var arrayText = text.Normalize(NormalizationForm.FormD).ToCharArray();
-            foreach (var letter in arrayText)
+            if (string.IsNullOrEmpty(phrase))
             {
-                if (CharUnicodeInfo.GetUnicodeCategory(letter) != UnicodeCategory.NonSpacingMark)
+                throw new ArgumentNullException(nameof(phrase));
+            }
+
+            phrase = Regex.Replace(phrase, @"\s+", " "); // Remove multiple spaces from phrase
+
+            if (phrase.Length > 50)
+            {
+                phrase = phrase.Substring(0, 50);
+            }
+
+            var stringBuilder = new StringBuilder();
+
+            foreach (var c in phrase.ToArray())
+            {
+                if (char.IsLetterOrDigit(c))
                 {
-                    sbReturn.Append(letter);
+                    stringBuilder.Append(c);
+                }
+                else if (c == ' ')
+                {
+                    stringBuilder.Append("-");
                 }
             }
-            return sbReturn.ToString();
+
+            return stringBuilder.ToString().ToLower();
         }
     }
 }

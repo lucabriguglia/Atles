@@ -35,6 +35,17 @@ namespace Atlas.Domain.Tests.Topics.Validators
             sut.ShouldHaveValidationErrorFor(x => x.Title, command);
         }
 
+        [Test]
+        public void Should_have_validation_error_when_slug_is_too_long()
+        {
+            var command = Fixture.Build<CreateTopic>().With(x => x.Slug, new string('*', 51)).Create();
+
+            var forumRules = new Mock<IForumRules>();
+
+            var sut = new CreateTopicValidator(forumRules.Object);
+
+            sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
+        }
 
         [Test]
         public void Should_have_validation_error_when_content_is_empty()

@@ -35,41 +35,43 @@ namespace Atlas.Domain.Posts
 
         }
 
-        public static Post CreateTopic(Guid forumId, Guid memberId, string title, string content, StatusType status)
+        public static Post CreateTopic(Guid forumId, Guid memberId, string title, string slug, string content, StatusType status)
         {
-            return new Post(Guid.NewGuid(), null, forumId, memberId, title, content, status);
+            return new Post(Guid.NewGuid(), null, forumId, memberId, title, slug, content, status);
         }
 
-        public static Post CreateTopic(Guid id, Guid forumId, Guid memberId, string title, string content, StatusType status)
+        public static Post CreateTopic(Guid id, Guid forumId, Guid memberId, string title, string slug, string content, StatusType status)
         {
-            return new Post(id, null, forumId, memberId, title, content, status);
+            return new Post(id, null, forumId, memberId, title, slug, content, status);
         }
 
         public static Post CreateReply(Guid topicId, Guid forumId, Guid memberId, string content, StatusType status)
         {
-            return new Post(Guid.NewGuid(), topicId, forumId, memberId, null, content, status);
+            return new Post(Guid.NewGuid(), topicId, forumId, memberId, null, null, content, status);
         }
 
         public static Post CreateReply(Guid id, Guid topicId, Guid forumId, Guid memberId, string content, StatusType status)
         {
-            return new Post(id, topicId, forumId, memberId, null, content, status);
+            return new Post(id, topicId, forumId, memberId, null, null, content, status);
         }
 
-        private Post(Guid id, Guid? topicId, Guid forumId, Guid memberId, string title, string content, StatusType status)
+        private Post(Guid id, Guid? topicId, Guid forumId, Guid memberId, string title, string slug, string content, StatusType status)
         {
             Id = id;
             TopicId = topicId;
             ForumId = forumId;
             MemberId = memberId;
             Title = title;
+            Slug = slug;
             Content = content;
             Status = status;
             TimeStamp = DateTime.UtcNow;
         }
 
-        public void UpdateDetails(string title, string content, StatusType status)
+        public void UpdateDetails(string title, string slug, string content, StatusType status)
         {
             Title = title;
+            Slug = slug;
             Content = content;
             Status = status;
         }

@@ -14,14 +14,16 @@ namespace Atlas.Domain.Tests.Topics
             var forumId = Guid.NewGuid();
             var memberId = Guid.NewGuid();
             const string title = "New Topic";
+            const string slug = "my-topic-slug";
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            var sut = Post.CreateTopic(forumId, memberId, title, content, status);
+            var sut = Post.CreateTopic(forumId, memberId, title, slug, content, status);
 
             Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
             Assert.AreEqual(memberId, sut.MemberId, nameof(sut.MemberId));
             Assert.AreEqual(title, sut.Title, nameof(sut.Title));
+            Assert.AreEqual(slug, sut.Slug, nameof(sut.Slug));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
         }
@@ -33,15 +35,17 @@ namespace Atlas.Domain.Tests.Topics
             var forumId = Guid.NewGuid();
             var memberId = Guid.NewGuid();
             const string title = "New Topic";
+            const string slug = "my-topic-slug";
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            var sut = Post.CreateTopic(id, forumId, memberId, title, content, status);
+            var sut = Post.CreateTopic(id, forumId, memberId, title, slug, content, status);
 
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
             Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
             Assert.AreEqual(memberId, sut.MemberId, nameof(sut.MemberId));
             Assert.AreEqual(title, sut.Title, nameof(sut.Title));
+            Assert.AreEqual(slug, sut.Slug, nameof(sut.Slug));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
         }
@@ -52,12 +56,14 @@ namespace Atlas.Domain.Tests.Topics
             var sut = Fixture.Create<Post>();
 
             const string title = "Updated Topic";
+            const string slug = "my-topic-slug";
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            sut.UpdateDetails(title, content, status);
+            sut.UpdateDetails(title, slug, content, status);
 
             Assert.AreEqual(title, sut.Title, nameof(sut.Title));
+            Assert.AreEqual(slug, sut.Slug, nameof(sut.Slug));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
         }
@@ -65,7 +71,7 @@ namespace Atlas.Domain.Tests.Topics
         [Test]
         public void Should_update_last_reply()
         {
-            var sut = Post.CreateTopic(Guid.NewGuid(), Guid.NewGuid(), "Title", "Content", StatusType.Published);
+            var sut = Post.CreateTopic(Guid.NewGuid(), Guid.NewGuid(), "Title", "slug", "Content", StatusType.Published);
 
             var lastReplyId = Guid.NewGuid();
 

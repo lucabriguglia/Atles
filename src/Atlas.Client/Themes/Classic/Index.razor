@@ -38,7 +38,7 @@ else
                                     <div>
                                         @if (forum.CanViewTopics)
                                         {
-                                            <a href="/forum/@forum.Id">@forum.Name</a>
+                                            <a href="@Url.Forum(forum.Slug)">@forum.Name</a>
                                         }
                                         else
                                         {

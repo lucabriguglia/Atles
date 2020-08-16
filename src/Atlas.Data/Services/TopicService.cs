@@ -1,5 +1,7 @@
-﻿using System.Data;
+﻿using System;
+using System.Data;
 using System.Linq;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
@@ -33,10 +35,17 @@ namespace Atlas.Data.Services
         {
             await _createValidator.ValidateCommandAsync(command);
 
+            var title = Regex.Replace(command.Title, @"\s+", " "); // Remove multiple spaces from title
+
+            var slug = string.IsNullOrWhiteSpace(command.Slug)
+                ? await GenerateSlugAsync(command.ForumId, title)
+                : command.Slug;
+
             var topic = Post.CreateTopic(command.Id,
                 command.ForumId,
                 command.MemberId,
-                command.Title,
+                title,
+                slug,
                 command.Content,
                 command.Status);
 
@@ -49,7 +58,8 @@ namespace Atlas.Data.Services
                 new 
                 {
                     command.ForumId,
-                    command.Title,
+                    title,
+                    Slug = slug,
                     command.Content,
                     command.Status
                 }));
@@ -84,7 +94,13 @@ namespace Atlas.Data.Services
                 throw new DataException($"Topic with Id {command.Id} not found.");
             }
 
-            topic.UpdateDetails(command.Title, command.Content, command.Status);
+            var title = Regex.Replace(command.Title, @"\s+", " "); // Remove multiple spaces from title
+
+            var slug = string.IsNullOrWhiteSpace(command.Slug)
+                ? await GenerateSlugAsync(command.ForumId, title)
+                : command.Slug;
+
+            topic.UpdateDetails(title, slug, command.Content, command.Status);
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
@@ -93,7 +109,8 @@ namespace Atlas.Data.Services
                 command.Id,
                 new
                 {
-                    command.Title,
+                    title,
+                    Slug = slug,
                     command.Content,
                     command.Status
                 }));
@@ -101,6 +118,32 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.Forum(topic.ForumId));
+        }
+
+        public async Task<string> GenerateSlugAsync(Guid forumId, string title)
+        {
+            var slug = string.Empty;
+            var exists = true;
+            var repeat = 0;
+
+            while (exists && repeat < 5)
+            {
+                var suffix = repeat > 0 ? $"-{repeat}" : string.Empty;
+                slug = $"{title.ToSlug()}{suffix}";
+                exists = await _dbContext.Posts.AnyAsync(x => x.ForumId == forumId && x.Slug == slug);
+                repeat++;
+                if (exists)
+                {
+                    slug = string.Empty;
+                }
+            }
+
+            if (slug == string.Empty)
+            {
+                slug = Guid.NewGuid().ToString();
+            }
+
+            return slug;
         }
 
         public async Task PinAsync(PinTopic command)
