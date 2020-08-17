@@ -16,11 +16,6 @@ namespace Atlas.Domain
 
             phrase = Regex.Replace(phrase, @"\s+", " "); // Remove multiple spaces from phrase
 
-            if (phrase.Length > 50)
-            {
-                phrase = phrase.Substring(0, 50);
-            }
-
             var stringBuilder = new StringBuilder();
 
             foreach (var c in phrase.ToArray())
@@ -35,7 +30,14 @@ namespace Atlas.Domain
                 }
             }
 
-            return stringBuilder.ToString().ToLower();
+            var result = stringBuilder.ToString().ToLower();
+
+            if (result.Length > 50)
+            {
+                result = result.Substring(0, 50);
+            }
+
+            return result;
         }
     }
 }

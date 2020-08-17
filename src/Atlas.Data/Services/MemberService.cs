@@ -68,13 +68,9 @@ namespace Atlas.Data.Services
                 displayName = $"User{random.Next(100000)}";
                 exists = await _dbContext.Members.AnyAsync(x => x.DisplayName == displayName);
                 repeat++;
-                if (exists)
-                {
-                    displayName = string.Empty;
-                }
             }
 
-            if (displayName == string.Empty)
+            if (exists)
             {
                 displayName = Guid.NewGuid().ToString();
             }

@@ -136,13 +136,9 @@ namespace Atlas.Data.Services
                 slug = $"{title.ToSlug()}{suffix}";
                 exists = await _dbContext.Posts.AnyAsync(x => x.ForumId == forumId && x.Slug == slug);
                 repeat++;
-                if (exists)
-                {
-                    slug = string.Empty;
-                }
             }
 
-            if (slug == string.Empty)
+            if (exists)
             {
                 slug = Guid.NewGuid().ToString();
             }
