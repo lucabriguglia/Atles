@@ -9,6 +9,6 @@ namespace Atlas.Models.Public
         public string Email { get; set; }
         public string DisplayName { get; set; }
         public string GravatarHash { get; set; }
-        public bool Suspended { get; set; }
+        public bool IsSuspended { get; set; }
     }
 }

@@ -8,7 +8,7 @@ namespace Atlas.Domain.Members
         Task CreateAsync(CreateMember command);
         Task UpdateAsync(UpdateMember command);
         Task SuspendAsync(SuspendMember command);
-        Task ResumeAsync(ResumeMember command);
+        Task ReinstateAsync(ReinstateMember command);
         Task<string> DeleteAsync(DeleteMember command);
         Task<string> GenerateDisplayNameAsync();
     }

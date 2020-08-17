@@ -2,7 +2,7 @@
 
 namespace Atlas.Domain.Members.Commands
 {
-    public class ResumeMember : CommandBase
+    public class ReinstateMember : CommandBase
     {
         public Guid Id { get; set; }
     }

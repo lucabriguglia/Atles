@@ -50,7 +50,7 @@ namespace Atlas.Server.Controllers.Public
             var member = await _contextService.CurrentMemberAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
-            var canReply = _securityService.HasPermission(PermissionType.Reply, permissions);
+            var canReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !member.IsSuspended;
 
             if (!canReply)
             {
@@ -108,8 +108,8 @@ namespace Atlas.Server.Controllers.Public
                 .FirstOrDefaultAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
-            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions) && !member.IsSuspended;
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !member.IsSuspended;
             var authorized = canEdit && replyMemberId == member.Id || canModerate;
 
             if (!authorized)
@@ -157,8 +157,8 @@ namespace Atlas.Server.Controllers.Public
                 .FirstOrDefaultAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
-            var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions) && !member.IsSuspended;
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !member.IsSuspended;
             var authorized = canDelete && replyMemberId == member.Id || canModerate;
 
             if (!authorized)

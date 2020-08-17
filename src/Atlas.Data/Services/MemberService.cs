@@ -142,7 +142,7 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task ResumeAsync(ResumeMember command)
+        public async Task ReinstateAsync(ReinstateMember command)
         {
             var member = await _dbContext.Members
                 .FirstOrDefaultAsync(x =>
@@ -154,11 +154,11 @@ namespace Atlas.Data.Services
                 throw new DataException($"Member with Id {command.Id} not found.");
             }
 
-            member.Resume();
+            member.Reinstate();
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
-                EventType.Resumed,
+                EventType.Reinstated,
                 typeof(Member),
                 command.Id));
 

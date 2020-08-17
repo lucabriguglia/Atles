@@ -125,7 +125,7 @@ namespace Atlas.Data.Tests.Services
         }
 
         [Test]
-        public async Task Should_resume_member_and_add_event()
+        public async Task Should_reinstate_member_and_add_event()
         {
             var options = Shared.CreateContextOptions();
 
@@ -141,7 +141,7 @@ namespace Atlas.Data.Tests.Services
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var command = Fixture.Build<ResumeMember>()
+                var command = Fixture.Build<ReinstateMember>()
                     .With(x => x.Id, member.Id)
                     .Create();
 
@@ -152,7 +152,7 @@ namespace Atlas.Data.Tests.Services
                     createValidator.Object,
                     updateValidator.Object);
 
-                await sut.ResumeAsync(command);
+                await sut.ReinstateAsync(command);
 
                 var memberResumed = await dbContext.Members.FirstOrDefaultAsync(x => x.Id == member.Id);
                 var memberEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == member.Id);

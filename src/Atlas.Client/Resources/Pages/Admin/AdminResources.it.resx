@@ -159,6 +159,9 @@
   <data name="Are you sure you want to remove the user from the role?" xml:space="preserve">
     <value>Sicuri di voler rimuovere l'utente dal ruolo</value>
   </data>
+  <data name="Are you sure you want to suspend this member?" xml:space="preserve">
+    <value>Sicuri di volere sospendere questo utente?</value>
+  </data>
   <data name="Cancel" xml:space="preserve">
     <value>Cancella</value>
   </data>
@@ -279,6 +282,9 @@
   <data name="Public" xml:space="preserve">
     <value>Pubblico</value>
   </data>
+  <data name="Reinstate" xml:space="preserve">
+    <value>Reintegra</value>
+  </data>
   <data name="Remove" xml:space="preserve">
     <value>Rimuovi</value>
   </data>
@@ -305,6 +311,9 @@
   </data>
   <data name="Status" xml:space="preserve">
     <value>Stato</value>
+  </data>
+  <data name="Suspend" xml:space="preserve">
+    <value>Sospendi</value>
   </data>
   <data name="Target" xml:space="preserve">
     <value>Target</value>

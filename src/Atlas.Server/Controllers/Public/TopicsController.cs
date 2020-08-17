@@ -54,6 +54,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult<TopicPageModel>> Topic(string forumSlug, string topicSlug, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
             var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
 
             var model = await _topicModelBuilder.BuildTopicPageModelAsync(site.Id, forumSlug, topicSlug, new QueryOptions(search, page));
 
@@ -87,10 +88,10 @@ namespace Atlas.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            model.CanEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
-            model.CanReply = _securityService.HasPermission(PermissionType.Reply, permissions);
-            model.CanDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
-            model.CanModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            model.CanEdit = _securityService.HasPermission(PermissionType.Edit, permissions) && !member.IsSuspended;
+            model.CanReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !member.IsSuspended;
+            model.CanDelete = _securityService.HasPermission(PermissionType.Delete, permissions) && !member.IsSuspended;
+            model.CanModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !member.IsSuspended;
 
             return model;
         }
@@ -127,6 +128,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult<PostPageModel>> NewTopic(Guid forumId)
         {
             var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
 
             var model = await _postModelBuilder.BuildNewPostPageModelAsync(site.Id, forumId);
 
@@ -143,7 +145,7 @@ namespace Atlas.Server.Controllers.Public
             }
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
-            var canPost = _securityService.HasPermission(PermissionType.Start, permissions);
+            var canPost = _securityService.HasPermission(PermissionType.Start, permissions) && !member.IsSuspended;
 
             if (!canPost)
             {
@@ -183,8 +185,8 @@ namespace Atlas.Server.Controllers.Public
             }
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
-            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions) && !member.IsSuspended;
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !member.IsSuspended;
             var authorized = canEdit && model.Topic.MemberId == member.Id && !model.Topic.Locked || canModerate;
 
             if (!authorized)
@@ -211,7 +213,7 @@ namespace Atlas.Server.Controllers.Public
             var member = await _contextService.CurrentMemberAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
-            var canPost = _securityService.HasPermission(PermissionType.Start, permissions);
+            var canPost = _securityService.HasPermission(PermissionType.Start, permissions) && !member.IsSuspended;
 
             if (!canPost)
             {
@@ -269,8 +271,8 @@ namespace Atlas.Server.Controllers.Public
                 .FirstOrDefaultAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
-            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions) && !member.IsSuspended;
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !member.IsSuspended;
             var authorized = canEdit && topicInfo.MemberId == member.Id && !topicInfo.Locked || canModerate;
 
             if (!authorized)
@@ -308,7 +310,7 @@ namespace Atlas.Server.Controllers.Public
             };
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !member.IsSuspended;
 
             if (!canModerate)
             {
@@ -345,7 +347,7 @@ namespace Atlas.Server.Controllers.Public
             };
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !member.IsSuspended;
 
             if (!canModerate)
             {
@@ -391,8 +393,8 @@ namespace Atlas.Server.Controllers.Public
                 .FirstOrDefaultAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
-            var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions) && !member.IsSuspended;
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !member.IsSuspended;
             var authorized = canDelete && topicMemberId == member.Id || canModerate;
 
             if (!authorized)

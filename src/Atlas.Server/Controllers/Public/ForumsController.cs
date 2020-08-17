@@ -37,6 +37,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult<ForumPageModel>> Forum(string slug, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
             var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
 
             var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, slug, new QueryOptions(search, page));
 
@@ -70,7 +71,7 @@ namespace Atlas.Server.Controllers.Public
             }
 
             model.CanRead = _securityService.HasPermission(PermissionType.Read, permissions);
-            model.CanStart = _securityService.HasPermission(PermissionType.Start, permissions);
+            model.CanStart = _securityService.HasPermission(PermissionType.Start, permissions) && !member.IsSuspended;
 
             return model;
         }

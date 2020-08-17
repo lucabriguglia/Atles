@@ -158,6 +158,42 @@ namespace Atlas.Server.Controllers.Admin
             return result;
         }
 
+        [HttpPost("suspend")]
+        public async Task<ActionResult> Suspend([FromBody] Guid id)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var command = new SuspendMember
+            {
+                Id = id,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
+
+            await _memberService.SuspendAsync(command);
+
+            return Ok();
+        }
+
+        [HttpPost("reinstate")]
+        public async Task<ActionResult> Reinstate([FromBody] Guid id)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+            var member = await _contextService.CurrentMemberAsync();
+
+            var command = new ReinstateMember
+            {
+                Id = id,
+                SiteId = site.Id,
+                MemberId = member.Id
+            };
+
+            await _memberService.ReinstateAsync(command);
+
+            return Ok();
+        }
+
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {

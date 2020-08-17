@@ -12,6 +12,7 @@ namespace Atlas.Models.Public.Members
             public string Email { get; set; }
             public string DisplayName { get; set; }
             public string GravatarHash { get; set; }
+            public bool IsSuspended { get; set; }
         }
     }
 }

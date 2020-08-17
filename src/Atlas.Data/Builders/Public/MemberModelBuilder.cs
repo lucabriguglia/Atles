@@ -75,7 +75,8 @@ namespace Atlas.Data.Builders.Public
                 Id = member.Id,
                 Email = member.Email,
                 DisplayName = member.DisplayName,
-                GravatarHash = _gravatarService.HashEmailForGravatar(member.Email)
+                GravatarHash = _gravatarService.HashEmailForGravatar(member.Email),
+                IsSuspended = member.Status == StatusType.Suspended
             };
 
             return result;

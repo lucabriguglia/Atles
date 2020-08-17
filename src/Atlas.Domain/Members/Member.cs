@@ -81,7 +81,7 @@ namespace Atlas.Domain.Members
             Status = StatusType.Suspended;
         }
 
-        public void Resume()
+        public void Reinstate()
         {
             Status = StatusType.Active;
         }

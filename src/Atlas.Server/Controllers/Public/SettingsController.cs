@@ -34,7 +34,7 @@ namespace Atlas.Server.Controllers.Public
         }
 
         [HttpGet("edit")]
-        public async Task<SettingsPageModel> Edit()
+        public async Task<ActionResult<SettingsPageModel>> Edit()
         {
             var member = await _contextService.CurrentMemberAsync();
 
@@ -49,7 +49,7 @@ namespace Atlas.Server.Controllers.Public
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            if (model.Member.Id != member.Id)
+            if (model.Member.Id != member.Id || member.IsSuspended)
             {
                 _logger.LogWarning("Unauthorized access to update settings.", new
                 {

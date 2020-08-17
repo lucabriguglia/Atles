@@ -143,11 +143,11 @@ namespace Atlas.Domain.Tests.Members
         }
 
         [Test]
-        public void Resume()
+        public void Reinstate()
         {
             var sut = Fixture.Create<Member>();
 
-            sut.Resume();
+            sut.Reinstate();
 
             Assert.AreEqual(StatusType.Active, sut.Status, nameof(sut.Status));
         }
