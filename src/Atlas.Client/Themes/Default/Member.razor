@@ -33,6 +33,17 @@ else
                     @Loc["Inactive"]
                 </div>
             }
+
+            <AuthorizeView Policy="Admin">
+                <Authorized>
+                    <div class="mt-4 mb-2">
+                        <a href="/admin/members/edit/@Model.Member.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Edit"]</a>
+                    </div>
+                    <div class="mb-4">
+                        <a href="/admin/members/activity/@Model.Member.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Activity"]</a>
+                    </div>
+                </Authorized>
+            </AuthorizeView>
         </div>
         <div class="col-md-9">
             <h4 class="mb-3">Last Posts</h4>
