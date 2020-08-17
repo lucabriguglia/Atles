@@ -135,6 +135,9 @@
   <data name="Access Failed Count" xml:space="preserve">
     <value>Numero di Accessi Falliti</value>
   </data>
+  <data name="Activity" xml:space="preserve">
+    <value>Attivita'</value>
+  </data>
   <data name="Admin" xml:space="preserve">
     <value>Admin</value>
   </data>
@@ -288,6 +291,9 @@
   <data name="Save" xml:space="preserve">
     <value>Salva</value>
   </data>
+  <data name="Search activity" xml:space="preserve">
+    <value>Carca attivita'</value>
+  </data>
   <data name="Search members" xml:space="preserve">
     <value>Cerca utenti</value>
   </data>
@@ -299,6 +305,9 @@
   </data>
   <data name="Status" xml:space="preserve">
     <value>Stato</value>
+  </data>
+  <data name="Target" xml:space="preserve">
+    <value>Target</value>
   </data>
   <data name="Terms" xml:space="preserve">
     <value>Termini</value>
@@ -336,7 +345,13 @@
   <data name="Users in role {0}" xml:space="preserve">
     <value>Utenti nel ruolo {0}</value>
   </data>
+  <data name="View Activity" xml:space="preserve">
+    <value>Visualizza Attivita'</value>
+  </data>
   <data name="View Info" xml:space="preserve">
     <value>Visualizza Informazioni</value>
+  </data>
+  <data name="{0}'s Activity" xml:space="preserve">
+    <value>Attivita' dell'utente {0}</value>
   </data>
 </root>

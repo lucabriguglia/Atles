@@ -156,6 +156,9 @@
   <data name="Next" xml:space="preserve">
     <value>Next</value>
   </data>
+  <data name="No records found." xml:space="preserve">
+    <value>No records found.</value>
+  </data>
   <data name="Ops something went wrong." xml:space="preserve">
     <value>Ops something went wrong.</value>
   </data>

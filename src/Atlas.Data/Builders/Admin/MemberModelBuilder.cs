@@ -1,12 +1,13 @@
-﻿using Atlas.Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Domain.Members;
 using Atlas.Models.Admin.Members;
 using Atlas.Models;
 using Microsoft.AspNetCore.Identity;
+using Newtonsoft.Json.Linq;
 
 namespace Atlas.Data.Builders.Admin
 {
@@ -136,6 +137,87 @@ namespace Atlas.Data.Builders.Admin
                 result.Info.AccessFailedCount = user.AccessFailedCount;
                 result.Info.LockoutEnd = user.LockoutEnd;
             }
+
+            return result;
+        }
+
+        public async Task<ActivityPageModel> BuildActivityPageModelAsync(Guid siteId, Guid memberId, QueryOptions options)
+        {
+            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == memberId);
+
+            if (member == null)
+            {
+                return null;
+            }
+
+            var result = new ActivityPageModel
+            {
+                Member = new ActivityPageModel.MemberModel
+                {
+                    Id = member.Id,
+                    DisplayName = member.DisplayName
+                }
+            };
+
+            var query = _dbContext.Events.Where(x => x.SiteId == siteId && x.MemberId == memberId);
+
+            if (!string.IsNullOrWhiteSpace(options.Search))
+            {
+                query = query.Where(x => x.Type.Contains(options.Search) || 
+                                         x.TargetType.Contains(options.Search) ||
+                                         x.Data.Contains(options.Search));
+            }
+
+            var events = await query
+                .OrderByDescending(x => x.TimeStamp)
+                .Skip(options.Skip)
+                .Take(options.PageSize)
+                .ToListAsync();
+
+            var items = new List<ActivityPageModel.EventModel>();
+
+            foreach (var @event in events)
+            {
+                var model = new ActivityPageModel.EventModel
+                {
+                    Id = @event.Id,
+                    Type = @event.Type,
+                    TargetId = @event.TargetId,
+                    TargetType = @event.TargetType,
+                    TimeStamp = @event.TimeStamp
+                };
+
+                if (!string.IsNullOrWhiteSpace(@event.Data) && @event.Data != "null")
+                {
+                    var parsedData = JObject.Parse(@event.Data);
+
+                    var data = new Dictionary<string, string>();
+
+                    foreach (var x in parsedData)
+                    {
+                        if (x.Key == nameof(@event.Id) || 
+                            x.Key == nameof(@event.TargetId) ||
+                            x.Key == nameof(@event.TargetType) || 
+                            x.Key == nameof(@event.SiteId) ||
+                            x.Key == nameof(@event.MemberId)) 
+                            continue;
+
+                        var value = !string.IsNullOrWhiteSpace(x.Value.ToString())
+                            ? x.Value.ToString()
+                            : "<null>";
+
+                        data.Add(x.Key, value);
+                    }
+
+                    model.Data = data;
+                }
+
+                items.Add(model);
+            }
+
+            var totalRecords = await query.CountAsync();
+
+            result.Events = new PaginatedData<ActivityPageModel.EventModel>(items, totalRecords, options.PageSize);
 
             return result;
         }

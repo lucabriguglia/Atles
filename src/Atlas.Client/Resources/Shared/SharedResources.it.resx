@@ -156,6 +156,9 @@
   <data name="Next" xml:space="preserve">
     <value>Prossima</value>
   </data>
+  <data name="No records found." xml:space="preserve">
+    <value>Nessun elemento trovato.</value>
+  </data>
   <data name="Ops something went wrong." xml:space="preserve">
     <value>Ops qualcosa e' andato storto.</value>
   </data>

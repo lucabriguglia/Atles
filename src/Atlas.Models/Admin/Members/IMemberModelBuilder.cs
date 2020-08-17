@@ -9,5 +9,6 @@ namespace Atlas.Models.Admin.Members
         Task<CreatePageModel> BuildCreatePageModelAsync();
         Task<EditPageModel> BuildEditPageModelAsync(Guid memberId);
         Task<EditPageModel> BuildEditPageModelAsync(string userId);
+        Task<ActivityPageModel> BuildActivityPageModelAsync(Guid siteId, Guid memberId, QueryOptions options);
     }
 }

@@ -143,6 +143,21 @@ namespace Atlas.Server.Controllers.Admin
             return Ok();
         }
 
+        [HttpGet("activity/{id}")]
+        public async Task<ActionResult<ActivityPageModel>> Activity(Guid id, [FromQuery] int? page = 1, [FromQuery] string search = null)
+        {
+            var site = await _contextService.CurrentSiteAsync();
+
+            var result = await _modelBuilder.BuildActivityPageModelAsync(site.Id, id, new QueryOptions(search, page));
+
+            if (result == null)
+            {
+                return NotFound();
+            }
+
+            return result;
+        }
+
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
