@@ -9,6 +9,7 @@ namespace Atlas.Client.Components.Shared
         [Parameter] public string Title { get; set; }
         [Parameter] public string Body { get; set; }
         [Parameter] public string Button { get; set; }
+        [Parameter] public string CssClass { get; set; } = "danger";
         [Parameter] public EventCallback<MouseEventArgs> OnClickCallback { get; set; }
     }
 }

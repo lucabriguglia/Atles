@@ -91,6 +91,7 @@ else
                                 }
                                 else
                                 {
+                                    <button type="button" class="btn btn-warning disabled">@Loc["Suspend"]</button>
                                     <button type="button" class="btn btn-danger disabled">@Loc["Delete"]</button>
                                 }
                             </td>
@@ -107,6 +108,7 @@ else
                           Title="@Loc["Suspend"]"
                           Body="@Loc["Are you sure you want to suspend this member?"]"
                           Button="@Loc["Suspend"]"
+                          CssClass="warning"
                           OnClickCallback="@SuspendAsync" />
 
             <ConfirmModal Title="@Loc["Delete"]"
