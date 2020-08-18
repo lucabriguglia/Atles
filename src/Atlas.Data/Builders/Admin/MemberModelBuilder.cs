@@ -17,8 +17,8 @@ namespace Atlas.Data.Builders.Admin
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public MemberModelBuilder(AtlasDbContext dbContext, 
-            RoleManager<IdentityRole> roleManager, 
+        public MemberModelBuilder(AtlasDbContext dbContext,
+            RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager)
         {
             _dbContext = dbContext;
@@ -102,13 +102,13 @@ namespace Atlas.Data.Builders.Admin
             {
                 Member = new EditPageModel.MemberModel
                 {
-                    Id = member.Id, 
+                    Id = member.Id,
                     DisplayName = member.DisplayName
                 },
                 Info = new EditPageModel.InfoModel
                 {
-                    UserId = member.UserId, 
-                    Email = member.Email, 
+                    UserId = member.UserId,
+                    Email = member.Email,
                     Status = member.Status
                 }
             };
@@ -163,7 +163,7 @@ namespace Atlas.Data.Builders.Admin
 
             if (!string.IsNullOrWhiteSpace(options.Search))
             {
-                query = query.Where(x => x.Type.Contains(options.Search) || 
+                query = query.Where(x => x.Type.Contains(options.Search) ||
                                          x.TargetType.Contains(options.Search) ||
                                          x.Data.Contains(options.Search));
             }
@@ -187,19 +187,22 @@ namespace Atlas.Data.Builders.Admin
                     TimeStamp = @event.TimeStamp
                 };
 
+                var data = new Dictionary<string, string>
+                {
+                    {nameof(@event.TargetId), @event.TargetId.ToString()}
+                };
+
                 if (!string.IsNullOrWhiteSpace(@event.Data) && @event.Data != "null")
                 {
                     var parsedData = JObject.Parse(@event.Data);
 
-                    var data = new Dictionary<string, string>();
-
                     foreach (var x in parsedData)
                     {
-                        if (x.Key == nameof(@event.Id) || 
+                        if (x.Key == nameof(@event.Id) ||
                             x.Key == nameof(@event.TargetId) ||
-                            x.Key == nameof(@event.TargetType) || 
+                            x.Key == nameof(@event.TargetType) ||
                             x.Key == nameof(@event.SiteId) ||
-                            x.Key == nameof(@event.MemberId)) 
+                            x.Key == nameof(@event.MemberId))
                             continue;
 
                         var value = !string.IsNullOrWhiteSpace(x.Value.ToString())
@@ -208,9 +211,9 @@ namespace Atlas.Data.Builders.Admin
 
                         data.Add(x.Key, value);
                     }
-
-                    model.Data = data;
                 }
+
+                model.Data = data;
 
                 items.Add(model);
             }
