@@ -1,0 +1,15 @@
+{
+  "dependencies": {
+    "secrets1": {
+      "type": "secrets"
+    },
+    "mssql1": {
+      "type": "mssql",
+      "connectionId": "AtlifyConnection"
+    },
+    "mssql2": {
+      "type": "mssql",
+      "connectionId": "ApplicationConnection"
+    }
+  }
+}

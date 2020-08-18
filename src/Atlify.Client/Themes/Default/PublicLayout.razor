@@ -1,0 +1,45 @@
+﻿@inherits Atlify.Client.Components.Themes.PublicLayoutComponent
+
+<header>
+    <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-dark bg-dark border-bottom box-shadow mb-3">
+        <div class="container">
+            <a class="navbar-brand" href="/">@Site?.Title</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="navbar-collapse collapse d-sm-inline-flex flex-sm-row-reverse">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item">
+                        <a href="/" class="nav-link">@Loc["Home"]</a>
+                    </li>
+                    <li class="nav-item">
+                        <a href="/search" class="nav-link">@Loc["Search"]</a>
+                    </li>
+                    <LoginDisplay />
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<main role="main" class="pb-3">
+    <div class="container">
+        @Body
+    </div>
+</main>
+
+<footer class="border-top footer text-muted small">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-6">
+                &copy; @DateTime.UtcNow.Year - @Site?.Title - <a href="/privacy">@Loc["Privacy"]</a> - <a href="/terms">@Loc["Terms"]</a>
+            </div>
+            <div class="col-md-6 text-right mb-3">
+                @* <PleaseDoNotRemove> *@
+                Powered by <a href="https://github.com/lucabriguglia/Atlify" title="Powered by Atlify">Atlify</a>
+                @* </PleaseDoNotRemove> *@
+            </div>
+        </div>
+    </div>
+</footer>

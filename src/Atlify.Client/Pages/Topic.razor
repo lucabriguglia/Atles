@@ -1,0 +1,9 @@
+﻿@page "/forum/{forumSlug}/{topicSlug}"
+
+@inherits Atlify.Client.Components.Pages.TopicPage
+
+@AddComponent("Topic", new Dictionary<string, object>
+{
+    { nameof(ForumSlug), ForumSlug },
+    { nameof(TopicSlug), TopicSlug }
+})

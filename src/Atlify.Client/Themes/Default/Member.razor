@@ -1,0 +1,92 @@
+﻿@using Atlify.Client.Extensions
+@using Atlify.Domain
+@inherits Atlify.Client.Components.Themes.MemberComponent
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.Member.DisplayName</li>
+        </ol>
+    </nav>
+
+    <div class="row">
+        <div class="col-md-3 text-center">
+            <Avatar GravatarHash="@Model.Member.GravatarHash" GravatarSize="128" Class="mb-3"></Avatar>
+
+            <h4 class="mb-4">@Model.Member.DisplayName</h4>
+
+            <div class="form-control rounded bg-light text-center mb-3 mx-auto" style="width: 8rem;">
+                @Loc["Topics"]: <span class="font-weight-bold">@Model.Member.TotalTopics</span>
+            </div>
+
+            <div class="form-control rounded bg-light text-center mb-3 mx-auto" style="width: 8rem;">
+                @Loc["Replies"]: <span class="font-weight-bold">@Model.Member.TotalReplies</span>
+            </div>
+
+            @if (Model.Member.Status != StatusType.Active)
+            {
+                <div class="alert alert-warning mx-auto" style="width: 8rem;" role="alert">
+                    @Loc["Inactive"]
+                </div>
+            }
+
+            <AuthorizeView Policy="Admin">
+                <Authorized>
+                    <div class="mt-4 mb-2">
+                        <a href="/admin/members/edit/@Model.Member.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Edit"]</a>
+                    </div>
+                    <div class="mb-4">
+                        <a href="/admin/members/activity/@Model.Member.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Activity"]</a>
+                    </div>
+                </Authorized>
+            </AuthorizeView>
+        </div>
+        <div class="col-md-9">
+            <h4 class="mb-3">Last Posts</h4>
+
+            @if (Model.Posts.Items.Count == 0)
+            {
+                <NoRecords Text="@Loc["No posts found for this user."]" />
+            }
+            else
+            {
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var post in Model.Posts.Items)
+                        {
+                            <li class="list-group-item py-3">
+                                <div class="card-text">
+                                    @if (post.IsTopic)
+                                    {
+                                        <a href="@Url.Topic(post.ForumSlug, post.Slug)">@post.Title</a>
+                                    }
+                                    else
+                                    {
+                                        <a href="@Url.Topic(post.ForumSlug, post.Slug)">@Loc["RE"]: @post.Title</a>
+                                    }
+                                </div>
+                                <div class="card-text">
+                                    @((MarkupString)post.Content.ToSafeLengthText(150))
+                                </div>
+                                <div class="row small">
+                                    <div class="col-md-6">
+                                        <span class="mr-2">@post.TimeStamp.ToForumLocalDateAndTime()</span>
+                                    </div>
+                                    <div class="col-md-6 text-right">
+                                        In <a href="@Url.Forum(post.ForumSlug)">@post.ForumName</a>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+            }
+        </div>
+    </div>
+}

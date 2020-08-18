@@ -1,0 +1,30 @@
+﻿@inherits Atlify.Client.Components.Shared.LoginDisplayComponent
+
+<AuthorizeView>
+    <Authorized>
+        <li class="nav-item dropdown">
+            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                <Avatar GravatarSize="24" CurrentMember="true"></Avatar>
+            </a>
+            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                <a class="dropdown-item" href="/profile">@Loc["Profile"]</a>
+                <a class="dropdown-item" href="/settings">@Loc["Settings"]</a>
+                <a class="dropdown-item" href="authentication/profile">@Loc["Account"]</a>
+                <AuthorizeView Policy="Admin">
+                    <Authorized Context="AdminContext">
+                        <a class="dropdown-item" href="/admin/dashboard">@Loc["Admin"]</a>
+                    </Authorized>                    
+                </AuthorizeView>
+                <a class="dropdown-item" href="#" @onclick="BeginSignOut">@Loc["Log out"]</a>
+            </div>
+        </li>
+    </Authorized>
+    <NotAuthorized>
+        <li class="nav-item">
+            <a href="authentication/login" class="btn btn-outline-secondary mr-1 mb-1">@Loc["Log in"]</a>
+        </li>
+        <li class="nav-item">
+            <a href="authentication/register" class="btn btn-outline-secondary mb-1">@Loc["Register"]</a>
+        </li>
+    </NotAuthorized>
+</AuthorizeView>

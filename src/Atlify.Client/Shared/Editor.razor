@@ -1,0 +1,28 @@
+﻿@inherits Atlify.Client.Components.Shared.EditorComponent
+
+<div class="form-group">
+    <ul class="nav nav-tabs" id="@(Id)_tabLinks" role="tablist">
+        <li class="nav-item">
+            <a class="nav-link active" id="@(Id)_text-tab" data-toggle="tab" href="#@(Id)_text" role="tab" aria-controls="@(Id)_text" aria-selected="true">@Loc["Text"]</a>
+        </li>
+        <li class="nav-item">
+            <a class="nav-link" id="@(Id)_preview-tab" data-toggle="tab" href="#@(Id)_preview" role="tab" aria-controls="@(Id)_preview" aria-selected="false" @onclick="@PreviewAsync">@Loc["Preview"]</a>
+        </li>
+    </ul>
+    <div class="tab-content" id="@(Id)_tabContent">
+        <div class="tab-pane fade show active" id="@(Id)_text" role="tabpanel" aria-labelledby="@(Id)_text-tab">
+            <InputTextArea id="@(Id)" @bind-Value="Value" @oninput="OnValueChanged" Rows="@Rows" Class="form-control" Style="border:none;" Placeholder="@Loc["Your text here..."]" />
+        </div>
+        <div class="tab-pane fade pt-3 pl-4" id="@(Id)_preview" role="tabpanel" aria-labelledby="@(Id)_preview-tab">
+            @if (Preview == null)
+            {
+                <Loading></Loading>
+            }
+            else
+            {
+                @((MarkupString)Preview)
+            }
+        </div>
+    </div>
+    <ValidationMessage For="@(() => Value)" />
+</div>

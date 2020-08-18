@@ -1,0 +1,53 @@
+﻿@page "/admin/members/create"
+
+@inherits Atlify.Client.Components.Admin.Members.CreatePage
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item"><a href="/admin/members">@Loc["Members"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Loc["Create New Member"]</li>
+    </ol>
+</nav>
+
+<h3 class="mb-3">@Loc["Create New Member"]</h3>
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <div class="row">
+        <div class="col-md-4">
+            <EditForm Model="Model.User" OnValidSubmit="@(async () => await SaveAsync())">
+                <DataAnnotationsValidator />
+                <div class="form-group">
+                    <label for="email" class="control-label">@Loc["Email"]</label>
+                    <InputText id="email" @bind-Value="Model.User.Email" Class="form-control" />
+                    <ValidationMessage For="@(() => Model.User.Email)" />
+                </div>
+                <div class="form-group">
+                    <label for="password" class="control-label">@Loc["Password"]</label>
+                    <InputText id="password" @bind-Value="Model.User.Password" Type="password" Class="form-control" />
+                    <ValidationMessage For="@(() => Model.User.Password)" />
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword" class="control-label">@Loc["Confirm Password"]</label>
+                    <InputText id="confirmPassword" @bind-Value="Model.User.ConfirmPassword" Type="password" Class="form-control" />
+                    <ValidationMessage For="@(() => Model.User.ConfirmPassword)" />
+                </div>
+                <div class="form-group">
+                    <input type="submit" value="Save" class="btn btn-primary" />
+                    <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
+                </div>
+                <ValidationSummary />
+            </EditForm>
+        </div>
+    </div>
+}
+
+@if (Error)
+{
+    <SomethingWrong />
+}

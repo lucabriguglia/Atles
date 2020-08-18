@@ -1,0 +1,129 @@
+﻿@using Atlify.Client.Extensions
+@inherits Atlify.Client.Components.Themes.ForumComponent
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    if (DisplayPage)
+    {
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
+                <li class="breadcrumb-item active" aria-current="page">@Model.Forum.Name</li>
+            </ol>
+        </nav>
+
+        <div class="row">
+            <div class="col-md-6">
+                <h4 class="mb-3">@Model.Forum.Name</h4>
+            </div>
+            <div class="col-md-6 text-right mb-3">
+                @if (Model.CanStart)
+                {
+                    <a href="/forum/@Model.Forum.Id/post" class="btn btn-primary" role="button">@Loc["New Topic"]</a>
+                }
+                else
+                {
+                    <AuthorizeView>
+                        <Authorized>
+                            <i class="fas fa-comment-slash mr-1"></i>
+                            @Loc["You are not authorized to start a new discussion"]
+                        </Authorized>
+                        <NotAuthorized>
+                            <i class="fas fa-sign-in-alt mr-1"></i>
+                            @((MarkupString)string.Format(Loc["{0} to start a new discussion"], $"<a href=\"authentication/login?returnUrl={Uri.EscapeDataString(Navigation.Uri)}\">{Loc["Login"]}</a>"))
+                        </NotAuthorized>
+                    </AuthorizeView>
+                }
+            </div>
+        </div>
+
+        <a id="topics"></a>
+
+        <div class="row">
+            <div class="col-md-6 input-group mb-3">
+                <input type="text" class="form-control" placeholder="@string.Format(Loc["Search topics in {0}"], Model.Forum.Name)" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
+                <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
+                    <i class="fa fa-times"></i>
+                </button>
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        @if (Model.Topics == null)
+        {
+            <Loading />
+        }
+        else
+        {
+            @if (Model.Topics.Items.Count == 0)
+            {
+                <NoRecords Text="@Loc["No topics found for this forum."]" />
+            }
+            else
+            {
+                <div class="card">
+                    <ul class="list-group list-group-flush">
+                        @foreach (var item in Model.Topics.Items)
+                        {
+                            <li class="list-group-item py-3">
+                                <div class="row">
+                                    <div class="col-md-auto pr-1">
+                                        <a href="/member/@item.MemberId" title="@item.MemberDisplayName">
+                                            <Avatar GravatarHash="@item.GravatarHash" GravatarSize="32" Class="mb-2"></Avatar>
+                                        </a>
+                                    </div>
+                                    <div class="col">
+                                        <p class="card-text">
+                                            @if (item.Pinned)
+                                            {
+                                                <i class="fas fa-thumbtack mr-2"></i>
+                                            }
+                                            @if (item.Locked)
+                                            {
+                                                <i class="fas fa-lock mr-2"></i>
+                                            }
+                                            @if (Model.CanRead)
+                                            {
+                                                <a href="@Url.Topic(Model.Forum.Slug, item.Slug)" title="@item.Title">@item.Title.ToSafeLengthText(50)</a>
+                                            }
+                                            else
+                                            {
+                                                <span title="@item.Title"></span>@item.Title.ToSafeLengthText(50)
+                                            }
+                                        </p>
+                                        <div class="row small">
+                                            <div class="col-md-6">
+                                                @item.TimeStamp.ToForumLocalDateAndTime()
+                                                <span class="font-weight-bold ml-2">@item.TotalReplies</span> @Loc["Replies"]
+                                            </div>
+                                            <div class="col-md-6 text-right">
+                                                @((MarkupString)string.Format(Loc["Most recent post by {0} on {1}"],
+                                                    $"<a href=\"/member/{item.MostRecentMemberId}\" title=\"{item.MostRecentMemberDisplayName}\">{item.MostRecentMemberDisplayName.ToSafeLengthText(10)}</a>",
+                                                    item.MostRecentTimeStamp.ToForumLocalDateAndTime()))
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </li>
+                        }
+                    </ul>
+                </div>
+                <div class="mt-3">
+                    <Pager TotalPages="@Model.Topics.TotalPages" CurrentPage="@CurrentPage" OnLoadDataCallback="@ChangePageAsync"></Pager>
+                </div>
+            }
+        }
+    }
+    else
+    {
+        <SomethingWrong />
+    }
+}
