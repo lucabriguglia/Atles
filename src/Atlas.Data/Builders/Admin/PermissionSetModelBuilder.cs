@@ -59,7 +59,7 @@ namespace Atlas.Data.Builders.Admin
                 foreach (PermissionType permissionType in Enum.GetValues(typeof(PermissionType)))
                 {
                     var disabled = roleModel.Name == Consts.RoleNameAdmin ||
-                                   roleModel.Id == Consts.RoleIdAll && IsReadingPermissionType(permissionType);
+                                   roleModel.Id == Consts.RoleIdAll && !IsReadingPermissionType(permissionType);
 
                     permissionModel.PermissionTypes.Add(new FormComponentModel.PermissionTypeModel
                     {
