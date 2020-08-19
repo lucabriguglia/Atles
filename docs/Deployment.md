@@ -47,7 +47,7 @@ to this:
 <a name="mail-settings"></a>
 ### Mail Settings
 
-In order for the Atlas to work properly you need to configure a SMTP provider in app settings.
+In order for Atlas to work properly and emails to users (including confirming their email address after registration) you need to configure a SMTP provider in app settings.
 
 ```
 "MailSettings": {
@@ -74,16 +74,15 @@ You need to specify two connection strings: `ApplicationConnection` and `AtlasCo
 ```
 
 `ApplicationConnection` is used for ASP.NET Identity data while `AtlasConnection` is used for Atlas data.
-The two connection strings can be the same or different depending on whether you want membership data on a separate database or you want to use existing membership data.
-In case you are going to use an existing ASP.NET Identity database, the Atlas member profile will be created the first time the user logs in.
+The two connection strings can be the same or different depending on whether you want membership data on a separate database or you want to use an existing database with membership data.
+In case you are going to use an existing ASP.NET Identity database, the Atlas member profile will be created the first time a user logs in.
 To migrate your datbase(s) you can use .NET CLI to apply the migrations or run the sql scripts included in the sql folder.
 
 <a name="other-app-strings"></a>
 ### Other App Settings
 
 - `MigrateDatabases` should be set to `false` in a production environment.
-- `EnsureDefaultSiteInitialized` should be set to `true` only for the first time the application runs in production. The setting should be set to `false` after that.
-
+- `EnsureDefaultSiteInitialized` should be set to `true` only for the first time the application runs in production. This setting should be set to `false` after that.
 
 <a name="default-users"></a>
 ### Default Users
