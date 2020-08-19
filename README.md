@@ -4,7 +4,7 @@
 
 A forum software built with ASP.NET Core Blazor WebAssembly.
 
-**Demo**: [Atlas Website](https://atlas-blazor.azurewebsites.net/).
+**Demo**: [Azure App Service](https://atlas-blazor.azurewebsites.net/).
 
 **Documentation**: [Atlas Wiki](https://lucabriguglia.github.io/Atlas).
 
