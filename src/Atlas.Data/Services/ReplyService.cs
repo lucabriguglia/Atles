@@ -165,6 +165,11 @@ namespace Atlas.Data.Services
                 typeof(Post),
                 command.Id));
 
+            if (reply.IsAnswer)
+            {
+                reply.Topic.SetAsAnswered(false);
+            }
+
             reply.Topic.DecreaseRepliesCount();
             reply.Topic.Forum.DecreaseRepliesCount();
             reply.Topic.Forum.Category.DecreaseRepliesCount();

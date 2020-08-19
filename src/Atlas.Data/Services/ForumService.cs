@@ -74,6 +74,7 @@ namespace Atlas.Data.Services
             await _updateValidator.ValidateCommandAsync(command);
 
             var forum = await _dbContext.Forums
+                .Include(x => x.Category)
                 .FirstOrDefaultAsync(x =>
                     x.Category.SiteId == command.SiteId &&
                     x.Id == command.Id && 
@@ -88,6 +89,13 @@ namespace Atlas.Data.Services
 
             if (originalCategoryId != command.CategoryId)
             {
+                forum.Category.DecreaseTopicsCount(forum.TopicsCount);
+                forum.Category.DecreaseRepliesCount(forum.RepliesCount);
+
+                var newCategory = await _dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.CategoryId);
+                newCategory.IncreaseTopicsCount(forum.TopicsCount);
+                newCategory.IncreaseRepliesCount(forum.RepliesCount);
+
                 await ReorderForumsInCategory(originalCategoryId, command.Id, command.SiteId, command.MemberId);
 
                 var newCategoryForumsCount = await _dbContext.Forums
@@ -98,6 +106,7 @@ namespace Atlas.Data.Services
             }
 
             forum.UpdateDetails(command.CategoryId, command.Name, command.Slug, command.Description, command.PermissionSetId);
+            
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Updated,

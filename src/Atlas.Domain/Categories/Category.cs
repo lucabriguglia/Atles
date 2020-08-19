@@ -73,19 +73,19 @@ namespace Atlas.Domain.Categories
             SortOrder = sortOrder;
         }
 
-        public void IncreaseTopicsCount()
+        public void IncreaseTopicsCount(int count = 1)
         {
-            TopicsCount += 1;
+            TopicsCount += count;
         }
 
-        public void IncreaseRepliesCount()
+        public void IncreaseRepliesCount(int count = 1)
         {
-            RepliesCount += 1;
+            RepliesCount += count;
         }
 
-        public void DecreaseTopicsCount()
+        public void DecreaseTopicsCount(int count = 1)
         {
-            TopicsCount -= 1;
+            TopicsCount -= count;
 
             if (TopicsCount < 0)
             {
@@ -93,9 +93,9 @@ namespace Atlas.Domain.Categories
             }
         }
 
-        public void DecreaseRepliesCount()
+        public void DecreaseRepliesCount(int count = 1)
         {
-            RepliesCount -= 1;
+            RepliesCount -= count;
 
             if (RepliesCount < 0)
             {

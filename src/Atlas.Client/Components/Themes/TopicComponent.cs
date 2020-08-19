@@ -52,6 +52,7 @@ namespace Atlas.Client.Components.Themes
         protected int CurrentPage { get; set; } = 1;
         protected bool DisplayPage { get; set; }
         protected bool EditingAnswer { get; set; }
+        protected bool DeletingAnswer { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -115,8 +116,9 @@ namespace Atlas.Client.Components.Themes
             await LoadDataAsync();
         }
 
-        protected void SetDeleteReplyId(Guid id)
+        protected void SetDeleteReplyId(Guid id, bool isAnswer = false)
         {
+            DeletingAnswer = isAnswer;
             DeleteReplyId = id;
         }
 
@@ -187,7 +189,15 @@ namespace Atlas.Client.Components.Themes
         protected async Task DeleteReplyAsync(MouseEventArgs e)
         {
             await ApiService.DeleteAsync($"api/public/replies/delete-reply/{Model.Forum.Id}/{Model.Topic.Id}/{DeleteReplyId}");
-            await LoadDataAsync();
+
+            if (DeletingAnswer)
+            {
+                await OnInitializedAsync();
+            }
+            else
+            {
+                await LoadDataAsync();
+            }
         }
 
         protected void Cancel()

@@ -354,15 +354,6 @@
   <data name="Topics" xml:space="preserve">
     <value>Discussioni</value>
   </data>
-  <data name="Total Forums" xml:space="preserve">
-    <value>Forum</value>
-  </data>
-  <data name="Total Replies" xml:space="preserve">
-    <value>Risposte</value>
-  </data>
-  <data name="Total Topics" xml:space="preserve">
-    <value>Dicussioni</value>
-  </data>
   <data name="Two Factor Enabled" xml:space="preserve">
     <value>Two Factor Abilitato</value>
   </data>

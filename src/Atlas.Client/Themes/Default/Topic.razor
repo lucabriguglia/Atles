@@ -84,10 +84,10 @@ else
                             {
                                 <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await EditReplyAsync(Model.Answer.Id, Model.Answer.OriginalContent, Model.Answer.MemberId, true))">@Loc["Edit"]</a>
                             }
-                            @*@if (CanDeleteReply(Model.Answer.UserId))
+                            @if (CanDeleteReply(Model.Answer.UserId))
                             {
-                                <a href="#" @onclick:preventDefault="true" @onclick="() => SetDeleteReplyId(Model.Answer.Id)" data-toggle="modal" data-target="#confirm-modal-delete-reply">@Loc["Delete"]</a>
-                            }*@
+                                <a href="#" @onclick:preventDefault="true" @onclick="() => SetDeleteReplyId(Model.Answer.Id, true)" data-toggle="modal" data-target="#confirm-modal-delete-reply">@Loc["Delete"]</a>
+                            }
                         </div>
                     </div>
                 </div>
