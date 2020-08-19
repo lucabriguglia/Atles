@@ -66,7 +66,7 @@ namespace Atlas.Domain.Tests.Replies
         [TestCase(false)]
         public void SetAsAnswer(bool isAnswer)
         {
-            var sut = Fixture.Create<Post>();
+            var sut = Post.CreateReply(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Content", StatusType.Active);
 
             sut.SetAsAnswer(isAnswer);
 
