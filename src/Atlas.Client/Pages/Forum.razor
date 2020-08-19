@@ -1,0 +1,10 @@
+﻿@page "/forum/{id:guid}"
+@page "/forum/{slug}"
+
+@inherits ForumPage
+
+@AddComponent("Forum", new Dictionary<string, object>
+{
+    { nameof(Id), Id },
+    { nameof(Slug), Slug }
+})

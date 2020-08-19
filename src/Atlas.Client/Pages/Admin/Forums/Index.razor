@@ -1,0 +1,97 @@
+﻿@page "/admin/forums"
+@page "/admin/forums/{categoryId:guid}"
+
+@inherits Atlas.Client.Components.Admin.Forums.IndexPage
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Loc["Forums"]</li>
+    </ol>
+</nav>
+
+<div class="row">
+    <div class="col-md-6">
+        <h3 class="mb-3">@Loc["Forums"]</h3>
+    </div>
+    <div class="col-md-6 text-right mb-3">
+        <a href="/admin/forums/create/@CategoryId" class="btn btn-primary" role="button">@Loc["Create New"]</a>
+    </div>
+</div>
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-md-6 input-group mb-3">
+            <div class="input-group-prepend">
+                <label class="input-group-text" for="categoryId">@Loc["Category"]</label>
+            </div>
+            <select class="custom-select" id="categoryId" @onchange="CategoryChangedAsync">
+                @foreach (var option in Model.Categories)
+                {
+                    <option value=@option.Id selected=@(CategoryId == option.Id)>@option.Name</option>
+                }
+            </select>
+        </div>
+    </div>
+}
+
+@if (Model == null)
+{
+    <Loading />
+}
+else if (Model.Forums.Count == 0)
+{
+    <NoRecords Text="@Loc["No forums found for the selected category."]" />
+}
+else
+{
+    <table class="table table-bordered table-hover">
+        <thead>
+            <tr>
+                <th scope="col">&nbsp;</th>
+                <th scope="col">@Loc["Name"]</th>
+                <th scope="col">@Loc["Slug"]</th>
+                <th scope="col" class="text-center">@Loc["Total Topics"]</th>
+                <th scope="col" class="text-center">@Loc["Total Replies"]</th>
+                <th scope="col">@Loc["Permission Set"]</th>
+                <th scope="col">&nbsp;</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.Forums)
+            {
+                <tr>
+                    <td class="text-center">
+                        @if (item.SortOrder > 1)
+                        {
+                            <button type="button" class="btn btn-link btn-sm" @onclick="@(async () => await MoveUpAsync(item.Id))">
+                                <span class="fas fa-arrow-up"></span>
+                            </button>
+                        }
+                        @if (item.SortOrder < Model.Forums.Count)
+                        {
+                            <button type="button" class="btn btn-link btn-sm" @onclick="@(async () => await MoveDownAsync(item.Id))">
+                                <span class="fas fa-arrow-down"></span>
+                            </button>
+                        }
+                    </td>
+                    <td>@item.Name</td>
+                    <td>@item.Slug</td>
+                    <td class="text-center">@item.TotalTopics</td>
+                    <td class="text-center">@item.TotalReplies</td>
+                    <td>@item.PermissionSetName</td>
+                    <td>
+                        <a href="/admin/forums/edit/@item.Id" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
+                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+
+    <ConfirmModal Title="@Loc["Delete"]"
+                  Body="@Loc["Are you sure you want to delete this forum?"]"
+                  Button="@Loc["Delete"]"
+                  OnClickCallback="@DeleteAsync" />
+}

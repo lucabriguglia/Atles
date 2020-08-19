@@ -1,8 +1,8 @@
-# Atlify
+# Atlas
 
-Atlify is a forum software built with ASP.NET Core Blazor WebAssembly.
+Atlas is a forum software built with ASP.NET Core Blazor WebAssembly.
 
-**Repository**: [https://github.com/lucabriguglia/Atlify](https://github.com/lucabriguglia/Atlify)
+**Repository**: [https://github.com/lucabriguglia/Atlas](https://github.com/lucabriguglia/Atlas)
 
 ## Documentation
 

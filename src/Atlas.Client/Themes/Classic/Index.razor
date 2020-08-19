@@ -1,0 +1,70 @@
+﻿@inherits IndexComponent
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">@Loc["Home"]</li>
+        </ol>
+    </nav>
+
+    @foreach (var category in Model.Categories)
+    {
+        if (category.Forums.Count > 0)
+        {
+            <div class="mb-3">
+                @if (Model.Categories.Count > 1)
+                {
+                    <h4 class="mb-3">@category.Name</h4>
+                }
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th scope="col" class="w-50">@Loc["Forum"]</th>
+                            <th scope="col" class="w-auto text-center">@Loc["Topics"]</th>
+                            <th scope="col" class="w-auto text-center">@Loc["Replies"]</th>
+                            <th scope="col" class="w-25">&nbsp;</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var forum in category.Forums)
+                        {
+                            <tr>
+                                <td>
+                                    <div>
+                                        @if (forum.CanViewTopics)
+                                        {
+                                            <a href="@Url.Forum(forum.Slug)">@forum.Name</a>
+                                        }
+                                        else
+                                        {
+                                            @forum.Name
+                                        }
+                                    </div>
+                                    <p class="small">@forum.Description</p>
+                                </td>
+                                <td class="text-center">@forum.TotalTopics</td>
+                                <td class="text-center">@forum.TotalReplies</td>
+                                <td class="small">
+                                    @if (forum.HasLastPost())
+                                    {
+                                        <span>
+                                            @((MarkupString)string.Format(Loc["Latest: {0} by {1} on {2}"],
+                                            $"<a href=\"/forum/{forum.Id}/{forum.LastTopicId.Value}\" title=\"{forum.LastTopicTitle}\">{forum.LastTopicTitle.ToSafeLengthText(15)}</a>",
+                                            $"<a href=\"/member/{forum.LastPostMemberId}\" title=\"{forum.LastPostMemberDisplayName}\">{forum.LastPostMemberDisplayName.ToSafeLengthText(10)}</a>",
+                                            forum.LastPostTimeStamp.Value.ToForumLocalDateAndTime()))
+                                        </span>
+                                    }
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    }
+}

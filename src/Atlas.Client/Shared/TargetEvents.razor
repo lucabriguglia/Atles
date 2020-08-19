@@ -1,0 +1,43 @@
+﻿@inherits Atlas.Client.Components.Shared.TargetEventsComponent
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <a class="btn btn-outline-info mb-3" data-toggle="collapse" href="#events" role="button" aria-expanded="false" aria-controls="events">
+        @Loc["View Events"]
+    </a>
+    <div class="collapse" id="events">
+        <table class="table table-bordered table-hover">
+            <thead>
+                <tr>
+                    <th scope="col">@Loc["Event"]</th>
+                    <th scope="col">@Loc["Data"]</th>
+                    <th scope="col">@Loc["By"]</th>
+                    <th scope="col">@Loc["Date"]</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var _event in Model.Events)
+                {
+                    <tr>
+                        <td>@_event.Type</td>
+                        <td>
+                            @if (_event.Data != null)
+                            {
+                                @foreach (var (key, value) in _event.Data)
+                                {
+                                    <div><strong>@key</strong>: @value</div>
+                                }
+                            }
+                        </td>
+                        <td>@_event.MemberName</td>
+                        <td>@_event.TimeStamp</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+}

@@ -1,12 +1,12 @@
-# Atlify (Beta)
+# Atlas (Beta)
 
-![.NET Core](https://github.com/lucabriguglia/Atlify/workflows/.NET%20Core/badge.svg)
+![.NET Core](https://github.com/lucabriguglia/Atlas/workflows/.NET%20Core/badge.svg)
 
 A forum software built with ASP.NET Core Blazor WebAssembly.
 
-**Website**: [Atlify.io](https://atlify.io/).
+**Official Website**: [Atlas Website](https://atlify.io/).
 
-**Documentation**: [Atlify Wiki](https://lucabriguglia.github.io/Atlify).
+**Documentation**: [Atlas Wiki](https://lucabriguglia.github.io/Atlas).
 
 ![Forums Admin](docs/assets/img/admin-forums.png)
 ![Permission Set Admin](docs/assets/img/admin-permission-set-edit.png)
@@ -28,7 +28,7 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 ## Run on local
 
 - Clone the repository
-- Run the **Atlify.Server** project
+- Run the **Atlas.Server** project
 - Database and default data will be created automatically
 - Login with any of the following accounts:
   - **Admin User**: admin@default.com / !P455w0rd?

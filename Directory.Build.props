@@ -4,10 +4,10 @@
   <PropertyGroup Label="ProjectSettings">
     <Authors>Luca Briguglia</Authors>
     <Copyright>Copyright Luca Briguglia</Copyright>
-    <Product>Atlify</Product>
+    <Product>Atlas</Product>
     <Version>1.0.0.0</Version>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/lucabriguglia/Atlify</RepositoryUrl>
+    <RepositoryUrl>https://github.com/lucabriguglia/Atlas</RepositoryUrl>
     <PackageLicenseExpression>GPL-3.0</PackageLicenseExpression>
   </PropertyGroup>
 

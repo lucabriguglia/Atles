@@ -1,6 +1,6 @@
 ## Deployment
 
-Please follow these instructions in order to deploy Atlify to a web server.
+Please follow these instructions in order to deploy Atlas to a web server.
 The target framework is **.NET Core 3.1**.
 
 - [Certificate](#certificate)
@@ -20,7 +20,7 @@ App settings configuration for Identity Server should then be modified from this
 ```
 "IdentityServer": {
     "Clients": {
-        "Atlify.Client": {
+        "Atlas.Client": {
         "Profile": "IdentityServerSPA"
         }
     },
@@ -31,7 +31,7 @@ to this:
 ```
 "IdentityServer": {
     "Clients": {
-        "Atlify.Client": {
+        "Atlas.Client": {
         "Profile": "IdentityServerSPA"
         }
     },
@@ -47,7 +47,7 @@ to this:
 <a name="mail-settings"></a>
 ### Mail Settings
 
-In order for the Atlify to work properly you need to configure a SMTP provider in app settings.
+In order for the Atlas to work properly you need to configure a SMTP provider in app settings.
 
 ```
 "MailSettings": {
@@ -64,18 +64,18 @@ If you want to use Gmail as your SMTP provider, please follow the instructions i
 <a name="connection-strings"></a>
 ### Connection Strings
 
-You need to specify two connection strings: `ApplicationConnection` and `AtlifyConnection` in app settings.
+You need to specify two connection strings: `ApplicationConnection` and `AtlasConnection` in app settings.
 
 ```
 "ConnectionStrings": {
-    "ApplicationConnection": "Server=(localdb)\\mssqllocaldb;Database=Atlify;Trusted_Connection=True;MultipleActiveResultSets=true",
-    "AtlifyConnection": "Server=(localdb)\\mssqllocaldb;Database=Atlify;Trusted_Connection=True;MultipleActiveResultSets=true"
+    "ApplicationConnection": "Server=(localdb)\\mssqllocaldb;Database=Atlas;Trusted_Connection=True;MultipleActiveResultSets=true",
+    "AtlasConnection": "Server=(localdb)\\mssqllocaldb;Database=Atlas;Trusted_Connection=True;MultipleActiveResultSets=true"
 },
 ```
 
-`ApplicationConnection` is used for ASP.NET Identity data while `AtlifyConnection` is used for Atlify data.
+`ApplicationConnection` is used for ASP.NET Identity data while `AtlasConnection` is used for Atlas data.
 The two connection strings can be the same or different depending on whether you want membership data on a separate database or you want to use existing membership data.
-In case you are going to use an existing ASP.NET Identity database, the Atlify member profile will be created the first time the user logs in.
+In case you are going to use an existing ASP.NET Identity database, the Atlas member profile will be created the first time the user logs in.
 To migrate your datbase(s) you can use .NET CLI to apply the migrations or run the sql scripts included in the sql folder.
 
 <a name="other-app-strings"></a>
@@ -126,7 +126,7 @@ The web.config should look similar to the following:
       <handlers>
         <add name="aspNetCore" path="*" verb="*" modules="AspNetCoreModule" resourceType="Unspecified" />
       </handlers>
-      <aspNetCore processPath="dotnet" arguments=".\Atlify.Server.dll" stdoutLogEnabled="false" stdoutLogFile="\\?\%home%\LogFiles\stdout" hostingModel="OutOfProcess" />
+      <aspNetCore processPath="dotnet" arguments=".\Atlas.Server.dll" stdoutLogEnabled="false" stdoutLogFile="\\?\%home%\LogFiles\stdout" hostingModel="OutOfProcess" />
     </system.webServer>
   </location>
 </configuration>
