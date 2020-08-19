@@ -58,6 +58,7 @@ else
 
         @if (Model.Topic.HasAnswer)
         {
+            <a id="@Model.Answer.Id"></a>
             <div class="card border-success mb-3">
                 <div class="card-header text-success"><i class="fas fa-check mr-2"></i>Selected Answer</div>
                 <div class="card-body">
@@ -72,11 +73,21 @@ else
                     </div>
                     <div class="card-text">@((MarkupString)Model.Answer.Content)</div>
                     <div class="row">
-                        <div class="col-md-12">
+                        <div class="col-md-6">
                             @if (CanEditTopic())
                             {
                                 <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await SetAnswerAsync(Model.Answer.Id, false))">@Loc["Remove Answer"]</a>
                             }
+                        </div>
+                        <div class="col-md-6 text-right">
+                            @if (CanEditReply(Model.Answer.UserId))
+                            {
+                                <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await EditReplyAsync(Model.Answer.Id, Model.Answer.OriginalContent, Model.Answer.MemberId, true))">@Loc["Edit"]</a>
+                            }
+                            @*@if (CanDeleteReply(Model.Answer.UserId))
+                            {
+                                <a href="#" @onclick:preventDefault="true" @onclick="() => SetDeleteReplyId(Model.Answer.Id)" data-toggle="modal" data-target="#confirm-modal-delete-reply">@Loc["Delete"]</a>
+                            }*@
                         </div>
                     </div>
                 </div>

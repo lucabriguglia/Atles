@@ -81,10 +81,6 @@ else
                                     </div>
                                     <div class="col">
                                         <p class="card-text">
-                                            @if (item.HasAnswer)
-                                            {
-                                                <i class="fas fa-check mr-2 text-success"></i>
-                                            }
                                             @if (item.Pinned)
                                             {
                                                 <i class="fas fa-thumbtack mr-2"></i>
@@ -92,6 +88,10 @@ else
                                             @if (item.Locked)
                                             {
                                                 <i class="fas fa-lock mr-2"></i>
+                                            }
+                                            @if (item.HasAnswer)
+                                            {
+                                                <i class="fas fa-check mr-1 text-success"></i>
                                             }
                                             @if (Model.CanRead)
                                             {

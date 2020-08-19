@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Atlas.Client.Services;
 using Atlas.Models;
 using Atlas.Models.Public.Topics;
+using Markdig;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
@@ -50,6 +51,7 @@ namespace Atlas.Client.Components.Themes
         protected string Search { get; set; }
         protected int CurrentPage { get; set; } = 1;
         protected bool DisplayPage { get; set; }
+        protected bool EditingAnswer { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -135,8 +137,9 @@ namespace Atlas.Client.Components.Themes
             Model.Topic.Locked = !Model.Topic.Locked;
         }
 
-        protected async Task EditReplyAsync(Guid id, string content, Guid memberId)
+        protected async Task EditReplyAsync(Guid id, string content, Guid memberId, bool isAnswer = false)
         {
+            EditingAnswer = isAnswer;
             Model.Post.Id = id;
             Model.Post.Content = content;
             Model.Post.MemberId = memberId;
@@ -161,9 +164,18 @@ namespace Atlas.Client.Components.Themes
                 CurrentPage = Model.Replies.TotalPages;
             }
 
-            Model.Post = new TopicPageModel.PostModel();
+            if (!EditingAnswer)
+            {
+                Model.Replies = null;
+                await LoadDataAsync();
+            }
+            else
+            {
+                Model.Answer.Content = Markdown.ToHtml(Model.Post.Content);
+                Model.Answer.OriginalContent = Model.Post.Content;
+            }
 
-            await LoadDataAsync();
+            Model.Post = new TopicPageModel.PostModel();
         }
 
         protected async Task DeleteTopicAsync(MouseEventArgs e)
