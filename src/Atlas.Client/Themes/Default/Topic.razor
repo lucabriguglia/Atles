@@ -49,7 +49,7 @@ else
                         <a href="/member/@Model.Topic.MemberId">@Model.Topic.MemberDisplayName</a>
                     </div>
                     <div class="col-md-6 text-right small">
-                        @Model.Topic.TimeStamp.ToForumLocalDateAndTime()
+                        @Model.Topic.TimeStamp.ToAppLocalDateAndTime()
                     </div>
                 </div>
                 <p class="card-text">@((MarkupString)Model.Topic.Content)</p>
@@ -97,7 +97,7 @@ else
                                         <a href="/member/@reply.MemberId">@reply.MemberDisplayName</a>
                                     </div>
                                     <div class="col-md-6 text-right">
-                                        @reply.TimeStamp.ToForumLocalDateAndTime()
+                                        @reply.TimeStamp.ToAppLocalDateAndTime()
                                     </div>
                                 </div>
                                 <div class="card-text">@((MarkupString)reply.Content)</div>

@@ -29,7 +29,7 @@ namespace Atlas.Data.Builders.Public
         {
             var topic = await _dbContext.Posts
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
-                .Include(x => x.Member)
+                .Include(x => x.CreatedByMember)
                 .FirstOrDefaultAsync(x =>
                     x.TopicId == null &&
                     x.Forum.Category.SiteId == siteId &&
@@ -56,11 +56,11 @@ namespace Atlas.Data.Builders.Public
                     Title = topic.Title,
                     Slug = topic.Slug,
                     Content = Markdown.ToHtml(topic.Content),
-                    MemberId = topic.Member.Id,
-                    MemberDisplayName = topic.Member.DisplayName,
+                    MemberId = topic.CreatedByMember.Id,
+                    MemberDisplayName = topic.CreatedByMember.DisplayName,
                     TimeStamp = topic.TimeStamp,
-                    UserId = topic.Member.UserId,
-                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email),
+                    UserId = topic.CreatedByMember.UserId,
+                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.CreatedByMember.Email),
                     Pinned = topic.Pinned,
                     Locked = topic.Locked
                 },
@@ -73,7 +73,7 @@ namespace Atlas.Data.Builders.Public
         public async Task<PaginatedData<TopicPageModel.ReplyModel>> BuildTopicPageModelRepliesAsync(Guid topicId, QueryOptions options)
         {
             var repliesQuery = _dbContext.Posts
-                .Include(x => x.Member)
+                .Include(x => x.CreatedByMember)
                 .Where(x =>
                     x.TopicId == topicId &&
                     x.Status == StatusType.Published);
@@ -94,11 +94,11 @@ namespace Atlas.Data.Builders.Public
                 Id = reply.Id,
                 Content = Markdown.ToHtml(reply.Content),
                 OriginalContent = reply.Content,
-                UserId = reply.Member.UserId,
-                MemberId = reply.Member.Id,
-                MemberDisplayName = reply.Member.DisplayName,
+                UserId = reply.CreatedByMember.UserId,
+                MemberId = reply.CreatedByMember.Id,
+                MemberDisplayName = reply.CreatedByMember.DisplayName,
                 TimeStamp = reply.TimeStamp,
-                GravatarHash = _gravatarService.HashEmailForGravatar(reply.Member.Email)
+                GravatarHash = _gravatarService.HashEmailForGravatar(reply.CreatedByMember.Email)
             }).ToList();
 
             var totalRecordsQuery = _dbContext.Posts

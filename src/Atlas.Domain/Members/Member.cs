@@ -13,6 +13,7 @@ namespace Atlas.Domain.Members
         public int TopicsCount { get; private set; }
         public int RepliesCount { get; private set; }
         public StatusType Status { get; private set; }
+        public DateTime TimeStamp { get; set; }
 
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Event> Events { get; set; }
@@ -39,6 +40,7 @@ namespace Atlas.Domain.Members
             Email = email;
             DisplayName = displayName;
             Status = StatusType.Active;
+            TimeStamp = DateTime.UtcNow;
         }
 
         public void UpdateDetails(string displayName)

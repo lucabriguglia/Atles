@@ -280,3 +280,81 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819091023_UpdatePostAndMember')
+BEGIN
+    ALTER TABLE [Post] DROP CONSTRAINT [FK_Post_Member_MemberId];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819091023_UpdatePostAndMember')
+BEGIN
+    EXEC sp_rename N'[Post].[TimeStamp]', N'CreatedOn', N'COLUMN';
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819091023_UpdatePostAndMember')
+BEGIN
+    EXEC sp_rename N'[Post].[MemberId]', N'CreatedBy', N'COLUMN';
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819091023_UpdatePostAndMember')
+BEGIN
+    EXEC sp_rename N'[Post].[IX_Post_MemberId]', N'IX_Post_CreatedBy', N'INDEX';
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819091023_UpdatePostAndMember')
+BEGIN
+    ALTER TABLE [Post] ADD [ModifiedBy] uniqueidentifier NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819091023_UpdatePostAndMember')
+BEGIN
+    ALTER TABLE [Post] ADD [ModifiedOn] datetime2 NULL;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819091023_UpdatePostAndMember')
+BEGIN
+    ALTER TABLE [Member] ADD [TimeStamp] datetime2 NOT NULL DEFAULT '0001-01-01T00:00:00.0000000';
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819091023_UpdatePostAndMember')
+BEGIN
+    CREATE INDEX [IX_Post_ModifiedBy] ON [Post] ([ModifiedBy]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819091023_UpdatePostAndMember')
+BEGIN
+    ALTER TABLE [Post] ADD CONSTRAINT [FK_Post_Member_CreatedBy] FOREIGN KEY ([CreatedBy]) REFERENCES [Member] ([Id]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819091023_UpdatePostAndMember')
+BEGIN
+    ALTER TABLE [Post] ADD CONSTRAINT [FK_Post_Member_ModifiedBy] FOREIGN KEY ([ModifiedBy]) REFERENCES [Member] ([Id]) ON DELETE NO ACTION;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819091023_UpdatePostAndMember')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20200819091023_UpdatePostAndMember', N'3.1.6');
+END;
+
+GO
+

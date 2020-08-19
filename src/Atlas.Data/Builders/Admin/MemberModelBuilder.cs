@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Domain;
 using Atlas.Domain.Members;
 using Atlas.Models.Admin.Members;
 using Atlas.Models;
@@ -26,7 +27,7 @@ namespace Atlas.Data.Builders.Admin
             _userManager = userManager;
         }
 
-        public async Task<IndexPageModel> BuildIndexPageModelAsync(QueryOptions options)
+        public async Task<IndexPageModel> BuildIndexPageModelAsync(QueryOptions options, string status = null)
         {
             var result = new IndexPageModel();
 
@@ -35,6 +36,16 @@ namespace Atlas.Data.Builders.Admin
             if (!string.IsNullOrWhiteSpace(options.Search))
             {
                 query = query.Where(x => x.DisplayName.Contains(options.Search) || x.Email.Contains(options.Search));
+            }
+
+            if (!string.IsNullOrWhiteSpace(status))
+            {
+                var statusIsValid = Enum.TryParse(status, out StatusType memberStatus);
+
+                if (statusIsValid)
+                {
+                    query = query.Where(x => x.Status == memberStatus);
+                }
             }
 
             var members = await query
@@ -50,7 +61,8 @@ namespace Atlas.Data.Builders.Admin
                 Email = member.Email,
                 TotalTopics = member.TopicsCount,
                 TotalReplies = member.RepliesCount,
-                Status = member.Status
+                Status = member.Status,
+                TimeStamp = member.TimeStamp
             })
             .ToList();
 

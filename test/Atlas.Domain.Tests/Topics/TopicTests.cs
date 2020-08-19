@@ -55,13 +55,15 @@ namespace Atlas.Domain.Tests.Topics
         {
             var sut = Fixture.Create<Post>();
 
+            var memberId = Guid.NewGuid();
             const string title = "Updated Topic";
             const string slug = "my-topic-slug";
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            sut.UpdateDetails(title, slug, content, status);
+            sut.UpdateDetails(memberId, title, slug, content, status);
 
+            Assert.AreEqual(memberId, sut.ModifiedBy, nameof(sut.ModifiedBy));
             Assert.AreEqual(title, sut.Title, nameof(sut.Title));
             Assert.AreEqual(slug, sut.Slug, nameof(sut.Slug));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));

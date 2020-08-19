@@ -15,6 +15,7 @@ namespace Atlas.Models.Admin.Members
             public int TotalTopics { get; set; }
             public int TotalReplies { get; set; }
             public StatusType Status { get; set; }
+            public DateTime TimeStamp { get; set; }
         }
     }
 }

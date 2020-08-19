@@ -53,7 +53,7 @@ namespace Atlas.Data.Builders.Public
         {
             var topic = await _dbContext.Posts
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
-                .Include(x => x.Member)
+                .Include(x => x.CreatedByMember)
                 .FirstOrDefaultAsync(x =>
                     x.TopicId == null &&
                     x.Forum.Category.SiteId == siteId &&
@@ -80,7 +80,7 @@ namespace Atlas.Data.Builders.Public
                     Title = topic.Title,
                     Slug = topic.Slug,
                     Content = topic.Content,
-                    MemberId = topic.Member.Id,
+                    MemberId = topic.CreatedByMember.Id,
                     Locked = topic.Locked
                 }
             };

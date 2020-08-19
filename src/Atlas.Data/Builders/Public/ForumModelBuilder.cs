@@ -55,8 +55,8 @@ namespace Atlas.Data.Builders.Public
         public async Task<PaginatedData<ForumPageModel.TopicModel>> BuildForumPageModelTopicsAsync(Guid forumId, QueryOptions options)
         {
             var topicsQuery = _dbContext.Posts
-                .Include(x => x.Member)
-                .Include(x => x.LastReply).ThenInclude(x => x.Member)
+                .Include(x => x.CreatedByMember)
+                .Include(x => x.LastReply).ThenInclude(x => x.CreatedByMember)
                 .Where(x =>
                     x.TopicId == null &&
                     x.ForumId == forumId &&
@@ -81,12 +81,12 @@ namespace Atlas.Data.Builders.Public
                 Title = topic.Title,
                 Slug = topic.Slug,
                 TotalReplies = topic.RepliesCount,
-                MemberId = topic.Member.Id,
-                MemberDisplayName = topic.Member.DisplayName,
+                MemberId = topic.CreatedByMember.Id,
+                MemberDisplayName = topic.CreatedByMember.DisplayName,
                 TimeStamp = topic.TimeStamp,
-                GravatarHash = _gravatarService.HashEmailForGravatar(topic.Member.Email),
+                GravatarHash = _gravatarService.HashEmailForGravatar(topic.CreatedByMember.Email),
                 MostRecentMemberId = topic.LastReply?.MemberId ?? topic.MemberId,
-                MostRecentMemberDisplayName = topic.LastReply?.Member?.DisplayName ?? topic.Member.DisplayName,
+                MostRecentMemberDisplayName = topic.LastReply?.CreatedByMember?.DisplayName ?? topic.CreatedByMember.DisplayName,
                 MostRecentTimeStamp = topic.LastReply?.TimeStamp ?? topic.TimeStamp,
                 Pinned = topic.Pinned,
                 Locked = topic.Locked

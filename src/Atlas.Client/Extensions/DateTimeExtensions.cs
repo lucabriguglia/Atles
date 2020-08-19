@@ -11,11 +11,18 @@ namespace Atlas.Client.Extensions
             return localTime;
         }
 
-        public static string ToForumLocalDateAndTime(this DateTime timeStamp)
+        public static string ToAppLocalDateAndTime(this DateTime timeStamp)
         {
             var localDate = timeStamp.FromUtcToLocalTime();
             var forumDateAndTime = $"{localDate.ToShortDateString()} {localDate.ToShortTimeString()}";
             return forumDateAndTime;
+        }
+
+        public static string ToAppLocalDate(this DateTime timeStamp)
+        {
+            var localDate = timeStamp.FromUtcToLocalTime();
+            var forumDate = localDate.ToShortDateString();
+            return forumDate;
         }
     }
 }

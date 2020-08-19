@@ -34,9 +34,9 @@ namespace Atlas.Server.Controllers.Admin
         }
 
         [HttpGet("index-model")]
-        public async Task<IndexPageModel> List([FromQuery] int? page = 1, [FromQuery] string search = null)
+        public async Task<IndexPageModel> List([FromQuery] int? page = 1, [FromQuery] string search = null, [FromQuery] string status = null)
         {
-            return await _modelBuilder.BuildIndexPageModelAsync(new QueryOptions(search, page));
+            return await _modelBuilder.BuildIndexPageModelAsync(new QueryOptions(search, page), status);
         }
 
         [HttpGet("create")]

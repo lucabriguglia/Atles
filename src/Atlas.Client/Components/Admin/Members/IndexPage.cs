@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Models.Admin.Members;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
@@ -13,6 +14,7 @@ namespace Atlas.Client.Components.Admin.Members
         protected Guid DeleteId { get; set; }
         protected int CurrentPage { get; set; } = 1;
         protected string Search { get; set; }
+        protected string Status { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -21,7 +23,7 @@ namespace Atlas.Client.Components.Admin.Members
 
         private async Task LoadMembersAsync()
         {
-            Model = await ApiService.GetFromJsonAsync<IndexPageModel>($"api/admin/members/index-model?page={CurrentPage}&search={Search}");
+            Model = await ApiService.GetFromJsonAsync<IndexPageModel>($"api/admin/members/index-model?page={CurrentPage}&search={Search}&status={Status}");
         }
 
         protected async Task ChangePageAsync(int page)
@@ -54,10 +56,19 @@ namespace Atlas.Client.Components.Admin.Members
             {
                 Search = string.Empty;
                 CurrentPage = 1;
-                Model = null;
+                Model.Members = null;
                 StateHasChanged();
                 await LoadMembersAsync();
             }
+        }
+
+        protected async Task StatusChangedAsync(ChangeEventArgs args)
+        {
+            Status = args.Value.ToString();
+            CurrentPage = 1;
+            Model.Members = null;
+            StateHasChanged();
+            await LoadMembersAsync();
         }
 
         protected void SetSuspendId(Guid id)

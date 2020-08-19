@@ -5,7 +5,7 @@ namespace Atlas.Models.Admin.Members
 {
     public interface IMemberModelBuilder
     {
-        Task<IndexPageModel> BuildIndexPageModelAsync(QueryOptions options);
+        Task<IndexPageModel> BuildIndexPageModelAsync(QueryOptions options, string status = null);
         Task<CreatePageModel> BuildCreatePageModelAsync();
         Task<EditPageModel> BuildEditPageModelAsync(Guid memberId);
         Task<EditPageModel> BuildEditPageModelAsync(string userId);

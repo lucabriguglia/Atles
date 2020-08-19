@@ -59,7 +59,7 @@ namespace Atlas.Data.Builders.Public
                     var forum = await _cacheManager.GetOrSetAsync(CacheKeys.Forum(forumId), async () =>
                     {
                         var entity = await _dbContext.Forums
-                            .Include(x => x.LastPost).ThenInclude(x => x.Member)
+                            .Include(x => x.LastPost).ThenInclude(x => x.CreatedByMember)
                             .Include(x => x.LastPost).ThenInclude(x => x.Topic)
                             .Where(x => x.Id == forumId && x.Status == StatusType.Published)
                             .OrderBy(x => x.SortOrder)
@@ -80,8 +80,8 @@ namespace Atlas.Data.Builders.Public
                                 LastTopicTitle = entity.LastPost?.Title ?? entity.LastPost?.Topic?.Title,
                                 LastTopicSlug = entity.LastPost?.Slug ?? entity.LastPost?.Topic?.Slug,
                                 LastPostTimeStamp = entity.LastPost?.TimeStamp,
-                                LastPostMemberId = entity.LastPost?.Member?.Id,
-                                LastPostMemberDisplayName = entity.LastPost?.Member?.DisplayName
+                                LastPostMemberId = entity.LastPost?.CreatedByMember?.Id,
+                                LastPostMemberDisplayName = entity.LastPost?.CreatedByMember?.DisplayName
                             };
                         }
 

@@ -102,7 +102,7 @@ namespace Atlas.Data.Services
                 ? await GenerateSlugAsync(command.ForumId, title)
                 : command.Slug;
 
-            topic.UpdateDetails(title, slug, command.Content, command.Status);
+            topic.UpdateDetails(command.MemberId, title, slug, command.Content, command.Status);
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
@@ -203,7 +203,7 @@ namespace Atlas.Data.Services
         public async Task DeleteAsync(DeleteTopic command)
         {
             var topic = await _dbContext.Posts
-                .Include(x => x.Member)
+                .Include(x => x.CreatedByMember)
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Forum).ThenInclude(x => x.LastPost)
                 .FirstOrDefaultAsync(x =>
@@ -228,7 +228,7 @@ namespace Atlas.Data.Services
 
             topic.Forum.DecreaseTopicsCount();
             topic.Forum.Category.DecreaseTopicsCount();
-            topic.Member.DecreaseTopicsCount();
+            topic.CreatedByMember.DecreaseTopicsCount();
 
             if (topic.Forum.LastPost != null && (topic.Id == topic.Forum.LastPostId || topic.Id == topic.Forum.LastPost.TopicId))
             {

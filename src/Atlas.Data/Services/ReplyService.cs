@@ -90,7 +90,7 @@ namespace Atlas.Data.Services
                 throw new DataException($"Reply with Id {command.Id} not found.");
             }
 
-            reply.UpdateDetails(command.Content, command.Status);
+            reply.UpdateDetails(command.MemberId, command.Content, command.Status);
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
@@ -109,7 +109,7 @@ namespace Atlas.Data.Services
         public async Task DeleteAsync(DeleteReply command)
         {
             var reply = await _dbContext.Posts
-                .Include(x => x.Member)
+                .Include(x => x.CreatedByMember)
                 .Include(x => x.Topic).ThenInclude(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Topic).ThenInclude(x => x.Forum).ThenInclude(x => x.LastPost)
                 .FirstOrDefaultAsync(x =>
@@ -135,7 +135,7 @@ namespace Atlas.Data.Services
             reply.Topic.DecreaseRepliesCount();
             reply.Topic.Forum.DecreaseRepliesCount();
             reply.Topic.Forum.Category.DecreaseRepliesCount();
-            reply.Member.DecreaseRepliesCount();
+            reply.CreatedByMember.DecreaseRepliesCount();
 
             if (reply.Topic.Forum.LastPost != null && (reply.Id == reply.Topic.Forum.LastPostId || reply.Id == reply.Topic.Forum.LastPost.TopicId))
             {

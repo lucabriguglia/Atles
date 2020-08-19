@@ -69,7 +69,7 @@ namespace Atlas.Data.Builders.Public
                     p.Content,
                     p.TimeStamp,
                     p.MemberId,
-                    MemberDisplayName = p.Member.DisplayName,
+                    MemberDisplayName = p.CreatedByMember.DisplayName,
                     p.ForumId,
                     ForumName = p.Forum.Name,
                     ForumSlug = p.Forum.Slug

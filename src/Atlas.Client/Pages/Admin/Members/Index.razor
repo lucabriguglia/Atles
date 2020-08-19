@@ -24,19 +24,30 @@
 }
 else
 {
-    <div class="row">
-        <div class="col-md-6 input-group mb-3">
-            <input type="text" class="form-control" placeholder="@Loc["Search members"]" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
-            <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
-                <i class="fa fa-times"></i>
+<div class="row">
+    <div class="col-md-6 input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="memberStatus">@Loc["Status"]</label>
+        </div>
+        <select class="custom-select" id="memberStatus" @onchange="StatusChangedAsync">
+            <option value="">@Loc["All"]</option>
+            <option value="Active">@Loc["Active"]</option>
+            <option value="Suspended">@Loc["Suspended"]</option>
+            <option value="Deleted">@Loc["Deleted"]</option>
+</select>
+    </div>
+    <div class="col-md-6 input-group mb-3">
+        <input type="text" class="form-control" placeholder="@Loc["Search members"]" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
+        <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
+            <i class="fa fa-times"></i>
+        </button>
+        <div class="input-group-append">
+            <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
+                <i class="fa fa-search"></i>
             </button>
-            <div class="input-group-append">
-                <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
         </div>
     </div>
+</div>
 
     <a id="members"></a>
 
@@ -57,9 +68,10 @@ else
                     <tr>
                         <th scope="col">@Loc["Display Name"]</th>
                         <th scope="col">@Loc["Email"]</th>
-                        <th scope="col" class="text-center">@Loc["Total Topics"]</th>
-                        <th scope="col" class="text-center">@Loc["Total Replies"]</th>
+                        <th scope="col" class="text-center">@Loc["Topics"]</th>
+                        <th scope="col" class="text-center">@Loc["Replies"]</th>
                         <th scope="col" class="text-center">@Loc["Status"]</th>
+                        <th scope="col" class="text-center">@Loc["Date"]</th>
                         <th scope="col">&nbsp;</th>
                     </tr>
                 </thead>
@@ -72,6 +84,7 @@ else
                             <td class="text-center">@item.TotalTopics</td>
                             <td class="text-center">@item.TotalReplies</td>
                             <td class="text-center">@item.Status</td>
+                            <td class="text-center">@item.TimeStamp.ToAppLocalDate()</td>
                             <td>
                                 <a href="/admin/members/edit/@item.Id" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
                                 <a href="/admin/members/activity/@item.Id" class="btn btn-secondary" role="button">@Loc["Activity"]</a>

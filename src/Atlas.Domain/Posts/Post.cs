@@ -14,8 +14,18 @@ namespace Atlas.Domain.Posts
         public string Content { get; private set; }
         public int RepliesCount { get; private set; }
         public StatusType Status { get; private set; }
+
+        [Column("CreatedBy")]
+        [ForeignKey("CreatedByMember")]
         public Guid MemberId { get; private set; }
+
+        [Column("CreatedOn")]
         public DateTime TimeStamp { get; private set; }
+
+        [ForeignKey("ModifiedByMember")]
+        public Guid? ModifiedBy { get; private set; }
+        public DateTime? ModifiedOn { get; private set; }
+
         public bool Pinned { get; private set; }
         public bool Locked { get; private set; }
 
@@ -28,7 +38,8 @@ namespace Atlas.Domain.Posts
         public virtual Post Topic { get; set; }
         public virtual Post LastReply { get; set; }
         public virtual Forum Forum { get; set; }
-        public virtual Member Member { get; set; }
+        public virtual Member CreatedByMember { get; set; }
+        public virtual Member ModifiedByMember { get; set; }
         
         public Post()
         {
@@ -68,16 +79,20 @@ namespace Atlas.Domain.Posts
             TimeStamp = DateTime.UtcNow;
         }
 
-        public void UpdateDetails(string title, string slug, string content, StatusType status)
+        public void UpdateDetails(Guid memberId, string title, string slug, string content, StatusType status)
         {
+            ModifiedBy = memberId;
+            ModifiedOn = DateTime.UtcNow;
             Title = title;
             Slug = slug;
             Content = content;
             Status = status;
         }
 
-        public void UpdateDetails(string content, StatusType status)
+        public void UpdateDetails(Guid memberId, string content, StatusType status)
         {
+            ModifiedBy = memberId;
+            ModifiedOn = DateTime.UtcNow;
             Content = content;
             Status = status;
         }

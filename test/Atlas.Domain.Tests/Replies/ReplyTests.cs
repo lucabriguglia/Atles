@@ -51,11 +51,13 @@ namespace Atlas.Domain.Tests.Replies
         {
             var sut = Fixture.Create<Post>();
 
+            var memberId = Guid.NewGuid();
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            sut.UpdateDetails(content, status);
+            sut.UpdateDetails(memberId, content, status);
 
+            Assert.AreEqual(memberId, sut.ModifiedBy, nameof(sut.ModifiedBy));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
         }
