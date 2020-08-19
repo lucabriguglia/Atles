@@ -81,6 +81,10 @@ else
                                     </div>
                                     <div class="col">
                                         <p class="card-text">
+                                            @if (item.HasAnswer)
+                                            {
+                                                <i class="fas fa-check mr-2 text-success"></i>
+                                            }
                                             @if (item.Pinned)
                                             {
                                                 <i class="fas fa-thumbtack mr-2"></i>

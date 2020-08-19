@@ -358,3 +358,25 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819114322_AddAswerToPost')
+BEGIN
+    ALTER TABLE [Post] ADD [HasAnswer] bit NOT NULL DEFAULT CAST(0 AS bit);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819114322_AddAswerToPost')
+BEGIN
+    ALTER TABLE [Post] ADD [IsAnswer] bit NOT NULL DEFAULT CAST(0 AS bit);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200819114322_AddAswerToPost')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20200819114322_AddAswerToPost', N'3.1.6');
+END;
+
+GO
+

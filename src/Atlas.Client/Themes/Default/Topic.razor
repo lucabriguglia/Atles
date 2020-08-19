@@ -52,9 +52,36 @@ else
                         @Model.Topic.TimeStamp.ToAppLocalDateAndTime()
                     </div>
                 </div>
-                <p class="card-text">@((MarkupString)Model.Topic.Content)</p>
+                <div class="card-text">@((MarkupString)Model.Topic.Content)</div>
             </div>
         </div>
+
+        @if (Model.Topic.HasAnswer)
+        {
+            <div class="card border-success mb-3">
+                <div class="card-header text-success"><i class="fas fa-check mr-2"></i>Selected Answer</div>
+                <div class="card-body">
+                    <div class="row mb-3">
+                        <div class="col-md-6 small font-weight-bold">
+                            <Avatar GravatarHash="@Model.Answer.GravatarHash" GravatarSize="32" Class="mr-1"></Avatar>
+                            <a href="/member/@Model.Answer.MemberId">@Model.Answer.MemberDisplayName</a>
+                        </div>
+                        <div class="col-md-6 text-right small">
+                            @Model.Answer.TimeStamp.ToAppLocalDateAndTime()
+                        </div>
+                    </div>
+                    <div class="card-text">@((MarkupString)Model.Answer.Content)</div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            @if (CanEditTopic())
+                            {
+                                <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await SetAnswerAsync(Model.Answer.Id, false))">@Loc["Remove Answer"]</a>
+                            }
+                        </div>
+                    </div>
+                </div>
+            </div>
+        }
 
         <a id="replies"></a>
         <h5 class="mb-3">@Loc["Replies"]</h5>
@@ -102,7 +129,13 @@ else
                                 </div>
                                 <div class="card-text">@((MarkupString)reply.Content)</div>
                                 <div class="row">
-                                    <div class="col-md-12 text-right">
+                                    <div class="col-md-6">
+                                        @if (CanEditTopic() && !Model.Topic.HasAnswer)
+                                        {
+                                            <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await SetAnswerAsync(reply.Id, true))">@Loc["Set Answer"]</a>
+                                        }
+                                    </div>
+                                    <div class="col-md-6 text-right">
                                         @if (CanEditReply(reply.UserId))
                                         {
                                             <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await EditReplyAsync(reply.Id, reply.OriginalContent, reply.MemberId))">@Loc["Edit"]</a>
@@ -164,7 +197,7 @@ else
                 <AuthorizeView>
                     <Authorized>
                         <i class="fas fa-comment-slash mr-1"></i>
-                        @Loc["You are not authorized to reply"]            
+                        @Loc["You are not authorized to reply"]
                     </Authorized>
                     <NotAuthorized>
                         <i class="fas fa-sign-in-alt mr-1"></i>

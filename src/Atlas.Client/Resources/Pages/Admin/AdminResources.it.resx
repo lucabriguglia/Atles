@@ -297,6 +297,9 @@
   <data name="Remove" xml:space="preserve">
     <value>Rimuovi</value>
   </data>
+  <data name="Remove Answer" xml:space="preserve">
+    <value>Rimuovi Risposta</value>
+  </data>
   <data name="Replies" xml:space="preserve">
     <value>Risposte</value>
   </data>
@@ -314,6 +317,12 @@
   </data>
   <data name="Search members" xml:space="preserve">
     <value>Cerca utenti</value>
+  </data>
+  <data name="Selected Answer" xml:space="preserve">
+    <value>Risposta Selezionata</value>
+  </data>
+  <data name="Set Answer" xml:space="preserve">
+    <value>Seleziona Risposta</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Impostazioni</value>

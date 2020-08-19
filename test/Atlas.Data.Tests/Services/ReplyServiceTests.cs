@@ -148,6 +148,69 @@ namespace Atlas.Data.Tests.Services
         }
 
         [Test]
+        public async Task Should_set_reply_as_answer_and_add_event()
+        {
+            var options = Shared.CreateContextOptions();
+
+            var siteId = Guid.NewGuid();
+            var categoryId = Guid.NewGuid();
+            var forumId = Guid.NewGuid();
+            var topicId = Guid.NewGuid();
+            var memberId = Guid.NewGuid();
+
+            var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
+            var forum = new Forum(forumId, categoryId, "Forum", "my-forum", "My Forum", 1);
+            var topic = Post.CreateTopic(topicId, forumId, Guid.NewGuid(), "Title", "slug", "Content", StatusType.Published);
+            var reply = Post.CreateReply(Guid.NewGuid(), topicId, forumId, memberId, "Content", StatusType.Published);
+            var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
+
+            category.IncreaseRepliesCount();
+            forum.IncreaseRepliesCount();
+            topic.IncreaseRepliesCount();
+            member.IncreaseRepliesCount();
+
+            using (var dbContext = new AtlasDbContext(options))
+            {
+                dbContext.Categories.Add(category);
+                dbContext.Forums.Add(forum);
+                dbContext.Posts.Add(topic);
+                dbContext.Posts.Add(reply);
+                dbContext.Members.Add(member);
+                await dbContext.SaveChangesAsync();
+            }
+
+            using (var dbContext = new AtlasDbContext(options))
+            {
+                var command = new SetReplyAsAnswer
+                {
+                    Id = reply.Id,
+                    SiteId = siteId,
+                    ForumId = forumId,
+                    TopicId = topicId,
+                    IsAnswer = true
+                };
+
+                var cacheManager = new Mock<ICacheManager>();
+                var createValidator = new Mock<IValidator<CreateReply>>();
+                var updateValidator = new Mock<IValidator<UpdateReply>>();
+
+                var sut = new ReplyService(dbContext,
+                    cacheManager.Object,
+                    createValidator.Object,
+                    updateValidator.Object);
+
+                await sut.SetAsAnswerAsync(command);
+
+                var replyUpdated = await dbContext.Posts.Include(x => x.Topic).FirstOrDefaultAsync(x => x.Id == reply.Id);
+                var replyEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == reply.Id);
+
+                Assert.AreEqual(true, replyUpdated.IsAnswer);
+                Assert.AreEqual(true, replyUpdated.Topic.HasAnswer);
+                Assert.NotNull(replyEvent);
+            }
+        }
+
+        [Test]
         public async Task Should_delete_reply_and_add_event()
         {
             var options = Shared.CreateContextOptions();

@@ -82,6 +82,7 @@ namespace Atlas.Client.Components.Themes
         protected async Task SearchAsync()
         {
             CurrentPage = 1;
+            Model.Replies = null;
             await LoadDataAsync();
         }
 
@@ -91,6 +92,7 @@ namespace Atlas.Client.Components.Themes
             {
                 Search = string.Empty;
                 CurrentPage = 1;
+                Model.Replies = null;
                 await LoadDataAsync();
             }
         }
@@ -107,6 +109,7 @@ namespace Atlas.Client.Components.Themes
         {
             await JsRuntime.InvokeVoidAsync("scrollToTarget", "replies");
             CurrentPage = page;
+            Model.Replies = null;
             await LoadDataAsync();
         }
 
@@ -180,6 +183,13 @@ namespace Atlas.Client.Components.Themes
             Model.Post.Id = null;
             Model.Post.Content = null;
             Model.Topic.MemberId = Guid.Empty;
+        }
+
+        protected async Task SetAnswerAsync(Guid replyId, bool isAnswer)
+        {
+            Model.Replies = null;
+            await ApiService.PostAsJsonAsync($"api/public/replies/set-reply-as-answer/{Model.Forum.Id}/{Model.Topic.Id}/{replyId}", isAnswer);
+            await OnInitializedAsync();
         }
 
         protected bool CanEditTopic()

@@ -7,6 +7,7 @@ namespace Atlas.Domain.Posts
     {
         Task CreateAsync(CreateReply command);
         Task UpdateAsync(UpdateReply command);
+        Task SetAsAnswerAsync(SetReplyAsAnswer command);
         Task DeleteAsync(DeleteReply command);
     }
 }

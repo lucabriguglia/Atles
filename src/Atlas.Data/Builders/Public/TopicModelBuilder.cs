@@ -62,10 +62,38 @@ namespace Atlas.Data.Builders.Public
                     UserId = topic.CreatedByMember.UserId,
                     GravatarHash = _gravatarService.HashEmailForGravatar(topic.CreatedByMember.Email),
                     Pinned = topic.Pinned,
-                    Locked = topic.Locked
+                    Locked = topic.Locked,
+                    HasAnswer = topic.HasAnswer
                 },
                 Replies = await BuildTopicPageModelRepliesAsync(topic.Id, options)
             };
+
+            if (topic.HasAnswer)
+            {
+                var answer = await _dbContext.Posts
+                    .Include(x => x.CreatedByMember)
+                    .Where(x =>
+                        x.TopicId == topic.Id &&
+                        x.Status == StatusType.Published &&
+                        x.IsAnswer)
+                    .FirstOrDefaultAsync();
+
+                if (answer != null)
+                {
+                    result.Answer = new TopicPageModel.ReplyModel
+                    {
+                        Id = answer.Id,
+                        Content = Markdown.ToHtml(answer.Content),
+                        OriginalContent = answer.Content,
+                        UserId = answer.CreatedByMember.UserId,
+                        MemberId = answer.CreatedByMember.Id,
+                        MemberDisplayName = answer.CreatedByMember.DisplayName,
+                        TimeStamp = answer.TimeStamp,
+                        GravatarHash = _gravatarService.HashEmailForGravatar(answer.CreatedByMember.Email),
+                        IsAnswer = answer.IsAnswer
+                    };
+                }
+            }
 
             return result;
         }
@@ -76,7 +104,8 @@ namespace Atlas.Data.Builders.Public
                 .Include(x => x.CreatedByMember)
                 .Where(x =>
                     x.TopicId == topicId &&
-                    x.Status == StatusType.Published);
+                    x.Status == StatusType.Published &&
+                    x.IsAnswer == false);
 
             if (!string.IsNullOrWhiteSpace(options.Search))
             {
@@ -98,7 +127,8 @@ namespace Atlas.Data.Builders.Public
                 MemberId = reply.CreatedByMember.Id,
                 MemberDisplayName = reply.CreatedByMember.DisplayName,
                 TimeStamp = reply.TimeStamp,
-                GravatarHash = _gravatarService.HashEmailForGravatar(reply.CreatedByMember.Email)
+                GravatarHash = _gravatarService.HashEmailForGravatar(reply.CreatedByMember.Email),
+                IsAnswer = reply.IsAnswer
             }).ToList();
 
             var totalRecordsQuery = _dbContext.Posts

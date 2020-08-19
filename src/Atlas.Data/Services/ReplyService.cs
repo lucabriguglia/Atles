@@ -106,6 +106,39 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task SetAsAnswerAsync(SetReplyAsAnswer command)
+        {
+            var reply = await _dbContext.Posts
+                .Include(x => x.Topic)
+                .FirstOrDefaultAsync(x =>
+                    x.Id == command.Id &&
+                    x.TopicId == command.TopicId &&
+                    x.Topic.ForumId == command.ForumId &&
+                    x.Topic.Forum.Category.SiteId == command.SiteId &&
+                    x.Status == StatusType.Published);
+
+            if (reply == null)
+            {
+                throw new DataException($"Reply with Id {command.Id} not found.");
+            }
+
+            reply.SetAsAnswer(command.IsAnswer);
+
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Updated,
+                typeof(Post),
+                command.Id,
+                new
+                {
+                    command.IsAnswer
+                }));
+
+            reply.Topic.SetAsAnswered(command.IsAnswer);
+
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task DeleteAsync(DeleteReply command)
         {
             var reply = await _dbContext.Posts

@@ -62,6 +62,17 @@ namespace Atlas.Domain.Tests.Replies
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
         }
 
+        [TestCase(true)]
+        [TestCase(false)]
+        public void SetAsAnswer(bool isAnswer)
+        {
+            var sut = Fixture.Create<Post>();
+
+            sut.SetAsAnswer(isAnswer);
+
+            Assert.AreEqual(isAnswer, sut.IsAnswer, nameof(sut.IsAnswer));
+        }
+
         [Test]
         public void Delete()
         {

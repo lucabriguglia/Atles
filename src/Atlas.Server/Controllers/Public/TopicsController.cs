@@ -185,9 +185,9 @@ namespace Atlas.Server.Controllers.Public
             }
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
-            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions) && !member.IsSuspended;
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !member.IsSuspended;
-            var authorized = canEdit && model.Topic.MemberId == member.Id && !model.Topic.Locked || canModerate;
+            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var authorized = (canEdit && model.Topic.MemberId == member.Id && !model.Topic.Locked || canModerate) && !member.IsSuspended;
 
             if (!authorized)
             {
@@ -271,9 +271,9 @@ namespace Atlas.Server.Controllers.Public
                 .FirstOrDefaultAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
-            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions) && !member.IsSuspended;
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !member.IsSuspended;
-            var authorized = canEdit && topicInfo.MemberId == member.Id && !topicInfo.Locked || canModerate;
+            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var authorized = (canEdit && topicInfo.MemberId == member.Id && !topicInfo.Locked || canModerate) && !member.IsSuspended;
 
             if (!authorized)
             {
@@ -393,9 +393,9 @@ namespace Atlas.Server.Controllers.Public
                 .FirstOrDefaultAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
-            var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions) && !member.IsSuspended;
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !member.IsSuspended;
-            var authorized = canDelete && topicMemberId == member.Id || canModerate;
+            var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
+            var authorized = (canDelete && topicMemberId == member.Id || canModerate) && !member.IsSuspended;
 
             if (!authorized)
             {

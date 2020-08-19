@@ -28,6 +28,8 @@ namespace Atlas.Domain.Posts
 
         public bool Pinned { get; private set; }
         public bool Locked { get; private set; }
+        public bool IsAnswer { get; private set; }
+        public bool HasAnswer { get; private set; }
 
         [ForeignKey("Topic")]
         public Guid? TopicId { get; private set; }
@@ -133,6 +135,22 @@ namespace Atlas.Domain.Posts
             if (IsTopic())
             {
                 Locked = locked;
+            }
+        }
+
+        public void SetAsAnswer(bool isAnswer)
+        {
+            if (!IsTopic())
+            {
+                IsAnswer = isAnswer;
+            }
+        }
+
+        public void SetAsAnswered(bool hasAnswer)
+        {
+            if (IsTopic())
+            {
+                HasAnswer = hasAnswer;
             }
         }
 

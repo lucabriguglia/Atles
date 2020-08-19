@@ -7,6 +7,7 @@ namespace Atlas.Models.Public.Topics
     {
         public ForumModel Forum { get; set; } = new ForumModel();
         public TopicModel Topic { get; set; } = new TopicModel();
+        public ReplyModel Answer { get; set; } = new ReplyModel();
         public PaginatedData<ReplyModel> Replies { get; set; } = new PaginatedData<ReplyModel>();
         public PostModel Post { get; set; } = new PostModel();
 
@@ -35,6 +36,7 @@ namespace Atlas.Models.Public.Topics
             public string GravatarHash { get; set; }
             public bool Pinned { get; set; }
             public bool Locked { get; set; }
+            public bool HasAnswer { get; set; }
         }
 
         public class ReplyModel
@@ -47,6 +49,7 @@ namespace Atlas.Models.Public.Topics
             public string MemberDisplayName { get; set; }
             public DateTime TimeStamp { get; set; }
             public string GravatarHash { get; set; }
+            public bool IsAnswer { get; set; }
         }
 
         public class PostModel

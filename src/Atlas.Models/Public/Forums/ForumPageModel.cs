@@ -33,6 +33,7 @@ namespace Atlas.Models.Public.Forums
             public string MostRecentMemberDisplayName { get; set; }
             public bool Pinned { get; set; }
             public bool Locked { get; set; }
+            public bool HasAnswer { get; set; }
         }
     }
 }

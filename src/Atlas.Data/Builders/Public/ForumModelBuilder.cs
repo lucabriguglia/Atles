@@ -89,7 +89,8 @@ namespace Atlas.Data.Builders.Public
                 MostRecentMemberDisplayName = topic.LastReply?.CreatedByMember?.DisplayName ?? topic.CreatedByMember.DisplayName,
                 MostRecentTimeStamp = topic.LastReply?.TimeStamp ?? topic.TimeStamp,
                 Pinned = topic.Pinned,
-                Locked = topic.Locked
+                Locked = topic.Locked,
+                HasAnswer = topic.HasAnswer
             })
             .ToList();
 
