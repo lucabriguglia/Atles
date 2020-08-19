@@ -9,7 +9,6 @@ namespace Atlify.Domain.Pages
         public Guid SiteId { get; private set; }
         public string Name { get; private set; }
         public string Title { get; private set; }
-        public int SortOrder { get; private set; }
         public StatusType Status { get; private set; }
 
         public virtual Site Site { get; set; }
