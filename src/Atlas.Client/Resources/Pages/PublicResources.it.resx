@@ -117,6 +117,12 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Accept Answer" xml:space="preserve">
+    <value>Accetta Risposta</value>
+  </data>
+  <data name="Accepted Answer" xml:space="preserve">
+    <value>Risposta Accettata</value>
+  </data>
   <data name="Activity" xml:space="preserve">
     <value>Attivita'</value>
   </data>
@@ -212,6 +218,9 @@
   </data>
   <data name="RE" xml:space="preserve">
     <value>RE</value>
+  </data>
+  <data name="Remove Answer" xml:space="preserve">
+    <value>Rimuovi Risposta</value>
   </data>
   <data name="Replies" xml:space="preserve">
     <value>Risposte</value>
