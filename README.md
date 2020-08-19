@@ -4,7 +4,7 @@
 
 A forum software built with ASP.NET Core Blazor WebAssembly.
 
-**Website**: [Atlify.io](https://atlify.io/).
+**Website**: [Atlify.io](https://https://atlas-blazor.azurewebsites.net/).
 
 **Documentation**: [Atlify Wiki](https://lucabriguglia.github.io/Atlify).
 
