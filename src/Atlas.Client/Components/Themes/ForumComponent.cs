@@ -10,7 +10,6 @@ namespace Atlas.Client.Components.Themes
 {
     public abstract class ForumComponent : ThemeComponentBase
     {
-        [Parameter] public Guid? Id { get; set; }
         [Parameter] public string Slug { get; set; }
 
         protected ForumPageModel Model { get; set; }

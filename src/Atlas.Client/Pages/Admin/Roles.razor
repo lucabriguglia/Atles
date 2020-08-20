@@ -45,15 +45,15 @@ else
                         <td>
                             @if (item.Name != Consts.RoleNameAdmin)
                             {
-                                <button type="button" class="btn btn-secondary" role="button" @onclick="@(async () => await  EditAsync(item.Id, item.Name))">@Loc["Edit"]</button>
-                                <button type="button" class="btn btn-secondary" role="button" @onclick="@(async () => await  LoadUsersInRole(item.Name))">@Loc["Users"]</button>
-                                <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
+                                <button type="button" class="btn btn-secondary mb-1" role="button" @onclick="@(async () => await  EditAsync(item.Id, item.Name))">@Loc["Edit"]</button>
+                                <button type="button" class="btn btn-secondary mb-1" role="button" @onclick="@(async () => await  LoadUsersInRole(item.Name))">@Loc["Users"]</button>
+                                <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
                             }
                             else
                             {
-                                <button type="button" class="btn btn-secondary disabled" role="button">@Loc["Edit"]</button>
-                                <button type="button" class="btn btn-secondary" role="button" @onclick="@(async () => await  LoadUsersInRole(item.Name))">@Loc["Users"]</button>
-                                <button type="button" class="btn btn-danger disabled">@Loc["Delete"]</button>
+                                <button type="button" class="btn btn-secondary mb-1 disabled" role="button">@Loc["Edit"]</button>
+                                <button type="button" class="btn btn-secondary mb-1" role="button" @onclick="@(async () => await  LoadUsersInRole(item.Name))">@Loc["Users"]</button>
+                                <button type="button" class="btn btn-danger mb-1 disabled">@Loc["Delete"]</button>
                             }
                         </td>
                     </tr>
@@ -81,8 +81,8 @@ else
                         <ValidationMessage For="@(() => Model.EditRole.Name)" />
                     </div>
                     <div class="form-group">
-                        <input type="submit" value="@EditButton" class="btn btn-primary" />
-                        <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
+                        <input type="submit" value="@EditButton" class="btn btn-primary mb-1" />
+                        <button type="button" class="btn btn-secondary mb-1" @onclick="Cancel">@Loc["Cancel"]</button>
                     </div>
                 </EditForm>
             </div>
@@ -118,14 +118,14 @@ else
                             <tr>
                                 <td>@item.Email</td>
                                 <td>
-                                    <a href="/admin/members/edit-by-user-id/@item.Id" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
+                                    <a href="/admin/members/edit-by-user-id/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Edit"]</a>
                                     @if (RoleForUsers != Consts.RoleNameAdmin)
                                     {
-                                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#remove-user-from-role-confirm-modal" data-id="@item.Id" @onclick="() => SetUseIdToRemove(item.Id)">@Loc["Remove"]</button>
+                                        <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#remove-user-from-role-confirm-modal" data-id="@item.Id" @onclick="() => SetUseIdToRemove(item.Id)">@Loc["Remove"]</button>
                                     }
                                     else
                                     {
-                                        <button type="button" class="btn btn-danger disabled">@Loc["Delete"]</button>
+                                        <button type="button" class="btn btn-danger mb-1 disabled">@Loc["Delete"]</button>
                                     }
                                 </td>
                             </tr>

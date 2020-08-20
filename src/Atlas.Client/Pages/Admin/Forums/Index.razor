@@ -82,8 +82,8 @@ else
                     <td class="text-center">@item.TotalReplies</td>
                     <td>@item.PermissionSetName</td>
                     <td>
-                        <a href="/admin/forums/edit/@item.Id" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
+                        <a href="/admin/forums/edit/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Edit"]</a>
+                        <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
                     </td>
                 </tr>
             }

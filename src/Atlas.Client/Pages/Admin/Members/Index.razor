@@ -86,26 +86,24 @@ else
                             <td class="text-center">@item.Status</td>
                             <td class="text-center">@item.TimeStamp.ToAppLocalDate()</td>
                             <td>
-                                <a href="/admin/members/edit/@item.Id" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
-                                <a href="/admin/members/activity/@item.Id" class="btn btn-secondary" role="button">@Loc["Activity"]</a>
+                                <a href="/admin/members/edit/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Edit"]</a>
+                                <a href="/admin/members/activity/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Activity"]</a>
                                 @if (item.Status == StatusType.Active)
                                 {
-                                    <button type="button" class="btn btn-warning" data-toggle="modal" data-target="#confirm-modal-suspend" @onclick="() => SetSuspendId(item.Id)">@Loc["Suspend"]</button>
+                                    <button type="button" class="btn btn-warning mb-1" data-toggle="modal" data-target="#confirm-modal-suspend" @onclick="() => SetSuspendId(item.Id)">@Loc["Suspend"]</button>
                                 }
-
                                 @if (item.Status == StatusType.Suspended)
                                 {
-                                    <button type="button" class="btn btn-warning" @onclick="@(async () => await ReinstateAsync(item.Id))">@Loc["Reinstate"]</button>
+                                    <button type="button" class="btn btn-warning mb-1" @onclick="@(async () => await ReinstateAsync(item.Id))">@Loc["Reinstate"]</button>
                                 }
-
                                 @if (item.Status != StatusType.Deleted)
                                 {
-                                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
+                                    <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#confirm-modal" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
                                 }
                                 else
                                 {
-                                    <button type="button" class="btn btn-warning disabled">@Loc["Suspend"]</button>
-                                    <button type="button" class="btn btn-danger disabled">@Loc["Delete"]</button>
+                                    <button type="button" class="btn btn-warning mb-1 disabled">@Loc["Suspend"]</button>
+                                    <button type="button" class="btn btn-danger mb-1 disabled">@Loc["Delete"]</button>
                                 }
                             </td>
                         </tr>
