@@ -183,10 +183,10 @@ else
                         <div class="form-group">
                             <div class="row">
                                 <div class="col">
-                                    <input type="submit" value="@ReplyButtonText" class="btn btn-primary @CssClassDisabled" />
+                                    <input type="submit" value="@ReplyButtonText" class="btn btn-primary mb-1 @CssClassDisabled" />
                                     @if ((Model.Post.Id != null))
                                     {
-                                        <button type="button" class="btn btn-secondary" @onclick="Cancel">@Loc["Cancel"]</button>
+                                        <button type="button" class="btn btn-secondary mb-1" @onclick="Cancel">@Loc["Cancel"]</button>
                                     }
                                 </div>
                                 <div class="col text-center">

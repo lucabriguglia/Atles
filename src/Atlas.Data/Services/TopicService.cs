@@ -134,7 +134,10 @@ namespace Atlas.Data.Services
             {
                 var suffix = repeat > 0 ? $"-{repeat}" : string.Empty;
                 slug = $"{title.ToSlug()}{suffix}";
-                exists = await _dbContext.Posts.AnyAsync(x => x.ForumId == forumId && x.Slug == slug);
+                exists = await _dbContext.Posts.AnyAsync(x => 
+                    x.ForumId == forumId && 
+                    x.Slug == slug && 
+                    x.Status == StatusType.Published);
                 repeat++;
             }
 

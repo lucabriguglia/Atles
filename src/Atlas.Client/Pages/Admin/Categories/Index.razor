@@ -10,10 +10,10 @@
 </nav>
 
 <div class="row">
-    <div class="col-md-6">
+    <div class="col">
         <h3 class="mb-3">@Loc["Categories"]</h3>
     </div>
-    <div class="col-md-6 text-right mb-3">
+    <div class="col text-right mb-3">
         <a href="/admin/categories/create" class="btn btn-primary" role="button">@Loc["Create New"]</a>
     </div>
 </div>
@@ -64,9 +64,9 @@ else
                     <td class="text-center">@item.TotalReplies</td>
                     <td>@item.PermissionSetName</td>
                     <td>
-                        <a href="/admin/categories/edit/@item.Id" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
-                        <a href="/admin/forums/@item.Id" class="btn btn-secondary" role="button">@Loc["Forums"]</a>
-                        <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
+                        <a href="/admin/categories/edit/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Edit"]</a>
+                        <a href="/admin/forums/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Forums"]</a>
+                        <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
                     </td>
                 </tr>
             }
