@@ -177,6 +177,9 @@
   <data name="Inactive" xml:space="preserve">
     <value>Inactive</value>
   </data>
+  <data name="Latest Posts" xml:space="preserve">
+    <value>Latest Posts</value>
+  </data>
   <data name="Latest: {0} by {1} on {2}" xml:space="preserve">
     <value>Latest: {0} by {1} on {2}</value>
   </data>
