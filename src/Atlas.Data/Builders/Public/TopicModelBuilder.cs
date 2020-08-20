@@ -131,17 +131,7 @@ namespace Atlas.Data.Builders.Public
                 IsAnswer = reply.IsAnswer
             }).ToList();
 
-            var totalRecordsQuery = _dbContext.Posts
-                .Where(x =>
-                    x.TopicId == topicId &&
-                    x.Status == StatusType.Published);
-
-            if (!string.IsNullOrWhiteSpace(options.Search))
-            {
-                totalRecordsQuery = totalRecordsQuery.Where(x => x.Content.Contains(options.Search));
-            }
-
-            var totalRecords = await totalRecordsQuery.CountAsync();
+            var totalRecords = await repliesQuery.CountAsync();
 
             var result = new PaginatedData<TopicPageModel.ReplyModel>(items, totalRecords, options.PageSize);
 

@@ -44,31 +44,20 @@ namespace Atlas.Client.Components.Themes
             : Loc["No replies found for current search."];
 
         protected Guid DeleteReplyId { get; set; }
-
-        protected ClaimsPrincipal CurrentUser { get; set; }
-        protected string CurrentUserId { get; set; } = Guid.Empty.ToString();
-
         protected string Search { get; set; }
         protected int CurrentPage { get; set; } = 1;
+        public int TotalPages { get; set; } = 1;
         protected bool DisplayPage { get; set; }
         protected bool EditingAnswer { get; set; }
         protected bool DeletingAnswer { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            var authState = await AuthenticationStateTask;
-            CurrentUser = authState.User;
-
             try
             {
                 Model = await ApiService.GetFromJsonAsync<TopicPageModel>($"api/public/topics/{ForumSlug}/{TopicSlug}?page=1");
-
+                TotalPages = Model.Replies.TotalPages;
                 DisplayPage = true;
-
-                if (CurrentUser.Identity.IsAuthenticated)
-                {
-                    CurrentUserId = CurrentUser.Identities.First().Claims.FirstOrDefault(x => x.Type == "sub")?.Value;
-                }
             }
             catch (Exception)
             {
@@ -80,6 +69,8 @@ namespace Atlas.Client.Components.Themes
         private async Task LoadDataAsync()
         {
             Model.Replies = await ApiService.GetFromJsonAsync<PaginatedData<TopicPageModel.ReplyModel>>($"api/public/topics/{Model.Forum.Id}/{Model.Topic.Id}/replies?page={CurrentPage}&search={Search}");
+            TotalPages = Model.Replies.TotalPages;
+            StateHasChanged();
         }
 
         protected async Task SearchAsync()
@@ -216,12 +207,12 @@ namespace Atlas.Client.Components.Themes
 
         protected bool CanEditTopic()
         {
-            return Model.CanEdit && Model.Topic.UserId == CurrentUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanEdit && Model.Topic.UserId == Member.UserId && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanDeleteTopic()
         {
-            return Model.CanDelete && Model.Topic.UserId == CurrentUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanDelete && Model.Topic.UserId == Member.UserId && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanCreateReply()
@@ -231,12 +222,12 @@ namespace Atlas.Client.Components.Themes
 
         protected bool CanEditReply(string replyUserId)
         {
-            return Model.CanEdit && replyUserId == CurrentUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanEdit && replyUserId == Member.UserId && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanDeleteReply(string replyUserId)
         {
-            return Model.CanDelete && replyUserId == CurrentUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanDelete && replyUserId == Member.UserId && !Model.Topic.Locked || Model.CanModerate;
         }
     }
 }

@@ -14,17 +14,20 @@ namespace Atlas.Client.Components.Admin.Members
         protected ActivityPageModel Model { get; set; }
 
         public int CurrentPage { get; set; } = 1;
+        public int TotalPages { get; set; } = 1;
         protected string Search { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             Model = await ApiService.GetFromJsonAsync<ActivityPageModel>($"api/admin/members/activity/{Id}");
+            TotalPages = Model.Events.TotalPages;
         }
 
         private async Task LoadEventsAsync()
         {
             var model = await ApiService.GetFromJsonAsync<ActivityPageModel>($"api/admin/members/activity/{Id}?page={CurrentPage}&search={Search}");
             Model.Events = model.Events;
+            TotalPages = Model.Events.TotalPages;
         }
 
         protected async Task ChangePageAsync(int page)

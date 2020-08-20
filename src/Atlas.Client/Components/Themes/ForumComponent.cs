@@ -15,6 +15,7 @@ namespace Atlas.Client.Components.Themes
 
         protected ForumPageModel Model { get; set; }
         protected int CurrentPage { get; set; } = 1;
+        public int TotalPages { get; set; } = 1;
         protected string Search { get; set; }
         protected bool DisplayPage { get; set; }
 
@@ -23,6 +24,7 @@ namespace Atlas.Client.Components.Themes
             try
             {
                 Model = await ApiService.GetFromJsonAsync<ForumPageModel>($"api/public/forums/{Slug}?page=1");
+                TotalPages = Model.Topics.TotalPages;
                 DisplayPage = true;
             }
             catch (Exception)
@@ -66,6 +68,7 @@ namespace Atlas.Client.Components.Themes
         private async Task LoadTopicsAsync()
         {
             Model.Topics = await ApiService.GetFromJsonAsync<PaginatedData<ForumPageModel.TopicModel>>($"api/public/forums/{Model.Forum.Id}/topics?page={CurrentPage}&search={Search}");
+            TotalPages = Model.Topics.TotalPages;
         }
     }
 }

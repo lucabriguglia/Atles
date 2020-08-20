@@ -43,7 +43,6 @@ namespace Atlas.Client.Components.Shared
                 {
                     EndPage = TotalPages;
                 }
-                StateHasChanged();
             }
             else if (direction == "back" && StartPage > 1)
             {

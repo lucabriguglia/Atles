@@ -80,10 +80,10 @@ else
                     }
                 </tbody>
             </table>
-
-            <div class="mt-3">
-                <Pager CurrentPage="CurrentPage" TotalPages="Model.Events.TotalPages" OnLoadDataCallback="@ChangePageAsync"></Pager>
-            </div>
         }
     }
+
+    <div class="mt-3">
+        <Pager CurrentPage="CurrentPage" TotalPages="TotalPages" OnLoadDataCallback="@ChangePageAsync"></Pager>
+    </div>
 }

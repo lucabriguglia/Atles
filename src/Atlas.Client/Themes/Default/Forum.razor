@@ -119,10 +119,10 @@ else
                         }
                     </ul>
                 </div>
-                <div class="mt-3">
-                    <Pager TotalPages="@Model.Topics.TotalPages" CurrentPage="@CurrentPage" OnLoadDataCallback="@ChangePageAsync"></Pager>
-                </div>
             }
+            <div class="mt-3">
+                <Pager CurrentPage="@CurrentPage" TotalPages="@TotalPages" OnLoadDataCallback="@ChangePageAsync"></Pager>
+            </div>
         }
     }
     else

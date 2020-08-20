@@ -74,7 +74,8 @@ namespace Atlas.Server.Services
                             Email = member.Email,
                             DisplayName = member.DisplayName,
                             GravatarHash = _gravatarService.HashEmailForGravatar(member.Email),
-                            IsSuspended = member.Status == StatusType.Suspended
+                            IsSuspended = member.Status == StatusType.Suspended,
+                            IsAuthenticated = true
                         };
                     }
                 }
