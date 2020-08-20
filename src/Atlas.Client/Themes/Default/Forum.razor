@@ -16,10 +16,10 @@ else
         </nav>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col">
                 <h4 class="mb-3">@Model.Forum.Name</h4>
             </div>
-            <div class="col-md-6 text-right mb-3">
+            <div class="col text-right mb-3">
                 @if (Model.CanStart)
                 {
                     <a href="/forum/@Model.Forum.Id/post" class="btn btn-primary" role="button">@Loc["New Topic"]</a>
@@ -103,11 +103,11 @@ else
                                             }
                                         </p>
                                         <div class="row small">
-                                            <div class="col-md-6">
+                                            <div class="col">
                                                 @item.TimeStamp.ToAppLocalDateAndTime()
                                                 <span class="font-weight-bold ml-2">@item.TotalReplies</span> @Loc["Replies"]
                                             </div>
-                                            <div class="col-md-6 text-right">
+                                            <div class="col text-right">
                                                 @((MarkupString)string.Format(Loc["Most recent post by {0} on {1}"],
                                                     $"<a href=\"/member/{item.MostRecentMemberId}\" title=\"{item.MostRecentMemberDisplayName}\">{item.MostRecentMemberDisplayName.ToSafeLengthText(10)}</a>",
                                                     item.MostRecentTimeStamp.ToAppLocalDateAndTime()))
