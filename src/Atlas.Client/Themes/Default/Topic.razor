@@ -17,7 +17,7 @@ else
         </nav>
 
         <div class="row">
-            <div class="col-md-6">
+            <div class="col">
                 <h3 class="mb-3">
                     <span class="small">
                         @if (Model.Topic.Pinned)
@@ -32,7 +32,7 @@ else
                     @Model.Topic.Title
                 </h3>
             </div>
-            <div class="col-md-6 text-right mb-3">
+            <div class="col text-right mb-3">
                 @if (CanCreateReply())
                 {
                     <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewReplyAsync())" class="btn btn-primary @CssClassDisabled" role="button">@Loc["Reply"]</a>
@@ -43,7 +43,7 @@ else
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row mb-3">
-                    <div class="col-md-6">
+                    <div class="col">
                         <div class="container">
                             <div class="row small">
                                 <div><Avatar GravatarHash="@Model.Topic.GravatarHash" GravatarSize="32" Class="mr-3"></Avatar></div>
@@ -54,7 +54,7 @@ else
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6 text-right">
+                    <div class="col text-right">
                         <TopicMenu TopicId="@Model.Topic.Id"
                                    ForumId="@Model.Forum.Id"
                                    CanEdit="CanEditTopic()"
@@ -77,7 +77,7 @@ else
                 <div class="card-header text-success"><i class="fas fa-check mr-2"></i>@Loc["Accepted Answer"]</div>
                 <div class="card-body">
                     <div class="row mb-3">
-                        <div class="col-md-6">
+                        <div class="col">
                             <div class="container">
                                 <div class="row small">
                                     <div><Avatar GravatarHash="@Model.Answer.GravatarHash" GravatarSize="32" Class="mr-3"></Avatar></div>
@@ -88,7 +88,7 @@ else
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-6 text-right">
+                        <div class="col text-right">
                             <PostMenu PostId="@Model.Answer.Id"
                                       CanRemoveAnswer="CanEditTopic()"
                                       RemoveAnswerCallback="@(async () => await SetAnswerAsync(Model.Answer.Id, false))"
@@ -139,7 +139,7 @@ else
                             <li class="list-group-item py-3">
                                 <a id="@reply.Id"></a>
                                 <div class="row mb-3">
-                                    <div class="col-md-6">
+                                    <div class="col">
                                         <div class="container">
                                             <div class="row small">
                                                 <div><Avatar GravatarHash="@reply.GravatarHash" GravatarSize="32" Class="mr-3"></Avatar></div>
@@ -150,7 +150,7 @@ else
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-md-6 text-right">
+                                    <div class="col text-right">
                                         <PostMenu PostId="@reply.Id"
                                                   CanAcceptAnswer="CanEditTopic() && !Model.Topic.HasAnswer"
                                                   AcceptAnswerCallback="@(async () => await SetAnswerAsync(reply.Id, true))"
