@@ -183,9 +183,6 @@
   <data name="Latest: {0} by {1} on {2}" xml:space="preserve">
     <value>Latest: {0} by {1} on {2}</value>
   </data>
-  <data name="Lock" xml:space="preserve">
-    <value>Lock</value>
-  </data>
   <data name="Log in" xml:space="preserve">
     <value>Log in</value>
   </data>
@@ -212,9 +209,6 @@
   </data>
   <data name="No topics found for this forum." xml:space="preserve">
     <value>No topics found for this forum.</value>
-  </data>
-  <data name="Pin" xml:space="preserve">
-    <value>Pin</value>
   </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
@@ -266,12 +260,6 @@
   </data>
   <data name="Topics" xml:space="preserve">
     <value>Topics</value>
-  </data>
-  <data name="Unlock" xml:space="preserve">
-    <value>Unlock</value>
-  </data>
-  <data name="Unpin" xml:space="preserve">
-    <value>Unpin</value>
   </data>
   <data name="Update" xml:space="preserve">
     <value>Update</value>

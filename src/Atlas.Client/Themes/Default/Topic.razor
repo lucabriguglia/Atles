@@ -18,25 +18,24 @@ else
 
         <div class="row">
             <div class="col-md-6">
-                <h3 class="mb-3">@Model.Topic.Title</h3>
+                <h3 class="mb-3">
+                    <span class="small">
+                        @if (Model.Topic.Pinned)
+                        {
+                            <i class="fas fa-thumbtack small mr-1"></i>
+                        }
+                        @if (Model.Topic.Locked)
+                        {
+                            <i class="fas fa-lock small mr-1"></i>
+                        }
+                    </span>
+                    @Model.Topic.Title
+                </h3>
             </div>
             <div class="col-md-6 text-right mb-3">
                 @if (CanCreateReply())
                 {
                     <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewReplyAsync())" class="btn btn-primary @CssClassDisabled" role="button">@Loc["Reply"]</a>
-                }
-                @if (CanEditTopic())
-                {
-                    <a href="/forum/@Model.Forum.Id/post/@Model.Topic.Id/edit" class="btn btn-secondary @CssClassDisabled" role="button">@Loc["Edit"]</a>
-                }
-                @if (Model.CanModerate)
-                {
-                    <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await PinAsync())" class="btn btn-info @CssClassDisabled" role="button">@PinButtonText</a>
-                    <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await LockAsync())" class="btn btn-warning @CssClassDisabled" role="button">@LockButtonText</a>
-                }
-                @if (CanDeleteTopic())
-                {
-                    <button type="button" class="btn btn-danger @CssClassDisabled" data-toggle="modal" data-target="#confirm-modal-delete-topic">@Loc["Delete"]</button>
                 }
             </div>
         </div>
@@ -44,12 +43,27 @@ else
         <div class="card mb-3">
             <div class="card-body">
                 <div class="row mb-3">
-                    <div class="col-md-6 small font-weight-bold">
-                        <Avatar GravatarHash="@Model.Topic.GravatarHash" GravatarSize="32" Class="mr-1"></Avatar>
-                        <a href="/member/@Model.Topic.MemberId">@Model.Topic.MemberDisplayName</a>
+                    <div class="col-md-6">
+                        <div class="container">
+                            <div class="row small">
+                                <div><Avatar GravatarHash="@Model.Topic.GravatarHash" GravatarSize="32" Class="mr-3"></Avatar></div>
+                                <div>
+                                    <div class="font-weight-bold"><a href="/member/@Model.Topic.MemberId">@Model.Topic.MemberDisplayName</a></div>
+                                    <div>@Model.Topic.TimeStamp.ToAppLocalDateAndTime()</div>
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 text-right small">
-                        @Model.Topic.TimeStamp.ToAppLocalDateAndTime()
+                    <div class="col-md-6 text-right">
+                        <TopicMenu TopicId="@Model.Topic.Id"
+                                   ForumId="@Model.Forum.Id"
+                                   CanEdit="CanEditTopic()"
+                                   CanModerate="Model.CanModerate"
+                                   CanDelete="CanDeleteTopic()"
+                                   PinCallback="@(async () => await PinAsync())"
+                                   LockCallback="@(async () => await LockAsync())"
+                                   Pinned="Model.Topic.Pinned"
+                                   Locked="Model.Topic.Locked" />
                     </div>
                 </div>
                 <div class="card-text">@((MarkupString)Model.Topic.Content)</div>

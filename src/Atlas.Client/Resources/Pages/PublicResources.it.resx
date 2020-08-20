@@ -261,12 +261,6 @@
   <data name="Topics" xml:space="preserve">
     <value>Discussioni</value>
   </data>
-  <data name="Unlock" xml:space="preserve">
-    <value>Sblocca</value>
-  </data>
-  <data name="Unpin" xml:space="preserve">
-    <value>Stacca</value>
-  </data>
   <data name="Update" xml:space="preserve">
     <value>Aggiorna</value>
   </data>

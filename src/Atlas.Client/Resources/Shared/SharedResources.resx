@@ -156,6 +156,9 @@
   <data name="Loading..." xml:space="preserve">
     <value>Loading...</value>
   </data>
+  <data name="Lock" xml:space="preserve">
+    <value>Lock</value>
+  </data>
   <data name="Log in" xml:space="preserve">
     <value>Log in</value>
   </data>
@@ -170,6 +173,9 @@
   </data>
   <data name="Ops something went wrong." xml:space="preserve">
     <value>Ops something went wrong.</value>
+  </data>
+  <data name="Pin" xml:space="preserve">
+    <value>Pin</value>
   </data>
   <data name="Preview" xml:space="preserve">
     <value>Preview</value>
@@ -194,6 +200,12 @@
   </data>
   <data name="Text" xml:space="preserve">
     <value>Text</value>
+  </data>
+  <data name="Unlock" xml:space="preserve">
+    <value>Unlock</value>
+  </data>
+  <data name="Unpin" xml:space="preserve">
+    <value>Unpin</value>
   </data>
   <data name="View Events" xml:space="preserve">
     <value>View Events</value>
