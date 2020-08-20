@@ -38,11 +38,11 @@ else
                                 </h5>
                                 <p class="card-text">@forum.Description</p>
                                 <div class="row small">
-                                    <div class="col-md-6">
+                                    <div class="col">
                                         <span class="font-weight-bold">@forum.TotalTopics</span> @Loc["Topics"]
                                         <span class="font-weight-bold ml-2">@forum.TotalReplies</span> @Loc["Replies"]
                                     </div>
-                                    <div class="col-md-6 text-right">
+                                    <div class="col text-right">
                                         @if (forum.HasLastPost())
                                         {
                                             <span class="ml-2">
