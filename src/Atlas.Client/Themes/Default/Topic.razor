@@ -79,7 +79,7 @@ else
                                       CanRemoveAnswer="CanEditTopic()"
                                       RemoveAnswerCallback="@(async () => await SetAnswerAsync(Model.Answer.Id, false))"
                                       CanEdit="CanEditReply(Model.Answer.UserId)"
-                                      EditCallback="@(async () => await EditReplyAsync(Model.Answer.Id, Model.Answer.OriginalContent, Model.Answer.MemberId))"
+                                      EditCallback="@(async () => await EditReplyAsync(Model.Answer.Id, Model.Answer.OriginalContent, Model.Answer.MemberId, true))"
                                       CanDelete="CanDeleteReply(Model.Answer.UserId)"
                                       DeleteCallback="() => SetDeleteReplyId(Model.Answer.Id)"/>
                         </div>
