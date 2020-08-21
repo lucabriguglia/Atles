@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
+using Atlas.Client.Components.Shared;
 using Atlas.Models.Public.Forums;
 
 namespace Atlas.Client.Components.Themes
@@ -17,6 +18,8 @@ namespace Atlas.Client.Components.Themes
         public int TotalPages { get; set; } = 1;
         protected string Search { get; set; }
         protected bool DisplayPage { get; set; }
+
+        protected PagerComponent Pager { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -36,7 +39,9 @@ namespace Atlas.Client.Components.Themes
         protected async Task SearchAsync()
         {
             CurrentPage = 1;
+            Model.Topics = null;
             await LoadTopicsAsync();
+            Pager.ReInitialize(TotalPages);
         }
 
         protected async Task ClearSearchAsync()
@@ -45,7 +50,9 @@ namespace Atlas.Client.Components.Themes
             {
                 Search = string.Empty;
                 CurrentPage = 1;
+                Model.Topics = null;
                 await LoadTopicsAsync();
+                Pager.ReInitialize(TotalPages);
             }
         }
 

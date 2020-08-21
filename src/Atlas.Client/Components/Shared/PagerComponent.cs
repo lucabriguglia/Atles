@@ -18,6 +18,15 @@ namespace Atlas.Client.Components.Shared
             SetPager("forward");
         }
 
+        public void ReInitialize(int totalPages)
+        {
+            StartPage = 0;
+            EndPage = 0;
+            TotalPages = totalPages;
+            SetPager("forward");
+            StateHasChanged();
+        }
+
         private const int PagerSize = 10;
 
         protected int StartPage;
@@ -30,7 +39,7 @@ namespace Atlas.Client.Components.Shared
             StateHasChanged();
         }
 
-        public void SetPager(string direction)
+        private void SetPager(string direction)
         {
             if (direction == "forward" && EndPage < TotalPages)
             {

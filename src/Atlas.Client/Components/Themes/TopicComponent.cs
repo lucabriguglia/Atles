@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Atlas.Client.Components.Shared;
 using Atlas.Client.Services;
 using Atlas.Models;
 using Atlas.Models.Public.Topics;
@@ -51,6 +52,8 @@ namespace Atlas.Client.Components.Themes
         protected bool EditingAnswer { get; set; }
         protected bool DeletingAnswer { get; set; }
 
+        protected PagerComponent Pager { get; set; }
+
         protected override async Task OnInitializedAsync()
         {
             try
@@ -78,6 +81,7 @@ namespace Atlas.Client.Components.Themes
             CurrentPage = 1;
             Model.Replies = null;
             await LoadDataAsync();
+            Pager.ReInitialize(TotalPages);
         }
 
         protected async Task ClearSearchAsync()
@@ -88,6 +92,7 @@ namespace Atlas.Client.Components.Themes
                 CurrentPage = 1;
                 Model.Replies = null;
                 await LoadDataAsync();
+                Pager.ReInitialize(TotalPages);
             }
         }
 
@@ -101,10 +106,10 @@ namespace Atlas.Client.Components.Themes
 
         protected async Task ChangePageAsync(int page)
         {
-            await JsRuntime.InvokeVoidAsync("scrollToTarget", "replies");
             CurrentPage = page;
             Model.Replies = null;
             await LoadDataAsync();
+            await JsRuntime.InvokeVoidAsync("scrollToTarget", "replies");
         }
 
         protected void SetDeleteReplyId(Guid id, bool isAnswer = false)

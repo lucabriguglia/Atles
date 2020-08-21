@@ -98,7 +98,7 @@ else
                                         }
                                         @if (Model.CanRead)
                                         {
-                                            <a href="/forum/@Model.Forum.Id/@item.Id" title="@item.Title">@item.Title.ToSafeLengthText(50)</a>
+                                            <a href="/forum/@Model.Forum.Slug/@item.Slug" title="@item.Title">@item.Title.ToSafeLengthText(50)</a>
                                         }
                                         else
                                         {

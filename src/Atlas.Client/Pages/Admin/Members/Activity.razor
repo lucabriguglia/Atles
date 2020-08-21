@@ -84,6 +84,6 @@ else
     }
 
     <div class="mt-3">
-        <Pager CurrentPage="CurrentPage" TotalPages="TotalPages" OnLoadDataCallback="@ChangePageAsync"></Pager>
+        <Pager @ref="Pager" CurrentPage="CurrentPage" TotalPages="TotalPages" OnLoadDataCallback="@ChangePageAsync"></Pager>
     </div>
 }

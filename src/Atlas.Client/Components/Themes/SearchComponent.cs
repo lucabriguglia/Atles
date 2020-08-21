@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Atlas.Client.Components.Shared;
 using Atlas.Models.Public;
 using Atlas.Models.Public.Search;
 using Microsoft.AspNetCore.Components.Web;
@@ -12,10 +13,14 @@ namespace Atlas.Client.Components.Themes
 
         protected string SearchTerm { get; set; }
         protected int CurrentPage { get; set; } = 1;
+        protected int TotalPages { get; set; }
+
+        protected PagerComponent Pager { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             Model = await ApiService.GetFromJsonAsync<SearchPageModel>("api/public/search?page=1");
+            TotalPages = Model.Posts.TotalPages;
         }
 
         protected async Task MyKeyUpAsync(KeyboardEventArgs key)
@@ -28,9 +33,10 @@ namespace Atlas.Client.Components.Themes
 
         protected async Task SearchAsync()
         {
+            CurrentPage = 1;
             Model.Posts = null;
-            StateHasChanged();
             await LoadDataAsync();
+            Pager.ReInitialize(TotalPages);
         }
 
         protected async Task ClearSearchAsync()
@@ -38,9 +44,10 @@ namespace Atlas.Client.Components.Themes
             if (!string.IsNullOrWhiteSpace(SearchTerm))
             {
                 SearchTerm = string.Empty;
+                CurrentPage = 1;
                 Model.Posts = null;
-                StateHasChanged();
                 await LoadDataAsync();
+                Pager.ReInitialize(TotalPages);
             }
         }
 
@@ -56,6 +63,7 @@ namespace Atlas.Client.Components.Themes
         private async Task LoadDataAsync()
         {
             Model = await ApiService.GetFromJsonAsync<SearchPageModel>($"api/public/search?page={CurrentPage}&search={SearchTerm}");
+            TotalPages = Model.Posts.TotalPages;
         }
     }
 }

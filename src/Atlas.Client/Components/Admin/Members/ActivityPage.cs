@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atlas.Client.Components.Shared;
 using Atlas.Models.Admin.Members;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -16,6 +17,8 @@ namespace Atlas.Client.Components.Admin.Members
         public int CurrentPage { get; set; } = 1;
         public int TotalPages { get; set; } = 1;
         protected string Search { get; set; }
+
+        protected PagerComponent Pager { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -50,8 +53,8 @@ namespace Atlas.Client.Components.Admin.Members
         {
             CurrentPage = 1;
             Model.Events = null;
-            StateHasChanged();
             await LoadEventsAsync();
+            Pager.ReInitialize(TotalPages);
         }
 
         protected async Task ClearSearchAsync()
@@ -61,8 +64,8 @@ namespace Atlas.Client.Components.Admin.Members
                 Search = string.Empty;
                 CurrentPage = 1;
                 Model.Events = null;
-                StateHasChanged();
                 await LoadEventsAsync();
+                Pager.ReInitialize(TotalPages);
             }
         }
     }
