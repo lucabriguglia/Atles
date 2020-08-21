@@ -19,6 +19,22 @@ else
             <div class="col">
                 <h4 class="mb-3">@Model.Forum.Name</h4>
             </div>
+        </div>
+
+        <a id="topics"></a>
+
+        <div class="row">
+            <div class="col input-group mb-3">
+                <input type="text" class="form-control" placeholder="@string.Format(Loc["Search topics in {0}"], Model.Forum.Name)" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
+                <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
+                    <i class="fa fa-times"></i>
+                </button>
+                <div class="input-group-append">
+                    <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </div>
             <div class="col text-right mb-3">
                 @if (Model.CanStart)
                 {
@@ -37,22 +53,6 @@ else
                         </NotAuthorized>
                     </AuthorizeView>
                 }
-            </div>
-        </div>
-
-        <a id="topics"></a>
-
-        <div class="row">
-            <div class="col-md-6 input-group mb-3">
-                <input type="text" class="form-control" placeholder="@string.Format(Loc["Search topics in {0}"], Model.Forum.Name)" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
-                <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
-                    <i class="fa fa-times"></i>
-                </button>
-                <div class="input-group-append">
-                    <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
-                        <i class="fa fa-search"></i>
-                    </button>
-                </div>
             </div>
         </div>
 
@@ -80,7 +80,7 @@ else
                                         </a>
                                     </div>
                                     <div class="col">
-                                        <p class="card-text">
+                                        <div class="card-text mb-2">
                                             @if (item.Pinned)
                                             {
                                                 <i class="fas fa-thumbtack mr-2"></i>
@@ -101,14 +101,13 @@ else
                                             {
                                                 <span title="@item.Title"></span>@item.Title.ToSafeLengthText(50)
                                             }
-                                        </p>
+                                        </div>
                                         <div class="row small">
                                             <div class="col">
-                                                @item.TimeStamp.ToAppLocalDateAndTime()
-                                                <span class="font-weight-bold ml-2">@item.TotalReplies</span> @Loc["Replies"]
+                                                <span class="font-weight-bold">@item.TotalReplies</span> @Loc["Replies"]
                                             </div>
-                                            <div class="col text-right">
-                                                @((MarkupString)string.Format(Loc["Most recent post by {0} on {1}"],
+                                            <div class="col text-right text-secondary">
+                                                @((MarkupString)string.Format(Loc["Latest by {0} on {1}"],
                                                     $"<a href=\"/member/{item.MostRecentMemberId}\" title=\"{item.MostRecentMemberDisplayName}\">{item.MostRecentMemberDisplayName.ToSafeLengthText(10)}</a>",
                                                     item.MostRecentTimeStamp.ToAppLocalDateAndTime()))
                                             </div>

@@ -18,7 +18,7 @@ else
 
         <div class="row">
             <div class="col">
-                <h3 class="mb-3">
+                <h4 class="mb-3">
                     <span class="small">
                         @if (Model.Topic.Pinned)
                         {
@@ -30,13 +30,7 @@ else
                         }
                     </span>
                     @Model.Topic.Title
-                </h3>
-            </div>
-            <div class="col text-right mb-3">
-                @if (CanCreateReply())
-                {
-                    <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewReplyAsync())" class="btn btn-primary @CssClassDisabled" role="button">@Loc["Reply"]</a>
-                }
+                </h4>
             </div>
         </div>
 
@@ -107,7 +101,7 @@ else
         <h5 class="mb-3">@Loc["Replies"]</h5>
 
         <div class="row">
-            <div class="col-md-6 input-group mb-3">
+            <div class="col input-group mb-3">
                 <input type="text" class="form-control" placeholder="@Loc["Search replies"]" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
                 <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
                     <i class="fa fa-times"></i>
@@ -117,6 +111,12 @@ else
                         <i class="fa fa-search"></i>
                     </button>
                 </div>
+            </div>
+            <div class="col text-right mb-3">
+                @if (CanCreateReply())
+                {
+                    <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewReplyAsync())" class="btn btn-primary @CssClassDisabled" role="button">@Loc["Reply"]</a>
+                }
             </div>
         </div>
 

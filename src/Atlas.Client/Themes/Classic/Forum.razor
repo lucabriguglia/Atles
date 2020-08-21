@@ -29,7 +29,7 @@ else
                     <AuthorizeView>
                         <Authorized>
                             <i class="fas fa-comment-slash mr-1"></i>
-                            @Loc["You are not authorized to start a new discussion."]
+                            @Loc["You are not authorized to start a new discussion"]
                         </Authorized>
                         <NotAuthorized>
                             <i class="fas fa-sign-in-alt mr-1"></i>
@@ -111,7 +111,7 @@ else
                                 </td>
                                 <td class="text-center">@item.TotalReplies</td>
                                 <td class="small">
-                                    @((MarkupString)string.Format(Loc["Most recent post by {0} on {1}"],
+                                    @((MarkupString)string.Format(Loc["Latest by {0} on {1}"],
                                         $"<a href=\"/member/{item.MostRecentMemberId}\" title=\"{item.MostRecentMemberDisplayName}\">{item.MostRecentMemberDisplayName.ToSafeLengthText(10)}</a>",
                                         item.MostRecentTimeStamp.ToAppLocalDateAndTime()))
                                 </td>
