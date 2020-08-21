@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Linq;
-using System.Security.Claims;
 using System.Threading.Tasks;
 using Atlas.Client.Components.Shared;
 using Atlas.Client.Services;
@@ -152,6 +150,8 @@ namespace Atlas.Client.Components.Themes
 
             await SaveDataAsync(() => ApiService.PostAsJsonAsync(requestUri, Model));
 
+            var previousTotalPages = TotalPages;
+
             if (Model.Post.Id != null)
             {
                 await JsRuntime.InvokeVoidAsync("scrollToTarget", Model.Post.Id.Value);
@@ -159,7 +159,7 @@ namespace Atlas.Client.Components.Themes
 
             if (Model.Post.Id == null)
             {
-                CurrentPage = Model.Replies.TotalPages;
+                CurrentPage = TotalPages;
             }
 
             if (!EditingAnswer)
@@ -171,6 +171,15 @@ namespace Atlas.Client.Components.Themes
             {
                 Model.Answer.Content = Markdown.ToHtml(Model.Post.Content);
                 Model.Answer.OriginalContent = Model.Post.Content;
+            }
+
+            if (Model.Post.Id == null)
+            {
+                Pager.ReInitialize(TotalPages);
+                if (TotalPages > previousTotalPages)
+                {
+                    await ChangePageAsync(TotalPages);
+                }
             }
 
             Model.Post = new TopicPageModel.PostModel();
@@ -186,6 +195,8 @@ namespace Atlas.Client.Components.Themes
         {
             await ApiService.DeleteAsync($"api/public/replies/delete-reply/{Model.Forum.Id}/{Model.Topic.Id}/{DeleteReplyId}");
 
+            CurrentPage = 1;
+
             if (DeletingAnswer)
             {
                 await OnInitializedAsync();
@@ -194,6 +205,8 @@ namespace Atlas.Client.Components.Themes
             {
                 await LoadDataAsync();
             }
+
+            Pager.ReInitialize(TotalPages);
         }
 
         protected void Cancel()
