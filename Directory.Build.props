@@ -9,7 +9,7 @@
     <RepositoryUrl>https://github.com/lucabriguglia/Atlas</RepositoryUrl>
   </PropertyGroup>
 
-  <PropertyGroup Label="NugetSettings">
+  <!--<PropertyGroup Label="NugetSettings">
     <IsPackable>true</IsPackable>
     <Version>1.0.0</Version>
     <GeneratePackageOnBuild Condition="$(Configuration) == 'Release'">true</GeneratePackageOnBuild>
@@ -17,6 +17,6 @@
     <PackageProjectUrl>https://github.com/lucabriguglia/Atlas</PackageProjectUrl>
     <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
     <SourcesPackage>true</SourcesPackage>
-  </PropertyGroup>
+  </PropertyGroup>-->
 
 </Project>
