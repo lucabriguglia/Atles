@@ -1,14 +1,22 @@
 <Project>
-	<Import Project="..\Directory.Build.props" Condition="Exists('..\Directory.Build.props')" />
+  <Import Project="..\Directory.Build.props" Condition="Exists('..\Directory.Build.props')" />
 
   <PropertyGroup Label="ProjectSettings">
     <Authors>Luca Briguglia</Authors>
     <Copyright>Copyright Luca Briguglia</Copyright>
     <Product>Atlas</Product>
-    <Version>1.0.0.0</Version>
     <RepositoryType>git</RepositoryType>
     <RepositoryUrl>https://github.com/lucabriguglia/Atlas</RepositoryUrl>
-    <PackageLicenseExpression>GPL-3.0</PackageLicenseExpression>
+  </PropertyGroup>
+
+  <PropertyGroup Label="NugetSettings">
+    <IsPackable>true</IsPackable>
+    <Version>1.0.0</Version>
+    <GeneratePackageOnBuild Condition="$(Configuration) == 'Release'">true</GeneratePackageOnBuild>
+    <PackageTags>Atlas, Blazor, Forums, Community, Questions, Amswers</PackageTags>
+    <PackageProjectUrl>https://github.com/lucabriguglia/Atlas</PackageProjectUrl>
+    <PackageLicenseExpression>GPL-3.0-or-later</PackageLicenseExpression>
+    <SourcesPackage>true</SourcesPackage>
   </PropertyGroup>
 
 </Project>

@@ -5,6 +5,7 @@
     <UserSecretsId>Atlas.Server-35EFD1FC-2839-4B16-9DA2-F7DC412158E9</UserSecretsId>
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
     <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
