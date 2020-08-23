@@ -1,4 +1,5 @@
 using System.IdentityModel.Tokens.Jwt;
+using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
@@ -12,6 +13,9 @@ using Atlas.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Atlas.Domain.Sites;
 using Atlas.Models.Admin.Categories;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.Extensions.FileProviders;
 
 namespace Atlas.Server
 {
@@ -65,6 +69,12 @@ namespace Atlas.Server
             services.AddControllersWithViews();
             services.AddRazorPages();
 
+            services.Configure<FormOptions>(x =>
+            {
+                x.ValueLengthLimit = int.MaxValue;
+                x.MultipartBodyLengthLimit = int.MaxValue;
+            });
+
             services.Scan(s => s
                 .FromAssembliesOf(typeof(Startup), typeof(Site), typeof(IndexPageModel), typeof(AtlasDbContext))
                 .AddClasses()
@@ -96,6 +106,11 @@ namespace Atlas.Server
             app.UseHttpsRedirection();
             app.UseBlazorFrameworkFiles();
             app.UseStaticFiles();
+            app.UseStaticFiles(new StaticFileOptions()
+            {
+                FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Uploads")),
+                RequestPath = new PathString("/Uploads")
+            });
 
             app.UseRouting();
 

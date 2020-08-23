@@ -30,7 +30,7 @@ namespace Atlas.Client.Components.Admin.Members
         {
             CurrentPage = page;
             Model.Members = null;
-            await JsRuntime.InvokeVoidAsync("scrollToTarget", "members");
+            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "members");
             await LoadMembersAsync();
         }
 

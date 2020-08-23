@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.JSInterop;
+using Tewr.Blazor.FileReader;
 
 namespace Atlas.Client
 {
@@ -49,6 +50,8 @@ namespace Atlas.Client
             {
                 options.ResourcesPath = "Resources";
             });
+
+            builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
             var host = builder.Build();
 
