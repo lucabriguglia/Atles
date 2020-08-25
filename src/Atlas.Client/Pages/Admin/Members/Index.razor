@@ -111,10 +111,6 @@ else
                 </tbody>
             </table>
 
-            <div class="mt-3">
-                <Pager TotalPages="Model.Members.TotalPages" OnLoadDataCallback="@ChangePageAsync"></Pager>
-            </div>
-
             <ConfirmModal Id="confirm-modal-suspend"
                           Title="@Loc["Suspend"]"
                           Body="@Loc["Are you sure you want to suspend this member?"]"
@@ -128,4 +124,8 @@ else
                           OnClickCallback="@DeleteAsync" />
         }
     }
+
+    <div class="mt-3">
+        <Pager TotalPages="Model.Members.TotalPages" OnLoadDataCallback="@ChangePageAsync"></Pager>
+    </div>
 }

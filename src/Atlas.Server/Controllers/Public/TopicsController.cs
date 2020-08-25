@@ -56,7 +56,7 @@ namespace Atlas.Server.Controllers.Public
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var model = await _topicModelBuilder.BuildTopicPageModelAsync(site.Id, forumSlug, topicSlug, new QueryOptions(search, page));
+            var model = await _topicModelBuilder.BuildTopicPageModelAsync(site.Id, forumSlug, topicSlug, new QueryOptions(page, search));
 
             if (model == null)
             {
@@ -118,7 +118,7 @@ namespace Atlas.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var result = await _topicModelBuilder.BuildTopicPageModelRepliesAsync(topicId, new QueryOptions(search, page));
+            var result = await _topicModelBuilder.BuildTopicPageModelRepliesAsync(topicId, new QueryOptions(page, search));
 
             return result;
         }

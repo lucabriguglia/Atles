@@ -128,7 +128,7 @@ namespace Atlas.Server.Controllers.Public
                 }
             }
 
-            var model = await _searchModelBuilder.BuildSearchPageModelAsync(site.Id, accessibleForumIds, new QueryOptions(search, page));
+            var model = await _searchModelBuilder.BuildSearchPageModelAsync(site.Id, accessibleForumIds, new QueryOptions(page, search));
 
             return model;
         }

@@ -36,7 +36,7 @@ namespace Atlas.Server.Controllers.Admin
         [HttpGet("index-model")]
         public async Task<IndexPageModel> List([FromQuery] int? page = 1, [FromQuery] string search = null, [FromQuery] string status = null)
         {
-            return await _modelBuilder.BuildIndexPageModelAsync(new QueryOptions(search, page), status);
+            return await _modelBuilder.BuildIndexPageModelAsync(new QueryOptions(page, search, status));
         }
 
         [HttpGet("create")]
@@ -148,7 +148,7 @@ namespace Atlas.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var result = await _modelBuilder.BuildActivityPageModelAsync(site.Id, id, new QueryOptions(search, page));
+            var result = await _modelBuilder.BuildActivityPageModelAsync(site.Id, id, new QueryOptions(page, search));
 
             if (result == null)
             {
