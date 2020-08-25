@@ -62,8 +62,11 @@ namespace Atlas.Data.Extensions
             return (IQueryable<T>)ret;
         }
 
-        public static IQueryable<T> AddOrderBy<T>(this IQueryable<T> source, string propertyName, OrderByDirectionType? direction)
+        public static IQueryable<T> AddOrderBy<T>(this IQueryable<T> source, QueryOptions options)
         {
+            var propertyName = options.OrderByField;
+            var direction = options.OrderByDirection;
+
             if (!string.IsNullOrWhiteSpace(propertyName) && direction != null && source.PropertyExists(propertyName))
             {
                 source = direction == OrderByDirectionType.Asc

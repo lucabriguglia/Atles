@@ -1,4 +1,6 @@
-﻿namespace Atlas.Models
+﻿using System;
+
+namespace Atlas.Models
 {
     public class QueryOptions
     {
@@ -18,13 +20,17 @@
         {
         }
 
-        public QueryOptions(int? currentPage = 1, string search = null, string orderByField = null, OrderByDirectionType? orderByDirection = null, int? pageSize = null)
+        public QueryOptions(int? currentPage = 1, string search = null, string orderByField = null, string orderByDirection = null, int? pageSize = null)
         {
             CurrentPage = SetCurrentPage(currentPage);
             Search = search;
             OrderByField = orderByField;
-            OrderByDirection = orderByDirection;
             PageSize = pageSize ?? DefaultPageSize;
+
+            if (!string.IsNullOrWhiteSpace(orderByDirection) && Enum.TryParse(orderByDirection, out OrderByDirectionType orderByDirectionType))
+            {
+                OrderByDirection = orderByDirectionType;
+            }
         }
 
         private static int SetCurrentPage(int? currentPage) => currentPage == null || currentPage.Value < 1 ? 1 : currentPage.Value;

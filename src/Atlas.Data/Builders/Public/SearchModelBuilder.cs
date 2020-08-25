@@ -53,7 +53,7 @@ namespace Atlas.Data.Builders.Public
 
             if (options.OrderByIsDefined())
             {
-                postsQuery.AddOrderBy(options.OrderByField, options.OrderByDirection);
+                postsQuery.AddOrderBy(options);
             }
             else
             {
