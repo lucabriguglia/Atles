@@ -22,7 +22,7 @@ namespace Atlas.Client.Components.Pages
             if (Site == null)
             {
                 Site = await ApiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
-                await JsRuntime.InvokeVoidAsync("changePageTitle", Site.Title);
+                await JsRuntime.InvokeVoidAsync("atlas.interop.changePageTitle", Site.Title);
             }
         }
 

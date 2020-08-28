@@ -32,34 +32,6 @@
                 top: 0.5rem;
             }
     </style>
-
-    <script>
-        window.addCssFile = (fileNameToAdd, fileNameToRemove) => {
-            var hrefToAdd = 'css/' + fileNameToAdd;
-            if (!$("link[href='" + hrefToAdd + "']").length) {
-                var head = document.getElementsByTagName('HEAD')[0];
-                var link = document.createElement('link');
-                link.rel = 'stylesheet';
-                link.type = 'text/css';
-                link.href = hrefToAdd;
-                head.appendChild(link);
-            }
-
-            var hrefToRemove = 'css/' + fileNameToRemove;
-            if ($("link[href='" + hrefToRemove + "']").length) {
-                $("link[rel=stylesheet][href='" + hrefToRemove + "']").remove();
-            }
-        };
-
-        window.scrollToTarget = (target) => {
-            var element = document.getElementById(target);
-            element.scrollIntoView();
-        };
-
-        window.changePageTitle = (title) => {
-            document.title = title;
-        };
-    </script>
 </head>
 
 <body>
@@ -74,6 +46,10 @@
         <a href="" class="reload">Reload</a>
         <a class="dismiss">🗙</a>
     </div>
+
+    <script src="atlas.js"></script>
+
+    <script src="_content/BlazorInputFile/inputfile.js"></script>
 
     <script src="_content/Microsoft.AspNetCore.Components.WebAssembly.Authentication/AuthenticationService.js"></script>
     <script src="_framework/blazor.webassembly.js"></script>

@@ -5,6 +5,7 @@ namespace Atlas.Server.Services
 {
     public interface IIntegrityService
     {
-        Task EnsureMemberCreatedAsync(IdentityUser user);
+        Task EnsureMemberCreatedAsync(IdentityUser user, bool confirm = false);
+        Task EnsureMemberConfirmedAsync(IdentityUser user);
     }
 }

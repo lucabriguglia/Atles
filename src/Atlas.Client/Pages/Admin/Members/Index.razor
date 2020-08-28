@@ -24,30 +24,48 @@
 }
 else
 {
-    <div class="row">
-        <div class="col-md-6 input-group mb-3">
-            <div class="input-group-prepend">
-                <label class="input-group-text" for="memberStatus">@Loc["Status"]</label>
-            </div>
-            <select class="custom-select" id="memberStatus" @onchange="StatusChangedAsync">
-                <option value="">@Loc["All"]</option>
-                <option value="Active">@Loc["Active"]</option>
-                <option value="Suspended">@Loc["Suspended"]</option>
-                <option value="Deleted">@Loc["Deleted"]</option>
-            </select>
+<div class="row">
+    <div class="col-md-4 input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="memberStatus">@Loc["Status"]</label>
         </div>
-        <div class="col-md-6 input-group mb-3">
-            <input type="text" class="form-control" placeholder="@Loc["Search members"]" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
-            <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
-                <i class="fa fa-times"></i>
+        <select class="custom-select" id="memberStatus" @onchange="StatusChangedAsync">
+            <option value="">@Loc["All"]</option>
+            <option value="Active">@Loc["Active"]</option>
+            <option value="Pending">@Loc["Pending"]</option>
+            <option value="Suspended">@Loc["Suspended"]</option>
+            <option value="Deleted">@Loc["Deleted"]</option>
+        </select>
+    </div>
+    <div class="col-md-4 input-group mb-3">
+        <div class="input-group-prepend">
+            <label class="input-group-text" for="sortBy">Sort By</label>
+        </div>
+        <select class="custom-select" id="sortBy" @onchange="SortByChangedAsync">
+            <option value="DisplayName-Asc">Display Name: A to Z</option>
+            <option value="DisplayName-Desc">Display Name: Z to A</option>
+            <option value="Email-Asc">Email: A to Z</option>
+            <option value="Email-Desc">Email: Z to A</option>
+            <option value="TopicsCount-Asc">Topics: Low to High</option>
+            <option value="TopicsCount-Desc">Topics: High to Low</option>
+            <option value="RepliesCount-Asc">Replies: Low to High</option>
+            <option value="RepliesCount-Desc">Replies: High to Low</option>
+            <option value="Date-Asc">Date: Newest First</option>
+            <option value="Date-Desc">Date: Oldest First</option>
+        </select>
+    </div>
+    <div class="col-md-4 input-group mb-3">
+        <input type="text" class="form-control" placeholder="@Loc["Search members"]" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
+        <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
+            <i class="fa fa-times"></i>
+        </button>
+        <div class="input-group-append">
+            <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
+                <i class="fa fa-search"></i>
             </button>
-            <div class="input-group-append">
-                <button class="btn btn-secondary" type="button" @onclick="@(async () => await SearchAsync())">
-                    <i class="fa fa-search"></i>
-                </button>
-            </div>
         </div>
     </div>
+</div>
 
     <a id="members"></a>
 
@@ -111,10 +129,6 @@ else
                 </tbody>
             </table>
 
-            <div class="mt-3">
-                <Pager TotalPages="Model.Members.TotalPages" OnLoadDataCallback="@ChangePageAsync"></Pager>
-            </div>
-
             <ConfirmModal Id="confirm-modal-suspend"
                           Title="@Loc["Suspend"]"
                           Body="@Loc["Are you sure you want to suspend this member?"]"
@@ -128,4 +142,8 @@ else
                           OnClickCallback="@DeleteAsync" />
         }
     }
+
+    <div class="mt-3">
+        <Pager @ref="Pager" TotalPages="TotalPages" OnLoadDataCallback="@ChangePageAsync"></Pager>
+    </div>
 }

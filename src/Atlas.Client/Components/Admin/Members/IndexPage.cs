@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atlas.Client.Components.Shared;
 using Atlas.Models.Admin.Members;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -13,24 +14,31 @@ namespace Atlas.Client.Components.Admin.Members
         protected Guid SuspendId { get; set; }
         protected Guid DeleteId { get; set; }
         protected int CurrentPage { get; set; } = 1;
+        protected int TotalPages { get; set; } = 1;
         protected string Search { get; set; }
         protected string Status { get; set; }
+        protected string SortByField { get; set; }
+        protected string SortByDirection { get; set; }
+        protected PagerComponent Pager { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Model = await ApiService.GetFromJsonAsync<IndexPageModel>($"api/admin/members/index-model");
+            Model = await ApiService.GetFromJsonAsync<IndexPageModel>("api/admin/members/index-model");
+            TotalPages = Model.Members.TotalPages;
         }
 
         private async Task LoadMembersAsync()
         {
-            Model = await ApiService.GetFromJsonAsync<IndexPageModel>($"api/admin/members/index-model?page={CurrentPage}&search={Search}&status={Status}");
+            var model = await ApiService.GetFromJsonAsync<IndexPageModel>($"api/admin/members/index-model?page={CurrentPage}&search={Search}&status={Status}&sortByField={SortByField}&sortByDirection={SortByDirection}");
+            Model.Members = model.Members;
+            TotalPages = Model.Members.TotalPages;
         }
 
         protected async Task ChangePageAsync(int page)
         {
             CurrentPage = page;
             Model.Members = null;
-            await JsRuntime.InvokeVoidAsync("scrollToTarget", "members");
+            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "members");
             await LoadMembersAsync();
         }
 
@@ -46,8 +54,8 @@ namespace Atlas.Client.Components.Admin.Members
         {
             CurrentPage = 1;
             Model.Members = null;
-            StateHasChanged();
             await LoadMembersAsync();
+            Pager.ReInitialize(TotalPages);
         }
 
         protected async Task ClearSearchAsync()
@@ -57,8 +65,8 @@ namespace Atlas.Client.Components.Admin.Members
                 Search = string.Empty;
                 CurrentPage = 1;
                 Model.Members = null;
-                StateHasChanged();
                 await LoadMembersAsync();
+                Pager.ReInitialize(TotalPages);
             }
         }
 
@@ -67,7 +75,17 @@ namespace Atlas.Client.Components.Admin.Members
             Status = args.Value.ToString();
             CurrentPage = 1;
             Model.Members = null;
-            StateHasChanged();
+            await LoadMembersAsync();
+            Pager.ReInitialize(TotalPages);
+        }
+
+        protected async Task SortByChangedAsync(ChangeEventArgs args)
+        {
+            var selected = args.Value.ToString().Split('-');
+            SortByField = selected[0];
+            SortByDirection = selected[1];
+            CurrentPage = 1;
+            Model.Members = null;
             await LoadMembersAsync();
         }
 
@@ -80,7 +98,6 @@ namespace Atlas.Client.Components.Admin.Members
         {
             await ApiService.PostAsJsonAsync("api/admin/members/suspend", SuspendId);
             Model.Members = null;
-            StateHasChanged();
             await LoadMembersAsync();
         }
 
@@ -88,7 +105,6 @@ namespace Atlas.Client.Components.Admin.Members
         {
             Model.Members = null;
             await ApiService.PostAsJsonAsync("api/admin/members/reinstate", id);
-            StateHasChanged();
             await LoadMembersAsync();
         }
 
@@ -101,7 +117,6 @@ namespace Atlas.Client.Components.Admin.Members
         {
             Model.Members = null;
             await ApiService.DeleteAsync($"api/admin/members/delete/{DeleteId}");
-            StateHasChanged();
             await OnInitializedAsync();
         }
     }

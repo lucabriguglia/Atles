@@ -35,6 +35,11 @@ namespace Atlas.Data.Services
                 command.Email,
                 displayName);
 
+            if (command.Confirm)
+            {
+                member.Confirm();
+            }
+
             _dbContext.Members.Add(member);
 
             var memberIdForEvent = command.MemberId == Guid.Empty 
@@ -50,8 +55,36 @@ namespace Atlas.Data.Services
                 {
                     command.UserId,
                     command.Email,
-                    DisplayName = displayName
+                    DisplayName = displayName,
+                    member.Status
                 }));
+
+            await _dbContext.SaveChangesAsync();
+        }
+
+        public async Task ConfirmAsync(ConfirmMember command)
+        {
+            var member = await _dbContext.Members
+                .FirstOrDefaultAsync(x =>
+                    x.Id == command.Id &&
+                    x.Status == StatusType.Pending);
+
+            if (member == null)
+            {
+                throw new DataException($"Member with Id {command.Id} not found.");
+            }
+
+            member.Confirm();
+
+            var memberIdForEvent = command.MemberId == Guid.Empty
+                ? member.Id
+                : command.MemberId;
+
+            _dbContext.Events.Add(new Event(command.SiteId,
+                memberIdForEvent,
+                EventType.Confirmed,
+                typeof(Member),
+                command.Id));
 
             await _dbContext.SaveChangesAsync();
         }

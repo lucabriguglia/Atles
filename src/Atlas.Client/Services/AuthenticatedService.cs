@@ -23,6 +23,11 @@ namespace Atlas.Client.Services
             return await _httpClient.PostAsJsonAsync(requestUri, data);
         }
 
+        public async Task<HttpResponseMessage> PostAsync(string requestUri, HttpContent content)
+        {
+            return await _httpClient.PostAsync(requestUri, content);
+        }
+
         public async Task<HttpResponseMessage> DeleteAsync(string requestUri)
         {
             return await _httpClient.DeleteAsync(requestUri);

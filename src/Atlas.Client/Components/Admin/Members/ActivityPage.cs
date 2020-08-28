@@ -37,7 +37,7 @@ namespace Atlas.Client.Components.Admin.Members
         {
             CurrentPage = page;
             Model.Events = null;
-            await JsRuntime.InvokeVoidAsync("scrollToTarget", "events");
+            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "events");
             await LoadEventsAsync();
         }
 

@@ -51,7 +51,7 @@ namespace Atlas.Data.Builders.Public
                 Status = member.Status
             };
 
-            result.Posts = await _searchModelBuilder.SearchPostModels(forumIds, new QueryOptions(1), memberId);
+            result.Posts = await _searchModelBuilder.SearchPostModels(forumIds, new QueryOptions(), memberId);
 
             return result;
         }

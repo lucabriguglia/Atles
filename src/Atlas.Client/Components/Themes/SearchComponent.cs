@@ -53,7 +53,7 @@ namespace Atlas.Client.Components.Themes
 
         protected async Task ChangePageAsync(int page)
         {
-            await JsRuntime.InvokeVoidAsync("scrollToTarget", "posts");
+            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "posts");
             CurrentPage = page;
             Model.Posts = null;
             StateHasChanged();

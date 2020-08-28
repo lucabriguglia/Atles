@@ -1,0 +1,17 @@
+﻿@inherits FileManagerComponent
+
+<div>
+    <input type="file" id="@FileInputId" accept="@FileInputAccept" @ref="FileInput" @onchange="HandleSelectedAsync" />
+</div>
+<div>
+    <button type="button" class="btn btn-primary" @onclick="@UploadFilesAsync">Upload</button>
+</div>
+
+@if (Status ==  null)
+{
+    <Loading />
+}
+else
+{
+    @Status
+}

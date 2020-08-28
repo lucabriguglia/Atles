@@ -6,6 +6,7 @@
         Published = 1,
         Deleted = 2,
         Active = 3,
-        Suspended = 4
+        Suspended = 4,
+        Pending = 5
     }
 }

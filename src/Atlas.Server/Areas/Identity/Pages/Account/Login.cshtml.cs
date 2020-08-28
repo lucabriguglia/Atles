@@ -86,7 +86,7 @@ namespace Atlas.Server.Areas.Identity.Pages.Account
                     _logger.LogInformation("User logged in.");
 
                     var user = await _userManager.FindByEmailAsync(Input.Email);
-                    await _integrityService.EnsureMemberCreatedAsync(user);
+                    await _integrityService.EnsureMemberCreatedAsync(user, true);
 
                     return LocalRedirect(returnUrl);
                 }

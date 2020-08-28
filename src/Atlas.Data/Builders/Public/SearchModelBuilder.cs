@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
+using Atlas.Data.Extensions;
 using Atlas.Domain;
 using Atlas.Models;
 using Atlas.Models.Public.Search;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Logging;
 
 namespace Atlas.Data.Builders.Public
 {
@@ -44,11 +46,14 @@ namespace Atlas.Data.Builders.Public
                     x.Status == StatusType.Published &&
                     (x.Topic == null || x.Topic.Status == StatusType.Published));
 
-            if (!string.IsNullOrWhiteSpace(options.Search))
+            if (options.SearchIsDefined())
             {
-                postsQuery = postsQuery
-                    .Where(x => x.Title.Contains(options.Search) || x.Content.Contains(options.Search));
+                postsQuery = postsQuery.Where(x => x.Title.Contains(options.Search) || x.Content.Contains(options.Search));
             }
+
+            postsQuery = options.OrderByIsDefined() 
+                ? postsQuery.OrderBy(options) 
+                : postsQuery.OrderByDescending(x => x.TimeStamp);
 
             if (memberId != null)
             {
@@ -56,7 +61,6 @@ namespace Atlas.Data.Builders.Public
             }
 
             var posts = await postsQuery
-                .OrderByDescending(x => x.TimeStamp)
                 .Skip(options.Skip)
                 .Take(options.PageSize)
                 .Select(p => new

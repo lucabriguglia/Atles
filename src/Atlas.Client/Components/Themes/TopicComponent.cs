@@ -107,7 +107,7 @@ namespace Atlas.Client.Components.Themes
             CurrentPage = page;
             Model.Replies = null;
             await LoadDataAsync();
-            await JsRuntime.InvokeVoidAsync("scrollToTarget", "replies");
+            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "replies");
         }
 
         protected void SetDeleteReplyId(Guid id, bool isAnswer = false)
@@ -118,7 +118,7 @@ namespace Atlas.Client.Components.Themes
 
         protected async Task NewReplyAsync()
         {
-            await JsRuntime.InvokeVoidAsync("scrollToTarget", "reply");
+            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "reply");
         }
 
         protected async Task PinAsync()
@@ -139,7 +139,7 @@ namespace Atlas.Client.Components.Themes
             Model.Post.Id = id;
             Model.Post.Content = content;
             Model.Post.MemberId = memberId;
-            await JsRuntime.InvokeVoidAsync("scrollToTarget", "reply");
+            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "reply");
         }
 
         protected async Task SaveReplyAsync()
@@ -154,7 +154,7 @@ namespace Atlas.Client.Components.Themes
 
             if (Model.Post.Id != null)
             {
-                await JsRuntime.InvokeVoidAsync("scrollToTarget", Model.Post.Id.Value);
+                await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", Model.Post.Id.Value);
             }
 
             if (Model.Post.Id == null)

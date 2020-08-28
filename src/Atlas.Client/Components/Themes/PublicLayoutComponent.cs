@@ -17,7 +17,7 @@ namespace Atlas.Client.Components.Themes
 
         protected override async Task OnInitializedAsync()
         {
-            await JsRuntime.InvokeVoidAsync("addCssFile", Site.CssPublic, Site.CssAdmin);
+            await JsRuntime.InvokeVoidAsync("atlas.interop.addCssFile", Site.CssPublic, Site.CssAdmin);
         }
     }
 }

@@ -36,7 +36,7 @@ namespace Atlas.Client.Components.Admin
             IsEdit = false;
             Model.EditRole.Id = null;
             Model.EditRole.Name = null;
-            await JsRuntime.InvokeVoidAsync("scrollToTarget", "form");
+            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "form");
         }
 
         protected async Task EditAsync(string id, string name)
@@ -46,7 +46,7 @@ namespace Atlas.Client.Components.Admin
             IsEdit = true;
             Model.EditRole.Id = id;
             Model.EditRole.Name = name;
-            await JsRuntime.InvokeVoidAsync("scrollToTarget", "form");
+            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "form");
         }
 
         protected async Task SaveAsync()
@@ -88,7 +88,7 @@ namespace Atlas.Client.Components.Admin
             DisplayForm = false;
             DisplayMembers = true;
             RoleForUsers = roleName;
-            await JsRuntime.InvokeVoidAsync("scrollToTarget", "users");
+            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "users");
             Model.UsersInRole = await ApiService.GetFromJsonAsync<IList<IndexPageModel.UserModel>>($"api/admin/roles/users-in-role/{roleName}");
             Loading = false;
         }

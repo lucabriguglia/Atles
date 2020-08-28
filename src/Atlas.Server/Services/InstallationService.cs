@@ -361,5 +361,10 @@ namespace Atlas.Server.Services
             forumWelcomeToUpdate.UpdateLastPost(topicWelcome.Id);
             await _dbContext.SaveChangesAsync();
         }
+
+        public Task InstallThemeAsync()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

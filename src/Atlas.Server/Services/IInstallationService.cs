@@ -5,5 +5,6 @@ namespace Atlas.Server.Services
     public interface IInstallationService
     {
         Task EnsureDefaultSiteInitializedAsync();
+        Task InstallThemeAsync();
     }
 }

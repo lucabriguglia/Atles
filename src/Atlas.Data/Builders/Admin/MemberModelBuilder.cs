@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Data.Extensions;
 using Atlas.Domain;
 using Atlas.Domain.Members;
 using Atlas.Models.Admin.Members;
@@ -33,23 +34,21 @@ namespace Atlas.Data.Builders.Admin
 
             var query = _dbContext.Members.Where(x => true);
 
-            if (!string.IsNullOrWhiteSpace(options.Search))
+            if (options.SearchIsDefined())
             {
                 query = query.Where(x => x.DisplayName.Contains(options.Search) || x.Email.Contains(options.Search));
             }
 
-            if (!string.IsNullOrWhiteSpace(status))
-            {
-                var statusIsValid = Enum.TryParse(status, out StatusType memberStatus);
+            query = options.OrderByIsDefined() 
+                ? query.OrderBy(options) 
+                : query.OrderBy(x => x.DisplayName);
 
-                if (statusIsValid)
-                {
-                    query = query.Where(x => x.Status == memberStatus);
-                }
+            if (!string.IsNullOrWhiteSpace(status) && Enum.TryParse(status, out StatusType memberStatus))
+            {
+                query = query.Where(x => x.Status == memberStatus);
             }
 
             var members = await query
-                .OrderBy(x => x.DisplayName)
                 .Skip(options.Skip)
                 .Take(options.PageSize)
                 .ToListAsync();
