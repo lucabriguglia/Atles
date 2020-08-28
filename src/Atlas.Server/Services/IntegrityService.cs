@@ -23,7 +23,7 @@ namespace Atlas.Server.Services
             _dbContext = dbContext;
         }
 
-        public async Task EnsureMemberCreatedAsync(IdentityUser user)
+        public async Task EnsureMemberCreatedAsync(IdentityUser user, bool confirm = false)
         {
             var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == user.Id);
 
@@ -35,7 +35,8 @@ namespace Atlas.Server.Services
                 {
                     UserId = user.Id,
                     Email = user.Email,
-                    SiteId = site.Id
+                    SiteId = site.Id,
+                    Confirm = confirm
                 });
             }
         }

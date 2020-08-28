@@ -7,5 +7,6 @@ namespace Atlas.Domain.Members.Commands
         public Guid Id { get; set; } = Guid.NewGuid();
         public string UserId { get; set; }
         public string Email { get; set; }
+        public bool Confirm { get; set; }
     }
 }

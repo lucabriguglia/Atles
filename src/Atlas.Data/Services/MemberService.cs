@@ -35,6 +35,11 @@ namespace Atlas.Data.Services
                 command.Email,
                 displayName);
 
+            if (command.Confirm)
+            {
+                member.Confirm();
+            }
+
             _dbContext.Members.Add(member);
 
             var memberIdForEvent = command.MemberId == Guid.Empty 
@@ -50,7 +55,8 @@ namespace Atlas.Data.Services
                 {
                     command.UserId,
                     command.Email,
-                    DisplayName = displayName
+                    DisplayName = displayName,
+                    member.Status
                 }));
 
             await _dbContext.SaveChangesAsync();
