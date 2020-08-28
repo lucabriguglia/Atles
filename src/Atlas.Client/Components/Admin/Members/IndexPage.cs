@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atlas.Client.Components.Shared;
 using Atlas.Models.Admin.Members;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
@@ -18,6 +19,7 @@ namespace Atlas.Client.Components.Admin.Members
         protected string Status { get; set; }
         protected string SortByField { get; set; }
         protected string SortByDirection { get; set; }
+        protected PagerComponent Pager { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -52,8 +54,8 @@ namespace Atlas.Client.Components.Admin.Members
         {
             CurrentPage = 1;
             Model.Members = null;
-            StateHasChanged();
             await LoadMembersAsync();
+            Pager.ReInitialize(TotalPages);
         }
 
         protected async Task ClearSearchAsync()
@@ -63,8 +65,8 @@ namespace Atlas.Client.Components.Admin.Members
                 Search = string.Empty;
                 CurrentPage = 1;
                 Model.Members = null;
-                StateHasChanged();
                 await LoadMembersAsync();
+                Pager.ReInitialize(TotalPages);
             }
         }
 
@@ -73,8 +75,8 @@ namespace Atlas.Client.Components.Admin.Members
             Status = args.Value.ToString();
             CurrentPage = 1;
             Model.Members = null;
-            StateHasChanged();
             await LoadMembersAsync();
+            Pager.ReInitialize(TotalPages);
         }
 
         protected async Task SortByChangedAsync(ChangeEventArgs args)
@@ -84,7 +86,6 @@ namespace Atlas.Client.Components.Admin.Members
             SortByDirection = selected[1];
             CurrentPage = 1;
             Model.Members = null;
-            StateHasChanged();
             await LoadMembersAsync();
         }
 
@@ -97,7 +98,6 @@ namespace Atlas.Client.Components.Admin.Members
         {
             await ApiService.PostAsJsonAsync("api/admin/members/suspend", SuspendId);
             Model.Members = null;
-            StateHasChanged();
             await LoadMembersAsync();
         }
 
@@ -105,7 +105,6 @@ namespace Atlas.Client.Components.Admin.Members
         {
             Model.Members = null;
             await ApiService.PostAsJsonAsync("api/admin/members/reinstate", id);
-            StateHasChanged();
             await LoadMembersAsync();
         }
 
@@ -118,7 +117,6 @@ namespace Atlas.Client.Components.Admin.Members
         {
             Model.Members = null;
             await ApiService.DeleteAsync($"api/admin/members/delete/{DeleteId}");
-            StateHasChanged();
             await OnInitializedAsync();
         }
     }
