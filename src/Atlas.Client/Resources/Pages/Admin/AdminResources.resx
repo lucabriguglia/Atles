@@ -273,6 +273,9 @@
   <data name="Password" xml:space="preserve">
     <value>Password</value>
   </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
   <data name="Permission Set" xml:space="preserve">
     <value>Permission Set</value>
   </data>

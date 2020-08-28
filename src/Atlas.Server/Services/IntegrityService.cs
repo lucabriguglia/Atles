@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Domain.Members;
@@ -51,7 +52,7 @@ namespace Atlas.Server.Services
 
                 await _memberService.ConfirmAsync(new ConfirmMember
                 {
-                    UserId = user.Id,
+                    Id = member.Id,
                     SiteId = site.Id
                 });
             }

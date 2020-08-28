@@ -66,21 +66,25 @@ namespace Atlas.Data.Services
         {
             var member = await _dbContext.Members
                 .FirstOrDefaultAsync(x =>
-                    x.UserId == command.UserId &&
+                    x.Id == command.Id &&
                     x.Status == StatusType.Pending);
 
             if (member == null)
             {
-                throw new DataException($"Member with UserId {command.UserId} not found.");
+                throw new DataException($"Member with Id {command.Id} not found.");
             }
 
             member.Confirm();
 
+            var memberIdForEvent = command.MemberId == Guid.Empty
+                ? member.Id
+                : command.MemberId;
+
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                memberIdForEvent,
                 EventType.Confirmed,
                 typeof(Member),
-                member.Id));
+                command.Id));
 
             await _dbContext.SaveChangesAsync();
         }
