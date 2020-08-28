@@ -51,14 +51,9 @@ namespace Atlas.Data.Builders.Public
                 postsQuery = postsQuery.Where(x => x.Title.Contains(options.Search) || x.Content.Contains(options.Search));
             }
 
-            if (options.OrderByIsDefined())
-            {
-                postsQuery.AddOrderBy(options);
-            }
-            else
-            {
-                postsQuery = postsQuery.OrderByDescending(x => x.TimeStamp);
-            }
+            postsQuery = options.OrderByIsDefined() 
+                ? postsQuery.OrderBy(options) 
+                : postsQuery.OrderByDescending(x => x.TimeStamp);
 
             if (memberId != null)
             {

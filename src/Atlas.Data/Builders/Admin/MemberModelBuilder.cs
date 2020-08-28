@@ -39,14 +39,9 @@ namespace Atlas.Data.Builders.Admin
                 query = query.Where(x => x.DisplayName.Contains(options.Search) || x.Email.Contains(options.Search));
             }
 
-            if (options.OrderByIsDefined())
-            {
-                query.AddOrderBy(options);
-            }
-            else
-            {
-                query = query.OrderBy(x => x.DisplayName);
-            }
+            query = options.OrderByIsDefined() 
+                ? query.OrderBy(options) 
+                : query.OrderBy(x => x.DisplayName);
 
             if (!string.IsNullOrWhiteSpace(status) && Enum.TryParse(status, out StatusType memberStatus))
             {
