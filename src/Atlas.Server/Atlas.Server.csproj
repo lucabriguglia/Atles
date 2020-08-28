@@ -9,6 +9,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Areas\Identity\Pages\Shared\**" />
+    <Content Remove="Areas\Identity\Pages\Shared\**" />
+    <EmbeddedResource Remove="Areas\Identity\Pages\Shared\**" />
+    <None Remove="Areas\Identity\Pages\Shared\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.6.2" />
     <PackageReference Include="Markdig" Version="0.20.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
@@ -33,7 +40,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Identity\Pages\Shared\" />
     <Folder Include="Uploads\" />
   </ItemGroup>
 

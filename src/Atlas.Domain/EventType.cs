@@ -10,6 +10,7 @@
         Pinned,
         Locked,
         Suspended,
-        Reinstated
+        Reinstated,
+        Confirmed
     }
 }

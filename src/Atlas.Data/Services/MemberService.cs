@@ -56,6 +56,29 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
         }
 
+        public async Task ConfirmAsync(ConfirmMember command)
+        {
+            var member = await _dbContext.Members
+                .FirstOrDefaultAsync(x =>
+                    x.UserId == command.UserId &&
+                    x.Status == StatusType.Pending);
+
+            if (member == null)
+            {
+                throw new DataException($"Member with UserId {command.UserId} not found.");
+            }
+
+            member.Confirm();
+
+            _dbContext.Events.Add(new Event(command.SiteId,
+                command.MemberId,
+                EventType.Confirmed,
+                typeof(Member),
+                member.Id));
+
+            await _dbContext.SaveChangesAsync();
+        }
+
         public async Task<string> GenerateDisplayNameAsync()
         {
             var displayName = string.Empty;

@@ -20,7 +20,7 @@ namespace Atlas.Domain.Tests.Members
             Assert.AreEqual(userId, sut.UserId, nameof(sut.UserId));
             Assert.AreEqual(email, sut.Email, nameof(sut.Email));
             Assert.AreEqual(displayName, sut.DisplayName, nameof(sut.DisplayName));
-            Assert.AreEqual(StatusType.Active, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(StatusType.Pending, sut.Status, nameof(sut.Status));
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace Atlas.Domain.Tests.Members
             Assert.AreEqual(userId, sut.UserId, nameof(sut.UserId));
             Assert.AreEqual(email, sut.Email, nameof(sut.Email));
             Assert.AreEqual(displayName, sut.DisplayName, nameof(sut.DisplayName));
-            Assert.AreEqual(StatusType.Active, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(StatusType.Pending, sut.Status, nameof(sut.Status));
         }
 
         [Test]
@@ -148,6 +148,16 @@ namespace Atlas.Domain.Tests.Members
             var sut = Fixture.Create<Member>();
 
             sut.Reinstate();
+
+            Assert.AreEqual(StatusType.Active, sut.Status, nameof(sut.Status));
+        }
+
+        [Test]
+        public void Confirm()
+        {
+            var sut = Fixture.Create<Member>();
+
+            sut.Confirm();
 
             Assert.AreEqual(StatusType.Active, sut.Status, nameof(sut.Status));
         }

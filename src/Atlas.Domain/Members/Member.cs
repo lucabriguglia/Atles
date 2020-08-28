@@ -39,8 +39,13 @@ namespace Atlas.Domain.Members
             UserId = userId;
             Email = email;
             DisplayName = displayName;
-            Status = StatusType.Active;
+            Status = StatusType.Pending;
             TimeStamp = DateTime.UtcNow;
+        }
+
+        public void Confirm()
+        {
+            Status = StatusType.Active;
         }
 
         public void UpdateDetails(string displayName)

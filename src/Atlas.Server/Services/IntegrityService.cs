@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Data;
+using Atlas.Domain;
 using Atlas.Domain.Members;
 using Atlas.Domain.Members.Commands;
 using Microsoft.AspNetCore.Identity;
@@ -34,6 +35,22 @@ namespace Atlas.Server.Services
                 {
                     UserId = user.Id,
                     Email = user.Email,
+                    SiteId = site.Id
+                });
+            }
+        }
+
+        public async Task EnsureMemberConfirmedAsync(IdentityUser user)
+        {
+            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == user.Id);
+
+            if (member != null && member.Status == StatusType.Pending)
+            {
+                var site = await _contextService.CurrentSiteAsync();
+
+                await _memberService.ConfirmAsync(new ConfirmMember
+                {
+                    UserId = user.Id,
                     SiteId = site.Id
                 });
             }
