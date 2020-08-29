@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Domain.Members
+namespace Atlas.Domain.Users
 {
-    public interface IMemberRules
+    public interface IUserRules
     {
         Task<bool> IsDisplayNameUniqueAsync(string displayName);
         Task<bool> IsDisplayNameUniqueAsync(string displayName, Guid id);

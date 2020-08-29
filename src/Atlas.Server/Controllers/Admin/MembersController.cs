@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Domain.Members;
-using Atlas.Domain.Members.Commands;
+using Atlas.Domain.Users;
+using Atlas.Domain.Users.Commands;
 using Atlas.Models;
 using Atlas.Models.Admin.Members;
 using Atlas.Server.Services;
@@ -15,14 +15,14 @@ namespace Atlas.Server.Controllers.Admin
     public class MembersController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IMemberService _memberService;
-        private readonly IMemberRules _memberRules;
+        private readonly IUserService _memberService;
+        private readonly IUserRules _memberRules;
         private readonly IMemberModelBuilder _modelBuilder;
         private readonly UserManager<IdentityUser> _userManager;
 
         public MembersController(IContextService contextService,
-            IMemberService memberService,
-            IMemberRules memberRules,
+            IUserService memberService,
+            IUserRules memberRules,
             IMemberModelBuilder modelBuilder, 
             UserManager<IdentityUser> userManager)
         {
@@ -66,9 +66,9 @@ namespace Atlas.Server.Controllers.Admin
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var command = new CreateMember
+            var command = new CreateUser
             {
-                UserId = user.Id,
+                IdentityUserId = user.Id,
                 Email = user.Email,
                 SiteId = site.Id,
                 MemberId = member.Id
@@ -134,7 +134,7 @@ namespace Atlas.Server.Controllers.Admin
                 }
             }
 
-            var command = new UpdateMember
+            var command = new UpdateUser
             {
                 Id = model.Member.Id,
                 DisplayName = model.Member.DisplayName,
@@ -169,7 +169,7 @@ namespace Atlas.Server.Controllers.Admin
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var command = new SuspendMember
+            var command = new SuspendUser
             {
                 Id = id,
                 SiteId = site.Id,
@@ -187,7 +187,7 @@ namespace Atlas.Server.Controllers.Admin
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var command = new ReinstateMember
+            var command = new ReinstateUser
             {
                 Id = id,
                 SiteId = site.Id,
@@ -205,7 +205,7 @@ namespace Atlas.Server.Controllers.Admin
             var site = await _contextService.CurrentSiteAsync();
             var member = await _contextService.CurrentMemberAsync();
 
-            var command = new DeleteMember
+            var command = new DeleteUser
             {
                 Id = id,
                 SiteId = site.Id,

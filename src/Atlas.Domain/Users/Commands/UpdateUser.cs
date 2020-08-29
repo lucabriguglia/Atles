@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Atlas.Domain.Members.Commands
+namespace Atlas.Domain.Users.Commands
 {
-    public class UpdateMember : CommandBase
+    public class UpdateUser : CommandBase
     {
         public Guid Id { get; set; }
         public string DisplayName { get; set; }

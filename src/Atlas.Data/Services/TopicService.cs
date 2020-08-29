@@ -69,7 +69,7 @@ namespace Atlas.Data.Services
             forum.IncreaseTopicsCount();
             forum.Category.IncreaseTopicsCount();
 
-            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == topic.MemberId);
+            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == topic.MemberId);
             member.IncreaseTopicsCount();
 
             await _dbContext.SaveChangesAsync();
@@ -206,7 +206,7 @@ namespace Atlas.Data.Services
         public async Task DeleteAsync(DeleteTopic command)
         {
             var topic = await _dbContext.Posts
-                .Include(x => x.CreatedByMember)
+                .Include(x => x.CreatedByUser)
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Forum).ThenInclude(x => x.LastPost)
                 .FirstOrDefaultAsync(x =>
@@ -231,7 +231,7 @@ namespace Atlas.Data.Services
 
             topic.Forum.DecreaseTopicsCount();
             topic.Forum.Category.DecreaseTopicsCount();
-            topic.CreatedByMember.DecreaseTopicsCount();
+            topic.CreatedByUser.DecreaseTopicsCount();
 
             if (topic.Forum.LastPost != null && (topic.Id == topic.Forum.LastPostId || topic.Id == topic.Forum.LastPost.TopicId))
             {

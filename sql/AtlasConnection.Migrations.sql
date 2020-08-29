@@ -380,3 +380,95 @@ END;
 
 GO
 
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    ALTER TABLE [Event] DROP CONSTRAINT [FK_Event_Member_MemberId];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    ALTER TABLE [Post] DROP CONSTRAINT [FK_Post_Member_CreatedBy];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    ALTER TABLE [Post] DROP CONSTRAINT [FK_Post_Member_ModifiedBy];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    ALTER TABLE [Member] DROP CONSTRAINT [PK_Member];
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    EXEC sp_rename N'[Member]', N'User';
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    EXEC sp_rename N'[Event].[MemberId]', N'UserId', N'COLUMN';
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    EXEC sp_rename N'[Event].[IX_Event_MemberId]', N'IX_Event_UserId', N'INDEX';
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    EXEC sp_rename N'[User].[UserId]', N'IdentityUserId', N'COLUMN';
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    ALTER TABLE [User] ADD CONSTRAINT [PK_User] PRIMARY KEY ([Id]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    ALTER TABLE [Event] ADD CONSTRAINT [FK_Event_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    ALTER TABLE [Post] ADD CONSTRAINT [FK_Post_User_CreatedBy] FOREIGN KEY ([CreatedBy]) REFERENCES [User] ([Id]);
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    ALTER TABLE [Post] ADD CONSTRAINT [FK_Post_User_ModifiedBy] FOREIGN KEY ([ModifiedBy]) REFERENCES [User] ([Id]) ON DELETE NO ACTION;
+END;
+
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20200829182602_RenameMember')
+BEGIN
+    INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
+    VALUES (N'20200829182602_RenameMember', N'3.1.6');
+END;
+
+GO
+

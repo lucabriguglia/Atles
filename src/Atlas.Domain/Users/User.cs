@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 using Atlas.Domain.Posts;
 
-namespace Atlas.Domain.Members
+namespace Atlas.Domain.Users
 {
-    public class Member
+    public class User
     {
         public Guid Id { get; private set; }
-        public string UserId { get; private set; }
+        [Column("IdentityUserId")]
+        public string IdentityUserId { get; private set; }
         public string Email { get; private set; }
         public string DisplayName { get; private set; }
         public int TopicsCount { get; private set; }
@@ -18,25 +20,25 @@ namespace Atlas.Domain.Members
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Event> Events { get; set; }
 
-        public Member()
+        public User()
         {
             
         }
 
-        public Member(Guid id, string userId, string email, string displayName)
+        public User(Guid id, string identityUserId, string email, string displayName)
         {
-            New(id, userId, email, displayName);
+            New(id, identityUserId, email, displayName);
         }
 
-        public Member(string userId, string email, string displayName)
+        public User(string identityUserId, string email, string displayName)
         {
-            New(Guid.NewGuid(), userId, email, displayName);
+            New(Guid.NewGuid(), identityUserId, email, displayName);
         }
 
-        private void New(Guid id, string userId, string email, string displayName)
+        private void New(Guid id, string identityUserId, string email, string displayName)
         {
             Id = id;
-            UserId = userId;
+            IdentityUserId = identityUserId;
             Email = email;
             DisplayName = displayName;
             Status = StatusType.Pending;

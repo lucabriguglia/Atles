@@ -32,7 +32,7 @@ namespace Atlas.Data.Builders.Public
         {
             var result = new MemberPageModel();
 
-            var member = await _dbContext.Members
+            var member = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == memberId);
 
@@ -60,7 +60,7 @@ namespace Atlas.Data.Builders.Public
         {
             var result = new SettingsPageModel();
 
-            var member = await _dbContext.Members
+            var member = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == memberId &&
                     x.Status != StatusType.Deleted);

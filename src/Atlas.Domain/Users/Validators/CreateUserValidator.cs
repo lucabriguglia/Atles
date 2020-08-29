@@ -1,13 +1,13 @@
-﻿using Atlas.Domain.Members.Commands;
+﻿using Atlas.Domain.Users.Commands;
 using FluentValidation;
 
-namespace Atlas.Domain.Members.Validators
+namespace Atlas.Domain.Users.Validators
 {
-    public class CreateMemberValidator : AbstractValidator<CreateMember>
+    public class CreateUserValidator : AbstractValidator<CreateUser>
     {
-        public CreateMemberValidator(IMemberRules rules)
+        public CreateUserValidator(IUserRules rules)
         {
-            RuleFor(c => c.UserId)
+            RuleFor(c => c.IdentityUserId)
                 .NotEmpty().WithMessage("UserId is required.");
 
             RuleFor(c => c.Email)

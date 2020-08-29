@@ -5,11 +5,11 @@ using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
-using Atlas.Domain.Members;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.PermissionSets.Commands;
 using Atlas.Domain.Posts;
 using Atlas.Domain.Sites;
+using Atlas.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -124,19 +124,19 @@ namespace Atlas.Server.Services
             }
 
             // Members
-            var memberAdmin = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userAdmin.Id);
+            var memberAdmin = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == userAdmin.Id);
             if (memberAdmin == null)
             {
-                memberAdmin = new Member(userAdmin.Id, _configuration["DefaultAdminUserEmail"], _configuration["DefaultAdminUserDisplayName"]);
-                _dbContext.Members.Add(memberAdmin);
+                memberAdmin = new User(userAdmin.Id, _configuration["DefaultAdminUserEmail"], _configuration["DefaultAdminUserDisplayName"]);
+                _dbContext.Users.Add(memberAdmin);
                 _dbContext.Events.Add(new Event(site.Id,
                     null,
                     EventType.Created,
-                    typeof(Member),
+                    typeof(User),
                     memberAdmin.Id,
                     new
                     {
-                        memberAdmin.UserId,
+                        UserId = memberAdmin.IdentityUserId,
                         memberAdmin.Email,
                         memberAdmin.DisplayName
                     }));
@@ -144,19 +144,19 @@ namespace Atlas.Server.Services
 
             if (_configuration["CreateDefaultNormalUser"] == "true")
             {
-                var memberNormal = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userNormalId);
+                var memberNormal = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == userNormalId);
                 if (memberNormal == null)
                 {
-                    memberNormal = new Member(userNormalId, _configuration["DefaultNormalUserEmail"], _configuration["DefaultNormalUserDisplayName"]);
-                    _dbContext.Members.Add(memberNormal);
+                    memberNormal = new User(userNormalId, _configuration["DefaultNormalUserEmail"], _configuration["DefaultNormalUserDisplayName"]);
+                    _dbContext.Users.Add(memberNormal);
                     _dbContext.Events.Add(new Event(site.Id,
                         null,
                         EventType.Created,
-                        typeof(Member),
+                        typeof(User),
                         memberNormal.Id,
                         new
                         {
-                            memberNormal.UserId,
+                            UserId = memberNormal.IdentityUserId,
                             memberNormal.Email,
                             memberNormal.DisplayName
                         }));
@@ -165,19 +165,19 @@ namespace Atlas.Server.Services
 
             if (_configuration["CreateDefaultModeratorUser"] == "true")
             {
-                var memberModerator = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userModeratorId);
+                var memberModerator = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == userModeratorId);
                 if (memberModerator == null)
                 {
-                    memberModerator = new Member(userModeratorId, _configuration["DefaultModeratorUserEmail"], _configuration["DefaultModeratorUserDisplayName"]);
-                    _dbContext.Members.Add(memberModerator);
+                    memberModerator = new User(userModeratorId, _configuration["DefaultModeratorUserEmail"], _configuration["DefaultModeratorUserDisplayName"]);
+                    _dbContext.Users.Add(memberModerator);
                     _dbContext.Events.Add(new Event(site.Id,
                         null,
                         EventType.Created,
-                        typeof(Member),
+                        typeof(User),
                         memberModerator.Id,
                         new
                         {
-                            memberModerator.UserId,
+                            UserId = memberModerator.IdentityUserId,
                             memberModerator.Email,
                             memberModerator.DisplayName
                         }));

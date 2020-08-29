@@ -29,7 +29,7 @@ namespace Atlas.Data.Builders.Public
         {
             var topic = await _dbContext.Posts
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
-                .Include(x => x.CreatedByMember)
+                .Include(x => x.CreatedByUser)
                 .FirstOrDefaultAsync(x =>
                     x.TopicId == null &&
                     x.Forum.Category.SiteId == siteId &&
@@ -56,11 +56,11 @@ namespace Atlas.Data.Builders.Public
                     Title = topic.Title,
                     Slug = topic.Slug,
                     Content = Markdown.ToHtml(topic.Content),
-                    MemberId = topic.CreatedByMember.Id,
-                    MemberDisplayName = topic.CreatedByMember.DisplayName,
+                    MemberId = topic.CreatedByUser.Id,
+                    MemberDisplayName = topic.CreatedByUser.DisplayName,
                     TimeStamp = topic.TimeStamp,
-                    UserId = topic.CreatedByMember.UserId,
-                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.CreatedByMember.Email),
+                    UserId = topic.CreatedByUser.IdentityUserId,
+                    GravatarHash = _gravatarService.HashEmailForGravatar(topic.CreatedByUser.Email),
                     Pinned = topic.Pinned,
                     Locked = topic.Locked,
                     HasAnswer = topic.HasAnswer
@@ -71,7 +71,7 @@ namespace Atlas.Data.Builders.Public
             if (topic.HasAnswer)
             {
                 var answer = await _dbContext.Posts
-                    .Include(x => x.CreatedByMember)
+                    .Include(x => x.CreatedByUser)
                     .Where(x =>
                         x.TopicId == topic.Id &&
                         x.Status == StatusType.Published &&
@@ -85,11 +85,11 @@ namespace Atlas.Data.Builders.Public
                         Id = answer.Id,
                         Content = Markdown.ToHtml(answer.Content),
                         OriginalContent = answer.Content,
-                        UserId = answer.CreatedByMember.UserId,
-                        MemberId = answer.CreatedByMember.Id,
-                        MemberDisplayName = answer.CreatedByMember.DisplayName,
+                        UserId = answer.CreatedByUser.IdentityUserId,
+                        MemberId = answer.CreatedByUser.Id,
+                        MemberDisplayName = answer.CreatedByUser.DisplayName,
                         TimeStamp = answer.TimeStamp,
-                        GravatarHash = _gravatarService.HashEmailForGravatar(answer.CreatedByMember.Email),
+                        GravatarHash = _gravatarService.HashEmailForGravatar(answer.CreatedByUser.Email),
                         IsAnswer = answer.IsAnswer
                     };
                 }
@@ -101,7 +101,7 @@ namespace Atlas.Data.Builders.Public
         public async Task<PaginatedData<TopicPageModel.ReplyModel>> BuildTopicPageModelRepliesAsync(Guid topicId, QueryOptions options)
         {
             var repliesQuery = _dbContext.Posts
-                .Include(x => x.CreatedByMember)
+                .Include(x => x.CreatedByUser)
                 .Where(x =>
                     x.TopicId == topicId &&
                     x.Status == StatusType.Published &&
@@ -123,11 +123,11 @@ namespace Atlas.Data.Builders.Public
                 Id = reply.Id,
                 Content = Markdown.ToHtml(reply.Content),
                 OriginalContent = reply.Content,
-                UserId = reply.CreatedByMember.UserId,
-                MemberId = reply.CreatedByMember.Id,
-                MemberDisplayName = reply.CreatedByMember.DisplayName,
+                UserId = reply.CreatedByUser.IdentityUserId,
+                MemberId = reply.CreatedByUser.Id,
+                MemberDisplayName = reply.CreatedByUser.DisplayName,
                 TimeStamp = reply.TimeStamp,
-                GravatarHash = _gravatarService.HashEmailForGravatar(reply.CreatedByMember.Email),
+                GravatarHash = _gravatarService.HashEmailForGravatar(reply.CreatedByUser.Email),
                 IsAnswer = reply.IsAnswer
             }).ToList();
 

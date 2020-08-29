@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Data.Rules;
-using Atlas.Domain.Members;
+using Atlas.Domain.Users;
 using NUnit.Framework;
 
 namespace Atlas.Data.Tests.Rules
@@ -43,8 +43,8 @@ namespace Atlas.Data.Tests.Rules
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var member = new Member(Guid.NewGuid().ToString(), "me@email.com", displayName);
-                dbContext.Members.Add(member);
+                var member = new User(Guid.NewGuid().ToString(), "me@email.com", displayName);
+                dbContext.Users.Add(member);
                 await dbContext.SaveChangesAsync();
             }
 
@@ -65,10 +65,10 @@ namespace Atlas.Data.Tests.Rules
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var member1 = new Member(Guid.NewGuid().ToString(), "me@email.com", "Member 1");
-                var member2 = new Member(memberId, Guid.NewGuid().ToString(), "me@email.com", "Member 2");
-                dbContext.Members.Add(member1);
-                dbContext.Members.Add(member2);
+                var member1 = new User(Guid.NewGuid().ToString(), "me@email.com", "Member 1");
+                var member2 = new User(memberId, Guid.NewGuid().ToString(), "me@email.com", "Member 2");
+                dbContext.Users.Add(member1);
+                dbContext.Users.Add(member2);
                 await dbContext.SaveChangesAsync();
             }
 

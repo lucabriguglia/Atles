@@ -1,11 +1,11 @@
-﻿using Atlas.Domain.Members.Commands;
+﻿using Atlas.Domain.Users.Commands;
 using FluentValidation;
 
-namespace Atlas.Domain.Members.Validators
+namespace Atlas.Domain.Users.Validators
 {
-    public class UpdateMemberValidator : AbstractValidator<UpdateMember>
+    public class UpdateUserValidator : AbstractValidator<UpdateUser>
     {
-        public UpdateMemberValidator(IMemberRules rules)
+        public UpdateUserValidator(IUserRules rules)
         {
             RuleFor(c => c.DisplayName)
                 .NotEmpty().WithMessage("Display name is required.")

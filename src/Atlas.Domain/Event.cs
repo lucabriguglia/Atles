@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using Atlas.Domain.Members;
+using System.ComponentModel.DataAnnotations.Schema;
+using Atlas.Domain.Users;
 
 namespace Atlas.Domain
 {
@@ -13,10 +14,11 @@ namespace Atlas.Domain
         public string TargetType { get; private set; }
         public string Type { get; private set; }
         public string Data { get; private set; }
-        
+
+        [Column("UserId")]
         public Guid? MemberId { get; private set; }
 
-        public virtual Member Member { get; set; }
+        public virtual User Member { get; set; }
 
         public Event()
         {

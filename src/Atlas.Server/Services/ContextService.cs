@@ -63,14 +63,14 @@ namespace Atlas.Server.Services
 
                 if (!string.IsNullOrEmpty(userId))
                 {
-                    var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userId);
+                    var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == userId);
 
                     if (member != null)
                     {
                         result = new CurrentMemberModel
                         {
                             Id = member.Id,
-                            UserId = member.UserId,
+                            UserId = member.IdentityUserId,
                             Email = member.Email,
                             DisplayName = member.DisplayName,
                             GravatarHash = _gravatarService.HashEmailForGravatar(member.Email),

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Domain.Members;
-using Atlas.Domain.Members.Commands;
+using Atlas.Domain.Users;
+using Atlas.Domain.Users.Commands;
 using Atlas.Models.Public.Members;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
@@ -16,14 +16,14 @@ namespace Atlas.Server.Controllers.Public
     {
         private readonly IContextService _contextService;
         private readonly IMemberModelBuilder _modelBuilder;
-        private readonly IMemberService _memberService;
-        private readonly IMemberRules _memberRules;
+        private readonly IUserService _memberService;
+        private readonly IUserRules _memberRules;
         private readonly ILogger<SettingsController> _logger;
 
         public SettingsController(IContextService contextService, 
             IMemberModelBuilder modelBuilder,
-            IMemberService memberService, 
-            IMemberRules memberRules, 
+            IUserService memberService, 
+            IUserRules memberRules, 
             ILogger<SettingsController> logger)
         {
             _contextService = contextService;
@@ -61,7 +61,7 @@ namespace Atlas.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var command = new UpdateMember
+            var command = new UpdateUser
             {
                 Id = member.Id,
                 DisplayName = model.Member.DisplayName,

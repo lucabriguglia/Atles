@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Extensions;
 using Atlas.Domain;
-using Atlas.Domain.Members;
+using Atlas.Domain.Users;
 using Atlas.Models.Admin.Members;
 using Atlas.Models;
 using Microsoft.AspNetCore.Identity;
@@ -32,7 +32,7 @@ namespace Atlas.Data.Builders.Admin
         {
             var result = new IndexPageModel();
 
-            var query = _dbContext.Members.Where(x => true);
+            var query = _dbContext.Users.Where(x => true);
 
             if (options.SearchIsDefined())
             {
@@ -65,7 +65,7 @@ namespace Atlas.Data.Builders.Admin
             })
             .ToList();
 
-            var countQuery = _dbContext.Members.Where(x => true);
+            var countQuery = _dbContext.Users.Where(x => true);
 
             if (!string.IsNullOrWhiteSpace(options.Search))
             {
@@ -90,19 +90,19 @@ namespace Atlas.Data.Builders.Admin
 
         public async Task<EditPageModel> BuildEditPageModelAsync(Guid memberId)
         {
-            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == memberId);
+            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == memberId);
 
             return await BuildEditPageModelAsync(member);
         }
 
         public async Task<EditPageModel> BuildEditPageModelAsync(string userId)
         {
-            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == userId);
+            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == userId);
 
             return await BuildEditPageModelAsync(member);
         }
 
-        private async Task<EditPageModel> BuildEditPageModelAsync(Member member)
+        private async Task<EditPageModel> BuildEditPageModelAsync(User member)
         {
             if (member == null)
             {
@@ -118,13 +118,13 @@ namespace Atlas.Data.Builders.Admin
                 },
                 Info = new EditPageModel.InfoModel
                 {
-                    UserId = member.UserId,
+                    UserId = member.IdentityUserId,
                     Email = member.Email,
                     Status = member.Status
                 }
             };
 
-            var user = await _userManager.FindByIdAsync(member.UserId);
+            var user = await _userManager.FindByIdAsync(member.IdentityUserId);
 
             if (user != null)
             {
@@ -154,7 +154,7 @@ namespace Atlas.Data.Builders.Admin
 
         public async Task<ActivityPageModel> BuildActivityPageModelAsync(Guid siteId, Guid memberId, QueryOptions options)
         {
-            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == memberId);
+            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == memberId);
 
             if (member == null)
             {

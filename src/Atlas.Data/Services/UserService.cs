@@ -2,36 +2,36 @@
 using System.Data;
 using System.Threading.Tasks;
 using Atlas.Domain;
-using Atlas.Domain.Members;
-using Atlas.Domain.Members.Commands;
+using Atlas.Domain.Users;
+using Atlas.Domain.Users.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data.Services
 {
-    public class MemberService : IMemberService
+    public class UserService : IUserService
     {
         private readonly AtlasDbContext _dbContext;
-        private readonly IValidator<CreateMember> _createValidator;
-        private readonly IValidator<UpdateMember> _updateValidator;
+        private readonly IValidator<CreateUser> _createValidator;
+        private readonly IValidator<UpdateUser> _updateValidator;
 
-        public MemberService(AtlasDbContext dbContext,
-            IValidator<CreateMember> createValidator,
-            IValidator<UpdateMember> updateValidator)
+        public UserService(AtlasDbContext dbContext,
+            IValidator<CreateUser> createValidator,
+            IValidator<UpdateUser> updateValidator)
         {
             _dbContext = dbContext;
             _createValidator = createValidator;
             _updateValidator = updateValidator;
         }
 
-        public async Task CreateAsync(CreateMember command)
+        public async Task CreateAsync(CreateUser command)
         {
             await _createValidator.ValidateCommandAsync(command);
 
             var displayName = await GenerateDisplayNameAsync();
 
-            var member = new Member(command.Id,
-                command.UserId,
+            var member = new User(command.Id,
+                command.IdentityUserId,
                 command.Email,
                 displayName);
 
@@ -40,7 +40,7 @@ namespace Atlas.Data.Services
                 member.Confirm();
             }
 
-            _dbContext.Members.Add(member);
+            _dbContext.Users.Add(member);
 
             var memberIdForEvent = command.MemberId == Guid.Empty 
                 ? member.Id 
@@ -49,11 +49,11 @@ namespace Atlas.Data.Services
             _dbContext.Events.Add(new Event(command.SiteId,
                 memberIdForEvent,
                 EventType.Created,
-                typeof(Member),
+                typeof(User),
                 command.Id,
                 new
                 {
-                    command.UserId,
+                    UserId = command.IdentityUserId,
                     command.Email,
                     DisplayName = displayName,
                     member.Status
@@ -62,9 +62,9 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task ConfirmAsync(ConfirmMember command)
+        public async Task ConfirmAsync(ConfirmUser command)
         {
-            var member = await _dbContext.Members
+            var member = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.Status == StatusType.Pending);
@@ -83,7 +83,7 @@ namespace Atlas.Data.Services
             _dbContext.Events.Add(new Event(command.SiteId,
                 memberIdForEvent,
                 EventType.Confirmed,
-                typeof(Member),
+                typeof(User),
                 command.Id));
 
             await _dbContext.SaveChangesAsync();
@@ -99,7 +99,7 @@ namespace Atlas.Data.Services
             while (exists && repeat < 5)
             {
                 displayName = $"User{random.Next(100000)}";
-                exists = await _dbContext.Members.AnyAsync(x => x.DisplayName == displayName);
+                exists = await _dbContext.Users.AnyAsync(x => x.DisplayName == displayName);
                 repeat++;
             }
 
@@ -111,11 +111,11 @@ namespace Atlas.Data.Services
             return displayName;
         }
 
-        public async Task UpdateAsync(UpdateMember command)
+        public async Task UpdateAsync(UpdateUser command)
         {
             await _updateValidator.ValidateCommandAsync(command);
 
-            var member = await _dbContext.Members
+            var member = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id);
 
@@ -129,7 +129,7 @@ namespace Atlas.Data.Services
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Updated,
-                typeof(Member),
+                typeof(User),
                 command.Id,
                 new
                 {
@@ -141,7 +141,7 @@ namespace Atlas.Data.Services
                 _dbContext.Events.Add(new Event(command.SiteId,
                     command.MemberId,
                     EventType.Updated,
-                    typeof(Member),
+                    typeof(User),
                     command.Id,
                     new
                     {
@@ -152,9 +152,9 @@ namespace Atlas.Data.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task SuspendAsync(SuspendMember command)
+        public async Task SuspendAsync(SuspendUser command)
         {
-            var member = await _dbContext.Members
+            var member = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.Status != StatusType.Deleted);
@@ -169,15 +169,15 @@ namespace Atlas.Data.Services
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Suspended,
-                typeof(Member),
+                typeof(User),
                 command.Id));
 
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task ReinstateAsync(ReinstateMember command)
+        public async Task ReinstateAsync(ReinstateUser command)
         {
-            var member = await _dbContext.Members
+            var member = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.Status != StatusType.Deleted);
@@ -192,15 +192,15 @@ namespace Atlas.Data.Services
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Reinstated,
-                typeof(Member),
+                typeof(User),
                 command.Id));
 
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<string> DeleteAsync(DeleteMember command)
+        public async Task<string> DeleteAsync(DeleteUser command)
         {
-            var member = await _dbContext.Members
+            var member = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.Status != StatusType.Deleted);
@@ -215,12 +215,12 @@ namespace Atlas.Data.Services
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.MemberId,
                 EventType.Deleted,
-                typeof(Member),
+                typeof(User),
                 command.Id));
 
             await _dbContext.SaveChangesAsync();
 
-            return member.UserId;
+            return member.IdentityUserId;
         }
     }
 }

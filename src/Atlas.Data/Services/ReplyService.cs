@@ -65,7 +65,7 @@ namespace Atlas.Data.Services
             topic.Forum.IncreaseRepliesCount();
             topic.Forum.Category.IncreaseRepliesCount();
 
-            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == reply.MemberId);
+            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == reply.MemberId);
             member.IncreaseRepliesCount();
 
             await _dbContext.SaveChangesAsync();
@@ -142,7 +142,7 @@ namespace Atlas.Data.Services
         public async Task DeleteAsync(DeleteReply command)
         {
             var reply = await _dbContext.Posts
-                .Include(x => x.CreatedByMember)
+                .Include(x => x.CreatedByUser)
                 .Include(x => x.Topic).ThenInclude(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Topic).ThenInclude(x => x.Forum).ThenInclude(x => x.LastPost)
                 .FirstOrDefaultAsync(x =>
@@ -173,7 +173,7 @@ namespace Atlas.Data.Services
             reply.Topic.DecreaseRepliesCount();
             reply.Topic.Forum.DecreaseRepliesCount();
             reply.Topic.Forum.Category.DecreaseRepliesCount();
-            reply.CreatedByMember.DecreaseRepliesCount();
+            reply.CreatedByUser.DecreaseRepliesCount();
 
             if (reply.Topic.Forum.LastPost != null && (reply.Id == reply.Topic.Forum.LastPostId || reply.Id == reply.Topic.Forum.LastPost.TopicId))
             {

@@ -17,7 +17,7 @@ namespace Atlas.Data.Configurations
                 .IsRequired();
 
             builder
-                .HasOne(x => x.CreatedByMember)
+                .HasOne(x => x.CreatedByUser)
                 .WithMany(x => x.Posts)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();

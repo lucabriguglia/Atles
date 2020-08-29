@@ -1,23 +1,23 @@
 ﻿using System;
-using Atlas.Domain.Members;
+using Atlas.Domain.Users;
 using AutoFixture;
 using NUnit.Framework;
 
-namespace Atlas.Domain.Tests.Members
+namespace Atlas.Domain.Tests.Users
 {
     [TestFixture]
-    public class MemberTests : TestFixtureBase
+    public class UserTests : TestFixtureBase
     {
         [Test]
         public void New()
         {
-            var userId = Guid.NewGuid().ToString();
+            var identityUserId = Guid.NewGuid().ToString();
             const string email = "abc@def.ghi";
             const string displayName = "Display Name";
 
-            var sut = new Member(userId, email, displayName);
+            var sut = new User(identityUserId, email, displayName);
 
-            Assert.AreEqual(userId, sut.UserId, nameof(sut.UserId));
+            Assert.AreEqual(identityUserId, sut.IdentityUserId, nameof(sut.IdentityUserId));
             Assert.AreEqual(email, sut.Email, nameof(sut.Email));
             Assert.AreEqual(displayName, sut.DisplayName, nameof(sut.DisplayName));
             Assert.AreEqual(StatusType.Pending, sut.Status, nameof(sut.Status));
@@ -27,14 +27,14 @@ namespace Atlas.Domain.Tests.Members
         public void New_passing_id()
         {
             var id = Guid.NewGuid();
-            var userId = Guid.NewGuid().ToString();
+            var identityUserId = Guid.NewGuid().ToString();
             const string email = "abc@def.ghi";
             const string displayName = "Display Name";
 
-            var sut = new Member(id, userId, email, displayName);
+            var sut = new User(id, identityUserId, email, displayName);
 
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
-            Assert.AreEqual(userId, sut.UserId, nameof(sut.UserId));
+            Assert.AreEqual(identityUserId, sut.IdentityUserId, nameof(sut.IdentityUserId));
             Assert.AreEqual(email, sut.Email, nameof(sut.Email));
             Assert.AreEqual(displayName, sut.DisplayName, nameof(sut.DisplayName));
             Assert.AreEqual(StatusType.Pending, sut.Status, nameof(sut.Status));
@@ -43,7 +43,7 @@ namespace Atlas.Domain.Tests.Members
         [Test]
         public void Update_details()
         {
-            var sut = Fixture.Create<Member>();
+            var sut = Fixture.Create<User>();
 
             const string displayName = "New Display Name";
 
@@ -55,7 +55,7 @@ namespace Atlas.Domain.Tests.Members
         [Test]
         public void Increase_topics_count()
         {
-            var sut = Fixture.Create<Member>();
+            var sut = Fixture.Create<User>();
 
             var currentCount = sut.TopicsCount;
 
@@ -67,7 +67,7 @@ namespace Atlas.Domain.Tests.Members
         [Test]
         public void Decrease_topics_count()
         {
-            var sut = Fixture.Create<Member>();
+            var sut = Fixture.Create<User>();
             sut.IncreaseTopicsCount();
 
             var currentCount = sut.TopicsCount;
@@ -80,7 +80,7 @@ namespace Atlas.Domain.Tests.Members
         [Test]
         public void Decrease_topics_count_less_than_zero()
         {
-            var sut = Fixture.Create<Member>();
+            var sut = Fixture.Create<User>();
 
             sut.DecreaseTopicsCount();
 
@@ -90,7 +90,7 @@ namespace Atlas.Domain.Tests.Members
         [Test]
         public void Increase_replies_count()
         {
-            var sut = Fixture.Create<Member>();
+            var sut = Fixture.Create<User>();
 
             var currentCount = sut.RepliesCount;
 
@@ -102,7 +102,7 @@ namespace Atlas.Domain.Tests.Members
         [Test]
         public void Decrease_replies_count()
         {
-            var sut = Fixture.Create<Member>();
+            var sut = Fixture.Create<User>();
             sut.IncreaseRepliesCount();
 
             var currentCount = sut.RepliesCount;
@@ -115,7 +115,7 @@ namespace Atlas.Domain.Tests.Members
         [Test]
         public void Decrease_replies_count_less_than_zero()
         {
-            var sut = Fixture.Create<Member>();
+            var sut = Fixture.Create<User>();
 
             sut.DecreaseRepliesCount();
 
@@ -125,7 +125,7 @@ namespace Atlas.Domain.Tests.Members
         [Test]
         public void Delete()
         {
-            var sut = Fixture.Create<Member>();
+            var sut = Fixture.Create<User>();
 
             sut.Delete();
 
@@ -135,7 +135,7 @@ namespace Atlas.Domain.Tests.Members
         [Test]
         public void Suspend()
         {
-            var sut = Fixture.Create<Member>();
+            var sut = Fixture.Create<User>();
 
             sut.Suspend();
 
@@ -145,7 +145,7 @@ namespace Atlas.Domain.Tests.Members
         [Test]
         public void Reinstate()
         {
-            var sut = Fixture.Create<Member>();
+            var sut = Fixture.Create<User>();
 
             sut.Reinstate();
 
@@ -155,7 +155,7 @@ namespace Atlas.Domain.Tests.Members
         [Test]
         public void Confirm()
         {
-            var sut = Fixture.Create<Member>();
+            var sut = Fixture.Create<User>();
 
             sut.Confirm();
 
