@@ -65,8 +65,8 @@ namespace Atlas.Data.Services
             topic.Forum.IncreaseRepliesCount();
             topic.Forum.Category.IncreaseRepliesCount();
 
-            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == reply.CreatedBy);
-            member.IncreaseRepliesCount();
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == reply.CreatedBy);
+            user.IncreaseRepliesCount();
 
             await _dbContext.SaveChangesAsync();
 

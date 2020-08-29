@@ -30,24 +30,24 @@ namespace Atlas.Data.Services
 
             var displayName = await GenerateDisplayNameAsync();
 
-            var member = new User(command.Id,
+            var user = new User(command.Id,
                 command.IdentityUserId,
                 command.Email,
                 displayName);
 
             if (command.Confirm)
             {
-                member.Confirm();
+                user.Confirm();
             }
 
-            _dbContext.Users.Add(member);
+            _dbContext.Users.Add(user);
 
-            var memberIdForEvent = command.UserId == Guid.Empty 
-                ? member.Id 
+            var userIdForEvent = command.UserId == Guid.Empty 
+                ? user.Id 
                 : command.UserId;
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                memberIdForEvent,
+                userIdForEvent,
                 EventType.Created,
                 typeof(User),
                 command.Id,
@@ -56,7 +56,7 @@ namespace Atlas.Data.Services
                     UserId = command.IdentityUserId,
                     command.Email,
                     DisplayName = displayName,
-                    member.Status
+                    user.Status
                 }));
 
             await _dbContext.SaveChangesAsync();
@@ -64,24 +64,24 @@ namespace Atlas.Data.Services
 
         public async Task ConfirmAsync(ConfirmUser command)
         {
-            var member = await _dbContext.Users
+            var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.Status == StatusType.Pending);
 
-            if (member == null)
+            if (user == null)
             {
                 throw new DataException($"User with Id {command.Id} not found.");
             }
 
-            member.Confirm();
+            user.Confirm();
 
-            var memberIdForEvent = command.UserId == Guid.Empty
-                ? member.Id
+            var userIdForEvent = command.UserId == Guid.Empty
+                ? user.Id
                 : command.UserId;
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                memberIdForEvent,
+                userIdForEvent,
                 EventType.Confirmed,
                 typeof(User),
                 command.Id));
@@ -115,16 +115,16 @@ namespace Atlas.Data.Services
         {
             await _updateValidator.ValidateCommandAsync(command);
 
-            var member = await _dbContext.Users
+            var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id);
 
-            if (member == null)
+            if (user == null)
             {
                 throw new DataException($"User with Id {command.Id} not found.");
             }
 
-            member.UpdateDetails(command.DisplayName);
+            user.UpdateDetails(command.DisplayName);
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
@@ -154,17 +154,17 @@ namespace Atlas.Data.Services
 
         public async Task SuspendAsync(SuspendUser command)
         {
-            var member = await _dbContext.Users
+            var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.Status != StatusType.Deleted);
 
-            if (member == null)
+            if (user == null)
             {
                 throw new DataException($"User with Id {command.Id} not found.");
             }
 
-            member.Suspend();
+            user.Suspend();
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
@@ -177,17 +177,17 @@ namespace Atlas.Data.Services
 
         public async Task ReinstateAsync(ReinstateUser command)
         {
-            var member = await _dbContext.Users
+            var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.Status != StatusType.Deleted);
 
-            if (member == null)
+            if (user == null)
             {
                 throw new DataException($"User with Id {command.Id} not found.");
             }
 
-            member.Reinstate();
+            user.Reinstate();
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
@@ -200,17 +200,17 @@ namespace Atlas.Data.Services
 
         public async Task<string> DeleteAsync(DeleteUser command)
         {
-            var member = await _dbContext.Users
+            var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
                     x.Status != StatusType.Deleted);
 
-            if (member == null)
+            if (user == null)
             {
                 throw new DataException($"User with Id {command.Id} not found.");
             }
 
-            member.Delete();
+            user.Delete();
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
@@ -220,7 +220,7 @@ namespace Atlas.Data.Services
 
             await _dbContext.SaveChangesAsync();
 
-            return member.IdentityUserId;
+            return user.IdentityUserId;
         }
     }
 }

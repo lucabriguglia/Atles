@@ -13,15 +13,15 @@ namespace Atlas.Domain.Tests.Replies
         {
             var topicId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
-            var memberId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            var sut = Post.CreateReply(topicId, forumId, memberId, content, status);
+            var sut = Post.CreateReply(topicId, forumId, userId, content, status);
 
             Assert.AreEqual(topicId, sut.TopicId, nameof(sut.TopicId));
             Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
-            Assert.AreEqual(memberId, sut.CreatedBy, nameof(sut.CreatedBy));
+            Assert.AreEqual(userId, sut.CreatedBy, nameof(sut.CreatedBy));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
         }
@@ -32,16 +32,16 @@ namespace Atlas.Domain.Tests.Replies
             var id = Guid.NewGuid();
             var topicId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
-            var memberId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            var sut = Post.CreateReply(id, topicId, forumId, memberId, content, status);
+            var sut = Post.CreateReply(id, topicId, forumId, userId, content, status);
 
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
             Assert.AreEqual(topicId, sut.TopicId, nameof(sut.TopicId));
             Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
-            Assert.AreEqual(memberId, sut.CreatedBy, nameof(sut.CreatedBy));
+            Assert.AreEqual(userId, sut.CreatedBy, nameof(sut.CreatedBy));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
         }
@@ -51,13 +51,13 @@ namespace Atlas.Domain.Tests.Replies
         {
             var sut = Fixture.Create<Post>();
 
-            var memberId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
             const string content = "Blah blah blah...";
             const StatusType status = StatusType.Draft;
 
-            sut.UpdateDetails(memberId, content, status);
+            sut.UpdateDetails(userId, content, status);
 
-            Assert.AreEqual(memberId, sut.ModifiedBy, nameof(sut.ModifiedBy));
+            Assert.AreEqual(userId, sut.ModifiedBy, nameof(sut.ModifiedBy));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
         }

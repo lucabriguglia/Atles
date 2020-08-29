@@ -48,12 +48,12 @@ namespace Atlas.Data.Builders.Admin
                 query = query.Where(x => x.Status == memberStatus);
             }
 
-            var members = await query
+            var users = await query
                 .Skip(options.Skip)
                 .Take(options.PageSize)
                 .ToListAsync();
 
-            var items = members.Select(member => new IndexPageModel.UserModel
+            var items = users.Select(member => new IndexPageModel.UserModel
             {
                 Id = member.Id,
                 DisplayName = member.DisplayName,
@@ -90,21 +90,21 @@ namespace Atlas.Data.Builders.Admin
 
         public async Task<EditPageModel> BuildEditPageModelAsync(Guid memberId)
         {
-            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == memberId);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == memberId);
 
-            return await BuildEditPageModelAsync(member);
+            return await BuildEditPageModelAsync(user);
         }
 
         public async Task<EditPageModel> BuildEditPageModelAsync(string identityUserId)
         {
-            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == identityUserId);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == identityUserId);
 
-            return await BuildEditPageModelAsync(member);
+            return await BuildEditPageModelAsync(user);
         }
 
-        private async Task<EditPageModel> BuildEditPageModelAsync(User member)
+        private async Task<EditPageModel> BuildEditPageModelAsync(User user)
         {
-            if (member == null)
+            if (user == null)
             {
                 return null;
             }
@@ -113,24 +113,24 @@ namespace Atlas.Data.Builders.Admin
             {
                 User = new EditPageModel.UserModel
                 {
-                    Id = member.Id,
-                    DisplayName = member.DisplayName
+                    Id = user.Id,
+                    DisplayName = user.DisplayName
                 },
                 Info = new EditPageModel.InfoModel
                 {
-                    UserId = member.IdentityUserId,
-                    Email = member.Email,
-                    Status = member.Status
+                    UserId = user.IdentityUserId,
+                    Email = user.Email,
+                    Status = user.Status
                 }
             };
 
-            var user = await _userManager.FindByIdAsync(member.IdentityUserId);
+            var identityUser = await _userManager.FindByIdAsync(user.IdentityUserId);
 
-            if (user != null)
+            if (identityUser != null)
             {
                 foreach (var role in await _roleManager.Roles.ToListAsync())
                 {
-                    var selected = await _userManager.IsInRoleAsync(user, role.Name);
+                    var selected = await _userManager.IsInRoleAsync(identityUser, role.Name);
 
                     result.Roles.Add(new EditPageModel.RoleModel
                     {
@@ -139,14 +139,14 @@ namespace Atlas.Data.Builders.Admin
                     });
                 }
 
-                result.Info.UserName = user.UserName;
-                result.Info.EmailConfirmed = user.EmailConfirmed;
-                result.Info.PhoneNumber = user.PhoneNumber;
-                result.Info.PhoneNumberConfirmed = user.PhoneNumberConfirmed;
-                result.Info.TwoFactorEnabled = user.TwoFactorEnabled;
-                result.Info.LockoutEnabled = user.LockoutEnabled;
-                result.Info.AccessFailedCount = user.AccessFailedCount;
-                result.Info.LockoutEnd = user.LockoutEnd;
+                result.Info.UserName = identityUser.UserName;
+                result.Info.EmailConfirmed = identityUser.EmailConfirmed;
+                result.Info.PhoneNumber = identityUser.PhoneNumber;
+                result.Info.PhoneNumberConfirmed = identityUser.PhoneNumberConfirmed;
+                result.Info.TwoFactorEnabled = identityUser.TwoFactorEnabled;
+                result.Info.LockoutEnabled = identityUser.LockoutEnabled;
+                result.Info.AccessFailedCount = identityUser.AccessFailedCount;
+                result.Info.LockoutEnd = identityUser.LockoutEnd;
             }
 
             return result;
@@ -154,9 +154,9 @@ namespace Atlas.Data.Builders.Admin
 
         public async Task<ActivityPageModel> BuildActivityPageModelAsync(Guid siteId, Guid userId, QueryOptions options)
         {
-            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
 
-            if (member == null)
+            if (user == null)
             {
                 return null;
             }
@@ -165,8 +165,8 @@ namespace Atlas.Data.Builders.Admin
             {
                 User = new ActivityPageModel.UserModel
                 {
-                    Id = member.Id,
-                    DisplayName = member.DisplayName
+                    Id = user.Id,
+                    DisplayName = user.DisplayName
                 }
             };
 

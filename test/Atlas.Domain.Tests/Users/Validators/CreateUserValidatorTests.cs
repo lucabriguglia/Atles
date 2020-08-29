@@ -16,9 +16,9 @@ namespace Atlas.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<CreateUser>().With(x => x.IdentityUserId, string.Empty).Create();
 
-            var memberRules = new Mock<IUserRules>();
+            var userRules = new Mock<IUserRules>();
 
-            var sut = new CreateUserValidator(memberRules.Object);
+            var sut = new CreateUserValidator(userRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.IdentityUserId, command);
         }
@@ -28,9 +28,9 @@ namespace Atlas.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<CreateUser>().With(x => x.Email, string.Empty).Create();
 
-            var memberRules = new Mock<IUserRules>();
+            var userRules = new Mock<IUserRules>();
 
-            var sut = new CreateUserValidator(memberRules.Object);
+            var sut = new CreateUserValidator(userRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Email, command);
         }
@@ -40,9 +40,9 @@ namespace Atlas.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<CreateUser>().With(x => x.Email, "email").Create();
 
-            var memberRules = new Mock<IUserRules>();
+            var userRules = new Mock<IUserRules>();
 
-            var sut = new CreateUserValidator(memberRules.Object);
+            var sut = new CreateUserValidator(userRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Email, command);
         }

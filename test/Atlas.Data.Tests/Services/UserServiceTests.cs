@@ -37,11 +37,11 @@ namespace Atlas.Data.Tests.Services
 
                 await sut.CreateAsync(command);
 
-                var member = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == command.Id);
+                var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 createValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
-                Assert.NotNull(member);
+                Assert.NotNull(user);
                 Assert.NotNull(@event);
             }
         }
@@ -50,18 +50,18 @@ namespace Atlas.Data.Tests.Services
         public async Task Should_update_user_and_add_event()
         {
             var options = Shared.CreateContextOptions();
-            var member = new User(Guid.NewGuid(), Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+            var user = new User(Guid.NewGuid(), Guid.NewGuid().ToString(), "me@email.com", "Display Name");
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.Users.Add(member);
+                dbContext.Users.Add(user);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var command = Fixture.Build<UpdateUser>()
-                        .With(x => x.Id, member.Id)
+                        .With(x => x.Id, user.Id)
                         .Create();
 
                 var createValidator = new Mock<IValidator<CreateUser>>();
@@ -91,20 +91,20 @@ namespace Atlas.Data.Tests.Services
         {
             var options = Shared.CreateContextOptions();
 
-            var memberId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
 
-            var member = new User(memberId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+            var user = new User(userId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.Users.Add(member);
+                dbContext.Users.Add(user);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var command = Fixture.Build<SuspendUser>()
-                    .With(x => x.Id, member.Id)
+                    .With(x => x.Id, user.Id)
                     .Create();
 
                 var createValidator = new Mock<IValidator<CreateUser>>();
@@ -116,11 +116,11 @@ namespace Atlas.Data.Tests.Services
 
                 await sut.SuspendAsync(command);
 
-                var memberSuspended = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == member.Id);
-                var memberEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == member.Id);
+                var userSuspended = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+                var userEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == user.Id);
 
-                Assert.AreEqual(StatusType.Suspended, memberSuspended.Status);
-                Assert.NotNull(memberEvent);
+                Assert.AreEqual(StatusType.Suspended, userSuspended.Status);
+                Assert.NotNull(userEvent);
             }
         }
 
@@ -129,20 +129,20 @@ namespace Atlas.Data.Tests.Services
         {
             var options = Shared.CreateContextOptions();
 
-            var memberId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
 
-            var member = new User(memberId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+            var user = new User(userId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.Users.Add(member);
+                dbContext.Users.Add(user);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var command = Fixture.Build<ReinstateUser>()
-                    .With(x => x.Id, member.Id)
+                    .With(x => x.Id, user.Id)
                     .Create();
 
                 var createValidator = new Mock<IValidator<CreateUser>>();
@@ -154,11 +154,11 @@ namespace Atlas.Data.Tests.Services
 
                 await sut.ReinstateAsync(command);
 
-                var memberResumed = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == member.Id);
-                var memberEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == member.Id);
+                var userReinstated = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+                var userEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == user.Id);
 
-                Assert.AreEqual(StatusType.Active, memberResumed.Status);
-                Assert.NotNull(memberEvent);
+                Assert.AreEqual(StatusType.Active, userReinstated.Status);
+                Assert.NotNull(userEvent);
             }
         }
 
@@ -167,20 +167,20 @@ namespace Atlas.Data.Tests.Services
         {
             var options = Shared.CreateContextOptions();
 
-            var memberId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
 
-            var member = new User(memberId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+            var user = new User(userId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                dbContext.Users.Add(member);
+                dbContext.Users.Add(user);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 var command = Fixture.Build<DeleteUser>()
-                        .With(x => x.Id, member.Id)
+                        .With(x => x.Id, user.Id)
                         .Create();
 
                 var createValidator = new Mock<IValidator<CreateUser>>();
@@ -192,11 +192,11 @@ namespace Atlas.Data.Tests.Services
 
                 await sut.DeleteAsync(command);
 
-                var memberDeleted = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == member.Id);
-                var memberEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == member.Id);
+                var userDeleted = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+                var userEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == user.Id);
 
-                Assert.AreEqual(StatusType.Deleted, memberDeleted.Status);
-                Assert.NotNull(memberEvent);
+                Assert.AreEqual(StatusType.Deleted, userDeleted.Status);
+                Assert.NotNull(userEvent);
             }
         }
     }

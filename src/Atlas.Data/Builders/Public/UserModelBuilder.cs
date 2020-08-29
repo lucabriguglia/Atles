@@ -32,23 +32,23 @@ namespace Atlas.Data.Builders.Public
         {
             var result = new UserPageModel();
 
-            var member = await _dbContext.Users
+            var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == userId);
 
-            if (member == null)
+            if (user == null)
             {
                 return null;
             }
 
             result.User = new UserModel
             {
-                Id = member.Id,
-                DisplayName = member.DisplayName,
-                TotalTopics = member.TopicsCount,
-                TotalReplies = member.RepliesCount,
-                GravatarHash = _gravatarService.HashEmailForGravatar(member.Email),
-                Status = member.Status
+                Id = user.Id,
+                DisplayName = user.DisplayName,
+                TotalTopics = user.TopicsCount,
+                TotalReplies = user.RepliesCount,
+                GravatarHash = _gravatarService.HashEmailForGravatar(user.Email),
+                Status = user.Status
             };
 
             result.Posts = await _searchModelBuilder.SearchPostModels(forumIds, new QueryOptions(), userId);
@@ -60,23 +60,23 @@ namespace Atlas.Data.Builders.Public
         {
             var result = new SettingsPageModel();
 
-            var member = await _dbContext.Users
+            var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == userId &&
                     x.Status != StatusType.Deleted);
 
-            if (member == null)
+            if (user == null)
             {
                 return null;
             }
 
             result.User = new SettingsPageModel.UserModel
             {
-                Id = member.Id,
-                Email = member.Email,
-                DisplayName = member.DisplayName,
-                GravatarHash = _gravatarService.HashEmailForGravatar(member.Email),
-                IsSuspended = member.Status == StatusType.Suspended
+                Id = user.Id,
+                Email = user.Email,
+                DisplayName = user.DisplayName,
+                GravatarHash = _gravatarService.HashEmailForGravatar(user.Email),
+                IsSuspended = user.Status == StatusType.Suspended
             };
 
             return result;

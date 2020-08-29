@@ -69,8 +69,8 @@ namespace Atlas.Data.Services
             forum.IncreaseTopicsCount();
             forum.Category.IncreaseTopicsCount();
 
-            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == topic.CreatedBy);
-            member.IncreaseTopicsCount();
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == topic.CreatedBy);
+            user.IncreaseTopicsCount();
 
             await _dbContext.SaveChangesAsync();
 

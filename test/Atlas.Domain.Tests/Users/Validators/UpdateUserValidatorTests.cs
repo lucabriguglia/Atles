@@ -16,9 +16,9 @@ namespace Atlas.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<UpdateUser>().With(x => x.DisplayName, string.Empty).Create();
 
-            var memberRules = new Mock<IUserRules>();
+            var userRules = new Mock<IUserRules>();
 
-            var sut = new UpdateUserValidator(memberRules.Object);
+            var sut = new UpdateUserValidator(userRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
         }
@@ -28,9 +28,9 @@ namespace Atlas.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<UpdateUser>().With(x => x.DisplayName, new string('*', 51)).Create();
 
-            var memberRules = new Mock<IUserRules>();
+            var userRules = new Mock<IUserRules>();
 
-            var sut = new UpdateUserValidator(memberRules.Object);
+            var sut = new UpdateUserValidator(userRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
         }
@@ -40,10 +40,10 @@ namespace Atlas.Domain.Tests.Users.Validators
         {
             var command = Fixture.Create<UpdateUser>();
 
-            var memberRules = new Mock<IUserRules>();
-            memberRules.Setup(x => x.IsDisplayNameUniqueAsync(command.DisplayName, command.Id)).ReturnsAsync(false);
+            var userRules = new Mock<IUserRules>();
+            userRules.Setup(x => x.IsDisplayNameUniqueAsync(command.DisplayName, command.Id)).ReturnsAsync(false);
 
-            var sut = new UpdateUserValidator(memberRules.Object);
+            var sut = new UpdateUserValidator(userRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
         }
