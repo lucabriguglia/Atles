@@ -10,21 +10,21 @@ using Microsoft.Extensions.Logging;
 
 namespace Atlas.Server.Controllers.Public
 {
-    [Route("api/public/members")]
+    [Route("api/public/users")]
     [ApiController]
-    public class MembersController : ControllerBase
+    public class UsersController : ControllerBase
     {
         private readonly IContextService _contextService;
         private readonly IUserModelBuilder _modelBuilder;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ISecurityService _securityService;
-        private readonly ILogger<MembersController> _logger;
+        private readonly ILogger<UsersController> _logger;
 
-        public MembersController(IContextService contextService,
+        public UsersController(IContextService contextService,
             IUserModelBuilder modelBuilder, 
             IPermissionModelBuilder permissionModelBuilder, 
             ISecurityService securityService, 
-            ILogger<MembersController> logger)
+            ILogger<UsersController> logger)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
@@ -40,20 +40,20 @@ namespace Atlas.Server.Controllers.Public
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var memberId = Guid.Empty;
+            var userId = Guid.Empty;
 
             if (id == null)
             {
-                var member = await _contextService.CurrentUserAsync();
+                var user = await _contextService.CurrentUserAsync();
 
-                if (member != null)
+                if (user != null)
                 {
-                    memberId = member.Id;
+                    userId = user.Id;
                 }
             }
             else
             {
-                memberId = id.Value;
+                userId = id.Value;
             }
 
             var currentForums = await _contextService.CurrentForumsAsync();
@@ -72,14 +72,14 @@ namespace Atlas.Server.Controllers.Public
                 }
             }
 
-            var model = await _modelBuilder.BuildUserPageModelAsync(memberId, accessibleForumIds);
+            var model = await _modelBuilder.BuildUserPageModelAsync(userId, accessibleForumIds);
 
             if (model == null)
             {
                 _logger.LogWarning("Member not found.", new
                 {
                     SiteId = site.Id,
-                    MemebrId = memberId,
+                    MemebrId = userId,
                     User = User.Identity.Name
                 });
 
