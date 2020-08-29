@@ -11,24 +11,24 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Atlas.Server.Controllers.Admin
 {
-    [Route("api/admin/members")]
-    public class MembersController : AdminControllerBase
+    [Route("api/admin/users")]
+    public class UsersController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IUserService _memberService;
-        private readonly IUserRules _memberRules;
+        private readonly IUserService _userService;
+        private readonly IUserRules _userRules;
         private readonly IUserModelBuilder _modelBuilder;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public MembersController(IContextService contextService,
-            IUserService memberService,
-            IUserRules memberRules,
+        public UsersController(IContextService contextService,
+            IUserService userService,
+            IUserRules userRules,
             IUserModelBuilder modelBuilder, 
             UserManager<IdentityUser> userManager)
         {
             _contextService = contextService;
-            _memberService = memberService;
-            _memberRules = memberRules;
+            _userService = userService;
+            _userRules = userRules;
             _modelBuilder = modelBuilder;
             _userManager = userManager;
         }
@@ -55,26 +55,27 @@ namespace Atlas.Server.Controllers.Admin
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var user = new IdentityUser { UserName = model.Email, Email = model.Email };
-            var createResult = await _userManager.CreateAsync(user, model.Password);
+            var identityUser = new IdentityUser { UserName = model.Email, Email = model.Email };
+            var createResult = await _userManager.CreateAsync(identityUser, model.Password);
 
             if (!createResult.Succeeded) return BadRequest();
 
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-            var confirmResult = await _userManager.ConfirmEmailAsync(user, code);
+            var code = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
+            var confirmResult = await _userManager.ConfirmEmailAsync(identityUser, code);
 
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new CreateUser
             {
-                IdentityUserId = user.Id,
-                Email = user.Email,
+                IdentityUserId = identityUser.Id,
+                Email = identityUser.Email,
                 SiteId = site.Id,
-                MemberId = member.Id
+                MemberId = user.Id,
+                Confirm = true
             };
 
-            await _memberService.CreateAsync(command);
+            await _userService.CreateAsync(command);
 
             return Ok(command.Id);
         }
@@ -92,10 +93,10 @@ namespace Atlas.Server.Controllers.Admin
             return result;
         }
 
-        [HttpGet("edit-by-user-id/{id}")]
-        public async Task<ActionResult<EditPageModel>> EditByUserId(string id)
+        [HttpGet("edit-by-identity-user-id/{id}")]
+        public async Task<ActionResult<EditPageModel>> EditByIdentityUserId(string identityUserId)
         {
-            var result = await _modelBuilder.BuildEditPageModelAsync(id);
+            var result = await _modelBuilder.BuildEditPageModelAsync(identityUserId);
 
             if (result == null)
             {
@@ -109,26 +110,26 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Update(EditPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
-            var user = await _userManager.FindByIdAsync(model.Info.UserId);
+            var identityUser = await _userManager.FindByIdAsync(model.Info.UserId);
 
-            if (user != null && model.Roles.Count > 0)
+            if (identityUser != null && model.Roles.Count > 0)
             {
                 foreach (var role in model.Roles)
                 {
                     if (role.Selected)
                     {
-                        if (!await _userManager.IsInRoleAsync(user, role.Name))
+                        if (!await _userManager.IsInRoleAsync(identityUser, role.Name))
                         {
-                            await _userManager.AddToRoleAsync(user, role.Name);
+                            await _userManager.AddToRoleAsync(identityUser, role.Name);
                         }
                     }
                     else
                     {
-                        if (await _userManager.IsInRoleAsync(user, role.Name))
+                        if (await _userManager.IsInRoleAsync(identityUser, role.Name))
                         {
-                            await _userManager.RemoveFromRoleAsync(user, role.Name);
+                            await _userManager.RemoveFromRoleAsync(identityUser, role.Name);
                         }
                     }
                 }
@@ -139,11 +140,11 @@ namespace Atlas.Server.Controllers.Admin
                 Id = model.User.Id,
                 DisplayName = model.User.DisplayName,
                 SiteId = site.Id,
-                MemberId = member.Id,
+                MemberId = user.Id,
                 Roles = model.Roles.Where(x => x.Selected).Select(x => x.Name).ToList()
             };
 
-            await _memberService.UpdateAsync(command);
+            await _userService.UpdateAsync(command);
 
             return Ok();
         }
@@ -167,16 +168,16 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Suspend([FromBody] Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new SuspendUser
             {
                 Id = id,
                 SiteId = site.Id,
-                MemberId = member.Id
+                MemberId = user.Id
             };
 
-            await _memberService.SuspendAsync(command);
+            await _userService.SuspendAsync(command);
 
             return Ok();
         }
@@ -185,16 +186,16 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Reinstate([FromBody] Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new ReinstateUser
             {
                 Id = id,
                 SiteId = site.Id,
-                MemberId = member.Id
+                MemberId = user.Id
             };
 
-            await _memberService.ReinstateAsync(command);
+            await _userService.ReinstateAsync(command);
 
             return Ok();
         }
@@ -203,22 +204,22 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Delete(Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new DeleteUser
             {
                 Id = id,
                 SiteId = site.Id,
-                MemberId = member.Id
+                MemberId = user.Id
             };
 
-            var userId = await _memberService.DeleteAsync(command);
+            var identityUserId = await _userService.DeleteAsync(command);
 
-            var user = await _userManager.FindByIdAsync(userId);
+            var identityUser = await _userManager.FindByIdAsync(identityUserId);
 
-            if (user != null)
+            if (identityUser != null)
             {
-                await _userManager.DeleteAsync(user);
+                await _userManager.DeleteAsync(identityUser);
             }
 
             return Ok();
@@ -227,14 +228,14 @@ namespace Atlas.Server.Controllers.Admin
         [HttpGet("is-display-name-unique/{name}")]
         public async Task<IActionResult> IsDisplayNameUnique(string name)
         {
-            var isNameUnique = await _memberRules.IsDisplayNameUniqueAsync(name);
+            var isNameUnique = await _userRules.IsDisplayNameUniqueAsync(name);
             return Ok(isNameUnique);
         }
 
         [HttpGet("is-display-name-unique/{name}/{id}")]
         public async Task<IActionResult> IsNameUnique(string name, Guid id)
         {
-            var isNameUnique = await _memberRules.IsDisplayNameUniqueAsync(name, id);
+            var isNameUnique = await _userRules.IsDisplayNameUniqueAsync(name, id);
             return Ok(isNameUnique);
         }
     }

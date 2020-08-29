@@ -22,13 +22,13 @@ namespace Atlas.Client.Components.Admin.Users
 
         protected override async Task OnInitializedAsync()
         {
-            Model = await ApiService.GetFromJsonAsync<ActivityPageModel>($"api/admin/members/activity/{Id}");
+            Model = await ApiService.GetFromJsonAsync<ActivityPageModel>($"api/admin/users/activity/{Id}");
             TotalPages = Model.Events.TotalPages;
         }
 
         private async Task LoadEventsAsync()
         {
-            var model = await ApiService.GetFromJsonAsync<ActivityPageModel>($"api/admin/members/activity/{Id}?page={CurrentPage}&search={Search}");
+            var model = await ApiService.GetFromJsonAsync<ActivityPageModel>($"api/admin/users/activity/{Id}?page={CurrentPage}&search={Search}");
             Model.Events = model.Events;
             TotalPages = Model.Events.TotalPages;
         }

@@ -53,7 +53,7 @@ namespace Atlas.Data.Builders.Admin
                 .Take(options.PageSize)
                 .ToListAsync();
 
-            var items = members.Select(member => new IndexPageModel.MemberModel
+            var items = members.Select(member => new IndexPageModel.UserModel
             {
                 Id = member.Id,
                 DisplayName = member.DisplayName,
@@ -74,7 +74,7 @@ namespace Atlas.Data.Builders.Admin
 
             var totalRecords = await countQuery.CountAsync();
 
-            result.Members = new PaginatedData<IndexPageModel.MemberModel>(items, totalRecords, options.PageSize);
+            result.Users = new PaginatedData<IndexPageModel.UserModel>(items, totalRecords, options.PageSize);
 
             return result;
         }

@@ -27,9 +27,9 @@ namespace Atlas.Models.Admin.Users
             "TimeStamp-Asc"
         };
 
-        public PaginatedData<MemberModel> Members { get; set; } = new PaginatedData<MemberModel>();
+        public PaginatedData<UserModel> Users { get; set; } = new PaginatedData<UserModel>();
 
-        public class MemberModel
+        public class UserModel
         {
             public Guid Id { get; set; }
             public string DisplayName { get; set; }

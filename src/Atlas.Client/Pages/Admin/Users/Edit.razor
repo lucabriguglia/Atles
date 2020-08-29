@@ -1,13 +1,13 @@
-﻿@page "/admin/members/edit/{id:guid}"
-@page "/admin/members/edit-by-user-id/{userId}"
+﻿@page "/admin/users/edit/{id:guid}"
+@page "/admin/users/edit-by-identity-user-id/{identityUserId}"
 
-@inherits Atlas.Client.Components.Admin.Members.EditPage
+@inherits Atlas.Client.Components.Admin.Users.EditPage
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
-        <li class="breadcrumb-item"><a href="/admin/members">@Loc["Members"]</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Loc["Edit Member"]</li>
+        <li class="breadcrumb-item"><a href="/admin/users">@Loc["Users"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Loc["Edit User"]</li>
     </ol>
 </nav>
 
@@ -19,10 +19,10 @@ else
 {
     <div class="row">
         <div class="col-md-6">
-            <h3 class="mb-3">@Loc["Edit Member"]</h3>
+            <h3 class="mb-3">@Loc["Edit User"]</h3>
         </div>
         <div class="col-md-6 text-right mb-3">
-            <a href="/admin/members/activity/@Model.User.Id" class="btn btn-primary" role="button">@Loc["Activity"]</a>
+            <a href="/admin/users/activity/@Model.User.Id" class="btn btn-primary" role="button">@Loc["Activity"]</a>
         </div>
     </div>
 

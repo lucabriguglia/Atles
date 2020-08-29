@@ -1,4 +1,4 @@
-﻿@page "/admin/members/activity/{id:guid}"
+﻿@page "/admin/users/activity/{id:guid}"
 
 @inherits Atlas.Client.Components.Admin.Users.ActivityPage
 
@@ -11,7 +11,7 @@ else
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
-            <li class="breadcrumb-item"><a href="/admin/members">@Loc["Members"]</a></li>
+            <li class="breadcrumb-item"><a href="/admin/users">@Loc["Users"]</a></li>
             <li class="breadcrumb-item active" aria-current="page">@Loc["Activity"]</li>
         </ol>
     </nav>
@@ -21,7 +21,7 @@ else
             <h3 class="mb-3">@string.Format(Loc["{0}'s Activity"], Model.User.DisplayName)</h3>
         </div>
         <div class="col text-right mb-3">
-            <a href="/admin/members/edit/@Id" class="btn btn-primary" role="button">@Loc["Edit Member"]</a>
+            <a href="/admin/members/edit/@Id" class="btn btn-primary" role="button">@Loc["Edit User"]</a>
         </div>
     </div>
 

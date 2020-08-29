@@ -3,7 +3,7 @@ using Atlas.Models.Admin.Users;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Atlas.Client.Components.Admin.Members
+namespace Atlas.Client.Components.Admin.Users
 {
     public abstract class FormComponent : AdminComponentBase
     {
@@ -51,7 +51,7 @@ namespace Atlas.Client.Components.Admin.Members
             var displayNameProp = editContext.Model.GetType().GetProperty("DisplayName");
             var displayNameVal = displayNameProp.GetValue(editContext.Model).ToString();
 
-            var isDisplayNameUnique = displayNameVal == _currentDisplayName || await ApiService.GetFromJsonAsync<bool>($"api/admin/members/is-display-name-unique/{displayNameVal}");
+            var isDisplayNameUnique = displayNameVal == _currentDisplayName || await ApiService.GetFromJsonAsync<bool>($"api/admin/users/is-display-name-unique/{displayNameVal}");
 
             return isDisplayNameUnique;
         }
@@ -63,7 +63,7 @@ namespace Atlas.Client.Components.Admin.Members
 
         protected void Cancel()
         {
-            NavigationManager.NavigateTo("/admin/members");
+            NavigationManager.NavigateTo("/admin/users");
         }
     }
 }

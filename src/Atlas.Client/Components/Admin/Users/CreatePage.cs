@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Atlas.Models.Admin.Users;
 
-namespace Atlas.Client.Components.Admin.Members
+namespace Atlas.Client.Components.Admin.Users
 {
     public abstract class CreatePage : AdminPageBase
     {
@@ -12,17 +12,17 @@ namespace Atlas.Client.Components.Admin.Members
 
         protected override async Task OnInitializedAsync()
         {
-            Model = await ApiService.GetFromJsonAsync<CreatePageModel>("api/admin/members/create");
+            Model = await ApiService.GetFromJsonAsync<CreatePageModel>("api/admin/users/create");
         }
 
         protected async Task SaveAsync()
         {
-            var response = await ApiService.PostAsJsonAsync("api/admin/members/save", Model.User);
+            var response = await ApiService.PostAsJsonAsync("api/admin/users/save", Model.User);
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
                 var memberId = JsonSerializer.Deserialize<Guid>(content);
-                NavigationManager.NavigateTo($"/admin/members/edit/{memberId}");
+                NavigationManager.NavigateTo($"/admin/users/edit/{memberId}");
             }
             else
             {
@@ -32,7 +32,7 @@ namespace Atlas.Client.Components.Admin.Members
 
         protected void Cancel()
         {
-            NavigationManager.NavigateTo("/admin/members");
+            NavigationManager.NavigateTo("/admin/users");
         }
     }
 }

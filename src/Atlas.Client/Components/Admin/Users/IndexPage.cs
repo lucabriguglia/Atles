@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
-namespace Atlas.Client.Components.Admin.Members
+namespace Atlas.Client.Components.Admin.Users
 {
     public abstract class IndexPage : AdminPageBase
     {
@@ -23,23 +23,23 @@ namespace Atlas.Client.Components.Admin.Members
 
         protected override async Task OnInitializedAsync()
         {
-            Model = await ApiService.GetFromJsonAsync<IndexPageModel>("api/admin/members/index-model");
-            TotalPages = Model.Members.TotalPages;
+            Model = await ApiService.GetFromJsonAsync<IndexPageModel>("api/admin/users/index-model");
+            TotalPages = Model.Users.TotalPages;
         }
 
-        private async Task LoadMembersAsync()
+        private async Task LoadUsersAsync()
         {
-            var model = await ApiService.GetFromJsonAsync<IndexPageModel>($"api/admin/members/index-model?page={CurrentPage}&search={Search}&status={Status}&sortByField={SortByField}&sortByDirection={SortByDirection}");
-            Model.Members = model.Members;
-            TotalPages = Model.Members.TotalPages;
+            var model = await ApiService.GetFromJsonAsync<IndexPageModel>($"api/admin/users/index-model?page={CurrentPage}&search={Search}&status={Status}&sortByField={SortByField}&sortByDirection={SortByDirection}");
+            Model.Users = model.Users;
+            TotalPages = Model.Users.TotalPages;
         }
 
         protected async Task ChangePageAsync(int page)
         {
             CurrentPage = page;
-            Model.Members = null;
-            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "members");
-            await LoadMembersAsync();
+            Model.Users = null;
+            await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "users");
+            await LoadUsersAsync();
         }
 
         protected async Task MyKeyUpAsync(KeyboardEventArgs key)
@@ -53,8 +53,8 @@ namespace Atlas.Client.Components.Admin.Members
         protected async Task SearchAsync()
         {
             CurrentPage = 1;
-            Model.Members = null;
-            await LoadMembersAsync();
+            Model.Users = null;
+            await LoadUsersAsync();
             Pager.ReInitialize(TotalPages);
         }
 
@@ -64,8 +64,8 @@ namespace Atlas.Client.Components.Admin.Members
             {
                 Search = string.Empty;
                 CurrentPage = 1;
-                Model.Members = null;
-                await LoadMembersAsync();
+                Model.Users = null;
+                await LoadUsersAsync();
                 Pager.ReInitialize(TotalPages);
             }
         }
@@ -74,8 +74,8 @@ namespace Atlas.Client.Components.Admin.Members
         {
             Status = args.Value.ToString();
             CurrentPage = 1;
-            Model.Members = null;
-            await LoadMembersAsync();
+            Model.Users = null;
+            await LoadUsersAsync();
             Pager.ReInitialize(TotalPages);
         }
 
@@ -85,8 +85,8 @@ namespace Atlas.Client.Components.Admin.Members
             SortByField = selected[0];
             SortByDirection = selected[1];
             CurrentPage = 1;
-            Model.Members = null;
-            await LoadMembersAsync();
+            Model.Users = null;
+            await LoadUsersAsync();
         }
 
         protected void SetSuspendId(Guid id)
@@ -96,16 +96,16 @@ namespace Atlas.Client.Components.Admin.Members
 
         protected async Task SuspendAsync(MouseEventArgs e)
         {
-            await ApiService.PostAsJsonAsync("api/admin/members/suspend", SuspendId);
-            Model.Members = null;
-            await LoadMembersAsync();
+            await ApiService.PostAsJsonAsync("api/admin/users/suspend", SuspendId);
+            Model.Users = null;
+            await LoadUsersAsync();
         }
 
         protected async Task ReinstateAsync(Guid id)
         {
-            Model.Members = null;
-            await ApiService.PostAsJsonAsync("api/admin/members/reinstate", id);
-            await LoadMembersAsync();
+            Model.Users = null;
+            await ApiService.PostAsJsonAsync("api/admin/users/reinstate", id);
+            await LoadUsersAsync();
         }
 
         protected void SetDeleteId(Guid id)
@@ -115,8 +115,8 @@ namespace Atlas.Client.Components.Admin.Members
 
         protected async Task DeleteAsync(MouseEventArgs e)
         {
-            Model.Members = null;
-            await ApiService.DeleteAsync($"api/admin/members/delete/{DeleteId}");
+            Model.Users = null;
+            await ApiService.DeleteAsync($"api/admin/users/delete/{DeleteId}");
             await OnInitializedAsync();
         }
     }
