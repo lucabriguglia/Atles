@@ -89,8 +89,8 @@ namespace Atlas.Data.Builders.Public
                 Slug = post.Slug,
                 Content = Markdown.ToHtml(post.Content),
                 TimeStamp = post.TimeStamp,
-                MemberId = post.MemberId,
-                MemberDisplayName = post.MemberDisplayName,
+                UserId = post.MemberId,
+                UserDisplayName = post.MemberDisplayName,
                 ForumId = post.ForumId,
                 ForumName = post.ForumName,
                 ForumSlug = post.ForumSlug

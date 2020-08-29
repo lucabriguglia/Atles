@@ -54,7 +54,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult<TopicPageModel>> Topic(string forumSlug, string topicSlug, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var model = await _topicModelBuilder.BuildTopicPageModelAsync(site.Id, forumSlug, topicSlug, new QueryOptions(page, search));
 
@@ -128,7 +128,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult<PostPageModel>> NewTopic(Guid forumId)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var model = await _postModelBuilder.BuildNewPostPageModelAsync(site.Id, forumId);
 
@@ -167,7 +167,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult<PostPageModel>> EditTopic(Guid forumId, Guid topicId)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var model = await _postModelBuilder.BuildEditPostPageModelAsync(site.Id, forumId, topicId);
 
@@ -187,7 +187,7 @@ namespace Atlas.Server.Controllers.Public
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
             var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
-            var authorized = (canEdit && model.Topic.MemberId == member.Id && !model.Topic.Locked || canModerate) && !member.IsSuspended;
+            var authorized = (canEdit && model.Topic.UserId == member.Id && !model.Topic.Locked || canModerate) && !member.IsSuspended;
 
             if (!authorized)
             {
@@ -210,7 +210,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> CreateTopic(PostPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
             var canPost = _securityService.HasPermission(PermissionType.Start, permissions) && !member.IsSuspended;
@@ -247,7 +247,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> UpdateTopic(PostPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new UpdateTopic
             {
@@ -298,7 +298,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> PinTopic(Guid forumId, Guid topicId, [FromBody] bool pinned)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new PinTopic
             {
@@ -335,7 +335,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> LockTopic(Guid forumId, Guid topicId, [FromBody] bool locked)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new LockTopic
             {
@@ -372,7 +372,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> DeleteTopic(Guid forumId, Guid topicId)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new DeleteTopic
             {

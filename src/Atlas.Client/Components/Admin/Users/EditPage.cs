@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Models.Admin.Members;
+using Atlas.Models.Admin.Users;
 using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Admin.Members

@@ -80,8 +80,8 @@ namespace Atlas.Data.Builders.Public
                                 LastTopicTitle = entity.LastPost?.Title ?? entity.LastPost?.Topic?.Title,
                                 LastTopicSlug = entity.LastPost?.Slug ?? entity.LastPost?.Topic?.Slug,
                                 LastPostTimeStamp = entity.LastPost?.TimeStamp,
-                                LastPostMemberId = entity.LastPost?.CreatedByUser?.Id,
-                                LastPostMemberDisplayName = entity.LastPost?.CreatedByUser?.DisplayName
+                                LastPostUserId = entity.LastPost?.CreatedByUser?.Id,
+                                LastPostUserDisplayName = entity.LastPost?.CreatedByUser?.DisplayName
                             };
                         }
 

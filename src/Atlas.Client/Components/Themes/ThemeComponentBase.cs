@@ -12,7 +12,7 @@ namespace Atlas.Client.Components.Themes
 {
     public abstract class ThemeComponentBase : ComponentBase
     {
-        [CascadingParameter] protected CurrentMemberModel Member { get; set; }
+        [CascadingParameter] protected CurrentUserModel Member { get; set; }
         [CascadingParameter] protected CurrentSiteModel Site { get; set; }
 
         [Inject] public ApiService ApiService { get; set; }

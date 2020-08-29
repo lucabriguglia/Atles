@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Models.Public;
-using Atlas.Models.Public.Members;
+using Atlas.Models.Public.Users;
 using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Themes
@@ -10,12 +10,12 @@ namespace Atlas.Client.Components.Themes
     {
         [Parameter] public Guid? Id { get; set; }
 
-        protected MemberPageModel Model { get; set; }
+        protected UserPageModel Model { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
             var requestUri = Id == null ? "api/public/members" : $"api/public/members/{Id}";
-            Model = await ApiService.GetFromJsonAsync<MemberPageModel>(requestUri);
+            Model = await ApiService.GetFromJsonAsync<UserPageModel>(requestUri);
         }
     }
 }

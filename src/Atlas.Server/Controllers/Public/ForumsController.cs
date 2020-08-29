@@ -37,7 +37,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult<ForumPageModel>> Forum(string slug, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, slug, new QueryOptions(page, search));
 

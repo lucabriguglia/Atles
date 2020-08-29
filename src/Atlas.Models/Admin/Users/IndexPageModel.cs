@@ -1,7 +1,7 @@
 ﻿using System;
 using Atlas.Domain;
 
-namespace Atlas.Models.Admin.Members
+namespace Atlas.Models.Admin.Users
 {
     public class IndexPageModel
     {

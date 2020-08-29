@@ -47,7 +47,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> CreateReply(TopicPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
             var canReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !member.IsSuspended;
@@ -84,7 +84,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> UpdateReply(TopicPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new UpdateReply
             {
@@ -135,7 +135,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> SetReplyAsAnswer(Guid forumId, Guid topicId, Guid replyId, [FromBody] bool isAnswer)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new SetReplyAsAnswer
             {
@@ -185,7 +185,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> DeleteReply(Guid forumId, Guid topicId, Guid replyId)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new DeleteReply
             {

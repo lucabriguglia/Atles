@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Domain.Users;
@@ -24,35 +23,35 @@ namespace Atlas.Server.Services
             _dbContext = dbContext;
         }
 
-        public async Task EnsureMemberCreatedAsync(IdentityUser user, bool confirm = false)
+        public async Task EnsureUserCreatedAsync(IdentityUser identityUser, bool confirm = false)
         {
-            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == user.Id);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == identityUser.Id);
 
-            if (member == null)
+            if (user == null)
             {
                 var site = await _contextService.CurrentSiteAsync();
 
                 await _memberService.CreateAsync(new CreateUser
                 {
-                    IdentityUserId = user.Id,
-                    Email = user.Email,
+                    IdentityUserId = identityUser.Id,
+                    Email = identityUser.Email,
                     SiteId = site.Id,
                     Confirm = confirm
                 });
             }
         }
 
-        public async Task EnsureMemberConfirmedAsync(IdentityUser user)
+        public async Task EnsureUserConfirmedAsync(IdentityUser identityUser)
         {
-            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == user.Id);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == identityUser.Id);
 
-            if (member != null && member.Status == StatusType.Pending)
+            if (user != null && user.Status == StatusType.Pending)
             {
                 var site = await _contextService.CurrentSiteAsync();
 
                 await _memberService.ConfirmAsync(new ConfirmUser
                 {
-                    Id = member.Id,
+                    Id = user.Id,
                     SiteId = site.Id
                 });
             }

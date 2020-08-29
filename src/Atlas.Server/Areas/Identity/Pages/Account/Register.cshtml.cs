@@ -83,7 +83,7 @@ namespace Atlas.Server.Areas.Identity.Pages.Account
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    await _integrityService.EnsureMemberCreatedAsync(user);
+                    await _integrityService.EnsureUserCreatedAsync(user);
 
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
                     code = WebEncoders.Base64UrlEncode(Encoding.UTF8.GetBytes(code));

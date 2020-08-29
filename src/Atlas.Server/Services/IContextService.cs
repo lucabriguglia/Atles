@@ -7,7 +7,7 @@ namespace Atlas.Server.Services
     public interface IContextService
     {
         Task<CurrentSiteModel> CurrentSiteAsync();
-        Task<CurrentMemberModel> CurrentMemberAsync();
+        Task<CurrentUserModel> CurrentUserAsync();
         Task<IList<CurrentForumModel>> CurrentForumsAsync();
     }
 }

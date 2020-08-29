@@ -6,8 +6,8 @@
             <DataAnnotationsValidator />
             <div class="form-group">
                 <label for="displayName" class="control-label">@Loc["Display Name"]</label>
-                <InputText id="displayName" @bind-Value="Model.Member.DisplayName" Class="form-control" />
-                <ValidationMessage For="@(() => Model.Member.DisplayName)" />
+                <InputText id="displayName" @bind-Value="Model.User.DisplayName" Class="form-control" />
+                <ValidationMessage For="@(() => Model.User.DisplayName)" />
             </div>
             @if (Model.Roles.Count > 0)
             {

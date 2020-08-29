@@ -6,20 +6,20 @@ using System.Threading.Tasks;
 using Atlas.Data.Extensions;
 using Atlas.Domain;
 using Atlas.Domain.Users;
-using Atlas.Models.Admin.Members;
 using Atlas.Models;
+using Atlas.Models.Admin.Users;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json.Linq;
 
 namespace Atlas.Data.Builders.Admin
 {
-    public class MemberModelBuilder : IMemberModelBuilder
+    public class UserModelBuilder : IUserModelBuilder
     {
         private readonly AtlasDbContext _dbContext;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public MemberModelBuilder(AtlasDbContext dbContext,
+        public UserModelBuilder(AtlasDbContext dbContext,
             RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager)
         {
@@ -95,9 +95,9 @@ namespace Atlas.Data.Builders.Admin
             return await BuildEditPageModelAsync(member);
         }
 
-        public async Task<EditPageModel> BuildEditPageModelAsync(string userId)
+        public async Task<EditPageModel> BuildEditPageModelAsync(string identityUserId)
         {
-            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == userId);
+            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == identityUserId);
 
             return await BuildEditPageModelAsync(member);
         }
@@ -111,7 +111,7 @@ namespace Atlas.Data.Builders.Admin
 
             var result = new EditPageModel
             {
-                Member = new EditPageModel.MemberModel
+                User = new EditPageModel.UserModel
                 {
                     Id = member.Id,
                     DisplayName = member.DisplayName
@@ -152,9 +152,9 @@ namespace Atlas.Data.Builders.Admin
             return result;
         }
 
-        public async Task<ActivityPageModel> BuildActivityPageModelAsync(Guid siteId, Guid memberId, QueryOptions options)
+        public async Task<ActivityPageModel> BuildActivityPageModelAsync(Guid siteId, Guid userId, QueryOptions options)
         {
-            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == memberId);
+            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
 
             if (member == null)
             {
@@ -163,14 +163,14 @@ namespace Atlas.Data.Builders.Admin
 
             var result = new ActivityPageModel
             {
-                Member = new ActivityPageModel.MemberModel
+                User = new ActivityPageModel.UserModel
                 {
                     Id = member.Id,
                     DisplayName = member.DisplayName
                 }
             };
 
-            var query = _dbContext.Events.Where(x => x.SiteId == siteId && x.MemberId == memberId);
+            var query = _dbContext.Events.Where(x => x.SiteId == siteId && x.MemberId == userId);
 
             if (!string.IsNullOrWhiteSpace(options.Search))
             {

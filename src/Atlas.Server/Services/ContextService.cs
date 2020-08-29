@@ -50,31 +50,31 @@ namespace Atlas.Server.Services
             };
         }
 
-        public async Task<CurrentMemberModel> CurrentMemberAsync()
+        public async Task<CurrentUserModel> CurrentUserAsync()
         {
-            var result = new CurrentMemberModel();
+            var result = new CurrentUserModel();
 
-            var user = _httpContextAccessor.HttpContext.User;
+            var claimsPrincipal = _httpContextAccessor.HttpContext.User;
 
-            if (user.Identity.IsAuthenticated)
+            if (claimsPrincipal.Identity.IsAuthenticated)
             {
-                var userId = _httpContextAccessor.HttpContext.User.Identities.First().Claims
+                var identityUserId = _httpContextAccessor.HttpContext.User.Identities.First().Claims
                     .FirstOrDefault(x => x.Type == ClaimTypes.NameIdentifier)?.Value;
 
-                if (!string.IsNullOrEmpty(userId))
+                if (!string.IsNullOrEmpty(identityUserId))
                 {
-                    var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == userId);
+                    var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == identityUserId);
 
-                    if (member != null)
+                    if (user != null)
                     {
-                        result = new CurrentMemberModel
+                        result = new CurrentUserModel
                         {
-                            Id = member.Id,
-                            UserId = member.IdentityUserId,
-                            Email = member.Email,
-                            DisplayName = member.DisplayName,
-                            GravatarHash = _gravatarService.HashEmailForGravatar(member.Email),
-                            IsSuspended = member.Status == StatusType.Suspended,
+                            Id = user.Id,
+                            IdentityUserId = user.IdentityUserId,
+                            Email = user.Email,
+                            DisplayName = user.DisplayName,
+                            GravatarHash = _gravatarService.HashEmailForGravatar(user.Email),
+                            IsSuspended = user.Status == StatusType.Suspended,
                             IsAuthenticated = true
                         };
                     }

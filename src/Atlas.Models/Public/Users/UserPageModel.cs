@@ -2,16 +2,16 @@
 using Atlas.Domain;
 using Atlas.Models.Public.Search;
 
-namespace Atlas.Models.Public.Members
+namespace Atlas.Models.Public.Users
 {
-    public class MemberPageModel
+    public class UserPageModel
     {
-        public MemberModel Member { get; set; } = new MemberModel();
+        public UserModel User { get; set; } = new UserModel();
 
         public PaginatedData<SearchPostModel> Posts { get; set; } = new PaginatedData<SearchPostModel>();
     }
 
-    public class MemberModel
+    public class UserModel
     {
         public Guid Id { get; set; }
         public string DisplayName { get; set; }

@@ -71,7 +71,7 @@ namespace Atlas.Server.Services
             }
             var roleModerator = await roleManager.FindByNameAsync(Consts.RoleNameModerator);
 
-            // Users
+            // Identity Users
             var userAdmin = await userManager.FindByEmailAsync(_configuration["DefaultAdminUserEmail"]);
             if (userAdmin == null)
             {
@@ -123,7 +123,7 @@ namespace Atlas.Server.Services
                 await userManager.AddToRoleAsync(userModerator, Consts.RoleNameModerator);
             }
 
-            // Members
+            // Users
             var memberAdmin = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == userAdmin.Id);
             if (memberAdmin == null)
             {

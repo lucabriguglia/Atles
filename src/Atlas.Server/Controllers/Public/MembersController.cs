@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models.Public;
-using Atlas.Models.Public.Members;
+using Atlas.Models.Public.Users;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -15,13 +15,13 @@ namespace Atlas.Server.Controllers.Public
     public class MembersController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IMemberModelBuilder _modelBuilder;
+        private readonly IUserModelBuilder _modelBuilder;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ISecurityService _securityService;
         private readonly ILogger<MembersController> _logger;
 
         public MembersController(IContextService contextService,
-            IMemberModelBuilder modelBuilder, 
+            IUserModelBuilder modelBuilder, 
             IPermissionModelBuilder permissionModelBuilder, 
             ISecurityService securityService, 
             ILogger<MembersController> logger)
@@ -36,7 +36,7 @@ namespace Atlas.Server.Controllers.Public
         [HttpGet]
         [Route("")]
         [Route("{id}")]
-        public async Task<ActionResult<MemberPageModel>> Index(Guid? id = null)
+        public async Task<ActionResult<UserPageModel>> Index(Guid? id = null)
         {
             var site = await _contextService.CurrentSiteAsync();
 
@@ -44,7 +44,7 @@ namespace Atlas.Server.Controllers.Public
 
             if (id == null)
             {
-                var member = await _contextService.CurrentMemberAsync();
+                var member = await _contextService.CurrentUserAsync();
 
                 if (member != null)
                 {
@@ -72,7 +72,7 @@ namespace Atlas.Server.Controllers.Public
                 }
             }
 
-            var model = await _modelBuilder.BuildMemberPageModelAsync(memberId, accessibleForumIds);
+            var model = await _modelBuilder.BuildUserPageModelAsync(memberId, accessibleForumIds);
 
             if (model == null)
             {

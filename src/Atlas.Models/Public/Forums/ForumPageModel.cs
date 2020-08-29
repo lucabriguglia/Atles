@@ -24,13 +24,13 @@ namespace Atlas.Models.Public.Forums
             public string Title { get; set; }
             public string Slug { get; set; }
             public int TotalReplies { get; set; }
-            public Guid MemberId { get; set; }
-            public string MemberDisplayName { get; set; }
+            public Guid UserId { get; set; }
+            public string UserDisplayName { get; set; }
             public DateTime TimeStamp { get; set; }
             public string GravatarHash { get; set; }
             public DateTime MostRecentTimeStamp { get; set; }
-            public Guid MostRecentMemberId { get; set; }
-            public string MostRecentMemberDisplayName { get; set; }
+            public Guid MostRecentUserId { get; set; }
+            public string MostRecentUserDisplayName { get; set; }
             public bool Pinned { get; set; }
             public bool Locked { get; set; }
             public bool HasAnswer { get; set; }

@@ -75,7 +75,7 @@ else
                             <li class="list-group-item py-3">
                                 <div class="row">
                                     <div class="col-md-auto pr-1">
-                                        <a href="/member/@item.MemberId" title="@item.MemberDisplayName">
+                                        <a href="/member/@item.UserId" title="@item.UserDisplayName">
                                             <Avatar GravatarHash="@item.GravatarHash" GravatarSize="32" Class="mb-2"></Avatar>
                                         </a>
                                     </div>
@@ -108,7 +108,7 @@ else
                                             </div>
                                             <div class="col-md-8 mb-1 text-right text-secondary">
                                                 @((MarkupString)string.Format(Loc["Latest by {0} on {1}"],
-                                                    $"<a href=\"/member/{item.MostRecentMemberId}\" title=\"{item.MostRecentMemberDisplayName}\">{item.MostRecentMemberDisplayName.ToSafeLengthText(10)}</a>",
+                                                    $"<a href=\"/member/{item.MostRecentUserId}\" title=\"{item.MostRecentUserDisplayName}\">{item.MostRecentUserDisplayName.ToSafeLengthText(10)}</a>",
                                                     item.MostRecentTimeStamp.ToAppLocalDateAndTime()))
                                             </div>
                                         </div>

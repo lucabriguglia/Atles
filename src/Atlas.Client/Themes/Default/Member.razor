@@ -9,25 +9,25 @@ else
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Model.Member.DisplayName</li>
+            <li class="breadcrumb-item active" aria-current="page">@Model.User.DisplayName</li>
         </ol>
     </nav>
 
     <div class="row">
         <div class="col-md-3 text-center">
-            <Avatar GravatarHash="@Model.Member.GravatarHash" GravatarSize="128" Class="mb-3"></Avatar>
+            <Avatar GravatarHash="@Model.User.GravatarHash" GravatarSize="128" Class="mb-3"></Avatar>
 
-            <h4 class="mb-4">@Model.Member.DisplayName</h4>
+            <h4 class="mb-4">@Model.User.DisplayName</h4>
 
             <div class="form-control rounded bg-light text-center mb-3 mx-auto" style="width: 8rem;">
-                @Loc["Topics"]: <span class="font-weight-bold">@Model.Member.TotalTopics</span>
+                @Loc["Topics"]: <span class="font-weight-bold">@Model.User.TotalTopics</span>
             </div>
 
             <div class="form-control rounded bg-light text-center mb-3 mx-auto" style="width: 8rem;">
-                @Loc["Replies"]: <span class="font-weight-bold">@Model.Member.TotalReplies</span>
+                @Loc["Replies"]: <span class="font-weight-bold">@Model.User.TotalReplies</span>
             </div>
 
-            @if (Model.Member.Status != StatusType.Active)
+            @if (Model.User.Status != StatusType.Active)
             {
                 <div class="alert alert-warning mx-auto" style="width: 8rem;" role="alert">
                     @Loc["Inactive"]
@@ -37,10 +37,10 @@ else
             <AuthorizeView Policy="Admin">
                 <Authorized>
                     <div class="mt-4 mb-2">
-                        <a href="/admin/members/edit/@Model.Member.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Edit"]</a>
+                        <a href="/admin/members/edit/@Model.User.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Edit"]</a>
                     </div>
                     <div class="mb-4">
-                        <a href="/admin/members/activity/@Model.Member.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Activity"]</a>
+                        <a href="/admin/members/activity/@Model.User.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Activity"]</a>
                     </div>
                 </Authorized>
             </AuthorizeView>

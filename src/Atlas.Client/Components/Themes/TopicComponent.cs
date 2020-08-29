@@ -213,7 +213,7 @@ namespace Atlas.Client.Components.Themes
         {
             Model.Post.Id = null;
             Model.Post.Content = null;
-            Model.Topic.MemberId = Guid.Empty;
+            Model.Topic.UserId = Guid.Empty;
         }
 
         protected async Task SetAnswerAsync(Guid replyId, bool isAnswer)
@@ -225,12 +225,12 @@ namespace Atlas.Client.Components.Themes
 
         protected bool CanEditTopic()
         {
-            return Model.CanEdit && Model.Topic.UserId == Member.UserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanEdit && Model.Topic.IdentityUserId == Member.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanDeleteTopic()
         {
-            return Model.CanDelete && Model.Topic.UserId == Member.UserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanDelete && Model.Topic.IdentityUserId == Member.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanCreateReply()
@@ -240,12 +240,12 @@ namespace Atlas.Client.Components.Themes
 
         protected bool CanEditReply(string replyUserId)
         {
-            return Model.CanEdit && replyUserId == Member.UserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanEdit && replyUserId == Member.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanDeleteReply(string replyUserId)
         {
-            return Model.CanDelete && replyUserId == Member.UserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanDelete && replyUserId == Member.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
         }
     }
 }

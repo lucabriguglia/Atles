@@ -48,7 +48,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Save(FormComponentModel.CategoryModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new CreateCategory
             {
@@ -82,7 +82,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Update(FormComponentModel.CategoryModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new UpdateCategory
             {
@@ -102,7 +102,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> MoveUp([FromBody] Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new MoveCategory
             {
@@ -121,7 +121,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> MoveDown([FromBody] Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new MoveCategory
             {
@@ -140,7 +140,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Delete(Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new DeleteCategory
             {

@@ -64,7 +64,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Save(FormComponentModel.ForumModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new CreateForum
             {
@@ -101,7 +101,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Update(FormComponentModel.ForumModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new UpdateForum
             {
@@ -124,7 +124,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> MoveUp([FromBody] Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new MoveForum
             {
@@ -143,7 +143,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> MoveDown([FromBody] Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new MoveForum
             {
@@ -162,7 +162,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Delete(Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new DeleteForum
             {

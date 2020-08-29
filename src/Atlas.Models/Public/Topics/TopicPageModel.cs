@@ -29,10 +29,10 @@ namespace Atlas.Models.Public.Topics
             public string Title { get; set; }
             public string Slug { get; set; }
             public string Content { get; set; }
-            public Guid MemberId { get; set; }
-            public string MemberDisplayName { get; set; }
+            public Guid UserId { get; set; }
+            public string UserDisplayName { get; set; }
             public DateTime TimeStamp { get; set; }
-            public string UserId { get; set; }
+            public string IdentityUserId { get; set; }
             public string GravatarHash { get; set; }
             public bool Pinned { get; set; }
             public bool Locked { get; set; }

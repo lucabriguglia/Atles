@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Client.Components.Shared;
-using Atlas.Models.Admin.Members;
+using Atlas.Models.Admin.Users;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
-namespace Atlas.Client.Components.Admin.Members
+namespace Atlas.Client.Components.Admin.Users
 {
     public abstract class ActivityPage : AdminPageBase
     {

@@ -43,7 +43,7 @@ namespace Atlas.Server.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
-                await _integrityService.EnsureMemberConfirmedAsync(user);
+                await _integrityService.EnsureUserConfirmedAsync(user);
             }
             
             return Page();

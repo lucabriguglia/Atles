@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Models.Admin.Members;
+using Atlas.Models.Admin.Users;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
@@ -17,10 +17,10 @@ namespace Atlas.Client.Components.Admin.Members
 
         protected override void OnInitialized()
         {
-            EditContext = new EditContext(Model.Member);
+            EditContext = new EditContext(Model.User);
             EditContext.OnFieldChanged += HandleFieldChanged;
             _validationMessageStore = new ValidationMessageStore(EditContext);
-            _currentDisplayName = Model.Member.DisplayName;
+            _currentDisplayName = Model.User.DisplayName;
         }
 
         private void HandleFieldChanged(object sender, FieldChangedEventArgs e)

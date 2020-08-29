@@ -80,7 +80,7 @@ namespace Atlas.Data.Builders.Public
                     Title = topic.Title,
                     Slug = topic.Slug,
                     Content = topic.Content,
-                    MemberId = topic.CreatedByUser.Id,
+                    UserId = topic.CreatedByUser.Id,
                     Locked = topic.Locked
                 }
             };

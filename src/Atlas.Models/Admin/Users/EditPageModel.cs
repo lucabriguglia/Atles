@@ -3,15 +3,15 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Atlas.Domain;
 
-namespace Atlas.Models.Admin.Members
+namespace Atlas.Models.Admin.Users
 {
     public class EditPageModel
     {
-        public MemberModel Member { get; set; } = new MemberModel();
+        public UserModel User { get; set; } = new UserModel();
         public InfoModel Info { get; set; } = new InfoModel();
         public IList<RoleModel> Roles { get; set; } = new List<RoleModel>();
 
-        public class MemberModel
+        public class UserModel
         {
             public Guid Id { get; set; }
 

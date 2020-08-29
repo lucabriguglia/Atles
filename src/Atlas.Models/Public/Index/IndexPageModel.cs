@@ -31,8 +31,8 @@ namespace Atlas.Models.Public.Index
             public string LastTopicTitle { get; set; }
             public string LastTopicSlug { get; set; }
             public DateTime? LastPostTimeStamp { get; set; }
-            public Guid? LastPostMemberId { get; set; }
-            public string LastPostMemberDisplayName { get; set; }
+            public Guid? LastPostUserId { get; set; }
+            public string LastPostUserDisplayName { get; set; }
             public bool CanViewTopics { get; set; }
 
             public bool HasLastPost() => LastTopicId != null;

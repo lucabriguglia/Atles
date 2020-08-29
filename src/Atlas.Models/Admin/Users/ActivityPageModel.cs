@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Atlas.Models.Admin.Members
+namespace Atlas.Models.Admin.Users
 {
     public class ActivityPageModel
     {
-        public MemberModel Member { get; set; } = new MemberModel();
+        public UserModel User { get; set; } = new UserModel();
 
         public PaginatedData<EventModel> Events { get; set; } = new PaginatedData<EventModel>();
 
-        public class MemberModel
+        public class UserModel
         {
             public Guid Id { get; set; }
             public string DisplayName { get; set; }

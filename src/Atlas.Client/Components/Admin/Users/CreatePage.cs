@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Atlas.Models.Admin.Members;
+using Atlas.Models.Admin.Users;
 
 namespace Atlas.Client.Components.Admin.Members
 {

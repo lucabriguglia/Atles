@@ -1,12 +1,12 @@
 ﻿using System;
 
-namespace Atlas.Models.Public.Members
+namespace Atlas.Models.Public.Users
 {
     public class SettingsPageModel
     {
-        public MemberModel Member { get; set; } = new MemberModel();
+        public UserModel User { get; set; } = new UserModel();
 
-        public class MemberModel
+        public class UserModel
         {
             public Guid Id { get; set; }
             public string Email { get; set; }

@@ -47,7 +47,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Save(FormComponentModel.PermissionSetModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new CreatePermissionSet
             {
@@ -81,7 +81,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Update(FormComponentModel.PermissionSetModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new UpdatePermissionSet
             {
@@ -101,7 +101,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Delete(Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new DeletePermissionSet
             {

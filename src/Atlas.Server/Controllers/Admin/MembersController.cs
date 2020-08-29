@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Atlas.Domain.Users;
 using Atlas.Domain.Users.Commands;
 using Atlas.Models;
-using Atlas.Models.Admin.Members;
+using Atlas.Models.Admin.Users;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -17,13 +17,13 @@ namespace Atlas.Server.Controllers.Admin
         private readonly IContextService _contextService;
         private readonly IUserService _memberService;
         private readonly IUserRules _memberRules;
-        private readonly IMemberModelBuilder _modelBuilder;
+        private readonly IUserModelBuilder _modelBuilder;
         private readonly UserManager<IdentityUser> _userManager;
 
         public MembersController(IContextService contextService,
             IUserService memberService,
             IUserRules memberRules,
-            IMemberModelBuilder modelBuilder, 
+            IUserModelBuilder modelBuilder, 
             UserManager<IdentityUser> userManager)
         {
             _contextService = contextService;
@@ -64,7 +64,7 @@ namespace Atlas.Server.Controllers.Admin
             var confirmResult = await _userManager.ConfirmEmailAsync(user, code);
 
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new CreateUser
             {
@@ -109,7 +109,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Update(EditPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var user = await _userManager.FindByIdAsync(model.Info.UserId);
 
@@ -136,8 +136,8 @@ namespace Atlas.Server.Controllers.Admin
 
             var command = new UpdateUser
             {
-                Id = model.Member.Id,
-                DisplayName = model.Member.DisplayName,
+                Id = model.User.Id,
+                DisplayName = model.User.DisplayName,
                 SiteId = site.Id,
                 MemberId = member.Id,
                 Roles = model.Roles.Where(x => x.Selected).Select(x => x.Name).ToList()
@@ -167,7 +167,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Suspend([FromBody] Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new SuspendUser
             {
@@ -185,7 +185,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Reinstate([FromBody] Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new ReinstateUser
             {
@@ -203,7 +203,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Delete(Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new DeleteUser
             {

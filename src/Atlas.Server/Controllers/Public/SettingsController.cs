@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Domain.Users;
 using Atlas.Domain.Users.Commands;
-using Atlas.Models.Public.Members;
+using Atlas.Models.Public.Users;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -15,13 +15,13 @@ namespace Atlas.Server.Controllers.Public
     public class SettingsController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IMemberModelBuilder _modelBuilder;
+        private readonly IUserModelBuilder _modelBuilder;
         private readonly IUserService _memberService;
         private readonly IUserRules _memberRules;
         private readonly ILogger<SettingsController> _logger;
 
         public SettingsController(IContextService contextService, 
-            IMemberModelBuilder modelBuilder,
+            IUserModelBuilder modelBuilder,
             IUserService memberService, 
             IUserRules memberRules, 
             ILogger<SettingsController> logger)
@@ -36,7 +36,7 @@ namespace Atlas.Server.Controllers.Public
         [HttpGet("edit")]
         public async Task<ActionResult<SettingsPageModel>> Edit()
         {
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var model = await _modelBuilder.BuildSettingsPageModelAsync(member.Id);
 
@@ -47,14 +47,14 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> Update(SettingsPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
-            if (model.Member.Id != member.Id || member.IsSuspended)
+            if (model.User.Id != member.Id || member.IsSuspended)
             {
                 _logger.LogWarning("Unauthorized access to update settings.", new
                 {
                     SiteId = site.Id,
-                    MemberId = model.Member?.Id,
+                    MemberId = model.User?.Id,
                     User = User.Identity.Name
                 });
 
@@ -64,7 +64,7 @@ namespace Atlas.Server.Controllers.Public
             var command = new UpdateUser
             {
                 Id = member.Id,
-                DisplayName = model.Member.DisplayName,
+                DisplayName = model.User.DisplayName,
                 SiteId = site.Id,
                 MemberId = member.Id
             };

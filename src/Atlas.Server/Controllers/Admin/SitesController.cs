@@ -42,7 +42,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Update(SettingsPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var member = await _contextService.CurrentUserAsync();
 
             var command = new UpdateSite
             {
