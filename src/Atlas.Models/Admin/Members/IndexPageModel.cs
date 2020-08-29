@@ -23,8 +23,8 @@ namespace Atlas.Models.Admin.Members
             "TopicsCount-Desc",
             "RepliesCount-Asc",
             "RepliesCount-Desc",
-            "TimeStamp-Asc",
-            "TimeStamp-Desc"
+            "TimeStamp-Desc",
+            "TimeStamp-Asc"
         };
 
         public PaginatedData<MemberModel> Members { get; set; } = new PaginatedData<MemberModel>();
