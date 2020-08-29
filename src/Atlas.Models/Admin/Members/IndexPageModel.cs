@@ -5,6 +5,28 @@ namespace Atlas.Models.Admin.Members
 {
     public class IndexPageModel
     {
+        public StatusType[] Status { get; } =
+        {
+            StatusType.Active,
+            StatusType.Pending,
+            StatusType.Suspended,
+            StatusType.Deleted
+        };
+
+        public string[] SortBy { get; } =
+        {
+            "DisplayName-Asc",
+            "DisplayName-Desc",
+            "Email-Asc",
+            "Email-Desc",
+            "TopicsCount-Asc",
+            "TopicsCount-Desc",
+            "RepliesCount-Asc",
+            "RepliesCount-Desc",
+            "TimeStamp-Asc",
+            "TimeStamp-Desc"
+        };
+
         public PaginatedData<MemberModel> Members { get; set; } = new PaginatedData<MemberModel>();
 
         public class MemberModel

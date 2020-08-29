@@ -210,6 +210,12 @@
   <data name="Display Name" xml:space="preserve">
     <value>Display Name</value>
   </data>
+  <data name="DisplayName-Asc" xml:space="preserve">
+    <value>Display Name: Dalla A alla Z</value>
+  </data>
+  <data name="DisplayName-Desc" xml:space="preserve">
+    <value>Display Name: Dalla Z alla A</value>
+  </data>
   <data name="Edit" xml:space="preserve">
     <value>Modifica</value>
   </data>
@@ -233,6 +239,12 @@
   </data>
   <data name="Email Confirmed" xml:space="preserve">
     <value>Email Confermata</value>
+  </data>
+  <data name="Email-Asc" xml:space="preserve">
+    <value>Email: Dalla A alla Z</value>
+  </data>
+  <data name="Email-Desc" xml:space="preserve">
+    <value>Email: Dalla Z alla A</value>
   </data>
   <data name="Forums" xml:space="preserve">
     <value>Forum</value>
@@ -306,6 +318,12 @@
   <data name="Replies" xml:space="preserve">
     <value>Risposte</value>
   </data>
+  <data name="RepliesCount-Asc" xml:space="preserve">
+    <value>Risposte: Da minore a maggiore</value>
+  </data>
+  <data name="RepliesCount-Desc" xml:space="preserve">
+    <value>Risposte: Da maggiore a minore</value>
+  </data>
   <data name="Role" xml:space="preserve">
     <value>Ruolo</value>
   </data>
@@ -354,11 +372,23 @@
   <data name="Themes" xml:space="preserve">
     <value>Temi</value>
   </data>
+  <data name="TimeStamp-Asc" xml:space="preserve">
+    <value>Data: Prima i piu' nuovi</value>
+  </data>
+  <data name="TimeStamp-Desc" xml:space="preserve">
+    <value>Data: Prima i piu' vecchi</value>
+  </data>
   <data name="Title" xml:space="preserve">
     <value>Titolo</value>
   </data>
   <data name="Topics" xml:space="preserve">
     <value>Discussioni</value>
+  </data>
+  <data name="TopicsCount-Asc" xml:space="preserve">
+    <value>Discussioni: Da minore a maggiore</value>
+  </data>
+  <data name="TopicsCount-Desc" xml:space="preserve">
+    <value>Discussioni: Da maggiore a minore</value>
   </data>
   <data name="Two Factor Enabled" xml:space="preserve">
     <value>Two Factor Abilitato</value>

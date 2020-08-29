@@ -31,10 +31,10 @@ else
         </div>
         <select class="custom-select" id="memberStatus" @onchange="StatusChangedAsync">
             <option value="">@Loc["All"]</option>
-            <option value="Active">@Loc["Active"]</option>
-            <option value="Pending">@Loc["Pending"]</option>
-            <option value="Suspended">@Loc["Suspended"]</option>
-            <option value="Deleted">@Loc["Deleted"]</option>
+            @foreach (var option in Model.Status)
+            {
+                <option value=@option>@Loc[$"{option}"]</option>
+            }
         </select>
     </div>
     <div class="col-md-4 input-group mb-3">
@@ -42,7 +42,11 @@ else
             <label class="input-group-text" for="sortBy">Sort By</label>
         </div>
         <select class="custom-select" id="sortBy" @onchange="SortByChangedAsync">
-            <option value="DisplayName-Asc">Display Name: A to Z</option>
+            @foreach (var option in Model.SortBy)
+            {
+                <option value=@option>@Loc[$"{option}"]</option>
+            }
+            @*<option value="DisplayName-Asc">Display Name: A to Z</option>
             <option value="DisplayName-Desc">Display Name: Z to A</option>
             <option value="Email-Asc">Email: A to Z</option>
             <option value="Email-Desc">Email: Z to A</option>
@@ -50,8 +54,8 @@ else
             <option value="TopicsCount-Desc">Topics: High to Low</option>
             <option value="RepliesCount-Asc">Replies: Low to High</option>
             <option value="RepliesCount-Desc">Replies: High to Low</option>
-            <option value="Date-Asc">Date: Newest First</option>
-            <option value="Date-Desc">Date: Oldest First</option>
+            <option value="TimeStamp-Asc">Date: Newest First</option>
+            <option value="TimeStamp-Desc">Date: Oldest First</option>*@
         </select>
     </div>
     <div class="col-md-4 input-group mb-3">
