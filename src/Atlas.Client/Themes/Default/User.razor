@@ -37,10 +37,10 @@ else
             <AuthorizeView Policy="Admin">
                 <Authorized>
                     <div class="mt-4 mb-2">
-                        <a href="/admin/members/edit/@Model.User.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Edit"]</a>
+                        <a href="/admin/users/edit/@Model.User.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Edit"]</a>
                     </div>
                     <div class="mb-4">
-                        <a href="/admin/members/activity/@Model.User.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Activity"]</a>
+                        <a href="/admin/users/activity/@Model.User.Id" class="btn btn-primary" style="width: 8rem;" role="button">@Loc["Activity"]</a>
                     </div>
                 </Authorized>
             </AuthorizeView>
