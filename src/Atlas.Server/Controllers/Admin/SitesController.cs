@@ -42,12 +42,12 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Update(SettingsPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new UpdateSite
             {
                 SiteId = site.Id,
-                MemberId = member.Id,
+                UserId = user.Id,
                 Title = model.Site.Title,
                 Theme = model.Site.Theme,
                 Css = model.Site.Css,

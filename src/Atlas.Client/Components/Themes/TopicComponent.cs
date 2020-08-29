@@ -133,12 +133,12 @@ namespace Atlas.Client.Components.Themes
             Model.Topic.Locked = !Model.Topic.Locked;
         }
 
-        protected async Task EditReplyAsync(Guid id, string content, Guid memberId, bool isAnswer = false)
+        protected async Task EditReplyAsync(Guid id, string content, Guid userId, bool isAnswer = false)
         {
             EditingAnswer = isAnswer;
             Model.Post.Id = id;
             Model.Post.Content = content;
-            Model.Post.MemberId = memberId;
+            Model.Post.UserId = userId;
             await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "reply");
         }
 
@@ -225,12 +225,12 @@ namespace Atlas.Client.Components.Themes
 
         protected bool CanEditTopic()
         {
-            return Model.CanEdit && Model.Topic.IdentityUserId == Member.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanEdit && Model.Topic.IdentityUserId == User.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanDeleteTopic()
         {
-            return Model.CanDelete && Model.Topic.IdentityUserId == Member.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanDelete && Model.Topic.IdentityUserId == User.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanCreateReply()
@@ -240,12 +240,12 @@ namespace Atlas.Client.Components.Themes
 
         protected bool CanEditReply(string replyUserId)
         {
-            return Model.CanEdit && replyUserId == Member.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanEdit && replyUserId == User.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
         }
 
         protected bool CanDeleteReply(string replyUserId)
         {
-            return Model.CanDelete && replyUserId == Member.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.CanDelete && replyUserId == User.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
         }
     }
 }

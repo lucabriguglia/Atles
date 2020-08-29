@@ -17,10 +17,10 @@ namespace Atlas.Domain.Posts
 
         [Column("CreatedBy")]
         [ForeignKey("CreatedByUser")]
-        public Guid MemberId { get; private set; }
+        public Guid CreatedBy { get; private set; }
 
         [Column("CreatedOn")]
-        public DateTime TimeStamp { get; private set; }
+        public DateTime CreatedOn { get; private set; }
 
         [ForeignKey("ModifiedByUser")]
         public Guid? ModifiedBy { get; private set; }
@@ -73,12 +73,12 @@ namespace Atlas.Domain.Posts
             Id = id;
             TopicId = topicId;
             ForumId = forumId;
-            MemberId = memberId;
+            CreatedBy = memberId;
             Title = title;
             Slug = slug;
             Content = content;
             Status = status;
-            TimeStamp = DateTime.UtcNow;
+            CreatedOn = DateTime.UtcNow;
         }
 
         public void UpdateDetails(Guid memberId, string title, string slug, string content, StatusType status)

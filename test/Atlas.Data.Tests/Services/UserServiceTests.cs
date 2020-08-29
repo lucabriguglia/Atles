@@ -77,11 +77,11 @@ namespace Atlas.Data.Tests.Services
 
                 await sut.UpdateAsync(command);
 
-                var updatedMember = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == command.Id);
+                var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 updateValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
-                Assert.AreEqual(command.DisplayName, updatedMember.DisplayName);
+                Assert.AreEqual(command.DisplayName, updatedUser.DisplayName);
                 Assert.NotNull(@event);
             }
         }

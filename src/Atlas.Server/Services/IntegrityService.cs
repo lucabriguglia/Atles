@@ -11,15 +11,15 @@ namespace Atlas.Server.Services
     public class IntegrityService : IIntegrityService
     {
         private readonly IContextService _contextService;
-        private readonly IUserService _memberService;
+        private readonly IUserService _userService;
         private readonly AtlasDbContext _dbContext;
 
         public IntegrityService(IContextService contextService, 
-            IUserService memberService, 
+            IUserService userService, 
             AtlasDbContext dbContext)
         {
             _contextService = contextService;
-            _memberService = memberService;
+            _userService = userService;
             _dbContext = dbContext;
         }
 
@@ -31,7 +31,7 @@ namespace Atlas.Server.Services
             {
                 var site = await _contextService.CurrentSiteAsync();
 
-                await _memberService.CreateAsync(new CreateUser
+                await _userService.CreateAsync(new CreateUser
                 {
                     IdentityUserId = identityUser.Id,
                     Email = identityUser.Email,
@@ -49,7 +49,7 @@ namespace Atlas.Server.Services
             {
                 var site = await _contextService.CurrentSiteAsync();
 
-                await _memberService.ConfirmAsync(new ConfirmUser
+                await _userService.ConfirmAsync(new ConfirmUser
                 {
                     Id = user.Id,
                     SiteId = site.Id

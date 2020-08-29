@@ -42,9 +42,9 @@ namespace Atlas.Data.Services
 
             _dbContext.Users.Add(member);
 
-            var memberIdForEvent = command.MemberId == Guid.Empty 
+            var memberIdForEvent = command.UserId == Guid.Empty 
                 ? member.Id 
-                : command.MemberId;
+                : command.UserId;
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 memberIdForEvent,
@@ -71,14 +71,14 @@ namespace Atlas.Data.Services
 
             if (member == null)
             {
-                throw new DataException($"Member with Id {command.Id} not found.");
+                throw new DataException($"User with Id {command.Id} not found.");
             }
 
             member.Confirm();
 
-            var memberIdForEvent = command.MemberId == Guid.Empty
+            var memberIdForEvent = command.UserId == Guid.Empty
                 ? member.Id
-                : command.MemberId;
+                : command.UserId;
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 memberIdForEvent,
@@ -121,13 +121,13 @@ namespace Atlas.Data.Services
 
             if (member == null)
             {
-                throw new DataException($"Member with Id {command.Id} not found.");
+                throw new DataException($"User with Id {command.Id} not found.");
             }
 
             member.UpdateDetails(command.DisplayName);
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Updated,
                 typeof(User),
                 command.Id,
@@ -139,7 +139,7 @@ namespace Atlas.Data.Services
             if (command.Roles != null && command.Roles.Count > 0)
             {
                 _dbContext.Events.Add(new Event(command.SiteId,
-                    command.MemberId,
+                    command.UserId,
                     EventType.Updated,
                     typeof(User),
                     command.Id,
@@ -161,13 +161,13 @@ namespace Atlas.Data.Services
 
             if (member == null)
             {
-                throw new DataException($"Member with Id {command.Id} not found.");
+                throw new DataException($"User with Id {command.Id} not found.");
             }
 
             member.Suspend();
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Suspended,
                 typeof(User),
                 command.Id));
@@ -184,13 +184,13 @@ namespace Atlas.Data.Services
 
             if (member == null)
             {
-                throw new DataException($"Member with Id {command.Id} not found.");
+                throw new DataException($"User with Id {command.Id} not found.");
             }
 
             member.Reinstate();
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Reinstated,
                 typeof(User),
                 command.Id));
@@ -207,13 +207,13 @@ namespace Atlas.Data.Services
 
             if (member == null)
             {
-                throw new DataException($"Member with Id {command.Id} not found.");
+                throw new DataException($"User with Id {command.Id} not found.");
             }
 
             member.Delete();
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Deleted,
                 typeof(User),
                 command.Id));

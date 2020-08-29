@@ -101,8 +101,8 @@ namespace Atlas.Server.Controllers.Public
             return await _contextService.CurrentSiteAsync();
         }
 
-        [HttpGet("current-member")]
-        public async Task<CurrentUserModel> CurrentMember()
+        [HttpGet("current-user")]
+        public async Task<CurrentUserModel> CurrentUser()
         {
             return await _contextService.CurrentUserAsync();
         }

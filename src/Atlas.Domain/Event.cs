@@ -16,9 +16,9 @@ namespace Atlas.Domain
         public string Data { get; private set; }
 
         [Column("UserId")]
-        public Guid? MemberId { get; private set; }
+        public Guid? UserId { get; private set; }
 
-        public virtual User Member { get; set; }
+        public virtual User User { get; set; }
 
         public Event()
         {
@@ -26,7 +26,7 @@ namespace Atlas.Domain
         }
 
         public Event(Guid siteId, 
-            Guid? memberId, 
+            Guid? userId, 
             EventType eventType, 
             Type targetType, 
             Guid targetId, 
@@ -35,7 +35,7 @@ namespace Atlas.Domain
             Type = eventType.ToString();
             TargetType = targetType.Name;
             TargetId = targetId;
-            MemberId = memberId;
+            UserId = userId;
             SiteId = siteId;
             Data = JsonConvert.SerializeObject(data);
         }

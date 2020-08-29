@@ -79,7 +79,7 @@ namespace Atlas.Data.Builders.Public
                                 LastTopicId = entity.LastPost?.TopicId == null ? entity.LastPost?.Id : entity.LastPost?.Topic?.Id,
                                 LastTopicTitle = entity.LastPost?.Title ?? entity.LastPost?.Topic?.Title,
                                 LastTopicSlug = entity.LastPost?.Slug ?? entity.LastPost?.Topic?.Slug,
-                                LastPostTimeStamp = entity.LastPost?.TimeStamp,
+                                LastPostTimeStamp = entity.LastPost?.CreatedOn,
                                 LastPostUserId = entity.LastPost?.CreatedByUser?.Id,
                                 LastPostUserDisplayName = entity.LastPost?.CreatedByUser?.DisplayName
                             };

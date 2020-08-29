@@ -21,8 +21,8 @@ namespace Atlas.Client.Components.Admin.Users
             if (response.IsSuccessStatusCode)
             {
                 var content = await response.Content.ReadAsStringAsync();
-                var memberId = JsonSerializer.Deserialize<Guid>(content);
-                NavigationManager.NavigateTo($"/admin/users/edit/{memberId}");
+                var userId = JsonSerializer.Deserialize<Guid>(content);
+                NavigationManager.NavigateTo($"/admin/users/edit/{userId}");
             }
             else
             {

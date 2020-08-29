@@ -47,7 +47,7 @@ namespace Atlas.Data.Services
 
             _dbContext.Categories.Add(category);
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Created,
                 typeof(Category),
                 category.Id,
@@ -81,7 +81,7 @@ namespace Atlas.Data.Services
 
             category.UpdateDetails(command.Name, command.PermissionSetId);
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Updated,
                 typeof(Category),
                 category.Id,
@@ -120,7 +120,7 @@ namespace Atlas.Data.Services
             }
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Reordered,
                 typeof(Category),
                 category.Id,
@@ -147,7 +147,7 @@ namespace Atlas.Data.Services
             }
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Reordered,
                 typeof(Category),
                 adjacentCategory.Id,
@@ -177,7 +177,7 @@ namespace Atlas.Data.Services
 
             category.Delete();
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Deleted,
                 typeof(Category),
                 category.Id));
@@ -193,7 +193,7 @@ namespace Atlas.Data.Services
             {
                 otherCategories[i].Reorder(i + 1);
                 _dbContext.Events.Add(new Event(command.SiteId,
-                    command.MemberId,
+                    command.UserId,
                     EventType.Reordered,
                     typeof(Category),
                     otherCategories[i].Id,
@@ -207,7 +207,7 @@ namespace Atlas.Data.Services
             {
                 forum.Delete();
                 _dbContext.Events.Add(new Event(command.SiteId,
-                    command.MemberId,
+                    command.UserId,
                     EventType.Deleted,
                     typeof(Forum),
                     forum.Id));

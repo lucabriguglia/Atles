@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Atlas.Data.Tests.Rules
 {
     [TestFixture]
-    public class MemberRulesTests : TestFixtureBase
+    public class UserRulesTests : TestFixtureBase
     {
         [Test]
         [Ignore("")]
@@ -15,7 +15,7 @@ namespace Atlas.Data.Tests.Rules
         {
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new MemberRules(dbContext);
+                var sut = new UserRules(dbContext);
                 var actual = await sut.IsDisplayNameUniqueAsync("Display Name");
 
                 Assert.IsTrue(actual);
@@ -28,7 +28,7 @@ namespace Atlas.Data.Tests.Rules
         {
             using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new MemberRules(dbContext);
+                var sut = new UserRules(dbContext);
                 var actual = await sut.IsDisplayNameUniqueAsync("Display Name", Guid.NewGuid());
 
                 Assert.IsTrue(actual);
@@ -50,7 +50,7 @@ namespace Atlas.Data.Tests.Rules
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var sut = new MemberRules(dbContext);
+                var sut = new UserRules(dbContext);
                 var actual = await sut.IsDisplayNameUniqueAsync(displayName);
 
                 Assert.IsFalse(actual);
@@ -65,17 +65,17 @@ namespace Atlas.Data.Tests.Rules
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var member1 = new User(Guid.NewGuid().ToString(), "me@email.com", "Member 1");
-                var member2 = new User(memberId, Guid.NewGuid().ToString(), "me@email.com", "Member 2");
-                dbContext.Users.Add(member1);
-                dbContext.Users.Add(member2);
+                var user1 = new User(Guid.NewGuid().ToString(), "me@email.com", "User 1");
+                var user2 = new User(memberId, Guid.NewGuid().ToString(), "me@email.com", "User 2");
+                dbContext.Users.Add(user1);
+                dbContext.Users.Add(user2);
                 await dbContext.SaveChangesAsync();
             }
 
             using (var dbContext = new AtlasDbContext(options))
             {
-                var sut = new MemberRules(dbContext);
-                var actual = await sut.IsDisplayNameUniqueAsync("Member 1", memberId);
+                var sut = new UserRules(dbContext);
+                var actual = await sut.IsDisplayNameUniqueAsync("User 1", memberId);
 
                 Assert.IsFalse(actual);
             }

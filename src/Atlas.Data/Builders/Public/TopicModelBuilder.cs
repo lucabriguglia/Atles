@@ -58,7 +58,7 @@ namespace Atlas.Data.Builders.Public
                     Content = Markdown.ToHtml(topic.Content),
                     UserId = topic.CreatedByUser.Id,
                     UserDisplayName = topic.CreatedByUser.DisplayName,
-                    TimeStamp = topic.TimeStamp,
+                    TimeStamp = topic.CreatedOn,
                     IdentityUserId = topic.CreatedByUser.IdentityUserId,
                     GravatarHash = _gravatarService.HashEmailForGravatar(topic.CreatedByUser.Email),
                     Pinned = topic.Pinned,
@@ -85,10 +85,10 @@ namespace Atlas.Data.Builders.Public
                         Id = answer.Id,
                         Content = Markdown.ToHtml(answer.Content),
                         OriginalContent = answer.Content,
-                        UserId = answer.CreatedByUser.IdentityUserId,
-                        MemberId = answer.CreatedByUser.Id,
-                        MemberDisplayName = answer.CreatedByUser.DisplayName,
-                        TimeStamp = answer.TimeStamp,
+                        IdentityUserId = answer.CreatedByUser.IdentityUserId,
+                        UserId = answer.CreatedByUser.Id,
+                        UserDisplayName = answer.CreatedByUser.DisplayName,
+                        TimeStamp = answer.CreatedOn,
                         GravatarHash = _gravatarService.HashEmailForGravatar(answer.CreatedByUser.Email),
                         IsAnswer = answer.IsAnswer
                     };
@@ -113,7 +113,7 @@ namespace Atlas.Data.Builders.Public
             }
 
             var replies = await repliesQuery
-                .OrderBy(x => x.TimeStamp)
+                .OrderBy(x => x.CreatedOn)
                 .Skip(options.Skip)
                 .Take(options.PageSize)
                 .ToListAsync();
@@ -123,10 +123,10 @@ namespace Atlas.Data.Builders.Public
                 Id = reply.Id,
                 Content = Markdown.ToHtml(reply.Content),
                 OriginalContent = reply.Content,
-                UserId = reply.CreatedByUser.IdentityUserId,
-                MemberId = reply.CreatedByUser.Id,
-                MemberDisplayName = reply.CreatedByUser.DisplayName,
-                TimeStamp = reply.TimeStamp,
+                IdentityUserId = reply.CreatedByUser.IdentityUserId,
+                UserId = reply.CreatedByUser.Id,
+                UserDisplayName = reply.CreatedByUser.DisplayName,
+                TimeStamp = reply.CreatedOn,
                 GravatarHash = _gravatarService.HashEmailForGravatar(reply.CreatedByUser.Email),
                 IsAnswer = reply.IsAnswer
             }).ToList();

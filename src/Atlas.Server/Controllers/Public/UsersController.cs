@@ -76,7 +76,7 @@ namespace Atlas.Server.Controllers.Public
 
             if (model == null)
             {
-                _logger.LogWarning("Member not found.", new
+                _logger.LogWarning("User not found.", new
                 {
                     SiteId = site.Id,
                     MemebrId = userId,

@@ -71,7 +71,7 @@ namespace Atlas.Server.Controllers.Admin
                 IdentityUserId = identityUser.Id,
                 Email = identityUser.Email,
                 SiteId = site.Id,
-                MemberId = user.Id,
+                UserId = user.Id,
                 Confirm = true
             };
 
@@ -140,7 +140,7 @@ namespace Atlas.Server.Controllers.Admin
                 Id = model.User.Id,
                 DisplayName = model.User.DisplayName,
                 SiteId = site.Id,
-                MemberId = user.Id,
+                UserId = user.Id,
                 Roles = model.Roles.Where(x => x.Selected).Select(x => x.Name).ToList()
             };
 
@@ -174,7 +174,7 @@ namespace Atlas.Server.Controllers.Admin
             {
                 Id = id,
                 SiteId = site.Id,
-                MemberId = user.Id
+                UserId = user.Id
             };
 
             await _userService.SuspendAsync(command);
@@ -192,7 +192,7 @@ namespace Atlas.Server.Controllers.Admin
             {
                 Id = id,
                 SiteId = site.Id,
-                MemberId = user.Id
+                UserId = user.Id
             };
 
             await _userService.ReinstateAsync(command);
@@ -210,7 +210,7 @@ namespace Atlas.Server.Controllers.Admin
             {
                 Id = id,
                 SiteId = site.Id,
-                MemberId = user.Id
+                UserId = user.Id
             };
 
             var identityUserId = await _userService.DeleteAsync(command);

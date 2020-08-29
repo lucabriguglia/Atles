@@ -70,7 +70,7 @@ namespace Atlas.Data.Builders.Public
 
             var topics = await topicsQuery
                 .OrderByDescending(x => x.Pinned)
-                    .ThenByDescending(x => x.LastReply != null ? x.LastReply.TimeStamp : x.TimeStamp)
+                    .ThenByDescending(x => x.LastReply != null ? x.LastReply.CreatedOn : x.CreatedOn)
                 .Skip(options.Skip)
                 .Take(options.PageSize)
                 .ToListAsync();
@@ -83,11 +83,11 @@ namespace Atlas.Data.Builders.Public
                 TotalReplies = topic.RepliesCount,
                 UserId = topic.CreatedByUser.Id,
                 UserDisplayName = topic.CreatedByUser.DisplayName,
-                TimeStamp = topic.TimeStamp,
+                TimeStamp = topic.CreatedOn,
                 GravatarHash = _gravatarService.HashEmailForGravatar(topic.CreatedByUser.Email),
-                MostRecentUserId = topic.LastReply?.MemberId ?? topic.MemberId,
+                MostRecentUserId = topic.LastReply?.CreatedBy ?? topic.CreatedBy,
                 MostRecentUserDisplayName = topic.LastReply?.CreatedByUser?.DisplayName ?? topic.CreatedByUser.DisplayName,
-                MostRecentTimeStamp = topic.LastReply?.TimeStamp ?? topic.TimeStamp,
+                MostRecentTimeStamp = topic.LastReply?.CreatedOn ?? topic.CreatedOn,
                 Pinned = topic.Pinned,
                 Locked = topic.Locked,
                 HasAnswer = topic.HasAnswer

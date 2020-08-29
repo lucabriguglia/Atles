@@ -16,29 +16,29 @@ namespace Atlas.Server.Controllers.Public
     {
         private readonly IContextService _contextService;
         private readonly IUserModelBuilder _modelBuilder;
-        private readonly IUserService _memberService;
-        private readonly IUserRules _memberRules;
+        private readonly IUserService _userService;
+        private readonly IUserRules _userRules;
         private readonly ILogger<SettingsController> _logger;
 
         public SettingsController(IContextService contextService, 
             IUserModelBuilder modelBuilder,
-            IUserService memberService, 
-            IUserRules memberRules, 
+            IUserService userService, 
+            IUserRules userRules, 
             ILogger<SettingsController> logger)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
-            _memberService = memberService;
-            _memberRules = memberRules;
+            _userService = userService;
+            _userRules = userRules;
             _logger = logger;
         }
 
         [HttpGet("edit")]
         public async Task<ActionResult<SettingsPageModel>> Edit()
         {
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
-            var model = await _modelBuilder.BuildSettingsPageModelAsync(member.Id);
+            var model = await _modelBuilder.BuildSettingsPageModelAsync(user.Id);
 
             return model;
         }
@@ -47,14 +47,14 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> Update(SettingsPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
-            if (model.User.Id != member.Id || member.IsSuspended)
+            if (model.User.Id != user.Id || user.IsSuspended)
             {
                 _logger.LogWarning("Unauthorized access to update settings.", new
                 {
                     SiteId = site.Id,
-                    MemberId = model.User?.Id,
+                    UserId = model.User?.Id,
                     User = User.Identity.Name
                 });
 
@@ -63,13 +63,13 @@ namespace Atlas.Server.Controllers.Public
 
             var command = new UpdateUser
             {
-                Id = member.Id,
+                Id = user.Id,
                 DisplayName = model.User.DisplayName,
                 SiteId = site.Id,
-                MemberId = member.Id
+                UserId = user.Id
             };
 
-            await _memberService.UpdateAsync(command);
+            await _userService.UpdateAsync(command);
 
             return Ok();
         }
@@ -77,7 +77,7 @@ namespace Atlas.Server.Controllers.Public
         [HttpGet("is-display-name-unique/{name}")]
         public async Task<IActionResult> IsDisplayNameUnique(string name)
         {
-            var isNameUnique = await _memberRules.IsDisplayNameUniqueAsync(name);
+            var isNameUnique = await _userRules.IsDisplayNameUniqueAsync(name);
             return Ok(isNameUnique);
         }
     }

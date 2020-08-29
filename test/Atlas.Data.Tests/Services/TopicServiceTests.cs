@@ -46,7 +46,7 @@ namespace Atlas.Data.Tests.Services
             {
                 var command = Fixture.Build<CreateTopic>()
                         .With(x => x.ForumId, forum.Id)
-                        .With(x => x.MemberId, memberId)
+                        .With(x => x.UserId, memberId)
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
@@ -70,7 +70,7 @@ namespace Atlas.Data.Tests.Services
 
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
-                var updatedMember = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == memberId);
+                var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == memberId);
 
                 createValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.NotNull(topic);
@@ -79,7 +79,7 @@ namespace Atlas.Data.Tests.Services
                 Assert.AreEqual(topic.Id, updatedForum.LastPostId);
                 Assert.AreEqual(forum.TopicsCount + 1, updatedForum.TopicsCount);
                 Assert.AreEqual(forum.TopicsCount + 1, updatedForum.TopicsCount);
-                Assert.AreEqual(member.TopicsCount + 1, updatedMember.TopicsCount);
+                Assert.AreEqual(member.TopicsCount + 1, updatedUser.TopicsCount);
             }
         }
 
@@ -289,13 +289,13 @@ namespace Atlas.Data.Tests.Services
 
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
-                var updatedMember = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == member.Id);
+                var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == member.Id);
 
                 Assert.AreEqual(StatusType.Deleted, topicDeleted.Status);
                 Assert.NotNull(topicEvent);
                 Assert.AreEqual(0, updatedCategory.TopicsCount);
                 Assert.AreEqual(0, updatedForum.TopicsCount);
-                Assert.AreEqual(0, updatedMember.TopicsCount);
+                Assert.AreEqual(0, updatedUser.TopicsCount);
             }
         }
     }

@@ -6,11 +6,11 @@ using Atlas.Domain.Users;
 
 namespace Atlas.Data.Rules
 {
-    public class MemberRules : IUserRules
+    public class UserRules : IUserRules
     {
         private readonly AtlasDbContext _dbContext;
 
-        public MemberRules(AtlasDbContext dbContext)
+        public UserRules(AtlasDbContext dbContext)
         {
             _dbContext = dbContext;
         }

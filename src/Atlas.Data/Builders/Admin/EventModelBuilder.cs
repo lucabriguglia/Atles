@@ -20,7 +20,7 @@ namespace Atlas.Data.Builders.Admin
         public async Task<TargetEventsComponentModel> BuildTargetModelAsync(Guid siteId, Guid id)
         {
             var events = await _dbContext.Events
-                .Include(x => x.Member)
+                .Include(x => x.User)
                 .Where(x => x.SiteId == siteId && x.TargetId == id)
                 .OrderByDescending(x => x.TimeStamp)
                 .ToListAsync();
@@ -43,8 +43,8 @@ namespace Atlas.Data.Builders.Admin
                     Id = @event.Id,
                     Type = @event.Type,
                     TimeStamp = @event.TimeStamp,
-                    MemberId = @event.MemberId,
-                    MemberName = @event.Member?.DisplayName ?? "<system>"
+                    UserId = @event.UserId,
+                    UserName = @event.User?.DisplayName ?? "<system>"
                 };
 
                 if (!string.IsNullOrWhiteSpace(@event.Data) && @event.Data != "null")
@@ -59,7 +59,7 @@ namespace Atlas.Data.Builders.Admin
                             x.Key != nameof(@event.TargetId) &&
                             x.Key != nameof(@event.TargetType) &&
                             x.Key != nameof(@event.SiteId) &&
-                            x.Key != nameof(@event.MemberId))
+                            x.Key != nameof(@event.UserId))
                         {
                             var value = !string.IsNullOrWhiteSpace(x.Value.ToString()) 
                                 ? x.Value.ToString()

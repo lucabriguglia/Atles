@@ -170,7 +170,7 @@ namespace Atlas.Data.Builders.Admin
                 }
             };
 
-            var query = _dbContext.Events.Where(x => x.SiteId == siteId && x.MemberId == userId);
+            var query = _dbContext.Events.Where(x => x.SiteId == siteId && x.UserId == userId);
 
             if (!string.IsNullOrWhiteSpace(options.Search))
             {
@@ -213,7 +213,7 @@ namespace Atlas.Data.Builders.Admin
                             x.Key == nameof(@event.TargetId) ||
                             x.Key == nameof(@event.TargetType) ||
                             x.Key == nameof(@event.SiteId) ||
-                            x.Key == nameof(@event.MemberId))
+                            x.Key == nameof(@event.UserId))
                             continue;
 
                         var value = !string.IsNullOrWhiteSpace(x.Value.ToString())

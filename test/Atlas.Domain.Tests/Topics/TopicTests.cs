@@ -21,7 +21,7 @@ namespace Atlas.Domain.Tests.Topics
             var sut = Post.CreateTopic(forumId, memberId, title, slug, content, status);
 
             Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
-            Assert.AreEqual(memberId, sut.MemberId, nameof(sut.MemberId));
+            Assert.AreEqual(memberId, sut.CreatedBy, nameof(sut.CreatedBy));
             Assert.AreEqual(title, sut.Title, nameof(sut.Title));
             Assert.AreEqual(slug, sut.Slug, nameof(sut.Slug));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
@@ -43,7 +43,7 @@ namespace Atlas.Domain.Tests.Topics
 
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
             Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
-            Assert.AreEqual(memberId, sut.MemberId, nameof(sut.MemberId));
+            Assert.AreEqual(memberId, sut.CreatedBy, nameof(sut.CreatedBy));
             Assert.AreEqual(title, sut.Title, nameof(sut.Title));
             Assert.AreEqual(slug, sut.Slug, nameof(sut.Slug));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));

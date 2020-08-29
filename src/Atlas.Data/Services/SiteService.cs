@@ -40,7 +40,7 @@ namespace Atlas.Data.Services
             site.UpdateDetails(command.Title, command.Theme, command.Css, command.Language, command.Privacy, command.Terms);
 
             _dbContext.Events.Add(new Event(site.Id,
-                command.MemberId,
+                command.UserId,
                 EventType.Updated,
                 typeof(Site),
                 site.Id,

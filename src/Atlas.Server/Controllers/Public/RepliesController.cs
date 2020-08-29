@@ -47,10 +47,10 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> CreateReply(TopicPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
-            var canReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !member.IsSuspended;
+            var canReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !user.IsSuspended;
 
             if (!canReply)
             {
@@ -72,7 +72,7 @@ namespace Atlas.Server.Controllers.Public
                 Content = model.Post.Content,
                 Status = StatusType.Published,
                 SiteId = site.Id,
-                MemberId = member.Id
+                UserId = user.Id
             };
 
             await _replyService.CreateAsync(command);
@@ -84,7 +84,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> UpdateReply(TopicPageModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new UpdateReply
             {
@@ -94,23 +94,23 @@ namespace Atlas.Server.Controllers.Public
                 Content = model.Post.Content,
                 Status = StatusType.Published,
                 SiteId = site.Id,
-                MemberId = member.Id
+                UserId = user.Id
             };
 
-            var replyMemberId = await _dbContext.Posts
+            var replyUserId = await _dbContext.Posts
                 .Where(x =>
                     x.Id == command.Id &&
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
                     x.Status != StatusType.Deleted)
-                .Select(x => x.MemberId)
+                .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
             var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
-            var authorized = (canEdit && replyMemberId == member.Id || canModerate) && !member.IsSuspended;
+            var authorized = (canEdit && replyUserId == user.Id || canModerate) && !user.IsSuspended;
 
             if (!authorized)
             {
@@ -135,7 +135,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> SetReplyAsAnswer(Guid forumId, Guid topicId, Guid replyId, [FromBody] bool isAnswer)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new SetReplyAsAnswer
             {
@@ -143,24 +143,24 @@ namespace Atlas.Server.Controllers.Public
                 TopicId = topicId,
                 ForumId = forumId,
                 SiteId = site.Id,
-                MemberId = member.Id,
+                UserId = user.Id,
                 IsAnswer = isAnswer
             };
 
-            var topicMemberId = await _dbContext.Posts
+            var topicUserId = await _dbContext.Posts
                 .Where(x =>
                     x.Id == command.Id &&
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
                     x.Status == StatusType.Published)
-                .Select(x => x.Topic.MemberId)
+                .Select(x => x.Topic.CreatedBy)
                 .FirstOrDefaultAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
             var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
-            var authorized = (canEdit && topicMemberId == member.Id || canModerate) && !member.IsSuspended;
+            var authorized = (canEdit && topicUserId == user.Id || canModerate) && !user.IsSuspended;
 
             if (!authorized)
             {
@@ -185,7 +185,7 @@ namespace Atlas.Server.Controllers.Public
         public async Task<ActionResult> DeleteReply(Guid forumId, Guid topicId, Guid replyId)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new DeleteReply
             {
@@ -193,23 +193,23 @@ namespace Atlas.Server.Controllers.Public
                 TopicId = topicId,
                 ForumId = forumId,
                 SiteId = site.Id,
-                MemberId = member.Id
+                UserId = user.Id
             };
 
-            var replyMemberId = await _dbContext.Posts
+            var replyUserId = await _dbContext.Posts
                 .Where(x =>
                     x.Id == command.Id &&
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
                     x.Status != StatusType.Deleted)
-                .Select(x => x.MemberId)
+                .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 
             var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
             var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
-            var authorized = (canDelete && replyMemberId == member.Id || canModerate) && !member.IsSuspended;
+            var authorized = (canDelete && replyUserId == user.Id || canModerate) && !user.IsSuspended;
 
             if (!authorized)
             {

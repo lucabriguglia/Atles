@@ -12,7 +12,7 @@ namespace Atlas.Client.Components.Themes
         [Inject] public IJSRuntime JsRuntime { get; set; }
         [Inject] public IStringLocalizer<PublicResources> Loc { get; set; }
 
-        [CascadingParameter] protected CurrentUserModel Member { get; set; }
+        [CascadingParameter] protected CurrentUserModel User { get; set; }
         [CascadingParameter] protected CurrentSiteModel Site { get; set; }
 
         protected override async Task OnInitializedAsync()

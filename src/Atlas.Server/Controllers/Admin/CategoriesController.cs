@@ -48,14 +48,14 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Save(FormComponentModel.CategoryModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new CreateCategory
             {
                 Name = model.Name,
                 PermissionSetId = model.PermissionSetId,
                 SiteId = site.Id,
-                MemberId = member.Id
+                UserId = user.Id
             };
 
             await _categoryService.CreateAsync(command);
@@ -82,7 +82,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Update(FormComponentModel.CategoryModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new UpdateCategory
             {
@@ -90,7 +90,7 @@ namespace Atlas.Server.Controllers.Admin
                 Name = model.Name,
                 PermissionSetId = model.PermissionSetId,
                 SiteId = site.Id,
-                MemberId = member.Id
+                UserId = user.Id
             };
 
             await _categoryService.UpdateAsync(command);
@@ -102,13 +102,13 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> MoveUp([FromBody] Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new MoveCategory
             {
                 Id = id,
                 SiteId = site.Id,
-                MemberId = member.Id,
+                UserId = user.Id,
                 Direction = Direction.Up
             };
 
@@ -121,13 +121,13 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> MoveDown([FromBody] Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new MoveCategory
             {
                 Id = id,
                 SiteId = site.Id,
-                MemberId = member.Id,
+                UserId = user.Id,
                 Direction = Direction.Down
             };
 
@@ -140,13 +140,13 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Delete(Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentUserAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new DeleteCategory
             {
                 Id = id,
                 SiteId = site.Id,
-                MemberId = member.Id
+                UserId = user.Id
             };
 
             await _categoryService.DeleteAsync(command);

@@ -21,7 +21,7 @@ namespace Atlas.Domain.Tests.Replies
 
             Assert.AreEqual(topicId, sut.TopicId, nameof(sut.TopicId));
             Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
-            Assert.AreEqual(memberId, sut.MemberId, nameof(sut.MemberId));
+            Assert.AreEqual(memberId, sut.CreatedBy, nameof(sut.CreatedBy));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
         }
@@ -41,7 +41,7 @@ namespace Atlas.Domain.Tests.Replies
             Assert.AreEqual(id, sut.Id, nameof(sut.Id));
             Assert.AreEqual(topicId, sut.TopicId, nameof(sut.TopicId));
             Assert.AreEqual(forumId, sut.ForumId, nameof(sut.ForumId));
-            Assert.AreEqual(memberId, sut.MemberId, nameof(sut.MemberId));
+            Assert.AreEqual(memberId, sut.CreatedBy, nameof(sut.CreatedBy));
             Assert.AreEqual(content, sut.Content, nameof(sut.Content));
             Assert.AreEqual(status, sut.Status, nameof(sut.Status));
         }

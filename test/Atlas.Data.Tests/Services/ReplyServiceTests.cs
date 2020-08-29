@@ -50,7 +50,7 @@ namespace Atlas.Data.Tests.Services
                 var command = Fixture.Build<CreateReply>()
                         .With(x => x.ForumId, forum.Id)
                         .With(x => x.TopicId, topicId)
-                        .With(x => x.MemberId, memberId)
+                        .With(x => x.UserId, memberId)
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
@@ -75,7 +75,7 @@ namespace Atlas.Data.Tests.Services
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
                 var updatedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == topic.Id);
-                var updatedMember = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == memberId);
+                var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == memberId);
 
                 createValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.NotNull(reply);
@@ -85,7 +85,7 @@ namespace Atlas.Data.Tests.Services
                 Assert.AreEqual(forum.RepliesCount + 1, updatedForum.RepliesCount);
                 Assert.AreEqual(topic.RepliesCount + 1, updatedTopic.RepliesCount);
                 Assert.AreEqual(reply.Id, updatedTopic.LastReplyId);
-                Assert.AreEqual(member.RepliesCount + 1, updatedMember.RepliesCount);
+                Assert.AreEqual(member.RepliesCount + 1, updatedUser.RepliesCount);
             }
         }
 
@@ -268,14 +268,14 @@ namespace Atlas.Data.Tests.Services
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
                 var updatedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == topic.Id);
-                var updatedMember = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == member.Id);
+                var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == member.Id);
 
                 Assert.AreEqual(StatusType.Deleted, replyDeleted.Status);
                 Assert.NotNull(replyEvent);
                 Assert.AreEqual(0, updatedCategory.RepliesCount);
                 Assert.AreEqual(0, updatedForum.RepliesCount);
                 Assert.AreEqual(0, updatedTopic.RepliesCount);
-                Assert.AreEqual(0, updatedMember.RepliesCount);
+                Assert.AreEqual(0, updatedUser.RepliesCount);
             }
         }
     }

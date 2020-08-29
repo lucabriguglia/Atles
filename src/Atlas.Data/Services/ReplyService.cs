@@ -35,14 +35,14 @@ namespace Atlas.Data.Services
             var reply = Post.CreateReply(command.Id,
                 command.TopicId,
                 command.ForumId,
-                command.MemberId,
+                command.UserId,
                 command.Content,
                 command.Status);
 
             _dbContext.Posts.Add(reply);
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Created,
                 typeof(Post),
                 command.Id,
@@ -65,7 +65,7 @@ namespace Atlas.Data.Services
             topic.Forum.IncreaseRepliesCount();
             topic.Forum.Category.IncreaseRepliesCount();
 
-            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == reply.MemberId);
+            var member = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == reply.CreatedBy);
             member.IncreaseRepliesCount();
 
             await _dbContext.SaveChangesAsync();
@@ -90,10 +90,10 @@ namespace Atlas.Data.Services
                 throw new DataException($"Reply with Id {command.Id} not found.");
             }
 
-            reply.UpdateDetails(command.MemberId, command.Content, command.Status);
+            reply.UpdateDetails(command.UserId, command.Content, command.Status);
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Updated,
                 typeof(Post),
                 command.Id,
@@ -125,7 +125,7 @@ namespace Atlas.Data.Services
             reply.SetAsAnswer(command.IsAnswer);
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Updated,
                 typeof(Post),
                 command.Id,
@@ -160,7 +160,7 @@ namespace Atlas.Data.Services
             reply.Delete();
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Deleted,
                 typeof(Post),
                 command.Id));
@@ -182,7 +182,7 @@ namespace Atlas.Data.Services
                                 x.Status == StatusType.Published &&
                                 (x.Topic == null || x.Topic.Status == StatusType.Published) &&
                                 x.Id != reply.Id)
-                    .OrderByDescending(x => x.TimeStamp)
+                    .OrderByDescending(x => x.CreatedOn)
                     .FirstOrDefaultAsync();
 
                 if (newLastPost != null)

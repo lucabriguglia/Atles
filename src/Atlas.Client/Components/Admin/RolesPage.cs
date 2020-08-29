@@ -14,7 +14,7 @@ namespace Atlas.Client.Components.Admin
         protected string EditButton => IsEdit ? Loc["Update"] : Loc["Save"];
 
         protected bool DisplayForm { get; set; }
-        protected bool DisplayMembers { get; set; }
+        protected bool DisplayUsers { get; set; }
         protected bool Loading { get; set; }
         protected bool IsEdit { get; set; }
         protected string DeleteId { get; set; }
@@ -24,7 +24,7 @@ namespace Atlas.Client.Components.Admin
         protected override async Task OnInitializedAsync()
         {
             DisplayForm = false;
-            DisplayMembers = false;
+            DisplayUsers = false;
             IsEdit = false;
             Model = await ApiService.GetFromJsonAsync<IndexPageModel>("api/admin/roles/list");
         }
@@ -32,7 +32,7 @@ namespace Atlas.Client.Components.Admin
         protected async Task NewAsync()
         {
             DisplayForm = true;
-            DisplayMembers = false;
+            DisplayUsers = false;
             IsEdit = false;
             Model.EditRole.Id = null;
             Model.EditRole.Name = null;
@@ -42,7 +42,7 @@ namespace Atlas.Client.Components.Admin
         protected async Task EditAsync(string id, string name)
         {
             DisplayForm = true;
-            DisplayMembers = false;
+            DisplayUsers = false;
             IsEdit = true;
             Model.EditRole.Id = id;
             Model.EditRole.Name = name;
@@ -59,7 +59,7 @@ namespace Atlas.Client.Components.Admin
         protected void Cancel()
         {
             DisplayForm = false;
-            DisplayMembers = false;
+            DisplayUsers = false;
             IsEdit = false;
             Model.EditRole.Id = null;
             Model.EditRole.Name = null;
@@ -86,7 +86,7 @@ namespace Atlas.Client.Components.Admin
             
             Loading = true;
             DisplayForm = false;
-            DisplayMembers = true;
+            DisplayUsers = true;
             RoleForUsers = roleName;
             await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "users");
             Model.UsersInRole = await ApiService.GetFromJsonAsync<IList<IndexPageModel.UserModel>>($"api/admin/roles/users-in-role/{roleName}");

@@ -44,9 +44,9 @@ namespace Atlas.Models.Public.Topics
             public Guid Id { get; set; }
             public string Content { get; set; }
             public string OriginalContent { get; set; }
-            public string UserId { get; set; }
-            public Guid MemberId { get; set; }
-            public string MemberDisplayName { get; set; }
+            public string IdentityUserId { get; set; }
+            public Guid UserId { get; set; }
+            public string UserDisplayName { get; set; }
             public DateTime TimeStamp { get; set; }
             public string GravatarHash { get; set; }
             public bool IsAnswer { get; set; }
@@ -59,7 +59,7 @@ namespace Atlas.Models.Public.Topics
             [Required]
             public string Content { get; set; }
 
-            public Guid MemberId { get; set; }
+            public Guid UserId { get; set; }
         }
     }
 }
