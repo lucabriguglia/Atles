@@ -48,7 +48,7 @@ else
                                             <span class="ml-2">
                                                 @((MarkupString)string.Format(Loc["Latest: {0} by {1} on {2}"],
                                                 $"<a href=\"{Url.Topic(forum.Slug, forum.LastTopicSlug)}\" title=\"{forum.LastTopicTitle}\">{forum.LastTopicTitle.ToSafeLengthText(15)}</a>",
-                                                $"<a href=\"/member/{forum.LastPostUserId}\" title=\"{forum.LastPostUserDisplayName}\">{forum.LastPostUserDisplayName.ToSafeLengthText(10)}</a>",
+                                                $"<a href=\"/user/{forum.LastPostUserId}\" title=\"{forum.LastPostUserDisplayName}\">{forum.LastPostUserDisplayName.ToSafeLengthText(10)}</a>",
                                                 forum.LastPostTimeStamp.Value.ToAppLocalDateAndTime()))
                                             </span>
                                         }

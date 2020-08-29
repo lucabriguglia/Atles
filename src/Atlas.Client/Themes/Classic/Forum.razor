@@ -82,7 +82,7 @@ else
                         {
                             <tr>
                                 <td>
-                                    <a href="/member/@item.UserId" title="@item.UserDisplayName">
+                                    <a href="/user/@item.UserId" title="@item.UserDisplayName">
                                         <Avatar GravatarHash="@item.GravatarHash" GravatarSize="32" Class="mb-2"></Avatar>
                                     </a>
                                 </td>
@@ -112,7 +112,7 @@ else
                                 <td class="text-center">@item.TotalReplies</td>
                                 <td class="small">
                                     @((MarkupString)string.Format(Loc["Latest by {0} on {1}"],
-                                        $"<a href=\"/member/{item.MostRecentUserId}\" title=\"{item.MostRecentUserDisplayName}\">{item.MostRecentUserDisplayName.ToSafeLengthText(10)}</a>",
+                                        $"<a href=\"/user/{item.MostRecentUserId}\" title=\"{item.MostRecentUserDisplayName}\">{item.MostRecentUserDisplayName.ToSafeLengthText(10)}</a>",
                                         item.MostRecentTimeStamp.ToAppLocalDateAndTime()))
                                 </td>
                             </tr>

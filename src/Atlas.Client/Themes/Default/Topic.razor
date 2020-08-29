@@ -42,7 +42,7 @@ else
                             <div class="row small">
                                 <div><Avatar GravatarHash="@Model.Topic.GravatarHash" GravatarSize="32" Class="mr-3"></Avatar></div>
                                 <div>
-                                    <div class="font-weight-bold"><a href="/member/@Model.Topic.UserId">@Model.Topic.UserDisplayName</a></div>
+                                    <div class="font-weight-bold"><a href="/user/@Model.Topic.UserId">@Model.Topic.UserDisplayName</a></div>
                                     <div class="text-secondary">@Model.Topic.TimeStamp.ToAppLocalDateAndTime()</div>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@ else
                                 <div class="row small">
                                     <div><Avatar GravatarHash="@Model.Answer.GravatarHash" GravatarSize="32" Class="mr-3"></Avatar></div>
                                     <div>
-                                        <div class="font-weight-bold"><a href="/member/@Model.Answer.MemberId">@Model.Answer.MemberDisplayName</a></div>
+                                        <div class="font-weight-bold"><a href="/user/@Model.Answer.MemberId">@Model.Answer.MemberDisplayName</a></div>
                                         <div class="text-secondary">@Model.Answer.TimeStamp.ToAppLocalDateAndTime()</div>
                                     </div>
                                 </div>
@@ -144,7 +144,7 @@ else
                                             <div class="row small">
                                                 <div><Avatar GravatarHash="@reply.GravatarHash" GravatarSize="32" Class="mr-3"></Avatar></div>
                                                 <div>
-                                                    <div class="font-weight-bold"><a href="/member/@reply.MemberId">@reply.MemberDisplayName</a></div>
+                                                    <div class="font-weight-bold"><a href="/user/@reply.MemberId">@reply.MemberDisplayName</a></div>
                                                     <div class="text-secondary">@reply.TimeStamp.ToAppLocalDateAndTime()</div>
                                                 </div>
                                             </div>
