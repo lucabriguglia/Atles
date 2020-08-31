@@ -31,7 +31,7 @@
             <div class="form-group">
                 <label for="permissionSetId" class="control-label">@Loc["Permission Set"]</label>
                 <select id="permissionSetId" @bind="Model.Forum.PermissionSetId" class="form-control">
-                    <option value="@Guid.Empty" selected="">&lt;@Loc["Inherit from Category"]&gt;</option>
+                    <option value="@Guid.Empty">&lt;@Loc["Inherit from Category"]&gt;</option>
                     @foreach (var item in Model.PermissionSets)
                     {
                         <option value="@item.Id">@item.Name</option>

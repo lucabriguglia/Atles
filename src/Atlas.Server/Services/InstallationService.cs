@@ -128,6 +128,7 @@ namespace Atlas.Server.Services
             if (memberAdmin == null)
             {
                 memberAdmin = new User(userAdmin.Id, _configuration["DefaultAdminUserEmail"], _configuration["DefaultAdminUserDisplayName"]);
+                memberAdmin.Confirm();
                 _dbContext.Users.Add(memberAdmin);
                 _dbContext.Events.Add(new Event(site.Id,
                     null,
@@ -148,6 +149,7 @@ namespace Atlas.Server.Services
                 if (memberNormal == null)
                 {
                     memberNormal = new User(userNormalId, _configuration["DefaultNormalUserEmail"], _configuration["DefaultNormalUserDisplayName"]);
+                    memberNormal.Confirm();
                     _dbContext.Users.Add(memberNormal);
                     _dbContext.Events.Add(new Event(site.Id,
                         null,
@@ -169,6 +171,7 @@ namespace Atlas.Server.Services
                 if (memberModerator == null)
                 {
                     memberModerator = new User(userModeratorId, _configuration["DefaultModeratorUserEmail"], _configuration["DefaultModeratorUserDisplayName"]);
+                    memberModerator.Confirm();
                     _dbContext.Users.Add(memberModerator);
                     _dbContext.Events.Add(new Event(site.Id,
                         null,
