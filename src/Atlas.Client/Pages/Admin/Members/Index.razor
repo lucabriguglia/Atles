@@ -30,7 +30,7 @@ else
             <label class="input-group-text" for="memberStatus">@Loc["Status"]</label>
         </div>
         <select class="custom-select" id="memberStatus" @onchange="StatusChangedAsync">
-            <option value="">@Loc["All"]</option>
+            <option>@Loc["All"]</option>
             @foreach (var option in Model.Status)
             {
                 <option value=@option>@Loc[$"{option}"]</option>
