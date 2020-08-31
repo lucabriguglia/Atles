@@ -29,7 +29,7 @@ namespace Atlas.Models.Public.Posts
             [Required]
             public string Content { get; set; }
 
-            public Guid MemberId { get; set; }
+            public Guid UserId { get; set; }
 
             public bool Locked { get; set; }
         }

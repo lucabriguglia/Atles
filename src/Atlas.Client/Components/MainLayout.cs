@@ -12,12 +12,12 @@ namespace Atlas.Client.Components
         [Inject] public IJSRuntime JsRuntime { get; set; }
         [Inject] public ApiService ApiService { get; set; }
 
-        protected CurrentMemberModel Member { get; set; }
+        protected CurrentUserModel User { get; set; }
         protected CurrentSiteModel Site { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Member = await ApiService.GetFromJsonAsync<CurrentMemberModel>("api/public/current-member");
+            User = await ApiService.GetFromJsonAsync<CurrentUserModel>("api/public/current-user");
             Site = await ApiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
             await JsRuntime.InvokeVoidAsync("atlas.interop.changePageTitle", Site.Title);
         }

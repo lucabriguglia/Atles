@@ -40,7 +40,7 @@ namespace Atlas.Data.Services
             _dbContext.PermissionSets.Add(permissionSet);
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Created,
                 typeof(PermissionSet),
                 command.Id,
@@ -78,7 +78,7 @@ namespace Atlas.Data.Services
             permissionSet.UpdateDetails(command.Name, command.Permissions);
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Updated,
                 typeof(PermissionSet),
                 command.Id,
@@ -116,7 +116,7 @@ namespace Atlas.Data.Services
             permissionSet.Delete();
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Deleted,
                 typeof(PermissionSet),
                 command.Id));

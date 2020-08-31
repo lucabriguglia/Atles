@@ -11,7 +11,7 @@ namespace Atlas.Data.Configurations
             builder.ToTable("Event");
 
             builder
-                .HasOne(x => x.Member)
+                .HasOne(x => x.User)
                 .WithMany(x => x.Events)
                 .OnDelete(DeleteBehavior.NoAction);
         }

@@ -1,0 +1,88 @@
+﻿@page "/admin/users/edit/{id:guid}"
+@page "/admin/users/edit-by-identity-user-id/{identityUserId}"
+
+@inherits Atlas.Client.Components.Admin.Users.EditPage
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item"><a href="/admin/users">@Loc["Users"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Loc["Edit User"]</li>
+    </ol>
+</nav>
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <div class="row">
+        <div class="col-md-6">
+            <h3 class="mb-3">@Loc["Edit User"]</h3>
+        </div>
+        <div class="col-md-6 text-right mb-3">
+            <a href="/admin/users/activity/@Model.User.Id" class="btn btn-primary" role="button">@Loc["Activity"]</a>
+        </div>
+    </div>
+
+    <Form Model="Model" Button="Update" OnValidSubmit="@UpdateAsync"></Form>
+
+    <div>
+        <a class="btn btn-outline-info mb-3" data-toggle="collapse" href="#info" role="button" aria-expanded="false" aria-controls="info">
+            @Loc["View Info"]
+        </a>
+        <div class="collapse" id="info">
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">@Loc["Status"]:</label>
+                        <label class="">@Model.Info.Status</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">@Loc["User Id"]:</label>
+                        <label class="">@Model.Info.UserId</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">@Loc["User Name"]:</label>
+                        <label class="">@Model.Info.UserName</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">@Loc["Email"]:</label>
+                        <label class="">@Model.Info.Email</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">@Loc["Email Confirmed"]:</label>
+                        <label class="">@Model.Info.EmailConfirmed</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">@Loc["Phone Number"]:</label>
+                        <label class="">@Model.Info.PhoneNumber</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">@Loc["Phone Number Confirmed"]:</label>
+                        <label class="">@Model.Info.PhoneNumberConfirmed</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">@Loc["Two Factor Enabled"]:</label>
+                        <label class="">@Model.Info.TwoFactorEnabled</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">@Loc["Lockout Enabled"]:</label>
+                        <label class="">@Model.Info.LockoutEnabled</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">@Loc["Lockout End"]:</label>
+                        <label class="">@Model.Info.LockoutEnd</label>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label font-weight-bold">@Loc["Access Failed Count"]:</label>
+                        <label class="">@Model.Info.AccessFailedCount</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <TargetEvents Id="Id"></TargetEvents>
+}

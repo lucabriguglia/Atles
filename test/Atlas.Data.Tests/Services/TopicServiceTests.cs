@@ -6,9 +6,9 @@ using Atlas.Data.Services;
 using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
-using Atlas.Domain.Members;
 using Atlas.Domain.Posts;
 using Atlas.Domain.Posts.Commands;
+using Atlas.Domain.Users;
 using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;
@@ -28,17 +28,17 @@ namespace Atlas.Data.Tests.Services
 
             var categoryId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
-            var memberId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
 
             var category = new Category(categoryId, Guid.NewGuid(), "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
-            var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
+            var user = new User(userId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
-                dbContext.Members.Add(member);
+                dbContext.Users.Add(user);
                 await dbContext.SaveChangesAsync();
             }
 
@@ -46,7 +46,7 @@ namespace Atlas.Data.Tests.Services
             {
                 var command = Fixture.Build<CreateTopic>()
                         .With(x => x.ForumId, forum.Id)
-                        .With(x => x.MemberId, memberId)
+                        .With(x => x.UserId, userId)
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
@@ -70,7 +70,7 @@ namespace Atlas.Data.Tests.Services
 
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
-                var updatedMember = await dbContext.Members.FirstOrDefaultAsync(x => x.Id == memberId);
+                var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
 
                 createValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.NotNull(topic);
@@ -79,7 +79,7 @@ namespace Atlas.Data.Tests.Services
                 Assert.AreEqual(topic.Id, updatedForum.LastPostId);
                 Assert.AreEqual(forum.TopicsCount + 1, updatedForum.TopicsCount);
                 Assert.AreEqual(forum.TopicsCount + 1, updatedForum.TopicsCount);
-                Assert.AreEqual(member.TopicsCount + 1, updatedMember.TopicsCount);
+                Assert.AreEqual(user.TopicsCount + 1, updatedUser.TopicsCount);
             }
         }
 
@@ -244,23 +244,23 @@ namespace Atlas.Data.Tests.Services
             var siteId = Guid.NewGuid();
             var categoryId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
-            var memberId = Guid.NewGuid();
+            var userId = Guid.NewGuid();
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
-            var topic = Post.CreateTopic(forumId, memberId, "Title", "slug", "Content", StatusType.Published);
-            var member = new Member(memberId, Guid.NewGuid().ToString(), "Email", "Display Name");
+            var topic = Post.CreateTopic(forumId, userId, "Title", "slug", "Content", StatusType.Published);
+            var user = new User(userId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
             category.IncreaseTopicsCount();
             forum.IncreaseTopicsCount();
-            member.IncreaseTopicsCount();
+            user.IncreaseTopicsCount();
 
             using (var dbContext = new AtlasDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
                 dbContext.Posts.Add(topic);
-                dbContext.Members.Add(member);
+                dbContext.Users.Add(user);
 
                 await dbContext.SaveChangesAsync();
             }
@@ -289,13 +289,13 @@ namespace Atlas.Data.Tests.Services
 
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
-                var updatedMember = await dbContext.Members.FirstOrDefaultAsync(x => x.Id == member.Id);
+                var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
 
                 Assert.AreEqual(StatusType.Deleted, topicDeleted.Status);
                 Assert.NotNull(topicEvent);
                 Assert.AreEqual(0, updatedCategory.TopicsCount);
                 Assert.AreEqual(0, updatedForum.TopicsCount);
-                Assert.AreEqual(0, updatedMember.TopicsCount);
+                Assert.AreEqual(0, updatedUser.TopicsCount);
             }
         }
     }

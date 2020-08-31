@@ -53,11 +53,11 @@ namespace Atlas.Data.Builders.Public
 
             postsQuery = options.OrderByIsDefined() 
                 ? postsQuery.OrderBy(options) 
-                : postsQuery.OrderByDescending(x => x.TimeStamp);
+                : postsQuery.OrderByDescending(x => x.CreatedOn);
 
             if (memberId != null)
             {
-                postsQuery = postsQuery.Where(x => x.MemberId == memberId);
+                postsQuery = postsQuery.Where(x => x.CreatedBy == memberId);
             }
 
             var posts = await postsQuery
@@ -71,9 +71,9 @@ namespace Atlas.Data.Builders.Public
                     Title = p.Title ?? p.Topic.Title,
                     Slug = p.Slug ?? p.Topic.Slug,
                     p.Content,
-                    p.TimeStamp,
-                    p.MemberId,
-                    MemberDisplayName = p.CreatedByMember.DisplayName,
+                    TimeStamp = p.CreatedOn,
+                    UserId = p.CreatedBy,
+                    UserDisplayName = p.CreatedByUser.DisplayName,
                     p.ForumId,
                     ForumName = p.Forum.Name,
                     ForumSlug = p.Forum.Slug
@@ -89,8 +89,8 @@ namespace Atlas.Data.Builders.Public
                 Slug = post.Slug,
                 Content = Markdown.ToHtml(post.Content),
                 TimeStamp = post.TimeStamp,
-                MemberId = post.MemberId,
-                MemberDisplayName = post.MemberDisplayName,
+                UserId = post.UserId,
+                UserDisplayName = post.UserDisplayName,
                 ForumId = post.ForumId,
                 ForumName = post.ForumName,
                 ForumSlug = post.ForumSlug

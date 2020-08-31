@@ -43,7 +43,7 @@ namespace Atlas.Data.Services
 
             var topic = Post.CreateTopic(command.Id,
                 command.ForumId,
-                command.MemberId,
+                command.UserId,
                 title,
                 slug,
                 command.Content,
@@ -51,7 +51,7 @@ namespace Atlas.Data.Services
 
             _dbContext.Posts.Add(topic);
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Created,
                 typeof(Post),
                 command.Id,
@@ -69,8 +69,8 @@ namespace Atlas.Data.Services
             forum.IncreaseTopicsCount();
             forum.Category.IncreaseTopicsCount();
 
-            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.Id == topic.MemberId);
-            member.IncreaseTopicsCount();
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == topic.CreatedBy);
+            user.IncreaseTopicsCount();
 
             await _dbContext.SaveChangesAsync();
 
@@ -102,10 +102,10 @@ namespace Atlas.Data.Services
                 ? await GenerateSlugAsync(command.ForumId, title)
                 : command.Slug;
 
-            topic.UpdateDetails(command.MemberId, title, slug, command.Content, command.Status);
+            topic.UpdateDetails(command.UserId, title, slug, command.Content, command.Status);
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Updated,
                 typeof(Post),
                 command.Id,
@@ -167,7 +167,7 @@ namespace Atlas.Data.Services
             topic.Pin(command.Pinned);
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Pinned,
                 typeof(Post),
                 command.Id));
@@ -195,7 +195,7 @@ namespace Atlas.Data.Services
             topic.Lock(command.Locked);
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Locked,
                 typeof(Post),
                 command.Id));
@@ -206,7 +206,7 @@ namespace Atlas.Data.Services
         public async Task DeleteAsync(DeleteTopic command)
         {
             var topic = await _dbContext.Posts
-                .Include(x => x.CreatedByMember)
+                .Include(x => x.CreatedByUser)
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Forum).ThenInclude(x => x.LastPost)
                 .FirstOrDefaultAsync(x =>
@@ -224,14 +224,14 @@ namespace Atlas.Data.Services
             topic.Delete();
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Deleted,
                 typeof(Post),
                 command.Id));
 
             topic.Forum.DecreaseTopicsCount();
             topic.Forum.Category.DecreaseTopicsCount();
-            topic.CreatedByMember.DecreaseTopicsCount();
+            topic.CreatedByUser.DecreaseTopicsCount();
 
             if (topic.Forum.LastPost != null && (topic.Id == topic.Forum.LastPostId || topic.Id == topic.Forum.LastPost.TopicId))
             {
@@ -240,7 +240,7 @@ namespace Atlas.Data.Services
                                 x.Status == StatusType.Published &&
                                 (x.Topic == null || x.Topic.Status == StatusType.Published) &&
                                 x.Id != topic.Id)
-                    .OrderByDescending(x => x.TimeStamp)
+                    .OrderByDescending(x => x.CreatedOn)
                     .FirstOrDefaultAsync();
 
                 if (newLastPost != null)

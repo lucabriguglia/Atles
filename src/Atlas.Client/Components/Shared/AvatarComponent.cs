@@ -7,13 +7,13 @@ namespace Atlas.Client.Components.Shared
         [Parameter] public string GravatarHash { get; set; }
         [Parameter] public int GravatarSize { get; set; }
         [Parameter] public string Class { get; set; }
-        [Parameter] public bool CurrentMember { get; set; }
+        [Parameter] public bool CurrentUser { get; set; }
 
         protected override void OnInitialized()
         {
-            if (CurrentMember)
+            if (CurrentUser)
             {
-                GravatarHash = Member.GravatarHash;
+                GravatarHash = User.GravatarHash;
             }
         }
     }

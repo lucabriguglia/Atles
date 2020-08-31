@@ -15,8 +15,8 @@ namespace Atlas.Models.Admin.Events
             public Guid Id { get; set; }
             public DateTime TimeStamp { get; set; }
             public string Type { get; set; }
-            public Guid? MemberId { get; set; }
-            public string MemberName { get; set; }
+            public Guid? UserId { get; set; }
+            public string UserName { get; set; }
             public Dictionary<string, string> Data { get; set; }
         }
     }

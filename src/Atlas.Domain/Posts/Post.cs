@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
 using Atlas.Domain.Forums;
-using Atlas.Domain.Members;
+using Atlas.Domain.Users;
 
 namespace Atlas.Domain.Posts
 {
@@ -16,13 +16,13 @@ namespace Atlas.Domain.Posts
         public StatusType Status { get; private set; }
 
         [Column("CreatedBy")]
-        [ForeignKey("CreatedByMember")]
-        public Guid MemberId { get; private set; }
+        [ForeignKey("CreatedByUser")]
+        public Guid CreatedBy { get; private set; }
 
         [Column("CreatedOn")]
-        public DateTime TimeStamp { get; private set; }
+        public DateTime CreatedOn { get; private set; }
 
-        [ForeignKey("ModifiedByMember")]
+        [ForeignKey("ModifiedByUser")]
         public Guid? ModifiedBy { get; private set; }
         public DateTime? ModifiedOn { get; private set; }
 
@@ -40,8 +40,8 @@ namespace Atlas.Domain.Posts
         public virtual Post Topic { get; set; }
         public virtual Post LastReply { get; set; }
         public virtual Forum Forum { get; set; }
-        public virtual Member CreatedByMember { get; set; }
-        public virtual Member ModifiedByMember { get; set; }
+        public virtual User CreatedByUser { get; set; }
+        public virtual User ModifiedByUser { get; set; }
         
         public Post()
         {
@@ -73,12 +73,12 @@ namespace Atlas.Domain.Posts
             Id = id;
             TopicId = topicId;
             ForumId = forumId;
-            MemberId = memberId;
+            CreatedBy = memberId;
             Title = title;
             Slug = slug;
             Content = content;
             Status = status;
-            TimeStamp = DateTime.UtcNow;
+            CreatedOn = DateTime.UtcNow;
         }
 
         public void UpdateDetails(Guid memberId, string title, string slug, string content, StatusType status)

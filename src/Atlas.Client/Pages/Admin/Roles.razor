@@ -90,7 +90,7 @@ else
     }
 
     <a id="users"></a>
-    @if (DisplayMembers)
+    @if (DisplayUsers)
     {
         if (Loading)
         {
@@ -118,7 +118,7 @@ else
                             <tr>
                                 <td>@item.Email</td>
                                 <td>
-                                    <a href="/admin/members/edit-by-user-id/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Edit"]</a>
+                                    <a href="/admin/users/edit-by-identity-user-id/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Edit"]</a>
                                     @if (RoleForUsers != Consts.RoleNameAdmin)
                                     {
                                         <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#remove-user-from-role-confirm-modal" data-id="@item.Id" @onclick="() => SetUseIdToRemove(item.Id)">@Loc["Remove"]</button>

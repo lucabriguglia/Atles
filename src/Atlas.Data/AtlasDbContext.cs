@@ -2,9 +2,9 @@
 using Atlas.Domain;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
-using Atlas.Domain.Members;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.Sites;
+using Atlas.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Post = Atlas.Domain.Posts.Post;
 
@@ -27,7 +27,7 @@ namespace Atlas.Data
         public DbSet<Category> Categories { get; set; }
         public DbSet<Event> Events { get; set; }
         public DbSet<Forum> Forums { get; set; }
-        public DbSet<Member> Members { get; set; }
+        public DbSet<User> Users { get; set; }
         public DbSet<PermissionSet> PermissionSets { get; set; }
         public DbSet<Permission> Permissions { get; set; }
         public DbSet<Post> Posts { get; set; }

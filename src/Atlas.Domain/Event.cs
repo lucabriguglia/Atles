@@ -1,6 +1,7 @@
 ﻿using Newtonsoft.Json;
 using System;
-using Atlas.Domain.Members;
+using System.ComponentModel.DataAnnotations.Schema;
+using Atlas.Domain.Users;
 
 namespace Atlas.Domain
 {
@@ -13,10 +14,11 @@ namespace Atlas.Domain
         public string TargetType { get; private set; }
         public string Type { get; private set; }
         public string Data { get; private set; }
-        
-        public Guid? MemberId { get; private set; }
 
-        public virtual Member Member { get; set; }
+        [Column("UserId")]
+        public Guid? UserId { get; private set; }
+
+        public virtual User User { get; set; }
 
         public Event()
         {
@@ -24,7 +26,7 @@ namespace Atlas.Domain
         }
 
         public Event(Guid siteId, 
-            Guid? memberId, 
+            Guid? userId, 
             EventType eventType, 
             Type targetType, 
             Guid targetId, 
@@ -33,7 +35,7 @@ namespace Atlas.Domain
             Type = eventType.ToString();
             TargetType = targetType.Name;
             TargetId = targetId;
-            MemberId = memberId;
+            UserId = userId;
             SiteId = siteId;
             Data = JsonConvert.SerializeObject(data);
         }

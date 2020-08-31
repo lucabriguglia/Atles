@@ -42,7 +42,7 @@ else
                             <div class="row small">
                                 <div><Avatar GravatarHash="@Model.Topic.GravatarHash" GravatarSize="32" Class="mr-3"></Avatar></div>
                                 <div>
-                                    <div class="font-weight-bold"><a href="/member/@Model.Topic.MemberId">@Model.Topic.MemberDisplayName</a></div>
+                                    <div class="font-weight-bold"><a href="/user/@Model.Topic.UserId">@Model.Topic.UserDisplayName</a></div>
                                     <div class="text-secondary">@Model.Topic.TimeStamp.ToAppLocalDateAndTime()</div>
                                 </div>
                             </div>
@@ -76,7 +76,7 @@ else
                                 <div class="row small">
                                     <div><Avatar GravatarHash="@Model.Answer.GravatarHash" GravatarSize="32" Class="mr-3"></Avatar></div>
                                     <div>
-                                        <div class="font-weight-bold"><a href="/member/@Model.Answer.MemberId">@Model.Answer.MemberDisplayName</a></div>
+                                        <div class="font-weight-bold"><a href="/user/@Model.Answer.UserId">@Model.Answer.UserDisplayName</a></div>
                                         <div class="text-secondary">@Model.Answer.TimeStamp.ToAppLocalDateAndTime()</div>
                                     </div>
                                 </div>
@@ -86,9 +86,9 @@ else
                             <PostMenu PostId="@Model.Answer.Id"
                                       CanRemoveAnswer="CanEditTopic()"
                                       RemoveAnswerCallback="@(async () => await SetAnswerAsync(Model.Answer.Id, false))"
-                                      CanEdit="CanEditReply(Model.Answer.UserId)"
-                                      EditCallback="@(async () => await EditReplyAsync(Model.Answer.Id, Model.Answer.OriginalContent, Model.Answer.MemberId, true))"
-                                      CanDelete="CanDeleteReply(Model.Answer.UserId)"
+                                      CanEdit="CanEditReply(Model.Answer.IdentityUserId)"
+                                      EditCallback="@(async () => await EditReplyAsync(Model.Answer.Id, Model.Answer.OriginalContent, Model.Answer.UserId, true))"
+                                      CanDelete="CanDeleteReply(Model.Answer.IdentityUserId)"
                                       DeleteCallback="() => SetDeleteReplyId(Model.Answer.Id)"/>
                         </div>
                     </div>
@@ -144,7 +144,7 @@ else
                                             <div class="row small">
                                                 <div><Avatar GravatarHash="@reply.GravatarHash" GravatarSize="32" Class="mr-3"></Avatar></div>
                                                 <div>
-                                                    <div class="font-weight-bold"><a href="/member/@reply.MemberId">@reply.MemberDisplayName</a></div>
+                                                    <div class="font-weight-bold"><a href="/user/@reply.UserId">@reply.UserDisplayName</a></div>
                                                     <div class="text-secondary">@reply.TimeStamp.ToAppLocalDateAndTime()</div>
                                                 </div>
                                             </div>
@@ -154,9 +154,9 @@ else
                                         <PostMenu PostId="@reply.Id"
                                                   CanAcceptAnswer="CanEditTopic() && !Model.Topic.HasAnswer"
                                                   AcceptAnswerCallback="@(async () => await SetAnswerAsync(reply.Id, true))"
-                                                  CanEdit="CanEditReply(reply.UserId)"
-                                                  EditCallback="@(async () => await EditReplyAsync(reply.Id, reply.OriginalContent, reply.MemberId))"
-                                                  CanDelete="CanDeleteReply(reply.UserId)"
+                                                  CanEdit="CanEditReply(reply.IdentityUserId)"
+                                                  EditCallback="@(async () => await EditReplyAsync(reply.Id, reply.OriginalContent, reply.UserId))"
+                                                  CanDelete="CanDeleteReply(reply.IdentityUserId)"
                                                   DeleteCallback="() => SetDeleteReplyId(reply.Id)"/>
                                     </div>
                                 </div>

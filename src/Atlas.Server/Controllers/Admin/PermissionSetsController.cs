@@ -47,14 +47,14 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Save(FormComponentModel.PermissionSetModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new CreatePermissionSet
             {
                 Name = model.Name,
                 Permissions = model.Permissions.ToPermissionCommands(),
                 SiteId = site.Id,
-                MemberId = member.Id
+                UserId = user.Id
             };
 
             await _permissionSetService.CreateAsync(command);
@@ -81,7 +81,7 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Update(FormComponentModel.PermissionSetModel model)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new UpdatePermissionSet
             {
@@ -89,7 +89,7 @@ namespace Atlas.Server.Controllers.Admin
                 Name = model.Name,
                 Permissions = model.Permissions.ToPermissionCommands(),
                 SiteId = site.Id,
-                MemberId = member.Id
+                UserId = user.Id
             };
 
             await _permissionSetService.UpdateAsync(command);
@@ -101,13 +101,13 @@ namespace Atlas.Server.Controllers.Admin
         public async Task<ActionResult> Delete(Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var member = await _contextService.CurrentMemberAsync();
+            var user = await _contextService.CurrentUserAsync();
 
             var command = new DeletePermissionSet
             {
                 Id = id,
                 SiteId = site.Id,
-                MemberId = member.Id
+                UserId = user.Id
             };
 
             await _permissionSetService.DeleteAsync(command);

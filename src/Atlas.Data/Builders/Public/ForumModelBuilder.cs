@@ -55,8 +55,8 @@ namespace Atlas.Data.Builders.Public
         public async Task<PaginatedData<ForumPageModel.TopicModel>> BuildForumPageModelTopicsAsync(Guid forumId, QueryOptions options)
         {
             var topicsQuery = _dbContext.Posts
-                .Include(x => x.CreatedByMember)
-                .Include(x => x.LastReply).ThenInclude(x => x.CreatedByMember)
+                .Include(x => x.CreatedByUser)
+                .Include(x => x.LastReply).ThenInclude(x => x.CreatedByUser)
                 .Where(x =>
                     x.TopicId == null &&
                     x.ForumId == forumId &&
@@ -70,7 +70,7 @@ namespace Atlas.Data.Builders.Public
 
             var topics = await topicsQuery
                 .OrderByDescending(x => x.Pinned)
-                    .ThenByDescending(x => x.LastReply != null ? x.LastReply.TimeStamp : x.TimeStamp)
+                    .ThenByDescending(x => x.LastReply != null ? x.LastReply.CreatedOn : x.CreatedOn)
                 .Skip(options.Skip)
                 .Take(options.PageSize)
                 .ToListAsync();
@@ -81,13 +81,13 @@ namespace Atlas.Data.Builders.Public
                 Title = topic.Title,
                 Slug = topic.Slug,
                 TotalReplies = topic.RepliesCount,
-                MemberId = topic.CreatedByMember.Id,
-                MemberDisplayName = topic.CreatedByMember.DisplayName,
-                TimeStamp = topic.TimeStamp,
-                GravatarHash = _gravatarService.HashEmailForGravatar(topic.CreatedByMember.Email),
-                MostRecentMemberId = topic.LastReply?.MemberId ?? topic.MemberId,
-                MostRecentMemberDisplayName = topic.LastReply?.CreatedByMember?.DisplayName ?? topic.CreatedByMember.DisplayName,
-                MostRecentTimeStamp = topic.LastReply?.TimeStamp ?? topic.TimeStamp,
+                UserId = topic.CreatedByUser.Id,
+                UserDisplayName = topic.CreatedByUser.DisplayName,
+                TimeStamp = topic.CreatedOn,
+                GravatarHash = _gravatarService.HashEmailForGravatar(topic.CreatedByUser.Email),
+                MostRecentUserId = topic.LastReply?.CreatedBy ?? topic.CreatedBy,
+                MostRecentUserDisplayName = topic.LastReply?.CreatedByUser?.DisplayName ?? topic.CreatedByUser.DisplayName,
+                MostRecentTimeStamp = topic.LastReply?.CreatedOn ?? topic.CreatedOn,
                 Pinned = topic.Pinned,
                 Locked = topic.Locked,
                 HasAnswer = topic.HasAnswer

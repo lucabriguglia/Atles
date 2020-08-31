@@ -1,9 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Domain;
-using Atlas.Domain.Members;
-using Atlas.Domain.Members.Commands;
+using Atlas.Domain.Users;
+using Atlas.Domain.Users.Commands;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
@@ -12,47 +11,47 @@ namespace Atlas.Server.Services
     public class IntegrityService : IIntegrityService
     {
         private readonly IContextService _contextService;
-        private readonly IMemberService _memberService;
+        private readonly IUserService _userService;
         private readonly AtlasDbContext _dbContext;
 
         public IntegrityService(IContextService contextService, 
-            IMemberService memberService, 
+            IUserService userService, 
             AtlasDbContext dbContext)
         {
             _contextService = contextService;
-            _memberService = memberService;
+            _userService = userService;
             _dbContext = dbContext;
         }
 
-        public async Task EnsureMemberCreatedAsync(IdentityUser user, bool confirm = false)
+        public async Task EnsureUserCreatedAsync(IdentityUser identityUser, bool confirm = false)
         {
-            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == user.Id);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == identityUser.Id);
 
-            if (member == null)
+            if (user == null)
             {
                 var site = await _contextService.CurrentSiteAsync();
 
-                await _memberService.CreateAsync(new CreateMember
+                await _userService.CreateAsync(new CreateUser
                 {
-                    UserId = user.Id,
-                    Email = user.Email,
+                    IdentityUserId = identityUser.Id,
+                    Email = identityUser.Email,
                     SiteId = site.Id,
                     Confirm = confirm
                 });
             }
         }
 
-        public async Task EnsureMemberConfirmedAsync(IdentityUser user)
+        public async Task EnsureUserConfirmedAsync(IdentityUser identityUser)
         {
-            var member = await _dbContext.Members.FirstOrDefaultAsync(x => x.UserId == user.Id);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == identityUser.Id);
 
-            if (member != null && member.Status == StatusType.Pending)
+            if (user != null && user.Status == StatusType.Pending)
             {
                 var site = await _contextService.CurrentSiteAsync();
 
-                await _memberService.ConfirmAsync(new ConfirmMember
+                await _userService.ConfirmAsync(new ConfirmUser
                 {
-                    Id = member.Id,
+                    Id = user.Id,
                     SiteId = site.Id
                 });
             }

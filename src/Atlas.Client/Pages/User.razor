@@ -1,0 +1,8 @@
+﻿@page "/user/{id:guid}"
+
+@inherits UserPage
+
+@AddComponent("User", new Dictionary<string, object>
+{
+    { nameof(Id), Id }
+})

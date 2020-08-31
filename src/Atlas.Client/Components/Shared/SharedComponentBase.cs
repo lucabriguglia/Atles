@@ -9,7 +9,7 @@ namespace Atlas.Client.Components.Shared
 {
     public abstract class SharedComponentBase : ComponentBase
     {
-        [CascadingParameter] protected CurrentMemberModel Member { get; set; }
+        [CascadingParameter] protected CurrentUserModel User { get; set; }
         [CascadingParameter] protected CurrentSiteModel Site { get; set; }
 
         [Inject] public ApiService ApiService { get; set; }

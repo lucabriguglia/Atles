@@ -49,7 +49,7 @@ namespace Atlas.Data.Services
 
             _dbContext.Forums.Add(forum);
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Created,
                 typeof(Forum),
                 forum.Id,
@@ -96,7 +96,7 @@ namespace Atlas.Data.Services
                 newCategory.IncreaseTopicsCount(forum.TopicsCount);
                 newCategory.IncreaseRepliesCount(forum.RepliesCount);
 
-                await ReorderForumsInCategory(originalCategoryId, command.Id, command.SiteId, command.MemberId);
+                await ReorderForumsInCategory(originalCategoryId, command.Id, command.SiteId, command.UserId);
 
                 var newCategoryForumsCount = await _dbContext.Forums
                     .Where(x => x.CategoryId == command.CategoryId && x.Status != StatusType.Deleted)
@@ -108,7 +108,7 @@ namespace Atlas.Data.Services
             forum.UpdateDetails(command.CategoryId, command.Name, command.Slug, command.Description, command.PermissionSetId);
             
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Updated,
                 typeof(Forum),
                 forum.Id,
@@ -150,7 +150,7 @@ namespace Atlas.Data.Services
             }
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Reordered,
                 typeof(Forum),
                 forum.Id,
@@ -177,7 +177,7 @@ namespace Atlas.Data.Services
             }
 
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Reordered,
                 typeof(Forum),
                 adjacentForum.Id,
@@ -206,12 +206,12 @@ namespace Atlas.Data.Services
 
             forum.Delete();
             _dbContext.Events.Add(new Event(command.SiteId,
-                command.MemberId,
+                command.UserId,
                 EventType.Deleted,
                 typeof(Forum),
                 forum.Id));
 
-            await ReorderForumsInCategory(forum.CategoryId, command.Id, command.SiteId, command.MemberId);
+            await ReorderForumsInCategory(forum.CategoryId, command.Id, command.SiteId, command.UserId);
 
             await _dbContext.SaveChangesAsync();
 

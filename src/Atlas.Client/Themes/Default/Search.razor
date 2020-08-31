@@ -64,7 +64,7 @@ else
                             <div class="row small">
                                 <div class="col-md-12">
                                     @((MarkupString)string.Format(Loc["By {0} on {1} in {2}"],
-                                    $"<a href=\"/member/{post.MemberId}\">{post.MemberDisplayName}</a>",
+                                    $"<a href=\"/user/{post.UserId}\">{post.UserDisplayName}</a>",
                                     $"{post.TimeStamp.ToShortDateString()} {post.TimeStamp.ToShortTimeString()}",
                                     $"<a href=\"{Url.Forum(post.ForumSlug)}\">{post.ForumName}</a>"))
                                 </div>

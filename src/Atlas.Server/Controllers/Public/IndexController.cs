@@ -75,8 +75,8 @@ namespace Atlas.Server.Controllers.Public
                         LastTopicTitle = forumToFilter.LastTopicTitle,
                         LastTopicSlug = forumToFilter.LastTopicSlug,
                         LastPostTimeStamp = forumToFilter.LastPostTimeStamp,
-                        LastPostMemberId = forumToFilter.LastPostMemberId,
-                        LastPostMemberDisplayName = forumToFilter.LastPostMemberDisplayName,
+                        LastPostUserId = forumToFilter.LastPostUserId,
+                        LastPostUserDisplayName = forumToFilter.LastPostUserDisplayName,
                         CanViewTopics = canViewTopics
                     };
                     category.Forums.Add(forum);
@@ -101,10 +101,10 @@ namespace Atlas.Server.Controllers.Public
             return await _contextService.CurrentSiteAsync();
         }
 
-        [HttpGet("current-member")]
-        public async Task<CurrentMemberModel> CurrentMember()
+        [HttpGet("current-user")]
+        public async Task<CurrentUserModel> CurrentUser()
         {
-            return await _contextService.CurrentMemberAsync();
+            return await _contextService.CurrentUserAsync();
         }
 
         [HttpGet("search")]

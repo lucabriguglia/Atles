@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Models.Public.Members;
+using Atlas.Models.Public.Users;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace Atlas.Client.Components.Themes
@@ -19,10 +19,10 @@ namespace Atlas.Client.Components.Themes
 
             Model = await ApiService.GetFromJsonAsync<SettingsPageModel>("api/public/settings/edit");
 
-            EditContext = new EditContext(Model.Member);
+            EditContext = new EditContext(Model.User);
             EditContext.OnFieldChanged += HandleFieldChanged;
             ValidationMessageStore = new ValidationMessageStore(EditContext);
-            CurrentDisplayName = Model.Member.DisplayName;
+            CurrentDisplayName = Model.User.DisplayName;
         }
 
         protected async Task UpdateAsync()

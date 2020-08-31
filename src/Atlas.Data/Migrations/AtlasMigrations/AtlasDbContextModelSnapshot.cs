@@ -65,6 +65,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<Guid?>("MemberId")
+                        .HasColumnName("UserId")
                         .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid>("SiteId")
@@ -161,11 +162,12 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .HasColumnType("int");
 
                     b.Property<string>("UserId")
+                        .HasColumnName("IdentityUserId")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
-                    b.ToTable("Member");
+                    b.ToTable("User");
                 });
 
             modelBuilder.Entity("Atlas.Domain.PermissionSets.Permission", b =>
@@ -375,13 +377,13 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .WithMany()
                         .HasForeignKey("LastReplyId");
 
-                    b.HasOne("Atlas.Domain.Members.Member", "CreatedByMember")
+                    b.HasOne("Atlas.Domain.Members.Member", "CreatedByUser")
                         .WithMany("Posts")
                         .HasForeignKey("MemberId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atlas.Domain.Members.Member", "ModifiedByMember")
+                    b.HasOne("Atlas.Domain.Members.Member", "ModifiedByUser")
                         .WithMany()
                         .HasForeignKey("ModifiedBy");
 
