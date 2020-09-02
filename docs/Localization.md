@@ -1,6 +1,6 @@
 ## Localization
 
-In order to localise the application in a different language, there are three reource files the need to be created as shwon below:
+In order to localise the application in a different language, there are three reource files the need to be created as shown below:
 Copy/paste the three default files and add the culture suffix.
 
 ![Resources](assets/img/resources.png)
