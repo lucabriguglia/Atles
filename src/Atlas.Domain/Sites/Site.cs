@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using Atlas.Domain.Categories;
+using Docs.Attributes;
 
 namespace Atlas.Domain.Sites
 {
+    [DocTarget(Consts.DocsContextForum)]
     public class Site
     {
         public Guid Id { get; private set; }

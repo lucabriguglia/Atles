@@ -1,7 +1,9 @@
 ﻿using System;
+using Docs.Attributes;
 
 namespace Atlas.Domain.Forums.Commands
 {
+    [DocRequest(typeof(Forum))]
     public class CreateForum : CommandBase
     {
         public Guid Id { get; set; } = Guid.NewGuid();

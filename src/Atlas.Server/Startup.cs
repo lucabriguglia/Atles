@@ -13,6 +13,7 @@ using Atlas.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Atlas.Domain.Sites;
 using Atlas.Models.Admin.Categories;
+using Docs.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.Extensions.FileProviders;
@@ -74,6 +75,8 @@ namespace Atlas.Server
                 x.ValueLengthLimit = int.MaxValue;
                 x.MultipartBodyLengthLimit = int.MaxValue;
             });
+
+            services.AddDocs();
 
             services.Scan(s => s
                 .FromAssembliesOf(typeof(Startup), typeof(Site), typeof(IndexPageModel), typeof(AtlasDbContext))

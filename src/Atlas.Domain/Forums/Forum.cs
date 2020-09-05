@@ -4,9 +4,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Atlas.Domain.Categories;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.Posts;
+using Docs.Attributes;
 
 namespace Atlas.Domain.Forums
 {
+    [DocTarget(Consts.DocsContextForum)]
     public class Forum
     {
         public Guid Id { get; private set; }

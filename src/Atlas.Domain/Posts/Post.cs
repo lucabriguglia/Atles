@@ -2,9 +2,11 @@
 using System.ComponentModel.DataAnnotations.Schema;
 using Atlas.Domain.Forums;
 using Atlas.Domain.Users;
+using Docs.Attributes;
 
 namespace Atlas.Domain.Posts
 {
+    [DocTarget(Consts.DocsContextForum)]
     public class Post
     {
         public Guid Id { get; private set; }

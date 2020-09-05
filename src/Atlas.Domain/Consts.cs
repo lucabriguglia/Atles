@@ -9,5 +9,7 @@
         public const string RoleNameRegistered = "Registered Users";
         public const string RoleNameAdmin = "Admin";
         public const string RoleNameModerator = "Moderator";
+
+        public const string DocsContextForum = "Forum";
     }
 }
