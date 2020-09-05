@@ -8,5 +8,6 @@ namespace Atlas.Client.Components.Admin
     [Layout(typeof(AdminLayout))]
     public abstract class AdminPageBase : AdminComponentBase
     {
+        protected string ApiUrl(string action) => $"api/admin/{action}";
     }
 }
