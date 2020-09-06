@@ -4,212 +4,1627 @@
       "Name": "Forum",
       "Targets": [
         {
-          "Name": "Category",
-          "NormalizedName": "Category",
-          "Summary": "Forum category.",
           "Requests": [
             {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "PermissionSetId",
+                  "NormalizedName": "Permission Set Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "CreateCategory",
               "NormalizedName": "Create Category",
-              "Summary": "Request that creates a new Forum Category.",
-              "TargetName": "Category"
+              "Summary": "Request that creates a new Forum Category."
             },
             {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "DeleteCategory",
               "NormalizedName": "Delete Category",
-              "Summary": "Request that deletes a Forum Category.",
-              "TargetName": "Category"
+              "Summary": "Request that deletes a Forum Category."
             },
             {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Direction",
+                  "NormalizedName": "Direction",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "MoveCategory",
               "NormalizedName": "Move Category",
-              "Summary": "Request that changes the Sort Order of a Forum Category.",
-              "TargetName": "Category"
+              "Summary": "Request that changes the Sort Order of a Forum Category."
             },
             {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "PermissionSetId",
+                  "NormalizedName": "Permission Set Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "UpdateCategory",
               "NormalizedName": "Update Category",
-              "Summary": "Request that updates a Forum Category.",
-              "TargetName": "Category"
+              "Summary": "Request that updates a Forum Category."
             }
-          ]
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "SiteId",
+              "NormalizedName": "Site Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Name",
+              "NormalizedName": "Name",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "SortOrder",
+              "NormalizedName": "Sort Order",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "TopicsCount",
+              "NormalizedName": "Topics Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "RepliesCount",
+              "NormalizedName": "Replies Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Status",
+              "NormalizedName": "Status",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "PermissionSetId",
+              "NormalizedName": "Permission Set Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Site",
+              "NormalizedName": "Site",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "PermissionSet",
+              "NormalizedName": "Permission Set",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Forums",
+              "NormalizedName": "Forums",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "MoveUp",
+              "NormalizedName": "Move Up",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "MoveDown",
+              "NormalizedName": "Move Down",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Reorder",
+              "NormalizedName": "Reorder",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "IncreaseTopicsCount",
+              "NormalizedName": "Increase Topics Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "IncreaseRepliesCount",
+              "NormalizedName": "Increase Replies Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "DecreaseTopicsCount",
+              "NormalizedName": "Decrease Topics Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "DecreaseRepliesCount",
+              "NormalizedName": "Decrease Replies Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Delete",
+              "NormalizedName": "Delete",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "PermissionSetName",
+              "NormalizedName": "Permission Set Name",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Name": "Category",
+          "NormalizedName": "Category",
+          "Summary": "Forum category."
         },
         {
-          "Name": "Forum",
-          "NormalizedName": "Forum",
-          "Summary": "Summary for type Forum not found.",
           "Requests": [
             {
+              "TargetName": "Forum",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "CategoryId",
+                  "NormalizedName": "Category Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Slug",
+                  "NormalizedName": "Slug",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Description",
+                  "NormalizedName": "Description",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "PermissionSetId",
+                  "NormalizedName": "Permission Set Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "CreateForum",
               "NormalizedName": "Create Forum",
-              "Summary": "Summary for type CreateForum not found.",
-              "TargetName": "Forum"
+              "Summary": "Summary not found."
             },
             {
+              "TargetName": "Forum",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "DeleteForum",
               "NormalizedName": "Delete Forum",
-              "Summary": "Summary for type DeleteForum not found.",
-              "TargetName": "Forum"
+              "Summary": "Summary not found."
             },
             {
+              "TargetName": "Forum",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Direction",
+                  "NormalizedName": "Direction",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "MoveForum",
               "NormalizedName": "Move Forum",
-              "Summary": "Summary for type MoveForum not found.",
-              "TargetName": "Forum"
+              "Summary": "Summary not found."
             },
             {
+              "TargetName": "Forum",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "CategoryId",
+                  "NormalizedName": "Category Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Slug",
+                  "NormalizedName": "Slug",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Description",
+                  "NormalizedName": "Description",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "PermissionSetId",
+                  "NormalizedName": "Permission Set Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "UpdateForum",
               "NormalizedName": "Update Forum",
-              "Summary": "Summary for type UpdateForum not found.",
-              "TargetName": "Forum"
+              "Summary": "Summary not found."
             }
-          ]
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "CategoryId",
+              "NormalizedName": "Category Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Name",
+              "NormalizedName": "Name",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Slug",
+              "NormalizedName": "Slug",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Description",
+              "NormalizedName": "Description",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "SortOrder",
+              "NormalizedName": "Sort Order",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "TopicsCount",
+              "NormalizedName": "Topics Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "RepliesCount",
+              "NormalizedName": "Replies Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Status",
+              "NormalizedName": "Status",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "PermissionSetId",
+              "NormalizedName": "Permission Set Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "LastPostId",
+              "NormalizedName": "Last Post Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Category",
+              "NormalizedName": "Category",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "PermissionSet",
+              "NormalizedName": "Permission Set",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "LastPost",
+              "NormalizedName": "Last Post",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Posts",
+              "NormalizedName": "Posts",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "UpdateLastPost",
+              "NormalizedName": "Update Last Post",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "MoveUp",
+              "NormalizedName": "Move Up",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "MoveDown",
+              "NormalizedName": "Move Down",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Reorder",
+              "NormalizedName": "Reorder",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "IncreaseTopicsCount",
+              "NormalizedName": "Increase Topics Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "DecreaseTopicsCount",
+              "NormalizedName": "Decrease Topics Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "IncreaseRepliesCount",
+              "NormalizedName": "Increase Replies Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "DecreaseRepliesCount",
+              "NormalizedName": "Decrease Replies Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Delete",
+              "NormalizedName": "Delete",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "PermissionSetName",
+              "NormalizedName": "Permission Set Name",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "HasPermissionSet",
+              "NormalizedName": "Has Permission Set",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Name": "Forum",
+          "NormalizedName": "Forum",
+          "Summary": "Summary not found."
         },
         {
-          "Name": "PermissionSet",
-          "NormalizedName": "Permission Set",
-          "Summary": "Summary for type PermissionSet not found.",
           "Requests": [
             {
+              "TargetName": "PermissionSet",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Permissions",
+                  "NormalizedName": "Permissions",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "CreatePermissionSet",
               "NormalizedName": "Create Permission Set",
-              "Summary": "Summary for type CreatePermissionSet not found.",
-              "TargetName": "PermissionSet"
+              "Summary": "Summary not found."
             },
             {
+              "TargetName": "PermissionSet",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "DeletePermissionSet",
               "NormalizedName": "Delete Permission Set",
-              "Summary": "Summary for type DeletePermissionSet not found.",
-              "TargetName": "PermissionSet"
+              "Summary": "Summary not found."
             },
             {
+              "TargetName": "PermissionSet",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Permissions",
+                  "NormalizedName": "Permissions",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "UpdatePermissionSet",
               "NormalizedName": "Update Permission Set",
-              "Summary": "Summary for type UpdatePermissionSet not found.",
-              "TargetName": "PermissionSet"
+              "Summary": "Summary not found."
             }
-          ]
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "SiteId",
+              "NormalizedName": "Site Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Name",
+              "NormalizedName": "Name",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Status",
+              "NormalizedName": "Status",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Permissions",
+              "NormalizedName": "Permissions",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Categories",
+              "NormalizedName": "Categories",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Forums",
+              "NormalizedName": "Forums",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Delete",
+              "NormalizedName": "Delete",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Name": "PermissionSet",
+          "NormalizedName": "Permission Set",
+          "Summary": "Summary not found."
         },
         {
-          "Name": "Post",
-          "NormalizedName": "Post",
-          "Summary": "Summary for type Post not found.",
           "Requests": [
             {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "TopicId",
+                  "NormalizedName": "Topic Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Content",
+                  "NormalizedName": "Content",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Status",
+                  "NormalizedName": "Status",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "CreateReply",
               "NormalizedName": "Create Reply",
-              "Summary": "Summary for type CreateReply not found.",
-              "TargetName": "Post"
+              "Summary": "Summary not found."
             },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Title",
+                  "NormalizedName": "Title",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Slug",
+                  "NormalizedName": "Slug",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Content",
+                  "NormalizedName": "Content",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Status",
+                  "NormalizedName": "Status",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
+              "Name": "CreateTopic",
+              "NormalizedName": "Create Topic",
+              "Summary": "Summary not found."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "TopicId",
+                  "NormalizedName": "Topic Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
+              "Name": "DeleteReply",
+              "NormalizedName": "Delete Reply",
+              "Summary": "Summary not found."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
+              "Name": "DeleteTopic",
+              "NormalizedName": "Delete Topic",
+              "Summary": "Summary not found."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Locked",
+                  "NormalizedName": "Locked",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
+              "Name": "LockTopic",
+              "NormalizedName": "Lock Topic",
+              "Summary": "Summary not found."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Pinned",
+                  "NormalizedName": "Pinned",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
+              "Name": "PinTopic",
+              "NormalizedName": "Pin Topic",
+              "Summary": "Summary not found."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "TopicId",
+                  "NormalizedName": "Topic Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "IsAnswer",
+                  "NormalizedName": "Is Answer",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
+              "Name": "SetReplyAsAnswer",
+              "NormalizedName": "Set Reply As Answer",
+              "Summary": "Summary not found."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "TopicId",
+                  "NormalizedName": "Topic Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Content",
+                  "NormalizedName": "Content",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Status",
+                  "NormalizedName": "Status",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
+              "Name": "UpdateReply",
+              "NormalizedName": "Update Reply",
+              "Summary": "Summary not found."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Title",
+                  "NormalizedName": "Title",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Slug",
+                  "NormalizedName": "Slug",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Content",
+                  "NormalizedName": "Content",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Status",
+                  "NormalizedName": "Status",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
+              "Name": "UpdateTopic",
+              "NormalizedName": "Update Topic",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "ForumId",
+              "NormalizedName": "Forum Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Title",
+              "NormalizedName": "Title",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Slug",
+              "NormalizedName": "Slug",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Content",
+              "NormalizedName": "Content",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "RepliesCount",
+              "NormalizedName": "Replies Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Status",
+              "NormalizedName": "Status",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "CreatedBy",
+              "NormalizedName": "Created By",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "CreatedOn",
+              "NormalizedName": "Created On",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "ModifiedBy",
+              "NormalizedName": "Modified By",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "ModifiedOn",
+              "NormalizedName": "Modified On",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Pinned",
+              "NormalizedName": "Pinned",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Locked",
+              "NormalizedName": "Locked",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "IsAnswer",
+              "NormalizedName": "Is Answer",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "HasAnswer",
+              "NormalizedName": "Has Answer",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "TopicId",
+              "NormalizedName": "Topic Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "LastReplyId",
+              "NormalizedName": "Last Reply Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Topic",
+              "NormalizedName": "Topic",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "LastReply",
+              "NormalizedName": "Last Reply",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Forum",
+              "NormalizedName": "Forum",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "CreatedByUser",
+              "NormalizedName": "Created By User",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "ModifiedByUser",
+              "NormalizedName": "Modified By User",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Methods": [
             {
               "Name": "CreateTopic",
               "NormalizedName": "Create Topic",
-              "Summary": "Summary for type CreateTopic not found.",
-              "TargetName": "Post"
+              "Summary": "Summary not found."
             },
             {
-              "Name": "DeleteReply",
-              "NormalizedName": "Delete Reply",
-              "Summary": "Summary for type DeleteReply not found.",
-              "TargetName": "Post"
+              "Name": "CreateReply",
+              "NormalizedName": "Create Reply",
+              "Summary": "Summary not found."
             },
             {
-              "Name": "DeleteTopic",
-              "NormalizedName": "Delete Topic",
-              "Summary": "Summary for type DeleteTopic not found.",
-              "TargetName": "Post"
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Summary not found."
             },
             {
-              "Name": "LockTopic",
-              "NormalizedName": "Lock Topic",
-              "Summary": "Summary for type LockTopic not found.",
-              "TargetName": "Post"
+              "Name": "UpdateLastReply",
+              "NormalizedName": "Update Last Reply",
+              "Summary": "Summary not found."
             },
             {
-              "Name": "PinTopic",
-              "NormalizedName": "Pin Topic",
-              "Summary": "Summary for type PinTopic not found.",
-              "TargetName": "Post"
+              "Name": "IncreaseRepliesCount",
+              "NormalizedName": "Increase Replies Count",
+              "Summary": "Summary not found."
             },
             {
-              "Name": "SetReplyAsAnswer",
-              "NormalizedName": "Set Reply As Answer",
-              "Summary": "Summary for type SetReplyAsAnswer not found.",
-              "TargetName": "Post"
+              "Name": "DecreaseRepliesCount",
+              "NormalizedName": "Decrease Replies Count",
+              "Summary": "Summary not found."
             },
             {
-              "Name": "UpdateReply",
-              "NormalizedName": "Update Reply",
-              "Summary": "Summary for type UpdateReply not found.",
-              "TargetName": "Post"
+              "Name": "Pin",
+              "NormalizedName": "Pin",
+              "Summary": "Summary not found."
             },
             {
-              "Name": "UpdateTopic",
-              "NormalizedName": "Update Topic",
-              "Summary": "Summary for type UpdateTopic not found.",
-              "TargetName": "Post"
+              "Name": "Lock",
+              "NormalizedName": "Lock",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "SetAsAnswer",
+              "NormalizedName": "Set As Answer",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "SetAsAnswered",
+              "NormalizedName": "Set As Answered",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Delete",
+              "NormalizedName": "Delete",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "IsTopic",
+              "NormalizedName": "Is Topic",
+              "Summary": "Summary not found."
             }
-          ]
+          ],
+          "Name": "Post",
+          "NormalizedName": "Post",
+          "Summary": "Summary not found."
         },
         {
-          "Name": "Site",
-          "NormalizedName": "Site",
-          "Summary": "Summary for type Site not found.",
           "Requests": [
             {
+              "TargetName": "Site",
+              "Properties": [
+                {
+                  "Name": "Title",
+                  "NormalizedName": "Title",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Theme",
+                  "NormalizedName": "Theme",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Css",
+                  "NormalizedName": "Css",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Language",
+                  "NormalizedName": "Language",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Privacy",
+                  "NormalizedName": "Privacy",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Terms",
+                  "NormalizedName": "Terms",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "UpdateSite",
               "NormalizedName": "Update Site",
-              "Summary": "Summary for type UpdateSite not found.",
-              "TargetName": "Site"
+              "Summary": "Summary not found."
             }
-          ]
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Name",
+              "NormalizedName": "Name",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Title",
+              "NormalizedName": "Title",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "PublicTheme",
+              "NormalizedName": "Public Theme",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "PublicCss",
+              "NormalizedName": "Public Css",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "AdminTheme",
+              "NormalizedName": "Admin Theme",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "AdminCss",
+              "NormalizedName": "Admin Css",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Language",
+              "NormalizedName": "Language",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Privacy",
+              "NormalizedName": "Privacy",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Terms",
+              "NormalizedName": "Terms",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Categories",
+              "NormalizedName": "Categories",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Name": "Site",
+          "NormalizedName": "Site",
+          "Summary": "Summary not found."
         },
         {
-          "Name": "User",
-          "NormalizedName": "User",
-          "Summary": "Summary for type User not found.",
           "Requests": [
             {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "ConfirmUser",
               "NormalizedName": "Confirm User",
-              "Summary": "Summary for type ConfirmUser not found.",
-              "TargetName": "User"
+              "Summary": "Summary not found."
             },
             {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "IdentityUserId",
+                  "NormalizedName": "Identity User Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Email",
+                  "NormalizedName": "Email",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Confirm",
+                  "NormalizedName": "Confirm",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "CreateUser",
               "NormalizedName": "Create User",
-              "Summary": "Summary for type CreateUser not found.",
-              "TargetName": "User"
+              "Summary": "Summary not found."
             },
             {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "DeleteUser",
               "NormalizedName": "Delete User",
-              "Summary": "Summary for type DeleteUser not found.",
-              "TargetName": "User"
+              "Summary": "Summary not found."
             },
             {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "ReinstateUser",
               "NormalizedName": "Reinstate User",
-              "Summary": "Summary for type ReinstateUser not found.",
-              "TargetName": "User"
+              "Summary": "Summary not found."
             },
             {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "SuspendUser",
               "NormalizedName": "Suspend User",
-              "Summary": "Summary for type SuspendUser not found.",
-              "TargetName": "User"
+              "Summary": "Summary not found."
             },
             {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "DisplayName",
+                  "NormalizedName": "Display Name",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "Roles",
+                  "NormalizedName": "Roles",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "Summary not found."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Methods": [],
               "Name": "UpdateUser",
               "NormalizedName": "Update User",
-              "Summary": "Summary for type UpdateUser not found.",
-              "TargetName": "User"
+              "Summary": "Summary not found."
             }
-          ]
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "IdentityUserId",
+              "NormalizedName": "Identity User Id",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Email",
+              "NormalizedName": "Email",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "DisplayName",
+              "NormalizedName": "Display Name",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "TopicsCount",
+              "NormalizedName": "Topics Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "RepliesCount",
+              "NormalizedName": "Replies Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Status",
+              "NormalizedName": "Status",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "TimeStamp",
+              "NormalizedName": "Time Stamp",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Posts",
+              "NormalizedName": "Posts",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Events",
+              "NormalizedName": "Events",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "Confirm",
+              "NormalizedName": "Confirm",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "IncreaseTopicsCount",
+              "NormalizedName": "Increase Topics Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "IncreaseRepliesCount",
+              "NormalizedName": "Increase Replies Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "DecreaseTopicsCount",
+              "NormalizedName": "Decrease Topics Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "DecreaseRepliesCount",
+              "NormalizedName": "Decrease Replies Count",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Suspend",
+              "NormalizedName": "Suspend",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Reinstate",
+              "NormalizedName": "Reinstate",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "Delete",
+              "NormalizedName": "Delete",
+              "Summary": "Summary not found."
+            }
+          ],
+          "Name": "User",
+          "NormalizedName": "User",
+          "Summary": "Summary not found."
         }
       ]
     }
   ],
-  "TimeStamp": "2020-09-06T10:02:10.0280972Z",
-  "ElapsedTime": 55
+  "TimeStamp": "2020-09-06T14:57:26.8404439Z",
+  "ElapsedTime": 73
 }

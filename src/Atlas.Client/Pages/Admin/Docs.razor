@@ -19,23 +19,32 @@
 }
 else
 {
-    foreach (var context in Model.Contexts)
-    {
-        if (Model.Contexts.Count > 1)
-        {
-            <h4>@context.Name</h4>
-        }
+    <div class="container">
+        <div class="row">
+            <div class="col-md-4">
+                @foreach (var context in Model.Contexts)
+                {
+                    <h4>@context.Name</h4>
+                    <ul class="nav flex-column">
+                        @foreach (var target in context.Targets)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" @onclick:preventDefault="true" @onclick="@(() => SelectTarget(context.Name, target.Name))">@target.NormalizedName</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+            <div class="col-md-8">
+                <h5>@SelectedTarget.NormalizedName</h5>
+                <div>@SelectedTarget.Summary</div>
 
-        foreach (var target in context.Targets)
-        {
-            <h5>@target.NormalizedName</h5>
-            <div>@target.Summary</div>
-
-            @foreach (var request in target.Requests)
-            {
-                <div class="font-weight-bold">@request.NormalizedName</div>
-                <div>@request.Summary</div>
-            }
-        }
-    }
+                @foreach (var request in SelectedTarget.Requests)
+                {
+                    <div class="font-weight-bold">@request.NormalizedName</div>
+                    <div>@request.Summary</div>
+                }
+            </div>
+        </div>
+    </div>
 }
