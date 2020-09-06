@@ -24,7 +24,6 @@ else
             <div class="col-md-4">
                 @foreach (var context in Model.Contexts)
                 {
-                    <h4>@context.Name</h4>
                     <ul class="nav flex-column">
                         @foreach (var target in context.Targets)
                         {
@@ -39,10 +38,39 @@ else
                 <h5>@SelectedTarget.NormalizedName</h5>
                 <div>@SelectedTarget.Summary</div>
 
+                <span>Properties</span>
+                @foreach (var property in SelectedTarget.Properties)
+                {
+                    <div class="font-weight-bold">@property.NormalizedName</div>
+                    <div>@property.Summary</div>
+                }
+
+                <span>Methods</span>
+                @foreach (var method in SelectedTarget.Methods)
+                {
+                    <div class="font-weight-bold">@method.NormalizedName</div>
+                    <div>@method.Summary</div>
+                }
+
+                <span>Requests</span>
                 @foreach (var request in SelectedTarget.Requests)
                 {
                     <div class="font-weight-bold">@request.NormalizedName</div>
                     <div>@request.Summary</div>
+
+                    <span>Properties</span>
+                    @foreach (var property in request.Properties)
+                    {
+                        <div class="font-weight-bold">@property.NormalizedName</div>
+                        <div>@property.Summary</div>
+                    }
+
+                    <span>Methods</span>
+                    @foreach (var method in request.Methods)
+                    {
+                        <div class="font-weight-bold">@method.NormalizedName</div>
+                        <div>@method.Summary</div>
+                    }
                 }
             </div>
         </div>
