@@ -10,14 +10,17 @@
 
   <ItemGroup>
     <Compile Remove="Areas\Identity\Pages\Shared\**" />
+    <Compile Remove="Uploads\**" />
     <Content Remove="Areas\Identity\Pages\Shared\**" />
+    <Content Remove="Uploads\**" />
     <EmbeddedResource Remove="Areas\Identity\Pages\Shared\**" />
+    <EmbeddedResource Remove="Uploads\**" />
     <None Remove="Areas\Identity\Pages\Shared\**" />
+    <None Remove="Uploads\**" />
   </ItemGroup>
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.6.2" />
-    <PackageReference Include="LucaBriguglia.Docs" Version="1.0.0" />
     <PackageReference Include="Markdig" Version="0.20.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="3.2.1" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="3.1.4" />
@@ -38,10 +41,6 @@
     <PackageReference Include="Microsoft.AspNetCore.ApiAuthorization.IdentityServer" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="3.1.6" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="3.1.6" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Uploads\" />
   </ItemGroup>
 
 </Project>

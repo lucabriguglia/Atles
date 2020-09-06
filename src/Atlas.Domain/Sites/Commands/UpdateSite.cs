@@ -1,8 +1,5 @@
-﻿using Docs.Attributes;
-
-namespace Atlas.Domain.Sites.Commands
+﻿namespace Atlas.Domain.Sites.Commands
 {
-    [DocRequest(typeof(Site))]
     public class UpdateSite : CommandBase
     {
         public string Title { get; set; }

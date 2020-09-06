@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using Atlas.Domain.Categories;
 using Atlas.Domain.Forums;
 using Atlas.Domain.PermissionSets.Commands;
-using Docs.Attributes;
 
 namespace Atlas.Domain.PermissionSets
 {
-    [DocTarget(Consts.DocsContextForum)]
     public sealed class PermissionSet
     {
         public Guid Id { get; private set; }

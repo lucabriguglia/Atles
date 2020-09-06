@@ -1,12 +1,10 @@
 ﻿using System;
-using Docs.Attributes;
 
 namespace Atlas.Domain.Categories.Commands
 {
     /// <summary>
     /// Request that updates a Forum Category.
     /// </summary>
-    [DocRequest(typeof(Category))]
     public class UpdateCategory : CommandBase
     {
         /// <summary>

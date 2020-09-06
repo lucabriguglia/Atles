@@ -3,14 +3,12 @@ using System.Collections.Generic;
 using Atlas.Domain.Forums;
 using Atlas.Domain.PermissionSets;
 using Atlas.Domain.Sites;
-using Docs.Attributes;
 
 namespace Atlas.Domain.Categories
 {
     /// <summary>
     /// Forum category.
     /// </summary>
-    [DocTarget(Consts.DocsContextForum)]
     public class Category
     {
         /// <summary>

@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
-using Docs.Attributes;
 
 namespace Atlas.Domain.PermissionSets.Commands
 {
-    [DocRequest(typeof(PermissionSet))]
     public class UpdatePermissionSet : CommandBase
     {
         public Guid Id { get; set; }
