@@ -35,41 +35,71 @@ else
                 }
             </div>
             <div class="col-md-8">
-                <h5>@SelectedTarget.NormalizedName</h5>
-                <div>@SelectedTarget.Summary</div>
 
-                <span>Properties</span>
-                @foreach (var property in SelectedTarget.Properties)
-                {
-                    <div class="font-weight-bold">@property.NormalizedName</div>
-                    <div>@property.Summary</div>
-                }
+                <h4>@SelectedTarget.NormalizedName</h4>
+                <div class="mb-3">@SelectedTarget.Summary</div>
 
-                <span>Methods</span>
-                @foreach (var method in SelectedTarget.Methods)
-                {
-                    <div class="font-weight-bold">@method.NormalizedName</div>
-                    <div>@method.Summary</div>
-                }
+                <h5>Properties</h5>
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                        @foreach (var property in SelectedTarget.Properties)
+                        {
+                            <tr>
+                                <th scope="row">@property.NormalizedName</th>
+                                <td>@property.Summary</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
 
-                <span>Requests</span>
+                <h5>Methods</h5>
+                <table class="table table-bordered table-hover">
+                    <tbody>
+                        @foreach (var method in SelectedTarget.Methods)
+                        {
+                            <tr>
+                                <th scope="row">@method.NormalizedName</th>
+                                <td>@method.Summary</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+
+                <hr/>
+
+                @*<h5>Requests</h5>*@
                 @foreach (var request in SelectedTarget.Requests)
                 {
-                    <div class="font-weight-bold">@request.NormalizedName</div>
-                    <div>@request.Summary</div>
+                    <h4>@request.NormalizedName</h4>
+                    <div class="mb-3">@request.Summary</div>
 
-                    <span>Properties</span>
-                    @foreach (var property in request.Properties)
-                    {
-                        <div class="font-weight-bold">@property.NormalizedName</div>
-                        <div>@property.Summary</div>
-                    }
+                    <h5>Properties</h5>
+                    <table class="table table-bordered table-hover">
+                        <tbody>
+                            @foreach (var property in request.Properties)
+                            {
+                                <tr>
+                                    <th scope="row">@property.NormalizedName</th>
+                                    <td>@property.Summary</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
 
-                    <span>Methods</span>
-                    @foreach (var method in request.Methods)
+                    @if (request.Methods.Count > 0)
                     {
-                        <div class="font-weight-bold">@method.NormalizedName</div>
-                        <div>@method.Summary</div>
+                        <h5>Methods</h5>
+                        <table class="table table-bordered table-hover">
+                            <tbody>
+                                @foreach (var method in request.Methods)
+                                {
+                                    <tr>
+                                        <th scope="row">@method.NormalizedName</th>
+                                        <td>@method.Summary</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     }
                 }
             </div>
