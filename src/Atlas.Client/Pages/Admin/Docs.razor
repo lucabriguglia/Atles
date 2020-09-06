@@ -1,0 +1,41 @@
+﻿@page "/admin/docs"
+
+@inherits Atlas.Client.Components.Admin.DocsPage
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Loc["Docs"]</li>
+    </ol>
+</nav>
+
+<h3 class="mb-3">@Loc["Docs"]</h3>
+
+<p>Experimental domain documentation.</p>
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    foreach (var context in Model.Contexts)
+    {
+        if (Model.Contexts.Count > 1)
+        {
+            <h4>@context.Name</h4>
+        }
+
+        foreach (var target in context.Targets)
+        {
+            <h5>@target.NormalizedName</h5>
+            <div>@target.Summary</div>
+
+            @foreach (var request in target.Requests)
+            {
+                <div class="font-weight-bold">@request.NormalizedName</div>
+                <div>@request.Summary</div>
+            }
+        }
+    }
+}

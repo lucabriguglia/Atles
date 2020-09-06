@@ -1,0 +1,215 @@
+{
+  "Contexts": [
+    {
+      "Name": "Forum",
+      "Targets": [
+        {
+          "Name": "Category",
+          "NormalizedName": "Category",
+          "Summary": "Forum category.",
+          "Requests": [
+            {
+              "Name": "CreateCategory",
+              "NormalizedName": "Create Category",
+              "Summary": "Request that creates a new Forum Category.",
+              "TargetName": "Category"
+            },
+            {
+              "Name": "DeleteCategory",
+              "NormalizedName": "Delete Category",
+              "Summary": "Request that deletes a Forum Category.",
+              "TargetName": "Category"
+            },
+            {
+              "Name": "MoveCategory",
+              "NormalizedName": "Move Category",
+              "Summary": "Request that changes the Sort Order of a Forum Category.",
+              "TargetName": "Category"
+            },
+            {
+              "Name": "UpdateCategory",
+              "NormalizedName": "Update Category",
+              "Summary": "Request that updates a Forum Category.",
+              "TargetName": "Category"
+            }
+          ]
+        },
+        {
+          "Name": "Forum",
+          "NormalizedName": "Forum",
+          "Summary": "Summary for type Forum not found.",
+          "Requests": [
+            {
+              "Name": "CreateForum",
+              "NormalizedName": "Create Forum",
+              "Summary": "Summary for type CreateForum not found.",
+              "TargetName": "Forum"
+            },
+            {
+              "Name": "DeleteForum",
+              "NormalizedName": "Delete Forum",
+              "Summary": "Summary for type DeleteForum not found.",
+              "TargetName": "Forum"
+            },
+            {
+              "Name": "MoveForum",
+              "NormalizedName": "Move Forum",
+              "Summary": "Summary for type MoveForum not found.",
+              "TargetName": "Forum"
+            },
+            {
+              "Name": "UpdateForum",
+              "NormalizedName": "Update Forum",
+              "Summary": "Summary for type UpdateForum not found.",
+              "TargetName": "Forum"
+            }
+          ]
+        },
+        {
+          "Name": "PermissionSet",
+          "NormalizedName": "Permission Set",
+          "Summary": "Summary for type PermissionSet not found.",
+          "Requests": [
+            {
+              "Name": "CreatePermissionSet",
+              "NormalizedName": "Create Permission Set",
+              "Summary": "Summary for type CreatePermissionSet not found.",
+              "TargetName": "PermissionSet"
+            },
+            {
+              "Name": "DeletePermissionSet",
+              "NormalizedName": "Delete Permission Set",
+              "Summary": "Summary for type DeletePermissionSet not found.",
+              "TargetName": "PermissionSet"
+            },
+            {
+              "Name": "UpdatePermissionSet",
+              "NormalizedName": "Update Permission Set",
+              "Summary": "Summary for type UpdatePermissionSet not found.",
+              "TargetName": "PermissionSet"
+            }
+          ]
+        },
+        {
+          "Name": "Post",
+          "NormalizedName": "Post",
+          "Summary": "Summary for type Post not found.",
+          "Requests": [
+            {
+              "Name": "CreateReply",
+              "NormalizedName": "Create Reply",
+              "Summary": "Summary for type CreateReply not found.",
+              "TargetName": "Post"
+            },
+            {
+              "Name": "CreateTopic",
+              "NormalizedName": "Create Topic",
+              "Summary": "Summary for type CreateTopic not found.",
+              "TargetName": "Post"
+            },
+            {
+              "Name": "DeleteReply",
+              "NormalizedName": "Delete Reply",
+              "Summary": "Summary for type DeleteReply not found.",
+              "TargetName": "Post"
+            },
+            {
+              "Name": "DeleteTopic",
+              "NormalizedName": "Delete Topic",
+              "Summary": "Summary for type DeleteTopic not found.",
+              "TargetName": "Post"
+            },
+            {
+              "Name": "LockTopic",
+              "NormalizedName": "Lock Topic",
+              "Summary": "Summary for type LockTopic not found.",
+              "TargetName": "Post"
+            },
+            {
+              "Name": "PinTopic",
+              "NormalizedName": "Pin Topic",
+              "Summary": "Summary for type PinTopic not found.",
+              "TargetName": "Post"
+            },
+            {
+              "Name": "SetReplyAsAnswer",
+              "NormalizedName": "Set Reply As Answer",
+              "Summary": "Summary for type SetReplyAsAnswer not found.",
+              "TargetName": "Post"
+            },
+            {
+              "Name": "UpdateReply",
+              "NormalizedName": "Update Reply",
+              "Summary": "Summary for type UpdateReply not found.",
+              "TargetName": "Post"
+            },
+            {
+              "Name": "UpdateTopic",
+              "NormalizedName": "Update Topic",
+              "Summary": "Summary for type UpdateTopic not found.",
+              "TargetName": "Post"
+            }
+          ]
+        },
+        {
+          "Name": "Site",
+          "NormalizedName": "Site",
+          "Summary": "Summary for type Site not found.",
+          "Requests": [
+            {
+              "Name": "UpdateSite",
+              "NormalizedName": "Update Site",
+              "Summary": "Summary for type UpdateSite not found.",
+              "TargetName": "Site"
+            }
+          ]
+        },
+        {
+          "Name": "User",
+          "NormalizedName": "User",
+          "Summary": "Summary for type User not found.",
+          "Requests": [
+            {
+              "Name": "ConfirmUser",
+              "NormalizedName": "Confirm User",
+              "Summary": "Summary for type ConfirmUser not found.",
+              "TargetName": "User"
+            },
+            {
+              "Name": "CreateUser",
+              "NormalizedName": "Create User",
+              "Summary": "Summary for type CreateUser not found.",
+              "TargetName": "User"
+            },
+            {
+              "Name": "DeleteUser",
+              "NormalizedName": "Delete User",
+              "Summary": "Summary for type DeleteUser not found.",
+              "TargetName": "User"
+            },
+            {
+              "Name": "ReinstateUser",
+              "NormalizedName": "Reinstate User",
+              "Summary": "Summary for type ReinstateUser not found.",
+              "TargetName": "User"
+            },
+            {
+              "Name": "SuspendUser",
+              "NormalizedName": "Suspend User",
+              "Summary": "Summary for type SuspendUser not found.",
+              "TargetName": "User"
+            },
+            {
+              "Name": "UpdateUser",
+              "NormalizedName": "Update User",
+              "Summary": "Summary for type UpdateUser not found.",
+              "TargetName": "User"
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "TimeStamp": "2020-09-06T10:02:10.0280972Z",
+  "ElapsedTime": 55
+}

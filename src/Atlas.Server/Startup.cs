@@ -13,6 +13,7 @@ using Atlas.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Atlas.Domain.Sites;
 using Atlas.Models.Admin.Categories;
+using Docs;
 using Docs.Extensions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Http.Features;
@@ -89,7 +90,8 @@ namespace Atlas.Server
             IWebHostEnvironment env,
             AtlasDbContext atlasDbContext,
             ApplicationDbContext applicationDbContext,
-            IInstallationService installationService)
+            IInstallationService installationService,
+            IDocumentationService documentationService)
         {
             if (env.IsDevelopment())
             {
@@ -137,6 +139,11 @@ namespace Atlas.Server
             if (Configuration["EnsureDefaultSiteInitialized"] == "true")
             {
                 installationService.EnsureDefaultSiteInitializedAsync().Wait();
+            }            
+            
+            if (Configuration["GenerateDocumentationOnStartup"] == "true")
+            {
+                documentationService.Generate(typeof(Site).Assembly);
             }
         }
     }

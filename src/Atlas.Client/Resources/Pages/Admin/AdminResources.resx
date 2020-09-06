@@ -402,9 +402,6 @@
   <data name="UserI d" xml:space="preserve">
     <value>User Id</value>
   </data>
-  <data name="Users" xml:space="preserve">
-    <value>Users</value>
-  </data>
   <data name="Users in role {0}" xml:space="preserve">
     <value>Users in role {0}</value>
   </data>
@@ -416,5 +413,8 @@
   </data>
   <data name="{0}'s Activity" xml:space="preserve">
     <value>{0}'s Activity</value>
+  </data>
+  <data name="Docs" xml:space="preserve">
+    <value>Docs</value>
   </data>
 </root>

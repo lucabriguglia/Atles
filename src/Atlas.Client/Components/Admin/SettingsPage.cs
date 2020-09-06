@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Models.Admin.Site;
-using Microsoft.JSInterop;
 
 namespace Atlas.Client.Components.Admin
 {
