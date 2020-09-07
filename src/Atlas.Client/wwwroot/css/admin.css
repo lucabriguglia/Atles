@@ -126,11 +126,3 @@ body {
     border-radius: 0px 0px 5px 5px;
     padding: 10px;
 }
-
-[data-toggle="collapse"] .fa:before {
-    content: "\f139";
-}
-
-[data-toggle="collapse"].collapsed .fa:before {
-    content: "\f13a";
-}

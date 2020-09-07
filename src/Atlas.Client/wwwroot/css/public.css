@@ -48,4 +48,12 @@ footer p {
     color: red;
 }
 
+.docs-icon-toogle[aria-expanded=false] .docs-icon-expanded {
+    display: none;
+}
+
+.docs-icon-toogle[aria-expanded=true] .docs-icon-collapsed {
+    display: none;
+}
+
 /*rgb(36, 58, 94)*/
