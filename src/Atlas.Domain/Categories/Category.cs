@@ -118,6 +118,7 @@ namespace Atlas.Domain.Categories
 
         /// <summary>
         /// Updates the details of the Forum Category.
+        /// The values that can be changed are the name and the permission set.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="permissionSetId"></param>
