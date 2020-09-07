@@ -227,5 +227,20 @@
             The unique identifier of the new Permission Set for the Forum Category.
             </summary>
         </member>
+        <member name="T:Atlas.Domain.CommandBase">
+            <summary>
+            CommandBase
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.CommandBase.SiteId">
+            <summary>
+            The unique identifier of the Site whose the request belongs to.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.CommandBase.UserId">
+            <summary>
+            The unique identifier of the User who initiated the request.
+            </summary>
+        </member>
     </members>
 </doc>

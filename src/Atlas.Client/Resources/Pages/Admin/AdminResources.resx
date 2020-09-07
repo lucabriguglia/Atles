@@ -414,7 +414,4 @@
   <data name="{0}'s Activity" xml:space="preserve">
     <value>{0}'s Activity</value>
   </data>
-  <data name="Docs" xml:space="preserve">
-    <value>Docs</value>
-  </data>
 </root>

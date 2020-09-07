@@ -11,27 +11,27 @@
                 {
                   "Name": "Id",
                   "NormalizedName": "Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier for the new Forum Category.\r\n            If not specified, a random one is assigned."
                 },
                 {
                   "Name": "Name",
                   "NormalizedName": "Name",
-                  "Summary": "Summary not found."
+                  "Summary": "The name for the Forum Category.\r\n            This value is mandatory."
                 },
                 {
                   "Name": "PermissionSetId",
                   "NormalizedName": "Permission Set Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Permission Set used os default for all Forums within the Forum Category.\r\n            This value is mandatory."
                 },
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -45,17 +45,17 @@
                 {
                   "Name": "Id",
                   "NormalizedName": "Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Forum Category to delete."
                 },
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -69,22 +69,22 @@
                 {
                   "Name": "Id",
                   "NormalizedName": "Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Forum Category to move."
                 },
                 {
                   "Name": "Direction",
                   "NormalizedName": "Direction",
-                  "Summary": "Summary not found."
+                  "Summary": "The direction. Can be either Up or Down."
                 },
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -98,27 +98,27 @@
                 {
                   "Name": "Id",
                   "NormalizedName": "Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Forum Category to update."
                 },
                 {
                   "Name": "Name",
                   "NormalizedName": "Name",
-                  "Summary": "Summary not found."
+                  "Summary": "The new Name of the Forum Category."
                 },
                 {
                   "Name": "PermissionSetId",
                   "NormalizedName": "Permission Set Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the new Permission Set for the Forum Category."
                 },
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -131,109 +131,109 @@
             {
               "Name": "Id",
               "NormalizedName": "Id",
-              "Summary": "Summary not found."
+              "Summary": "The unique identifier of the Forum Category."
             },
             {
               "Name": "SiteId",
               "NormalizedName": "Site Id",
-              "Summary": "Summary not found."
+              "Summary": "The unique identifier of the Site which the Forum Category belongs to."
             },
             {
               "Name": "Name",
               "NormalizedName": "Name",
-              "Summary": "Summary not found."
+              "Summary": "The name of the Forum Category which is displayed in the index page."
             },
             {
               "Name": "SortOrder",
               "NormalizedName": "Sort Order",
-              "Summary": "Summary not found."
+              "Summary": "The sort order which is used to display the Forum Categories in the index page."
             },
             {
               "Name": "TopicsCount",
               "NormalizedName": "Topics Count",
-              "Summary": "Summary not found."
+              "Summary": "The number of topics of all forums within the Forum Category."
             },
             {
               "Name": "RepliesCount",
               "NormalizedName": "Replies Count",
-              "Summary": "Summary not found."
+              "Summary": "The number of replies of all forums within the Forum Category."
             },
             {
               "Name": "Status",
               "NormalizedName": "Status",
-              "Summary": "Summary not found."
+              "Summary": "The status of the Forum Category.\r\n            Can be either Published or Deleted."
             },
             {
               "Name": "PermissionSetId",
               "NormalizedName": "Permission Set Id",
-              "Summary": "Summary not found."
+              "Summary": "The unique identifier of the Permission Set used as default for all Forums within the Forum Category which do not specify a Permission Set."
             },
             {
               "Name": "Site",
               "NormalizedName": "Site",
-              "Summary": "Summary not found."
+              "Summary": "Reference to the Site the Forum Category belongs to."
             },
             {
               "Name": "PermissionSet",
               "NormalizedName": "Permission Set",
-              "Summary": "Summary not found."
+              "Summary": "Reference to Permission Set used for the Forum Category."
             },
             {
               "Name": "Forums",
               "NormalizedName": "Forums",
-              "Summary": "Summary not found."
+              "Summary": "List of Forums that belong to the Forum Category."
             }
           ],
           "Methods": [
             {
               "Name": "UpdateDetails",
               "NormalizedName": "Update Details",
-              "Summary": "Summary not found."
+              "Summary": "Updates the details of the Forum Category."
             },
             {
               "Name": "MoveUp",
               "NormalizedName": "Move Up",
-              "Summary": "Summary not found."
+              "Summary": "Change the Sort Order by moving up 1 position.\r\n            It generates an error if Sort Order is 1."
             },
             {
               "Name": "MoveDown",
               "NormalizedName": "Move Down",
-              "Summary": "Summary not found."
+              "Summary": "Change the Sort Order by moving down 1 position."
             },
             {
               "Name": "Reorder",
               "NormalizedName": "Reorder",
-              "Summary": "Summary not found."
+              "Summary": "Replace the Sort Order with the given value."
             },
             {
               "Name": "IncreaseTopicsCount",
               "NormalizedName": "Increase Topics Count",
-              "Summary": "Summary not found."
+              "Summary": "Increase the number of topics by the given value.\r\n            If no value is given it will increase by 1."
             },
             {
               "Name": "IncreaseRepliesCount",
               "NormalizedName": "Increase Replies Count",
-              "Summary": "Summary not found."
+              "Summary": "Increase the number of replies by the given value.\r\n            If no value is given it will increase by 1."
             },
             {
               "Name": "DecreaseTopicsCount",
               "NormalizedName": "Decrease Topics Count",
-              "Summary": "Summary not found."
+              "Summary": "Decrease the number of topics by the given value.\r\n            If no value is given it will decrease by 1.\r\n            If the resulting number is less than zero, the value will be set to zero."
             },
             {
               "Name": "DecreaseRepliesCount",
               "NormalizedName": "Decrease Replies Count",
-              "Summary": "Summary not found."
+              "Summary": "Decrease the number of replies by the given value.\r\n            If no value is given it will decrease by 1.\r\n            If the resulting number is less than zero, the value will be set to zero."
             },
             {
               "Name": "Delete",
               "NormalizedName": "Delete",
-              "Summary": "Summary not found."
+              "Summary": "Set the status as Deleted and Forums, Topics and Replies within the Forum Category will no longer be visible."
             },
             {
               "Name": "PermissionSetName",
               "NormalizedName": "Permission Set Name",
-              "Summary": "Summary not found."
+              "Summary": "Returns the name of Permission Set used for the Forum Category."
             }
           ],
           "Name": "Category",
@@ -278,12 +278,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -302,12 +302,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -331,12 +331,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -380,12 +380,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -560,12 +560,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -584,12 +584,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -618,12 +618,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -723,12 +723,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -772,12 +772,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -806,12 +806,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -835,12 +835,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -869,12 +869,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -903,12 +903,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -942,12 +942,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -986,12 +986,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -1035,12 +1035,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -1265,12 +1265,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -1360,12 +1360,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -1399,12 +1399,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -1423,12 +1423,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -1447,12 +1447,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -1471,12 +1471,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -1505,12 +1505,12 @@
                 {
                   "Name": "SiteId",
                   "NormalizedName": "Site Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
                 },
                 {
                   "Name": "UserId",
                   "NormalizedName": "User Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
               "Methods": [],
@@ -1625,6 +1625,6 @@
       ]
     }
   ],
-  "TimeStamp": "2020-09-06T14:57:26.8404439Z",
-  "ElapsedTime": 73
+  "TimeStamp": "2020-09-07T10:26:53.6175709Z",
+  "ElapsedTime": 36
 }

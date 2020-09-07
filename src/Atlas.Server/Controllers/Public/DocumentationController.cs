@@ -2,10 +2,11 @@
 using Docs.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atlas.Server.Controllers.Admin
+namespace Atlas.Server.Controllers.Public
 {
-    [Route("api/admin/documentation")]
-    public class DocumentationController : AdminControllerBase
+    [Route("api/public/documentation")]
+    [ApiController]
+    public class DocumentationController : ControllerBase
     {
         private readonly IDocumentationService _documentationService;
 

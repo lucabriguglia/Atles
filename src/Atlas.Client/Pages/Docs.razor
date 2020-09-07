@@ -1,0 +1,134 @@
+﻿@page "/docs"
+
+@inherits DocsPage
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Docs</li>
+    </ol>
+</nav>
+
+<p>Experimental domain documentation.</p>
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-2">
+                @foreach (var context in Model.Contexts)
+                {
+                    <ul class="nav flex-column">
+                        @foreach (var target in context.Targets)
+                        {
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" @onclick:preventDefault="true" @onclick="@(() => SelectTarget(context.Name, target.Name))">@target.NormalizedName</a>
+                            </li>
+                        }
+                    </ul>
+                }
+            </div>
+            <div class="col-md-10">
+
+                <div class="mb-3">
+                    <h4>@SelectedTarget.NormalizedName</h4>
+                    <div class="mb-2">@SelectedTarget.Summary</div>
+
+                    <div class="mb-2">
+                        <a data-toggle="collapse" aria-expanded="false" aria-controls="target-methods-collapse" href="#target-methods-collapse">
+                            <i class="fas fa-chevron-right"></i>
+                            Methods
+                        </a>
+                        <div class="collapse mt-2" id="target-methods-collapse">
+                            <table class="table table-bordered table-hover">
+                                <tbody>
+                                    @foreach (var method in SelectedTarget.Methods)
+                                    {
+                                        <tr>
+                                            <th scope="row">@method.NormalizedName</th>
+                                            <td>@method.Summary</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div class="mb-2">
+                        <a data-toggle="collapse" aria-expanded="false" aria-controls="target-properties-collapse" href="#target-properties-collapse">
+                            <i class="fas fa-chevron-right"></i>
+                            Properties
+                        </a>
+                        <div class="collapse mt-2" id="target-properties-collapse">
+                            <table class="table table-bordered table-hover">
+                                <tbody>
+                                    @foreach (var property in SelectedTarget.Properties)
+                                    {
+                                        <tr>
+                                            <th scope="row">@property.NormalizedName</th>
+                                            <td>@property.Summary</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <hr />
+
+                @foreach (var request in SelectedTarget.Requests)
+                {
+                    <div class="mb-3">
+                        <h5>@request.NormalizedName</h5>
+                        <div class="mb-2">@request.Summary</div>
+                        <div class="mb-2">
+                            <a data-toggle="collapse" aria-expanded="false" aria-controls="request-@(request.Name)-properties-collapse" href="#request-@(request.Name)-properties-collapse">
+                                <i class="fas fa-chevron-right"></i>
+                                Properties
+                            </a>
+                            <div class="collapse mt-2" id="request-@(request.Name)-properties-collapse">
+                                <table class="table table-bordered table-hover">
+                                    <tbody>
+                                        @foreach (var property in request.Properties)
+                                        {
+                                            <tr>
+                                                <th scope="row">@property.NormalizedName</th>
+                                                <td>@property.Summary</td>
+                                            </tr>
+                                        }
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                        @if (request.Methods.Count > 0)
+                        {
+                            <div class="mb-2">
+                                <a data-toggle="collapse" aria-expanded="false" aria-controls="request-@(request.Name)-methods-collapse" href="#request-@(request.Name)-methods-collapse">
+                                    <i class="fas fa-chevron-right"></i>
+                                    Methods
+                                </a>
+                                <div class="collapse mt-2" id="request-@(request.Name)-methods-collapse">
+                                    <table class="table table-bordered table-hover">
+                                        <tbody>
+                                            @foreach (var method in request.Methods)
+                                            {
+                                                <tr>
+                                                    <th scope="row">@method.NormalizedName</th>
+                                                    <td>@method.Summary</td>
+                                                </tr>
+                                            }
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+}
