@@ -188,7 +188,7 @@
             {
               "Name": "UpdateDetails",
               "NormalizedName": "Update Details",
-              "Summary": "Updates the details of the Forum Category."
+              "Summary": "Updates the details of the Forum Category.\r\n            The values that can be changed are the name and the permission set."
             },
             {
               "Name": "MoveUp",
@@ -1625,6 +1625,6 @@
       ]
     }
   ],
-  "TimeStamp": "2020-09-07T10:26:53.6175709Z",
-  "ElapsedTime": 36
+  "TimeStamp": "2020-09-07T13:13:49.8375412Z",
+  "ElapsedTime": 33
 }

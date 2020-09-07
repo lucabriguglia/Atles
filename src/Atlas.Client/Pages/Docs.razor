@@ -14,6 +14,7 @@
 <p class="text-justify">
     The idea is to create a domain-oriented documentation that can help both developers and business users to understand better how a system works.
     The NuGet package used for the generation of the documentation is a software prototype created as the IT artefact of a dissertation for a Master's Degree in Software Engineering.
+    Future improvements will include the description of all validation rules applied when creating and updating domain objects.
 </p>
 
 @if (Model == null)
@@ -27,14 +28,18 @@ else
             <div class="col-md-3 pl-0">
                 @foreach (var context in Model.Contexts)
                 {
-                <div class="nav flex-column nav-pills" id="@(context.Name)-tab" role="tablist" aria-orientation="vertical">
-                    @for (var i = 0; i < context.Targets.Count; i++)
+                    @if (Model.Contexts.Count > 1)
                     {
-                        var target = context.Targets[i];
-                        var css = i == 0 ? "active" : string.Empty;
-                        <a class="nav-link @css" id="@(context.Name)-@(target.Name)-tab" data-toggle="pill" href="#@(context.Name)-@(target.Name)" role="tab" aria-controls="@(context.Name)-@(target.Name)" aria-selected="true">@target.NormalizedName</a>
+                        <h5>@context.Name</h5>
                     }
-                </div>
+                    <div class="nav flex-column nav-pills" id="@(context.Name)-tab" role="tablist" aria-orientation="vertical">
+                        @for (var i = 0; i < context.Targets.Count; i++)
+                        {
+                            var target = context.Targets[i];
+                            var css = i == 0 ? "active" : string.Empty;
+                            <a class="nav-link @css" id="@(context.Name)-@(target.Name)-tab" data-toggle="pill" href="#@(context.Name)-@(target.Name)" role="tab" aria-controls="@(context.Name)-@(target.Name)" aria-selected="true">@target.NormalizedName</a>
+                        }
+                    </div>
                 }
             </div>
             <div class="col-md-9 pr-0">
