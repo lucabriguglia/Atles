@@ -9,7 +9,7 @@ using Docs.Attributes;
 namespace Atlas.Domain.Forums
 {
     /// <summary>
-    /// Forum section.
+    /// A forum is a board where users can hold conversations.
     /// </summary>
     [DocTarget(Consts.DocsContextForum)]
     public class Forum
@@ -103,7 +103,8 @@ namespace Atlas.Domain.Forums
         }
 
         /// <summary>
-        /// Forum
+        /// Create a new forum with the given values including a unique identifier.
+        /// The default status is published.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="categoryId"></param>
@@ -118,7 +119,9 @@ namespace Atlas.Domain.Forums
         }
 
         /// <summary>
-        /// Forum
+        /// Creates a new forum with the given values.
+        /// The unique identifier is automatically assigned.
+        /// The default status is published.
         /// </summary>
         /// <param name="categoryId"></param>
         /// <param name="name"></param>

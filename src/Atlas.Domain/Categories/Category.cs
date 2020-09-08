@@ -8,7 +8,7 @@ using Docs.Attributes;
 namespace Atlas.Domain.Categories
 {
     /// <summary>
-    /// Forum category.
+    /// A forum category acts as a container to group logically different forums.
     /// </summary>
     [DocTarget(Consts.DocsContextForum)]
     public class Category
@@ -70,15 +70,15 @@ namespace Atlas.Domain.Categories
         public virtual ICollection<Forum> Forums { get; set; }
 
         /// <summary>
-        /// Create an empty forum category.
+        /// Creates an empty forum category.
         /// </summary>
         public Category()
         {
         }
 
         /// <summary>
-        /// Create a new forum category with the given values including a unique identifier.
-        /// The default Status is Published.
+        /// Creates a new forum category with the given values including a unique identifier.
+        /// The default status is published.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="siteId"></param>
@@ -91,9 +91,9 @@ namespace Atlas.Domain.Categories
         }
 
         /// <summary>
-        /// Create a new forum category with the given values.
+        /// Creates a new forum category with the given values.
         /// The unique identifier is automatically assigned.
-        /// The default Status is Published.
+        /// The default status is published.
         /// </summary>
         /// <param name="siteId"></param>
         /// <param name="name"></param>

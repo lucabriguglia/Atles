@@ -10,6 +10,7 @@
         public const string RoleNameAdmin = "Admin";
         public const string RoleNameModerator = "Moderator";
 
+        public const string DocsContextGeneral = "General";
         public const string DocsContextForum = "Forum";
     }
 }
