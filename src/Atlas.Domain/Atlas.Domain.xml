@@ -31,18 +31,18 @@
         </member>
         <member name="P:Atlas.Domain.Categories.Category.TopicsCount">
             <summary>
-            The number of topics of all forums within the Forum Category.
+            The number of topics of all forums within the forum category.
             </summary>
         </member>
         <member name="P:Atlas.Domain.Categories.Category.RepliesCount">
             <summary>
-            The number of replies of all forums within the Forum Category.
+            The number of replies of all forums within the forum category.
             </summary>
         </member>
         <member name="P:Atlas.Domain.Categories.Category.Status">
             <summary>
-            The status of the Forum Category.
-            Can be either Published or Deleted.
+            The status of the forum category.
+            Can be either published or deleted.
             </summary>
         </member>
         <member name="P:Atlas.Domain.Categories.Category.PermissionSetId">
@@ -67,13 +67,12 @@
         </member>
         <member name="M:Atlas.Domain.Categories.Category.#ctor">
             <summary>
-            Create an empty Forum Category.
-            Only used by Entity Framework.
+            Create an empty forum category.
             </summary>
         </member>
         <member name="M:Atlas.Domain.Categories.Category.#ctor(System.Guid,System.Guid,System.String,System.Int32,System.Guid)">
             <summary>
-            Create a new Forum Category with the given values including a unique identifier.
+            Create a new forum category with the given values including a unique identifier.
             The default Status is Published.
             </summary>
             <param name="id"></param>
@@ -84,7 +83,7 @@
         </member>
         <member name="M:Atlas.Domain.Categories.Category.#ctor(System.Guid,System.String,System.Int32,System.Guid)">
             <summary>
-            Create a new Forum Category with the given values.
+            Create a new forum category with the given values.
             The unique identifier is automatically assigned.
             The default Status is Published.
             </summary>
@@ -95,27 +94,27 @@
         </member>
         <member name="M:Atlas.Domain.Categories.Category.UpdateDetails(System.String,System.Guid)">
             <summary>
-            Updates the details of the Forum Category.
-            The values that can be changed are the name and the permission set.
+            Updates the details of the forum category.
+            The values that can be changed are name and permission set.
             </summary>
             <param name="name"></param>
             <param name="permissionSetId"></param>
         </member>
         <member name="M:Atlas.Domain.Categories.Category.MoveUp">
             <summary>
-            Change the Sort Order by moving up 1 position.
-            It generates an error if Sort Order is 1.
+            Change the sort order by moving up 1 position.
+            It generates an error if sort order is 1.
             </summary>
             <exception cref="T:System.ApplicationException"></exception>
         </member>
         <member name="M:Atlas.Domain.Categories.Category.MoveDown">
             <summary>
-            Change the Sort Order by moving down 1 position.
+            Change the sort order by moving down 1 position.
             </summary>
         </member>
         <member name="M:Atlas.Domain.Categories.Category.Reorder(System.Int32)">
             <summary>
-            Replace the Sort Order with the given value.
+            Replace the sort order with the given value.
             </summary>
             <param name="sortOrder"></param>
         </member>
@@ -151,12 +150,13 @@
         </member>
         <member name="M:Atlas.Domain.Categories.Category.Delete">
             <summary>
-            Set the status as Deleted and Forums, Topics and Replies within the Forum Category will no longer be visible.
+            Set the status as deleted.
+            Forums, topics and replies within the forum category will no longer be visible.
             </summary>
         </member>
         <member name="M:Atlas.Domain.Categories.Category.PermissionSetName">
             <summary>
-            Returns the name of Permission Set used for the Forum Category.
+            Returns the name of permission set used.
             </summary>
             <returns></returns>
         </member>
@@ -195,37 +195,38 @@
         </member>
         <member name="T:Atlas.Domain.Categories.Commands.MoveCategory">
             <summary>
-            Request that changes the Sort Order of a Forum Category.
+            Request that changes the sort order of a forum category.
             </summary>
         </member>
         <member name="P:Atlas.Domain.Categories.Commands.MoveCategory.Id">
             <summary>
-            The unique identifier of the Forum Category to move.
+            The unique identifier of the forum category to move.
             </summary>
         </member>
         <member name="P:Atlas.Domain.Categories.Commands.MoveCategory.Direction">
             <summary>
-            The direction. Can be either Up or Down.
+            The direction.
+            Can be either up or down.
             </summary>
         </member>
         <member name="T:Atlas.Domain.Categories.Commands.UpdateCategory">
             <summary>
-            Request that updates a Forum Category.
+            Request that updates a forum category.
             </summary>
         </member>
         <member name="P:Atlas.Domain.Categories.Commands.UpdateCategory.Id">
             <summary>
-            The unique identifier of the Forum Category to update.
+            The unique identifier of the forum category to update.
             </summary>
         </member>
         <member name="P:Atlas.Domain.Categories.Commands.UpdateCategory.Name">
             <summary>
-            The new Name of the Forum Category.
+            The new name of the forum category.
             </summary>
         </member>
         <member name="P:Atlas.Domain.Categories.Commands.UpdateCategory.PermissionSetId">
             <summary>
-            The unique identifier of the new Permission Set for the Forum Category.
+            The unique identifier of the new permission set for the forum category.
             </summary>
         </member>
         <member name="T:Atlas.Domain.CommandBase">
@@ -242,6 +243,291 @@
             <summary>
             The unique identifier of the User who initiated the request.
             </summary>
+        </member>
+        <member name="T:Atlas.Domain.Forums.Commands.CreateForum">
+            <summary>
+            Request that creates a forum section.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.Id">
+            <summary>
+            The unique identifier for the new forum. If not specified, a random one is assigned.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.CategoryId">
+            <summary>
+            The unique identifier of the forum category which the new forum belongs to.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.Name">
+            <summary>
+            The name of the new forum.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.Slug">
+            <summary>
+            The slug for the new forum.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.Description">
+            <summary>
+            The description of the new forum.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.PermissionSetId">
+            <summary>
+            The unique identifier of the permission set.
+            If not assigned, the new forum will inherit the permission set from the forum category.
+            </summary>
+        </member>
+        <member name="T:Atlas.Domain.Forums.Commands.DeleteForum">
+            <summary>
+            Request that deletes a forum.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.DeleteForum.Id">
+            <summary>
+            The unique identifier of the forum to delete.
+            </summary>
+        </member>
+        <member name="T:Atlas.Domain.Forums.Commands.MoveForum">
+            <summary>
+            Request that changes the sort order of a forum.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.MoveForum.Id">
+            <summary>
+            The unique identifier of the forum to move.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.MoveForum.Direction">
+            <summary>
+            The direction.
+            Can be either up or down.
+            </summary>
+        </member>
+        <member name="T:Atlas.Domain.Forums.Commands.UpdateForum">
+            <summary>
+            Request that updates the forum details.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.Id">
+            <summary>
+            The unique identifier of the forum to update.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.CategoryId">
+            <summary>
+            The new forum category for the forum.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.Name">
+            <summary>
+            The new name of the forum.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.Slug">
+            <summary>
+            The new slug of the forum.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.Description">
+            <summary>
+            The new description of the forum.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.PermissionSetId">
+            <summary>
+            The unique identifier of the new permission set for the forum.
+            </summary>
+        </member>
+        <member name="T:Atlas.Domain.Forums.Forum">
+            <summary>
+            Forum section.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.Id">
+            <summary>
+            The unique identifier of the Forum.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.CategoryId">
+            <summary>
+            The unique identifier of the Forum Category which the Forum belongs to.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.Name">
+            <summary>
+            The name of the Forum.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.Slug">
+            <summary>
+            The Slug of the Forum.
+            This value is added to the URL in order to identify the Forum.
+            If the Slug is "my-forum-slug", the URL will be something similar to "www.mysite.com/forum/my-forum-slug".
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.Description">
+            <summary>
+            The description of the Forum.
+            This value will be displayed in the index and forum pages if included in the theme.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.SortOrder">
+            <summary>
+            The sort order which is used to display the forums in the index page.  
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.TopicsCount">
+            <summary>
+            The number of topics published.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.RepliesCount">
+            <summary>
+            The number of replies published.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.Status">
+            <summary>
+            The status of the forum.
+            Can be either published or deleted.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.PermissionSetId">
+            <summary>
+            The unique identifier of the permission set used.
+            If it's not assigned, the forum will inherit the permission set fom the forum category.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.LastPostId">
+            <summary>
+            The unique identifier of the last post published.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.Category">
+            <summary>
+            Reference to the forum category.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.PermissionSet">
+            <summary>
+            Reference to the permission set if assigned.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.LastPost">
+            <summary>
+            Reference to the last post published if any.
+            </summary>
+        </member>
+        <member name="P:Atlas.Domain.Forums.Forum.Posts">
+            <summary>
+            List of published posts.
+            </summary>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.#ctor">
+            <summary>
+            Create an empty forum.
+            </summary>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.#ctor(System.Guid,System.Guid,System.String,System.String,System.String,System.Int32,System.Nullable{System.Guid})">
+            <summary>
+            Forum
+            </summary>
+            <param name="id"></param>
+            <param name="categoryId"></param>
+            <param name="name"></param>
+            <param name="slug"></param>
+            <param name="description"></param>
+            <param name="sortOrder"></param>
+            <param name="permissionSetId"></param>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.#ctor(System.Guid,System.String,System.String,System.String,System.Int32,System.Nullable{System.Guid})">
+            <summary>
+            Forum
+            </summary>
+            <param name="categoryId"></param>
+            <param name="name"></param>
+            <param name="slug"></param>
+            <param name="description"></param>
+            <param name="sortOrder"></param>
+            <param name="permissionSetId"></param>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.UpdateDetails(System.Guid,System.String,System.String,System.String,System.Nullable{System.Guid})">
+            <summary>
+            Updates the details of the forum.
+            The values that can be changed are forum category, name, slug, description and permission set.
+            </summary>
+            <param name="categoryId"></param>
+            <param name="name"></param>
+            <param name="slug"></param>
+            <param name="description"></param>
+            <param name="permissionSetId"></param>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.UpdateLastPost(System.Nullable{System.Guid})">
+            <summary>
+            Updates the unique identifier of the last published post.
+            </summary>
+            <param name="lastPostId"></param>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.MoveUp">
+            <summary>
+            Change the sort order by moving up 1 position.
+            It generates an error if sort order is 1.
+            </summary>
+            <exception cref="T:System.ApplicationException"></exception>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.MoveDown">
+            <summary>
+            Change the sort order by moving down 1 position.
+            </summary>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.Reorder(System.Int32)">
+            <summary>
+            Replace the sort order with the given value.
+            </summary>
+            <param name="sortOrder"></param>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.IncreaseTopicsCount">
+            <summary>
+            Increase the number of topics by 1.
+            </summary>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.DecreaseTopicsCount">
+            <summary>
+            Decrease the number of topics by 1.
+            If the resulting number is less than zero, the value will be set to zero.
+            </summary>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.IncreaseRepliesCount">
+            <summary>
+            Increase the number of replies by 1.
+            </summary>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.DecreaseRepliesCount">
+            <summary>
+            Decrease the number of replies by 1.
+            If the resulting number is less than zero, the value will be set to zero.
+            </summary>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.Delete">
+            <summary>
+            Set the status as deleted.
+            Topics and replies within the forum will no longer be visible.
+            </summary>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.PermissionSetName">
+            <summary>
+            Returns the name of permission set if assigned.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Atlas.Domain.Forums.Forum.HasPermissionSet">
+            <summary>
+            Indicates if a permission set is assigned.
+            </summary>
+            <returns></returns>
         </member>
     </members>
 </doc>

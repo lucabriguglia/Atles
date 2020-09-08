@@ -34,7 +34,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "CreateCategory",
               "NormalizedName": "Create Category",
               "Summary": "Request that creates a new Forum Category."
@@ -58,7 +64,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "DeleteCategory",
               "NormalizedName": "Delete Category",
               "Summary": "Request that deletes a Forum Category."
@@ -69,12 +81,12 @@
                 {
                   "Name": "Id",
                   "NormalizedName": "Id",
-                  "Summary": "The unique identifier of the Forum Category to move."
+                  "Summary": "The unique identifier of the forum category to move."
                 },
                 {
                   "Name": "Direction",
                   "NormalizedName": "Direction",
-                  "Summary": "The direction. Can be either Up or Down."
+                  "Summary": "The direction.\r\n            Can be either up or down."
                 },
                 {
                   "Name": "SiteId",
@@ -87,10 +99,16 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "MoveCategory",
               "NormalizedName": "Move Category",
-              "Summary": "Request that changes the Sort Order of a Forum Category."
+              "Summary": "Request that changes the sort order of a forum category."
             },
             {
               "TargetName": "Category",
@@ -98,17 +116,17 @@
                 {
                   "Name": "Id",
                   "NormalizedName": "Id",
-                  "Summary": "The unique identifier of the Forum Category to update."
+                  "Summary": "The unique identifier of the forum category to update."
                 },
                 {
                   "Name": "Name",
                   "NormalizedName": "Name",
-                  "Summary": "The new Name of the Forum Category."
+                  "Summary": "The new name of the forum category."
                 },
                 {
                   "Name": "PermissionSetId",
                   "NormalizedName": "Permission Set Id",
-                  "Summary": "The unique identifier of the new Permission Set for the Forum Category."
+                  "Summary": "The unique identifier of the new permission set for the forum category."
                 },
                 {
                   "Name": "SiteId",
@@ -121,10 +139,16 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "UpdateCategory",
               "NormalizedName": "Update Category",
-              "Summary": "Request that updates a Forum Category."
+              "Summary": "Request that updates a forum category."
             }
           ],
           "Properties": [
@@ -151,17 +175,17 @@
             {
               "Name": "TopicsCount",
               "NormalizedName": "Topics Count",
-              "Summary": "The number of topics of all forums within the Forum Category."
+              "Summary": "The number of topics of all forums within the forum category."
             },
             {
               "Name": "RepliesCount",
               "NormalizedName": "Replies Count",
-              "Summary": "The number of replies of all forums within the Forum Category."
+              "Summary": "The number of replies of all forums within the forum category."
             },
             {
               "Name": "Status",
               "NormalizedName": "Status",
-              "Summary": "The status of the Forum Category.\r\n            Can be either Published or Deleted."
+              "Summary": "The status of the forum category.\r\n            Can be either published or deleted."
             },
             {
               "Name": "PermissionSetId",
@@ -186,24 +210,39 @@
           ],
           "Methods": [
             {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Create an empty forum category."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Create a new forum category with the given values including a unique identifier.\r\n            The default Status is Published."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Create a new forum category with the given values.\r\n            The unique identifier is automatically assigned.\r\n            The default Status is Published."
+            },
+            {
               "Name": "UpdateDetails",
               "NormalizedName": "Update Details",
-              "Summary": "Updates the details of the Forum Category.\r\n            The values that can be changed are the name and the permission set."
+              "Summary": "Updates the details of the forum category.\r\n            The values that can be changed are name and permission set."
             },
             {
               "Name": "MoveUp",
               "NormalizedName": "Move Up",
-              "Summary": "Change the Sort Order by moving up 1 position.\r\n            It generates an error if Sort Order is 1."
+              "Summary": "Change the sort order by moving up 1 position.\r\n            It generates an error if sort order is 1."
             },
             {
               "Name": "MoveDown",
               "NormalizedName": "Move Down",
-              "Summary": "Change the Sort Order by moving down 1 position."
+              "Summary": "Change the sort order by moving down 1 position."
             },
             {
               "Name": "Reorder",
               "NormalizedName": "Reorder",
-              "Summary": "Replace the Sort Order with the given value."
+              "Summary": "Replace the sort order with the given value."
             },
             {
               "Name": "IncreaseTopicsCount",
@@ -228,12 +267,12 @@
             {
               "Name": "Delete",
               "NormalizedName": "Delete",
-              "Summary": "Set the status as Deleted and Forums, Topics and Replies within the Forum Category will no longer be visible."
+              "Summary": "Set the status as deleted.\r\n            Forums, topics and replies within the forum category will no longer be visible."
             },
             {
               "Name": "PermissionSetName",
               "NormalizedName": "Permission Set Name",
-              "Summary": "Returns the name of Permission Set used for the Forum Category."
+              "Summary": "Returns the name of permission set used."
             }
           ],
           "Name": "Category",
@@ -248,32 +287,32 @@
                 {
                   "Name": "Id",
                   "NormalizedName": "Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier for the new forum. If not specified, a random one is assigned."
                 },
                 {
                   "Name": "CategoryId",
                   "NormalizedName": "Category Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the forum category which the new forum belongs to."
                 },
                 {
                   "Name": "Name",
                   "NormalizedName": "Name",
-                  "Summary": "Summary not found."
+                  "Summary": "The name of the new forum."
                 },
                 {
                   "Name": "Slug",
                   "NormalizedName": "Slug",
-                  "Summary": "Summary not found."
+                  "Summary": "The slug for the new forum."
                 },
                 {
                   "Name": "Description",
                   "NormalizedName": "Description",
-                  "Summary": "Summary not found."
+                  "Summary": "The description of the new forum."
                 },
                 {
                   "Name": "PermissionSetId",
                   "NormalizedName": "Permission Set Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the permission set.\r\n            If not assigned, the new forum will inherit the permission set from the forum category."
                 },
                 {
                   "Name": "SiteId",
@@ -286,10 +325,16 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "CreateForum",
               "NormalizedName": "Create Forum",
-              "Summary": "Summary not found."
+              "Summary": "Request that creates a forum section."
             },
             {
               "TargetName": "Forum",
@@ -297,7 +342,7 @@
                 {
                   "Name": "Id",
                   "NormalizedName": "Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the forum to delete."
                 },
                 {
                   "Name": "SiteId",
@@ -310,10 +355,16 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "DeleteForum",
               "NormalizedName": "Delete Forum",
-              "Summary": "Summary not found."
+              "Summary": "Request that deletes a forum."
             },
             {
               "TargetName": "Forum",
@@ -321,12 +372,12 @@
                 {
                   "Name": "Id",
                   "NormalizedName": "Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the forum to move."
                 },
                 {
                   "Name": "Direction",
                   "NormalizedName": "Direction",
-                  "Summary": "Summary not found."
+                  "Summary": "The direction.\r\n            Can be either up or down."
                 },
                 {
                   "Name": "SiteId",
@@ -339,10 +390,16 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "MoveForum",
               "NormalizedName": "Move Forum",
-              "Summary": "Summary not found."
+              "Summary": "Request that changes the sort order of a forum."
             },
             {
               "TargetName": "Forum",
@@ -350,32 +407,32 @@
                 {
                   "Name": "Id",
                   "NormalizedName": "Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the forum to update."
                 },
                 {
                   "Name": "CategoryId",
                   "NormalizedName": "Category Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The new forum category for the forum."
                 },
                 {
                   "Name": "Name",
                   "NormalizedName": "Name",
-                  "Summary": "Summary not found."
+                  "Summary": "The new name of the forum."
                 },
                 {
                   "Name": "Slug",
                   "NormalizedName": "Slug",
-                  "Summary": "Summary not found."
+                  "Summary": "The new slug of the forum."
                 },
                 {
                   "Name": "Description",
                   "NormalizedName": "Description",
-                  "Summary": "Summary not found."
+                  "Summary": "The new description of the forum."
                 },
                 {
                   "Name": "PermissionSetId",
                   "NormalizedName": "Permission Set Id",
-                  "Summary": "Summary not found."
+                  "Summary": "The unique identifier of the new permission set for the forum."
                 },
                 {
                   "Name": "SiteId",
@@ -388,154 +445,175 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "UpdateForum",
               "NormalizedName": "Update Forum",
-              "Summary": "Summary not found."
+              "Summary": "Request that updates the forum details."
             }
           ],
           "Properties": [
             {
               "Name": "Id",
               "NormalizedName": "Id",
-              "Summary": "Summary not found."
+              "Summary": "The unique identifier of the Forum."
             },
             {
               "Name": "CategoryId",
               "NormalizedName": "Category Id",
-              "Summary": "Summary not found."
+              "Summary": "The unique identifier of the Forum Category which the Forum belongs to."
             },
             {
               "Name": "Name",
               "NormalizedName": "Name",
-              "Summary": "Summary not found."
+              "Summary": "The name of the Forum."
             },
             {
               "Name": "Slug",
               "NormalizedName": "Slug",
-              "Summary": "Summary not found."
+              "Summary": "The Slug of the Forum.\r\n            This value is added to the URL in order to identify the Forum.\r\n            If the Slug is \u0022my-forum-slug\u0022, the URL will be something similar to \u0022www.mysite.com/forum/my-forum-slug\u0022."
             },
             {
               "Name": "Description",
               "NormalizedName": "Description",
-              "Summary": "Summary not found."
+              "Summary": "The description of the Forum.\r\n            This value will be displayed in the index and forum pages if included in the theme."
             },
             {
               "Name": "SortOrder",
               "NormalizedName": "Sort Order",
-              "Summary": "Summary not found."
+              "Summary": "The sort order which is used to display the forums in the index page."
             },
             {
               "Name": "TopicsCount",
               "NormalizedName": "Topics Count",
-              "Summary": "Summary not found."
+              "Summary": "The number of topics published."
             },
             {
               "Name": "RepliesCount",
               "NormalizedName": "Replies Count",
-              "Summary": "Summary not found."
+              "Summary": "The number of replies published."
             },
             {
               "Name": "Status",
               "NormalizedName": "Status",
-              "Summary": "Summary not found."
+              "Summary": "The status of the forum.\r\n            Can be either published or deleted."
             },
             {
               "Name": "PermissionSetId",
               "NormalizedName": "Permission Set Id",
-              "Summary": "Summary not found."
+              "Summary": "The unique identifier of the permission set used.\r\n            If it\u0027s not assigned, the forum will inherit the permission set fom the forum category."
             },
             {
               "Name": "LastPostId",
               "NormalizedName": "Last Post Id",
-              "Summary": "Summary not found."
+              "Summary": "The unique identifier of the last post published."
             },
             {
               "Name": "Category",
               "NormalizedName": "Category",
-              "Summary": "Summary not found."
+              "Summary": "Reference to the forum category."
             },
             {
               "Name": "PermissionSet",
               "NormalizedName": "Permission Set",
-              "Summary": "Summary not found."
+              "Summary": "Reference to the permission set if assigned."
             },
             {
               "Name": "LastPost",
               "NormalizedName": "Last Post",
-              "Summary": "Summary not found."
+              "Summary": "Reference to the last post published if any."
             },
             {
               "Name": "Posts",
               "NormalizedName": "Posts",
-              "Summary": "Summary not found."
+              "Summary": "List of published posts."
             }
           ],
           "Methods": [
             {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Create an empty forum."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Forum"
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Forum"
+            },
+            {
               "Name": "UpdateDetails",
               "NormalizedName": "Update Details",
-              "Summary": "Summary not found."
+              "Summary": "Updates the details of the forum.\r\n            The values that can be changed are forum category, name, slug, description and permission set."
             },
             {
               "Name": "UpdateLastPost",
               "NormalizedName": "Update Last Post",
-              "Summary": "Summary not found."
+              "Summary": "Updates the unique identifier of the last published post."
             },
             {
               "Name": "MoveUp",
               "NormalizedName": "Move Up",
-              "Summary": "Summary not found."
+              "Summary": "Change the sort order by moving up 1 position.\r\n            It generates an error if sort order is 1."
             },
             {
               "Name": "MoveDown",
               "NormalizedName": "Move Down",
-              "Summary": "Summary not found."
+              "Summary": "Change the sort order by moving down 1 position."
             },
             {
               "Name": "Reorder",
               "NormalizedName": "Reorder",
-              "Summary": "Summary not found."
+              "Summary": "Replace the sort order with the given value."
             },
             {
               "Name": "IncreaseTopicsCount",
               "NormalizedName": "Increase Topics Count",
-              "Summary": "Summary not found."
+              "Summary": "Increase the number of topics by 1."
             },
             {
               "Name": "DecreaseTopicsCount",
               "NormalizedName": "Decrease Topics Count",
-              "Summary": "Summary not found."
+              "Summary": "Decrease the number of topics by 1.\r\n            If the resulting number is less than zero, the value will be set to zero."
             },
             {
               "Name": "IncreaseRepliesCount",
               "NormalizedName": "Increase Replies Count",
-              "Summary": "Summary not found."
+              "Summary": "Increase the number of replies by 1."
             },
             {
               "Name": "DecreaseRepliesCount",
               "NormalizedName": "Decrease Replies Count",
-              "Summary": "Summary not found."
+              "Summary": "Decrease the number of replies by 1.\r\n            If the resulting number is less than zero, the value will be set to zero."
             },
             {
               "Name": "Delete",
               "NormalizedName": "Delete",
-              "Summary": "Summary not found."
+              "Summary": "Set the status as deleted.\r\n            Topics and replies within the forum will no longer be visible."
             },
             {
               "Name": "PermissionSetName",
               "NormalizedName": "Permission Set Name",
-              "Summary": "Summary not found."
+              "Summary": "Returns the name of permission set if assigned."
             },
             {
               "Name": "HasPermissionSet",
               "NormalizedName": "Has Permission Set",
-              "Summary": "Summary not found."
+              "Summary": "Indicates if a permission set is assigned."
             }
           ],
           "Name": "Forum",
           "NormalizedName": "Forum",
-          "Summary": "Summary not found."
+          "Summary": "Forum section."
         },
         {
           "Requests": [
@@ -568,7 +646,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "CreatePermissionSet",
               "NormalizedName": "Create Permission Set",
               "Summary": "Summary not found."
@@ -592,7 +676,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "DeletePermissionSet",
               "NormalizedName": "Delete Permission Set",
               "Summary": "Summary not found."
@@ -626,7 +716,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "UpdatePermissionSet",
               "NormalizedName": "Update Permission Set",
               "Summary": "Summary not found."
@@ -670,6 +766,21 @@
             }
           ],
           "Methods": [
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Summary not found."
+            },
             {
               "Name": "New",
               "NormalizedName": "New",
@@ -731,7 +842,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "CreateReply",
               "NormalizedName": "Create Reply",
               "Summary": "Summary not found."
@@ -780,7 +897,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "CreateTopic",
               "NormalizedName": "Create Topic",
               "Summary": "Summary not found."
@@ -814,7 +937,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "DeleteReply",
               "NormalizedName": "Delete Reply",
               "Summary": "Summary not found."
@@ -843,7 +972,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "DeleteTopic",
               "NormalizedName": "Delete Topic",
               "Summary": "Summary not found."
@@ -877,7 +1012,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "LockTopic",
               "NormalizedName": "Lock Topic",
               "Summary": "Summary not found."
@@ -911,7 +1052,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "PinTopic",
               "NormalizedName": "Pin Topic",
               "Summary": "Summary not found."
@@ -950,7 +1097,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "SetReplyAsAnswer",
               "NormalizedName": "Set Reply As Answer",
               "Summary": "Summary not found."
@@ -994,7 +1147,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "UpdateReply",
               "NormalizedName": "Update Reply",
               "Summary": "Summary not found."
@@ -1043,7 +1202,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "UpdateTopic",
               "NormalizedName": "Update Topic",
               "Summary": "Summary not found."
@@ -1163,6 +1328,16 @@
           ],
           "Methods": [
             {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "CreateTopic",
+              "NormalizedName": "Create Topic",
+              "Summary": "Summary not found."
+            },
+            {
               "Name": "CreateTopic",
               "NormalizedName": "Create Topic",
               "Summary": "Summary not found."
@@ -1170,6 +1345,16 @@
             {
               "Name": "CreateReply",
               "NormalizedName": "Create Reply",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "CreateReply",
+              "NormalizedName": "Create Reply",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
               "Summary": "Summary not found."
             },
             {
@@ -1273,7 +1458,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "UpdateSite",
               "NormalizedName": "Update Site",
               "Summary": "Summary not found."
@@ -1338,6 +1529,21 @@
           ],
           "Methods": [
             {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Summary not found."
+            },
+            {
               "Name": "UpdateDetails",
               "NormalizedName": "Update Details",
               "Summary": "Summary not found."
@@ -1368,7 +1574,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "ConfirmUser",
               "NormalizedName": "Confirm User",
               "Summary": "Summary not found."
@@ -1407,7 +1619,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "CreateUser",
               "NormalizedName": "Create User",
               "Summary": "Summary not found."
@@ -1431,7 +1649,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "DeleteUser",
               "NormalizedName": "Delete User",
               "Summary": "Summary not found."
@@ -1455,7 +1679,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "ReinstateUser",
               "NormalizedName": "Reinstate User",
               "Summary": "Summary not found."
@@ -1479,7 +1709,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "SuspendUser",
               "NormalizedName": "Suspend User",
               "Summary": "Summary not found."
@@ -1513,7 +1749,13 @@
                   "Summary": "The unique identifier of the User who initiated the request."
                 }
               ],
-              "Methods": [],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
               "Name": "UpdateUser",
               "NormalizedName": "Update User",
               "Summary": "Summary not found."
@@ -1573,6 +1815,21 @@
           ],
           "Methods": [
             {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Summary not found."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Summary not found."
+            },
+            {
               "Name": "Confirm",
               "NormalizedName": "Confirm",
               "Summary": "Summary not found."
@@ -1625,6 +1882,6 @@
       ]
     }
   ],
-  "TimeStamp": "2020-09-07T14:50:33.3779664Z",
-  "ElapsedTime": 62
+  "TimeStamp": "2020-09-08T09:13:29.7591741Z",
+  "ElapsedTime": 69
 }
