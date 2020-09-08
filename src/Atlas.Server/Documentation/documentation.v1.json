@@ -1,0 +1,1882 @@
+{
+  "Contexts": [
+    {
+      "Name": "Forum",
+      "Targets": [
+        {
+          "Requests": [
+            {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier for the new Forum Category.\r\n            If not specified, a random one is assigned."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "The name for the Forum Category.\r\n            This value is mandatory."
+                },
+                {
+                  "Name": "PermissionSetId",
+                  "NormalizedName": "Permission Set Id",
+                  "Summary": "The unique identifier of the Permission Set used os default for all Forums within the Forum Category.\r\n            This value is mandatory."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "CreateCategory",
+              "NormalizedName": "Create Category",
+              "Summary": "Request that creates a new Forum Category."
+            },
+            {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the Forum Category to delete."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "DeleteCategory",
+              "NormalizedName": "Delete Category",
+              "Summary": "Request that deletes a Forum Category."
+            },
+            {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the forum category to move."
+                },
+                {
+                  "Name": "Direction",
+                  "NormalizedName": "Direction",
+                  "Summary": "The direction.\r\n            Can be either up or down."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "MoveCategory",
+              "NormalizedName": "Move Category",
+              "Summary": "Request that changes the sort order of a forum category."
+            },
+            {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the forum category to update."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "The new name of the forum category."
+                },
+                {
+                  "Name": "PermissionSetId",
+                  "NormalizedName": "Permission Set Id",
+                  "Summary": "The unique identifier of the new permission set for the forum category."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "UpdateCategory",
+              "NormalizedName": "Update Category",
+              "Summary": "Request that updates a forum category."
+            }
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "The unique identifier of the Forum Category."
+            },
+            {
+              "Name": "SiteId",
+              "NormalizedName": "Site Id",
+              "Summary": "The unique identifier of the Site which the Forum Category belongs to."
+            },
+            {
+              "Name": "Name",
+              "NormalizedName": "Name",
+              "Summary": "The name of the Forum Category which is displayed in the index page."
+            },
+            {
+              "Name": "SortOrder",
+              "NormalizedName": "Sort Order",
+              "Summary": "The sort order which is used to display the Forum Categories in the index page."
+            },
+            {
+              "Name": "TopicsCount",
+              "NormalizedName": "Topics Count",
+              "Summary": "The number of topics of all forums within the forum category."
+            },
+            {
+              "Name": "RepliesCount",
+              "NormalizedName": "Replies Count",
+              "Summary": "The number of replies of all forums within the forum category."
+            },
+            {
+              "Name": "Status",
+              "NormalizedName": "Status",
+              "Summary": "The status of the forum category.\r\n            Can be either published or deleted."
+            },
+            {
+              "Name": "PermissionSetId",
+              "NormalizedName": "Permission Set Id",
+              "Summary": "The unique identifier of the Permission Set used as default for all Forums within the Forum Category which do not specify a Permission Set."
+            },
+            {
+              "Name": "Site",
+              "NormalizedName": "Site",
+              "Summary": "Reference to the Site the Forum Category belongs to."
+            },
+            {
+              "Name": "PermissionSet",
+              "NormalizedName": "Permission Set",
+              "Summary": "Reference to Permission Set used for the Forum Category."
+            },
+            {
+              "Name": "Forums",
+              "NormalizedName": "Forums",
+              "Summary": "List of Forums that belong to the Forum Category."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates an empty forum category."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates a new forum category with the given values including a unique identifier.\r\n            The default status is published."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates a new forum category with the given values.\r\n            The unique identifier is automatically assigned.\r\n            The default status is published."
+            },
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Updates the details of the forum category.\r\n            The values that can be changed are name and permission set."
+            },
+            {
+              "Name": "MoveUp",
+              "NormalizedName": "Move Up",
+              "Summary": "Change the sort order by moving up 1 position.\r\n            It generates an error if sort order is 1."
+            },
+            {
+              "Name": "MoveDown",
+              "NormalizedName": "Move Down",
+              "Summary": "Change the sort order by moving down 1 position."
+            },
+            {
+              "Name": "Reorder",
+              "NormalizedName": "Reorder",
+              "Summary": "Replace the sort order with the given value."
+            },
+            {
+              "Name": "IncreaseTopicsCount",
+              "NormalizedName": "Increase Topics Count",
+              "Summary": "Increase the number of topics by the given value.\r\n            If no value is given it will increase by 1."
+            },
+            {
+              "Name": "IncreaseRepliesCount",
+              "NormalizedName": "Increase Replies Count",
+              "Summary": "Increase the number of replies by the given value.\r\n            If no value is given it will increase by 1."
+            },
+            {
+              "Name": "DecreaseTopicsCount",
+              "NormalizedName": "Decrease Topics Count",
+              "Summary": "Decrease the number of topics by the given value.\r\n            If no value is given it will decrease by 1.\r\n            If the resulting number is less than zero, the value will be set to zero."
+            },
+            {
+              "Name": "DecreaseRepliesCount",
+              "NormalizedName": "Decrease Replies Count",
+              "Summary": "Decrease the number of replies by the given value.\r\n            If no value is given it will decrease by 1.\r\n            If the resulting number is less than zero, the value will be set to zero."
+            },
+            {
+              "Name": "Delete",
+              "NormalizedName": "Delete",
+              "Summary": "Set the status as deleted.\r\n            Forums, topics and replies within the forum category will no longer be visible."
+            },
+            {
+              "Name": "PermissionSetName",
+              "NormalizedName": "Permission Set Name",
+              "Summary": "Returns the name of permission set used."
+            }
+          ],
+          "Name": "Category",
+          "NormalizedName": "Category",
+          "Summary": "A forum category acts as a container to group logically different forums."
+        },
+        {
+          "Requests": [
+            {
+              "TargetName": "Forum",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier for the new forum. If not specified, a random one is assigned."
+                },
+                {
+                  "Name": "CategoryId",
+                  "NormalizedName": "Category Id",
+                  "Summary": "The unique identifier of the forum category which the new forum belongs to."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "The name of the new forum."
+                },
+                {
+                  "Name": "Slug",
+                  "NormalizedName": "Slug",
+                  "Summary": "The slug for the new forum."
+                },
+                {
+                  "Name": "Description",
+                  "NormalizedName": "Description",
+                  "Summary": "The description of the new forum."
+                },
+                {
+                  "Name": "PermissionSetId",
+                  "NormalizedName": "Permission Set Id",
+                  "Summary": "The unique identifier of the permission set.\r\n            If not assigned, the new forum will inherit the permission set from the forum category."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "CreateForum",
+              "NormalizedName": "Create Forum",
+              "Summary": "Request that creates a forum section."
+            },
+            {
+              "TargetName": "Forum",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the forum to delete."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "DeleteForum",
+              "NormalizedName": "Delete Forum",
+              "Summary": "Request that deletes a forum."
+            },
+            {
+              "TargetName": "Forum",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the forum to move."
+                },
+                {
+                  "Name": "Direction",
+                  "NormalizedName": "Direction",
+                  "Summary": "The direction.\r\n            Can be either up or down."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "MoveForum",
+              "NormalizedName": "Move Forum",
+              "Summary": "Request that changes the sort order of a forum."
+            },
+            {
+              "TargetName": "Forum",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the forum to update."
+                },
+                {
+                  "Name": "CategoryId",
+                  "NormalizedName": "Category Id",
+                  "Summary": "The new forum category for the forum."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "The new name of the forum."
+                },
+                {
+                  "Name": "Slug",
+                  "NormalizedName": "Slug",
+                  "Summary": "The new slug of the forum."
+                },
+                {
+                  "Name": "Description",
+                  "NormalizedName": "Description",
+                  "Summary": "The new description of the forum."
+                },
+                {
+                  "Name": "PermissionSetId",
+                  "NormalizedName": "Permission Set Id",
+                  "Summary": "The unique identifier of the new permission set for the forum."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "UpdateForum",
+              "NormalizedName": "Update Forum",
+              "Summary": "Request that updates the forum details."
+            }
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "The unique identifier of the Forum."
+            },
+            {
+              "Name": "CategoryId",
+              "NormalizedName": "Category Id",
+              "Summary": "The unique identifier of the Forum Category which the Forum belongs to."
+            },
+            {
+              "Name": "Name",
+              "NormalizedName": "Name",
+              "Summary": "The name of the Forum."
+            },
+            {
+              "Name": "Slug",
+              "NormalizedName": "Slug",
+              "Summary": "The Slug of the Forum.\r\n            This value is added to the URL in order to identify the Forum.\r\n            If the Slug is \u0022my-forum-slug\u0022, the URL will be something similar to \u0022www.mysite.com/forum/my-forum-slug\u0022."
+            },
+            {
+              "Name": "Description",
+              "NormalizedName": "Description",
+              "Summary": "The description of the Forum.\r\n            This value will be displayed in the index and forum pages if included in the theme."
+            },
+            {
+              "Name": "SortOrder",
+              "NormalizedName": "Sort Order",
+              "Summary": "The sort order which is used to display the forums in the index page."
+            },
+            {
+              "Name": "TopicsCount",
+              "NormalizedName": "Topics Count",
+              "Summary": "The number of topics published."
+            },
+            {
+              "Name": "RepliesCount",
+              "NormalizedName": "Replies Count",
+              "Summary": "The number of replies published."
+            },
+            {
+              "Name": "Status",
+              "NormalizedName": "Status",
+              "Summary": "The status of the forum.\r\n            Can be either published or deleted."
+            },
+            {
+              "Name": "PermissionSetId",
+              "NormalizedName": "Permission Set Id",
+              "Summary": "The unique identifier of the permission set used.\r\n            If it\u0027s not assigned, the forum will inherit the permission set fom the forum category."
+            },
+            {
+              "Name": "LastPostId",
+              "NormalizedName": "Last Post Id",
+              "Summary": "The unique identifier of the last post published."
+            },
+            {
+              "Name": "Category",
+              "NormalizedName": "Category",
+              "Summary": "Reference to the forum category."
+            },
+            {
+              "Name": "PermissionSet",
+              "NormalizedName": "Permission Set",
+              "Summary": "Reference to the permission set if assigned."
+            },
+            {
+              "Name": "LastPost",
+              "NormalizedName": "Last Post",
+              "Summary": "Reference to the last post published if any."
+            },
+            {
+              "Name": "Posts",
+              "NormalizedName": "Posts",
+              "Summary": "List of published posts."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Create an empty forum."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Create a new forum with the given values including a unique identifier.\r\n            The default status is published."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates a new forum with the given values.\r\n            The unique identifier is automatically assigned.\r\n            The default status is published."
+            },
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Updates the details of the forum.\r\n            The values that can be changed are forum category, name, slug, description and permission set."
+            },
+            {
+              "Name": "UpdateLastPost",
+              "NormalizedName": "Update Last Post",
+              "Summary": "Updates the unique identifier of the last published post."
+            },
+            {
+              "Name": "MoveUp",
+              "NormalizedName": "Move Up",
+              "Summary": "Change the sort order by moving up 1 position.\r\n            It generates an error if sort order is 1."
+            },
+            {
+              "Name": "MoveDown",
+              "NormalizedName": "Move Down",
+              "Summary": "Change the sort order by moving down 1 position."
+            },
+            {
+              "Name": "Reorder",
+              "NormalizedName": "Reorder",
+              "Summary": "Replace the sort order with the given value."
+            },
+            {
+              "Name": "IncreaseTopicsCount",
+              "NormalizedName": "Increase Topics Count",
+              "Summary": "Increase the number of topics by 1."
+            },
+            {
+              "Name": "DecreaseTopicsCount",
+              "NormalizedName": "Decrease Topics Count",
+              "Summary": "Decrease the number of topics by 1.\r\n            If the resulting number is less than zero, the value will be set to zero."
+            },
+            {
+              "Name": "IncreaseRepliesCount",
+              "NormalizedName": "Increase Replies Count",
+              "Summary": "Increase the number of replies by 1."
+            },
+            {
+              "Name": "DecreaseRepliesCount",
+              "NormalizedName": "Decrease Replies Count",
+              "Summary": "Decrease the number of replies by 1.\r\n            If the resulting number is less than zero, the value will be set to zero."
+            },
+            {
+              "Name": "Delete",
+              "NormalizedName": "Delete",
+              "Summary": "Set the status as deleted.\r\n            Topics and replies within the forum will no longer be visible."
+            },
+            {
+              "Name": "PermissionSetName",
+              "NormalizedName": "Permission Set Name",
+              "Summary": "Returns the name of permission set if assigned."
+            },
+            {
+              "Name": "HasPermissionSet",
+              "NormalizedName": "Has Permission Set",
+              "Summary": "Indicates if a permission set is assigned."
+            }
+          ],
+          "Name": "Forum",
+          "NormalizedName": "Forum",
+          "Summary": "A forum is a board where users can hold conversations."
+        },
+        {
+          "Requests": [
+            {
+              "TargetName": "PermissionSet",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier for the new permission set. If not specified, a random one is assigned."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "The name of the new permission set."
+                },
+                {
+                  "Name": "Permissions",
+                  "NormalizedName": "Permissions",
+                  "Summary": "The permissions of the new permission set."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "CreatePermissionSet",
+              "NormalizedName": "Create Permission Set",
+              "Summary": "Request that creates a new permission set."
+            },
+            {
+              "TargetName": "PermissionSet",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the permission set to delete."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "DeletePermissionSet",
+              "NormalizedName": "Delete Permission Set",
+              "Summary": "Request that deletes a permission set."
+            },
+            {
+              "TargetName": "PermissionSet",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the permission set to update."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "The new name for the permission set."
+                },
+                {
+                  "Name": "Permissions",
+                  "NormalizedName": "Permissions",
+                  "Summary": "The new permissions for the permission set."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "UpdatePermissionSet",
+              "NormalizedName": "Update Permission Set",
+              "Summary": "Request that updates a permission set."
+            }
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "The unique identifier of the permission set."
+            },
+            {
+              "Name": "SiteId",
+              "NormalizedName": "Site Id",
+              "Summary": "The unique identifier of the site which the permission set belongs to."
+            },
+            {
+              "Name": "Name",
+              "NormalizedName": "Name",
+              "Summary": "The name of the permission set."
+            },
+            {
+              "Name": "Status",
+              "NormalizedName": "Status",
+              "Summary": "The status of the permission set.\r\n            It could be either published or deleted."
+            },
+            {
+              "Name": "Permissions",
+              "NormalizedName": "Permissions",
+              "Summary": "List of permissions.\r\n            Each permission is a combination of a user role and a permission type.\r\n            For example, role Subscriber and type Read which means that only users in the role Subscriber can read the discussions."
+            },
+            {
+              "Name": "Categories",
+              "NormalizedName": "Categories",
+              "Summary": "List of forum categories that use the permission set."
+            },
+            {
+              "Name": "Forums",
+              "NormalizedName": "Forums",
+              "Summary": "List of forums that use the permission set."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates an empty permission set."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates a new permission set  with the given values.\r\n            The unique identifier is automatically assigned.\r\n            The default status is published."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates a new permission set with the given values including a unique identifier.\r\n            The default status is published."
+            },
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Updates the details of the permission set.\r\n            The values that can be changed are name and permissions."
+            },
+            {
+              "Name": "Delete",
+              "NormalizedName": "Delete",
+              "Summary": "Set the status as deleted.\r\n            The permission set can no longer be used in forum categories and forums."
+            }
+          ],
+          "Name": "PermissionSet",
+          "NormalizedName": "Permission Set",
+          "Summary": "A permission set contains the permissions to read, create or edit forum posts.\r\n            Each permission type such as view forum, read topics or create new posts is assigned to one or more user roles."
+        },
+        {
+          "Requests": [
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the reply."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "The unique identifier of the forum."
+                },
+                {
+                  "Name": "TopicId",
+                  "NormalizedName": "Topic Id",
+                  "Summary": "The unique identifier of the topic."
+                },
+                {
+                  "Name": "Content",
+                  "NormalizedName": "Content",
+                  "Summary": "The content of the reply."
+                },
+                {
+                  "Name": "Status",
+                  "NormalizedName": "Status",
+                  "Summary": "The status of the reply."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "CreateReply",
+              "NormalizedName": "Create Reply",
+              "Summary": "Request to create a new reply."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the topic."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "The unique identifier of the forum."
+                },
+                {
+                  "Name": "Title",
+                  "NormalizedName": "Title",
+                  "Summary": "The title of the topic."
+                },
+                {
+                  "Name": "Slug",
+                  "NormalizedName": "Slug",
+                  "Summary": "The slug of the topic."
+                },
+                {
+                  "Name": "Content",
+                  "NormalizedName": "Content",
+                  "Summary": "The content of the topic."
+                },
+                {
+                  "Name": "Status",
+                  "NormalizedName": "Status",
+                  "Summary": "The status of the topic."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "CreateTopic",
+              "NormalizedName": "Create Topic",
+              "Summary": "Request to create a new topic."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the reply to delete."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "The unique identifier of the forum."
+                },
+                {
+                  "Name": "TopicId",
+                  "NormalizedName": "Topic Id",
+                  "Summary": "The unique identifier of the topic."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "DeleteReply",
+              "NormalizedName": "Delete Reply",
+              "Summary": "Request to delete a reply."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the topic to delete."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "The unique identifier of the forum."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "DeleteTopic",
+              "NormalizedName": "Delete Topic",
+              "Summary": "Request to delete a topic."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the topic to lock/unlock."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "The unique identifier of the forum."
+                },
+                {
+                  "Name": "Locked",
+                  "NormalizedName": "Locked",
+                  "Summary": "Value indicating whether the topic needs to be locked (true) or unlocked (false)."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "LockTopic",
+              "NormalizedName": "Lock Topic",
+              "Summary": "Request to lock/unlock a topic."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the topic to pin/unpin."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "The unique identifier of the forum."
+                },
+                {
+                  "Name": "Pinned",
+                  "NormalizedName": "Pinned",
+                  "Summary": "Value indicating whether the topic needs to be pinned (true) or unpinned (false)."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "PinTopic",
+              "NormalizedName": "Pin Topic",
+              "Summary": "Request to pin/unpin a topic."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the reply."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "The unique identifier of the forum."
+                },
+                {
+                  "Name": "TopicId",
+                  "NormalizedName": "Topic Id",
+                  "Summary": "The unique identifier of the topic."
+                },
+                {
+                  "Name": "IsAnswer",
+                  "NormalizedName": "Is Answer",
+                  "Summary": "Value indicating whether the reply needs to be set as answer (true) or not (false)."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "SetReplyAsAnswer",
+              "NormalizedName": "Set Reply As Answer",
+              "Summary": "Request to set a reply as answer."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the reply to update."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "The unique identifier of the forum."
+                },
+                {
+                  "Name": "TopicId",
+                  "NormalizedName": "Topic Id",
+                  "Summary": "The unique identifier of the topic."
+                },
+                {
+                  "Name": "Content",
+                  "NormalizedName": "Content",
+                  "Summary": "The new content of the reply."
+                },
+                {
+                  "Name": "Status",
+                  "NormalizedName": "Status",
+                  "Summary": "The new status of the reply."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "UpdateReply",
+              "NormalizedName": "Update Reply",
+              "Summary": "Request to update a reply."
+            },
+            {
+              "TargetName": "Post",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the topic to update."
+                },
+                {
+                  "Name": "ForumId",
+                  "NormalizedName": "Forum Id",
+                  "Summary": "The unique identifier of the forum."
+                },
+                {
+                  "Name": "Title",
+                  "NormalizedName": "Title",
+                  "Summary": "The new title of the topic."
+                },
+                {
+                  "Name": "Slug",
+                  "NormalizedName": "Slug",
+                  "Summary": "The new slug of the topic."
+                },
+                {
+                  "Name": "Content",
+                  "NormalizedName": "Content",
+                  "Summary": "The new content of the topic."
+                },
+                {
+                  "Name": "Status",
+                  "NormalizedName": "Status",
+                  "Summary": "The new status of the topic."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "UpdateTopic",
+              "NormalizedName": "Update Topic",
+              "Summary": "Request to update a topic."
+            }
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "The unique identifier of the forum post."
+            },
+            {
+              "Name": "ForumId",
+              "NormalizedName": "Forum Id",
+              "Summary": "The unique identifier of the forum."
+            },
+            {
+              "Name": "Title",
+              "NormalizedName": "Title",
+              "Summary": "The title of the post.\r\n            It is only used if the post is the initial message (topic)."
+            },
+            {
+              "Name": "Slug",
+              "NormalizedName": "Slug",
+              "Summary": "The slug of the post.\r\n            It is only used if the post is the initial message (topic).\r\n            This value is added to the URL in order to identify the topic within the forum.\r\n            If the slug is \u0022my-topic-slug\u0022, the URL will be something similar to \u0022www.mysite.com/forum/my-forum/my-topic-slug\u0022."
+            },
+            {
+              "Name": "Content",
+              "NormalizedName": "Content",
+              "Summary": "The content of the post."
+            },
+            {
+              "Name": "RepliesCount",
+              "NormalizedName": "Replies Count",
+              "Summary": "The number of replies to the initial message.\r\n            It is only used if the post is the initial message (topic)."
+            },
+            {
+              "Name": "Status",
+              "NormalizedName": "Status",
+              "Summary": "The status of the post.\r\n            It can be either published or deleted."
+            },
+            {
+              "Name": "CreatedBy",
+              "NormalizedName": "Created By",
+              "Summary": "The unique identifier of the user who created the post."
+            },
+            {
+              "Name": "CreatedOn",
+              "NormalizedName": "Created On",
+              "Summary": "The time stamp of when the post has been created."
+            },
+            {
+              "Name": "ModifiedBy",
+              "NormalizedName": "Modified By",
+              "Summary": "The unique identifier of the user who last updated the post."
+            },
+            {
+              "Name": "ModifiedOn",
+              "NormalizedName": "Modified On",
+              "Summary": "The time stamp of when the post has been last updated."
+            },
+            {
+              "Name": "Pinned",
+              "NormalizedName": "Pinned",
+              "Summary": "Value indicating whether the post is pinned or not.\r\n            It is only used if the post is the initial message (topic).\r\n            If pinned, the topic is always shown at the top of the forum page."
+            },
+            {
+              "Name": "Locked",
+              "NormalizedName": "Locked",
+              "Summary": "Value indicating whether the post is locked or not.\r\n            It is only used if the post is the initial message (topic).\r\n            If locked, only users that can moderate a forum will be able to reply to the initial message."
+            },
+            {
+              "Name": "IsAnswer",
+              "NormalizedName": "Is Answer",
+              "Summary": "Value indicating whether the post is marked as answer or not.\r\n            It is only used if the post is a reply to the initial message.\r\n            If it is an answer, the post is shown at the top of the topic page and marked as the accepted answer."
+            },
+            {
+              "Name": "HasAnswer",
+              "NormalizedName": "Has Answer",
+              "Summary": "Value indicating whether the post has an answer or not.\r\n            It is only used if the post is the initial message (topic).\r\n            If it has an answer, the topic is marked as answered in the forum page."
+            },
+            {
+              "Name": "TopicId",
+              "NormalizedName": "Topic Id",
+              "Summary": "The unique identifier of the topic.\r\n            It is only used if the post is a reply to the initial message."
+            },
+            {
+              "Name": "LastReplyId",
+              "NormalizedName": "Last Reply Id",
+              "Summary": "The unique identifier of the last reply.\r\n            It is only used if the post is the initial message (topic)."
+            },
+            {
+              "Name": "Topic",
+              "NormalizedName": "Topic",
+              "Summary": "Reference to the topic."
+            },
+            {
+              "Name": "LastReply",
+              "NormalizedName": "Last Reply",
+              "Summary": "Reference to the last reply."
+            },
+            {
+              "Name": "Forum",
+              "NormalizedName": "Forum",
+              "Summary": "Reference to the forum."
+            },
+            {
+              "Name": "CreatedByUser",
+              "NormalizedName": "Created By User",
+              "Summary": "Reference to the user who created the post."
+            },
+            {
+              "Name": "ModifiedByUser",
+              "NormalizedName": "Modified By User",
+              "Summary": "Reference to the user who last updated the post."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates an empty forum post."
+            },
+            {
+              "Name": "CreateTopic",
+              "NormalizedName": "Create Topic",
+              "Summary": "Creates a new topic with the given values."
+            },
+            {
+              "Name": "CreateTopic",
+              "NormalizedName": "Create Topic",
+              "Summary": "Creates a new topic with the given values including the unique identifier."
+            },
+            {
+              "Name": "CreateReply",
+              "NormalizedName": "Create Reply",
+              "Summary": "Creates a new reply with the given values."
+            },
+            {
+              "Name": "CreateReply",
+              "NormalizedName": "Create Reply",
+              "Summary": "Creates a new reply with the given values including the unique identifier."
+            },
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Updates the details of the topic."
+            },
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Updates the details of the reply."
+            },
+            {
+              "Name": "UpdateLastReply",
+              "NormalizedName": "Update Last Reply",
+              "Summary": "Updates the last reply unique identifier if the post is the initial message."
+            },
+            {
+              "Name": "IncreaseRepliesCount",
+              "NormalizedName": "Increase Replies Count",
+              "Summary": "Increases the number of replies of the topic by 1."
+            },
+            {
+              "Name": "DecreaseRepliesCount",
+              "NormalizedName": "Decrease Replies Count",
+              "Summary": "Decreases the number of replies of the topic by 1.\r\n            If the resulting number is less than zero, the value is set to zero."
+            },
+            {
+              "Name": "Pin",
+              "NormalizedName": "Pin",
+              "Summary": "Pin and unpin the topic based of the passed value."
+            },
+            {
+              "Name": "Lock",
+              "NormalizedName": "Lock",
+              "Summary": "Lock and unlock the topic based of the passed value."
+            },
+            {
+              "Name": "SetAsAnswer",
+              "NormalizedName": "Set As Answer",
+              "Summary": "Set the reply as answer."
+            },
+            {
+              "Name": "SetAsAnswered",
+              "NormalizedName": "Set As Answered",
+              "Summary": "Set the topic as answered."
+            },
+            {
+              "Name": "Delete",
+              "NormalizedName": "Delete",
+              "Summary": "Set the status as deleted."
+            },
+            {
+              "Name": "IsTopic",
+              "NormalizedName": "Is Topic",
+              "Summary": "Indicates if the post is an initial message (topic)."
+            }
+          ],
+          "Name": "Post",
+          "NormalizedName": "Post",
+          "Summary": "A forum post is a message created in a forum.\r\n            It can be either the start of a discussion (topic) or a reply to another message."
+        },
+        {
+          "Requests": [
+            {
+              "TargetName": "Site",
+              "Properties": [
+                {
+                  "Name": "Title",
+                  "NormalizedName": "Title",
+                  "Summary": "The new tile of the site."
+                },
+                {
+                  "Name": "Theme",
+                  "NormalizedName": "Theme",
+                  "Summary": "The new theme for the public site."
+                },
+                {
+                  "Name": "Css",
+                  "NormalizedName": "Css",
+                  "Summary": "The new Cascading Style Sheet for the public site."
+                },
+                {
+                  "Name": "Language",
+                  "NormalizedName": "Language",
+                  "Summary": "The new language ISO code of the site."
+                },
+                {
+                  "Name": "Privacy",
+                  "NormalizedName": "Privacy",
+                  "Summary": "The new content of the privacy page."
+                },
+                {
+                  "Name": "Terms",
+                  "NormalizedName": "Terms",
+                  "Summary": "The new content of the terms page."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "UpdateSite",
+              "NormalizedName": "Update Site",
+              "Summary": "Request to update the details of a site."
+            }
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "The unique identifier of the site."
+            },
+            {
+              "Name": "Name",
+              "NormalizedName": "Name",
+              "Summary": "The name of the site."
+            },
+            {
+              "Name": "Title",
+              "NormalizedName": "Title",
+              "Summary": "The title of the site."
+            },
+            {
+              "Name": "PublicTheme",
+              "NormalizedName": "Public Theme",
+              "Summary": "The name of the theme to use in the public site."
+            },
+            {
+              "Name": "PublicCss",
+              "NormalizedName": "Public Css",
+              "Summary": "The Cascading Style Sheet to use in the public site."
+            },
+            {
+              "Name": "AdminTheme",
+              "NormalizedName": "Admin Theme",
+              "Summary": "The name of the theme to use in the admin area."
+            },
+            {
+              "Name": "AdminCss",
+              "NormalizedName": "Admin Css",
+              "Summary": "The Cascading Style Sheet to use in the admin area."
+            },
+            {
+              "Name": "Language",
+              "NormalizedName": "Language",
+              "Summary": "The ISO code for the language of the site (e.g. en or en-GB)."
+            },
+            {
+              "Name": "Privacy",
+              "NormalizedName": "Privacy",
+              "Summary": "The content of the privacy page."
+            },
+            {
+              "Name": "Terms",
+              "NormalizedName": "Terms",
+              "Summary": "The content of the terms page."
+            },
+            {
+              "Name": "Categories",
+              "NormalizedName": "Categories",
+              "Summary": "The list of forum categories."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates an empty site."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates a new site with the given values."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates a new site with the given values including the unique identifier."
+            },
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Updates the details of the site."
+            }
+          ],
+          "Name": "Site",
+          "NormalizedName": "Site",
+          "Summary": "Site"
+        },
+        {
+          "Requests": [
+            {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the user."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "ConfirmUser",
+              "NormalizedName": "Confirm User",
+              "Summary": "Request to set the status of a user to active after the email has been confirmed."
+            },
+            {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the user."
+                },
+                {
+                  "Name": "IdentityUserId",
+                  "NormalizedName": "Identity User Id",
+                  "Summary": "The unique identifier of the user in the membership database."
+                },
+                {
+                  "Name": "Email",
+                  "NormalizedName": "Email",
+                  "Summary": "The email of the user in the membership database."
+                },
+                {
+                  "Name": "Confirm",
+                  "NormalizedName": "Confirm",
+                  "Summary": "A value indicating whether the status of the new user needs to be set as active (true) or pending (false).\r\n            When a user registers through the site the value is false because the user needs to confirm the email address before being set as active.\r\n            When an administrator creates a user through the admin are, this value is true and the user is immediately active."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "CreateUser",
+              "NormalizedName": "Create User",
+              "Summary": "Request to create a new user.\r\n            This request is sent right after a user completes the registration in the site.\r\n            If a user is already registered but a profile does not exist yet, this request is sent the first time the user logs in."
+            },
+            {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the user to delete."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "DeleteUser",
+              "NormalizedName": "Delete User",
+              "Summary": "Request to set the status of a user to deleted and to remove the identity user from the membership database."
+            },
+            {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the user to re-activate."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "ReinstateUser",
+              "NormalizedName": "Reinstate User",
+              "Summary": "Request to re-active a suspended user."
+            },
+            {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the user to be suspended."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "SuspendUser",
+              "NormalizedName": "Suspend User",
+              "Summary": "Request to suspend a user."
+            },
+            {
+              "TargetName": "User",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the user to update."
+                },
+                {
+                  "Name": "DisplayName",
+                  "NormalizedName": "Display Name",
+                  "Summary": "The new display name of the user."
+                },
+                {
+                  "Name": "Roles",
+                  "NormalizedName": "Roles",
+                  "Summary": "The list of roles to be assigned to the user.\r\n            This value is populated only an administrator updates a user."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "UpdateUser",
+              "NormalizedName": "Update User",
+              "Summary": "Request to update a user."
+            }
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "The unique identifier of the user."
+            },
+            {
+              "Name": "IdentityUserId",
+              "NormalizedName": "Identity User Id",
+              "Summary": "The unique identifier of the user in the membership database."
+            },
+            {
+              "Name": "Email",
+              "NormalizedName": "Email",
+              "Summary": "The email of the user in the membership database."
+            },
+            {
+              "Name": "DisplayName",
+              "NormalizedName": "Display Name",
+              "Summary": "The display name of the user.\r\n            It is used as the public name of the user."
+            },
+            {
+              "Name": "TopicsCount",
+              "NormalizedName": "Topics Count",
+              "Summary": "The number of the topics published by the user."
+            },
+            {
+              "Name": "RepliesCount",
+              "NormalizedName": "Replies Count",
+              "Summary": "The number of replies created by the user."
+            },
+            {
+              "Name": "Status",
+              "NormalizedName": "Status",
+              "Summary": "The status of the user.\r\n            Pending: User is registered but the email is not confirmed.Active: User is registered and the email is confirmed.Suspended: User cannot create new posts (topics or replies)."
+            },
+            {
+              "Name": "TimeStamp",
+              "NormalizedName": "Time Stamp",
+              "Summary": "The time stamp of when the user has been created."
+            },
+            {
+              "Name": "Posts",
+              "NormalizedName": "Posts",
+              "Summary": "The list of posts created by the user."
+            },
+            {
+              "Name": "Events",
+              "NormalizedName": "Events",
+              "Summary": "The list of events generated by the user."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates an empty user."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates a new user with the given values."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates a new user with the given values including the unique identifier."
+            },
+            {
+              "Name": "Confirm",
+              "NormalizedName": "Confirm",
+              "Summary": "Set the status to active when the user confirms the email address."
+            },
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Updates user\u0027s details."
+            },
+            {
+              "Name": "IncreaseTopicsCount",
+              "NormalizedName": "Increase Topics Count",
+              "Summary": "Increases the number of topics by 1."
+            },
+            {
+              "Name": "IncreaseRepliesCount",
+              "NormalizedName": "Increase Replies Count",
+              "Summary": "Increases the number of replies by 1."
+            },
+            {
+              "Name": "DecreaseTopicsCount",
+              "NormalizedName": "Decrease Topics Count",
+              "Summary": "Decreases the number of topics by 1."
+            },
+            {
+              "Name": "DecreaseRepliesCount",
+              "NormalizedName": "Decrease Replies Count",
+              "Summary": "Decreases the number of replies by 1."
+            },
+            {
+              "Name": "Suspend",
+              "NormalizedName": "Suspend",
+              "Summary": "Sets the status of the user as suspended.\r\n            The user will no longer be able to write new posts."
+            },
+            {
+              "Name": "Reinstate",
+              "NormalizedName": "Reinstate",
+              "Summary": "Re-activates the user if suspended."
+            },
+            {
+              "Name": "Delete",
+              "NormalizedName": "Delete",
+              "Summary": "Sets the status of the user as deleted."
+            }
+          ],
+          "Name": "User",
+          "NormalizedName": "User",
+          "Summary": "User"
+        }
+      ]
+    }
+  ],
+  "TimeStamp": "2020-09-08T17:49:43.8249431Z",
+  "ElapsedTime": 116
+}
