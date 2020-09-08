@@ -13,13 +13,13 @@ footer p {
     margin-bottom: .25rem;
 }
 
-.tab-pane {
+/*.tab-pane {
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     border-radius: 0px 0px 5px 5px;
     padding: 10px;
-}
+}*/
 
 .nav-tabs {
     margin-bottom: 0;
@@ -46,6 +46,14 @@ footer p {
 
 .validation-message {
     color: red;
+}
+
+.docs-icon-toogle[aria-expanded=false] .docs-icon-expanded {
+    display: none;
+}
+
+.docs-icon-toogle[aria-expanded=true] .docs-icon-collapsed {
+    display: none;
 }
 
 /*rgb(36, 58, 94)*/

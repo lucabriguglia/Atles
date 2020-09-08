@@ -2,9 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Client.Pages;
 using Atlas.Client.Services;
 using Atlas.Models.Public;
 using Microsoft.AspNetCore.Components;
+using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 
 namespace Atlas.Client.Components.Pages
@@ -16,6 +18,7 @@ namespace Atlas.Client.Components.Pages
 
         [Inject] public IJSRuntime JsRuntime { get; set; }
         [Inject] public ApiService ApiService { get; set; }
+        [Inject] public IStringLocalizer<PublicResources> Loc { get; set; }
 
         protected override async Task OnInitializedAsync()
         {

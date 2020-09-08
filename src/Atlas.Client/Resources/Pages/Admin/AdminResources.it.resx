@@ -402,9 +402,6 @@
   <data name="UserI d" xml:space="preserve">
     <value>User Id</value>
   </data>
-  <data name="Users" xml:space="preserve">
-    <value>Utenti</value>
-  </data>
   <data name="Users in role {0}" xml:space="preserve">
     <value>Utenti nel ruolo {0}</value>
   </data>

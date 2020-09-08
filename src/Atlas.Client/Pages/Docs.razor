@@ -1,0 +1,161 @@
+﻿@page "/docs"
+
+@inherits DocsPage
+
+<nav aria-label="breadcrumb">
+    <ol class="breadcrumb">
+        <li class="breadcrumb-item"><a href="/">@Loc["Home"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Docs</li>
+    </ol>
+</nav>
+
+<h3>Domain Documentation</h3>
+
+<p class="text-justify">
+    The idea is to create a domain-oriented documentation that can help both developers and business users to understand better how a system works.
+    The NuGet package used for the generation of the documentation is a software prototype created as the IT artefact of a dissertation for a Master's Degree in Software Engineering.
+    Future improvements will include the description of all validation rules applied when creating and updating domain objects.
+</p>
+
+@if (Model == null)
+{
+    <Loading />
+}
+else
+{
+    <div class="container">
+        <div class="row">
+            <div class="col-md-3 pl-0">
+                @foreach (var context in Model.Contexts)
+                {
+                    @if (Model.Contexts.Count > 1)
+                    {
+                        <h5>@context.Name</h5>
+                    }
+                    <div class="nav flex-column nav-pills" id="@(context.Name)-tab" role="tablist" aria-orientation="vertical">
+                        @for (var i = 0; i < context.Targets.Count; i++)
+                        {
+                            var target = context.Targets[i];
+                            var css = i == 0 ? "active" : string.Empty;
+                            <a class="nav-link @css" id="@(context.Name)-@(target.Name)-tab" data-toggle="pill" href="#@(context.Name)-@(target.Name)" role="tab" aria-controls="@(context.Name)-@(target.Name)" aria-selected="true">@target.NormalizedName</a>
+                        }
+                    </div>
+                }
+            </div>
+            <div class="col-md-9 pr-0">
+                @foreach (var context in Model.Contexts)
+                {
+                <div class="tab-content" id="@(context.Name)-tabContent">
+                    @for (var i = 0; i < context.Targets.Count; i++)
+                    {
+                        var target = context.Targets[i];
+                        var css = i == 0 ? "show active" : string.Empty;
+                        <div class="tab-pane fade @css" id="@(context.Name)-@(target.Name)" role="tabpanel" aria-labelledby="@(context.Name)-@(target.Name)-tab">
+                            <div class="mb-3">
+                                <h4>@target.NormalizedName</h4>
+                                <div class="mb-2">@target.Summary</div>
+
+                                <div class="mb-2">
+                                    <a class="docs-icon-toogle" data-toggle="collapse" aria-expanded="false" aria-controls="target-methods-collapse" href="#target-methods-collapse">
+                                        <i class="fas fa-chevron-right docs-icon-collapsed"></i>
+                                        <i class="fas fa-chevron-down docs-icon-expanded"></i>
+                                        Methods
+                                    </a>
+                                    <div class="collapse mt-2" id="target-methods-collapse">
+                                        <table class="table table-bordered table-hover">
+                                            <tbody>
+                                                @foreach (var method in target.Methods)
+                                                {
+                                                    <tr>
+                                                        <th scope="row">@method.NormalizedName</th>
+                                                        <td>@method.Summary</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                                <div class="mb-2">
+                                    <a class="docs-icon-toogle" data-toggle="collapse" aria-expanded="false" aria-controls="target-properties-collapse" href="#target-properties-collapse">
+                                        <i class="fas fa-chevron-right docs-icon-collapsed"></i>
+                                        <i class="fas fa-chevron-down docs-icon-expanded"></i>
+                                        Properties
+                                    </a>
+                                    <div class="collapse mt-2" id="target-properties-collapse">
+                                        <table class="table table-bordered table-hover">
+                                            <tbody>
+                                                @foreach (var property in target.Properties)
+                                                {
+                                                    <tr>
+                                                        <th scope="row">@property.NormalizedName</th>
+                                                        <td>@property.Summary</td>
+                                                    </tr>
+                                                }
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr />
+
+                            <p class="text-secondary">The following are all actions that can change the state of a @target.NormalizedName.</p>
+
+                            @foreach (var request in target.Requests)
+                            {
+                                <div class="mb-3">
+                                    <h5>@request.NormalizedName</h5>
+                                    <div class="mb-2">@request.Summary</div>
+                                    <div class="mb-2">
+                                        <a class="docs-icon-toogle" data-toggle="collapse" aria-expanded="false" aria-controls="request-@(request.Name)-properties-collapse" href="#request-@(request.Name)-properties-collapse">
+                                            <i class="fas fa-chevron-right docs-icon-collapsed"></i>
+                                            <i class="fas fa-chevron-down docs-icon-expanded"></i>
+                                            Properties
+                                        </a>
+                                        <div class="collapse mt-2" id="request-@(request.Name)-properties-collapse">
+                                            <table class="table table-bordered table-hover">
+                                                <tbody>
+                                                    @foreach (var property in request.Properties)
+                                                    {
+                                                        <tr>
+                                                            <th scope="row">@property.NormalizedName</th>
+                                                            <td>@property.Summary</td>
+                                                        </tr>
+                                                    }
+                                                </tbody>
+                                            </table>
+                                        </div>
+                                    </div>
+                                    @if (request.Methods.Count > 0)
+                                    {
+                                        <div class="mb-2">
+                                            <a class="docs-icon-toogle" data-toggle="collapse" aria-expanded="false" aria-controls="request-@(request.Name)-methods-collapse" href="#request-@(request.Name)-methods-collapse">
+                                                <i class="fas fa-chevron-right docs-icon-collapsed"></i>
+                                                <i class="fas fa-chevron-down docs-icon-expanded"></i>
+                                                Methods
+                                            </a>
+                                            <div class="collapse mt-2" id="request-@(request.Name)-methods-collapse">
+                                                <table class="table table-bordered table-hover">
+                                                    <tbody>
+                                                        @foreach (var method in request.Methods)
+                                                        {
+                                                            <tr>
+                                                                <th scope="row">@method.NormalizedName</th>
+                                                                <td>@method.Summary</td>
+                                                            </tr>
+                                                        }
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        </div>
+                    }
+                </div>
+                }
+            </div>
+        </div>
+    </div>
+}

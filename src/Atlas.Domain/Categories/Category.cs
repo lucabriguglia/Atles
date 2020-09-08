@@ -7,7 +7,7 @@ using Atlas.Domain.Sites;
 namespace Atlas.Domain.Categories
 {
     /// <summary>
-    /// Forum category.
+    /// A forum category acts as a container to group logically different forums.
     /// </summary>
     public class Category
     {
@@ -32,18 +32,18 @@ namespace Atlas.Domain.Categories
         public int SortOrder { get; private set; }
 
         /// <summary>
-        /// The number of topics of all forums within the Forum Category.
+        /// The number of topics of all forums within the forum category.
         /// </summary>
         public int TopicsCount { get; private set; }
 
         /// <summary>
-        /// The number of replies of all forums within the Forum Category.
+        /// The number of replies of all forums within the forum category.
         /// </summary>
         public int RepliesCount { get; private set; }
 
         /// <summary>
-        /// The status of the Forum Category.
-        /// Can be either Published or Deleted.
+        /// The status of the forum category.
+        /// Can be either published or deleted.
         /// </summary>
         public StatusType Status { get; private set; }
 
@@ -68,17 +68,15 @@ namespace Atlas.Domain.Categories
         public virtual ICollection<Forum> Forums { get; set; }
 
         /// <summary>
-        /// Create an empty Forum Category.
-        /// Only used by Entity Framework.
+        /// Creates an empty forum category.
         /// </summary>
         public Category()
         {
-
         }
 
         /// <summary>
-        /// Create a new Forum Category with the given values including a unique identifier.
-        /// The default Status is Published.
+        /// Creates a new forum category with the given values including a unique identifier.
+        /// The default status is published.
         /// </summary>
         /// <param name="id"></param>
         /// <param name="siteId"></param>
@@ -91,9 +89,9 @@ namespace Atlas.Domain.Categories
         }
 
         /// <summary>
-        /// Create a new Forum Category with the given values.
+        /// Creates a new forum category with the given values.
         /// The unique identifier is automatically assigned.
-        /// The default Status is Published.
+        /// The default status is published.
         /// </summary>
         /// <param name="siteId"></param>
         /// <param name="name"></param>
@@ -115,7 +113,8 @@ namespace Atlas.Domain.Categories
         }
 
         /// <summary>
-        /// Updates the details of the Forum Category.
+        /// Updates the details of the forum category.
+        /// The values that can be changed are name and permission set.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="permissionSetId"></param>
@@ -126,8 +125,8 @@ namespace Atlas.Domain.Categories
         }
 
         /// <summary>
-        /// Change the Sort Order by moving up 1 position.
-        /// It generates an error if Sort Order is 1.
+        /// Change the sort order by moving up 1 position.
+        /// It generates an error if sort order is 1.
         /// </summary>
         /// <exception cref="ApplicationException"></exception>
         public void MoveUp()
@@ -141,7 +140,7 @@ namespace Atlas.Domain.Categories
         }
 
         /// <summary>
-        /// Change the Sort Order by moving down 1 position.
+        /// Change the sort order by moving down 1 position.
         /// </summary>
         public void MoveDown()
         {
@@ -149,7 +148,7 @@ namespace Atlas.Domain.Categories
         }
 
         /// <summary>
-        /// Replace the Sort Order with the given value.
+        /// Replace the sort order with the given value.
         /// </summary>
         /// <param name="sortOrder"></param>
         public void Reorder(int sortOrder)
@@ -210,7 +209,8 @@ namespace Atlas.Domain.Categories
         }
 
         /// <summary>
-        /// Set the status as Deleted and Forums, Topics and Replies within the Forum Category will no longer be visible.
+        /// Set the status as deleted.
+        /// Forums, topics and replies within the forum category will no longer be visible.
         /// </summary>
         public void Delete()
         {
@@ -218,7 +218,7 @@ namespace Atlas.Domain.Categories
         }
 
         /// <summary>
-        /// Returns the name of Permission Set used for the Forum Category.
+        /// Returns the name of permission set used.
         /// </summary>
         /// <returns></returns>
         public string PermissionSetName() => PermissionSet?.Name;

@@ -3,22 +3,22 @@
 namespace Atlas.Domain.Categories.Commands
 {
     /// <summary>
-    /// Request that updates a Forum Category.
+    /// Request that updates a forum category.
     /// </summary>
     public class UpdateCategory : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the Forum Category to update.
+        /// The unique identifier of the forum category to update.
         /// </summary>
         public Guid Id { get; set; }
 
         /// <summary>
-        /// The new Name of the Forum Category.
+        /// The new name of the forum category.
         /// </summary>
         public string Name { get; set; }
 
         /// <summary>
-        /// The unique identifier of the new Permission Set for the Forum Category.
+        /// The unique identifier of the new permission set for the forum category.
         /// </summary>
         public Guid PermissionSetId { get; set; }
     }
