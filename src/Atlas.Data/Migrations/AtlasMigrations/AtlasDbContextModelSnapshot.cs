@@ -64,10 +64,6 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<string>("Data")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<Guid?>("MemberId")
-                        .HasColumnName("UserId")
-                        .HasColumnType("uniqueidentifier");
-
                     b.Property<Guid>("SiteId")
                         .HasColumnType("uniqueidentifier");
 
@@ -83,9 +79,12 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<string>("Type")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid?>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
                     b.HasKey("Id");
 
-                    b.HasIndex("MemberId");
+                    b.HasIndex("UserId");
 
                     b.ToTable("Event");
                 });
@@ -137,39 +136,6 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.ToTable("Forum");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Members.Member", b =>
-                {
-                    b.Property<Guid>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("DisplayName")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<string>("Email")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<int>("RepliesCount")
-                        .HasColumnType("int");
-
-                    b.Property<int>("Status")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("TopicsCount")
-                        .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnName("IdentityUserId")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.ToTable("User");
-                });
-
             modelBuilder.Entity("Atlas.Domain.PermissionSets.Permission", b =>
                 {
                     b.Property<Guid>("PermissionSetId")
@@ -215,6 +181,12 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<string>("Content")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<Guid>("CreatedBy")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("CreatedOn")
+                        .HasColumnType("datetime2");
+
                     b.Property<Guid>("ForumId")
                         .HasColumnType("uniqueidentifier");
 
@@ -229,10 +201,6 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
                     b.Property<bool>("Locked")
                         .HasColumnType("bit");
-
-                    b.Property<Guid>("MemberId")
-                        .HasColumnName("CreatedBy")
-                        .HasColumnType("uniqueidentifier");
 
                     b.Property<Guid?>("ModifiedBy")
                         .HasColumnType("uniqueidentifier");
@@ -252,10 +220,6 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<int>("Status")
                         .HasColumnType("int");
 
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnName("CreatedOn")
-                        .HasColumnType("datetime2");
-
                     b.Property<string>("Title")
                         .HasColumnType("nvarchar(max)");
 
@@ -264,11 +228,11 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("CreatedBy");
+
                     b.HasIndex("ForumId");
 
                     b.HasIndex("LastReplyId");
-
-                    b.HasIndex("MemberId");
 
                     b.HasIndex("ModifiedBy");
 
@@ -315,6 +279,38 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.ToTable("Site");
                 });
 
+            modelBuilder.Entity("Atlas.Domain.Users.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("DisplayName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("IdentityUserId")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("RepliesCount")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Status")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("TopicsCount")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("User");
+                });
+
             modelBuilder.Entity("Atlas.Domain.Categories.Category", b =>
                 {
                     b.HasOne("Atlas.Domain.PermissionSets.PermissionSet", "PermissionSet")
@@ -332,9 +328,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
             modelBuilder.Entity("Atlas.Domain.Event", b =>
                 {
-                    b.HasOne("Atlas.Domain.Members.Member", "Member")
+                    b.HasOne("Atlas.Domain.Users.User", "User")
                         .WithMany("Events")
-                        .HasForeignKey("MemberId")
+                        .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction);
                 });
 
@@ -367,6 +363,12 @@ namespace Atlas.Data.Migrations.AtlasMigrations
 
             modelBuilder.Entity("Atlas.Domain.Posts.Post", b =>
                 {
+                    b.HasOne("Atlas.Domain.Users.User", "CreatedByUser")
+                        .WithMany("Posts")
+                        .HasForeignKey("CreatedBy")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
                     b.HasOne("Atlas.Domain.Forums.Forum", "Forum")
                         .WithMany("Posts")
                         .HasForeignKey("ForumId")
@@ -377,13 +379,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         .WithMany()
                         .HasForeignKey("LastReplyId");
 
-                    b.HasOne("Atlas.Domain.Members.Member", "CreatedByUser")
-                        .WithMany("Posts")
-                        .HasForeignKey("MemberId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Atlas.Domain.Members.Member", "ModifiedByUser")
+                    b.HasOne("Atlas.Domain.Users.User", "ModifiedByUser")
                         .WithMany()
                         .HasForeignKey("ModifiedBy");
 

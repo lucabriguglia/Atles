@@ -8,23 +8,6 @@ namespace Atlas.Data.Migrations.AtlasMigrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Member",
-                columns: table => new
-                {
-                    Id = table.Column<Guid>(nullable: false),
-                    UserId = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    DisplayName = table.Column<string>(nullable: true),
-                    TopicsCount = table.Column<int>(nullable: false),
-                    RepliesCount = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Member", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "PermissionSet",
                 columns: table => new
                 {
@@ -59,26 +42,21 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Event",
+                name: "User",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
-                    SiteId = table.Column<Guid>(nullable: false),
-                    TimeStamp = table.Column<DateTime>(nullable: false),
-                    TargetId = table.Column<Guid>(nullable: false),
-                    TargetType = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true),
-                    Data = table.Column<string>(nullable: true),
-                    MemberId = table.Column<Guid>(nullable: true)
+                    IdentityUserId = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: true),
+                    DisplayName = table.Column<string>(nullable: true),
+                    TopicsCount = table.Column<int>(nullable: false),
+                    RepliesCount = table.Column<int>(nullable: false),
+                    Status = table.Column<int>(nullable: false),
+                    TimeStamp = table.Column<DateTime>(nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Event", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Event_Member_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Member",
-                        principalColumn: "Id");
+                    table.PrimaryKey("PK_User", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -128,12 +106,36 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Event",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(nullable: false),
+                    SiteId = table.Column<Guid>(nullable: false),
+                    TimeStamp = table.Column<DateTime>(nullable: false),
+                    TargetId = table.Column<Guid>(nullable: false),
+                    TargetType = table.Column<string>(nullable: true),
+                    Type = table.Column<string>(nullable: true),
+                    Data = table.Column<string>(nullable: true),
+                    UserId = table.Column<Guid>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Event", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Event_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Forum",
                 columns: table => new
                 {
                     Id = table.Column<Guid>(nullable: false),
                     CategoryId = table.Column<Guid>(nullable: false),
                     Name = table.Column<string>(nullable: true),
+                    Slug = table.Column<string>(nullable: true),
                     Description = table.Column<string>(nullable: true),
                     SortOrder = table.Column<int>(nullable: false),
                     TopicsCount = table.Column<int>(nullable: false),
@@ -164,17 +166,29 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     Id = table.Column<Guid>(nullable: false),
                     ForumId = table.Column<Guid>(nullable: false),
                     Title = table.Column<string>(nullable: true),
+                    Slug = table.Column<string>(nullable: true),
                     Content = table.Column<string>(nullable: true),
                     RepliesCount = table.Column<int>(nullable: false),
                     Status = table.Column<int>(nullable: false),
-                    MemberId = table.Column<Guid>(nullable: false),
-                    TimeStamp = table.Column<DateTime>(nullable: false),
+                    CreatedBy = table.Column<Guid>(nullable: false),
+                    CreatedOn = table.Column<DateTime>(nullable: false),
+                    ModifiedBy = table.Column<Guid>(nullable: true),
+                    ModifiedOn = table.Column<DateTime>(nullable: true),
+                    Pinned = table.Column<bool>(nullable: false),
+                    Locked = table.Column<bool>(nullable: false),
+                    IsAnswer = table.Column<bool>(nullable: false),
+                    HasAnswer = table.Column<bool>(nullable: false),
                     TopicId = table.Column<Guid>(nullable: true),
                     LastReplyId = table.Column<Guid>(nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Post", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Post_User_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "User",
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Post_Forum_ForumId",
                         column: x => x.ForumId,
@@ -187,10 +201,11 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Post_Member_MemberId",
-                        column: x => x.MemberId,
-                        principalTable: "Member",
-                        principalColumn: "Id");
+                        name: "FK_Post_User_ModifiedBy",
+                        column: x => x.ModifiedBy,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_Post_Post_TopicId",
                         column: x => x.TopicId,
@@ -210,9 +225,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 column: "SiteId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Event_MemberId",
+                name: "IX_Event_UserId",
                 table: "Event",
-                column: "MemberId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Forum_CategoryId",
@@ -230,6 +245,11 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 column: "PermissionSetId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_Post_CreatedBy",
+                table: "Post",
+                column: "CreatedBy");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Post_ForumId",
                 table: "Post",
                 column: "ForumId");
@@ -240,9 +260,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 column: "LastReplyId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Post_MemberId",
+                name: "IX_Post_ModifiedBy",
                 table: "Post",
-                column: "MemberId");
+                column: "ModifiedBy");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Post_TopicId",
@@ -273,7 +293,11 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 table: "Category");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Post_Member_MemberId",
+                name: "FK_Post_User_CreatedBy",
+                table: "Post");
+
+            migrationBuilder.DropForeignKey(
+                name: "FK_Post_User_ModifiedBy",
                 table: "Post");
 
             migrationBuilder.DropForeignKey(
@@ -297,7 +321,7 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                 name: "Site");
 
             migrationBuilder.DropTable(
-                name: "Member");
+                name: "User");
 
             migrationBuilder.DropTable(
                 name: "Category");
