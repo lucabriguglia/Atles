@@ -44,6 +44,7 @@ namespace Atlas.Data.Builders.Public
                 {
                     Id = forum.Id,
                     Name = forum.Name,
+                    Description = forum.Description,
                     Slug = forum.Slug
                 },
                 Topics = await BuildForumPageModelTopicsAsync(forum.Id, options)
