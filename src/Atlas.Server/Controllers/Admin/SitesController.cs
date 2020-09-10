@@ -53,7 +53,8 @@ namespace Atlas.Server.Controllers.Admin
                 Css = model.Site.Css,
                 Language = model.Site.Language,
                 Privacy = model.Site.Privacy,
-                Terms = model.Site.Terms
+                Terms = model.Site.Terms,
+                HeadScript = model.Site.HeadScript
             };
 
             await _siteService.UpdateAsync(command);

@@ -59,8 +59,9 @@ namespace Atlas.Domain.Tests.Sites
             const string language = "it";
             const string privacy = "Privacy";
             const string terms = "Terms";
+            const string headScript = "<script>...blah...</script>";
 
-            sut.UpdateDetails(title, theme, css, language, privacy, terms);
+            sut.UpdateDetails(title, theme, css, language, privacy, terms, headScript);
 
             Assert.AreEqual(title, sut.Title, nameof(sut.Title));
             Assert.AreEqual(theme, sut.PublicTheme, nameof(sut.PublicTheme));
@@ -68,6 +69,7 @@ namespace Atlas.Domain.Tests.Sites
             Assert.AreEqual(language, sut.Language, nameof(sut.Language));
             Assert.AreEqual(privacy, sut.Privacy, nameof(sut.Privacy));
             Assert.AreEqual(terms, sut.Terms, nameof(sut.Terms));
+            Assert.AreEqual(headScript, sut.HeadScript, nameof(sut.HeadScript));
         }
     }
 }

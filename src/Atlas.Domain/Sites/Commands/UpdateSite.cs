@@ -37,5 +37,10 @@ namespace Atlas.Domain.Sites.Commands
         /// The new content of the terms page.
         /// </summary>
         public string Terms { get; set; }
+
+        /// <summary>
+        /// The script for the head section of the HTML document.
+        /// </summary>
+        public string HeadScript { get; set; }
     }
 }

@@ -62,6 +62,12 @@ namespace Atlas.Domain.Sites
         public string Terms { get; private set; }
 
         /// <summary>
+        /// Optional script to be added at the beginning of the head section of the HTML document.
+        /// It could be used for example to add the Google Analytics script.
+        /// </summary>
+        public string HeadScript { get; private set; }
+
+        /// <summary>
         /// The list of forum categories.
         /// </summary>
         public virtual ICollection<Category> Categories { get; set; }
@@ -117,7 +123,14 @@ namespace Atlas.Domain.Sites
         /// <param name="language"></param>
         /// <param name="privacy"></param>
         /// <param name="terms"></param>
-        public void UpdateDetails(string title, string theme, string css, string language, string privacy, string terms)
+        /// <param name="headScript"></param>
+        public void UpdateDetails(string title, 
+            string theme, 
+            string css, 
+            string language, 
+            string privacy, 
+            string terms,
+            string headScript)
         {
             Title = title;
             PublicTheme = theme;
@@ -125,6 +138,7 @@ namespace Atlas.Domain.Sites
             Language = language;
             Privacy = privacy;
             Terms = terms;
+            HeadScript = headScript;
         }
     }
 }

@@ -36,6 +36,8 @@ namespace Atlas.Models.Admin.Site
 
             [Required]
             public string Terms { get; set; }
+
+            public string HeadScript { get; set; }
         }
     }
 }

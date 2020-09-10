@@ -13,5 +13,6 @@ namespace Atlas.Models.Public
         public string Language { get; set; }
         public string Privacy { get; set; }
         public string Terms { get; set; }
+        public string HeadScript { get; set; }
     }
 }

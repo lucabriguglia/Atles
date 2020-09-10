@@ -19,7 +19,13 @@ namespace Atlas.Client.Components
         {
             User = await ApiService.GetFromJsonAsync<CurrentUserModel>("api/public/current-user");
             Site = await ApiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
+
             await JsRuntime.InvokeVoidAsync("atlas.interop.changePageTitle", Site.Title);
+
+            if (!string.IsNullOrWhiteSpace(Site.HeadScript))
+            {
+                await JsRuntime.InvokeVoidAsync("atlas.interop.prependScriptToHead", Site.HeadScript);
+            }
         }
 
         protected RenderFragment AddLayout(string name, RenderFragment body) => builder =>

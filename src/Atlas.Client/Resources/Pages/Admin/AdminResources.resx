@@ -414,4 +414,10 @@
   <data name="{0}'s Activity" xml:space="preserve">
     <value>{0}'s Activity</value>
   </data>
+  <data name="Advanced" xml:space="preserve">
+    <value>Advanced</value>
+  </data>
+  <data name="Head Script" xml:space="preserve">
+    <value>Head Script</value>
+  </data>
 </root>

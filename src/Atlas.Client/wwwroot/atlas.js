@@ -16,6 +16,10 @@ atlas.interop = {
             $("link[rel=stylesheet][href='" + hrefToRemove + "']").remove();
         }
     },
+    prependScriptToHead: function (script) {
+        var head = document.getElementsByTagName('HEAD')[0];
+        head.innerHTML = script + head.innerHTML;
+    },
     scrollToTarget: function (target) {
         var element = document.getElementById(target);
         element.scrollIntoView();
@@ -37,16 +41,5 @@ atlas.interop = {
         var fileInput = document.getElementById(fileInputId);
         var request = new XMLHttpRequest();
         request.send(new FormData(fileInput));
-        //if (fileInput != null) {
-        //    for (var i = 0; i < fileInput.files.length; i++) {
-        //        var file = fileInput.files[i];
-        //        var fileName = file.name;
-        //        var formData = new FormData();
-        //        formData.append(fileName, file);
-        //        var request = new XMLHttpRequest();
-        //        request.open("POST", "api/upload/upload-files", true);
-        //        request.send(formData);
-        //    }
-        //}
     }
 };

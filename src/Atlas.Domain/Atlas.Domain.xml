@@ -1185,6 +1185,11 @@
             The new content of the terms page.
             </summary>
         </member>
+        <member name="P:Atlas.Domain.Sites.Commands.UpdateSite.HeadScript">
+            <summary>
+            The script for the head section of the HTML document.
+            </summary>
+        </member>
         <member name="T:Atlas.Domain.Sites.Site">
             <summary>
             Site
@@ -1240,6 +1245,12 @@
             The content of the terms page.
             </summary>
         </member>
+        <member name="P:Atlas.Domain.Sites.Site.HeadScript">
+            <summary>
+            Optional script to be added at the beginning of the head section of the HTML document.
+            It could be used for example to add the Google Analytics script.
+            </summary>
+        </member>
         <member name="P:Atlas.Domain.Sites.Site.Categories">
             <summary>
             The list of forum categories.
@@ -1265,7 +1276,7 @@
             <param name="name"></param>
             <param name="title"></param>
         </member>
-        <member name="M:Atlas.Domain.Sites.Site.UpdateDetails(System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Atlas.Domain.Sites.Site.UpdateDetails(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Updates the details of the site.
             </summary>
@@ -1275,6 +1286,7 @@
             <param name="language"></param>
             <param name="privacy"></param>
             <param name="terms"></param>
+            <param name="headScript"></param>
         </member>
         <member name="T:Atlas.Domain.Users.Commands.ConfirmUser">
             <summary>

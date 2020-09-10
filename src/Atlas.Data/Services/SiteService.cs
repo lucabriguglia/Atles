@@ -37,7 +37,13 @@ namespace Atlas.Data.Services
                 throw new DataException($"Site with Id {command.SiteId} not found.");
             }
 
-            site.UpdateDetails(command.Title, command.Theme, command.Css, command.Language, command.Privacy, command.Terms);
+            site.UpdateDetails(command.Title, 
+                command.Theme, 
+                command.Css, 
+                command.Language, 
+                command.Privacy, 
+                command.Terms,
+                command.HeadScript);
 
             _dbContext.Events.Add(new Event(site.Id,
                 command.UserId,
@@ -51,7 +57,8 @@ namespace Atlas.Data.Services
                     site.PublicCss,
                     site.Language,
                     site.Privacy,
-                    site.Terms
+                    site.Terms,
+                    site.HeadScript
                 }));
 
             await _dbContext.SaveChangesAsync();

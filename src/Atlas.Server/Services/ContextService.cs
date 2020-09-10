@@ -46,7 +46,8 @@ namespace Atlas.Server.Services
                 CssAdmin = currentSite.AdminCss,
                 Language = currentSite.Language,
                 Privacy = Markdown.ToHtml(currentSite.Privacy),
-                Terms = Markdown.ToHtml(currentSite.Terms)
+                Terms = Markdown.ToHtml(currentSite.Terms),
+                HeadScript = currentSite.HeadScript
             };
         }
 

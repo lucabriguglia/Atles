@@ -34,7 +34,8 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     AdminCss = table.Column<string>(nullable: true),
                     Language = table.Column<string>(nullable: true),
                     Privacy = table.Column<string>(nullable: true),
-                    Terms = table.Column<string>(nullable: true)
+                    Terms = table.Column<string>(nullable: true),
+                    HeadScript = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {

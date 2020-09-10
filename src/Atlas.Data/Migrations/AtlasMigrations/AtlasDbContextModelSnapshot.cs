@@ -253,6 +253,9 @@ namespace Atlas.Data.Migrations.AtlasMigrations
                     b.Property<string>("AdminTheme")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("HeadScript")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Language")
                         .HasColumnType("nvarchar(max)");
 
