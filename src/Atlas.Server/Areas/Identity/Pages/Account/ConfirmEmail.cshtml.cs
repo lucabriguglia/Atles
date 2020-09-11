@@ -1,5 +1,6 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
+using Atlas.Data;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -12,10 +13,10 @@ namespace Atlas.Server.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class ConfirmEmailModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<SiteUser> _userManager;
         private readonly IIntegrityService _integrityService;
 
-        public ConfirmEmailModel(UserManager<IdentityUser> userManager, IIntegrityService integrityService)
+        public ConfirmEmailModel(UserManager<SiteUser> userManager, IIntegrityService integrityService)
         {
             _userManager = userManager;
             _integrityService = integrityService;

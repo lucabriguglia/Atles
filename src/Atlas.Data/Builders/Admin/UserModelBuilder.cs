@@ -16,12 +16,12 @@ namespace Atlas.Data.Builders.Admin
     public class UserModelBuilder : IUserModelBuilder
     {
         private readonly AtlasDbContext _dbContext;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<SiteRole> _roleManager;
+        private readonly UserManager<SiteUser> _userManager;
 
         public UserModelBuilder(AtlasDbContext dbContext,
-            RoleManager<IdentityRole> roleManager,
-            UserManager<IdentityUser> userManager)
+            RoleManager<SiteRole> roleManager,
+            UserManager<SiteUser> userManager)
         {
             _dbContext = dbContext;
             _roleManager = roleManager;

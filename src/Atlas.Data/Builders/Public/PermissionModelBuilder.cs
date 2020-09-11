@@ -16,11 +16,11 @@ namespace Atlas.Data.Builders.Public
     {
         private readonly AtlasDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
-        private readonly RoleManager<IdentityRole> _roleManager;
+        private readonly RoleManager<SiteRole> _roleManager;
 
         public PermissionModelBuilder(AtlasDbContext dbContext, 
             ICacheManager cacheManager,
-            RoleManager<IdentityRole> roleManager)
+            RoleManager<SiteRole> roleManager)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;

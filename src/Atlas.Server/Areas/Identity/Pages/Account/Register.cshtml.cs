@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Text.Encodings.Web;
 using System.Threading.Tasks;
+using Atlas.Data;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -19,24 +20,27 @@ namespace Atlas.Server.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class RegisterModel : PageModel
     {
-        private readonly SignInManager<IdentityUser> _signInManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly SignInManager<SiteUser> _signInManager;
+        private readonly UserManager<SiteUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
         private readonly IIntegrityService _integrityService;
+        private readonly IContextService _contextService;
 
         public RegisterModel(
-            UserManager<IdentityUser> userManager,
-            SignInManager<IdentityUser> signInManager,
+            UserManager<SiteUser> userManager,
+            SignInManager<SiteUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender, 
-            IIntegrityService integrityService)
+            IIntegrityService integrityService, 
+            IContextService contextService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
             _logger = logger;
             _emailSender = emailSender;
             _integrityService = integrityService;
+            _contextService = contextService;
         }
 
         [BindProperty]
@@ -77,7 +81,8 @@ namespace Atlas.Server.Areas.Identity.Pages.Account
             ExternalLogins = (await _signInManager.GetExternalAuthenticationSchemesAsync()).ToList();
             if (ModelState.IsValid)
             {
-                var user = new IdentityUser { UserName = Input.Email, Email = Input.Email };
+                var site = await _contextService.CurrentSiteAsync();
+                var user = new SiteUser { SiteId = site.Id, UserName = Input.Email, Email = Input.Email };
                 var result = await _userManager.CreateAsync(user, Input.Password);
                 if (result.Succeeded)
                 {

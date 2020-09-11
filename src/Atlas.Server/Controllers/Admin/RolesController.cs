@@ -1,7 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Atlas.Data;
 using Atlas.Domain;
 using Atlas.Models.Admin.Roles;
+using Atlas.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -12,16 +14,19 @@ namespace Atlas.Server.Controllers.Admin
     public class RolesController : AdminControllerBase
     {
         private readonly IRoleModelBuilder _roleModelBuilder;
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<SiteRole> _roleManager;
+        private readonly UserManager<SiteUser> _userManager;
+        private readonly IContextService _contextService;
 
         public RolesController(IRoleModelBuilder roleModelBuilder, 
-            RoleManager<IdentityRole> roleManager, 
-            UserManager<IdentityUser> userManager)
+            RoleManager<SiteRole> roleManager, 
+            UserManager<SiteUser> userManager, 
+            IContextService contextService)
         {
             _roleModelBuilder = roleModelBuilder;
             _roleManager = roleManager;
             _userManager = userManager;
+            _contextService = contextService;
         }
 
         [HttpGet("list")]
@@ -39,7 +44,9 @@ namespace Atlas.Server.Controllers.Admin
         [HttpPost("create")]
         public async Task<ActionResult> Create(IndexPageModel.EditRoleModel model)
         {
-            var identityRole = new IdentityRole(model.Name);
+            var site = await _contextService.CurrentSiteAsync();
+
+            var identityRole = new SiteRole(site.Id, model.Name);
 
             await _roleManager.CreateAsync(identityRole);
 

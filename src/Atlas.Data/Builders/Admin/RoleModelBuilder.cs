@@ -10,10 +10,10 @@ namespace Atlas.Data.Builders.Admin
 {
     public class RoleModelBuilder : IRoleModelBuilder
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly RoleManager<SiteRole> _roleManager;
+        private readonly UserManager<SiteUser> _userManager;
 
-        public RoleModelBuilder(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public RoleModelBuilder(RoleManager<SiteRole> roleManager, UserManager<SiteUser> userManager)
         {
             _roleManager = roleManager;
             _userManager = userManager;

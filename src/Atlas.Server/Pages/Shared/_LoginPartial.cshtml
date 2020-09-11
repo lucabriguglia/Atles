@@ -1,5 +1,6 @@
-﻿@inject SignInManager<IdentityUser> SignInManager
-@inject UserManager<IdentityUser> UserManager
+﻿@using Atlas.Data
+@inject SignInManager<SiteUser> SignInManager
+@inject UserManager<SiteUser> UserManager
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 
 @{

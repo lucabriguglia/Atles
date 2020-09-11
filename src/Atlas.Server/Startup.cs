@@ -40,17 +40,35 @@ namespace Atlas.Server
                 options.UseSqlServer(
                     Configuration.GetConnectionString("AtlasConnection")));
 
-            services.AddDbContext<ApplicationDbContext>(options =>
-                options.UseSqlServer(
-                    Configuration.GetConnectionString("ApplicationConnection")));
+            //services.AddDbContext<ApplicationDbContext>(options =>
+            //    options.UseSqlServer(
+            //        Configuration.GetConnectionString("ApplicationConnection")));
 
-            services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+            //services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+            //    .AddRoles<IdentityRole>()
+            //    .AddEntityFrameworkStores<ApplicationDbContext>();
+
+            //// https://github.com/dotnet/aspnetcore/issues/20436#issuecomment-607718936
+            //services.AddIdentityServer()
+            //    .AddApiAuthorization<IdentityUser, ApplicationDbContext>(options => 
+            //    {
+            //        options.IdentityResources["openid"].UserClaims.Add("role");
+            //        options.ApiResources.Single().UserClaims.Add("role");
+            //    });
+
+            services.AddDbContext<SiteIdentityDbContext>(options =>
+                options.UseSqlServer(
+                    Configuration.GetConnectionString("SiteConnection")));
+
+            services.AddDefaultIdentity<SiteUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                .AddRoles<SiteRole>()
+                .AddUserStore<SiteUserStore>()
+                .AddRoleStore<SiteRoleStore>()
+                .AddEntityFrameworkStores<SiteIdentityDbContext>();
 
             // https://github.com/dotnet/aspnetcore/issues/20436#issuecomment-607718936
             services.AddIdentityServer()
-                .AddApiAuthorization<IdentityUser, ApplicationDbContext>(options => 
+                .AddApiAuthorization<SiteUser, SiteIdentityDbContext>(options =>
                 {
                     options.IdentityResources["openid"].UserClaims.Add("role");
                     options.ApiResources.Single().UserClaims.Add("role");
@@ -89,7 +107,7 @@ namespace Atlas.Server
         public void Configure(IApplicationBuilder app,
             IWebHostEnvironment env,
             AtlasDbContext atlasDbContext,
-            ApplicationDbContext applicationDbContext,
+            SiteIdentityDbContext siteIdentityDbContext,
             IInstallationService installationService,
             IDocumentationService documentationService)
         {
@@ -133,7 +151,7 @@ namespace Atlas.Server
             if (Configuration["MigrateDatabases"] == "true")
             {
                 atlasDbContext.Database.Migrate();
-                applicationDbContext.Database.Migrate();
+                siteIdentityDbContext.Database.Migrate();
             }
 
             if (Configuration["EnsureDefaultSiteInitialized"] == "true")

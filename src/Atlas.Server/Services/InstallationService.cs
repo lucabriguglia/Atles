@@ -34,12 +34,13 @@ namespace Atlas.Server.Services
 
         public async Task EnsureDefaultSiteInitializedAsync()
         {
-            if (await _dbContext.Sites.AnyAsync(x => x.Name == "Default"))
+            if (await _dbContext.Sites.AnyAsync(x => x.Name == "Third"))
             {
                 return;
             }
 
-            var site = new Site("Default", "Atlas");
+            //var site = new Site(new Guid("bbb7f78b-47f2-4b36-8d87-5cc3899f1c52"), "Default", "Default");
+            var site = new Site(new Guid("b8b1bad1-900a-442b-86cf-9987b7e4163e"), "Third", "Third");
             _dbContext.Sites.Add(site);
             _dbContext.Events.Add(new Event(site.Id,
                 null,
@@ -55,19 +56,20 @@ namespace Atlas.Server.Services
                     site.AdminTheme,
                     site.AdminCss
                 }));
-            var roleManager = _serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
-            var userManager = _serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
+
+            var roleManager = _serviceProvider.GetRequiredService<RoleManager<SiteRole>>();
+            var userManager = _serviceProvider.GetRequiredService<UserManager<SiteUser>>();
 
             // Roles
             if (await roleManager.RoleExistsAsync(Consts.RoleNameAdmin) == false)
             {
-                await roleManager.CreateAsync(new IdentityRole(Consts.RoleNameAdmin));
+                await roleManager.CreateAsync(new SiteRole(site.Id, Consts.RoleNameAdmin));
             }
             var roleAdmin = await roleManager.FindByNameAsync(Consts.RoleNameAdmin);
 
             if (await roleManager.RoleExistsAsync(Consts.RoleNameModerator) == false)
             {
-                await roleManager.CreateAsync(new IdentityRole(Consts.RoleNameModerator));
+                await roleManager.CreateAsync(new SiteRole(site.Id, Consts.RoleNameModerator));
             }
             var roleModerator = await roleManager.FindByNameAsync(Consts.RoleNameModerator);
 
@@ -75,8 +77,9 @@ namespace Atlas.Server.Services
             var userAdmin = await userManager.FindByEmailAsync(_configuration["DefaultAdminUserEmail"]);
             if (userAdmin == null)
             {
-                userAdmin = new IdentityUser
+                userAdmin = new SiteUser
                 {
+                    SiteId = site.Id,
                     Email = _configuration["DefaultAdminUserEmail"],
                     UserName = _configuration["DefaultAdminUserName"]
                 };
@@ -92,8 +95,9 @@ namespace Atlas.Server.Services
                 var userNormal = await userManager.FindByEmailAsync(_configuration["DefaultNormalUserEmail"]);
                 if (userNormal == null)
                 {
-                    userNormal = new IdentityUser
+                    userNormal = new SiteUser
                     {
+                        SiteId = site.Id,
                         Email = _configuration["DefaultNormalUserEmail"],
                         UserName = _configuration["DefaultNormalUserName"]
                     };
@@ -110,8 +114,9 @@ namespace Atlas.Server.Services
                 var userModerator = await userManager.FindByEmailAsync(_configuration["DefaultModeratorUserEmail"]);
                 if (userModerator == null)
                 {
-                    userModerator = new IdentityUser
+                    userModerator = new SiteUser
                     {
+                        SiteId = site.Id,
                         Email = _configuration["DefaultModeratorUserEmail"],
                         UserName = _configuration["DefaultModeratorUserName"]
                     };

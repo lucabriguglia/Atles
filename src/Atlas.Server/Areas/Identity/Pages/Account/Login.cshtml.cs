@@ -2,6 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Data;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
@@ -15,14 +16,14 @@ namespace Atlas.Server.Areas.Identity.Pages.Account
     [AllowAnonymous]
     public class LoginModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly UserManager<SiteUser> _userManager;
+        private readonly SignInManager<SiteUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
         private readonly IIntegrityService _integrityService;
 
-        public LoginModel(SignInManager<IdentityUser> signInManager, 
+        public LoginModel(SignInManager<SiteUser> signInManager, 
             ILogger<LoginModel> logger,
-            UserManager<IdentityUser> userManager, 
+            UserManager<SiteUser> userManager, 
             IIntegrityService integrityService)
         {
             _userManager = userManager;

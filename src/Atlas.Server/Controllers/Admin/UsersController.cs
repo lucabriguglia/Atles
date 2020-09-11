@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Data;
 using Atlas.Domain.Users;
 using Atlas.Domain.Users.Commands;
 using Atlas.Models;
@@ -18,13 +19,13 @@ namespace Atlas.Server.Controllers.Admin
         private readonly IUserService _userService;
         private readonly IUserRules _userRules;
         private readonly IUserModelBuilder _modelBuilder;
-        private readonly UserManager<IdentityUser> _userManager;
+        private readonly UserManager<SiteUser> _userManager;
 
         public UsersController(IContextService contextService,
             IUserService userService,
             IUserRules userRules,
             IUserModelBuilder modelBuilder, 
-            UserManager<IdentityUser> userManager)
+            UserManager<SiteUser> userManager)
         {
             _contextService = contextService;
             _userService = userService;
@@ -55,7 +56,7 @@ namespace Atlas.Server.Controllers.Admin
         {
             if (!ModelState.IsValid) return BadRequest();
 
-            var identityUser = new IdentityUser { UserName = model.Email, Email = model.Email };
+            var identityUser = new SiteUser { UserName = model.Email, Email = model.Email };
             var createResult = await _userManager.CreateAsync(identityUser, model.Password);
 
             if (!createResult.Succeeded) return BadRequest();

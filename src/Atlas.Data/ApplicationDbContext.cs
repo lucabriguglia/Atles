@@ -22,7 +22,7 @@ namespace Atlas.Data
         }
     }
 
-    public class SiteIdentityDbContext : ApiAuthorizationDbContext<SiteUser, SiteRole>
+    public class SiteIdentityDbContext : SiteApiAuthorizationDbContext<SiteUser>
     {
         public SiteIdentityDbContext(
             DbContextOptions options,
@@ -39,15 +39,36 @@ namespace Atlas.Data
     public class SiteRole : IdentityRole
     {
         public Guid SiteId { get; set; }
+
+        public SiteRole()
+        {
+        }
+
+        public SiteRole(Guid siteId, string roleName) : base(roleName)
+        {
+            SiteId = siteId;
+        }
     }
 
-    public class ApiAuthorizationDbContext<TUser, TRole> : IdentityDbContext<TUser, TRole, string>, IPersistedGrantDbContext 
+    public class SiteApiAuthorizationDbContext<TUser> : SiteApiAuthorizationDbContext<TUser, SiteRole, string>
         where TUser : IdentityUser
-        where TRole : IdentityRole
+    {
+        public SiteApiAuthorizationDbContext(
+            DbContextOptions options,
+            IOptions<OperationalStoreOptions> operationalStoreOptions)
+            : base(options, operationalStoreOptions)
+        {
+        }
+    }
+
+    public class SiteApiAuthorizationDbContext<TUser, TRole, TKey> : IdentityDbContext<TUser, TRole, TKey>, IPersistedGrantDbContext 
+        where TUser : IdentityUser<TKey>
+        where TRole : IdentityRole<TKey>
+        where TKey : IEquatable<TKey>
     {
         private readonly IOptions<OperationalStoreOptions> _operationalStoreOptions;
 
-        public ApiAuthorizationDbContext(
+        public SiteApiAuthorizationDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions)
             : base(options)
@@ -65,6 +86,17 @@ namespace Atlas.Data
         {
             base.OnModelCreating(builder);
             builder.ConfigurePersistedGrantContext(_operationalStoreOptions.Value);
+
+            //builder.Entity<SiteUser>(b =>
+            //{
+            //    b.HasIndex(r => new { r.SiteId, r.NormalizedEmail }).HasName("EmailIndex2").IsUnique();
+            //    b.HasIndex(r => new { r.SiteId, r.NormalizedUserName }).HasName("UserNameIndex2").IsUnique();
+            //});
+
+            //builder.Entity<SiteRole>(b =>
+            //{
+            //    b.HasIndex(r => new { r.SiteId, r.NormalizedName }).HasName("RoleNameIndex2").IsUnique();
+            //});
         }
     }
 
@@ -79,7 +111,7 @@ namespace Atlas.Data
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            var siteId = Guid.NewGuid(); // Get current site id.
+            var siteId = Temp.SiteId; // Get current site id.
 
             return Users.FirstOrDefaultAsync(u => u.NormalizedEmail == normalizedEmail && u.SiteId == siteId, cancellationToken);
         }
@@ -89,7 +121,7 @@ namespace Atlas.Data
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            var siteId = Guid.NewGuid(); // Get current site id.
+            var siteId = Temp.SiteId; // Get current site id.
 
             return Users.FirstOrDefaultAsync(u => u.NormalizedUserName == normalizedUserName && u.SiteId == siteId, cancellationToken);
         }
@@ -99,7 +131,7 @@ namespace Atlas.Data
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            var siteId = Guid.NewGuid(); // Get current site id.
+            var siteId = Temp.SiteId; // Get current site id.
 
             return Context.Roles.SingleOrDefaultAsync(r => r.NormalizedName == normalizedRoleName && r.SiteId == siteId, cancellationToken);
         }
@@ -116,7 +148,7 @@ namespace Atlas.Data
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            var siteId = Guid.NewGuid(); // Get current site id.
+            var siteId = Temp.SiteId; // Get current site id.
 
             return Roles.FirstOrDefaultAsync(r => r.NormalizedName == normalizedName && r.SiteId == siteId, cancellationToken);
         }
@@ -124,6 +156,7 @@ namespace Atlas.Data
 
     public static class Temp
     {
-        public static Guid DefaultSiteId => new Guid("C063F119-A898-4ADF-83F9-D69CAF163C6F");
+        //public static Guid SiteId => new Guid("bbb7f78b-47f2-4b36-8d87-5cc3899f1c52"); // Default
+        public static Guid SiteId => new Guid("b8b1bad1-900a-442b-86cf-9987b7e4163e"); // Third
     }
 }
