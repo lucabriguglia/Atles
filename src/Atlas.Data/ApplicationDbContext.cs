@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using IdentityServer4.EntityFramework.Entities;
@@ -6,6 +7,7 @@ using IdentityServer4.EntityFramework.Extensions;
 using IdentityServer4.EntityFramework.Interfaces;
 using IdentityServer4.EntityFramework.Options;
 using Microsoft.AspNetCore.ApiAuthorization.IdentityServer;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -102,8 +104,13 @@ namespace Atlas.Data
 
     public class SiteUserStore : UserStore<SiteUser, SiteRole, SiteIdentityDbContext>
     {
-        public SiteUserStore(SiteIdentityDbContext context, IdentityErrorDescriber describer = null) : base(context, describer)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly AtlasDbContext _dbContext;
+
+        public SiteUserStore(SiteIdentityDbContext context, IHttpContextAccessor httpContextAccessor, AtlasDbContext dbContext, IdentityErrorDescriber describer = null) : base(context, describer)
         {
+            _httpContextAccessor = httpContextAccessor;
+            _dbContext = dbContext;
         }
 
         public override Task<SiteUser> FindByEmailAsync(string normalizedEmail, CancellationToken cancellationToken = new CancellationToken())
@@ -111,7 +118,7 @@ namespace Atlas.Data
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            var siteId = Temp.SiteId; // Get current site id.
+            var siteId = new Temp(_httpContextAccessor, _dbContext).GetSiteId(); // Get current site id.
 
             return Users.FirstOrDefaultAsync(u => u.NormalizedEmail == normalizedEmail && u.SiteId == siteId, cancellationToken);
         }
@@ -121,7 +128,7 @@ namespace Atlas.Data
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            var siteId = Temp.SiteId; // Get current site id.
+            var siteId = new Temp(_httpContextAccessor, _dbContext).GetSiteId(); // Get current site id.
 
             return Users.FirstOrDefaultAsync(u => u.NormalizedUserName == normalizedUserName && u.SiteId == siteId, cancellationToken);
         }
@@ -131,7 +138,7 @@ namespace Atlas.Data
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            var siteId = Temp.SiteId; // Get current site id.
+            var siteId = new Temp(_httpContextAccessor, _dbContext).GetSiteId(); // Get current site id.
 
             return Context.Roles.SingleOrDefaultAsync(r => r.NormalizedName == normalizedRoleName && r.SiteId == siteId, cancellationToken);
         }
@@ -139,8 +146,13 @@ namespace Atlas.Data
 
     public class SiteRoleStore : RoleStore<SiteRole, SiteIdentityDbContext>
     {
-        public SiteRoleStore(SiteIdentityDbContext context, IdentityErrorDescriber describer = null) : base(context, describer)
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly AtlasDbContext _dbContext;
+
+        public SiteRoleStore(SiteIdentityDbContext context, IHttpContextAccessor httpContextAccessor, AtlasDbContext dbContext, IdentityErrorDescriber describer = null) : base(context, describer)
         {
+            _httpContextAccessor = httpContextAccessor;
+            _dbContext = dbContext;
         }
 
         public override Task<SiteRole> FindByNameAsync(string normalizedName, CancellationToken cancellationToken = default(CancellationToken))
@@ -148,15 +160,43 @@ namespace Atlas.Data
             cancellationToken.ThrowIfCancellationRequested();
             ThrowIfDisposed();
 
-            var siteId = Temp.SiteId; // Get current site id.
+            var siteId = new Temp(_httpContextAccessor, _dbContext).GetSiteId(); // Get current site id.
 
             return Roles.FirstOrDefaultAsync(r => r.NormalizedName == normalizedName && r.SiteId == siteId, cancellationToken);
         }
     }
 
-    public static class Temp
+    public class Temp
     {
+        private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly AtlasDbContext _dbContext;
+
+        public Temp(IHttpContextAccessor httpContextAccessor, AtlasDbContext dbContext)
+        {
+            _httpContextAccessor = httpContextAccessor;
+            _dbContext = dbContext;
+        }
         //public static Guid SiteId => new Guid("bbb7f78b-47f2-4b36-8d87-5cc3899f1c52"); // Default
-        public static Guid SiteId => new Guid("b8b1bad1-900a-442b-86cf-9987b7e4163e"); // Third
+        //public static Guid SiteId => new Guid("b8b1bad1-900a-442b-86cf-9987b7e4163e"); // Third
+
+        public Guid GetSiteId()
+        {
+            var host = _httpContextAccessor.HttpContext != null
+                ? _httpContextAccessor.HttpContext.Request.Host.Value
+                : string.Empty;
+
+            var name = string.Empty;
+
+            if (host == "localhost:44332")
+            {
+                name = "Default";
+            }
+            else if (host == "localhost:44333")
+            {
+                name = "Third";
+            }
+
+            return _dbContext.Sites.FirstOrDefault(x => x.Name == name).Id;
+        }
     }
 }

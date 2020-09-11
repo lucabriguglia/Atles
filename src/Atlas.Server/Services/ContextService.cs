@@ -33,8 +33,25 @@ namespace Atlas.Server.Services
 
         public async Task<CurrentSiteModel> CurrentSiteAsync()
         {
-            var currentSite = await _cacheManager.GetOrSetAsync(CacheKeys.CurrentSite("Third"), () => 
-                _dbContext.Sites.FirstOrDefaultAsync(x => x.Name == "Third"));
+            var host = _httpContextAccessor.HttpContext != null 
+                ? _httpContextAccessor.HttpContext.Request.Host.Value
+                : string.Empty;
+
+            var currentSite = await _cacheManager.GetOrSetAsync(CacheKeys.CurrentSite(host), () =>
+            {
+                var name = string.Empty;
+
+                if (host == "localhost:44332")
+                {
+                    name = "Default";
+                }
+                else if (host == "localhost:44333")
+                {
+                    name = "Third";
+                }
+
+                return _dbContext.Sites.FirstOrDefaultAsync(x => x.Name == name);
+            });
 
             return new CurrentSiteModel
             {
