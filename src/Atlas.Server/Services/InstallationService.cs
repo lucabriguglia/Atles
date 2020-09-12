@@ -34,13 +34,13 @@ namespace Atlas.Server.Services
 
         public async Task EnsureDefaultSiteInitializedAsync()
         {
-            if (await _dbContext.Sites.AnyAsync(x => x.Name == "Third"))
+            if (await _dbContext.Sites.AnyAsync(x => x.Name == "X"))
             {
                 return;
             }
 
             //var site = new Site(new Guid("bbb7f78b-47f2-4b36-8d87-5cc3899f1c52"), "Default", "Default");
-            var site = new Site(new Guid("b8b1bad1-900a-442b-86cf-9987b7e4163e"), "Third", "Third");
+            var site = new Site(new Guid("3b261ff5-4d37-4ed6-b810-dbadd8b8c0d5"), "X", "X");
             _dbContext.Sites.Add(site);
             _dbContext.Events.Add(new Event(site.Id,
                 null,

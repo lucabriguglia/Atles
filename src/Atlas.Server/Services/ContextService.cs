@@ -41,13 +41,13 @@ namespace Atlas.Server.Services
             {
                 var name = string.Empty;
 
-                if (host == "localhost:44332")
+                if (host == "localhost:5001")
                 {
                     name = "Default";
                 }
-                else if (host == "localhost:44333")
+                else if (host == "localhost:6001")
                 {
-                    name = "Third";
+                    name = "X";
                 }
 
                 return _dbContext.Sites.FirstOrDefaultAsync(x => x.Name == name);

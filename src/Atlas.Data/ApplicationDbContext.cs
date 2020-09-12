@@ -176,24 +176,24 @@ namespace Atlas.Data
             _httpContextAccessor = httpContextAccessor;
             _dbContext = dbContext;
         }
-        //public static Guid SiteId => new Guid("bbb7f78b-47f2-4b36-8d87-5cc3899f1c52"); // Default
-        //public static Guid SiteId => new Guid("b8b1bad1-900a-442b-86cf-9987b7e4163e"); // Third
 
         public Guid GetSiteId()
         {
+            //return new Guid("3b261ff5-4d37-4ed6-b810-dbadd8b8c0d5");
+
             var host = _httpContextAccessor.HttpContext != null
                 ? _httpContextAccessor.HttpContext.Request.Host.Value
                 : string.Empty;
 
             var name = string.Empty;
 
-            if (host == "localhost:44332")
+            if (host == "localhost:5001")
             {
                 name = "Default";
             }
-            else if (host == "localhost:44333")
+            else if (host == "localhost:6001")
             {
-                name = "Third";
+                name = "X";
             }
 
             return _dbContext.Sites.FirstOrDefault(x => x.Name == name).Id;
