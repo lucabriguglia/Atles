@@ -1,0 +1,27 @@
+﻿@using Atlas.Models.Public.Index
+@inherits SharedComponentBase
+
+
+@if (_model != null && _model.ShowBanner)
+{
+    <div id="cookie-consent" class="alert alert-primary alert-dismissible fade show" role="alert">
+        @Site.Title uses cookies and requires your consent. Mode info <a href="/privacy">here</a>.
+        <button type="button" class="accept-policy close" data-dismiss="alert" aria-label="Close" data-cookie-string="@_model.ConsentCookie" @onclick="AcceptCookie">
+            <span aria-hidden="true">Accept</span>
+        </button>
+    </div>
+}
+
+@code {
+    CookieConsentModel _model;
+
+    protected override async Task OnInitializedAsync()
+    {
+        _model = await ApiService.GetFromJsonAsync<CookieConsentModel>("api/public/cookie-consent");
+    }
+
+    private void AcceptCookie()
+    {
+        JsRuntime.InvokeVoidAsync("atlas.interop.acceptCookie", _model.ConsentCookie);
+    }
+}

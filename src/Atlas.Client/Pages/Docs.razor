@@ -50,7 +50,7 @@ else
                     {
                         var target = context.Targets[i];
                         var css = i == 0 ? "show active" : string.Empty;
-                        <div class="tab-pane fade @css" id="@(context.Name)-@(target.Name)" role="tabpanel" aria-labelledby="@(context.Name)-@(target.Name)-tab">
+                        <div class="tab-pane tab-pane-docs fade @css" id="@(context.Name)-@(target.Name)" role="tabpanel" aria-labelledby="@(context.Name)-@(target.Name)-tab">
                             <div class="mb-3">
                                 <h4>@target.NormalizedName</h4>
                                 <div class="mb-2">@target.Summary</div>

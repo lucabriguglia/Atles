@@ -56,9 +56,7 @@ namespace Atlas.Client
             var host = builder.Build();
 
             var apiService = host.Services.GetRequiredService<ApiService>();
-
             var site = await apiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
-
             var cultureName = site.Language ?? "en";
             var culture = new CultureInfo(cultureName);
             CultureInfo.DefaultThreadCurrentCulture = culture;

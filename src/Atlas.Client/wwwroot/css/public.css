@@ -13,13 +13,20 @@ footer p {
     margin-bottom: .25rem;
 }
 
-/*.tab-pane {
+.tab-pane {
     border-left: 1px solid #ddd;
     border-right: 1px solid #ddd;
     border-bottom: 1px solid #ddd;
     border-radius: 0px 0px 5px 5px;
     padding: 10px;
-}*/
+}
+
+.tab-pane-docs {
+    border-left: 0;
+    border-right: 0;
+    border-bottom: 0;
+    border-radius: 0;
+}
 
 .nav-tabs {
     margin-bottom: 0;

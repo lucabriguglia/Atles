@@ -41,5 +41,8 @@ atlas.interop = {
         var fileInput = document.getElementById(fileInputId);
         var request = new XMLHttpRequest();
         request.send(new FormData(fileInput));
+    },
+    acceptCookie: function (cookieString) {
+        document.cookie = cookieString;
     }
 };

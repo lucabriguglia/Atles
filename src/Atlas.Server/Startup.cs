@@ -77,6 +77,12 @@ namespace Atlas.Server
                 x.MultipartBodyLengthLimit = int.MaxValue;
             });
 
+            services.Configure<CookiePolicyOptions>(options =>
+            {
+                options.CheckConsentNeeded = context => true;
+                options.MinimumSameSitePolicy = SameSiteMode.None;
+            });
+
             services.AddDocs();
 
             services.Scan(s => s
@@ -116,6 +122,8 @@ namespace Atlas.Server
             //    FileProvider = new PhysicalFileProvider(Path.Combine(Directory.GetCurrentDirectory(), @"Uploads")),
             //    RequestPath = new PathString("/Uploads")
             //});
+
+            app.UseCookiePolicy();
 
             app.UseRouting();
 

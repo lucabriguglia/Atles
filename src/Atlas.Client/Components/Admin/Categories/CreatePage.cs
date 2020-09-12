@@ -14,7 +14,7 @@ namespace Atlas.Client.Components.Admin.Categories
 
         protected async Task SaveAsync()
         {
-            await ApiService.PostAsJsonAsync($"api/admin/categories/save", Model.Category);
+            await ApiService.PostAsJsonAsync("api/admin/categories/save", Model.Category);
             NavigationManager.NavigateTo("/admin/categories");
         }
     }

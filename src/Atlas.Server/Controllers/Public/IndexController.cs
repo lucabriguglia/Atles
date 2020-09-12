@@ -9,6 +9,7 @@ using Atlas.Models.Public.Search;
 using Atlas.Server.Services;
 using Markdig;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atlas.Server.Controllers.Public
@@ -90,7 +91,7 @@ namespace Atlas.Server.Controllers.Public
 
         [Authorize]
         [HttpPost("preview")]
-        public async Task<string> Preview([FromBody]string content)
+        public async Task<string> Preview([FromBody] string content)
         {
             return await Task.FromResult(Markdown.ToHtml(content));
         }
@@ -131,6 +132,15 @@ namespace Atlas.Server.Controllers.Public
             var model = await _searchModelBuilder.BuildSearchPageModelAsync(site.Id, accessibleForumIds, new QueryOptions(page, search));
 
             return model;
+        }
+
+        [HttpGet("cookie-consent")]
+        public async Task<CookieConsentModel> CookieConsent()
+        {
+            var consentFeature = HttpContext.Features.Get<ITrackingConsentFeature>();
+            var showBanner = !consentFeature?.CanTrack ?? false;
+            var consentCookie = consentFeature?.CreateConsentCookie();
+            return await Task.FromResult(new CookieConsentModel { ShowBanner = showBanner, ConsentCookie = consentCookie });
         }
     }
 }
