@@ -34,7 +34,7 @@ namespace Atlas.Data.Services
             await _createValidator.ValidateCommandAsync(command);
 
             var categoriesCount = await _dbContext.Categories
-                .Where(x => x.SiteId == command.SiteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == command.SiteId && x.Status != CategoryStatusType.Deleted)
                 .CountAsync();
 
             var sortOrder = categoriesCount + 1;
@@ -72,7 +72,7 @@ namespace Atlas.Data.Services
                 .FirstOrDefaultAsync(x => 
                     x.SiteId == command.SiteId && 
                     x.Id == command.Id && 
-                    x.Status != StatusType.Deleted);
+                    x.Status != CategoryStatusType.Deleted);
 
             if (category == null)
             {
@@ -103,7 +103,7 @@ namespace Atlas.Data.Services
                 .FirstOrDefaultAsync(x => 
                     x.SiteId == command.SiteId && 
                     x.Id == command.Id && 
-                    x.Status != StatusType.Deleted);
+                    x.Status != CategoryStatusType.Deleted);
 
             if (category == null)
             {
@@ -135,7 +135,7 @@ namespace Atlas.Data.Services
                 .FirstOrDefaultAsync(x => 
                     x.SiteId == command.SiteId && 
                     x.SortOrder == sortOrderToReplace && 
-                    x.Status != StatusType.Deleted);
+                    x.Status != CategoryStatusType.Deleted);
 
             if (command.Direction == Direction.Up)
             {
@@ -168,7 +168,7 @@ namespace Atlas.Data.Services
                 .FirstOrDefaultAsync(x => 
                     x.SiteId == command.SiteId && 
                     x.Id == command.Id &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != CategoryStatusType.Deleted);
 
             if (category == null)
             {
@@ -186,7 +186,7 @@ namespace Atlas.Data.Services
                 .Where(x =>
                     x.SiteId == command.SiteId &&
                     x.Id != command.Id &&
-                    x.Status != StatusType.Deleted)
+                    x.Status != CategoryStatusType.Deleted)
                 .ToListAsync();
 
             for (int i = 0; i < otherCategories.Count; i++)

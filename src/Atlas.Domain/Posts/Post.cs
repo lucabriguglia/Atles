@@ -52,7 +52,7 @@ namespace Atlas.Domain.Posts
         /// The status of the post.
         /// It can be either published or deleted.
         /// </summary>
-        public StatusType Status { get; private set; }
+        public PostStatusType Status { get; private set; }
 
         /// <summary>
         /// The unique identifier of the user who created the post.
@@ -160,7 +160,7 @@ namespace Atlas.Domain.Posts
         /// <param name="content"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public static Post CreateTopic(Guid forumId, Guid memberId, string title, string slug, string content, StatusType status)
+        public static Post CreateTopic(Guid forumId, Guid memberId, string title, string slug, string content, PostStatusType status)
         {
             return new Post(Guid.NewGuid(), null, forumId, memberId, title, slug, content, status);
         }
@@ -176,7 +176,7 @@ namespace Atlas.Domain.Posts
         /// <param name="content"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public static Post CreateTopic(Guid id, Guid forumId, Guid memberId, string title, string slug, string content, StatusType status)
+        public static Post CreateTopic(Guid id, Guid forumId, Guid memberId, string title, string slug, string content, PostStatusType status)
         {
             return new Post(id, null, forumId, memberId, title, slug, content, status);
         }
@@ -190,7 +190,7 @@ namespace Atlas.Domain.Posts
         /// <param name="content"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public static Post CreateReply(Guid topicId, Guid forumId, Guid memberId, string content, StatusType status)
+        public static Post CreateReply(Guid topicId, Guid forumId, Guid memberId, string content, PostStatusType status)
         {
             return new Post(Guid.NewGuid(), topicId, forumId, memberId, null, null, content, status);
         }
@@ -205,12 +205,12 @@ namespace Atlas.Domain.Posts
         /// <param name="content"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public static Post CreateReply(Guid id, Guid topicId, Guid forumId, Guid memberId, string content, StatusType status)
+        public static Post CreateReply(Guid id, Guid topicId, Guid forumId, Guid memberId, string content, PostStatusType status)
         {
             return new Post(id, topicId, forumId, memberId, null, null, content, status);
         }
 
-        private Post(Guid id, Guid? topicId, Guid forumId, Guid memberId, string title, string slug, string content, StatusType status)
+        private Post(Guid id, Guid? topicId, Guid forumId, Guid memberId, string title, string slug, string content, PostStatusType status)
         {
             Id = id;
             TopicId = topicId;
@@ -231,7 +231,7 @@ namespace Atlas.Domain.Posts
         /// <param name="slug"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        public void UpdateDetails(Guid memberId, string title, string slug, string content, StatusType status)
+        public void UpdateDetails(Guid memberId, string title, string slug, string content, PostStatusType status)
         {
             ModifiedBy = memberId;
             ModifiedOn = DateTime.UtcNow;
@@ -247,7 +247,7 @@ namespace Atlas.Domain.Posts
         /// <param name="memberId"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        public void UpdateDetails(Guid memberId, string content, StatusType status)
+        public void UpdateDetails(Guid memberId, string content, PostStatusType status)
         {
             ModifiedBy = memberId;
             ModifiedOn = DateTime.UtcNow;
@@ -342,7 +342,7 @@ namespace Atlas.Domain.Posts
         /// </summary>
         public void Delete()
         {
-            Status = StatusType.Deleted;
+            Status = PostStatusType.Deleted;
         }
 
         /// <summary>

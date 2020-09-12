@@ -19,7 +19,7 @@ namespace Atlas.Data.Rules
         {
             var any = await _dbContext.Users
                 .AnyAsync(x => x.DisplayName == displayName && 
-                               x.Status != StatusType.Deleted);
+                               x.Status != UserStatusType.Deleted);
             return !any;
         }
 
@@ -27,7 +27,7 @@ namespace Atlas.Data.Rules
         {
             var any = await _dbContext.Users
                 .AnyAsync(x => x.DisplayName == displayName && 
-                               x.Status != StatusType.Deleted &&
+                               x.Status != UserStatusType.Deleted &&
                                x.Id != id);
             return !any;
         }

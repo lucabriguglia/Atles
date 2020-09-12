@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Atlas.Domain;
+using Atlas.Domain.Users;
 
 namespace Atlas.Models.Admin.Users
 {
@@ -22,7 +22,7 @@ namespace Atlas.Models.Admin.Users
 
         public class InfoModel
         {
-            public StatusType Status { get; set; }
+            public UserStatusType Status { get; set; }
             public string UserId { get; set; }
             public string UserName { get; set; }
             public string Email { get; set; }

@@ -20,7 +20,7 @@ namespace Atlas.Data.Rules
             var any = await _dbContext.Categories
                 .AnyAsync(x => x.SiteId == siteId && 
                                x.Name == name && 
-                               x.Status != StatusType.Deleted);
+                               x.Status != CategoryStatusType.Deleted);
             return !any;
         }
 
@@ -29,7 +29,7 @@ namespace Atlas.Data.Rules
             var any = await _dbContext.Categories
                 .AnyAsync(x => x.SiteId == siteId && 
                                x.Name == name && 
-                               x.Status != StatusType.Deleted &&
+                               x.Status != CategoryStatusType.Deleted &&
                                x.Id != id);
             return !any;
         }

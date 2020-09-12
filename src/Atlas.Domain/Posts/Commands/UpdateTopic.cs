@@ -37,6 +37,6 @@ namespace Atlas.Domain.Posts.Commands
         /// <summary>
         /// The new status of the topic.
         /// </summary>
-        public StatusType Status { get; set; }
+        public PostStatusType Status { get; set; }
     }
 }

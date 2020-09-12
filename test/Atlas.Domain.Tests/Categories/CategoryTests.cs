@@ -22,7 +22,7 @@ namespace Atlas.Domain.Tests.Categories
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
             Assert.AreEqual(sortOrder, sut.SortOrder, nameof(sut.SortOrder));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
-            Assert.AreEqual(StatusType.Published, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(CategoryStatusType.Published, sut.Status, nameof(sut.Status));
         }
 
         [Test]
@@ -41,7 +41,7 @@ namespace Atlas.Domain.Tests.Categories
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
             Assert.AreEqual(sortOrder, sut.SortOrder, nameof(sut.SortOrder));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
-            Assert.AreEqual(StatusType.Published, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(CategoryStatusType.Published, sut.Status, nameof(sut.Status));
         }
 
         [Test]
@@ -179,7 +179,7 @@ namespace Atlas.Domain.Tests.Categories
 
             sut.Delete();
 
-            Assert.AreEqual(StatusType.Deleted, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(CategoryStatusType.Deleted, sut.Status, nameof(sut.Status));
         }
     }
 }

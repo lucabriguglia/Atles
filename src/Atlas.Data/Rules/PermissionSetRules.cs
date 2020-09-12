@@ -20,7 +20,7 @@ namespace Atlas.Data.Rules
             var any = await _dbContext.PermissionSets
                 .AnyAsync(x => x.SiteId == siteId &&
                                x.Name == name &&
-                               x.Status != StatusType.Deleted);
+                               x.Status != PermissionSetStatusType.Deleted);
             return !any;
         }
 
@@ -29,7 +29,7 @@ namespace Atlas.Data.Rules
             var any = await _dbContext.PermissionSets
                 .AnyAsync(x => x.SiteId == siteId &&
                                x.Name == name &&
-                               x.Status != StatusType.Deleted &&
+                               x.Status != PermissionSetStatusType.Deleted &&
                                x.Id != id);
             return !any;
         }
@@ -39,7 +39,7 @@ namespace Atlas.Data.Rules
             var any = await _dbContext.PermissionSets
                 .AnyAsync(x => x.SiteId == siteId && 
                                x.Id == id && 
-                               x.Status == StatusType.Published);
+                               x.Status == PermissionSetStatusType.Published);
             return any;
         }
 

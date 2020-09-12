@@ -33,7 +33,7 @@ namespace Atlas.Domain.PermissionSets
         /// The status of the permission set.
         /// It could be either published or deleted.
         /// </summary>
-        public StatusType Status { get; private set; }
+        public PermissionSetStatusType Status { get; private set; }
 
         /// <summary>
         /// List of permissions.
@@ -90,7 +90,7 @@ namespace Atlas.Domain.PermissionSets
             Id = id;
             SiteId = siteId;
             Name = name;
-            Status = StatusType.Published;
+            Status = PermissionSetStatusType.Published;
             AddPermissions(permissions);
         }
 
@@ -122,7 +122,7 @@ namespace Atlas.Domain.PermissionSets
         /// </summary>
         public void Delete()
         {
-            Status = StatusType.Deleted;
+            Status = PermissionSetStatusType.Deleted;
         }
     }
 }

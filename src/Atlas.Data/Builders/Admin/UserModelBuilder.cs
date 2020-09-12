@@ -43,7 +43,7 @@ namespace Atlas.Data.Builders.Admin
                 ? query.OrderBy(options) 
                 : query.OrderBy(x => x.DisplayName);
 
-            if (!string.IsNullOrWhiteSpace(status) && Enum.TryParse(status, out StatusType memberStatus))
+            if (!string.IsNullOrWhiteSpace(status) && Enum.TryParse(status, out UserStatusType memberStatus))
             {
                 query = query.Where(x => x.Status == memberStatus);
             }

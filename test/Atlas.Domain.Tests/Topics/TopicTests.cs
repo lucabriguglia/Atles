@@ -16,7 +16,7 @@ namespace Atlas.Domain.Tests.Topics
             const string title = "New Topic";
             const string slug = "my-topic-slug";
             const string content = "Blah blah blah...";
-            const StatusType status = StatusType.Draft;
+            const PostStatusType status = PostStatusType.Draft;
 
             var sut = Post.CreateTopic(forumId, userId, title, slug, content, status);
 
@@ -37,7 +37,7 @@ namespace Atlas.Domain.Tests.Topics
             const string title = "New Topic";
             const string slug = "my-topic-slug";
             const string content = "Blah blah blah...";
-            const StatusType status = StatusType.Draft;
+            const PostStatusType status = PostStatusType.Draft;
 
             var sut = Post.CreateTopic(id, forumId, userId, title, slug, content, status);
 
@@ -59,7 +59,7 @@ namespace Atlas.Domain.Tests.Topics
             const string title = "Updated Topic";
             const string slug = "my-topic-slug";
             const string content = "Blah blah blah...";
-            const StatusType status = StatusType.Draft;
+            const PostStatusType status = PostStatusType.Draft;
 
             sut.UpdateDetails(userId, title, slug, content, status);
 
@@ -73,7 +73,7 @@ namespace Atlas.Domain.Tests.Topics
         [Test]
         public void Should_update_last_reply()
         {
-            var sut = Post.CreateTopic(Guid.NewGuid(), Guid.NewGuid(), "Title", "slug", "Content", StatusType.Published);
+            var sut = Post.CreateTopic(Guid.NewGuid(), Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
 
             var lastReplyId = Guid.NewGuid();
 
@@ -85,7 +85,7 @@ namespace Atlas.Domain.Tests.Topics
         [Test]
         public void Should_not_update_last_reply_if_it_is_not_a_topic()
         {
-            var sut = Post.CreateReply(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Content", StatusType.Published);
+            var sut = Post.CreateReply(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Content", PostStatusType.Published);
 
             sut.UpdateLastReply(Guid.NewGuid());
 
@@ -167,7 +167,7 @@ namespace Atlas.Domain.Tests.Topics
 
             sut.Delete();
 
-            Assert.AreEqual(StatusType.Deleted, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(PostStatusType.Deleted, sut.Status, nameof(sut.Status));
         }
     }
 }

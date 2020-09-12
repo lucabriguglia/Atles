@@ -83,7 +83,7 @@ namespace Atlas.Data.Services
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != PostStatusType.Deleted);
 
             if (reply == null)
             {
@@ -115,7 +115,7 @@ namespace Atlas.Data.Services
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
-                    x.Status == StatusType.Published);
+                    x.Status == PostStatusType.Published);
 
             if (reply == null)
             {
@@ -150,7 +150,7 @@ namespace Atlas.Data.Services
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != PostStatusType.Deleted);
 
             if (reply == null)
             {
@@ -179,8 +179,8 @@ namespace Atlas.Data.Services
             {
                 var newLastPost = await _dbContext.Posts
                     .Where(x => x.ForumId == reply.Topic.ForumId &&
-                                x.Status == StatusType.Published &&
-                                (x.Topic == null || x.Topic.Status == StatusType.Published) &&
+                                x.Status == PostStatusType.Published &&
+                                (x.Topic == null || x.Topic.Status == PostStatusType.Published) &&
                                 x.Id != reply.Id)
                     .OrderByDescending(x => x.CreatedOn)
                     .FirstOrDefaultAsync();

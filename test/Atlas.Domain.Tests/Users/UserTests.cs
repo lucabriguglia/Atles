@@ -20,7 +20,7 @@ namespace Atlas.Domain.Tests.Users
             Assert.AreEqual(identityUserId, sut.IdentityUserId, nameof(sut.IdentityUserId));
             Assert.AreEqual(email, sut.Email, nameof(sut.Email));
             Assert.AreEqual(displayName, sut.DisplayName, nameof(sut.DisplayName));
-            Assert.AreEqual(StatusType.Pending, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(UserStatusType.Pending, sut.Status, nameof(sut.Status));
         }
 
         [Test]
@@ -37,7 +37,7 @@ namespace Atlas.Domain.Tests.Users
             Assert.AreEqual(identityUserId, sut.IdentityUserId, nameof(sut.IdentityUserId));
             Assert.AreEqual(email, sut.Email, nameof(sut.Email));
             Assert.AreEqual(displayName, sut.DisplayName, nameof(sut.DisplayName));
-            Assert.AreEqual(StatusType.Pending, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(UserStatusType.Pending, sut.Status, nameof(sut.Status));
         }
 
         [Test]
@@ -129,7 +129,7 @@ namespace Atlas.Domain.Tests.Users
 
             sut.Delete();
 
-            Assert.AreEqual(StatusType.Deleted, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(UserStatusType.Deleted, sut.Status, nameof(sut.Status));
         }
 
         [Test]
@@ -139,7 +139,7 @@ namespace Atlas.Domain.Tests.Users
 
             sut.Suspend();
 
-            Assert.AreEqual(StatusType.Suspended, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(UserStatusType.Suspended, sut.Status, nameof(sut.Status));
         }
 
         [Test]
@@ -149,7 +149,7 @@ namespace Atlas.Domain.Tests.Users
 
             sut.Reinstate();
 
-            Assert.AreEqual(StatusType.Active, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(UserStatusType.Active, sut.Status, nameof(sut.Status));
         }
 
         [Test]
@@ -159,7 +159,7 @@ namespace Atlas.Domain.Tests.Users
 
             sut.Confirm();
 
-            Assert.AreEqual(StatusType.Active, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(UserStatusType.Active, sut.Status, nameof(sut.Status));
         }
     }
 }

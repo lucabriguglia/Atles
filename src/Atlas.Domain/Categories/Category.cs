@@ -45,7 +45,7 @@ namespace Atlas.Domain.Categories
         /// The status of the forum category.
         /// Can be either published or deleted.
         /// </summary>
-        public StatusType Status { get; private set; }
+        public CategoryStatusType Status { get; private set; }
 
         /// <summary>
         /// The unique identifier of the Permission Set used as default for all Forums within the Forum Category which do not specify a Permission Set.
@@ -109,7 +109,7 @@ namespace Atlas.Domain.Categories
             Name = name;
             SortOrder = sortOrder;
             PermissionSetId = permissionSetId;
-            Status = StatusType.Published;
+            Status = CategoryStatusType.Published;
         }
 
         /// <summary>
@@ -214,7 +214,7 @@ namespace Atlas.Domain.Categories
         /// </summary>
         public void Delete()
         {
-            Status = StatusType.Deleted;
+            Status = CategoryStatusType.Deleted;
         }
 
         /// <summary>

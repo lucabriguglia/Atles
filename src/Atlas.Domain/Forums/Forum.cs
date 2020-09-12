@@ -61,7 +61,7 @@ namespace Atlas.Domain.Forums
         /// The status of the forum.
         /// Can be either published or deleted.
         /// </summary>
-        public StatusType Status { get; private set; }
+        public ForumStatusType Status { get; private set; }
 
         /// <summary>
         /// The unique identifier of the permission set used.
@@ -143,7 +143,7 @@ namespace Atlas.Domain.Forums
             Description = description;
             SortOrder = sortOrder;
             PermissionSetId = permissionSetId;
-            Status = StatusType.Published;
+            Status = ForumStatusType.Published;
         }
 
         /// <summary>
@@ -255,7 +255,7 @@ namespace Atlas.Domain.Forums
         /// </summary>
         public void Delete()
         {
-            Status = StatusType.Deleted;
+            Status = ForumStatusType.Deleted;
         }
 
         /// <summary>

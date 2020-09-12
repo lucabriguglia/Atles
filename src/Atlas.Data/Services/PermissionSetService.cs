@@ -63,7 +63,7 @@ namespace Atlas.Data.Services
                 .FirstOrDefaultAsync(x =>
                     x.SiteId == command.SiteId &&
                     x.Id == command.Id &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != PermissionSetStatusType.Deleted);
 
             if (permissionSet == null)
             {
@@ -101,7 +101,7 @@ namespace Atlas.Data.Services
                 .FirstOrDefaultAsync(x =>
                     x.SiteId == command.SiteId &&
                     x.Id == command.Id &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != PermissionSetStatusType.Deleted);
 
             if (permissionSet == null)
             {

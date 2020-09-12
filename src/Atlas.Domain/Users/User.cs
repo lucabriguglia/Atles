@@ -56,7 +56,7 @@ namespace Atlas.Domain.Users
         /// </item>
         /// </list>
         /// </summary>
-        public StatusType Status { get; private set; }
+        public UserStatusType Status { get; private set; }
 
         /// <summary>
         /// The time stamp of when the user has been created.
@@ -109,7 +109,7 @@ namespace Atlas.Domain.Users
             IdentityUserId = identityUserId;
             Email = email;
             DisplayName = displayName;
-            Status = StatusType.Pending;
+            Status = UserStatusType.Pending;
             TimeStamp = DateTime.UtcNow;
         }
 
@@ -118,7 +118,7 @@ namespace Atlas.Domain.Users
         /// </summary>
         public void Confirm()
         {
-            Status = StatusType.Active;
+            Status = UserStatusType.Active;
         }
 
         /// <summary>
@@ -178,7 +178,7 @@ namespace Atlas.Domain.Users
         /// </summary>
         public void Suspend()
         {
-            Status = StatusType.Suspended;
+            Status = UserStatusType.Suspended;
         }
 
         /// <summary>
@@ -186,7 +186,7 @@ namespace Atlas.Domain.Users
         /// </summary>
         public void Reinstate()
         {
-            Status = StatusType.Active;
+            Status = UserStatusType.Active;
         }
 
         /// <summary>
@@ -194,7 +194,7 @@ namespace Atlas.Domain.Users
         /// </summary>
         public void Delete()
         {
-            Status = StatusType.Deleted;
+            Status = UserStatusType.Deleted;
         }
     }
 }

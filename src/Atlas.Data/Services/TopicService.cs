@@ -89,7 +89,7 @@ namespace Atlas.Data.Services
                     x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != PostStatusType.Deleted);
 
             if (topic == null)
             {
@@ -137,7 +137,7 @@ namespace Atlas.Data.Services
                 exists = await _dbContext.Posts.AnyAsync(x => 
                     x.ForumId == forumId && 
                     x.Slug == slug && 
-                    x.Status == StatusType.Published);
+                    x.Status == PostStatusType.Published);
                 repeat++;
             }
 
@@ -157,7 +157,7 @@ namespace Atlas.Data.Services
                     x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != PostStatusType.Deleted);
 
             if (topic == null)
             {
@@ -185,7 +185,7 @@ namespace Atlas.Data.Services
                     x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != PostStatusType.Deleted);
 
             if (topic == null)
             {
@@ -214,7 +214,7 @@ namespace Atlas.Data.Services
                     x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != PostStatusType.Deleted);
 
             if (topic == null)
             {
@@ -237,8 +237,8 @@ namespace Atlas.Data.Services
             {
                 var newLastPost = await _dbContext.Posts
                     .Where(x => x.ForumId == topic.ForumId && 
-                                x.Status == StatusType.Published &&
-                                (x.Topic == null || x.Topic.Status == StatusType.Published) &&
+                                x.Status == PostStatusType.Published &&
+                                (x.Topic == null || x.Topic.Status == PostStatusType.Published) &&
                                 x.Id != topic.Id)
                     .OrderByDescending(x => x.CreatedOn)
                     .FirstOrDefaultAsync();

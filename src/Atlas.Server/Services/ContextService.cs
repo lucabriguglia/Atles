@@ -6,6 +6,8 @@ using Atlas.Data;
 using Atlas.Data.Builders;
 using Atlas.Data.Caching;
 using Atlas.Domain;
+using Atlas.Domain.Forums;
+using Atlas.Domain.Users;
 using Atlas.Models.Public;
 using Markdig;
 using Microsoft.AspNetCore.Http;
@@ -75,7 +77,7 @@ namespace Atlas.Server.Services
                             Email = user.Email,
                             DisplayName = user.DisplayName,
                             GravatarHash = _gravatarService.HashEmailForGravatar(user.Email),
-                            IsSuspended = user.Status == StatusType.Suspended,
+                            IsSuspended = user.Status == UserStatusType.Suspended,
                             IsAuthenticated = true
                         };
                     }
@@ -92,7 +94,7 @@ namespace Atlas.Server.Services
             return await _cacheManager.GetOrSetAsync(CacheKeys.CurrentForums(site.Id), async () =>
             {
                 var forums = await _dbContext.Forums
-                    .Where(x => x.Category.SiteId == site.Id && x.Status == StatusType.Published)
+                    .Where(x => x.Category.SiteId == site.Id && x.Status == ForumStatusType.Published)
                     .Select(x => new
                     {
                         x.Id,

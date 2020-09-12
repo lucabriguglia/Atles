@@ -4,6 +4,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
+using Atlas.Domain.Categories;
+using Atlas.Domain.Forums;
 using Atlas.Models.Public.Index;
 using Microsoft.EntityFrameworkCore;
 
@@ -32,7 +34,7 @@ namespace Atlas.Data.Builders.Public
                 {
                     var categories = await _dbContext.Categories
                         .Include(x => x.Forums)
-                        .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
+                        .Where(x => x.SiteId == siteId && x.Status == CategoryStatusType.Published)
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
 
@@ -42,7 +44,7 @@ namespace Atlas.Data.Builders.Public
                         Name = category.Name,
                         PermissionSetId = category.PermissionSetId,
                         ForumIds = category.Forums
-                            .Where(x => x.Status == StatusType.Published)
+                            .Where(x => x.Status == ForumStatusType.Published)
                             .OrderBy(x => x.SortOrder)
                             .Select(x => x.Id)
                             .ToList()
@@ -61,7 +63,7 @@ namespace Atlas.Data.Builders.Public
                         var entity = await _dbContext.Forums
                             .Include(x => x.LastPost).ThenInclude(x => x.CreatedByUser)
                             .Include(x => x.LastPost).ThenInclude(x => x.Topic)
-                            .Where(x => x.Id == forumId && x.Status == StatusType.Published)
+                            .Where(x => x.Id == forumId && x.Status == ForumStatusType.Published)
                             .OrderBy(x => x.SortOrder)
                             .FirstOrDefaultAsync();
 

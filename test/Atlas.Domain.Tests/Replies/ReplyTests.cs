@@ -15,7 +15,7 @@ namespace Atlas.Domain.Tests.Replies
             var forumId = Guid.NewGuid();
             var userId = Guid.NewGuid();
             const string content = "Blah blah blah...";
-            const StatusType status = StatusType.Draft;
+            const PostStatusType status = PostStatusType.Draft;
 
             var sut = Post.CreateReply(topicId, forumId, userId, content, status);
 
@@ -34,7 +34,7 @@ namespace Atlas.Domain.Tests.Replies
             var forumId = Guid.NewGuid();
             var userId = Guid.NewGuid();
             const string content = "Blah blah blah...";
-            const StatusType status = StatusType.Draft;
+            const PostStatusType status = PostStatusType.Draft;
 
             var sut = Post.CreateReply(id, topicId, forumId, userId, content, status);
 
@@ -53,7 +53,7 @@ namespace Atlas.Domain.Tests.Replies
 
             var userId = Guid.NewGuid();
             const string content = "Blah blah blah...";
-            const StatusType status = StatusType.Draft;
+            const PostStatusType status = PostStatusType.Draft;
 
             sut.UpdateDetails(userId, content, status);
 
@@ -66,7 +66,7 @@ namespace Atlas.Domain.Tests.Replies
         [TestCase(false)]
         public void SetAsAnswer(bool isAnswer)
         {
-            var sut = Post.CreateReply(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Content", StatusType.Active);
+            var sut = Post.CreateReply(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Content", PostStatusType.Published);
 
             sut.SetAsAnswer(isAnswer);
 
@@ -80,7 +80,7 @@ namespace Atlas.Domain.Tests.Replies
 
             sut.Delete();
 
-            Assert.AreEqual(StatusType.Deleted, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(PostStatusType.Deleted, sut.Status, nameof(sut.Status));
         }
     }
 }

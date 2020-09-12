@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
+using Atlas.Domain.Users;
 using Atlas.Models;
 using Atlas.Models.Public.Search;
 using Atlas.Models.Public.Users;
@@ -63,7 +64,7 @@ namespace Atlas.Data.Builders.Public
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == userId &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != UserStatusType.Deleted);
 
             if (user == null)
             {
@@ -76,7 +77,7 @@ namespace Atlas.Data.Builders.Public
                 Email = user.Email,
                 DisplayName = user.DisplayName,
                 GravatarHash = _gravatarService.HashEmailForGravatar(user.Email),
-                IsSuspended = user.Status == StatusType.Suspended
+                IsSuspended = user.Status == UserStatusType.Suspended
             };
 
             return result;

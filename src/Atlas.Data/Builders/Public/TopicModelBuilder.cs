@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
+using Atlas.Domain.Posts;
 using Atlas.Models;
 using Atlas.Models.Public.Topics;
 using Markdig;
@@ -35,7 +36,7 @@ namespace Atlas.Data.Builders.Public
                     x.Forum.Category.SiteId == siteId &&
                     x.Forum.Slug == forumSlug &&
                     x.Slug == topicSlug &&
-                    x.Status == StatusType.Published);
+                    x.Status == PostStatusType.Published);
 
             if (topic == null)
             {
@@ -74,7 +75,7 @@ namespace Atlas.Data.Builders.Public
                     .Include(x => x.CreatedByUser)
                     .Where(x =>
                         x.TopicId == topic.Id &&
-                        x.Status == StatusType.Published &&
+                        x.Status == PostStatusType.Published &&
                         x.IsAnswer)
                     .FirstOrDefaultAsync();
 
@@ -104,7 +105,7 @@ namespace Atlas.Data.Builders.Public
                 .Include(x => x.CreatedByUser)
                 .Where(x =>
                     x.TopicId == topicId &&
-                    x.Status == StatusType.Published &&
+                    x.Status == PostStatusType.Published &&
                     x.IsAnswer == false);
 
             if (!string.IsNullOrWhiteSpace(options.Search))

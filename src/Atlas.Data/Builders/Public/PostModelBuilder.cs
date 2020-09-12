@@ -2,6 +2,8 @@
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
+using Atlas.Domain.Forums;
+using Atlas.Domain.Posts;
 using Atlas.Models.Public.Posts;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,7 +31,7 @@ namespace Atlas.Data.Builders.Public
                 .FirstOrDefaultAsync(x =>
                     x.Id == forumId &&
                     x.Category.SiteId == siteId &&
-                    x.Status == StatusType.Published);
+                    x.Status == ForumStatusType.Published);
 
             if (forum == null)
             {
@@ -59,7 +61,7 @@ namespace Atlas.Data.Builders.Public
                     x.Forum.Category.SiteId == siteId &&
                     x.Forum.Id == forumId &&
                     x.Id == topicId &&
-                    x.Status == StatusType.Published);
+                    x.Status == PostStatusType.Published);
 
             if (topic == null)
             {

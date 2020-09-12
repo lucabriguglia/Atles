@@ -1,5 +1,6 @@
 ﻿@page "/admin/users"
 
+@using Atlas.Domain.Users
 @inherits Atlas.Client.Components.Admin.Users.IndexPage
 
 <nav aria-label="breadcrumb">
@@ -100,15 +101,15 @@ else
                             <td>
                                 <a href="/admin/users/edit/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Edit"]</a>
                                 <a href="/admin/users/activity/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Activity"]</a>
-                                @if (item.Status == StatusType.Active)
+                                @if (item.Status == UserStatusType.Active)
                                 {
                                     <button type="button" class="btn btn-warning mb-1" data-toggle="modal" data-target="#confirm-modal-suspend" @onclick="() => SetSuspendId(item.Id)">@Loc["Suspend"]</button>
                                 }
-                                @if (item.Status == StatusType.Suspended)
+                                @if (item.Status == UserStatusType.Suspended)
                                 {
                                     <button type="button" class="btn btn-warning mb-1" @onclick="@(async () => await ReinstateAsync(item.Id))">@Loc["Reinstate"]</button>
                                 }
-                                @if (item.Status != StatusType.Deleted)
+                                @if (item.Status != UserStatusType.Deleted)
                                 {
                                     <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#confirm-modal" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
                                 }

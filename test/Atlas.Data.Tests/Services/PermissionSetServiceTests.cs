@@ -153,7 +153,7 @@ namespace Atlas.Data.Tests.Services
                 var permissionSetDeleted = await dbContext.PermissionSets.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var permissionSetEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
-                Assert.AreEqual(StatusType.Deleted, permissionSetDeleted.Status);
+                Assert.AreEqual(PermissionSetStatusType.Deleted, permissionSetDeleted.Status);
                 Assert.NotNull(permissionSetEvent);
             }
         }

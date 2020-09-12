@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Domain.Categories;
+using Atlas.Domain.Forums;
+using Atlas.Domain.PermissionSets;
 using Atlas.Models.Admin.Categories;
 
 namespace Atlas.Data.Builders.Admin
@@ -22,7 +25,7 @@ namespace Atlas.Data.Builders.Admin
 
             var categories = await _dbContext.Categories
                 .Include(x => x.PermissionSet)
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == siteId && x.Status != CategoryStatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
@@ -31,7 +34,7 @@ namespace Atlas.Data.Builders.Admin
                 var forumsCount = await _dbContext.Forums
                     .Where(x => 
                         x.CategoryId == category.Id && 
-                        x.Status != StatusType.Deleted)
+                        x.Status != ForumStatusType.Deleted)
                     .CountAsync();
 
                 result.Categories.Add(new IndexPageModel.CategoryModel
@@ -54,7 +57,7 @@ namespace Atlas.Data.Builders.Admin
             var result = new FormComponentModel();
 
             var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
+                .Where(x => x.SiteId == siteId && x.Status == PermissionSetStatusType.Published)
                 .ToListAsync();
 
             if (id != null)
@@ -63,7 +66,7 @@ namespace Atlas.Data.Builders.Admin
                     .FirstOrDefaultAsync(x => 
                         x.SiteId == siteId && 
                         x.Id == id && 
-                        x.Status != StatusType.Deleted);
+                        x.Status != CategoryStatusType.Deleted);
 
                 if (category == null)
                 {

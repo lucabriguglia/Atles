@@ -67,7 +67,7 @@ namespace Atlas.Data.Services
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
-                    x.Status == StatusType.Pending);
+                    x.Status == UserStatusType.Pending);
 
             if (user == null)
             {
@@ -157,7 +157,7 @@ namespace Atlas.Data.Services
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != UserStatusType.Deleted);
 
             if (user == null)
             {
@@ -180,7 +180,7 @@ namespace Atlas.Data.Services
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != UserStatusType.Deleted);
 
             if (user == null)
             {
@@ -203,7 +203,7 @@ namespace Atlas.Data.Services
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != UserStatusType.Deleted);
 
             if (user == null)
             {

@@ -66,7 +66,7 @@ namespace Atlas.Domain.Tests.PermissionSets
 
             sut.Delete();
 
-            Assert.AreEqual(StatusType.Deleted, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(PermissionSetStatusType.Deleted, sut.Status, nameof(sut.Status));
         }
     }
 }

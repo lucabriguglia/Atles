@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Domain;
+using Atlas.Domain.Forums;
 using Atlas.Domain.PermissionSets;
 using Atlas.Models;
 using Atlas.Models.Public;
@@ -38,7 +39,7 @@ namespace Atlas.Data.Builders.Public
                     .FirstOrDefaultAsync(x =>
                         x.SiteId == siteId &&
                         x.Id == permissionSetId &&
-                        x.Status != StatusType.Deleted);
+                        x.Status != PermissionSetStatusType.Deleted);
 
                 if (permissionSet == null)
                 {
@@ -81,7 +82,7 @@ namespace Atlas.Data.Builders.Public
             var permission = await _dbContext.Forums.Where(x =>
                     x.Id == forumId &&
                     x.Category.SiteId == siteId &&
-                    x.Status == StatusType.Published)
+                    x.Status == ForumStatusType.Published)
                 .Select(x => new { Id = x.PermissionSetId ?? x.Category.PermissionSetId })
                 .FirstOrDefaultAsync();
 

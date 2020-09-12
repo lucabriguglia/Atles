@@ -1,5 +1,6 @@
 ﻿using System;
 using Atlas.Domain;
+using Atlas.Domain.Users;
 using Atlas.Models.Public.Search;
 
 namespace Atlas.Models.Public.Users
@@ -18,6 +19,6 @@ namespace Atlas.Models.Public.Users
         public int TotalTopics { get; set; }
         public int TotalReplies { get; set; }
         public string GravatarHash { get; set; }
-        public StatusType Status { get; set; }
+        public UserStatusType Status { get; set; }
     }
 }

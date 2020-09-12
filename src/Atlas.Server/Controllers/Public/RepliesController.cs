@@ -70,7 +70,7 @@ namespace Atlas.Server.Controllers.Public
                 ForumId = model.Forum.Id,
                 TopicId = model.Topic.Id,
                 Content = model.Post.Content,
-                Status = StatusType.Published,
+                Status = PostStatusType.Published,
                 SiteId = site.Id,
                 UserId = user.Id
             };
@@ -92,7 +92,7 @@ namespace Atlas.Server.Controllers.Public
                 ForumId = model.Forum.Id,
                 TopicId = model.Topic.Id,
                 Content = model.Post.Content,
-                Status = StatusType.Published,
+                Status = PostStatusType.Published,
                 SiteId = site.Id,
                 UserId = user.Id
             };
@@ -103,7 +103,7 @@ namespace Atlas.Server.Controllers.Public
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
-                    x.Status != StatusType.Deleted)
+                    x.Status != PostStatusType.Deleted)
                 .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 
@@ -153,7 +153,7 @@ namespace Atlas.Server.Controllers.Public
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
-                    x.Status == StatusType.Published)
+                    x.Status == PostStatusType.Published)
                 .Select(x => x.Topic.CreatedBy)
                 .FirstOrDefaultAsync();
 
@@ -202,7 +202,7 @@ namespace Atlas.Server.Controllers.Public
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
-                    x.Status != StatusType.Deleted)
+                    x.Status != PostStatusType.Deleted)
                 .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 

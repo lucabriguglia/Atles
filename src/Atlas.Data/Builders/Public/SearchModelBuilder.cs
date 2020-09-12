@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Atlas.Data.Caching;
 using Atlas.Data.Extensions;
 using Atlas.Domain;
+using Atlas.Domain.Posts;
 using Atlas.Models;
 using Atlas.Models.Public.Search;
 using Markdig;
@@ -43,8 +44,8 @@ namespace Atlas.Data.Builders.Public
             var postsQuery = _dbContext.Posts
                 .Where(x =>
                     forumIds.Contains(x.ForumId) &&
-                    x.Status == StatusType.Published &&
-                    (x.Topic == null || x.Topic.Status == StatusType.Published));
+                    x.Status == PostStatusType.Published &&
+                    (x.Topic == null || x.Topic.Status == PostStatusType.Published));
 
             if (options.SearchIsDefined())
             {

@@ -28,7 +28,7 @@ namespace Atlas.Data.Builders.Admin
             var permissionSets = await _dbContext.PermissionSets
                 .Include(x => x.Categories)
                 .Include(x => x.Forums)
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == siteId && x.Status != PermissionSetStatusType.Deleted)
                 .ToListAsync();
 
             foreach (var permissionSet in permissionSets)
@@ -84,7 +84,7 @@ namespace Atlas.Data.Builders.Admin
                 .FirstOrDefaultAsync(x => 
                     x.SiteId == siteId && 
                     x.Id == id && 
-                    x.Status != StatusType.Deleted);
+                    x.Status != PermissionSetStatusType.Deleted);
 
             if (permissionSet == null)
             {

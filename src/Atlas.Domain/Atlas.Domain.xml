@@ -1032,7 +1032,7 @@
             Creates an empty forum post.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.CreateTopic(System.Guid,System.Guid,System.String,System.String,System.String,Atlas.Domain.StatusType)">
+        <member name="M:Atlas.Domain.Posts.Post.CreateTopic(System.Guid,System.Guid,System.String,System.String,System.String,Atlas.Domain.Posts.PostStatusType)">
             <summary>
             Creates a new topic with the given values.
             </summary>
@@ -1044,7 +1044,7 @@
             <param name="status"></param>
             <returns></returns>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.CreateTopic(System.Guid,System.Guid,System.Guid,System.String,System.String,System.String,Atlas.Domain.StatusType)">
+        <member name="M:Atlas.Domain.Posts.Post.CreateTopic(System.Guid,System.Guid,System.Guid,System.String,System.String,System.String,Atlas.Domain.Posts.PostStatusType)">
             <summary>
             Creates a new topic with the given values including the unique identifier.
             </summary>
@@ -1057,7 +1057,7 @@
             <param name="status"></param>
             <returns></returns>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.CreateReply(System.Guid,System.Guid,System.Guid,System.String,Atlas.Domain.StatusType)">
+        <member name="M:Atlas.Domain.Posts.Post.CreateReply(System.Guid,System.Guid,System.Guid,System.String,Atlas.Domain.Posts.PostStatusType)">
             <summary>
             Creates a new reply with the given values.
             </summary>
@@ -1068,7 +1068,7 @@
             <param name="status"></param>
             <returns></returns>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.CreateReply(System.Guid,System.Guid,System.Guid,System.Guid,System.String,Atlas.Domain.StatusType)">
+        <member name="M:Atlas.Domain.Posts.Post.CreateReply(System.Guid,System.Guid,System.Guid,System.Guid,System.String,Atlas.Domain.Posts.PostStatusType)">
             <summary>
             Creates a new reply with the given values including the unique identifier.
             </summary>
@@ -1080,7 +1080,7 @@
             <param name="status"></param>
             <returns></returns>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.UpdateDetails(System.Guid,System.String,System.String,System.String,Atlas.Domain.StatusType)">
+        <member name="M:Atlas.Domain.Posts.Post.UpdateDetails(System.Guid,System.String,System.String,System.String,Atlas.Domain.Posts.PostStatusType)">
             <summary>
             Updates the details of the topic.
             </summary>
@@ -1090,7 +1090,7 @@
             <param name="content"></param>
             <param name="status"></param>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.UpdateDetails(System.Guid,System.String,Atlas.Domain.StatusType)">
+        <member name="M:Atlas.Domain.Posts.Post.UpdateDetails(System.Guid,System.String,Atlas.Domain.Posts.PostStatusType)">
             <summary>
             Updates the details of the reply.
             </summary>

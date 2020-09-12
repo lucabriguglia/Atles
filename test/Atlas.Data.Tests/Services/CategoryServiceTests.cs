@@ -264,11 +264,11 @@ namespace Atlas.Data.Tests.Services
                 var forum2Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum2.Id);
 
                 Assert.AreEqual(category1.SortOrder, category1Reordered.SortOrder);
-                Assert.AreEqual(StatusType.Deleted, category2Deleted.Status);
+                Assert.AreEqual(CategoryStatusType.Deleted, category2Deleted.Status);
                 Assert.AreEqual(category2.SortOrder, category3Reordered.SortOrder);
                 Assert.AreEqual(category3.SortOrder, category4Reordered.SortOrder);
-                Assert.AreEqual(StatusType.Deleted, forum1Deleted.Status);
-                Assert.AreEqual(StatusType.Deleted, forum2Deleted.Status);
+                Assert.AreEqual(CategoryStatusType.Deleted, forum1Deleted.Status);
+                Assert.AreEqual(CategoryStatusType.Deleted, forum2Deleted.Status);
                 Assert.NotNull(category1Event);
                 Assert.NotNull(category2Event);
                 Assert.NotNull(category3Event);

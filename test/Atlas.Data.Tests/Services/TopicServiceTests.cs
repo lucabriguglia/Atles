@@ -94,7 +94,7 @@ namespace Atlas.Data.Tests.Services
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
-            var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "slug", "Content", StatusType.Published);
+            var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -149,7 +149,7 @@ namespace Atlas.Data.Tests.Services
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
-            var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "slug", "Content", StatusType.Published);
+            var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -198,7 +198,7 @@ namespace Atlas.Data.Tests.Services
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
-            var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "slug", "Content", StatusType.Published);
+            var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
 
             using (var dbContext = new AtlasDbContext(options))
             {
@@ -248,7 +248,7 @@ namespace Atlas.Data.Tests.Services
 
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
-            var topic = Post.CreateTopic(forumId, userId, "Title", "slug", "Content", StatusType.Published);
+            var topic = Post.CreateTopic(forumId, userId, "Title", "slug", "Content", PostStatusType.Published);
             var user = new User(userId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
             category.IncreaseTopicsCount();
@@ -291,7 +291,7 @@ namespace Atlas.Data.Tests.Services
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
                 var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
 
-                Assert.AreEqual(StatusType.Deleted, topicDeleted.Status);
+                Assert.AreEqual(PostStatusType.Deleted, topicDeleted.Status);
                 Assert.NotNull(topicEvent);
                 Assert.AreEqual(0, updatedCategory.TopicsCount);
                 Assert.AreEqual(0, updatedForum.TopicsCount);

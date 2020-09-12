@@ -3,6 +3,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atlas.Domain.Categories;
+using Atlas.Domain.Forums;
+using Atlas.Domain.PermissionSets;
 using Atlas.Models.Admin.Forums;
 
 namespace Atlas.Data.Builders.Admin
@@ -20,7 +23,7 @@ namespace Atlas.Data.Builders.Admin
         {
             var categories = await _dbContext.Categories
                 .Include(x => x.PermissionSet)
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == siteId && x.Status != CategoryStatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
@@ -40,7 +43,7 @@ namespace Atlas.Data.Builders.Admin
 
             var forums = await _dbContext.Forums
                 .Include(x => x.PermissionSet)
-                .Where(x => x.CategoryId == currentCategory.Id && x.Status != StatusType.Deleted)
+                .Where(x => x.CategoryId == currentCategory.Id && x.Status != ForumStatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
@@ -81,7 +84,7 @@ namespace Atlas.Data.Builders.Admin
             var result = new FormComponentModel();
 
             var categories = await _dbContext.Categories
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == siteId && x.Status != CategoryStatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
@@ -107,7 +110,7 @@ namespace Atlas.Data.Builders.Admin
             };
 
             var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
+                .Where(x => x.SiteId == siteId && x.Status == PermissionSetStatusType.Published)
                 .ToListAsync();
 
             foreach (var permissionSet in permissionSets)
@@ -128,7 +131,7 @@ namespace Atlas.Data.Builders.Admin
                 .FirstOrDefaultAsync(x =>
                     x.Category.SiteId == siteId &&
                     x.Id == id &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != ForumStatusType.Deleted);
 
             if (forum == null)
             {
@@ -149,7 +152,7 @@ namespace Atlas.Data.Builders.Admin
             };
 
             var categories = await _dbContext.Categories
-                .Where(x => x.SiteId == siteId && x.Status != StatusType.Deleted)
+                .Where(x => x.SiteId == siteId && x.Status != CategoryStatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
@@ -163,7 +166,7 @@ namespace Atlas.Data.Builders.Admin
             }
 
             var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == siteId && x.Status == StatusType.Published)
+                .Where(x => x.SiteId == siteId && x.Status == PermissionSetStatusType.Published)
                 .ToListAsync();
 
             foreach (var permissionSet in permissionSets)

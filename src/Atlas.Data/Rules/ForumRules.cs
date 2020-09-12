@@ -21,7 +21,7 @@ namespace Atlas.Data.Rules
                 .AnyAsync(x => x.Category.SiteId== siteId &&
                                x.CategoryId == categoryId && 
                                x.Name == name && 
-                               x.Status != StatusType.Deleted);
+                               x.Status != ForumStatusType.Deleted);
             return !any;
         }
 
@@ -31,7 +31,7 @@ namespace Atlas.Data.Rules
                 .AnyAsync(x => x.Category.SiteId == siteId &&
                                x.CategoryId == categoryId &&
                                x.Name == name && 
-                               x.Status != StatusType.Deleted &&
+                               x.Status != ForumStatusType.Deleted &&
                                x.Id != id);
             return !any;
         }
@@ -41,7 +41,7 @@ namespace Atlas.Data.Rules
             var any = await _dbContext.Forums
                 .AnyAsync(x => x.Category.SiteId == siteId &&
                                x.Id == id &&
-                               x.Status == StatusType.Published);
+                               x.Status == ForumStatusType.Published);
             return any;
         }
 
@@ -50,7 +50,7 @@ namespace Atlas.Data.Rules
             var any = await _dbContext.Forums
                 .AnyAsync(x => x.Category.SiteId == siteId &&
                                x.Slug == slug &&
-                               x.Status != StatusType.Deleted);
+                               x.Status != ForumStatusType.Deleted);
             return !any;
         }
 
@@ -59,7 +59,7 @@ namespace Atlas.Data.Rules
             var any = await _dbContext.Forums
                 .AnyAsync(x => x.Category.SiteId == siteId &&
                                x.Slug == slug &&
-                               x.Status != StatusType.Deleted &&
+                               x.Status != ForumStatusType.Deleted &&
                                x.Id != id);
             return !any;
         }

@@ -34,7 +34,7 @@ namespace Atlas.Data.Services
             await _createValidator.ValidateCommandAsync(command);
 
             var forumsCount = await _dbContext.Forums
-                .Where(x => x.CategoryId == command.CategoryId && x.Status != StatusType.Deleted)
+                .Where(x => x.CategoryId == command.CategoryId && x.Status != ForumStatusType.Deleted)
                 .CountAsync();
 
             var sortOrder = forumsCount + 1;
@@ -78,7 +78,7 @@ namespace Atlas.Data.Services
                 .FirstOrDefaultAsync(x =>
                     x.Category.SiteId == command.SiteId &&
                     x.Id == command.Id && 
-                    x.Status != StatusType.Deleted);
+                    x.Status != ForumStatusType.Deleted);
 
             if (forum == null)
             {
@@ -99,7 +99,7 @@ namespace Atlas.Data.Services
                 await ReorderForumsInCategory(originalCategoryId, command.Id, command.SiteId, command.UserId);
 
                 var newCategoryForumsCount = await _dbContext.Forums
-                    .Where(x => x.CategoryId == command.CategoryId && x.Status != StatusType.Deleted)
+                    .Where(x => x.CategoryId == command.CategoryId && x.Status != ForumStatusType.Deleted)
                     .CountAsync();
 
                 forum.Reorder(newCategoryForumsCount + 1);
@@ -133,7 +133,7 @@ namespace Atlas.Data.Services
                 .FirstOrDefaultAsync(x =>
                     x.Category.SiteId == command.SiteId &&
                     x.Id == command.Id && 
-                    x.Status != StatusType.Deleted);
+                    x.Status != ForumStatusType.Deleted);
 
             if (forum == null)
             {
@@ -165,7 +165,7 @@ namespace Atlas.Data.Services
                 .FirstOrDefaultAsync(x => 
                     x.CategoryId == forum.CategoryId && 
                     x.SortOrder == sortOrderToReplace && 
-                    x.Status != StatusType.Deleted);
+                    x.Status != ForumStatusType.Deleted);
 
             if (command.Direction == Direction.Up)
             {
@@ -197,7 +197,7 @@ namespace Atlas.Data.Services
                 .FirstOrDefaultAsync(x =>
                     x.Category.SiteId == command.SiteId &&
                     x.Id == command.Id &&
-                    x.Status != StatusType.Deleted);
+                    x.Status != ForumStatusType.Deleted);
 
             if (forum == null)
             {
@@ -226,7 +226,7 @@ namespace Atlas.Data.Services
                 .Where(x =>
                     x.CategoryId == categoryId &&
                     x.Id != forumIdToExclude &&
-                    x.Status != StatusType.Deleted)
+                    x.Status != ForumStatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 

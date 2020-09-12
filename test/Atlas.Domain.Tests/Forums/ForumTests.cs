@@ -26,7 +26,7 @@ namespace Atlas.Domain.Tests.Forums
             Assert.AreEqual(description, sut.Description, nameof(sut.Description));
             Assert.AreEqual(sortOrder, sut.SortOrder, nameof(sut.SortOrder));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
-            Assert.AreEqual(StatusType.Published, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(ForumStatusType.Published, sut.Status, nameof(sut.Status));
         }
 
         [Test]
@@ -49,7 +49,7 @@ namespace Atlas.Domain.Tests.Forums
             Assert.AreEqual(description, sut.Description, nameof(sut.Description));
             Assert.AreEqual(sortOrder, sut.SortOrder, nameof(sut.SortOrder));
             Assert.AreEqual(permissionSetId, sut.PermissionSetId, nameof(sut.PermissionSetId));
-            Assert.AreEqual(StatusType.Published, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(ForumStatusType.Published, sut.Status, nameof(sut.Status));
         }
 
         [Test]
@@ -205,7 +205,7 @@ namespace Atlas.Domain.Tests.Forums
 
             sut.Delete();
 
-            Assert.AreEqual(StatusType.Deleted, sut.Status, nameof(sut.Status));
+            Assert.AreEqual(ForumStatusType.Deleted, sut.Status, nameof(sut.Status));
         }
     }
 }

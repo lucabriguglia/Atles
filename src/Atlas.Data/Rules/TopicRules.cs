@@ -22,7 +22,7 @@ namespace Atlas.Data.Rules
                                x.Forum.Category.SiteId == siteId &&
                                x.Id == id &&
                                x.TopicId == null &&
-                               x.Status == StatusType.Published);
+                               x.Status == PostStatusType.Published);
             return any;
         }
     }

@@ -119,7 +119,7 @@ namespace Atlas.Data.Tests.Services
                 var userSuspended = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
                 var userEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == user.Id);
 
-                Assert.AreEqual(StatusType.Suspended, userSuspended.Status);
+                Assert.AreEqual(UserStatusType.Suspended, userSuspended.Status);
                 Assert.NotNull(userEvent);
             }
         }
@@ -157,7 +157,7 @@ namespace Atlas.Data.Tests.Services
                 var userReinstated = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
                 var userEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == user.Id);
 
-                Assert.AreEqual(StatusType.Active, userReinstated.Status);
+                Assert.AreEqual(UserStatusType.Active, userReinstated.Status);
                 Assert.NotNull(userEvent);
             }
         }
@@ -195,7 +195,7 @@ namespace Atlas.Data.Tests.Services
                 var userDeleted = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
                 var userEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == user.Id);
 
-                Assert.AreEqual(StatusType.Deleted, userDeleted.Status);
+                Assert.AreEqual(UserStatusType.Deleted, userDeleted.Status);
                 Assert.NotNull(userEvent);
             }
         }

@@ -1,16 +1,17 @@
 ﻿using System;
 using Atlas.Domain;
+using Atlas.Domain.Users;
 
 namespace Atlas.Models.Admin.Users
 {
     public class IndexPageModel
     {
-        public StatusType[] Status { get; } =
+        public UserStatusType[] Status { get; } =
         {
-            StatusType.Active,
-            StatusType.Pending,
-            StatusType.Suspended,
-            StatusType.Deleted
+            UserStatusType.Active,
+            UserStatusType.Pending,
+            UserStatusType.Suspended,
+            UserStatusType.Deleted
         };
 
         public string[] SortBy { get; } =
@@ -36,7 +37,7 @@ namespace Atlas.Models.Admin.Users
             public string Email { get; set; }
             public int TotalTopics { get; set; }
             public int TotalReplies { get; set; }
-            public StatusType Status { get; set; }
+            public UserStatusType Status { get; set; }
             public DateTime TimeStamp { get; set; }
         }
     }

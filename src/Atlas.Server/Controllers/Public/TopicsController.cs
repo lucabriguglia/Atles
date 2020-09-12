@@ -232,7 +232,7 @@ namespace Atlas.Server.Controllers.Public
                 ForumId = model.Forum.Id,
                 Title = model.Topic.Title,
                 Content = model.Topic.Content,
-                Status = StatusType.Published,
+                Status = PostStatusType.Published,
                 SiteId = site.Id,
                 UserId = user.Id
             };
@@ -255,7 +255,7 @@ namespace Atlas.Server.Controllers.Public
                 ForumId = model.Forum.Id,
                 Title = model.Topic.Title,
                 Content = model.Topic.Content,
-                Status = StatusType.Published,
+                Status = PostStatusType.Published,
                 SiteId = site.Id,
                 UserId = user.Id
             };
@@ -266,7 +266,7 @@ namespace Atlas.Server.Controllers.Public
                     x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
-                    x.Status != StatusType.Deleted)
+                    x.Status != PostStatusType.Deleted)
                 .Select(x => new { UserId = x.CreatedBy, x.Locked})
                 .FirstOrDefaultAsync();
 
@@ -388,7 +388,7 @@ namespace Atlas.Server.Controllers.Public
                     x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
-                    x.Status != StatusType.Deleted)
+                    x.Status != PostStatusType.Deleted)
                 .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 

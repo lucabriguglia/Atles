@@ -45,7 +45,7 @@ namespace Atlas.Server.Services
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == identityUser.Id);
 
-            if (user != null && user.Status == StatusType.Pending)
+            if (user != null && user.Status == UserStatusType.Pending)
             {
                 var site = await _contextService.CurrentSiteAsync();
 

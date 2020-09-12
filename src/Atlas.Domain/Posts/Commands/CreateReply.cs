@@ -32,6 +32,6 @@ namespace Atlas.Domain.Posts.Commands
         /// <summary>
         /// The status of the reply.
         /// </summary>
-        public StatusType Status { get; set; }
+        public PostStatusType Status { get; set; }
     }
 }
