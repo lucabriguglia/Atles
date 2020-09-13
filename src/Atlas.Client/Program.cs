@@ -7,7 +7,6 @@ using Atlas.Models.Public;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.JSInterop;
 using Tewr.Blazor.FileReader;
 
 namespace Atlas.Client

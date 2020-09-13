@@ -77,11 +77,11 @@ namespace Atlas.Server
                 x.MultipartBodyLengthLimit = int.MaxValue;
             });
 
-            services.Configure<CookiePolicyOptions>(options =>
-            {
-                options.CheckConsentNeeded = context => true;
-                options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            //services.Configure<CookiePolicyOptions>(options =>
+            //{
+            //    options.CheckConsentNeeded = context => true;
+            //    options.MinimumSameSitePolicy = SameSiteMode.None;
+            //});
 
             services.AddDocs();
 
@@ -123,7 +123,7 @@ namespace Atlas.Server
             //    RequestPath = new PathString("/Uploads")
             //});
 
-            app.UseCookiePolicy();
+            //app.UseCookiePolicy();
 
             app.UseRouting();
 
