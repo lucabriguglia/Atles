@@ -4,9 +4,9 @@
   <PropertyGroup Label="ProjectSettings">
     <Authors>Luca Briguglia</Authors>
     <Copyright>Copyright Luca Briguglia</Copyright>
-    <Product>Atlas</Product>
+    <Product>Atles</Product>
     <RepositoryType>git</RepositoryType>
-    <RepositoryUrl>https://github.com/lucabriguglia/Atlas</RepositoryUrl>
+    <RepositoryUrl>https://github.com/lucabriguglia/Atles</RepositoryUrl>
   </PropertyGroup>
 
   <!--<PropertyGroup Label="NugetSettings">
