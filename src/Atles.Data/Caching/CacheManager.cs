@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.Caching.Memory;
 
-namespace Atlas.Data.Caching
+namespace Atles.Data.Caching
 {
     public class CacheManager : ICacheManager
     {

@@ -3,7 +3,7 @@ using System.Linq.Expressions;
 using System.Reflection;
 using Atles.Models;
 
-namespace Atlas.Data.Extensions
+namespace Atles.Data.Extensions
 {
     /// <summary>
     /// https://stackoverflow.com/questions/34906437/how-to-construct-order-by-expression-dynamically-in-entity-framework

@@ -7,15 +7,15 @@ using Atles.Domain.Users.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Services
+namespace Atles.Data.Services
 {
     public class UserService : IUserService
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly IValidator<CreateUser> _createValidator;
         private readonly IValidator<UpdateUser> _updateValidator;
 
-        public UserService(AtlasDbContext dbContext,
+        public UserService(AtlesDbContext dbContext,
             IValidator<CreateUser> createValidator,
             IValidator<UpdateUser> updateValidator)
         {

@@ -1,24 +1,24 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Data.Extensions;
+using Atles.Data.Extensions;
 using Atles.Domain.Users;
 using Atles.Models;
 using Atles.Models.Admin.Users;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 
-namespace Atlas.Data.Builders.Admin
+namespace Atles.Data.Builders.Admin
 {
     public class UserModelBuilder : IUserModelBuilder
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
 
-        public UserModelBuilder(AtlasDbContext dbContext,
+        public UserModelBuilder(AtlesDbContext dbContext,
             RoleManager<IdentityRole> roleManager,
             UserManager<IdentityUser> userManager)
         {

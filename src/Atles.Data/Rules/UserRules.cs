@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Atles.Domain.Users;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Rules
+namespace Atles.Data.Rules
 {
     public class UserRules : IUserRules
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
 
-        public UserRules(AtlasDbContext dbContext)
+        public UserRules(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }

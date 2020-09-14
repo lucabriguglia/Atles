@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
-using Atlas.Data.Services;
+using Atles.Data;
+using Atles.Data.Caching;
+using Atles.Data.Services;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
 using Atles.Domain.Posts;
@@ -35,7 +36,7 @@ namespace Atlas.Data.Tests.Services
             var topic = Post.CreateTopic(topicId, forumId, Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
             var user = new User(userId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
@@ -44,7 +45,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<CreateReply>()
                         .With(x => x.ForumId, forum.Id)
@@ -103,7 +104,7 @@ namespace Atlas.Data.Tests.Services
             var topic = Post.CreateTopic(topicId, forumId, Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
             var reply = Post.CreateReply(Guid.NewGuid(), topicId, forumId, Guid.NewGuid(), "Content", PostStatusType.Published);
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
@@ -112,7 +113,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<UpdateReply>()
                         .With(x => x.Id, reply.Id)
@@ -168,7 +169,7 @@ namespace Atlas.Data.Tests.Services
             topic.IncreaseRepliesCount();
             user.IncreaseRepliesCount();
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
@@ -178,7 +179,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = new SetReplyAsAnswer
                 {
@@ -231,7 +232,7 @@ namespace Atlas.Data.Tests.Services
             topic.IncreaseRepliesCount();
             user.IncreaseRepliesCount();
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
@@ -241,7 +242,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<DeleteReply>()
                         .With(x => x.Id, reply.Id)

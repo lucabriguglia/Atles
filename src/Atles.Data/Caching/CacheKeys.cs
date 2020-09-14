@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Data.Caching
+namespace Atles.Data.Caching
 {
     public static class CacheKeys
     {

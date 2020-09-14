@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
-using Atlas.Data.Services;
+using Atles.Data;
+using Atles.Data.Caching;
+using Atles.Data.Services;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
 using Atles.Domain.Posts;
@@ -33,7 +34,7 @@ namespace Atlas.Data.Tests.Services
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var user = new User(userId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
@@ -41,7 +42,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<CreateTopic>()
                         .With(x => x.ForumId, forum.Id)
@@ -95,7 +96,7 @@ namespace Atlas.Data.Tests.Services
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
@@ -104,7 +105,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<UpdateTopic>()
                     .With(x => x.Id, topic.Id)
@@ -150,7 +151,7 @@ namespace Atlas.Data.Tests.Services
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
@@ -159,7 +160,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<PinTopic>()
                     .With(x => x.Id, topic.Id)
@@ -199,7 +200,7 @@ namespace Atlas.Data.Tests.Services
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(forumId, Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
@@ -208,7 +209,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<LockTopic>()
                     .With(x => x.Id, topic.Id)
@@ -254,7 +255,7 @@ namespace Atlas.Data.Tests.Services
             forum.IncreaseTopicsCount();
             user.IncreaseTopicsCount();
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
@@ -264,7 +265,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<DeleteTopic>()
                         .With(x => x.Id, topic.Id)

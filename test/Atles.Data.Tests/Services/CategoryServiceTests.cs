@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
-using Atlas.Data.Services;
+using Atles.Data;
+using Atles.Data.Caching;
+using Atles.Data.Services;
 using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
@@ -25,7 +26,7 @@ namespace Atlas.Data.Tests.Services
         [Test]
         public async Task Should_create_new_category_and_add_event()
         {
-            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
                 var command = Fixture.Create<CreateCategory>();
 
@@ -62,14 +63,14 @@ namespace Atlas.Data.Tests.Services
             var permissionSet = new PermissionSet(Guid.NewGuid(), Guid.NewGuid(), "Default", new List<PermissionCommand>());
             var category = new Category(Guid.NewGuid(), permissionSet.SiteId, "Category", 1, permissionSet.Id);
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.PermissionSets.Add(permissionSet);
                 dbContext.Categories.Add(category);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<UpdateCategory>()
                         .With(x => x.Id, category.Id)
@@ -111,14 +112,14 @@ namespace Atlas.Data.Tests.Services
             var category1 = new Category(siteId, "Category 1", 1, Guid.NewGuid());
             var category2 = new Category(siteId, "Category 2", 2, Guid.NewGuid());
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category1);
                 dbContext.Categories.Add(category2);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = new MoveCategory
                 {
@@ -161,14 +162,14 @@ namespace Atlas.Data.Tests.Services
             var category1 = new Category(siteId, "Category 1", 1, Guid.NewGuid());
             var category2 = new Category(siteId, "Category 2", 2, Guid.NewGuid());
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category1);
                 dbContext.Categories.Add(category2);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = new MoveCategory
                 {
@@ -216,7 +217,7 @@ namespace Atlas.Data.Tests.Services
             var forum1 = new Forum(category2.Id, "Forum 1", "my-forum-1", "My Forum", 1);
             var forum2 = new Forum(category2.Id, "Forum 2", "my-forum-2", "My Forum", 2);
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category1);
                 dbContext.Categories.Add(category2);
@@ -229,7 +230,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<DeleteCategory>()
                         .With(x => x.Id, category2.Id)

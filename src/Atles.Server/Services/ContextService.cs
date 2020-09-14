@@ -3,8 +3,9 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Atlas.Data;
-using Atlas.Data.Builders;
-using Atlas.Data.Caching;
+using Atles.Data;
+using Atles.Data.Builders;
+using Atles.Data.Caching;
 using Atles.Domain.Forums;
 using Atles.Domain.Users;
 using Atles.Models.Public;
@@ -18,12 +19,12 @@ namespace Atlas.Server.Services
     {
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly ICacheManager _cacheManager;
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly IGravatarService _gravatarService;
 
         public ContextService(IHttpContextAccessor httpContextAccessor, 
             ICacheManager cacheManager,
-            AtlasDbContext dbContext,
+            AtlesDbContext dbContext,
             IGravatarService gravatarService)
         {
             _httpContextAccessor = httpContextAccessor;

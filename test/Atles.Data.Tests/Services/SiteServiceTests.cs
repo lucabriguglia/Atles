@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
-using Atlas.Data.Services;
+using Atles.Data;
+using Atles.Data.Caching;
+using Atles.Data.Services;
 using Atles.Domain.Sites;
 using Atles.Domain.Sites.Commands;
 using AutoFixture;
@@ -23,13 +24,13 @@ namespace Atlas.Data.Tests.Services
             var options = Shared.CreateContextOptions();
             var site = new Site(Guid.NewGuid(), "Name", "Title");
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Sites.Add(site);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<UpdateSite>()
                         .With(x => x.SiteId, site.Id)

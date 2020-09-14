@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Atles.Domain.Posts;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Rules
+namespace Atles.Data.Rules
 {
     public class TopicRules : ITopicRules
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
 
-        public TopicRules(AtlasDbContext dbContext)
+        public TopicRules(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }

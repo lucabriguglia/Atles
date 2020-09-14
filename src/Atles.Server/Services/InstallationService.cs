@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Data;
+using Atles.Data;
 using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
@@ -19,11 +20,11 @@ namespace Atlas.Server.Services
 {
     public class InstallationService : IInstallationService
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly IConfiguration _configuration;
         private readonly IServiceProvider _serviceProvider;
 
-        public InstallationService(AtlasDbContext dbContext, 
+        public InstallationService(AtlesDbContext dbContext, 
             IConfiguration configuration, 
             IServiceProvider serviceProvider)
         {

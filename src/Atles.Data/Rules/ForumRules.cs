@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Atles.Domain.Forums;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Rules
+namespace Atles.Data.Rules
 {
     public class ForumRules : IForumRules
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
 
-        public ForumRules(AtlasDbContext dbContext)
+        public ForumRules(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }

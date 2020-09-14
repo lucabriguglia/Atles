@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Data;
+using Atles.Data;
 using Atles.Domain.Users;
 using Atles.Domain.Users.Commands;
 using Microsoft.AspNetCore.Identity;
@@ -11,11 +12,11 @@ namespace Atlas.Server.Services
     {
         private readonly IContextService _contextService;
         private readonly IUserService _userService;
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
 
         public IntegrityService(IContextService contextService, 
             IUserService userService, 
-            AtlasDbContext dbContext)
+            AtlesDbContext dbContext)
         {
             _contextService = contextService;
             _userService = userService;

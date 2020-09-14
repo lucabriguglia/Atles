@@ -2,8 +2,9 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
-using Atlas.Data.Services;
+using Atles.Data;
+using Atles.Data.Caching;
+using Atles.Data.Services;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.PermissionSets.Commands;
 using AutoFixture;
@@ -21,7 +22,7 @@ namespace Atlas.Data.Tests.Services
         [Test]
         public async Task Should_create_new_permission_set_and_add_event()
         {
-            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
                 var command = new CreatePermissionSet
                 {
@@ -68,13 +69,13 @@ namespace Atlas.Data.Tests.Services
             var options = Shared.CreateContextOptions();
             var permissionSet = new PermissionSet(Guid.NewGuid(), Guid.NewGuid(), "Default", new List<PermissionCommand>());
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.PermissionSets.Add(permissionSet);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = new UpdatePermissionSet
                 {
@@ -125,13 +126,13 @@ namespace Atlas.Data.Tests.Services
 
             var permissionSet = new PermissionSet(siteId, "Permission Set", new List<PermissionCommand>());
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.PermissionSets.Add(permissionSet);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<DeletePermissionSet>()
                         .With(x => x.Id, permissionSet.Id)

@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Server.Services;
+using Atles.Data;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.Posts;
 using Atles.Domain.Posts.Commands;
@@ -23,14 +24,14 @@ namespace Atlas.Server.Controllers.Public
         private readonly IContextService _contextService;
         private readonly IReplyService _replyService;
         private readonly ISecurityService _securityService;
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ILogger<RepliesController> _logger;
 
         public RepliesController(IContextService contextService,
             IReplyService replyService, 
             ISecurityService securityService, 
-            AtlasDbContext dbContext, 
+            AtlesDbContext dbContext, 
             IPermissionModelBuilder permissionModelBuilder, 
             ILogger<RepliesController> logger)
         {

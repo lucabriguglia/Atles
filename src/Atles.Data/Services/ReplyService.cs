@@ -1,23 +1,23 @@
 ﻿using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
+using Atles.Data.Caching;
 using Atles.Domain;
 using Atles.Domain.Posts;
 using Atles.Domain.Posts.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Services
+namespace Atles.Data.Services
 {
     public class ReplyService : IReplyService
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IValidator<CreateReply> _createValidator;
         private readonly IValidator<UpdateReply> _updateValidator;
 
-        public ReplyService(AtlasDbContext dbContext,
+        public ReplyService(AtlesDbContext dbContext,
             ICacheManager cacheManager,
             IValidator<CreateReply> createValidator,
             IValidator<UpdateReply> updateValidator)

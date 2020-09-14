@@ -3,16 +3,16 @@ using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
 using Atles.Domain.PermissionSets;
+using Atles.Domain.Posts;
 using Atles.Domain.Sites;
 using Atles.Domain.Users;
 using Microsoft.EntityFrameworkCore;
-using Post = Atles.Domain.Posts.Post;
 
-namespace Atlas.Data
+namespace Atles.Data
 {
-    public class AtlasDbContext : DbContext
+    public class AtlesDbContext : DbContext
     {
-        public AtlasDbContext(DbContextOptions<AtlasDbContext> options)
+        public AtlesDbContext(DbContextOptions<AtlesDbContext> options)
             : base(options)
         {
         }

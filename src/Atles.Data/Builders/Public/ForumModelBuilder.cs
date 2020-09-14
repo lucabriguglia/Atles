@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
+using Atles.Data.Caching;
 using Atles.Domain.Forums;
 using Atles.Domain.Posts;
 using Atles.Models;
 using Atles.Models.Public.Forums;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Builders.Public
+namespace Atles.Data.Builders.Public
 {
     public class ForumModelBuilder : IForumModelBuilder
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IGravatarService _gravatarService;
 
-        public ForumModelBuilder(AtlasDbContext dbContext,
+        public ForumModelBuilder(AtlesDbContext dbContext,
             ICacheManager cacheManager,
             IGravatarService gravatarService)
         {

@@ -2,24 +2,23 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
-using Atlas.Data.Extensions;
+using Atles.Data.Caching;
+using Atles.Data.Extensions;
 using Atles.Domain.Posts;
 using Atles.Models;
 using Atles.Models.Public.Search;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
-namespace Atlas.Data.Builders.Public
+namespace Atles.Data.Builders.Public
 {
     public class SearchModelBuilder : ISearchModelBuilder
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IGravatarService _gravatarService;
 
-        public SearchModelBuilder(AtlasDbContext dbContext,
+        public SearchModelBuilder(AtlesDbContext dbContext,
             ICacheManager cacheManager,
             IGravatarService gravatarService)
         {

@@ -1,19 +1,19 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
 using Atles.Domain.PermissionSets;
 using Atles.Models.Admin.Forums;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Builders.Admin
+namespace Atles.Data.Builders.Admin
 {
     public class ForumModelBuilder : IForumModelBuilder
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
 
-        public ForumModelBuilder(AtlasDbContext dbContext)
+        public ForumModelBuilder(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }

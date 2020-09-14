@@ -1,21 +1,21 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Domain;
 using Atles.Domain.PermissionSets;
 using Atles.Models.Admin.PermissionSets;
 using Atles.Models.Admin.Roles;
+using Microsoft.EntityFrameworkCore;
 using IndexPageModel = Atles.Models.Admin.PermissionSets.IndexPageModel;
 
-namespace Atlas.Data.Builders.Admin
+namespace Atles.Data.Builders.Admin
 {
     public class PermissionSetModelBuilder : IPermissionSetModelBuilder
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly IRoleModelBuilder _roleManager;
 
-        public PermissionSetModelBuilder(AtlasDbContext dbContext, IRoleModelBuilder roleManager)
+        public PermissionSetModelBuilder(AtlesDbContext dbContext, IRoleModelBuilder roleManager)
         {
             _dbContext = dbContext;
             _roleManager = roleManager;

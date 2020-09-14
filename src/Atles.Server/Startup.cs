@@ -10,6 +10,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Atlas.Data;
 using Atlas.Server.Services;
+using Atles.Data;
 using Microsoft.AspNetCore.Identity;
 using Atles.Domain.Sites;
 using Atles.Models.Admin.Categories;
@@ -36,9 +37,9 @@ namespace Atlas.Server
         {
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
-            services.AddDbContext<AtlasDbContext>(options =>
+            services.AddDbContext<AtlesDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("AtlasConnection")));
+                    Configuration.GetConnectionString("AtlesConnection")));
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
@@ -86,7 +87,7 @@ namespace Atlas.Server
             services.AddDocs();
 
             services.Scan(s => s
-                .FromAssembliesOf(typeof(Startup), typeof(Site), typeof(IndexPageModel), typeof(AtlasDbContext))
+                .FromAssembliesOf(typeof(Startup), typeof(Site), typeof(IndexPageModel), typeof(AtlesDbContext))
                 .AddClasses()
                 .AsImplementedInterfaces());
         }
@@ -94,7 +95,7 @@ namespace Atlas.Server
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app,
             IWebHostEnvironment env,
-            AtlasDbContext atlasDbContext,
+            AtlesDbContext atlasDbContext,
             ApplicationDbContext applicationDbContext,
             IInstallationService installationService,
             IDocumentationService documentationService)

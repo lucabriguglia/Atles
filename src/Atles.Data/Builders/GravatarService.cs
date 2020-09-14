@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Atlas.Data.Builders
+namespace Atles.Data.Builders
 {
     public class GravatarService : IGravatarService
     {

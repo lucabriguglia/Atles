@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace Atlas.Data.Extensions
+namespace Atles.Data.Extensions
 {
     public static class StringExtensions
     {

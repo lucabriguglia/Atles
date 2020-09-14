@@ -6,7 +6,7 @@ using Atles.Models.Admin.Roles;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Builders.Admin
+namespace Atles.Data.Builders.Admin
 {
     public class RoleModelBuilder : IRoleModelBuilder
     {

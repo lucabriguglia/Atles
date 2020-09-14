@@ -1,4 +1,4 @@
-﻿using Atlas.Data.Caching;
+﻿using Atles.Data.Caching;
 using Docs;
 using Docs.Models;
 using Microsoft.AspNetCore.Mvc;

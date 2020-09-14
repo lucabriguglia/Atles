@@ -1,22 +1,22 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
+using Atles.Data.Caching;
 using Atles.Domain.Posts;
 using Atles.Models;
 using Atles.Models.Public.Topics;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Builders.Public
+namespace Atles.Data.Builders.Public
 {
     public class TopicModelBuilder : ITopicModelBuilder
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IGravatarService _gravatarService;
 
-        public TopicModelBuilder(AtlasDbContext dbContext,
+        public TopicModelBuilder(AtlesDbContext dbContext,
             ICacheManager cacheManager,
             IGravatarService gravatarService)
         {

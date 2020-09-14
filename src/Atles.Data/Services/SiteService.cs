@@ -1,21 +1,21 @@
 ﻿using System.Data;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
+using Atles.Data.Caching;
 using Atles.Domain;
 using Atles.Domain.Sites;
 using Atles.Domain.Sites.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Services
+namespace Atles.Data.Services
 {
     public class SiteService : ISiteService
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IValidator<UpdateSite> _updateValidator;
 
-        public SiteService(AtlasDbContext dbContext,
+        public SiteService(AtlesDbContext dbContext,
             ICacheManager cacheManager,
             IValidator<UpdateSite> updateValidator)
         {

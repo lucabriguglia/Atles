@@ -1,7 +1,7 @@
 ﻿using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
+using Atles.Data.Caching;
 using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
@@ -9,16 +9,16 @@ using Atles.Domain.Forums;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Services
+namespace Atles.Data.Services
 {
     public class CategoryService : ICategoryService
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IValidator<CreateCategory> _createValidator;
         private readonly IValidator<UpdateCategory> _updateValidator;
 
-        public CategoryService(AtlasDbContext dbContext,
+        public CategoryService(AtlesDbContext dbContext,
             ICacheManager cacheManager,
             IValidator<CreateCategory> createValidator,
             IValidator<UpdateCategory> updateValidator)

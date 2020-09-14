@@ -1,18 +1,18 @@
-﻿using Microsoft.EntityFrameworkCore;
-using Newtonsoft.Json.Linq;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Models.Admin.Events;
+using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json.Linq;
 
-namespace Atlas.Data.Builders.Admin
+namespace Atles.Data.Builders.Admin
 {
     public class EventModelBuilder : IEventModelBuilder
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
 
-        public EventModelBuilder(AtlasDbContext dbContext)
+        public EventModelBuilder(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }

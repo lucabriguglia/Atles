@@ -3,13 +3,13 @@ using System.Threading.Tasks;
 using Atles.Domain.PermissionSets;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Rules
+namespace Atles.Data.Rules
 {
     public class PermissionSetRules : IPermissionSetRules
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
 
-        public PermissionSetRules(AtlasDbContext dbContext)
+        public PermissionSetRules(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }

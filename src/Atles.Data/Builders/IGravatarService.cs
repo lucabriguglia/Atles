@@ -1,4 +1,4 @@
-﻿namespace Atlas.Data.Builders
+﻿namespace Atles.Data.Builders
 {
     public interface IGravatarService
     {

@@ -1,23 +1,23 @@
 ﻿using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
+using Atles.Data.Caching;
 using Atles.Domain;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.PermissionSets.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Services
+namespace Atles.Data.Services
 {
     public class PermissionSetService : IPermissionSetService
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IValidator<CreatePermissionSet> _createValidator;
         private readonly IValidator<UpdatePermissionSet> _updateValidator;
 
-        public PermissionSetService(AtlasDbContext dbContext,
+        public PermissionSetService(AtlesDbContext dbContext,
             ICacheManager cacheManager,
             IValidator<CreatePermissionSet> createValidator,
             IValidator<UpdatePermissionSet> updateValidator)

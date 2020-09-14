@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data;
 using Atlas.Server.Services;
+using Atles.Data;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.Posts;
 using Atles.Domain.Posts.Commands;
@@ -26,7 +27,7 @@ namespace Atlas.Server.Controllers.Public
         private readonly IPostModelBuilder _postModelBuilder;
         private readonly ITopicService _topicService;
         private readonly ISecurityService _securityService;
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ILogger<TopicsController> _logger;
 
@@ -35,7 +36,7 @@ namespace Atlas.Server.Controllers.Public
             IPostModelBuilder postModelBuilder,
             ITopicService topicService,
             ISecurityService securityService, 
-            AtlasDbContext dbContext, 
+            AtlesDbContext dbContext, 
             IPermissionModelBuilder permissionModelBuilder, 
             ILogger<TopicsController> logger)
         {

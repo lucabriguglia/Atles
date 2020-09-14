@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Data.Rules;
+using Atles.Data;
+using Atles.Data.Rules;
 using Atles.Domain.Categories;
 using NUnit.Framework;
 
@@ -12,7 +13,7 @@ namespace Atlas.Data.Tests.Rules
         [Test]
         public async Task Should_return_true_when_name_is_unique()
         {
-            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
                 var sut = new CategoryRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Category");
@@ -24,7 +25,7 @@ namespace Atlas.Data.Tests.Rules
         [Test]
         public async Task Should_return_true_when_name_is_unique_for_existing_category()
         {
-            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
                 var sut = new CategoryRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Category", Guid.NewGuid());
@@ -40,14 +41,14 @@ namespace Atlas.Data.Tests.Rules
             var siteId = Guid.NewGuid();
             var categoryName = "My Category";
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var category = new Category(siteId, categoryName, 1, Guid.NewGuid());
                 dbContext.Categories.Add(category);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var sut = new CategoryRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(siteId, categoryName);
@@ -63,7 +64,7 @@ namespace Atlas.Data.Tests.Rules
             var siteId = Guid.NewGuid();
             var categoryId = Guid.NewGuid();
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var category1 = new Category(siteId, "Category 1", 1, Guid.NewGuid());
                 var category2 = new Category(categoryId, siteId, "Category 2", 2, Guid.NewGuid());
@@ -72,7 +73,7 @@ namespace Atlas.Data.Tests.Rules
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var sut = new CategoryRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(siteId, "Category 1", categoryId);

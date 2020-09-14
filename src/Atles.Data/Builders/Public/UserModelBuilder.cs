@@ -1,23 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
+using Atles.Data.Caching;
 using Atles.Domain.Users;
 using Atles.Models;
 using Atles.Models.Public.Search;
 using Atles.Models.Public.Users;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Builders.Public
+namespace Atles.Data.Builders.Public
 {
     public class UserModelBuilder : IUserModelBuilder
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IGravatarService _gravatarService;
         private readonly ISearchModelBuilder _searchModelBuilder;
 
-        public UserModelBuilder(AtlasDbContext dbContext,
+        public UserModelBuilder(AtlesDbContext dbContext,
             ICacheManager cacheManager,
             IGravatarService gravatarService, 
             ISearchModelBuilder searchModelBuilder)

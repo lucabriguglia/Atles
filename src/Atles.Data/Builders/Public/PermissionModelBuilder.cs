@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
+using Atles.Data.Caching;
 using Atles.Domain;
 using Atles.Domain.Forums;
 using Atles.Domain.PermissionSets;
@@ -10,15 +10,15 @@ using Atles.Models.Public;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Builders.Public
+namespace Atles.Data.Builders.Public
 {
     public class PermissionModelBuilder : IPermissionModelBuilder
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public PermissionModelBuilder(AtlasDbContext dbContext, 
+        public PermissionModelBuilder(AtlesDbContext dbContext, 
             ICacheManager cacheManager,
             RoleManager<IdentityRole> roleManager)
         {

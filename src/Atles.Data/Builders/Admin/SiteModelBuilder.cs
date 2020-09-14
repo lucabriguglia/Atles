@@ -5,14 +5,14 @@ using Atles.Models.Admin.Site;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Atlas.Data.Builders.Admin
+namespace Atles.Data.Builders.Admin
 {
     public class SiteModelBuilder : ISiteModelBuilder
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly IConfiguration _configuration;
 
-        public SiteModelBuilder(AtlasDbContext dbContext, IConfiguration configuration)
+        public SiteModelBuilder(AtlesDbContext dbContext, IConfiguration configuration)
         {
             _dbContext = dbContext;
             _configuration = configuration;

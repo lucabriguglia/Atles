@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atlas.Data.Rules;
+using Atles.Data;
+using Atles.Data.Rules;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.PermissionSets.Commands;
 using Atles.Domain.Sites;
@@ -15,7 +16,7 @@ namespace Atlas.Data.Tests.Rules
         [Test]
         public async Task Should_return_true_when_name_is_unique()
         {
-            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
                 var sut = new PermissionSetRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Permission Set");
@@ -27,7 +28,7 @@ namespace Atlas.Data.Tests.Rules
         [Test]
         public async Task Should_return_true_when_name_is_unique_for_existing_permission_set()
         {
-            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
                 var sut = new PermissionSetRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Permission Set", Guid.NewGuid());
@@ -43,7 +44,7 @@ namespace Atlas.Data.Tests.Rules
             var siteId = Guid.NewGuid();
             const string permissionSetName = "My Permission Set";
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var site = new Site(siteId, "Name", "Title");
                 var permissionSet = new PermissionSet(siteId, permissionSetName, new List<PermissionCommand>());
@@ -52,7 +53,7 @@ namespace Atlas.Data.Tests.Rules
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var sut = new PermissionSetRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(siteId, permissionSetName);
@@ -68,7 +69,7 @@ namespace Atlas.Data.Tests.Rules
             var siteId = Guid.NewGuid();
             var permissionSetId = Guid.NewGuid();
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var site = new Site(siteId, "Name", "Title");
                 var permissionSet1 = new PermissionSet(siteId, "Permission Set 1", new List<PermissionCommand>());
@@ -79,7 +80,7 @@ namespace Atlas.Data.Tests.Rules
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var sut = new PermissionSetRules(dbContext);
                 var actual = await sut.IsNameUniqueAsync(siteId, "Permission Set 1", permissionSetId);
@@ -95,14 +96,14 @@ namespace Atlas.Data.Tests.Rules
             var site = new Site(Guid.NewGuid(), "Name", "Title");
             var permissionSet = new PermissionSet(Guid.NewGuid(), site.Id, "Permission Set", new List<PermissionCommand>());
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Sites.Add(site);
                 dbContext.PermissionSets.Add(permissionSet);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
                 var sut = new PermissionSetRules(dbContext);
                 var actual = await sut.IsValidAsync(site.Id, permissionSet.Id);
@@ -114,7 +115,7 @@ namespace Atlas.Data.Tests.Rules
         [Test]
         public async Task Should_return_false_when_permission_set_is_not_valid()
         {
-            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
                 var sut = new PermissionSetRules(dbContext);
                 var actual = await sut.IsValidAsync(Guid.NewGuid(), Guid.NewGuid());

@@ -1,15 +1,15 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Threading.Tasks;
 using Atles.Domain.Categories;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Rules
+namespace Atles.Data.Rules
 {
     public class CategoryRules : ICategoryRules
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
 
-        public CategoryRules(AtlasDbContext dbContext)
+        public CategoryRules(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }

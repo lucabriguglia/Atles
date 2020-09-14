@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Atlas.Data.Services;
+using Atles.Data;
+using Atles.Data.Services;
 using Atles.Domain.Users;
 using Atles.Domain.Users.Commands;
 using AutoFixture;
@@ -19,7 +20,7 @@ namespace Atlas.Data.Tests.Services
         [Test]
         public async Task Should_create_new_user_and_add_event()
         {
-            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
                 var command = Fixture.Create<CreateUser>();
 
@@ -51,13 +52,13 @@ namespace Atlas.Data.Tests.Services
             var options = Shared.CreateContextOptions();
             var user = new User(Guid.NewGuid(), Guid.NewGuid().ToString(), "me@email.com", "Display Name");
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Users.Add(user);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<UpdateUser>()
                         .With(x => x.Id, user.Id)
@@ -94,13 +95,13 @@ namespace Atlas.Data.Tests.Services
 
             var user = new User(userId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Users.Add(user);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<SuspendUser>()
                     .With(x => x.Id, user.Id)
@@ -132,13 +133,13 @@ namespace Atlas.Data.Tests.Services
 
             var user = new User(userId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Users.Add(user);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<ReinstateUser>()
                     .With(x => x.Id, user.Id)
@@ -170,13 +171,13 @@ namespace Atlas.Data.Tests.Services
 
             var user = new User(userId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Users.Add(user);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<DeleteUser>()
                         .With(x => x.Id, user.Id)

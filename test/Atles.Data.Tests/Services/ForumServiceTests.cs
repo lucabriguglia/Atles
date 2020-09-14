@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
-using Atlas.Data.Services;
+using Atles.Data;
+using Atles.Data.Caching;
+using Atles.Data.Services;
 using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
@@ -22,7 +23,7 @@ namespace Atlas.Data.Tests.Services
         [Test]
         public async Task Should_create_new_forum_and_add_event()
         {
-            using (var dbContext = new AtlasDbContext(Shared.CreateContextOptions()))
+            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
                 var command = Fixture.Create<CreateForum>();
 
@@ -63,14 +64,14 @@ namespace Atlas.Data.Tests.Services
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(categoryId, "Forum 1", "my-forum", "Forum 1", 1);
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<UpdateForum>()
                         .With(x => x.Id, forum.Id)
@@ -116,7 +117,7 @@ namespace Atlas.Data.Tests.Services
             var forum1 = new Forum(categoryId, "Forum 1", "my-forum-1", "Forum 1", 1);
             var forum2 = new Forum(categoryId, "Forum 2", "my-forum-2", "Forum 2", 2);
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum1);
@@ -124,7 +125,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = new MoveForum
                 {
@@ -170,7 +171,7 @@ namespace Atlas.Data.Tests.Services
             var forum1 = new Forum(categoryId, "Forum 1", "my-forum-1", "Forum 1", 1);
             var forum2 = new Forum(categoryId, "Forum 2", "my-forum-2", "Forum 2", 2);
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum1);
@@ -178,7 +179,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = new MoveForum
                 {
@@ -226,7 +227,7 @@ namespace Atlas.Data.Tests.Services
             var forum3 = new Forum(categoryId, "Forum 3", "my-forum-3", "Forum 3", 3);
             var forum4 = new Forum(categoryId, "Forum 4", "my-forum-4", "Forum 4", 4);
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum1);
@@ -237,7 +238,7 @@ namespace Atlas.Data.Tests.Services
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlasDbContext(options))
+            using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<DeleteForum>()
                         .With(x => x.SiteId, siteId)

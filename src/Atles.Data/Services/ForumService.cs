@@ -2,23 +2,23 @@
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Data.Caching;
+using Atles.Data.Caching;
 using Atles.Domain;
 using Atles.Domain.Forums;
 using Atles.Domain.Forums.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Services
+namespace Atles.Data.Services
 {
     public class ForumService : IForumService
     {
-        private readonly AtlasDbContext _dbContext;
+        private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IValidator<CreateForum> _createValidator;
         private readonly IValidator<UpdateForum> _updateValidator;
 
-        public ForumService(AtlasDbContext dbContext,
+        public ForumService(AtlesDbContext dbContext,
             ICacheManager cacheManager,
             IValidator<CreateForum> createValidator,
             IValidator<UpdateForum> updateValidator)
