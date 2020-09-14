@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Data;
 using Atlas.Server.Services;
 using Atles.Data;
 using Atles.Domain.PermissionSets;

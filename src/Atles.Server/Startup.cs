@@ -8,7 +8,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Atlas.Data;
 using Atlas.Server.Services;
 using Atles.Data;
 using Microsoft.AspNetCore.Identity;

@@ -2,7 +2,6 @@
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
-using Atlas.Data;
 using Atles.Data;
 using Atles.Data.Builders;
 using Atles.Data.Caching;

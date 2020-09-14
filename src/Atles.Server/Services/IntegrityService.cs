@@ -1,5 +1,4 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Data;
 using Atles.Data;
 using Atles.Domain.Users;
 using Atles.Domain.Users.Commands;
