@@ -11,15 +11,15 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Server", "src\Atlas.Server\Atles.Server.csproj", "{7ADEAF92-9A67-4ECB-AC0C-C712129C3072}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Server", "src\Atles.Server\Atles.Server.csproj", "{7ADEAF92-9A67-4ECB-AC0C-C712129C3072}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Client", "src\Atlas.Client\Atles.Client.csproj", "{6CD152FC-DFF1-4098-A7D3-2EE03A08ACEF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Client", "src\Atles.Client\Atles.Client.csproj", "{6CD152FC-DFF1-4098-A7D3-2EE03A08ACEF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Models", "src\Atlas.Models\Atles.Models.csproj", "{C91D322F-6360-4F49-9505-0D57E24F69FD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Models", "src\Atles.Models\Atles.Models.csproj", "{C91D322F-6360-4F49-9505-0D57E24F69FD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Data", "src\Atlas.Data\Atles.Data.csproj", "{9C3C652E-E71C-4113-8937-7DEB09A26E67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Data", "src\Atles.Data\Atles.Data.csproj", "{9C3C652E-E71C-4113-8937-7DEB09A26E67}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain", "src\Atlas.Domain\Atles.Domain.csproj", "{C51EDBBF-F283-41B1-95F9-068A7F11B186}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain", "src\Atles.Domain\Atles.Domain.csproj", "{C51EDBBF-F283-41B1-95F9-068A7F11B186}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{4DBC2831-6FA8-488A-89AB-7D445EFAB278}"
 EndProject
@@ -34,9 +34,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "docs", "docs", "{707C6370-0
 		docs\Themes.md = docs\Themes.md
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Tests", "test\Atlas.Domain.Tests\Atles.Domain.Tests.csproj", "{C72D981B-4499-4DAD-976E-634B02B95B26}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Tests", "test\Atles.Domain.Tests\Atles.Domain.Tests.csproj", "{C72D981B-4499-4DAD-976E-634B02B95B26}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Data.Tests", "test\Atlas.Data.Tests\Atles.Data.Tests.csproj", "{3DABE5C5-A015-4217-91EE-5282E829AEF8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Data.Tests", "test\Atles.Data.Tests\Atles.Data.Tests.csproj", "{3DABE5C5-A015-4217-91EE-5282E829AEF8}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "assets", "assets", "{BE91C094-1F67-4C0B-89A1-88D592CD9AD0}"
 EndProject
