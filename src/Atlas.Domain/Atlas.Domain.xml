@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <doc>
     <assembly>
-        <name>Atlas.Domain</name>
+        <name>Atles.Domain</name>
     </assembly>
     <members>
         <member name="T:Atlas.Domain.Categories.Category">

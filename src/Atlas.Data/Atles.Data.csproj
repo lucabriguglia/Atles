@@ -16,8 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Atlas.Domain\Atlas.Domain.csproj" />
-    <ProjectReference Include="..\Atlas.Models\Atlas.Models.csproj" />
+    <ProjectReference Include="..\Atlas.Domain\Atles.Domain.csproj" />
+    <ProjectReference Include="..\Atlas.Models\Atles.Models.csproj" />
   </ItemGroup>
   
 </Project>

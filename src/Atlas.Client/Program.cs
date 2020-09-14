@@ -4,6 +4,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using Atlas.Client.Services;
 using Atlas.Models.Public;
+using Atles.Client;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;

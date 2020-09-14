@@ -25,10 +25,10 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Atlas.Client\Atlas.Client.csproj" />
-    <ProjectReference Include="..\Atlas.Data\Atlas.Data.csproj" />
-    <ProjectReference Include="..\Atlas.Domain\Atlas.Domain.csproj" />
-    <ProjectReference Include="..\Atlas.Models\Atlas.Models.csproj" />
+    <ProjectReference Include="..\Atlas.Client\Atles.Client.csproj" />
+    <ProjectReference Include="..\Atlas.Data\Atles.Data.csproj" />
+    <ProjectReference Include="..\Atlas.Domain\Atles.Domain.csproj" />
+    <ProjectReference Include="..\Atlas.Models\Atles.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>

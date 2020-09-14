@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Client.Pages;
 using Atlas.Client.Services;
 using Atlas.Models.Public;
+using Atles.Client.Pages;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
@@ -52,6 +52,6 @@ namespace Atlas.Client.Components.Pages
             builder.CloseComponent();
         };
 
-        private static Type GetType(string theme, string name) => Type.GetType($"Atlas.Client.Themes.{theme}.{name}, {typeof(Program).Assembly.FullName}");
+        private static Type GetType(string theme, string name) => Type.GetType($"Atles.Client.Themes.{theme}.{name}, {typeof(Program).Assembly.FullName}");
     }
 }

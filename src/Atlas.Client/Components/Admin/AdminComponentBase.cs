@@ -1,5 +1,5 @@
-﻿using Atlas.Client.Pages.Admin;
-using Atlas.Client.Services;
+﻿using Atlas.Client.Services;
+using Atles.Client.Pages.Admin;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;

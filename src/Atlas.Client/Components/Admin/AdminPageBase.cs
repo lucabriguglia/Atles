@@ -1,4 +1,4 @@
-﻿using Atlas.Client.Pages.Admin;
+﻿using Atles.Client.Pages.Admin;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 
