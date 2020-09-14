@@ -6,7 +6,7 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atlas.Domain.Tests.Topics.Validators
+namespace Atles.Domain.Tests.Topics.Validators
 {
     [TestFixture]
     public class CreateTopicValidatorTests : TestFixtureBase

@@ -4,7 +4,7 @@ using AutoFixture;
 using FluentValidation.TestHelper;
 using NUnit.Framework;
 
-namespace Atlas.Domain.Tests.Topics.Validators
+namespace Atles.Domain.Tests.Topics.Validators
 {
     [TestFixture]
     public class UpdateTopicValidatorTests : TestFixtureBase

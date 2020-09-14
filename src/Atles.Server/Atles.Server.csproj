@@ -2,7 +2,7 @@
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
-    <UserSecretsId>Atlas.Server-35EFD1FC-2839-4B16-9DA2-F7DC412158E9</UserSecretsId>
+    <UserSecretsId>Atles.Server-35EFD1FC-2839-4B16-9DA2-F7DC412158E9</UserSecretsId>
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
     <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>

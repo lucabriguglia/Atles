@@ -5,7 +5,7 @@
     },
     "mssql1": {
       "type": "mssql",
-      "connectionId": "AtlasConnection"
+      "connectionId": "AtlesConnection"
     },
     "mssql2": {
       "type": "mssql",

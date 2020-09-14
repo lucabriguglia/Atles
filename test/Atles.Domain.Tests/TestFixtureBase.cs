@@ -1,7 +1,7 @@
 ﻿using AutoFixture;
 using NUnit.Framework;
 
-namespace Atlas.Domain.Tests
+namespace Atles.Domain.Tests
 {
     [TestFixture]
     public abstract class TestFixtureBase

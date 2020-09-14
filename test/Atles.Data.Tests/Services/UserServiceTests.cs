@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
-using Atles.Data;
 using Atles.Data.Services;
 using Atles.Domain.Users;
 using Atles.Domain.Users.Commands;
@@ -12,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 
-namespace Atlas.Data.Tests.Services
+namespace Atles.Data.Tests.Services
 {
     [TestFixture]
     public class UserServiceTests : TestFixtureBase

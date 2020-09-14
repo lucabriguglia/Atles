@@ -1,14 +1,13 @@
-﻿using Atles.Data;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Data.Tests
+namespace Atles.Data.Tests
 {
     public static class Shared
     {
         public static DbContextOptions<AtlesDbContext> CreateContextOptions()
         {
             var builder = new DbContextOptionsBuilder<AtlesDbContext>();
-            builder.UseInMemoryDatabase("Atlas");
+            builder.UseInMemoryDatabase("Atles");
             return builder.Options;
         }
     }

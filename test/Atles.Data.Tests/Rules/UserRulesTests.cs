@@ -1,11 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Data;
 using Atles.Data.Rules;
 using Atles.Domain.Users;
 using NUnit.Framework;
 
-namespace Atlas.Data.Tests.Rules
+namespace Atles.Data.Tests.Rules
 {
     [TestFixture]
     public class UserRulesTests : TestFixtureBase

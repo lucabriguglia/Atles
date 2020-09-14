@@ -7,7 +7,7 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atlas.Domain.Tests.Categories.Validators
+namespace Atles.Domain.Tests.Categories.Validators
 {
     [TestFixture]
     public class UpdateCategoryValidatorTests : TestFixtureBase

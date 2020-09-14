@@ -7,7 +7,7 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atlas.Domain.Tests.Replies.Validators
+namespace Atles.Domain.Tests.Replies.Validators
 {
     [TestFixture]
     public class CreateReplyValidatorTests : TestFixtureBase

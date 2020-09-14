@@ -3,7 +3,7 @@ using Atles.Domain.Posts;
 using AutoFixture;
 using NUnit.Framework;
 
-namespace Atlas.Domain.Tests.Replies
+namespace Atles.Domain.Tests.Replies
 {
     [TestFixture]
     public class ReplyTests : TestFixtureBase

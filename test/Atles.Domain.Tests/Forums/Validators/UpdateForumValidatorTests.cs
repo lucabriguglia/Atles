@@ -7,7 +7,7 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atlas.Domain.Tests.Forums.Validators
+namespace Atles.Domain.Tests.Forums.Validators
 {
     [TestFixture]
     public class UpdateForumValidatorTests : TestFixtureBase

@@ -1,14 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atles.Data;
 using Atles.Data.Rules;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.PermissionSets.Commands;
 using Atles.Domain.Sites;
 using NUnit.Framework;
 
-namespace Atlas.Data.Tests.Rules
+namespace Atles.Data.Tests.Rules
 {
     [TestFixture]
     public class PermissionSetRulesTests : TestFixtureBase

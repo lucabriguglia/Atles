@@ -28,7 +28,7 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 ## Run on local
 
 - Clone the repository
-- Run the **Atlas.Server** project
+- Run the **Atles.Server** project
 - Database and default data will be created automatically
 - Login with any of the following accounts:
   - **Admin User**: admin@default.com / !P455w0rd?

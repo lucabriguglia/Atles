@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Atles.Data.Migrations.AtlasMigrations
+namespace Atles.Data.Migrations.AtlesMigrations
 {
     public partial class InitialCreate : Migration
     {
