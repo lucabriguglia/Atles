@@ -1,8 +1,8 @@
-# Atlas
+# Atles
 
-Atlas is a forum software built with ASP.NET Core Blazor WebAssembly.
+Atles is a forum software built with ASP.NET Core Blazor WebAssembly.
 
-**Repository**: [https://github.com/lucabriguglia/Atlas](https://github.com/lucabriguglia/Atlas)
+**Repository**: [https://github.com/lucabriguglia/Atles](https://github.com/lucabriguglia/Atles)
 
 ## Documentation
 
