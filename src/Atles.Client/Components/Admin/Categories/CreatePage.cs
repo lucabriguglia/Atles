@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Models.Admin.Categories;
+using Atles.Models.Admin.Categories;
 
 namespace Atlas.Client.Components.Admin.Categories
 {

@@ -1,4 +1,4 @@
-﻿namespace Atlas.Models.Public.Search
+﻿namespace Atles.Models.Public.Search
 {
     public class SearchPageModel
     {

@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
-using Atlas.Models;
-using Atlas.Models.Public.Topics;
 using Atles.Domain.Posts;
+using Atles.Models;
+using Atles.Models.Public.Topics;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
 

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Models.Public
+namespace Atles.Models.Public
 {
     public class CurrentForumModel
     {

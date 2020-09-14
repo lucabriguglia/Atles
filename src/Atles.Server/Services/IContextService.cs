@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atlas.Models.Public;
+using Atles.Models.Public;
 
 namespace Atlas.Server.Services
 {

@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Models.Admin.Forums;
+using Atles.Models.Admin.Forums;
 using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Admin.Forums

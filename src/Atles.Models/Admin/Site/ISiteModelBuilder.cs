@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Models.Admin.Site
+namespace Atles.Models.Admin.Site
 {
     public interface ISiteModelBuilder
     {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Client.Services;
-using Atlas.Models.Public.Posts;
+using Atles.Models.Public.Posts;
 using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Themes

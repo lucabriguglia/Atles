@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Atlas.Models.Admin.Site
+namespace Atles.Models.Admin.Site
 {
     public class SettingsPageModel
     {

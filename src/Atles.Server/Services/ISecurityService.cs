@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Atlas.Models.Public;
 using Atles.Domain.PermissionSets;
+using Atles.Models.Public;
 
 namespace Atlas.Server.Services
 {

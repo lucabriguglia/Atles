@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Models.Admin.Categories
+namespace Atles.Models.Admin.Categories
 {
     public interface ICategoryModelBuilder
     {

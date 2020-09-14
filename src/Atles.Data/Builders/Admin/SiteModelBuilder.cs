@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Models.Admin.Site;
+using Atles.Models.Admin.Site;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

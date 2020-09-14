@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Atlas.Models.Public.Topics
+namespace Atles.Models.Public.Topics
 {
     public class TopicPageModel
     {

@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
-using Atlas.Models;
-using Atlas.Models.Public.Search;
-using Atlas.Models.Public.Users;
 using Atles.Domain.Users;
+using Atles.Models;
+using Atles.Models.Public.Search;
+using Atles.Models.Public.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data.Builders.Public

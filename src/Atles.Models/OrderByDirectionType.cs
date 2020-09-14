@@ -1,4 +1,4 @@
-﻿namespace Atlas.Models
+﻿namespace Atles.Models
 {
     public enum OrderByDirectionType
     {

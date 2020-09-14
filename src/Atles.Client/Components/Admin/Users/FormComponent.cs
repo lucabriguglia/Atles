@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Models.Admin.Users;
+using Atles.Models.Admin.Users;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 

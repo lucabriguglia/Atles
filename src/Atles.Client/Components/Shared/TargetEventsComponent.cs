@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Models.Admin.Events;
+using Atles.Models.Admin.Events;
 using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Shared

@@ -1,4 +1,4 @@
-﻿namespace Atlas.Models.Public.Index
+﻿namespace Atles.Models.Public.Index
 {
     public class CookieConsentModel
     {

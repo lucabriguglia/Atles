@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Atlas.Models;
+using Atles.Models;
 
 namespace Atlas.Data.Extensions
 {

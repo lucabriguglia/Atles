@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Models.Admin.Categories;
+using Atles.Models.Admin.Categories;
 using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Admin.Categories

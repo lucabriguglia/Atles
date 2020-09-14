@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Client.Services;
-using Atlas.Models.Public;
+using Atles.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 

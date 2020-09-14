@@ -1,11 +1,11 @@
-﻿using Atlas.Models;
-using Microsoft.AspNetCore.Components;
+﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 using System;
 using System.Threading.Tasks;
 using Atlas.Client.Components.Shared;
-using Atlas.Models.Public.Forums;
+using Atles.Models;
+using Atles.Models.Public.Forums;
 
 namespace Atlas.Client.Components.Themes
 {

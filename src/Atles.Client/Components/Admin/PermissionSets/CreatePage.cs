@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Models.Admin.PermissionSets;
+using Atles.Models.Admin.PermissionSets;
 
 namespace Atlas.Client.Components.Admin.PermissionSets
 {

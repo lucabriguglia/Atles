@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Atles.Domain.Users;
 
-namespace Atlas.Models.Admin.Users
+namespace Atles.Models.Admin.Users
 {
     public class EditPageModel
     {

@@ -2,10 +2,10 @@
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Models.Admin.Forums;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
 using Atles.Domain.PermissionSets;
+using Atles.Models.Admin.Forums;
 
 namespace Atlas.Data.Builders.Admin
 {

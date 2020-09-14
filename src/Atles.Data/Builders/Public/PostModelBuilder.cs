@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
-using Atlas.Models.Public.Posts;
 using Atles.Domain.Forums;
 using Atles.Domain.Posts;
+using Atles.Models.Public.Posts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data.Builders.Public

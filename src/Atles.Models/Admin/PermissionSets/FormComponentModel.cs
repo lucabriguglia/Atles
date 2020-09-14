@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Atles.Domain.PermissionSets;
 
-namespace Atlas.Models.Admin.PermissionSets
+namespace Atles.Models.Admin.PermissionSets
 {
     public class FormComponentModel
     {

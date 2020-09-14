@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Atlas.Models.Admin.Roles
+namespace Atles.Models.Admin.Roles
 {
     public interface IRoleModelBuilder
     {

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Models.Public.Users;
+using Atles.Models.Public.Users;
 using Microsoft.AspNetCore.Components.Forms;
 
 namespace Atlas.Client.Components.Themes

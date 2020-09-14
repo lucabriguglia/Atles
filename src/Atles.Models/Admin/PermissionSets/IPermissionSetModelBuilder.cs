@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Models.Admin.PermissionSets
+namespace Atles.Models.Admin.PermissionSets
 {
     public interface IPermissionSetModelBuilder
     {

@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data;
-using Atlas.Models.Public;
-using Atlas.Models.Public.Topics;
 using Atlas.Server.Services;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.Posts;
 using Atles.Domain.Posts.Commands;
+using Atles.Models.Public;
+using Atles.Models.Public.Topics;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;

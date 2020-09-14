@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Models;
-using Atlas.Models.Public;
-using Atlas.Models.Public.Forums;
 using Atlas.Server.Services;
 using Atles.Domain.PermissionSets;
+using Atles.Models;
+using Atles.Models.Public;
+using Atles.Models.Public.Forums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

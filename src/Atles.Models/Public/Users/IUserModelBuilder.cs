@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Atlas.Models.Public.Users
+namespace Atles.Models.Public.Users
 {
     public interface IUserModelBuilder
     {

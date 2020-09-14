@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Atlas.Models.Admin.Events
+namespace Atles.Models.Admin.Events
 {
     public class TargetEventsComponentModel
     {

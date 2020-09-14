@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Models.Public.Topics
+namespace Atles.Models.Public.Topics
 {
     public interface ITopicModelBuilder
     {

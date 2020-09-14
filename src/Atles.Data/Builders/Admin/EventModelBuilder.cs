@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Models.Admin.Events;
+using Atles.Models.Admin.Events;
 
 namespace Atlas.Data.Builders.Admin
 {

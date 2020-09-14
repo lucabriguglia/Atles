@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Mvc;
-using Atlas.Models.Admin.Site;
 using Atles.Domain.Sites;
 using Atles.Domain.Sites.Commands;
+using Atles.Models.Admin.Site;
 
 namespace Atlas.Server.Controllers.Admin
 {

@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using Atles.Domain.PermissionSets.Commands;
 
-namespace Atlas.Models.Admin.PermissionSets
+namespace Atles.Models.Admin.PermissionSets
 {
     public static class Extensions
     {

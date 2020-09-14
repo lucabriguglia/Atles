@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Models.Public.Posts
+namespace Atles.Models.Public.Posts
 {
     public interface IPostModelBuilder
     {

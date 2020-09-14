@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Models.Public.Users
+namespace Atles.Models.Public.Users
 {
     public class SettingsPageModel
     {

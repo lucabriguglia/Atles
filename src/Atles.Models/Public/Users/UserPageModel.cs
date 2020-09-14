@@ -1,8 +1,8 @@
 ﻿using System;
-using Atlas.Models.Public.Search;
 using Atles.Domain.Users;
+using Atles.Models.Public.Search;
 
-namespace Atlas.Models.Public.Users
+namespace Atles.Models.Public.Users
 {
     public class UserPageModel
     {

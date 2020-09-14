@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Atlas.Models.Public.Index
+namespace Atles.Models.Public.Index
 {
     public class IndexPageModel
     {

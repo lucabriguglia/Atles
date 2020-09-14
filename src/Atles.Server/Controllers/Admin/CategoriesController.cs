@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Models.Admin.Categories;
 using Atlas.Server.Services;
 using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
+using Atles.Models.Admin.Categories;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atlas.Server.Controllers.Admin

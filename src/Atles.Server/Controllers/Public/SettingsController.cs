@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Models.Public.Users;
 using Atlas.Server.Services;
 using Atles.Domain.Users;
 using Atles.Domain.Users.Commands;
+using Atles.Models.Public.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

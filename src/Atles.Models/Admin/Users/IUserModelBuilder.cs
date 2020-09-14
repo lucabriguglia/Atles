@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Models.Admin.Users
+namespace Atles.Models.Admin.Users
 {
     public interface IUserModelBuilder
     {

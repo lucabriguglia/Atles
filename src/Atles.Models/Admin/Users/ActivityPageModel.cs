@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Atlas.Models.Admin.Users
+namespace Atles.Models.Admin.Users
 {
     public class ActivityPageModel
     {

@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Models
+namespace Atles.Models
 {
     public class QueryOptions
     {

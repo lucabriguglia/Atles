@@ -2,7 +2,7 @@
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using Atlas.Models.Admin.Events;
+using Atles.Models.Admin.Events;
 
 namespace Atlas.Server.Controllers.Admin
 {

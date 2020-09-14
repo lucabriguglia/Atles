@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Models.Public.Index
+namespace Atles.Models.Public.Index
 {
     public interface IIndexModelBuilder
     {

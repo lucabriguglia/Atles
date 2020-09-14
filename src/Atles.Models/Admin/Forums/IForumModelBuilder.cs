@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Models.Admin.Forums
+namespace Atles.Models.Admin.Forums
 {
     public interface IForumModelBuilder
     {

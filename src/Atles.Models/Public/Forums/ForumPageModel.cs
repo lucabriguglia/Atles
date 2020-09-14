@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Models.Public.Forums
+namespace Atles.Models.Public.Forums
 {
     public class ForumPageModel
     {

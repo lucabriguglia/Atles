@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
-namespace Atlas.Models.Public.Search
+namespace Atles.Models.Public.Search
 {
     public interface ISearchModelBuilder
     {

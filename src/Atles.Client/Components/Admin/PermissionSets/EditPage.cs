@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Models.Admin.PermissionSets;
+using Atles.Models.Admin.PermissionSets;
 using Microsoft.AspNetCore.Components;
 
 namespace Atlas.Client.Components.Admin.PermissionSets

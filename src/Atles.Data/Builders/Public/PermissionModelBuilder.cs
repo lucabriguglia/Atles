@@ -3,11 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
-using Atlas.Models;
-using Atlas.Models.Public;
 using Atles.Domain;
 using Atles.Domain.Forums;
 using Atles.Domain.PermissionSets;
+using Atles.Models.Public;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

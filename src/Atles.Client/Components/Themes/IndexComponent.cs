@@ -1,6 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Models.Public;
-using Atlas.Models.Public.Index;
+using Atles.Models.Public.Index;
 
 namespace Atlas.Client.Components.Themes
 {

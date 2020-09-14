@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Atlas.Client.Components.Shared;
 using Atlas.Client.Services;
-using Atlas.Models;
-using Atlas.Models.Public.Topics;
+using Atles.Models;
+using Atles.Models.Public.Topics;
 using Markdig;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;

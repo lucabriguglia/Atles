@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Atlas.Models
+namespace Atles.Models
 {
     public class PaginatedData<T> where T : class
     {
