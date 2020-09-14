@@ -1,12 +1,12 @@
-# Atlas (Beta)
+# Atles (Beta)
 
-![.NET Core](https://github.com/lucabriguglia/Atlas/workflows/.NET%20Core/badge.svg)
+![.NET Core](https://github.com/lucabriguglia/Atles/workflows/.NET%20Core/badge.svg)
 
 A forum software built with ASP.NET Core Blazor WebAssembly.
 
 **Demo**: _(new demo site available soon)_.
 
-**Documentation**: [Atlas Wiki](https://lucabriguglia.github.io/Atlas).
+**Documentation**: [Atles Wiki](https://lucabriguglia.github.io/Atles).
 
 ![Forums Admin](docs/assets/img/admin-forums.png)
 ![Permission Set Admin](docs/assets/img/admin-permission-set-edit.png)
