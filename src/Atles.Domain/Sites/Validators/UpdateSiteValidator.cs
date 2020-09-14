@@ -1,7 +1,7 @@
-﻿using Atlas.Domain.Sites.Commands;
+﻿using Atles.Domain.Sites.Commands;
 using FluentValidation;
 
-namespace Atlas.Domain.Sites.Validators
+namespace Atles.Domain.Sites.Validators
 {
     public class UpdateSiteValidator : AbstractValidator<UpdateSite>
     {

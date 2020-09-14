@@ -3,7 +3,7 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Atlas.Domain
+namespace Atles.Domain
 {
     public static class SlugExtensions
     {

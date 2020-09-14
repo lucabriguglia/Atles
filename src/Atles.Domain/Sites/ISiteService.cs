@@ -1,7 +1,7 @@
-﻿using Atlas.Domain.Sites.Commands;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Atles.Domain.Sites.Commands;
 
-namespace Atlas.Domain.Sites
+namespace Atles.Domain.Sites
 {
     public interface ISiteService
     {

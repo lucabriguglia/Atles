@@ -1,5 +1,5 @@
 ﻿using System;
-using Atlas.Domain.Posts;
+using Atles.Domain.Posts;
 using AutoFixture;
 using NUnit.Framework;
 

@@ -1,8 +1,8 @@
-﻿using Atlas.Domain.Forums.Commands;
-using Atlas.Domain.PermissionSets;
+﻿using Atles.Domain.Forums.Commands;
+using Atles.Domain.PermissionSets;
 using FluentValidation;
 
-namespace Atlas.Domain.Forums.Validators
+namespace Atles.Domain.Forums.Validators
 {
     public class UpdateForumValidator : AbstractValidator<UpdateForum>
     {

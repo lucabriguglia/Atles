@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Docs.Attributes;
 
-namespace Atlas.Domain.PermissionSets.Commands
+namespace Atles.Domain.PermissionSets.Commands
 {
     /// <summary>
     /// Request that updates a permission set.

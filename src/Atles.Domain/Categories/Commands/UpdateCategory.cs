@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Domain.Categories.Commands
+namespace Atles.Domain.Categories.Commands
 {
     /// <summary>
     /// Request that updates a forum category.

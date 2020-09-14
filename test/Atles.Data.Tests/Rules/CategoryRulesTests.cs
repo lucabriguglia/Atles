@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Data.Rules;
-using Atlas.Domain.Categories;
+using Atles.Domain.Categories;
 using NUnit.Framework;
 
 namespace Atlas.Data.Tests.Rules

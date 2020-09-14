@@ -1,7 +1,7 @@
 ﻿using System;
 using Docs.Attributes;
 
-namespace Atlas.Domain.PermissionSets.Commands
+namespace Atles.Domain.PermissionSets.Commands
 {
     /// <summary>
     /// Request that deletes a permission set.

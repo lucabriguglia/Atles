@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atlas.Data.Rules;
-using Atlas.Domain;
-using Atlas.Domain.Categories;
-using Atlas.Domain.Forums;
-using Atlas.Domain.Posts;
+using Atles.Domain.Categories;
+using Atles.Domain.Forums;
+using Atles.Domain.Posts;
 using NUnit.Framework;
 
 namespace Atlas.Data.Tests.Rules

@@ -4,10 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Extensions;
-using Atlas.Domain;
-using Atlas.Domain.Users;
 using Atlas.Models;
 using Atlas.Models.Admin.Users;
+using Atles.Domain.Users;
 using Microsoft.AspNetCore.Identity;
 using Newtonsoft.Json.Linq;
 

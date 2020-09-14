@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Domain.Users.Commands;
+using Atles.Domain.Users.Commands;
 
-namespace Atlas.Domain.Users
+namespace Atles.Domain.Users
 {
     public interface IUserService
     {

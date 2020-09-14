@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Domain.PermissionSets.Commands;
+using Atles.Domain.PermissionSets.Commands;
 
-namespace Atlas.Domain.PermissionSets
+namespace Atles.Domain.PermissionSets
 {
     public interface IPermissionSetService
     {

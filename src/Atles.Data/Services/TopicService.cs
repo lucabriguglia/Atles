@@ -4,12 +4,12 @@ using System.Linq;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
-using Atlas.Domain;
-using Atlas.Domain.Posts;
-using Atlas.Domain.Posts.Commands;
+using Atles.Domain;
+using Atles.Domain.Posts;
+using Atles.Domain.Posts.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using Post = Atlas.Domain.Posts.Post;
+using Post = Atles.Domain.Posts.Post;
 
 namespace Atlas.Data.Services
 {

@@ -1,4 +1,4 @@
-﻿using Atlas.Domain.Users;
+﻿using Atles.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

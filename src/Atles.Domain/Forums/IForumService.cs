@@ -1,7 +1,7 @@
-﻿using Atlas.Domain.Forums.Commands;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
+using Atles.Domain.Forums.Commands;
 
-namespace Atlas.Domain.Forums
+namespace Atles.Domain.Forums
 {
     public interface IForumService
     {

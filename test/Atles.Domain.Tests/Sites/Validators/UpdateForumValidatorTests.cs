@@ -1,5 +1,5 @@
-﻿using Atlas.Domain.Sites.Commands;
-using Atlas.Domain.Sites.Validators;
+﻿using Atles.Domain.Sites.Commands;
+using Atles.Domain.Sites.Validators;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using NUnit.Framework;

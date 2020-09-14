@@ -1,7 +1,7 @@
 ﻿using System;
 using Docs.Attributes;
 
-namespace Atlas.Domain.Forums.Commands
+namespace Atles.Domain.Forums.Commands
 {
     /// <summary>
     /// Request that changes the sort order of a forum.

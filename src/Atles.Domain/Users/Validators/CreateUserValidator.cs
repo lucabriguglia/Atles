@@ -1,7 +1,7 @@
-﻿using Atlas.Domain.Users.Commands;
+﻿using Atles.Domain.Users.Commands;
 using FluentValidation;
 
-namespace Atlas.Domain.Users.Validators
+namespace Atles.Domain.Users.Validators
 {
     public class CreateUserValidator : AbstractValidator<CreateUser>
     {

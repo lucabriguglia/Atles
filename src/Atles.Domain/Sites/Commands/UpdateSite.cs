@@ -1,6 +1,6 @@
 ﻿using Docs.Attributes;
 
-namespace Atlas.Domain.Sites.Commands
+namespace Atles.Domain.Sites.Commands
 {
     /// <summary>
     /// Request to update the details of a site.

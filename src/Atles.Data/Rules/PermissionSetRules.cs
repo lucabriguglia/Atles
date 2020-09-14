@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Domain;
-using Atlas.Domain.PermissionSets;
+using Atles.Domain.PermissionSets;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data.Rules

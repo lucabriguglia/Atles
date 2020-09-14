@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atlas.Domain.PermissionSets;
 using Atlas.Models.Public;
 using Atlas.Models.Public.Users;
 using Atlas.Server.Services;
+using Atles.Domain.PermissionSets;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 

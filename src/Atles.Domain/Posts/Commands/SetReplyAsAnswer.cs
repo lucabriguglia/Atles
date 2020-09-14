@@ -1,7 +1,7 @@
 ﻿using System;
 using Docs.Attributes;
 
-namespace Atlas.Domain.Posts.Commands
+namespace Atles.Domain.Posts.Commands
 {
     /// <summary>
     /// Request to set a reply as answer.

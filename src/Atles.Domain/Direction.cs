@@ -1,4 +1,4 @@
-﻿namespace Atlas.Domain
+﻿namespace Atles.Domain
 {
     public enum Direction
     {

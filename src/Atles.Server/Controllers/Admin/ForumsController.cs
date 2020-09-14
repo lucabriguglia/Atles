@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Domain;
 using Atlas.Server.Services;
 using Microsoft.AspNetCore.Mvc;
-using Atlas.Domain.Forums.Commands;
-using Atlas.Domain.Forums;
 using Atlas.Models.Admin.Forums;
+using Atles.Domain;
+using Atles.Domain.Forums;
+using Atles.Domain.Forums.Commands;
 
 namespace Atlas.Server.Controllers.Admin
 {

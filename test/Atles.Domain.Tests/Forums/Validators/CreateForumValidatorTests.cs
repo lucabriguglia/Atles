@@ -1,7 +1,7 @@
-﻿using Atlas.Domain.Forums;
-using Atlas.Domain.Forums.Commands;
-using Atlas.Domain.Forums.Validators;
-using Atlas.Domain.PermissionSets;
+﻿using Atles.Domain.Forums;
+using Atles.Domain.Forums.Commands;
+using Atles.Domain.Forums.Validators;
+using Atles.Domain.PermissionSets;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;

@@ -1,6 +1,6 @@
-﻿using Atlas.Domain.Users;
-using Atlas.Domain.Users.Commands;
-using Atlas.Domain.Users.Validators;
+﻿using Atles.Domain.Users;
+using Atles.Domain.Users.Commands;
+using Atles.Domain.Users.Validators;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Domain.Posts.Commands;
+using Atles.Domain.Posts.Commands;
 
-namespace Atlas.Domain.Posts
+namespace Atles.Domain.Posts
 {
     public interface ITopicService
     {

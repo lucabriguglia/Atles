@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Atlas.Domain.PermissionSets;
-using Atlas.Domain.PermissionSets.Commands;
+using Atles.Domain.PermissionSets;
+using Atles.Domain.PermissionSets.Commands;
 using AutoFixture;
 using NUnit.Framework;
 

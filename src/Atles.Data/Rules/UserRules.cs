@@ -1,8 +1,7 @@
-﻿using Atlas.Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Threading.Tasks;
-using Atlas.Domain.Users;
+using Atles.Domain.Users;
 
 namespace Atlas.Data.Rules
 {

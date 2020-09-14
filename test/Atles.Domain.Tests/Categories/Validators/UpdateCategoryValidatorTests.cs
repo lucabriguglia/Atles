@@ -1,7 +1,7 @@
-﻿using Atlas.Domain.Categories;
-using Atlas.Domain.Categories.Commands;
-using Atlas.Domain.Categories.Validators;
-using Atlas.Domain.PermissionSets;
+﻿using Atles.Domain.Categories;
+using Atles.Domain.Categories.Commands;
+using Atles.Domain.Categories.Validators;
+using Atles.Domain.PermissionSets;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;

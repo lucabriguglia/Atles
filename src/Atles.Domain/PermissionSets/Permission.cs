@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Domain.PermissionSets
+namespace Atles.Domain.PermissionSets
 {
     public class Permission
     {

@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atlas.Data.Rules;
-using Atlas.Domain.PermissionSets;
-using Atlas.Domain.PermissionSets.Commands;
-using Atlas.Domain.Sites;
+using Atles.Domain.PermissionSets;
+using Atles.Domain.PermissionSets.Commands;
+using Atles.Domain.Sites;
 using NUnit.Framework;
 
 namespace Atlas.Data.Tests.Rules

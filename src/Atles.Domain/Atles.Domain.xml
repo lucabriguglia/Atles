@@ -4,73 +4,73 @@
         <name>Atles.Domain</name>
     </assembly>
     <members>
-        <member name="T:Atlas.Domain.Categories.Category">
+        <member name="T:Atles.Domain.Categories.Category">
             <summary>
             A forum category acts as a container to group logically different forums.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Category.Id">
+        <member name="P:Atles.Domain.Categories.Category.Id">
             <summary>
             The unique identifier of the Forum Category.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Category.SiteId">
+        <member name="P:Atles.Domain.Categories.Category.SiteId">
             <summary>
             The unique identifier of the Site which the Forum Category belongs to.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Category.Name">
+        <member name="P:Atles.Domain.Categories.Category.Name">
             <summary>
             The name of the Forum Category which is displayed in the index page.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Category.SortOrder">
+        <member name="P:Atles.Domain.Categories.Category.SortOrder">
             <summary>
             The sort order which is used to display the Forum Categories in the index page.  
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Category.TopicsCount">
+        <member name="P:Atles.Domain.Categories.Category.TopicsCount">
             <summary>
             The number of topics of all forums within the forum category.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Category.RepliesCount">
+        <member name="P:Atles.Domain.Categories.Category.RepliesCount">
             <summary>
             The number of replies of all forums within the forum category.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Category.Status">
+        <member name="P:Atles.Domain.Categories.Category.Status">
             <summary>
             The status of the forum category.
             Can be either published or deleted.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Category.PermissionSetId">
+        <member name="P:Atles.Domain.Categories.Category.PermissionSetId">
             <summary>
             The unique identifier of the Permission Set used as default for all Forums within the Forum Category which do not specify a Permission Set.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Category.Site">
+        <member name="P:Atles.Domain.Categories.Category.Site">
             <summary>
             Reference to the Site the Forum Category belongs to.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Category.PermissionSet">
+        <member name="P:Atles.Domain.Categories.Category.PermissionSet">
             <summary>
             Reference to Permission Set used for the Forum Category.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Category.Forums">
+        <member name="P:Atles.Domain.Categories.Category.Forums">
             <summary>
             List of Forums that belong to the Forum Category.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.#ctor">
+        <member name="M:Atles.Domain.Categories.Category.#ctor">
             <summary>
             Creates an empty forum category.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.#ctor(System.Guid,System.Guid,System.String,System.Int32,System.Guid)">
+        <member name="M:Atles.Domain.Categories.Category.#ctor(System.Guid,System.Guid,System.String,System.Int32,System.Guid)">
             <summary>
             Creates a new forum category with the given values including a unique identifier.
             The default status is published.
@@ -81,7 +81,7 @@
             <param name="sortOrder"></param>
             <param name="permissionSetId"></param>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.#ctor(System.Guid,System.String,System.Int32,System.Guid)">
+        <member name="M:Atles.Domain.Categories.Category.#ctor(System.Guid,System.String,System.Int32,System.Guid)">
             <summary>
             Creates a new forum category with the given values.
             The unique identifier is automatically assigned.
@@ -92,7 +92,7 @@
             <param name="sortOrder"></param>
             <param name="permissionSetId"></param>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.UpdateDetails(System.String,System.Guid)">
+        <member name="M:Atles.Domain.Categories.Category.UpdateDetails(System.String,System.Guid)">
             <summary>
             Updates the details of the forum category.
             The values that can be changed are name and permission set.
@@ -100,39 +100,39 @@
             <param name="name"></param>
             <param name="permissionSetId"></param>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.MoveUp">
+        <member name="M:Atles.Domain.Categories.Category.MoveUp">
             <summary>
             Change the sort order by moving up 1 position.
             It generates an error if sort order is 1.
             </summary>
             <exception cref="T:System.ApplicationException"></exception>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.MoveDown">
+        <member name="M:Atles.Domain.Categories.Category.MoveDown">
             <summary>
             Change the sort order by moving down 1 position.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.Reorder(System.Int32)">
+        <member name="M:Atles.Domain.Categories.Category.Reorder(System.Int32)">
             <summary>
             Replace the sort order with the given value.
             </summary>
             <param name="sortOrder"></param>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.IncreaseTopicsCount(System.Int32)">
+        <member name="M:Atles.Domain.Categories.Category.IncreaseTopicsCount(System.Int32)">
             <summary>
             Increase the number of topics by the given value.
             If no value is given it will increase by 1.
             </summary>
             <param name="count"></param>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.IncreaseRepliesCount(System.Int32)">
+        <member name="M:Atles.Domain.Categories.Category.IncreaseRepliesCount(System.Int32)">
             <summary>
             Increase the number of replies by the given value.
             If no value is given it will increase by 1.
             </summary>
             <param name="count"></param>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.DecreaseTopicsCount(System.Int32)">
+        <member name="M:Atles.Domain.Categories.Category.DecreaseTopicsCount(System.Int32)">
             <summary>
             Decrease the number of topics by the given value.
             If no value is given it will decrease by 1.
@@ -140,7 +140,7 @@
             </summary>
             <param name="count"></param>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.DecreaseRepliesCount(System.Int32)">
+        <member name="M:Atles.Domain.Categories.Category.DecreaseRepliesCount(System.Int32)">
             <summary>
             Decrease the number of replies by the given value.
             If no value is given it will decrease by 1.
@@ -148,290 +148,290 @@
             </summary>
             <param name="count"></param>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.Delete">
+        <member name="M:Atles.Domain.Categories.Category.Delete">
             <summary>
             Set the status as deleted.
             Forums, topics and replies within the forum category will no longer be visible.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Categories.Category.PermissionSetName">
+        <member name="M:Atles.Domain.Categories.Category.PermissionSetName">
             <summary>
             Returns the name of permission set used.
             </summary>
             <returns></returns>
         </member>
-        <member name="T:Atlas.Domain.Categories.Commands.CreateCategory">
+        <member name="T:Atles.Domain.Categories.Commands.CreateCategory">
             <summary>
             Request that creates a new Forum Category.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Commands.CreateCategory.Id">
+        <member name="P:Atles.Domain.Categories.Commands.CreateCategory.Id">
             <summary>
             The unique identifier for the new Forum Category.
             If not specified, a random one is assigned.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Commands.CreateCategory.Name">
+        <member name="P:Atles.Domain.Categories.Commands.CreateCategory.Name">
             <summary>
             The name for the Forum Category.
             This value is mandatory.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Commands.CreateCategory.PermissionSetId">
+        <member name="P:Atles.Domain.Categories.Commands.CreateCategory.PermissionSetId">
             <summary>
             The unique identifier of the Permission Set used os default for all Forums within the Forum Category.
             This value is mandatory.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Categories.Commands.DeleteCategory">
+        <member name="T:Atles.Domain.Categories.Commands.DeleteCategory">
             <summary>
             Request that deletes a Forum Category.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Commands.DeleteCategory.Id">
+        <member name="P:Atles.Domain.Categories.Commands.DeleteCategory.Id">
             <summary>
             The unique identifier of the Forum Category to delete.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Categories.Commands.MoveCategory">
+        <member name="T:Atles.Domain.Categories.Commands.MoveCategory">
             <summary>
             Request that changes the sort order of a forum category.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Commands.MoveCategory.Id">
+        <member name="P:Atles.Domain.Categories.Commands.MoveCategory.Id">
             <summary>
             The unique identifier of the forum category to move.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Commands.MoveCategory.Direction">
+        <member name="P:Atles.Domain.Categories.Commands.MoveCategory.Direction">
             <summary>
             The direction.
             Can be either up or down.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Categories.Commands.UpdateCategory">
+        <member name="T:Atles.Domain.Categories.Commands.UpdateCategory">
             <summary>
             Request that updates a forum category.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Commands.UpdateCategory.Id">
+        <member name="P:Atles.Domain.Categories.Commands.UpdateCategory.Id">
             <summary>
             The unique identifier of the forum category to update.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Commands.UpdateCategory.Name">
+        <member name="P:Atles.Domain.Categories.Commands.UpdateCategory.Name">
             <summary>
             The new name of the forum category.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Categories.Commands.UpdateCategory.PermissionSetId">
+        <member name="P:Atles.Domain.Categories.Commands.UpdateCategory.PermissionSetId">
             <summary>
             The unique identifier of the new permission set for the forum category.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.CommandBase">
+        <member name="T:Atles.Domain.CommandBase">
             <summary>
             CommandBase
             </summary>
         </member>
-        <member name="P:Atlas.Domain.CommandBase.SiteId">
+        <member name="P:Atles.Domain.CommandBase.SiteId">
             <summary>
             The unique identifier of the Site whose the request belongs to.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.CommandBase.UserId">
+        <member name="P:Atles.Domain.CommandBase.UserId">
             <summary>
             The unique identifier of the User who initiated the request.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Forums.Commands.CreateForum">
+        <member name="T:Atles.Domain.Forums.Commands.CreateForum">
             <summary>
             Request that creates a forum section.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.Id">
+        <member name="P:Atles.Domain.Forums.Commands.CreateForum.Id">
             <summary>
             The unique identifier for the new forum. If not specified, a random one is assigned.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.CategoryId">
+        <member name="P:Atles.Domain.Forums.Commands.CreateForum.CategoryId">
             <summary>
             The unique identifier of the forum category which the new forum belongs to.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.Name">
+        <member name="P:Atles.Domain.Forums.Commands.CreateForum.Name">
             <summary>
             The name of the new forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.Slug">
+        <member name="P:Atles.Domain.Forums.Commands.CreateForum.Slug">
             <summary>
             The slug for the new forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.Description">
+        <member name="P:Atles.Domain.Forums.Commands.CreateForum.Description">
             <summary>
             The description of the new forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.CreateForum.PermissionSetId">
+        <member name="P:Atles.Domain.Forums.Commands.CreateForum.PermissionSetId">
             <summary>
             The unique identifier of the permission set.
             If not assigned, the new forum will inherit the permission set from the forum category.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Forums.Commands.DeleteForum">
+        <member name="T:Atles.Domain.Forums.Commands.DeleteForum">
             <summary>
             Request that deletes a forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.DeleteForum.Id">
+        <member name="P:Atles.Domain.Forums.Commands.DeleteForum.Id">
             <summary>
             The unique identifier of the forum to delete.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Forums.Commands.MoveForum">
+        <member name="T:Atles.Domain.Forums.Commands.MoveForum">
             <summary>
             Request that changes the sort order of a forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.MoveForum.Id">
+        <member name="P:Atles.Domain.Forums.Commands.MoveForum.Id">
             <summary>
             The unique identifier of the forum to move.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.MoveForum.Direction">
+        <member name="P:Atles.Domain.Forums.Commands.MoveForum.Direction">
             <summary>
             The direction.
             Can be either up or down.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Forums.Commands.UpdateForum">
+        <member name="T:Atles.Domain.Forums.Commands.UpdateForum">
             <summary>
             Request that updates the forum details.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.Id">
+        <member name="P:Atles.Domain.Forums.Commands.UpdateForum.Id">
             <summary>
             The unique identifier of the forum to update.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.CategoryId">
+        <member name="P:Atles.Domain.Forums.Commands.UpdateForum.CategoryId">
             <summary>
             The new forum category for the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.Name">
+        <member name="P:Atles.Domain.Forums.Commands.UpdateForum.Name">
             <summary>
             The new name of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.Slug">
+        <member name="P:Atles.Domain.Forums.Commands.UpdateForum.Slug">
             <summary>
             The new slug of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.Description">
+        <member name="P:Atles.Domain.Forums.Commands.UpdateForum.Description">
             <summary>
             The new description of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Commands.UpdateForum.PermissionSetId">
+        <member name="P:Atles.Domain.Forums.Commands.UpdateForum.PermissionSetId">
             <summary>
             The unique identifier of the new permission set for the forum.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Forums.Forum">
+        <member name="T:Atles.Domain.Forums.Forum">
             <summary>
             A forum is a board where users can hold conversations.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.Id">
+        <member name="P:Atles.Domain.Forums.Forum.Id">
             <summary>
             The unique identifier of the Forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.CategoryId">
+        <member name="P:Atles.Domain.Forums.Forum.CategoryId">
             <summary>
             The unique identifier of the Forum Category which the Forum belongs to.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.Name">
+        <member name="P:Atles.Domain.Forums.Forum.Name">
             <summary>
             The name of the Forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.Slug">
+        <member name="P:Atles.Domain.Forums.Forum.Slug">
             <summary>
             The Slug of the Forum.
             This value is added to the URL in order to identify the Forum.
             If the Slug is "my-forum-slug", the URL will be something similar to "www.mysite.com/forum/my-forum-slug".
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.Description">
+        <member name="P:Atles.Domain.Forums.Forum.Description">
             <summary>
             The description of the Forum.
             This value will be displayed in the index and forum pages if included in the theme.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.SortOrder">
+        <member name="P:Atles.Domain.Forums.Forum.SortOrder">
             <summary>
             The sort order which is used to display the forums in the index page.  
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.TopicsCount">
+        <member name="P:Atles.Domain.Forums.Forum.TopicsCount">
             <summary>
             The number of topics published.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.RepliesCount">
+        <member name="P:Atles.Domain.Forums.Forum.RepliesCount">
             <summary>
             The number of replies published.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.Status">
+        <member name="P:Atles.Domain.Forums.Forum.Status">
             <summary>
             The status of the forum.
             Can be either published or deleted.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.PermissionSetId">
+        <member name="P:Atles.Domain.Forums.Forum.PermissionSetId">
             <summary>
             The unique identifier of the permission set used.
             If it's not assigned, the forum will inherit the permission set fom the forum category.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.LastPostId">
+        <member name="P:Atles.Domain.Forums.Forum.LastPostId">
             <summary>
             The unique identifier of the last post published.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.Category">
+        <member name="P:Atles.Domain.Forums.Forum.Category">
             <summary>
             Reference to the forum category.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.PermissionSet">
+        <member name="P:Atles.Domain.Forums.Forum.PermissionSet">
             <summary>
             Reference to the permission set if assigned.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.LastPost">
+        <member name="P:Atles.Domain.Forums.Forum.LastPost">
             <summary>
             Reference to the last post published if any.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Forums.Forum.Posts">
+        <member name="P:Atles.Domain.Forums.Forum.Posts">
             <summary>
             List of published posts.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.#ctor">
+        <member name="M:Atles.Domain.Forums.Forum.#ctor">
             <summary>
             Create an empty forum.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.#ctor(System.Guid,System.Guid,System.String,System.String,System.String,System.Int32,System.Nullable{System.Guid})">
+        <member name="M:Atles.Domain.Forums.Forum.#ctor(System.Guid,System.Guid,System.String,System.String,System.String,System.Int32,System.Nullable{System.Guid})">
             <summary>
             Create a new forum with the given values including a unique identifier.
             The default status is published.
@@ -444,7 +444,7 @@
             <param name="sortOrder"></param>
             <param name="permissionSetId"></param>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.#ctor(System.Guid,System.String,System.String,System.String,System.Int32,System.Nullable{System.Guid})">
+        <member name="M:Atles.Domain.Forums.Forum.#ctor(System.Guid,System.String,System.String,System.String,System.Int32,System.Nullable{System.Guid})">
             <summary>
             Creates a new forum with the given values.
             The unique identifier is automatically assigned.
@@ -457,7 +457,7 @@
             <param name="sortOrder"></param>
             <param name="permissionSetId"></param>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.UpdateDetails(System.Guid,System.String,System.String,System.String,System.Nullable{System.Guid})">
+        <member name="M:Atles.Domain.Forums.Forum.UpdateDetails(System.Guid,System.String,System.String,System.String,System.Nullable{System.Guid})">
             <summary>
             Updates the details of the forum.
             The values that can be changed are forum category, name, slug, description and permission set.
@@ -468,170 +468,170 @@
             <param name="description"></param>
             <param name="permissionSetId"></param>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.UpdateLastPost(System.Nullable{System.Guid})">
+        <member name="M:Atles.Domain.Forums.Forum.UpdateLastPost(System.Nullable{System.Guid})">
             <summary>
             Updates the unique identifier of the last published post.
             </summary>
             <param name="lastPostId"></param>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.MoveUp">
+        <member name="M:Atles.Domain.Forums.Forum.MoveUp">
             <summary>
             Change the sort order by moving up 1 position.
             It generates an error if sort order is 1.
             </summary>
             <exception cref="T:System.ApplicationException"></exception>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.MoveDown">
+        <member name="M:Atles.Domain.Forums.Forum.MoveDown">
             <summary>
             Change the sort order by moving down 1 position.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.Reorder(System.Int32)">
+        <member name="M:Atles.Domain.Forums.Forum.Reorder(System.Int32)">
             <summary>
             Replace the sort order with the given value.
             </summary>
             <param name="sortOrder"></param>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.IncreaseTopicsCount">
+        <member name="M:Atles.Domain.Forums.Forum.IncreaseTopicsCount">
             <summary>
             Increase the number of topics by 1.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.DecreaseTopicsCount">
+        <member name="M:Atles.Domain.Forums.Forum.DecreaseTopicsCount">
             <summary>
             Decrease the number of topics by 1.
             If the resulting number is less than zero, the value will be set to zero.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.IncreaseRepliesCount">
+        <member name="M:Atles.Domain.Forums.Forum.IncreaseRepliesCount">
             <summary>
             Increase the number of replies by 1.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.DecreaseRepliesCount">
+        <member name="M:Atles.Domain.Forums.Forum.DecreaseRepliesCount">
             <summary>
             Decrease the number of replies by 1.
             If the resulting number is less than zero, the value will be set to zero.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.Delete">
+        <member name="M:Atles.Domain.Forums.Forum.Delete">
             <summary>
             Set the status as deleted.
             Topics and replies within the forum will no longer be visible.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.PermissionSetName">
+        <member name="M:Atles.Domain.Forums.Forum.PermissionSetName">
             <summary>
             Returns the name of permission set if assigned.
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Atlas.Domain.Forums.Forum.HasPermissionSet">
+        <member name="M:Atles.Domain.Forums.Forum.HasPermissionSet">
             <summary>
             Indicates if a permission set is assigned.
             </summary>
             <returns></returns>
         </member>
-        <member name="T:Atlas.Domain.PermissionSets.Commands.CreatePermissionSet">
+        <member name="T:Atles.Domain.PermissionSets.Commands.CreatePermissionSet">
             <summary>
             Request that creates a new permission set.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.Commands.CreatePermissionSet.Id">
+        <member name="P:Atles.Domain.PermissionSets.Commands.CreatePermissionSet.Id">
             <summary>
             The unique identifier for the new permission set. If not specified, a random one is assigned.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.Commands.CreatePermissionSet.Name">
+        <member name="P:Atles.Domain.PermissionSets.Commands.CreatePermissionSet.Name">
             <summary>
             The name of the new permission set.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.Commands.CreatePermissionSet.Permissions">
+        <member name="P:Atles.Domain.PermissionSets.Commands.CreatePermissionSet.Permissions">
             <summary>
             The permissions of the new permission set.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.PermissionSets.Commands.DeletePermissionSet">
+        <member name="T:Atles.Domain.PermissionSets.Commands.DeletePermissionSet">
             <summary>
             Request that deletes a permission set.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.Commands.DeletePermissionSet.Id">
+        <member name="P:Atles.Domain.PermissionSets.Commands.DeletePermissionSet.Id">
             <summary>
             The unique identifier of the permission set to delete.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.PermissionSets.Commands.UpdatePermissionSet">
+        <member name="T:Atles.Domain.PermissionSets.Commands.UpdatePermissionSet">
             <summary>
             Request that updates a permission set.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.Commands.UpdatePermissionSet.Id">
+        <member name="P:Atles.Domain.PermissionSets.Commands.UpdatePermissionSet.Id">
             <summary>
             The unique identifier of the permission set to update.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.Commands.UpdatePermissionSet.Name">
+        <member name="P:Atles.Domain.PermissionSets.Commands.UpdatePermissionSet.Name">
             <summary>
             The new name for the permission set.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.Commands.UpdatePermissionSet.Permissions">
+        <member name="P:Atles.Domain.PermissionSets.Commands.UpdatePermissionSet.Permissions">
             <summary>
             The new permissions for the permission set.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.PermissionSets.PermissionSet">
+        <member name="T:Atles.Domain.PermissionSets.PermissionSet">
             <summary>
             A permission set contains the permissions to read, create or edit forum posts.
             Each permission type such as view forum, read topics or create new posts is assigned to one or more user roles.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.PermissionSet.Id">
+        <member name="P:Atles.Domain.PermissionSets.PermissionSet.Id">
             <summary>
             The unique identifier of the permission set.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.PermissionSet.SiteId">
+        <member name="P:Atles.Domain.PermissionSets.PermissionSet.SiteId">
             <summary>
             The unique identifier of the site which the permission set belongs to.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.PermissionSet.Name">
+        <member name="P:Atles.Domain.PermissionSets.PermissionSet.Name">
             <summary>
             The name of the permission set.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.PermissionSet.Status">
+        <member name="P:Atles.Domain.PermissionSets.PermissionSet.Status">
             <summary>
             The status of the permission set.
             It could be either published or deleted.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.PermissionSet.Permissions">
+        <member name="P:Atles.Domain.PermissionSets.PermissionSet.Permissions">
             <summary>
             List of permissions.
             Each permission is a combination of a user role and a permission type.
             For example, role Subscriber and type Read which means that only users in the role Subscriber can read the discussions.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.PermissionSet.Categories">
+        <member name="P:Atles.Domain.PermissionSets.PermissionSet.Categories">
             <summary>
             List of forum categories that use the permission set.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.PermissionSets.PermissionSet.Forums">
+        <member name="P:Atles.Domain.PermissionSets.PermissionSet.Forums">
             <summary>
             List of forums that use the permission set.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.PermissionSets.PermissionSet.#ctor">
+        <member name="M:Atles.Domain.PermissionSets.PermissionSet.#ctor">
             <summary>
             Creates an empty permission set.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.PermissionSets.PermissionSet.#ctor(System.Guid,System.String,System.Collections.Generic.ICollection{Atlas.Domain.PermissionSets.Commands.PermissionCommand})">
+        <member name="M:Atles.Domain.PermissionSets.PermissionSet.#ctor(System.Guid,System.String,System.Collections.Generic.ICollection{Atles.Domain.PermissionSets.Commands.PermissionCommand})">
             <summary>
             Creates a new permission set  with the given values.
             The unique identifier is automatically assigned.
@@ -641,7 +641,7 @@
             <param name="name"></param>
             <param name="permissions"></param>
         </member>
-        <member name="M:Atlas.Domain.PermissionSets.PermissionSet.#ctor(System.Guid,System.Guid,System.String,System.Collections.Generic.ICollection{Atlas.Domain.PermissionSets.Commands.PermissionCommand})">
+        <member name="M:Atles.Domain.PermissionSets.PermissionSet.#ctor(System.Guid,System.Guid,System.String,System.Collections.Generic.ICollection{Atles.Domain.PermissionSets.Commands.PermissionCommand})">
             <summary>
             Creates a new permission set with the given values including a unique identifier.
             The default status is published.
@@ -651,7 +651,7 @@
             <param name="name"></param>
             <param name="permissions"></param>
         </member>
-        <member name="M:Atlas.Domain.PermissionSets.PermissionSet.UpdateDetails(System.String,System.Collections.Generic.ICollection{Atlas.Domain.PermissionSets.Commands.PermissionCommand})">
+        <member name="M:Atles.Domain.PermissionSets.PermissionSet.UpdateDetails(System.String,System.Collections.Generic.ICollection{Atles.Domain.PermissionSets.Commands.PermissionCommand})">
             <summary>
             Updates the details of the permission set.
             The values that can be changed are name and permissions.
@@ -659,265 +659,265 @@
             <param name="name"></param>
             <param name="permissions"></param>
         </member>
-        <member name="M:Atlas.Domain.PermissionSets.PermissionSet.Delete">
+        <member name="M:Atles.Domain.PermissionSets.PermissionSet.Delete">
             <summary>
             Set the status as deleted.
             The permission set can no longer be used in forum categories and forums.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Posts.Commands.CreateReply">
+        <member name="T:Atles.Domain.Posts.Commands.CreateReply">
             <summary>
             Request to create a new reply.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.CreateReply.Id">
+        <member name="P:Atles.Domain.Posts.Commands.CreateReply.Id">
             <summary>
             The unique identifier of the reply.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.CreateReply.ForumId">
+        <member name="P:Atles.Domain.Posts.Commands.CreateReply.ForumId">
             <summary>
             The unique identifier of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.CreateReply.TopicId">
+        <member name="P:Atles.Domain.Posts.Commands.CreateReply.TopicId">
             <summary>
             The unique identifier of the topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.CreateReply.Content">
+        <member name="P:Atles.Domain.Posts.Commands.CreateReply.Content">
             <summary>
             The content of the reply.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.CreateReply.Status">
+        <member name="P:Atles.Domain.Posts.Commands.CreateReply.Status">
             <summary>
             The status of the reply.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Posts.Commands.CreateTopic">
+        <member name="T:Atles.Domain.Posts.Commands.CreateTopic">
             <summary>
             Request to create a new topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.CreateTopic.Id">
+        <member name="P:Atles.Domain.Posts.Commands.CreateTopic.Id">
             <summary>
             The unique identifier of the topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.CreateTopic.ForumId">
+        <member name="P:Atles.Domain.Posts.Commands.CreateTopic.ForumId">
             <summary>
             The unique identifier of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.CreateTopic.Title">
+        <member name="P:Atles.Domain.Posts.Commands.CreateTopic.Title">
             <summary>
             The title of the topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.CreateTopic.Slug">
+        <member name="P:Atles.Domain.Posts.Commands.CreateTopic.Slug">
             <summary>
             The slug of the topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.CreateTopic.Content">
+        <member name="P:Atles.Domain.Posts.Commands.CreateTopic.Content">
             <summary>
             The content of the topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.CreateTopic.Status">
+        <member name="P:Atles.Domain.Posts.Commands.CreateTopic.Status">
             <summary>
             The status of the topic.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Posts.Commands.DeleteReply">
+        <member name="T:Atles.Domain.Posts.Commands.DeleteReply">
             <summary>
             Request to delete a reply.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.DeleteReply.Id">
+        <member name="P:Atles.Domain.Posts.Commands.DeleteReply.Id">
             <summary>
             The unique identifier of the reply to delete.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.DeleteReply.ForumId">
+        <member name="P:Atles.Domain.Posts.Commands.DeleteReply.ForumId">
             <summary>
             The unique identifier of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.DeleteReply.TopicId">
+        <member name="P:Atles.Domain.Posts.Commands.DeleteReply.TopicId">
             <summary>
             The unique identifier of the topic.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Posts.Commands.DeleteTopic">
+        <member name="T:Atles.Domain.Posts.Commands.DeleteTopic">
             <summary>
             Request to delete a topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.DeleteTopic.Id">
+        <member name="P:Atles.Domain.Posts.Commands.DeleteTopic.Id">
             <summary>
             The unique identifier of the topic to delete.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.DeleteTopic.ForumId">
+        <member name="P:Atles.Domain.Posts.Commands.DeleteTopic.ForumId">
             <summary>
             The unique identifier of the forum.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Posts.Commands.LockTopic">
+        <member name="T:Atles.Domain.Posts.Commands.LockTopic">
             <summary>
             Request to lock/unlock a topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.LockTopic.Id">
+        <member name="P:Atles.Domain.Posts.Commands.LockTopic.Id">
             <summary>
             The unique identifier of the topic to lock/unlock.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.LockTopic.ForumId">
+        <member name="P:Atles.Domain.Posts.Commands.LockTopic.ForumId">
             <summary>
             The unique identifier of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.LockTopic.Locked">
+        <member name="P:Atles.Domain.Posts.Commands.LockTopic.Locked">
             <summary>
             Value indicating whether the topic needs to be locked (true) or unlocked (false).
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Posts.Commands.PinTopic">
+        <member name="T:Atles.Domain.Posts.Commands.PinTopic">
             <summary>
             Request to pin/unpin a topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.PinTopic.Id">
+        <member name="P:Atles.Domain.Posts.Commands.PinTopic.Id">
             <summary>
             The unique identifier of the topic to pin/unpin.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.PinTopic.ForumId">
+        <member name="P:Atles.Domain.Posts.Commands.PinTopic.ForumId">
             <summary>
             The unique identifier of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.PinTopic.Pinned">
+        <member name="P:Atles.Domain.Posts.Commands.PinTopic.Pinned">
             <summary>
             Value indicating whether the topic needs to be pinned (true) or unpinned (false).
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Posts.Commands.SetReplyAsAnswer">
+        <member name="T:Atles.Domain.Posts.Commands.SetReplyAsAnswer">
             <summary>
             Request to set a reply as answer.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.SetReplyAsAnswer.Id">
+        <member name="P:Atles.Domain.Posts.Commands.SetReplyAsAnswer.Id">
             <summary>
             The unique identifier of the reply.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.SetReplyAsAnswer.ForumId">
+        <member name="P:Atles.Domain.Posts.Commands.SetReplyAsAnswer.ForumId">
             <summary>
             The unique identifier of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.SetReplyAsAnswer.TopicId">
+        <member name="P:Atles.Domain.Posts.Commands.SetReplyAsAnswer.TopicId">
             <summary>
             The unique identifier of the topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.SetReplyAsAnswer.IsAnswer">
+        <member name="P:Atles.Domain.Posts.Commands.SetReplyAsAnswer.IsAnswer">
             <summary>
             Value indicating whether the reply needs to be set as answer (true) or not (false).
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Posts.Commands.UpdateReply">
+        <member name="T:Atles.Domain.Posts.Commands.UpdateReply">
             <summary>
             Request to update a reply.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.UpdateReply.Id">
+        <member name="P:Atles.Domain.Posts.Commands.UpdateReply.Id">
             <summary>
             The unique identifier of the reply to update.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.UpdateReply.ForumId">
+        <member name="P:Atles.Domain.Posts.Commands.UpdateReply.ForumId">
             <summary>
             The unique identifier of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.UpdateReply.TopicId">
+        <member name="P:Atles.Domain.Posts.Commands.UpdateReply.TopicId">
             <summary>
             The unique identifier of the topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.UpdateReply.Content">
+        <member name="P:Atles.Domain.Posts.Commands.UpdateReply.Content">
             <summary>
             The new content of the reply.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.UpdateReply.Status">
+        <member name="P:Atles.Domain.Posts.Commands.UpdateReply.Status">
             <summary>
             The new status of the reply.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Posts.Commands.UpdateTopic">
+        <member name="T:Atles.Domain.Posts.Commands.UpdateTopic">
             <summary>
             Request to update a topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.UpdateTopic.Id">
+        <member name="P:Atles.Domain.Posts.Commands.UpdateTopic.Id">
             <summary>
             The unique identifier of the topic to update.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.UpdateTopic.ForumId">
+        <member name="P:Atles.Domain.Posts.Commands.UpdateTopic.ForumId">
             <summary>
             The unique identifier of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.UpdateTopic.Title">
+        <member name="P:Atles.Domain.Posts.Commands.UpdateTopic.Title">
             <summary>
             The new title of the topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.UpdateTopic.Slug">
+        <member name="P:Atles.Domain.Posts.Commands.UpdateTopic.Slug">
             <summary>
             The new slug of the topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.UpdateTopic.Content">
+        <member name="P:Atles.Domain.Posts.Commands.UpdateTopic.Content">
             <summary>
             The new content of the topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Commands.UpdateTopic.Status">
+        <member name="P:Atles.Domain.Posts.Commands.UpdateTopic.Status">
             <summary>
             The new status of the topic.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Posts.Post">
+        <member name="T:Atles.Domain.Posts.Post">
             <summary>
             A forum post is a message created in a forum.
             It can be either the start of a discussion (topic) or a reply to another message. 
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.Id">
+        <member name="P:Atles.Domain.Posts.Post.Id">
             <summary>
             The unique identifier of the forum post.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.ForumId">
+        <member name="P:Atles.Domain.Posts.Post.ForumId">
             <summary>
             The unique identifier of the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.Title">
+        <member name="P:Atles.Domain.Posts.Post.Title">
             <summary>
             The title of the post.
             It is only used if the post is the initial message (topic).
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.Slug">
+        <member name="P:Atles.Domain.Posts.Post.Slug">
             <summary>
             The slug of the post.
             It is only used if the post is the initial message (topic).
@@ -925,114 +925,114 @@
             If the slug is "my-topic-slug", the URL will be something similar to "www.mysite.com/forum/my-forum/my-topic-slug".
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.Content">
+        <member name="P:Atles.Domain.Posts.Post.Content">
             <summary>
             The content of the post.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.RepliesCount">
+        <member name="P:Atles.Domain.Posts.Post.RepliesCount">
             <summary>
             The number of replies to the initial message.
             It is only used if the post is the initial message (topic).
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.Status">
+        <member name="P:Atles.Domain.Posts.Post.Status">
             <summary>
             The status of the post.
             It can be either published or deleted.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.CreatedBy">
+        <member name="P:Atles.Domain.Posts.Post.CreatedBy">
             <summary>
             The unique identifier of the user who created the post.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.CreatedOn">
+        <member name="P:Atles.Domain.Posts.Post.CreatedOn">
             <summary>
             The time stamp of when the post has been created.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.ModifiedBy">
+        <member name="P:Atles.Domain.Posts.Post.ModifiedBy">
             <summary>
             The unique identifier of the user who last updated the post.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.ModifiedOn">
+        <member name="P:Atles.Domain.Posts.Post.ModifiedOn">
             <summary>
             The time stamp of when the post has been last updated.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.Pinned">
+        <member name="P:Atles.Domain.Posts.Post.Pinned">
             <summary>
             Value indicating whether the post is pinned or not.
             It is only used if the post is the initial message (topic).
             If pinned, the topic is always shown at the top of the forum page.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.Locked">
+        <member name="P:Atles.Domain.Posts.Post.Locked">
             <summary>
             Value indicating whether the post is locked or not.
             It is only used if the post is the initial message (topic).
             If locked, only users that can moderate a forum will be able to reply to the initial message.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.IsAnswer">
+        <member name="P:Atles.Domain.Posts.Post.IsAnswer">
             <summary>
             Value indicating whether the post is marked as answer or not.
             It is only used if the post is a reply to the initial message.
             If it is an answer, the post is shown at the top of the topic page and marked as the accepted answer.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.HasAnswer">
+        <member name="P:Atles.Domain.Posts.Post.HasAnswer">
             <summary>
             Value indicating whether the post has an answer or not.
             It is only used if the post is the initial message (topic).
             If it has an answer, the topic is marked as answered in the forum page.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.TopicId">
+        <member name="P:Atles.Domain.Posts.Post.TopicId">
             <summary>
             The unique identifier of the topic.
             It is only used if the post is a reply to the initial message.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.LastReplyId">
+        <member name="P:Atles.Domain.Posts.Post.LastReplyId">
             <summary>
             The unique identifier of the last reply.
             It is only used if the post is the initial message (topic).
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.Topic">
+        <member name="P:Atles.Domain.Posts.Post.Topic">
             <summary>
             Reference to the topic.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.LastReply">
+        <member name="P:Atles.Domain.Posts.Post.LastReply">
             <summary>
             Reference to the last reply.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.Forum">
+        <member name="P:Atles.Domain.Posts.Post.Forum">
             <summary>
             Reference to the forum.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.CreatedByUser">
+        <member name="P:Atles.Domain.Posts.Post.CreatedByUser">
             <summary>
             Reference to the user who created the post.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Posts.Post.ModifiedByUser">
+        <member name="P:Atles.Domain.Posts.Post.ModifiedByUser">
             <summary>
             Reference to the user who last updated the post.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.#ctor">
+        <member name="M:Atles.Domain.Posts.Post.#ctor">
             <summary>
             Creates an empty forum post.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.CreateTopic(System.Guid,System.Guid,System.String,System.String,System.String,Atlas.Domain.Posts.PostStatusType)">
+        <member name="M:Atles.Domain.Posts.Post.CreateTopic(System.Guid,System.Guid,System.String,System.String,System.String,Atles.Domain.Posts.PostStatusType)">
             <summary>
             Creates a new topic with the given values.
             </summary>
@@ -1044,7 +1044,7 @@
             <param name="status"></param>
             <returns></returns>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.CreateTopic(System.Guid,System.Guid,System.Guid,System.String,System.String,System.String,Atlas.Domain.Posts.PostStatusType)">
+        <member name="M:Atles.Domain.Posts.Post.CreateTopic(System.Guid,System.Guid,System.Guid,System.String,System.String,System.String,Atles.Domain.Posts.PostStatusType)">
             <summary>
             Creates a new topic with the given values including the unique identifier.
             </summary>
@@ -1057,7 +1057,7 @@
             <param name="status"></param>
             <returns></returns>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.CreateReply(System.Guid,System.Guid,System.Guid,System.String,Atlas.Domain.Posts.PostStatusType)">
+        <member name="M:Atles.Domain.Posts.Post.CreateReply(System.Guid,System.Guid,System.Guid,System.String,Atles.Domain.Posts.PostStatusType)">
             <summary>
             Creates a new reply with the given values.
             </summary>
@@ -1068,7 +1068,7 @@
             <param name="status"></param>
             <returns></returns>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.CreateReply(System.Guid,System.Guid,System.Guid,System.Guid,System.String,Atlas.Domain.Posts.PostStatusType)">
+        <member name="M:Atles.Domain.Posts.Post.CreateReply(System.Guid,System.Guid,System.Guid,System.Guid,System.String,Atles.Domain.Posts.PostStatusType)">
             <summary>
             Creates a new reply with the given values including the unique identifier.
             </summary>
@@ -1080,7 +1080,7 @@
             <param name="status"></param>
             <returns></returns>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.UpdateDetails(System.Guid,System.String,System.String,System.String,Atlas.Domain.Posts.PostStatusType)">
+        <member name="M:Atles.Domain.Posts.Post.UpdateDetails(System.Guid,System.String,System.String,System.String,Atles.Domain.Posts.PostStatusType)">
             <summary>
             Updates the details of the topic.
             </summary>
@@ -1090,7 +1090,7 @@
             <param name="content"></param>
             <param name="status"></param>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.UpdateDetails(System.Guid,System.String,Atlas.Domain.Posts.PostStatusType)">
+        <member name="M:Atles.Domain.Posts.Post.UpdateDetails(System.Guid,System.String,Atles.Domain.Posts.PostStatusType)">
             <summary>
             Updates the details of the reply.
             </summary>
@@ -1098,177 +1098,177 @@
             <param name="content"></param>
             <param name="status"></param>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.UpdateLastReply(System.Guid)">
+        <member name="M:Atles.Domain.Posts.Post.UpdateLastReply(System.Guid)">
             <summary>
             Updates the last reply unique identifier if the post is the initial message.
             </summary>
             <param name="lastReplyId"></param>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.IncreaseRepliesCount">
+        <member name="M:Atles.Domain.Posts.Post.IncreaseRepliesCount">
             <summary>
             Increases the number of replies of the topic by 1.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.DecreaseRepliesCount">
+        <member name="M:Atles.Domain.Posts.Post.DecreaseRepliesCount">
             <summary>
             Decreases the number of replies of the topic by 1.
             If the resulting number is less than zero, the value is set to zero.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.Pin(System.Boolean)">
+        <member name="M:Atles.Domain.Posts.Post.Pin(System.Boolean)">
             <summary>
             Pin and unpin the topic based of the passed value.
             </summary>
             <param name="pinned"></param>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.Lock(System.Boolean)">
+        <member name="M:Atles.Domain.Posts.Post.Lock(System.Boolean)">
             <summary>
             Lock and unlock the topic based of the passed value.
             </summary>
             <param name="locked"></param>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.SetAsAnswer(System.Boolean)">
+        <member name="M:Atles.Domain.Posts.Post.SetAsAnswer(System.Boolean)">
             <summary>
             Set the reply as answer.
             </summary>
             <param name="isAnswer"></param>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.SetAsAnswered(System.Boolean)">
+        <member name="M:Atles.Domain.Posts.Post.SetAsAnswered(System.Boolean)">
             <summary>
             Set the topic as answered.
             </summary>
             <param name="hasAnswer"></param>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.Delete">
+        <member name="M:Atles.Domain.Posts.Post.Delete">
             <summary>
             Set the status as deleted.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Posts.Post.IsTopic">
+        <member name="M:Atles.Domain.Posts.Post.IsTopic">
             <summary>
             Indicates if the post is an initial message (topic).
             </summary>
             <returns></returns>
         </member>
-        <member name="T:Atlas.Domain.Sites.Commands.UpdateSite">
+        <member name="T:Atles.Domain.Sites.Commands.UpdateSite">
             <summary>
             Request to update the details of a site.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Commands.UpdateSite.Title">
+        <member name="P:Atles.Domain.Sites.Commands.UpdateSite.Title">
             <summary>
             The new tile of the site.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Commands.UpdateSite.Theme">
+        <member name="P:Atles.Domain.Sites.Commands.UpdateSite.Theme">
             <summary>
             The new theme for the public site.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Commands.UpdateSite.Css">
+        <member name="P:Atles.Domain.Sites.Commands.UpdateSite.Css">
             <summary>
             The new Cascading Style Sheet for the public site.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Commands.UpdateSite.Language">
+        <member name="P:Atles.Domain.Sites.Commands.UpdateSite.Language">
             <summary>
             The new language ISO code of the site.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Commands.UpdateSite.Privacy">
+        <member name="P:Atles.Domain.Sites.Commands.UpdateSite.Privacy">
             <summary>
             The new content of the privacy page.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Commands.UpdateSite.Terms">
+        <member name="P:Atles.Domain.Sites.Commands.UpdateSite.Terms">
             <summary>
             The new content of the terms page.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Commands.UpdateSite.HeadScript">
+        <member name="P:Atles.Domain.Sites.Commands.UpdateSite.HeadScript">
             <summary>
             The script for the head section of the HTML document.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Sites.Site">
+        <member name="T:Atles.Domain.Sites.Site">
             <summary>
             Site
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.Id">
+        <member name="P:Atles.Domain.Sites.Site.Id">
             <summary>
             The unique identifier of the site.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.Name">
+        <member name="P:Atles.Domain.Sites.Site.Name">
             <summary>
             The name of the site.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.Title">
+        <member name="P:Atles.Domain.Sites.Site.Title">
             <summary>
             The title of the site.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.PublicTheme">
+        <member name="P:Atles.Domain.Sites.Site.PublicTheme">
             <summary>
             The name of the theme to use in the public site.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.PublicCss">
+        <member name="P:Atles.Domain.Sites.Site.PublicCss">
             <summary>
             The Cascading Style Sheet to use in the public site.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.AdminTheme">
+        <member name="P:Atles.Domain.Sites.Site.AdminTheme">
             <summary>
             The name of the theme to use in the admin area.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.AdminCss">
+        <member name="P:Atles.Domain.Sites.Site.AdminCss">
             <summary>
             The Cascading Style Sheet to use in the admin area.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.Language">
+        <member name="P:Atles.Domain.Sites.Site.Language">
             <summary>
             The ISO code for the language of the site (e.g. en or en-GB).
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.Privacy">
+        <member name="P:Atles.Domain.Sites.Site.Privacy">
             <summary>
             The content of the privacy page.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.Terms">
+        <member name="P:Atles.Domain.Sites.Site.Terms">
             <summary>
             The content of the terms page.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.HeadScript">
+        <member name="P:Atles.Domain.Sites.Site.HeadScript">
             <summary>
             Optional script to be added at the beginning of the head section of the HTML document.
             It could be used for example to add the Google Analytics script.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Sites.Site.Categories">
+        <member name="P:Atles.Domain.Sites.Site.Categories">
             <summary>
             The list of forum categories.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Sites.Site.#ctor">
+        <member name="M:Atles.Domain.Sites.Site.#ctor">
             <summary>
             Creates an empty site.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Sites.Site.#ctor(System.String,System.String)">
+        <member name="M:Atles.Domain.Sites.Site.#ctor(System.String,System.String)">
             <summary>
             Creates a new site with the given values.
             </summary>
             <param name="name"></param>
             <param name="title"></param>
         </member>
-        <member name="M:Atlas.Domain.Sites.Site.#ctor(System.Guid,System.String,System.String)">
+        <member name="M:Atles.Domain.Sites.Site.#ctor(System.Guid,System.String,System.String)">
             <summary>
             Creates a new site with the given values including the unique identifier.
             </summary>
@@ -1276,7 +1276,7 @@
             <param name="name"></param>
             <param name="title"></param>
         </member>
-        <member name="M:Atlas.Domain.Sites.Site.UpdateDetails(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+        <member name="M:Atles.Domain.Sites.Site.UpdateDetails(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
             <summary>
             Updates the details of the site.
             </summary>
@@ -1288,133 +1288,133 @@
             <param name="terms"></param>
             <param name="headScript"></param>
         </member>
-        <member name="T:Atlas.Domain.Users.Commands.ConfirmUser">
+        <member name="T:Atles.Domain.Users.Commands.ConfirmUser">
             <summary>
             Request to set the status of a user to active after the email has been confirmed.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.Commands.ConfirmUser.Id">
+        <member name="P:Atles.Domain.Users.Commands.ConfirmUser.Id">
             <summary>
             The unique identifier of the user.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Users.Commands.CreateUser">
+        <member name="T:Atles.Domain.Users.Commands.CreateUser">
             <summary>
             Request to create a new user.
             This request is sent right after a user completes the registration in the site.
             If a user is already registered but a profile does not exist yet, this request is sent the first time the user logs in.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.Commands.CreateUser.Id">
+        <member name="P:Atles.Domain.Users.Commands.CreateUser.Id">
             <summary>
             The unique identifier of the user.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.Commands.CreateUser.IdentityUserId">
+        <member name="P:Atles.Domain.Users.Commands.CreateUser.IdentityUserId">
             <summary>
             The unique identifier of the user in the membership database.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.Commands.CreateUser.Email">
+        <member name="P:Atles.Domain.Users.Commands.CreateUser.Email">
             <summary>
             The email of the user in the membership database.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.Commands.CreateUser.Confirm">
+        <member name="P:Atles.Domain.Users.Commands.CreateUser.Confirm">
             <summary>
             A value indicating whether the status of the new user needs to be set as active (true) or pending (false).
             When a user registers through the site the value is false because the user needs to confirm the email address before being set as active.
             When an administrator creates a user through the admin are, this value is true and the user is immediately active.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Users.Commands.DeleteUser">
+        <member name="T:Atles.Domain.Users.Commands.DeleteUser">
             <summary>
             Request to set the status of a user to deleted and to remove the identity user from the membership database.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.Commands.DeleteUser.Id">
+        <member name="P:Atles.Domain.Users.Commands.DeleteUser.Id">
             <summary>
             The unique identifier of the user to delete.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Users.Commands.ReinstateUser">
+        <member name="T:Atles.Domain.Users.Commands.ReinstateUser">
             <summary>
             Request to re-active a suspended user.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.Commands.ReinstateUser.Id">
+        <member name="P:Atles.Domain.Users.Commands.ReinstateUser.Id">
             <summary>
             The unique identifier of the user to re-activate.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Users.Commands.SuspendUser">
+        <member name="T:Atles.Domain.Users.Commands.SuspendUser">
             <summary>
             Request to suspend a user.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.Commands.SuspendUser.Id">
+        <member name="P:Atles.Domain.Users.Commands.SuspendUser.Id">
             <summary>
             The unique identifier of the user to be suspended.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Users.Commands.UpdateUser">
+        <member name="T:Atles.Domain.Users.Commands.UpdateUser">
             <summary>
             Request to update a user.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.Commands.UpdateUser.Id">
+        <member name="P:Atles.Domain.Users.Commands.UpdateUser.Id">
             <summary>
             The unique identifier of the user to update.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.Commands.UpdateUser.DisplayName">
+        <member name="P:Atles.Domain.Users.Commands.UpdateUser.DisplayName">
             <summary>
             The new display name of the user.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.Commands.UpdateUser.Roles">
+        <member name="P:Atles.Domain.Users.Commands.UpdateUser.Roles">
             <summary>
             The list of roles to be assigned to the user.
             This value is populated only an administrator updates a user.
             </summary>
         </member>
-        <member name="T:Atlas.Domain.Users.User">
+        <member name="T:Atles.Domain.Users.User">
             <summary>
             User
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.User.Id">
+        <member name="P:Atles.Domain.Users.User.Id">
             <summary>
             The unique identifier of the user.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.User.IdentityUserId">
+        <member name="P:Atles.Domain.Users.User.IdentityUserId">
             <summary>
             The unique identifier of the user in the membership database.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.User.Email">
+        <member name="P:Atles.Domain.Users.User.Email">
             <summary>
             The email of the user in the membership database.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.User.DisplayName">
+        <member name="P:Atles.Domain.Users.User.DisplayName">
             <summary>
             The display name of the user.
             It is used as the public name of the user.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.User.TopicsCount">
+        <member name="P:Atles.Domain.Users.User.TopicsCount">
             <summary>
             The number of the topics published by the user.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.User.RepliesCount">
+        <member name="P:Atles.Domain.Users.User.RepliesCount">
             <summary>
             The number of replies created by the user.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.User.Status">
+        <member name="P:Atles.Domain.Users.User.Status">
             <summary>
             The status of the user.
             <list type="bullet">
@@ -1430,27 +1430,27 @@
             </list>
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.User.TimeStamp">
+        <member name="P:Atles.Domain.Users.User.TimeStamp">
             <summary>
             The time stamp of when the user has been created.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.User.Posts">
+        <member name="P:Atles.Domain.Users.User.Posts">
             <summary>
             The list of posts created by the user.
             </summary>
         </member>
-        <member name="P:Atlas.Domain.Users.User.Events">
+        <member name="P:Atles.Domain.Users.User.Events">
             <summary>
             The list of events generated by the user.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Users.User.#ctor">
+        <member name="M:Atles.Domain.Users.User.#ctor">
             <summary>
             Creates an empty user.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Users.User.#ctor(System.Guid,System.String,System.String,System.String)">
+        <member name="M:Atles.Domain.Users.User.#ctor(System.Guid,System.String,System.String,System.String)">
             <summary>
             Creates a new user with the given values.
             </summary>
@@ -1459,7 +1459,7 @@
             <param name="email"></param>
             <param name="displayName"></param>
         </member>
-        <member name="M:Atlas.Domain.Users.User.#ctor(System.String,System.String,System.String)">
+        <member name="M:Atles.Domain.Users.User.#ctor(System.String,System.String,System.String)">
             <summary>
             Creates a new user with the given values including the unique identifier.
             </summary>
@@ -1467,49 +1467,49 @@
             <param name="email"></param>
             <param name="displayName"></param>
         </member>
-        <member name="M:Atlas.Domain.Users.User.Confirm">
+        <member name="M:Atles.Domain.Users.User.Confirm">
             <summary>
             Set the status to active when the user confirms the email address.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Users.User.UpdateDetails(System.String)">
+        <member name="M:Atles.Domain.Users.User.UpdateDetails(System.String)">
             <summary>
             Updates user's details.
             </summary>
             <param name="displayName"></param>
         </member>
-        <member name="M:Atlas.Domain.Users.User.IncreaseTopicsCount">
+        <member name="M:Atles.Domain.Users.User.IncreaseTopicsCount">
             <summary>
             Increases the number of topics by 1.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Users.User.IncreaseRepliesCount">
+        <member name="M:Atles.Domain.Users.User.IncreaseRepliesCount">
             <summary>
             Increases the number of replies by 1.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Users.User.DecreaseTopicsCount">
+        <member name="M:Atles.Domain.Users.User.DecreaseTopicsCount">
             <summary>
             Decreases the number of topics by 1.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Users.User.DecreaseRepliesCount">
+        <member name="M:Atles.Domain.Users.User.DecreaseRepliesCount">
             <summary>
             Decreases the number of replies by 1.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Users.User.Suspend">
+        <member name="M:Atles.Domain.Users.User.Suspend">
             <summary>
             Sets the status of the user as suspended.
             The user will no longer be able to write new posts.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Users.User.Reinstate">
+        <member name="M:Atles.Domain.Users.User.Reinstate">
             <summary>
             Re-activates the user if suspended.
             </summary>
         </member>
-        <member name="M:Atlas.Domain.Users.User.Delete">
+        <member name="M:Atles.Domain.Users.User.Delete">
             <summary>
             Sets the status of the user as deleted.
             </summary>

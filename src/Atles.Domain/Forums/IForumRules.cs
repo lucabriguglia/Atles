@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Domain.Forums
+namespace Atles.Domain.Forums
 {
     public interface IForumRules
     {

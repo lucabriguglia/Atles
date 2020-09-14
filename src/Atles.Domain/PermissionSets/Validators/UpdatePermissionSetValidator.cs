@@ -1,7 +1,7 @@
-﻿using Atlas.Domain.PermissionSets.Commands;
+﻿using Atles.Domain.PermissionSets.Commands;
 using FluentValidation;
 
-namespace Atlas.Domain.PermissionSets.Validators
+namespace Atles.Domain.PermissionSets.Validators
 {
     public class UpdatePermissionSetValidator : AbstractValidator<UpdatePermissionSet>
     {

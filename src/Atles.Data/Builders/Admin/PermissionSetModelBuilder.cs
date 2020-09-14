@@ -1,11 +1,11 @@
-﻿using Atlas.Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Domain.PermissionSets;
 using Atlas.Models.Admin.PermissionSets;
 using Atlas.Models.Admin.Roles;
+using Atles.Domain;
+using Atles.Domain.PermissionSets;
 using IndexPageModel = Atlas.Models.Admin.PermissionSets.IndexPageModel;
 
 namespace Atlas.Data.Builders.Admin

@@ -1,4 +1,4 @@
-﻿namespace Atlas.Domain.Categories
+﻿namespace Atles.Domain.Categories
 {
     public enum CategoryStatusType
     {

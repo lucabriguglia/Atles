@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
-using Atlas.Domain;
-using Atlas.Domain.Categories;
-using Atlas.Domain.Forums;
 using Atlas.Models.Public.Index;
+using Atles.Domain.Categories;
+using Atles.Domain.Forums;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data.Builders.Public

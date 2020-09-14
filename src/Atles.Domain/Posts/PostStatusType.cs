@@ -1,4 +1,4 @@
-﻿namespace Atlas.Domain.Posts
+﻿namespace Atles.Domain.Posts
 {
     public enum PostStatusType
     {

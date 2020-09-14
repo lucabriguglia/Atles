@@ -1,8 +1,8 @@
-﻿using Atlas.Domain.Categories.Commands;
-using Atlas.Domain.PermissionSets;
+﻿using Atles.Domain.Categories.Commands;
+using Atles.Domain.PermissionSets;
 using FluentValidation;
 
-namespace Atlas.Domain.Categories.Validators
+namespace Atles.Domain.Categories.Validators
 {
     public class UpdateCategoryValidator : AbstractValidator<UpdateCategory>
     {

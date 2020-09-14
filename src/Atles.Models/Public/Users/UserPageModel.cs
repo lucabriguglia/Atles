@@ -1,7 +1,6 @@
 ﻿using System;
-using Atlas.Domain;
-using Atlas.Domain.Users;
 using Atlas.Models.Public.Search;
+using Atles.Domain.Users;
 
 namespace Atlas.Models.Public.Users
 {

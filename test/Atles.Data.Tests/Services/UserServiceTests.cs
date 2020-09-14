@@ -2,9 +2,8 @@
 using System.Threading;
 using System.Threading.Tasks;
 using Atlas.Data.Services;
-using Atlas.Domain;
-using Atlas.Domain.Users;
-using Atlas.Domain.Users.Commands;
+using Atles.Domain.Users;
+using Atles.Domain.Users.Commands;
 using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;

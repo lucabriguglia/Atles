@@ -2,11 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
-using Atlas.Domain;
-using Atlas.Domain.Forums;
-using Atlas.Domain.Posts;
 using Atlas.Models;
 using Atlas.Models.Public.Forums;
+using Atles.Domain.Forums;
+using Atles.Domain.Posts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atlas.Data.Builders.Public

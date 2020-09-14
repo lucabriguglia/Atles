@@ -1,8 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atlas.Data;
-using Atlas.Domain;
-using Atlas.Domain.Users;
-using Atlas.Domain.Users.Commands;
+using Atles.Domain.Users;
+using Atles.Domain.Users.Commands;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

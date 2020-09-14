@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Domain.Categories.Commands;
+using Atles.Domain.Categories.Commands;
 
-namespace Atlas.Domain.Categories
+namespace Atles.Domain.Categories
 {
     public interface ICategoryService
     {

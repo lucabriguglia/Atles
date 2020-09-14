@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Atlas.Domain.Forums;
-using Atlas.Domain.PermissionSets;
-using Atlas.Domain.Sites;
+using Atles.Domain.Forums;
+using Atles.Domain.PermissionSets;
+using Atles.Domain.Sites;
 
-namespace Atlas.Domain.Categories
+namespace Atles.Domain.Categories
 {
     /// <summary>
     /// A forum category acts as a container to group logically different forums.

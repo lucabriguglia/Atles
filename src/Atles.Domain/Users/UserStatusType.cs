@@ -1,4 +1,4 @@
-﻿namespace Atlas.Domain.Users
+﻿namespace Atles.Domain.Users
 {
     public enum UserStatusType
     {

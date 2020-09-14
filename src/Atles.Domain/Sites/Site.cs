@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Atlas.Domain.Categories;
+using Atles.Domain.Categories;
 using Docs.Attributes;
 
-namespace Atlas.Domain.Sites
+namespace Atles.Domain.Sites
 {
     /// <summary>
     /// Site

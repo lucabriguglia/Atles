@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Domain.Categories
+namespace Atles.Domain.Categories
 {
     public interface ICategoryRules
     {

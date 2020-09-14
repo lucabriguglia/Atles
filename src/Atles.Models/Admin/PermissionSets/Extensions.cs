@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Atlas.Domain.PermissionSets.Commands;
+using Atles.Domain.PermissionSets.Commands;
 
 namespace Atlas.Models.Admin.PermissionSets
 {

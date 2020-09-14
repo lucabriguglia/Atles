@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Domain.Users;
-using Atlas.Domain.Users.Commands;
 using Atlas.Models;
 using Atlas.Models.Admin.Users;
 using Atlas.Server.Services;
+using Atles.Domain.Users;
+using Atles.Domain.Users.Commands;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

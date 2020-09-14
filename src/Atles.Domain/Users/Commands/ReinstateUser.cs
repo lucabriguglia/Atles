@@ -1,7 +1,7 @@
 ﻿using System;
 using Docs.Attributes;
 
-namespace Atlas.Domain.Users.Commands
+namespace Atles.Domain.Users.Commands
 {
     /// <summary>
     /// Request to re-active a suspended user.

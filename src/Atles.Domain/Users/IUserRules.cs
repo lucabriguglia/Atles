@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atlas.Domain.Users
+namespace Atles.Domain.Users
 {
     public interface IUserRules
     {

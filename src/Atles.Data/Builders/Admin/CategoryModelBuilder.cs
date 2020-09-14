@@ -1,12 +1,11 @@
-﻿using Atlas.Domain;
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Domain.Categories;
-using Atlas.Domain.Forums;
-using Atlas.Domain.PermissionSets;
 using Atlas.Models.Admin.Categories;
+using Atles.Domain.Categories;
+using Atles.Domain.Forums;
+using Atles.Domain.PermissionSets;
 
 namespace Atlas.Data.Builders.Admin
 {

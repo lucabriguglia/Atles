@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Domain.PermissionSets;
-using Atlas.Domain.PermissionSets.Commands;
 using Atlas.Models.Admin.PermissionSets;
 using Atlas.Server.Services;
+using Atles.Domain.PermissionSets;
+using Atles.Domain.PermissionSets.Commands;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atlas.Server.Controllers.Admin

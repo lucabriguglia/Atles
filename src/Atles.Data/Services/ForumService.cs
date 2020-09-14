@@ -3,9 +3,9 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
-using Atlas.Domain;
-using Atlas.Domain.Forums;
-using Atlas.Domain.Forums.Commands;
+using Atles.Domain;
+using Atles.Domain.Forums;
+using Atles.Domain.Forums.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 

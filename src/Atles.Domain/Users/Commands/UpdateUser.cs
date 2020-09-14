@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Docs.Attributes;
 
-namespace Atlas.Domain.Users.Commands
+namespace Atles.Domain.Users.Commands
 {
     /// <summary>
     /// Request to update a user.

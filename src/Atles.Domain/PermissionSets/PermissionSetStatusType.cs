@@ -1,4 +1,4 @@
-﻿namespace Atlas.Domain.PermissionSets
+﻿namespace Atles.Domain.PermissionSets
 {
     public enum PermissionSetStatusType
     {

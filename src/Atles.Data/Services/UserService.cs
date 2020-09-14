@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Data;
 using System.Threading.Tasks;
-using Atlas.Domain;
-using Atlas.Domain.Users;
-using Atlas.Domain.Users.Commands;
+using Atles.Domain;
+using Atles.Domain.Users;
+using Atles.Domain.Users.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 

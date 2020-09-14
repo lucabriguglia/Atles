@@ -2,9 +2,9 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
-using Atlas.Domain;
-using Atlas.Domain.Posts;
-using Atlas.Domain.Posts.Commands;
+using Atles.Domain;
+using Atles.Domain.Posts;
+using Atles.Domain.Posts.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 

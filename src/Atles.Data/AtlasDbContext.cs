@@ -1,12 +1,12 @@
 ﻿using System.Reflection;
-using Atlas.Domain;
-using Atlas.Domain.Categories;
-using Atlas.Domain.Forums;
-using Atlas.Domain.PermissionSets;
-using Atlas.Domain.Sites;
-using Atlas.Domain.Users;
+using Atles.Domain;
+using Atles.Domain.Categories;
+using Atles.Domain.Forums;
+using Atles.Domain.PermissionSets;
+using Atles.Domain.Sites;
+using Atles.Domain.Users;
 using Microsoft.EntityFrameworkCore;
-using Post = Atlas.Domain.Posts.Post;
+using Post = Atles.Domain.Posts.Post;
 
 namespace Atlas.Data
 {

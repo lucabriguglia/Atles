@@ -1,5 +1,5 @@
 ﻿using System;
-using Atlas.Domain.Users;
+using Atles.Domain.Users;
 using AutoFixture;
 using NUnit.Framework;
 

@@ -1,4 +1,4 @@
-﻿namespace Atlas.Domain.PermissionSets.Commands
+﻿namespace Atles.Domain.PermissionSets.Commands
 {
     public class PermissionCommand
     {

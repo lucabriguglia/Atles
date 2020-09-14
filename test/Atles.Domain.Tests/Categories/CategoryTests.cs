@@ -1,5 +1,5 @@
 ﻿using System;
-using Atlas.Domain.Categories;
+using Atles.Domain.Categories;
 using AutoFixture;
 using NUnit.Framework;
 

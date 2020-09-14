@@ -1,6 +1,6 @@
-﻿using Atlas.Domain.PermissionSets;
-using Atlas.Domain.PermissionSets.Commands;
-using Atlas.Domain.PermissionSets.Validators;
+﻿using Atles.Domain.PermissionSets;
+using Atles.Domain.PermissionSets.Commands;
+using Atles.Domain.PermissionSets.Validators;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;

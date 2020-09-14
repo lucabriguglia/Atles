@@ -1,4 +1,4 @@
-﻿namespace Atlas.Domain.Forums
+﻿namespace Atles.Domain.Forums
 {
     public enum ForumStatusType
     {

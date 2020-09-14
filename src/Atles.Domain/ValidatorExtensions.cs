@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
 
-namespace Atlas.Domain
+namespace Atles.Domain
 {
     public static class ValidatorExtensions
     {

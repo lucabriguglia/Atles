@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atlas.Domain.PermissionSets;
 using Atlas.Models;
 using Atlas.Models.Public;
 using Atlas.Models.Public.Index;
 using Atlas.Models.Public.Search;
 using Atlas.Server.Services;
+using Atles.Domain.PermissionSets;
 using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;

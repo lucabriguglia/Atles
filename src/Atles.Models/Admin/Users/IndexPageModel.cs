@@ -1,6 +1,5 @@
 ﻿using System;
-using Atlas.Domain;
-using Atlas.Domain.Users;
+using Atles.Domain.Users;
 
 namespace Atlas.Models.Admin.Users
 {

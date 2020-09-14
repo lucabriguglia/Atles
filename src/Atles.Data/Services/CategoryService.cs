@@ -2,10 +2,10 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atlas.Data.Caching;
-using Atlas.Domain;
-using Atlas.Domain.Categories;
-using Atlas.Domain.Categories.Commands;
-using Atlas.Domain.Forums;
+using Atles.Domain;
+using Atles.Domain.Categories;
+using Atles.Domain.Categories.Commands;
+using Atles.Domain.Forums;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 

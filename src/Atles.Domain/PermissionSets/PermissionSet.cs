@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Atlas.Domain.Categories;
-using Atlas.Domain.Forums;
-using Atlas.Domain.PermissionSets.Commands;
+using Atles.Domain.Categories;
+using Atles.Domain.Forums;
+using Atles.Domain.PermissionSets.Commands;
 using Docs.Attributes;
 
-namespace Atlas.Domain.PermissionSets
+namespace Atles.Domain.PermissionSets
 {
     /// <summary>
     /// A permission set contains the permissions to read, create or edit forum posts.

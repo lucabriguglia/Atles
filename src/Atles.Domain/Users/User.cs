@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
-using Atlas.Domain.Posts;
+using Atles.Domain.Posts;
 using Docs.Attributes;
 
-namespace Atlas.Domain.Users
+namespace Atles.Domain.Users
 {
     /// <summary>
     /// User
