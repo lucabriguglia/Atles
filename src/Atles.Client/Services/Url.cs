@@ -1,4 +1,4 @@
-﻿namespace Atlas.Client.Services
+﻿namespace Atles.Client.Services
 {
     public static class Url
     {

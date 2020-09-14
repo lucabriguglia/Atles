@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atles.Models.Admin.Categories;
 
-namespace Atlas.Client.Components.Admin.Categories
+namespace Atles.Client.Components.Admin.Categories
 {
     public abstract class CreatePage : AdminPageBase
     {

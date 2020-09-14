@@ -1,6 +1,7 @@
 ﻿@page "/admin/users/activity/{id:guid}"
 
-@inherits Atlas.Client.Components.Admin.Users.ActivityPage
+@using Atles.Client.Extensions
+@inherits Atles.Client.Components.Admin.Users.ActivityPage
 
 @if (Model == null)
 {

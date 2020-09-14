@@ -3,7 +3,7 @@ using Atles.Models.Admin.PermissionSets;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Atlas.Client.Components.Admin.PermissionSets
+namespace Atles.Client.Components.Admin.PermissionSets
 {
     public abstract class FormComponent : AdminComponentBase
     {

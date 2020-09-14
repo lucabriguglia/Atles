@@ -1,11 +1,11 @@
-﻿using Atlas.Client.Services;
+﻿using Atles.Client.Services;
 using Atles.Client.Shared;
 using Atles.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 
-namespace Atlas.Client.Components.Shared
+namespace Atles.Client.Components.Shared
 {
     public abstract class SharedComponentBase : ComponentBase
     {

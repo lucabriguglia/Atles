@@ -1,8 +1,7 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Docs.Models;
 
-namespace Atlas.Client.Components.Pages
+namespace Atles.Client.Components.Pages
 {
     public abstract class DocsPage : PageBase
     {

@@ -1,10 +1,10 @@
-﻿using Atlas.Client.Services;
-using Atles.Client.Pages.Admin;
+﻿using Atles.Client.Pages.Admin;
+using Atles.Client.Services;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 
-namespace Atlas.Client.Components.Admin
+namespace Atles.Client.Components.Admin
 {
     public abstract class AdminComponentBase : ComponentBase
     {

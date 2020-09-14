@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atlas.Client.Extensions
+namespace Atles.Client.Extensions
 {
     public static class DateTimeExtensions
     {

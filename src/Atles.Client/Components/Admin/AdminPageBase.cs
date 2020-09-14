@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Components;
 
-namespace Atlas.Client.Components.Admin
+namespace Atles.Client.Components.Admin
 {
     [Authorize(Policy = "Admin")]
     [Layout(typeof(AdminLayout))]

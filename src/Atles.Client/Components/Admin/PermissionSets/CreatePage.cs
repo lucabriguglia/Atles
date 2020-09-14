@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atles.Models.Admin.PermissionSets;
 
-namespace Atlas.Client.Components.Admin.PermissionSets
+namespace Atles.Client.Components.Admin.PermissionSets
 {
     public abstract class CreatePage : AdminPageBase
     {

@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Client.Services;
+using Atles.Client.Services;
 using Atles.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace Atlas.Client.Components
+namespace Atles.Client.Components
 {
     public abstract class MainLayout : LayoutComponentBase
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atles.Models.Public.Index;
 
-namespace Atlas.Client.Components.Themes
+namespace Atles.Client.Components.Themes
 {
     public abstract class IndexComponent : ThemeComponentBase
     {

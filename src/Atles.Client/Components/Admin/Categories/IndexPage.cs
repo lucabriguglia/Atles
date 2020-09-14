@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Atles.Models.Admin.Categories;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace Atlas.Client.Components.Admin.Categories
+namespace Atles.Client.Components.Admin.Categories
 {
     public abstract class IndexPage : AdminPageBase
     {

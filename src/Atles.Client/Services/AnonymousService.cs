@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace Atlas.Client.Services
+namespace Atles.Client.Services
 {
     public class AnonymousService
     {

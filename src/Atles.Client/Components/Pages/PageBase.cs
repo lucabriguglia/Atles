@@ -2,14 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Client.Services;
 using Atles.Client.Pages;
+using Atles.Client.Services;
 using Atles.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 
-namespace Atlas.Client.Components.Pages
+namespace Atles.Client.Components.Pages
 {
     public abstract class PageBase : ComponentBase
     {

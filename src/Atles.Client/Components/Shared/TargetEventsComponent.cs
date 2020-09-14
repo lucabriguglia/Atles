@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Atles.Models.Admin.Events;
 using Microsoft.AspNetCore.Components;
 
-namespace Atlas.Client.Components.Shared
+namespace Atles.Client.Components.Shared
 {
     public abstract class TargetEventsComponent : SharedComponentBase
     {

@@ -1,10 +1,10 @@
-﻿@inherits Atlas.Client.Components.Admin.Categories.FormComponent
+﻿@inherits Atles.Client.Components.Admin.Categories.FormComponent
 
 <div class="row">
     <div class="col-md-4">
         <EditForm EditContext="@EditContext" OnSubmit="OnSubmitAsync">
             <DataAnnotationsValidator />
-            @*<FluentValidationValidator ValidatorType=typeof(Atlas.Domain.Forum.Validators.CreateForumClientValidator) />*@
+            @*<FluentValidationValidator ValidatorType=typeof(Atles.Domain.Forum.Validators.CreateForumClientValidator) />*@
             <div class="form-group">
                 <label for="name" class="control-label">@Loc["Name"]</label>
                 <InputText id="name" @bind-Value="Model.Category.Name" Class="form-control" />

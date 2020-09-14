@@ -3,7 +3,7 @@ using Atles.Models.Admin.Categories;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Atlas.Client.Components.Admin.Categories
+namespace Atles.Client.Components.Admin.Categories
 {
     public abstract class FormComponent : AdminComponentBase
     {

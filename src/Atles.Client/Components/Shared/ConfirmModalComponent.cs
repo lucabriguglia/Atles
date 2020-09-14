@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace Atlas.Client.Components.Shared
+namespace Atles.Client.Components.Shared
 {
     public abstract class ConfirmModalComponent : SharedComponentBase
     {

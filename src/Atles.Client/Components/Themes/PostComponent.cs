@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Client.Services;
+using Atles.Client.Services;
 using Atles.Models.Public.Posts;
 using Microsoft.AspNetCore.Components;
 
-namespace Atlas.Client.Components.Themes
+namespace Atles.Client.Components.Themes
 {
     public abstract class PostComponent : ThemeComponentBase
     {

@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atles.Models.Admin.Site;
 
-namespace Atlas.Client.Components.Admin
+namespace Atles.Client.Components.Admin
 {
     public abstract class SettingsPage : AdminPageBase
     {

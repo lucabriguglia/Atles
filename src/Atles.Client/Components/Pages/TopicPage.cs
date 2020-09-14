@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Components;
 
-namespace Atlas.Client.Components.Pages
+namespace Atles.Client.Components.Pages
 {
     public abstract class TopicPage : PageBase
     {

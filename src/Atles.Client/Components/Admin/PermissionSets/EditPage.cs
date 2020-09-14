@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Atles.Models.Admin.PermissionSets;
 using Microsoft.AspNetCore.Components;
 
-namespace Atlas.Client.Components.Admin.PermissionSets
+namespace Atles.Client.Components.Admin.PermissionSets
 {
     public abstract class EditPage : AdminPageBase
     {

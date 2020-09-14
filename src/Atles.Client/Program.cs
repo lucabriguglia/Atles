@@ -2,15 +2,14 @@ using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Atlas.Client.Services;
-using Atles.Client;
+using Atles.Client.Services;
 using Atles.Models.Public;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Tewr.Blazor.FileReader;
 
-namespace Atlas.Client
+namespace Atles.Client
 {
     public class Program
     {
@@ -19,10 +18,10 @@ namespace Atlas.Client
             var builder = WebAssemblyHostBuilder.CreateDefault(args);
             builder.RootComponents.Add<App>("app");
 
-            builder.Services.AddHttpClient("Atlas.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+            builder.Services.AddHttpClient("Atles.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
                 .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
-            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Atlas.ServerAPI"));
+            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Atles.ServerAPI"));
 
             builder.Services.AddHttpClient<AnonymousService>(client => 
             { 

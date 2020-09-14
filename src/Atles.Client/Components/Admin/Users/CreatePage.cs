@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Atles.Models.Admin.Users;
 
-namespace Atlas.Client.Components.Admin.Users
+namespace Atles.Client.Components.Admin.Users
 {
     public abstract class CreatePage : AdminPageBase
     {

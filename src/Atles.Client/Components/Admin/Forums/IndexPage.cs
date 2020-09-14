@@ -4,7 +4,7 @@ using Atles.Models.Admin.Forums;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace Atlas.Client.Components.Admin.Forums
+namespace Atles.Client.Components.Admin.Forums
 {
     public abstract class IndexPage : AdminPageBase
     {

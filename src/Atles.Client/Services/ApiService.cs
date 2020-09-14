@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components.Authorization;
 
-namespace Atlas.Client.Services
+namespace Atles.Client.Services
 {
     public class ApiService
     {

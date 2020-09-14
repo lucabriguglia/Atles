@@ -4,7 +4,7 @@ using Atles.Models.Admin.Roles;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
-namespace Atlas.Client.Components.Admin
+namespace Atles.Client.Components.Admin
 {
     public abstract class RolesPage : AdminPageBase
     {

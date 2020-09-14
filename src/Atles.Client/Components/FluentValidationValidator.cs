@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System;
+using System.Threading.Tasks;
 using FluentValidation;
 using FluentValidation.Results;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
-using System;
-using System.Threading.Tasks;
 
-namespace Atlas.Client.Components
+namespace Atles.Client.Components
 {
     /// <summary>
     /// https://blazor-university.com/forms/writing-custom-validation/

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Atles.Models.Admin.PermissionSets;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace Atlas.Client.Components.Admin.PermissionSets
+namespace Atles.Client.Components.Admin.PermissionSets
 {
     public abstract class IndexPage : AdminPageBase
     {

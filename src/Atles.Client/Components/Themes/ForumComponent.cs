@@ -1,13 +1,13 @@
-﻿using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Web;
-using Microsoft.JSInterop;
-using System;
+﻿using System;
 using System.Threading.Tasks;
-using Atlas.Client.Components.Shared;
+using Atles.Client.Components.Shared;
 using Atles.Models;
 using Atles.Models.Public.Forums;
+using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Web;
+using Microsoft.JSInterop;
 
-namespace Atlas.Client.Components.Themes
+namespace Atles.Client.Components.Themes
 {
     public abstract class ForumComponent : ThemeComponentBase
     {

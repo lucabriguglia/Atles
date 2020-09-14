@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Client.Components.Shared;
+using Atles.Client.Components.Shared;
 using Atles.Models.Admin.Users;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
-namespace Atlas.Client.Components.Admin.Users
+namespace Atles.Client.Components.Admin.Users
 {
     public abstract class IndexPage : AdminPageBase
     {

@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Atles.Models.Admin.Forums;
 using Microsoft.AspNetCore.Components;
 
-namespace Atlas.Client.Components.Admin.Forums
+namespace Atles.Client.Components.Admin.Forums
 {
     public abstract class EditPage : AdminPageBase
     {

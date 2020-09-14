@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Atlas.Client.Services;
 using Atles.Client.Pages;
+using Atles.Client.Services;
 using Atles.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 
-namespace Atlas.Client.Components.Themes
+namespace Atles.Client.Components.Themes
 {
     public abstract class ThemeComponentBase : ComponentBase
     {
