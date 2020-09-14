@@ -3,7 +3,7 @@ using Docs;
 using Docs.Models;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atlas.Server.Controllers.Public
+namespace Atles.Server.Controllers.Public
 {
     [Route("api/public/documentation")]
     [ApiController]

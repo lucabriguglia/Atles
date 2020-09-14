@@ -1,18 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atlas.Server.Services;
 using Atles.Domain.PermissionSets;
 using Atles.Models;
 using Atles.Models.Public;
 using Atles.Models.Public.Index;
 using Atles.Models.Public.Search;
+using Atles.Server.Services;
 using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atlas.Server.Controllers.Public
+namespace Atles.Server.Controllers.Public
 {
     [Route("api/public")]
     [ApiController]

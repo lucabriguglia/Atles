@@ -12,7 +12,7 @@ using Markdig;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Server.Services
+namespace Atles.Server.Services
 {
     public class ContextService : IContextService
     {

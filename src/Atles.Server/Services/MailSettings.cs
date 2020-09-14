@@ -1,4 +1,4 @@
-﻿namespace Atlas.Server.Services
+﻿namespace Atles.Server.Services
 {
     public class MailSettings
     {

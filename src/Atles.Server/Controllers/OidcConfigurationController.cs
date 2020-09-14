@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Atlas.Server.Controllers
+namespace Atles.Server.Controllers
 {
     public class OidcConfigurationController : Controller
     {

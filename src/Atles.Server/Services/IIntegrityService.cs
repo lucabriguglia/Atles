@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 
-namespace Atlas.Server.Services
+namespace Atles.Server.Services
 {
     public interface IIntegrityService
     {

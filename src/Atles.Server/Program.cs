@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Hosting;
 
-namespace Atlas.Server
+namespace Atles.Server
 {
     public class Program
     {

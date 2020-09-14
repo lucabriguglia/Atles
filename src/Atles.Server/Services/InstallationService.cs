@@ -15,7 +15,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Atlas.Server.Services
+namespace Atles.Server.Services
 {
     public class InstallationService : IInstallationService
     {
@@ -39,7 +39,7 @@ namespace Atlas.Server.Services
                 return;
             }
 
-            var site = new Site("Default", "Atlas");
+            var site = new Site("Default", "Atles");
             _dbContext.Sites.Add(site);
             _dbContext.Events.Add(new Event(site.Id,
                 null,
@@ -337,7 +337,7 @@ namespace Atlas.Server.Services
                 }));
 
             // Topics
-            var topicWelcomeTitle = "Welcome to Atlas!";
+            var topicWelcomeTitle = "Welcome to Atles!";
             var topicWelcome = Post.CreateTopic(forumWelcome.Id, memberAdmin.Id, topicWelcomeTitle, topicWelcomeTitle.ToSlug(), "Welcome...", PostStatusType.Published);
             _dbContext.Posts.Add(topicWelcome);
             _dbContext.Events.Add(new Event(site.Id,

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Server.Services;
 using Atles.Domain.Users;
 using Atles.Domain.Users.Commands;
 using Atles.Models;
 using Atles.Models.Admin.Users;
+using Atles.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atlas.Server.Controllers.Admin
+namespace Atles.Server.Controllers.Admin
 {
     [Route("api/admin/users")]
     public class UsersController : AdminControllerBase

@@ -5,7 +5,7 @@ using Atles.Domain.Users.Commands;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atlas.Server.Services
+namespace Atles.Server.Services
 {
     public class IntegrityService : IIntegrityService
     {

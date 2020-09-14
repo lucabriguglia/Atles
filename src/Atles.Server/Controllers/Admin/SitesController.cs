@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Server.Services;
-using Microsoft.AspNetCore.Mvc;
 using Atles.Domain.Sites;
 using Atles.Domain.Sites.Commands;
 using Atles.Models.Admin.Site;
+using Atles.Server.Services;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Atlas.Server.Controllers.Admin
+namespace Atles.Server.Controllers.Admin
 {
     [Route("api/admin/sites")]
     public class SitesController : AdminControllerBase

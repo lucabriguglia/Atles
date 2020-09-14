@@ -1,19 +1,19 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atlas.Server.Services;
 using Atles.Data;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.Posts;
 using Atles.Domain.Posts.Commands;
 using Atles.Models.Public;
 using Atles.Models.Public.Topics;
+using Atles.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
-namespace Atlas.Server.Controllers.Public
+namespace Atles.Server.Controllers.Public
 {
     [Authorize]
     [Route("api/public/replies")]

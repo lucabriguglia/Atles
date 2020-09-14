@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atlas.Server.Controllers.Admin
+namespace Atles.Server.Controllers.Admin
 {
     [Authorize(Policy = "Admin")]
     [ApiController]

@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Server.Services;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.PermissionSets.Commands;
 using Atles.Models.Admin.PermissionSets;
+using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atlas.Server.Controllers.Admin
+namespace Atles.Server.Controllers.Admin
 {
     [Route("api/admin/permission-sets")]
     public class PermissionSetsController : AdminControllerBase

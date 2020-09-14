@@ -1,13 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Server.Services;
 using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
 using Atles.Models.Admin.Categories;
+using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atlas.Server.Controllers.Admin
+namespace Atles.Server.Controllers.Admin
 {
     [Route("api/admin/categories")]
     public class CategoriesController : AdminControllerBase

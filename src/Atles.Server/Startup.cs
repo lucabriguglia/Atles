@@ -1,25 +1,22 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.IO;
 using System.Linq;
+using Atles.Data;
+using Atles.Domain.Sites;
+using Atles.Models.Admin.Categories;
+using Atles.Server.Services;
+using Docs;
+using Docs.Extensions;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http.Features;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Atlas.Server.Services;
-using Atles.Data;
-using Microsoft.AspNetCore.Identity;
-using Atles.Domain.Sites;
-using Atles.Models.Admin.Categories;
-using Docs;
-using Docs.Extensions;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Http.Features;
-using Microsoft.Extensions.FileProviders;
 
-namespace Atlas.Server
+namespace Atles.Server
 {
     public class Startup
     {

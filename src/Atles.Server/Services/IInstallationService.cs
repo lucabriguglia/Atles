@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Atlas.Server.Services
+namespace Atles.Server.Services
 {
     public interface IInstallationService
     {

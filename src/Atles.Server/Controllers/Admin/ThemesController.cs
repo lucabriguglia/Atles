@@ -3,7 +3,7 @@ using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atlas.Server.Controllers.Admin
+namespace Atles.Server.Controllers.Admin
 {
     [Route("api/admin/themes")]
     public class ThemesController : AdminControllerBase

@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atlas.Server.Services;
 using Atles.Domain.PermissionSets;
 using Atles.Models;
 using Atles.Models.Public;
 using Atles.Models.Public.Forums;
+using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Atlas.Server.Controllers.Public
+namespace Atles.Server.Controllers.Public
 {
     [Route("api/public/forums")]
     [ApiController]

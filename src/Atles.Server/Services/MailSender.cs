@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Atlas.Server.Services
+namespace Atles.Server.Services
 {
     /// <summary>
     /// Only used for ASP.NET Core Identity

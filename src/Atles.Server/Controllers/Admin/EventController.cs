@@ -1,10 +1,10 @@
-﻿using System.Threading.Tasks;
-using Atlas.Server.Services;
-using Microsoft.AspNetCore.Mvc;
-using System;
+﻿using System;
+using System.Threading.Tasks;
 using Atles.Models.Admin.Events;
+using Atles.Server.Services;
+using Microsoft.AspNetCore.Mvc;
 
-namespace Atlas.Server.Controllers.Admin
+namespace Atles.Server.Controllers.Admin
 {
     [Route("api/admin/events")]
     public class EventController : AdminControllerBase

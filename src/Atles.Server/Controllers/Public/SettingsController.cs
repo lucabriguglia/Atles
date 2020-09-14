@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
-using Atlas.Server.Services;
 using Atles.Domain.Users;
 using Atles.Domain.Users.Commands;
 using Atles.Models.Public.Users;
+using Atles.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Atlas.Server.Controllers.Public
+namespace Atles.Server.Controllers.Public
 {
     [Authorize]
     [Route("api/public/settings")]

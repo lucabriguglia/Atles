@@ -4,7 +4,7 @@ using Atles.Domain.PermissionSets;
 using Atles.Models.Public;
 using Microsoft.AspNetCore.Http;
 
-namespace Atlas.Server.Services
+namespace Atles.Server.Services
 {
     public class SecurityService : ISecurityService
     {
