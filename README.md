@@ -28,9 +28,8 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 - Clone the repository
 - Run the **Atles.Server** project
 - Database and default data will be created automatically
-- Login with any of the following accounts:
-  - **Admin User**: admin@default.com / !P455w0rd?
-  - **Moderator User**: moderator@default.com / !P455w0rd?
-  - **Normal User**: user@default.com / !P455w0rd?
+- Login with the default admin account:
+  - **Email**: admin@default.com
+  - **Password**: !P455w0rd?
 
 **Note**: Please delete any databases previously created if you pull new versions. It's still a beta and some breaking changes might occur between commits.

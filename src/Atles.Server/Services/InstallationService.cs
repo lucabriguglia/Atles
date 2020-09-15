@@ -86,43 +86,6 @@ namespace Atles.Server.Services
             }
             await userManager.AddToRoleAsync(userAdmin, Consts.RoleNameAdmin);
 
-            var userNormalId = string.Empty;
-            if (_configuration["CreateDefaultNormalUser"] == "true")
-            {
-                var userNormal = await userManager.FindByEmailAsync(_configuration["DefaultNormalUserEmail"]);
-                if (userNormal == null)
-                {
-                    userNormal = new IdentityUser
-                    {
-                        Email = _configuration["DefaultNormalUserEmail"],
-                        UserName = _configuration["DefaultNormalUserName"]
-                    };
-                    await userManager.CreateAsync(userNormal, _configuration["DefaultNormalUserPassword"]);
-                    var code = await userManager.GenerateEmailConfirmationTokenAsync(userNormal);
-                    await userManager.ConfirmEmailAsync(userNormal, code);
-                    userNormalId = userNormal.Id;
-                }
-            }
-
-            var userModeratorId = string.Empty;
-            if (_configuration["CreateDefaultModeratorUser"] == "true")
-            {
-                var userModerator = await userManager.FindByEmailAsync(_configuration["DefaultModeratorUserEmail"]);
-                if (userModerator == null)
-                {
-                    userModerator = new IdentityUser
-                    {
-                        Email = _configuration["DefaultModeratorUserEmail"],
-                        UserName = _configuration["DefaultModeratorUserName"]
-                    };
-                    await userManager.CreateAsync(userModerator, _configuration["DefaultModeratorUserPassword"]);
-                    var code = await userManager.GenerateEmailConfirmationTokenAsync(userModerator);
-                    await userManager.ConfirmEmailAsync(userModerator, code);
-                    userModeratorId = userModerator.Id;
-                }
-                await userManager.AddToRoleAsync(userModerator, Consts.RoleNameModerator);
-            }
-
             // Users
             var memberAdmin = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == userAdmin.Id);
             if (memberAdmin == null)
@@ -141,50 +104,6 @@ namespace Atles.Server.Services
                         memberAdmin.Email,
                         memberAdmin.DisplayName
                     }));
-            }
-
-            if (_configuration["CreateDefaultNormalUser"] == "true")
-            {
-                var memberNormal = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == userNormalId);
-                if (memberNormal == null)
-                {
-                    memberNormal = new User(userNormalId, _configuration["DefaultNormalUserEmail"], _configuration["DefaultNormalUserDisplayName"]);
-                    memberNormal.Confirm();
-                    _dbContext.Users.Add(memberNormal);
-                    _dbContext.Events.Add(new Event(site.Id,
-                        null,
-                        EventType.Created,
-                        typeof(User),
-                        memberNormal.Id,
-                        new
-                        {
-                            UserId = memberNormal.IdentityUserId,
-                            memberNormal.Email,
-                            memberNormal.DisplayName
-                        }));
-                }
-            }
-
-            if (_configuration["CreateDefaultModeratorUser"] == "true")
-            {
-                var memberModerator = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == userModeratorId);
-                if (memberModerator == null)
-                {
-                    memberModerator = new User(userModeratorId, _configuration["DefaultModeratorUserEmail"], _configuration["DefaultModeratorUserDisplayName"]);
-                    memberModerator.Confirm();
-                    _dbContext.Users.Add(memberModerator);
-                    _dbContext.Events.Add(new Event(site.Id,
-                        null,
-                        EventType.Created,
-                        typeof(User),
-                        memberModerator.Id,
-                        new
-                        {
-                            UserId = memberModerator.IdentityUserId,
-                            memberModerator.Email,
-                            memberModerator.DisplayName
-                        }));
-                }
             }
 
             // Permission Sets
