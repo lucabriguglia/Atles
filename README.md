@@ -5,6 +5,7 @@
 A forum software built with ASP.NET Core Blazor WebAssembly.
 
 **Website**: [atles.io](https://atles.io).
+
 **Documentation**: [Atles Wiki](https://lucabriguglia.github.io/Atles).
 
 ![Forums Admin](docs/assets/img/admin-forums.png)
