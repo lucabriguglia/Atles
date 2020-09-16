@@ -8,6 +8,8 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 
 **Documentation**: [Atles Wiki](https://lucabriguglia.github.io/Atles).
 
+**What's next?**: [Projects](https://github.com/lucabriguglia/Atles/projects).
+
 ![Forums Admin](docs/assets/img/admin-forums.png)
 ![Permission Set Admin](docs/assets/img/admin-permission-set-edit.png)
 
