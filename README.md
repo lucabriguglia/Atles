@@ -27,11 +27,11 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 
 ## What's next
 
+- Upload Custom Themes
+- Upload Language Packs
 - Blog Module
 - CMS Module
 - Plugins
-- Upload Custom Themes
-- Upload Language Packs
 - More Database Providers
 - _(more to come)_
 
