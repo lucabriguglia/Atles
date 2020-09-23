@@ -15,7 +15,7 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 
 - Blazor WebAssembly 3.2.0
 - Entity Framework Core 3.1
-- SQL Server _(more to come)_
+- SQL Server
 
 ## Features
 
@@ -24,6 +24,16 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 - Granular permissions
 - Markdown editor
 - You can use your own ASP.NET Identity
+
+## What's next
+
+- Upload Custom Themes
+- Upload Language Packs
+- Blog Module
+- CMS Module
+- Plugins
+- More Database Providers
+- _(more to come)_
 
 ## Run on local
 
