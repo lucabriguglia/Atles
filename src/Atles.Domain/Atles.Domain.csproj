@@ -9,6 +9,10 @@
     <DocumentationFile>Atles.Domain.xml</DocumentationFile>
   </PropertyGroup>
 
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DocumentationFile>C:\dev\Atlas\src\Atles.Domain\Atles.Domain.xml</DocumentationFile>
+  </PropertyGroup>
+
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="8.6.2" />
     <PackageReference Include="LucaBriguglia.Docs" Version="1.2.0" />

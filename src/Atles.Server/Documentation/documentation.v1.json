@@ -6,6 +6,282 @@
         {
           "Requests": [
             {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier for the new Forum Category.\r\n            If not specified, a random one is assigned."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "The name for the Forum Category.\r\n            This value is mandatory."
+                },
+                {
+                  "Name": "PermissionSetId",
+                  "NormalizedName": "Permission Set Id",
+                  "Summary": "The unique identifier of the Permission Set used os default for all Forums within the Forum Category.\r\n            This value is mandatory."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "CreateCategory",
+              "NormalizedName": "Create Category",
+              "Summary": "Request that creates a new Forum Category."
+            },
+            {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the Forum Category to delete."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "DeleteCategory",
+              "NormalizedName": "Delete Category",
+              "Summary": "Request that deletes a Forum Category."
+            },
+            {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the forum category to move."
+                },
+                {
+                  "Name": "Direction",
+                  "NormalizedName": "Direction",
+                  "Summary": "The direction.\r\n            Can be either up or down."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "MoveCategory",
+              "NormalizedName": "Move Category",
+              "Summary": "Request that changes the sort order of a forum category."
+            },
+            {
+              "TargetName": "Category",
+              "Properties": [
+                {
+                  "Name": "Id",
+                  "NormalizedName": "Id",
+                  "Summary": "The unique identifier of the forum category to update."
+                },
+                {
+                  "Name": "Name",
+                  "NormalizedName": "Name",
+                  "Summary": "The new name of the forum category."
+                },
+                {
+                  "Name": "PermissionSetId",
+                  "NormalizedName": "Permission Set Id",
+                  "Summary": "The unique identifier of the new permission set for the forum category."
+                },
+                {
+                  "Name": "SiteId",
+                  "NormalizedName": "Site Id",
+                  "Summary": "The unique identifier of the Site whose the request belongs to."
+                },
+                {
+                  "Name": "UserId",
+                  "NormalizedName": "User Id",
+                  "Summary": "The unique identifier of the User who initiated the request."
+                }
+              ],
+              "Methods": [
+                {
+                  "Name": "New",
+                  "NormalizedName": "New",
+                  "Summary": "Summary not found."
+                }
+              ],
+              "Name": "UpdateCategory",
+              "NormalizedName": "Update Category",
+              "Summary": "Request that updates a forum category."
+            }
+          ],
+          "Properties": [
+            {
+              "Name": "Id",
+              "NormalizedName": "Id",
+              "Summary": "The unique identifier of the Forum Category."
+            },
+            {
+              "Name": "SiteId",
+              "NormalizedName": "Site Id",
+              "Summary": "The unique identifier of the Site which the Forum Category belongs to."
+            },
+            {
+              "Name": "Name",
+              "NormalizedName": "Name",
+              "Summary": "The name of the Forum Category which is displayed in the index page."
+            },
+            {
+              "Name": "SortOrder",
+              "NormalizedName": "Sort Order",
+              "Summary": "The sort order which is used to display the Forum Categories in the index page."
+            },
+            {
+              "Name": "TopicsCount",
+              "NormalizedName": "Topics Count",
+              "Summary": "The number of topics of all forums within the forum category."
+            },
+            {
+              "Name": "RepliesCount",
+              "NormalizedName": "Replies Count",
+              "Summary": "The number of replies of all forums within the forum category."
+            },
+            {
+              "Name": "Status",
+              "NormalizedName": "Status",
+              "Summary": "The status of the forum category.\r\n            Can be either published or deleted."
+            },
+            {
+              "Name": "PermissionSetId",
+              "NormalizedName": "Permission Set Id",
+              "Summary": "The unique identifier of the Permission Set used as default for all Forums within the Forum Category which do not specify a Permission Set."
+            },
+            {
+              "Name": "Site",
+              "NormalizedName": "Site",
+              "Summary": "Reference to the Site the Forum Category belongs to."
+            },
+            {
+              "Name": "PermissionSet",
+              "NormalizedName": "Permission Set",
+              "Summary": "Reference to Permission Set used for the Forum Category."
+            },
+            {
+              "Name": "Forums",
+              "NormalizedName": "Forums",
+              "Summary": "List of Forums that belong to the Forum Category."
+            }
+          ],
+          "Methods": [
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates an empty forum category."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates a new forum category with the given values including a unique identifier.\r\n            The default status is published."
+            },
+            {
+              "Name": "New",
+              "NormalizedName": "New",
+              "Summary": "Creates a new forum category with the given values.\r\n            The unique identifier is automatically assigned.\r\n            The default status is published."
+            },
+            {
+              "Name": "UpdateDetails",
+              "NormalizedName": "Update Details",
+              "Summary": "Updates the details of the forum category.\r\n            The values that can be changed are name and permission set."
+            },
+            {
+              "Name": "MoveUp",
+              "NormalizedName": "Move Up",
+              "Summary": "Change the sort order by moving up 1 position.\r\n            It generates an error if sort order is 1."
+            },
+            {
+              "Name": "MoveDown",
+              "NormalizedName": "Move Down",
+              "Summary": "Change the sort order by moving down 1 position."
+            },
+            {
+              "Name": "Reorder",
+              "NormalizedName": "Reorder",
+              "Summary": "Replace the sort order with the given value."
+            },
+            {
+              "Name": "IncreaseTopicsCount",
+              "NormalizedName": "Increase Topics Count",
+              "Summary": "Increase the number of topics by the given value.\r\n            If no value is given it will increase by 1."
+            },
+            {
+              "Name": "IncreaseRepliesCount",
+              "NormalizedName": "Increase Replies Count",
+              "Summary": "Increase the number of replies by the given value.\r\n            If no value is given it will increase by 1."
+            },
+            {
+              "Name": "DecreaseTopicsCount",
+              "NormalizedName": "Decrease Topics Count",
+              "Summary": "Decrease the number of topics by the given value.\r\n            If no value is given it will decrease by 1.\r\n            If the resulting number is less than zero, the value will be set to zero."
+            },
+            {
+              "Name": "DecreaseRepliesCount",
+              "NormalizedName": "Decrease Replies Count",
+              "Summary": "Decrease the number of replies by the given value.\r\n            If no value is given it will decrease by 1.\r\n            If the resulting number is less than zero, the value will be set to zero."
+            },
+            {
+              "Name": "Delete",
+              "NormalizedName": "Delete",
+              "Summary": "Set the status as deleted.\r\n            Forums, topics and replies within the forum category will no longer be visible."
+            },
+            {
+              "Name": "PermissionSetName",
+              "NormalizedName": "Permission Set Name",
+              "Summary": "Returns the name of permission set used."
+            }
+          ],
+          "Name": "Category",
+          "NormalizedName": "Category",
+          "Summary": "A forum category acts as a container to group logically different forums."
+        },
+        {
+          "Requests": [
+            {
               "TargetName": "Forum",
               "Properties": [
                 {
@@ -1611,6 +1887,6 @@
       ]
     }
   ],
-  "TimeStamp": "2020-09-10T12:55:19.2898703Z",
-  "ElapsedTime": 52
+  "TimeStamp": "2020-09-23T16:48:09.285009Z",
+  "ElapsedTime": 72
 }
