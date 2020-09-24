@@ -1288,6 +1288,198 @@
             <param name="terms"></param>
             <param name="headScript"></param>
         </member>
+        <member name="T:Atles.Domain.Themes.Commands.CreateTheme">
+            <summary>
+            Request to create a new Theme.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Themes.Commands.CreateTheme.Id">
+            <summary>
+            The unique identifier for the new Theme. If not specified, a random one is assigned.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Themes.Commands.CreateTheme.Name">
+            <summary>
+            The name for the new Theme. This value is required.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Themes.Commands.DeleteTheme">
+            <summary>
+            Request to delete a Theme.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Themes.Commands.DeleteTheme.Id">
+            <summary>
+            The unique identifier of the Theme to delete.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Themes.Commands.RestoreTheme">
+            <summary>
+            Request to restore a Theme.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Themes.Commands.RestoreTheme.Id">
+            <summary>
+            The unique identifier of the Theme to restore.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Themes.Commands.UpdateTheme">
+            <summary>
+            Request to update a Theme.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Themes.Commands.UpdateTheme.Id">
+            <summary>
+            The unique identifier of the Theme to update.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Themes.Commands.UpdateTheme.Name">
+            <summary>
+            The new name for the Theme. This value is required.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Themes.IThemeRules">
+            <summary>
+            IThemeRules
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Themes.IThemeRules.IsNameUniqueAsync(System.Guid,System.String)">
+            <summary>
+            IsNameUniqueAsync
+            </summary>
+            <param name="siteId"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Themes.IThemeRules.IsNameUniqueAsync(System.Guid,System.String,System.Guid)">
+            <summary>
+            IsNameUniqueAsync
+            </summary>
+            <param name="siteId"></param>
+            <param name="name"></param>
+            <param name="id"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Atles.Domain.Themes.IThemeService">
+            <summary>
+            IThemeService
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Themes.IThemeService.CreateAsync(Atles.Domain.Themes.Commands.CreateTheme)">
+            <summary>
+            CreateAsync
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Themes.IThemeService.UpdateAsync(Atles.Domain.Themes.Commands.UpdateTheme)">
+            <summary>
+            UpdateAsync
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Themes.IThemeService.DeleteAsync(Atles.Domain.Themes.Commands.DeleteTheme)">
+            <summary>
+            DeleteAsync
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Themes.IThemeService.RestoreAsync(Atles.Domain.Themes.Commands.RestoreTheme)">
+            <summary>
+            RestoreAsync
+            </summary>
+            <param name="command"></param>
+            <returns></returns>
+        </member>
+        <member name="T:Atles.Domain.Themes.Theme">
+            <summary>
+            Theme
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Themes.Theme.SiteId">
+            <summary>
+            The unique identifier of the site which the Theme belongs to.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Themes.Theme.Id">
+            <summary>
+            The unique identifier of the Theme.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Themes.Theme.Name">
+            <summary>
+            The name of the Theme.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Themes.Theme.Status">
+            <summary>
+            The status of the Theme.
+            Value can be either published or deleted.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Themes.Theme.#ctor">
+            <summary>
+            Create an empty Theme.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Themes.Theme.CreateNew(System.Guid,System.String)">
+            <summary>
+            Create a new Theme with the given values.
+            The default status is published.
+            </summary>
+            <param name="siteId"></param>
+            <param name="name"></param>
+        </member>
+        <member name="M:Atles.Domain.Themes.Theme.CreateNew(System.Guid,System.Guid,System.String)">
+            <summary>
+            Create a new Theme with the given values.
+            The default status is published.
+            </summary>
+            <param name="id"></param>
+            <param name="siteId"></param>
+            <param name="name"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Themes.Theme.UpdateDetails(System.String)">
+            <summary>
+            Update the details a the Theme with the given values.
+            </summary>
+            <param name="name"></param>
+        </member>
+        <member name="M:Atles.Domain.Themes.Theme.Delete">
+            <summary>
+            Set the status as deleted.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Themes.Theme.Restore">
+            <summary>
+            Set the status as published.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Themes.Validators.CreateThemeValidator">
+            <summary>
+            Validate a request to create a new Theme.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Themes.Validators.CreateThemeValidator.#ctor(Atles.Domain.Themes.IThemeRules)">
+            <summary>
+            CreateThemeValidator
+            </summary>
+            <param name="rules"></param>
+        </member>
+        <member name="T:Atles.Domain.Themes.Validators.UpdateThemeValidator">
+            <summary>
+            Validate a request to update a Theme.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Themes.Validators.UpdateThemeValidator.#ctor(Atles.Domain.Themes.IThemeRules)">
+            <summary>
+            UpdateThemeValidator
+            </summary>
+            <param name="rules"></param>
+        </member>
         <member name="T:Atles.Domain.Users.Commands.ConfirmUser">
             <summary>
             Request to set the status of a user to active after the email has been confirmed.
