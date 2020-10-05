@@ -25,13 +25,6 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 - Markdown editor
 - You can use your own ASP.NET Identity
 
-## What's next
-
-- Upload Custom Themes
-- Upload Language Packs
-- More Database Providers
-- _(more to come)_
-
 ## Run on local
 
 - Clone the repository
