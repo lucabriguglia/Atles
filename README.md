@@ -2,7 +2,7 @@
 
 ![.NET Core](https://github.com/lucabriguglia/Atles/workflows/.NET%20Core/badge.svg)
 
-A forum software built with ASP.NET Core Blazor WebAssembly.
+A forum software built with ASP.NET Blazor WebAssembly.
 
 **Website**: [atles.io](https://atles.io).
 
@@ -13,8 +13,8 @@ A forum software built with ASP.NET Core Blazor WebAssembly.
 
 ## Technology
 
-- Blazor WebAssembly 3.2.0
-- Entity Framework Core 3.1
+- Blazor WebAssembly 5.0.1
+- Entity Framework Core 5.0.1
 - SQL Server
 
 ## Features
