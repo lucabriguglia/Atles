@@ -57,7 +57,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{E481A559-D8A9-4F0B-8825-4FC553E99BD9}"
 	ProjectSection(SolutionItems) = preProject
 		.github\workflows\dotnet-5.yml = .github\workflows\dotnet-5.yml
-		.github\workflows\dotnet-core.yml = .github\workflows\dotnet-core.yml
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{0C907861-F928-46E5-915E-1F153E1661D4}"
