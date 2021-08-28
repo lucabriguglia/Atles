@@ -10,11 +10,6 @@ namespace Atles.Domain.Posts.Commands
     public class PinTopic : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the topic to pin/unpin.
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// The unique identifier of the forum.
         /// </summary>
         public Guid ForumId { get; set; }

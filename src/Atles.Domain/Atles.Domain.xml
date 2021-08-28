@@ -165,12 +165,6 @@
             Request that creates a new Forum Category.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Categories.Commands.CreateCategory.Id">
-            <summary>
-            The unique identifier for the new Forum Category.
-            If not specified, a random one is assigned.
-            </summary>
-        </member>
         <member name="P:Atles.Domain.Categories.Commands.CreateCategory.Name">
             <summary>
             The name for the Forum Category.
@@ -188,19 +182,9 @@
             Request that deletes a Forum Category.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Categories.Commands.DeleteCategory.Id">
-            <summary>
-            The unique identifier of the Forum Category to delete.
-            </summary>
-        </member>
         <member name="T:Atles.Domain.Categories.Commands.MoveCategory">
             <summary>
             Request that changes the sort order of a forum category.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Categories.Commands.MoveCategory.Id">
-            <summary>
-            The unique identifier of the forum category to move.
             </summary>
         </member>
         <member name="P:Atles.Domain.Categories.Commands.MoveCategory.Direction">
@@ -212,11 +196,6 @@
         <member name="T:Atles.Domain.Categories.Commands.UpdateCategory">
             <summary>
             Request that updates a forum category.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Categories.Commands.UpdateCategory.Id">
-            <summary>
-            The unique identifier of the forum category to update.
             </summary>
         </member>
         <member name="P:Atles.Domain.Categories.Commands.UpdateCategory.Name">
@@ -234,6 +213,11 @@
             CommandBase
             </summary>
         </member>
+        <member name="P:Atles.Domain.CommandBase.Id">
+            <summary>
+            The unique identifier of the Aggregate.
+            </summary>
+        </member>
         <member name="P:Atles.Domain.CommandBase.SiteId">
             <summary>
             The unique identifier of the Site whose the request belongs to.
@@ -247,11 +231,6 @@
         <member name="T:Atles.Domain.Forums.Commands.CreateForum">
             <summary>
             Request that creates a forum section.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Forums.Commands.CreateForum.Id">
-            <summary>
-            The unique identifier for the new forum. If not specified, a random one is assigned.
             </summary>
         </member>
         <member name="P:Atles.Domain.Forums.Commands.CreateForum.CategoryId">
@@ -285,19 +264,9 @@
             Request that deletes a forum.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Forums.Commands.DeleteForum.Id">
-            <summary>
-            The unique identifier of the forum to delete.
-            </summary>
-        </member>
         <member name="T:Atles.Domain.Forums.Commands.MoveForum">
             <summary>
             Request that changes the sort order of a forum.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Forums.Commands.MoveForum.Id">
-            <summary>
-            The unique identifier of the forum to move.
             </summary>
         </member>
         <member name="P:Atles.Domain.Forums.Commands.MoveForum.Direction">
@@ -309,11 +278,6 @@
         <member name="T:Atles.Domain.Forums.Commands.UpdateForum">
             <summary>
             Request that updates the forum details.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Forums.Commands.UpdateForum.Id">
-            <summary>
-            The unique identifier of the forum to update.
             </summary>
         </member>
         <member name="P:Atles.Domain.Forums.Commands.UpdateForum.CategoryId">
@@ -537,11 +501,6 @@
             Request that creates a new permission set.
             </summary>
         </member>
-        <member name="P:Atles.Domain.PermissionSets.Commands.CreatePermissionSet.Id">
-            <summary>
-            The unique identifier for the new permission set. If not specified, a random one is assigned.
-            </summary>
-        </member>
         <member name="P:Atles.Domain.PermissionSets.Commands.CreatePermissionSet.Name">
             <summary>
             The name of the new permission set.
@@ -557,19 +516,9 @@
             Request that deletes a permission set.
             </summary>
         </member>
-        <member name="P:Atles.Domain.PermissionSets.Commands.DeletePermissionSet.Id">
-            <summary>
-            The unique identifier of the permission set to delete.
-            </summary>
-        </member>
         <member name="T:Atles.Domain.PermissionSets.Commands.UpdatePermissionSet">
             <summary>
             Request that updates a permission set.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.PermissionSets.Commands.UpdatePermissionSet.Id">
-            <summary>
-            The unique identifier of the permission set to update.
             </summary>
         </member>
         <member name="P:Atles.Domain.PermissionSets.Commands.UpdatePermissionSet.Name">
@@ -670,11 +619,6 @@
             Request to create a new reply.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Posts.Commands.CreateReply.Id">
-            <summary>
-            The unique identifier of the reply.
-            </summary>
-        </member>
         <member name="P:Atles.Domain.Posts.Commands.CreateReply.ForumId">
             <summary>
             The unique identifier of the forum.
@@ -698,11 +642,6 @@
         <member name="T:Atles.Domain.Posts.Commands.CreateTopic">
             <summary>
             Request to create a new topic.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Posts.Commands.CreateTopic.Id">
-            <summary>
-            The unique identifier of the topic.
             </summary>
         </member>
         <member name="P:Atles.Domain.Posts.Commands.CreateTopic.ForumId">
@@ -735,11 +674,6 @@
             Request to delete a reply.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Posts.Commands.DeleteReply.Id">
-            <summary>
-            The unique identifier of the reply to delete.
-            </summary>
-        </member>
         <member name="P:Atles.Domain.Posts.Commands.DeleteReply.ForumId">
             <summary>
             The unique identifier of the forum.
@@ -755,11 +689,6 @@
             Request to delete a topic.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Posts.Commands.DeleteTopic.Id">
-            <summary>
-            The unique identifier of the topic to delete.
-            </summary>
-        </member>
         <member name="P:Atles.Domain.Posts.Commands.DeleteTopic.ForumId">
             <summary>
             The unique identifier of the forum.
@@ -768,11 +697,6 @@
         <member name="T:Atles.Domain.Posts.Commands.LockTopic">
             <summary>
             Request to lock/unlock a topic.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Posts.Commands.LockTopic.Id">
-            <summary>
-            The unique identifier of the topic to lock/unlock.
             </summary>
         </member>
         <member name="P:Atles.Domain.Posts.Commands.LockTopic.ForumId">
@@ -790,11 +714,6 @@
             Request to pin/unpin a topic.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Posts.Commands.PinTopic.Id">
-            <summary>
-            The unique identifier of the topic to pin/unpin.
-            </summary>
-        </member>
         <member name="P:Atles.Domain.Posts.Commands.PinTopic.ForumId">
             <summary>
             The unique identifier of the forum.
@@ -808,11 +727,6 @@
         <member name="T:Atles.Domain.Posts.Commands.SetReplyAsAnswer">
             <summary>
             Request to set a reply as answer.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Posts.Commands.SetReplyAsAnswer.Id">
-            <summary>
-            The unique identifier of the reply.
             </summary>
         </member>
         <member name="P:Atles.Domain.Posts.Commands.SetReplyAsAnswer.ForumId">
@@ -833,11 +747,6 @@
         <member name="T:Atles.Domain.Posts.Commands.UpdateReply">
             <summary>
             Request to update a reply.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Posts.Commands.UpdateReply.Id">
-            <summary>
-            The unique identifier of the reply to update.
             </summary>
         </member>
         <member name="P:Atles.Domain.Posts.Commands.UpdateReply.ForumId">
@@ -863,11 +772,6 @@
         <member name="T:Atles.Domain.Posts.Commands.UpdateTopic">
             <summary>
             Request to update a topic.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Posts.Commands.UpdateTopic.Id">
-            <summary>
-            The unique identifier of the topic to update.
             </summary>
         </member>
         <member name="P:Atles.Domain.Posts.Commands.UpdateTopic.ForumId">
@@ -1293,21 +1197,11 @@
             Request to set the status of a user to active after the email has been confirmed.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Users.Commands.ConfirmUser.Id">
-            <summary>
-            The unique identifier of the user.
-            </summary>
-        </member>
         <member name="T:Atles.Domain.Users.Commands.CreateUser">
             <summary>
             Request to create a new user.
             This request is sent right after a user completes the registration in the site.
             If a user is already registered but a profile does not exist yet, this request is sent the first time the user logs in.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Users.Commands.CreateUser.Id">
-            <summary>
-            The unique identifier of the user.
             </summary>
         </member>
         <member name="P:Atles.Domain.Users.Commands.CreateUser.IdentityUserId">
@@ -1332,19 +1226,9 @@
             Request to set the status of a user to deleted and to remove the identity user from the membership database.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Users.Commands.DeleteUser.Id">
-            <summary>
-            The unique identifier of the user to delete.
-            </summary>
-        </member>
         <member name="T:Atles.Domain.Users.Commands.ReinstateUser">
             <summary>
             Request to re-active a suspended user.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Users.Commands.ReinstateUser.Id">
-            <summary>
-            The unique identifier of the user to re-activate.
             </summary>
         </member>
         <member name="T:Atles.Domain.Users.Commands.SuspendUser">
@@ -1352,19 +1236,9 @@
             Request to suspend a user.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Users.Commands.SuspendUser.Id">
-            <summary>
-            The unique identifier of the user to be suspended.
-            </summary>
-        </member>
         <member name="T:Atles.Domain.Users.Commands.UpdateUser">
             <summary>
             Request to update a user.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Users.Commands.UpdateUser.Id">
-            <summary>
-            The unique identifier of the user to update.
             </summary>
         </member>
         <member name="P:Atles.Domain.Users.Commands.UpdateUser.DisplayName">

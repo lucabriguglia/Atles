@@ -10,11 +10,6 @@ namespace Atles.Domain.Posts.Commands
     public class CreateReply : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the reply.
-        /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        /// <summary>
         /// The unique identifier of the forum.
         /// </summary>
         public Guid ForumId { get; set; }

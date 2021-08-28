@@ -10,11 +10,6 @@ namespace Atles.Domain.Forums.Commands
     public class MoveForum : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the forum to move.
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// The direction.
         /// Can be either up or down.
         /// </summary>

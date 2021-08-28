@@ -10,11 +10,6 @@ namespace Atles.Domain.Forums.Commands
     public class UpdateForum : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the forum to update.
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// The new forum category for the forum.
         /// </summary>
         public Guid CategoryId { get; set; }

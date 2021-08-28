@@ -11,11 +11,6 @@ namespace Atles.Domain.PermissionSets.Commands
     public class CreatePermissionSet : CommandBase
     {
         /// <summary>
-        /// The unique identifier for the new permission set. If not specified, a random one is assigned.
-        /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        /// <summary>
         /// The name of the new permission set.
         /// </summary>
         public string Name { get; set; }

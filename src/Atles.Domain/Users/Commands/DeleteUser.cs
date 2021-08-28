@@ -9,9 +9,5 @@ namespace Atles.Domain.Users.Commands
     [DocRequest(typeof(User))]
     public class DeleteUser : CommandBase
     {
-        /// <summary>
-        /// The unique identifier of the user to delete.
-        /// </summary>
-        public Guid Id { get; set; }
     }
 }

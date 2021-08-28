@@ -9,9 +9,5 @@ namespace Atles.Domain.PermissionSets.Commands
     [DocRequest(typeof(PermissionSet))]
     public class DeletePermissionSet : CommandBase
     {
-        /// <summary>
-        /// The unique identifier of the permission set to delete.
-        /// </summary>
-        public Guid Id { get; set; }
     }
 }

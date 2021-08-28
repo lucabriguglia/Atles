@@ -9,9 +9,5 @@ namespace Atles.Domain.Forums.Commands
     [DocRequest(typeof(Forum))]
     public class DeleteForum : CommandBase
     {
-        /// <summary>
-        /// The unique identifier of the forum to delete.
-        /// </summary>
-        public Guid Id { get; set; }
     }
 }

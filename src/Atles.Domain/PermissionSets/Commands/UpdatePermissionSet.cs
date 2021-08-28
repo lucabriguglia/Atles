@@ -11,11 +11,6 @@ namespace Atles.Domain.PermissionSets.Commands
     public class UpdatePermissionSet : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the permission set to update.
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// The new name for the permission set.
         /// </summary>
         public string Name { get; set; }

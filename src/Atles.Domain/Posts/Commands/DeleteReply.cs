@@ -10,11 +10,6 @@ namespace Atles.Domain.Posts.Commands
     public class DeleteReply : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the reply to delete.
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// The unique identifier of the forum.
         /// </summary>
         public Guid ForumId { get; set; }

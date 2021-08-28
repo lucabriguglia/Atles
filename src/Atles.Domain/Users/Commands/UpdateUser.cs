@@ -11,11 +11,6 @@ namespace Atles.Domain.Users.Commands
     public class UpdateUser : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the user to update.
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// The new display name of the user.
         /// </summary>
         public string DisplayName { get; set; }

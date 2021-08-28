@@ -9,9 +9,5 @@ namespace Atles.Domain.Users.Commands
     [DocRequest(typeof(User))]
     public class SuspendUser : CommandBase
     {
-        /// <summary>
-        /// The unique identifier of the user to be suspended.
-        /// </summary>
-        public Guid Id { get; set; }
     }
 }

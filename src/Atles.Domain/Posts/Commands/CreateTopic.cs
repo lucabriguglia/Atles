@@ -10,11 +10,6 @@ namespace Atles.Domain.Posts.Commands
     public class CreateTopic : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the topic.
-        /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        /// <summary>
         /// The unique identifier of the forum.
         /// </summary>
         public Guid ForumId { get; set; }

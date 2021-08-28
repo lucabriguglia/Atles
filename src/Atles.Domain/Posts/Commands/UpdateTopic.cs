@@ -10,11 +10,6 @@ namespace Atles.Domain.Posts.Commands
     public class UpdateTopic : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the topic to update.
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// The unique identifier of the forum.
         /// </summary>
         public Guid ForumId { get; set; }

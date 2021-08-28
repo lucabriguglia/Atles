@@ -9,9 +9,5 @@ namespace Atles.Domain.Users.Commands
     [DocRequest(typeof(User))]
     public class ReinstateUser : CommandBase
     {
-        /// <summary>
-        /// The unique identifier of the user to re-activate.
-        /// </summary>
-        public Guid Id { get; set; }
     }
 }

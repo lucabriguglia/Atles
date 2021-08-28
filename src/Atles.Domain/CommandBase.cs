@@ -5,8 +5,13 @@ namespace Atles.Domain
     /// <summary>
     /// CommandBase
     /// </summary>
-    public abstract class CommandBase
+    public abstract class CommandBase : ICommand
     {
+        /// <summary>
+        /// The unique identifier of the Aggregate.
+        /// </summary>
+        public Guid Id { get; set; } = Guid.NewGuid();
+
         /// <summary>
         /// The unique identifier of the Site whose the request belongs to.
         /// </summary>

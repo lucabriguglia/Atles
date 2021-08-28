@@ -8,11 +8,6 @@ namespace Atles.Domain.Categories.Commands
     public class MoveCategory : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the forum category to move.
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// The direction.
         /// Can be either up or down.
         /// </summary>

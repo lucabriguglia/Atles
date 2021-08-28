@@ -8,11 +8,6 @@ namespace Atles.Domain.Categories.Commands
     public class UpdateCategory : CommandBase
     {
         /// <summary>
-        /// The unique identifier of the forum category to update.
-        /// </summary>
-        public Guid Id { get; set; }
-
-        /// <summary>
         /// The new name of the forum category.
         /// </summary>
         public string Name { get; set; }

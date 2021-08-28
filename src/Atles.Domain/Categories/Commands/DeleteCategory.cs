@@ -7,9 +7,5 @@ namespace Atles.Domain.Categories.Commands
     /// </summary>
     public class DeleteCategory : CommandBase
     {
-        /// <summary>
-        /// The unique identifier of the Forum Category to delete.
-        /// </summary>
-        public Guid Id { get; set; }
     }
 }

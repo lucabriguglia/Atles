@@ -10,11 +10,6 @@ namespace Atles.Domain.Forums.Commands
     public class CreateForum : CommandBase
     {
         /// <summary>
-        /// The unique identifier for the new forum. If not specified, a random one is assigned.
-        /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        /// <summary>
         /// The unique identifier of the forum category which the new forum belongs to.
         /// </summary>
         public Guid CategoryId { get; set; }

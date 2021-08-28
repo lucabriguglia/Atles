@@ -8,12 +8,6 @@ namespace Atles.Domain.Categories.Commands
     public class CreateCategory : CommandBase
     {
         /// <summary>
-        /// The unique identifier for the new Forum Category.
-        /// If not specified, a random one is assigned.
-        /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        /// <summary>
         /// The name for the Forum Category.
         /// This value is mandatory.
         /// </summary>
