@@ -1,4 +1,4 @@
-# Atles (Beta)
+# Atles (Alpha)
 
 ![.NET Core](https://github.com/lucabriguglia/Atles/workflows/.NET%20Core/badge.svg)
 
