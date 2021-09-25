@@ -65,6 +65,12 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{0C907861-F92
 		sql\AtlasConnection.Migrations.sql = sql\AtlasConnection.Migrations.sql
 	EndProjectSection
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Domain.Handlers", "src\Atles.Domain.Handlers\Atles.Domain.Handlers.csproj", "{9A7D347B-FEE6-4EEA-80B8-E2D5157B36AC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Reporting.Handlers", "src\Atles.Reporting.Handlers\Atles.Reporting.Handlers.csproj", "{2FF5949C-F428-48BF-9253-255BACA5C9C6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Infrastructure", "src\Atles.Infrastructure\Atles.Infrastructure.csproj", "{6EF99000-8708-4A0D-ABCC-F9F3A77DDEDC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -99,6 +105,18 @@ Global
 		{3DABE5C5-A015-4217-91EE-5282E829AEF8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3DABE5C5-A015-4217-91EE-5282E829AEF8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3DABE5C5-A015-4217-91EE-5282E829AEF8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9A7D347B-FEE6-4EEA-80B8-E2D5157B36AC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9A7D347B-FEE6-4EEA-80B8-E2D5157B36AC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9A7D347B-FEE6-4EEA-80B8-E2D5157B36AC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9A7D347B-FEE6-4EEA-80B8-E2D5157B36AC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2FF5949C-F428-48BF-9253-255BACA5C9C6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2FF5949C-F428-48BF-9253-255BACA5C9C6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2FF5949C-F428-48BF-9253-255BACA5C9C6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2FF5949C-F428-48BF-9253-255BACA5C9C6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6EF99000-8708-4A0D-ABCC-F9F3A77DDEDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6EF99000-8708-4A0D-ABCC-F9F3A77DDEDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6EF99000-8708-4A0D-ABCC-F9F3A77DDEDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6EF99000-8708-4A0D-ABCC-F9F3A77DDEDC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -114,6 +132,9 @@ Global
 		{BE91C094-1F67-4C0B-89A1-88D592CD9AD0} = {707C6370-09DC-4970-9F9C-9BAC63BEF65B}
 		{84E69FCB-0CE0-4F91-B24C-20F6656DC88E} = {BE91C094-1F67-4C0B-89A1-88D592CD9AD0}
 		{E481A559-D8A9-4F0B-8825-4FC553E99BD9} = {043D4E72-366C-4591-AC04-76AB9FBD687B}
+		{9A7D347B-FEE6-4EEA-80B8-E2D5157B36AC} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
+		{2FF5949C-F428-48BF-9253-255BACA5C9C6} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
+		{6EF99000-8708-4A0D-ABCC-F9F3A77DDEDC} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2747CCE7-65F1-47E8-8F5F-4598AAA8A5B9}
