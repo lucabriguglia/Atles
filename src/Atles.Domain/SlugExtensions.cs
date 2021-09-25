@@ -26,7 +26,7 @@ namespace Atles.Domain
                 }
                 else if (c == ' ')
                 {
-                    stringBuilder.Append("-");
+                    stringBuilder.Append('-');
                 }
             }
 
