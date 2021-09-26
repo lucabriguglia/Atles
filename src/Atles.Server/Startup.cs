@@ -1,6 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Atles.Data;
+using Atles.Domain.Handlers.Categories;
 using Atles.Domain.Sites;
 using Atles.Models.Admin.Categories;
 using Atles.Server.Services;
@@ -83,7 +84,7 @@ namespace Atles.Server
             services.AddDocs();
 
             services.Scan(s => s
-                .FromAssembliesOf(typeof(Startup), typeof(Site), typeof(IndexPageModel), typeof(AtlesDbContext))
+                .FromAssembliesOf(typeof(Startup), typeof(Site), typeof(CreateCategoryHandler), typeof(IndexPageModel), typeof(AtlesDbContext))
                 .AddClasses()
                 .AsImplementedInterfaces());
         }

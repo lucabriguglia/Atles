@@ -27,8 +27,10 @@
   <ItemGroup>
     <ProjectReference Include="..\Atles.Client\Atles.Client.csproj" />
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
+    <ProjectReference Include="..\Atles.Domain.Handlers\Atles.Domain.Handlers.csproj" />
     <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
     <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
+    <ProjectReference Include="..\Atles.Reporting.Handlers\Atles.Reporting.Handlers.csproj" />
   </ItemGroup>
 
   <ItemGroup>

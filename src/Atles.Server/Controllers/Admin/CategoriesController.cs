@@ -16,16 +16,19 @@ namespace Atles.Server.Controllers.Admin
         private readonly ICategoryService _categoryService;
         private readonly ICategoryRules _categoryRules;
         private readonly ICategoryModelBuilder _modelBuilder;
+        private readonly ICommandSender _commandSender;
 
         public CategoriesController(IContextService contextService,
             ICategoryService categoryService,
             ICategoryRules categoryRules,
-            ICategoryModelBuilder modelBuilder)
+            ICategoryModelBuilder modelBuilder,
+            ICommandSender commandSender)
         {
             _contextService = contextService;
             _categoryService = categoryService;
             _categoryRules = categoryRules;
             _modelBuilder = modelBuilder;
+            _commandSender = commandSender;
         }
 
         [HttpGet("list")]
@@ -58,7 +61,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _categoryService.CreateAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
