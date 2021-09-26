@@ -96,7 +96,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _categoryService.UpdateAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
