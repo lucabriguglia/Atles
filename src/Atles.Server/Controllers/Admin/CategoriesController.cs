@@ -4,7 +4,9 @@ using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
 using Atles.Models.Admin.Categories;
+using Atles.Reporting.Handlers.Admin.Categories;
 using Atles.Server.Services;
+using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin
@@ -17,18 +19,21 @@ namespace Atles.Server.Controllers.Admin
         private readonly ICategoryRules _categoryRules;
         private readonly ICategoryModelBuilder _modelBuilder;
         private readonly ICommandSender _commandSender;
+        private readonly IMediator _mediator;
 
         public CategoriesController(IContextService contextService,
             ICategoryService categoryService,
             ICategoryRules categoryRules,
             ICategoryModelBuilder modelBuilder,
-            ICommandSender commandSender)
+            ICommandSender commandSender,
+            IMediator mediator)
         {
             _contextService = contextService;
             _categoryService = categoryService;
             _categoryRules = categoryRules;
             _modelBuilder = modelBuilder;
             _commandSender = commandSender;
+            _mediator = mediator;
         }
 
         [HttpGet("list")]
@@ -36,7 +41,10 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildIndexPageModelAsync(site.Id);
+            //var response = await _modelBuilder.BuildIndexPageModelAsync(site.Id);
+            var response = await _mediator.Send(new GetCategoriesIndex { SiteId = site.Id });
+
+            return response;
         }
 
         [HttpGet("create")]

@@ -4,9 +4,11 @@ using Atles.Data;
 using Atles.Domain.Handlers.Categories;
 using Atles.Domain.Sites;
 using Atles.Models.Admin.Categories;
+using Atles.Reporting.Handlers.Admin.Categories;
 using Atles.Server.Services;
 using Docs;
 using Docs.Extensions;
+using MediatR;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -80,6 +82,8 @@ namespace Atles.Server
             //    options.CheckConsentNeeded = context => true;
             //    options.MinimumSameSitePolicy = SameSiteMode.None;
             //});
+
+            services.AddMediatR(typeof(GetCategoriesIndex));
 
             services.AddDocs();
 

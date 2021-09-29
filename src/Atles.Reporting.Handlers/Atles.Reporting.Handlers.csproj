@@ -9,4 +9,12 @@
     <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Public\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="MediatR" Version="9.0.0" />
+  </ItemGroup>
+
 </Project>
