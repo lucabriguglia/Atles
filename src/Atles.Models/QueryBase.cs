@@ -1,7 +1,7 @@
 ﻿using MediatR;
 using System;
 
-namespace Atles.Reporting.Handlers.Admin
+namespace Atles.Reporting
 {
     public abstract class QueryBase<T> : IRequest<T>
     {
