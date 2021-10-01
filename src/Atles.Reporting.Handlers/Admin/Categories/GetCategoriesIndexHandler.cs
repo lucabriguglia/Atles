@@ -2,6 +2,7 @@
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
 using Atles.Models.Admin.Categories;
+using Atles.Reporting.Admin.Categories;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;

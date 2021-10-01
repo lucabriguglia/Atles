@@ -83,7 +83,7 @@ namespace Atles.Server
             //    options.MinimumSameSitePolicy = SameSiteMode.None;
             //});
 
-            services.AddMediatR(typeof(GetCategoriesIndex));
+            services.AddMediatR(typeof(GetCategoriesIndexHandler));
 
             services.AddDocs();
 

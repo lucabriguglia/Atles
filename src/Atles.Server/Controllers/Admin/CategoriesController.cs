@@ -4,6 +4,7 @@ using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
 using Atles.Models.Admin.Categories;
+using Atles.Reporting.Admin.Categories;
 using Atles.Reporting.Handlers.Admin.Categories;
 using Atles.Server.Services;
 using MediatR;
@@ -17,21 +18,18 @@ namespace Atles.Server.Controllers.Admin
         private readonly IContextService _contextService;
         private readonly ICategoryService _categoryService;
         private readonly ICategoryRules _categoryRules;
-        private readonly ICategoryModelBuilder _modelBuilder;
         private readonly ICommandSender _commandSender;
         private readonly IMediator _mediator;
 
         public CategoriesController(IContextService contextService,
             ICategoryService categoryService,
             ICategoryRules categoryRules,
-            ICategoryModelBuilder modelBuilder,
             ICommandSender commandSender,
             IMediator mediator)
         {
             _contextService = contextService;
             _categoryService = categoryService;
             _categoryRules = categoryRules;
-            _modelBuilder = modelBuilder;
             _commandSender = commandSender;
             _mediator = mediator;
         }
@@ -41,7 +39,6 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            //var response = await _modelBuilder.BuildIndexPageModelAsync(site.Id);
             var response = await _mediator.Send(new GetCategoriesIndex { SiteId = site.Id });
 
             return response;
@@ -52,7 +49,9 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildFormModelAsync(site.Id);
+            var response = await _mediator.Send(new GetCategoryForm { SiteId = site.Id });
+
+            return response;
         }
 
         [HttpPost("save")]
@@ -79,7 +78,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var result = await _modelBuilder.BuildFormModelAsync(site.Id, id);
+            var result = await _mediator.Send(new GetCategoryForm { SiteId = site.Id, Id = id });
 
             if (result == null)
             {
