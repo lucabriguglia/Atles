@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Threading;
 using System.Threading.Tasks;
 using Atles.Data.Caching;
 using Atles.Data.Services;
@@ -8,11 +6,8 @@ using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
 using Atles.Domain.Forums;
-using Atles.Domain.PermissionSets;
-using Atles.Domain.PermissionSets.Commands;
 using AutoFixture;
 using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
@@ -22,85 +17,6 @@ namespace Atles.Data.Tests.Services
     [TestFixture]
     public class CategoryServiceTests : TestFixtureBase
     {
-        [Test]
-        public async Task Should_create_new_category_and_add_event()
-        {
-            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
-            {
-                var command = Fixture.Create<CreateCategory>();
-
-                var cacheManager = new Mock<ICacheManager>();
-
-                var createValidator = new Mock<IValidator<CreateCategory>>();
-                createValidator
-                    .Setup(x => x.ValidateAsync(command, new CancellationToken()))
-                    .ReturnsAsync(new ValidationResult());
-
-                var updateValidator = new Mock<IValidator<UpdateCategory>>();
-
-                var sut = new CategoryService(dbContext,
-                    cacheManager.Object, 
-                    createValidator.Object, 
-                    updateValidator.Object);
-
-                await sut.CreateAsync(command);
-
-                var category = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
-
-                createValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
-                Assert.NotNull(category);
-                Assert.AreEqual(1, category.SortOrder);
-                Assert.NotNull(@event);
-            }
-        }
-
-        [Test]
-        public async Task Should_update_category_and_add_event()
-        {
-            var options = Shared.CreateContextOptions();
-            var permissionSet = new PermissionSet(Guid.NewGuid(), Guid.NewGuid(), "Default", new List<PermissionCommand>());
-            var category = new Category(Guid.NewGuid(), permissionSet.SiteId, "Category", 1, permissionSet.Id);
-
-            using (var dbContext = new AtlesDbContext(options))
-            {
-                dbContext.PermissionSets.Add(permissionSet);
-                dbContext.Categories.Add(category);
-                await dbContext.SaveChangesAsync();
-            }
-
-            using (var dbContext = new AtlesDbContext(options))
-            {
-                var command = Fixture.Build<UpdateCategory>()
-                        .With(x => x.Id, category.Id)
-                        .With(x => x.SiteId, category.SiteId)
-                    .Create();
-
-                var cacheManager = new Mock<ICacheManager>();
-
-                var createValidator = new Mock<IValidator<CreateCategory>>();
-
-                var updateValidator = new Mock<IValidator<UpdateCategory>>();
-                updateValidator
-                    .Setup(x => x.ValidateAsync(command, new CancellationToken()))
-                    .ReturnsAsync(new ValidationResult());
-
-                var sut = new CategoryService(dbContext,
-                    cacheManager.Object,
-                    createValidator.Object,
-                    updateValidator.Object);
-
-                await sut.UpdateAsync(command);
-
-                var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
-
-                updateValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
-                Assert.AreEqual(command.Name, updatedCategory.Name);
-                Assert.NotNull(@event);
-            }
-        }
-
         [Test]
         public async Task Should_move_category_up_and_add_events()
         {

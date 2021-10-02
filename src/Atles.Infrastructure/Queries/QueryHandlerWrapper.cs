@@ -8,6 +8,12 @@ namespace Atles.Infrastructure.Queries
         public override Task<TResult> Handle(IQuery<TResult> query, IServiceProvider serviceProvider)
         {
             var handler = GetHandler<IQueryHandler<TQuery, TResult>>(serviceProvider);
+
+            if (handler == null)
+            {
+                throw new Exception($"Handler not found for query of type {typeof(TQuery)}");
+            }
+
             return handler.Handle((TQuery)query);
         }
     }
