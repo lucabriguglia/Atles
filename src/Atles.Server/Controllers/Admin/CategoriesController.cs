@@ -16,19 +16,16 @@ namespace Atles.Server.Controllers.Admin
     public class CategoriesController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly ICategoryService _categoryService;
         private readonly ICategoryRules _categoryRules;
         private readonly ICommandSender _commandSender;
         private readonly IQuerySender _querySender;
 
         public CategoriesController(IContextService contextService,
-            ICategoryService categoryService,
             ICategoryRules categoryRules,
             ICommandSender commandSender,
             IQuerySender querySender)
         {
             _contextService = contextService;
-            _categoryService = categoryService;
             _categoryRules = categoryRules;
             _commandSender = commandSender;
             _querySender = querySender;
@@ -122,7 +119,7 @@ namespace Atles.Server.Controllers.Admin
                 Direction = Direction.Up
             };
 
-            await _categoryService.MoveAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
@@ -141,7 +138,7 @@ namespace Atles.Server.Controllers.Admin
                 Direction = Direction.Down
             };
 
-            await _categoryService.MoveAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
@@ -159,7 +156,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _categoryService.DeleteAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
