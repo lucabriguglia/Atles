@@ -9,7 +9,7 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Atles.Domain.Handlers.Categories
+namespace Atles.Domain.Handlers.Categories.Commands
 {
     public class DeleteCategoryHandler : ICommandHandler<DeleteCategory>
     {

@@ -1,7 +1,7 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Atles.Data;
-using Atles.Domain.Handlers.Categories;
+using Atles.Domain.Handlers.Categories.Commands;
 using Atles.Domain.Sites;
 using Atles.Infrastructure.Commands;
 using Atles.Models.Admin.Categories;

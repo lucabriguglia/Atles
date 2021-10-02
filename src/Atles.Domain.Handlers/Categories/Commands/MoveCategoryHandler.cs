@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Atles.Domain.Handlers.Categories
+namespace Atles.Domain.Handlers.Categories.Commands
 {
     public class MoveCategoryHandler : ICommandHandler<MoveCategory>
     {

@@ -1,21 +1,24 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Data.Rules;
+using Atles.Data;
 using Atles.Domain.Categories;
+using Atles.Domain.Categories.Rules;
+using Atles.Domain.Handlers.Categories.Rules;
 using NUnit.Framework;
 
-namespace Atles.Data.Tests.Rules
+namespace Atles.Domain.Handlers.Tests.Rules
 {
     [TestFixture]
-    public class CategoryRulesTests : TestFixtureBase
+    public class IsCategoryNameUniqueHandlerTests : TestFixtureBase
     {
         [Test]
         public async Task Should_return_true_when_name_is_unique()
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new CategoryRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Category");
+                var sut = new IsCategoryNameUniqueHandler(dbContext);
+                var query = new IsCategoryNameUnique { SiteId = Guid.NewGuid(), Name = "My Category" };
+                var actual = await sut.Handle(query);
 
                 Assert.IsTrue(actual);
             }
@@ -26,8 +29,9 @@ namespace Atles.Data.Tests.Rules
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new CategoryRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Category", Guid.NewGuid());
+                var sut = new IsCategoryNameUniqueHandler(dbContext);
+                var query = new IsCategoryNameUnique { SiteId = Guid.NewGuid(), Name = "My Category", Id = Guid.NewGuid() };
+                var actual = await sut.Handle(query);
 
                 Assert.IsTrue(actual);
             }
@@ -49,8 +53,9 @@ namespace Atles.Data.Tests.Rules
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var sut = new CategoryRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(siteId, categoryName);
+                var sut = new IsCategoryNameUniqueHandler(dbContext);
+                var query = new IsCategoryNameUnique { SiteId = siteId, Name = categoryName };
+                var actual = await sut.Handle(query);
 
                 Assert.IsFalse(actual);
             }
@@ -74,8 +79,9 @@ namespace Atles.Data.Tests.Rules
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var sut = new CategoryRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(siteId, "Category 1", categoryId);
+                var sut = new IsCategoryNameUniqueHandler(dbContext);
+                var query = new IsCategoryNameUnique { SiteId = siteId, Name = "Category 1", Id = categoryId };
+                var actual = await sut.Handle(query);
 
                 Assert.IsFalse(actual);
             }

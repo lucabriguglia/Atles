@@ -6,7 +6,7 @@ using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
-using Atles.Domain.Handlers.Categories;
+using Atles.Domain.Handlers.Categories.Commands;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.PermissionSets.Commands;
 using AutoFixture;
@@ -16,7 +16,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Domain.Handlers.Tests.Categories
+namespace Atles.Domain.Handlers.Tests.Categories.Commands
 {
     [TestFixture]
     public class UpdateCategoryHandlerTests : TestFixtureBase

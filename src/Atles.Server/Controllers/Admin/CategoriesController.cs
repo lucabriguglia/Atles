@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Domain;
-using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
+using Atles.Domain.Categories.Rules;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Queries;
 using Atles.Models.Admin.Categories;
@@ -16,17 +16,14 @@ namespace Atles.Server.Controllers.Admin
     public class CategoriesController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly ICategoryRules _categoryRules;
         private readonly ICommandSender _commandSender;
         private readonly IQuerySender _querySender;
 
         public CategoriesController(IContextService contextService,
-            ICategoryRules categoryRules,
             ICommandSender commandSender,
             IQuerySender querySender)
         {
             _contextService = contextService;
-            _categoryRules = categoryRules;
             _commandSender = commandSender;
             _querySender = querySender;
         }
@@ -165,7 +162,11 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string name)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _categoryRules.IsNameUniqueAsync(site.Id, name);
+            var isNameUnique = await _querySender.Send(new IsCategoryNameUnique 
+            {
+                SiteId = site.Id,
+                Name = name
+            });
             return Ok(isNameUnique);
         }
 
@@ -173,7 +174,12 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string name, Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _categoryRules.IsNameUniqueAsync(site.Id, name, id);
+            var isNameUnique = await _querySender.Send(new IsCategoryNameUnique
+            {
+                SiteId = site.Id,
+                Name = name,
+                Id = id
+            });
             return Ok(isNameUnique);
         }
     }

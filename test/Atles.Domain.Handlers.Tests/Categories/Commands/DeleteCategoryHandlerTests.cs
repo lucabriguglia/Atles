@@ -5,13 +5,13 @@ using Atles.Data.Caching;
 using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
 using Atles.Domain.Forums;
-using Atles.Domain.Handlers.Categories;
+using Atles.Domain.Handlers.Categories.Commands;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Domain.Handlers.Tests.Categories
+namespace Atles.Domain.Handlers.Tests.Categories.Commands
 {
     [TestFixture]
     public class DeleteCategoryHandlerTests : TestFixtureBase
