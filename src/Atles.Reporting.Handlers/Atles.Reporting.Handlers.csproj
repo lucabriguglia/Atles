@@ -6,15 +6,12 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
+    <ProjectReference Include="..\Atles.Infrastructure\Atles.Infrastructure.csproj" />
     <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Public\" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <PackageReference Include="MediatR" Version="9.0.0" />
   </ItemGroup>
 
 </Project>

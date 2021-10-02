@@ -1,18 +1,17 @@
 ﻿using Atles.Data;
 using Atles.Domain.Categories;
 using Atles.Domain.PermissionSets;
+using Atles.Infrastructure.Queries;
 using Atles.Models.Admin.Categories;
 using Atles.Reporting.Admin.Categories;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Atles.Reporting.Handlers.Admin.Categories
 {
-    public class GetCategoryFormHandler : IRequestHandler<GetCategoryForm, FormComponentModel>
+    public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, FormComponentModel>
     {
         private readonly AtlesDbContext _dbContext;
 
@@ -21,7 +20,7 @@ namespace Atles.Reporting.Handlers.Admin.Categories
             _dbContext = dbContext;
         }
 
-        public async Task<FormComponentModel> Handle(GetCategoryForm query, CancellationToken cancellationToken)
+        public async Task<FormComponentModel> Handle(GetCategoryForm query)
         {
             var result = new FormComponentModel();
 

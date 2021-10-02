@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Atles.Domain
+namespace Atles.Infrastructure.Commands
 {
     public interface ICommandSender
     {

@@ -3,11 +3,11 @@ using System.Threading.Tasks;
 using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
+using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Queries;
 using Atles.Models.Admin.Categories;
 using Atles.Reporting.Admin.Categories;
-using Atles.Reporting.Handlers.Admin.Categories;
 using Atles.Server.Services;
-using MediatR;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin
@@ -19,19 +19,19 @@ namespace Atles.Server.Controllers.Admin
         private readonly ICategoryService _categoryService;
         private readonly ICategoryRules _categoryRules;
         private readonly ICommandSender _commandSender;
-        private readonly IMediator _mediator;
+        private readonly IQuerySender _querySender;
 
         public CategoriesController(IContextService contextService,
             ICategoryService categoryService,
             ICategoryRules categoryRules,
             ICommandSender commandSender,
-            IMediator mediator)
+            IQuerySender querySender)
         {
             _contextService = contextService;
             _categoryService = categoryService;
             _categoryRules = categoryRules;
             _commandSender = commandSender;
-            _mediator = mediator;
+            _querySender = querySender;
         }
 
         [HttpGet("list")]
@@ -39,7 +39,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var response = await _mediator.Send(new GetCategoriesIndex { SiteId = site.Id });
+            var response = await _querySender.Send(new GetCategoriesIndex { SiteId = site.Id });
 
             return response;
         }
@@ -49,7 +49,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var response = await _mediator.Send(new GetCategoryForm { SiteId = site.Id });
+            var response = await _querySender.Send(new GetCategoryForm { SiteId = site.Id });
 
             return response;
         }
@@ -78,7 +78,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var result = await _mediator.Send(new GetCategoryForm { SiteId = site.Id, Id = id });
+            var result = await _querySender.Send(new GetCategoryForm { SiteId = site.Id, Id = id });
 
             if (result == null)
             {

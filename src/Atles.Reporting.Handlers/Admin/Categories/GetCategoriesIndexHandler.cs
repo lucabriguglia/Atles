@@ -1,17 +1,16 @@
 ﻿using Atles.Data;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
+using Atles.Infrastructure.Queries;
 using Atles.Models.Admin.Categories;
 using Atles.Reporting.Admin.Categories;
-using MediatR;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Atles.Reporting.Handlers.Admin.Categories
 {
-    public class GetCategoriesIndexHandler : IRequestHandler<GetCategoriesIndex, IndexPageModel>
+    public class GetCategoriesIndexHandler : IQueryHandler<GetCategoriesIndex, IndexPageModel>
     {
         private readonly AtlesDbContext _dbContext;
 
@@ -20,7 +19,7 @@ namespace Atles.Reporting.Handlers.Admin.Categories
             _dbContext = dbContext;
         }
 
-        public async Task<IndexPageModel> Handle(GetCategoriesIndex query, CancellationToken cancellationToken)
+        public async Task<IndexPageModel> Handle(GetCategoriesIndex query)
         {
             var result = new IndexPageModel();
 
@@ -28,7 +27,7 @@ namespace Atles.Reporting.Handlers.Admin.Categories
                 .Include(x => x.PermissionSet)
                 .Where(x => x.SiteId == query.SiteId && x.Status != CategoryStatusType.Deleted)
                 .OrderBy(x => x.SortOrder)
-                .ToListAsync(cancellationToken: cancellationToken);
+                .ToListAsync();
 
             foreach (var category in categories)
             {
@@ -36,7 +35,7 @@ namespace Atles.Reporting.Handlers.Admin.Categories
                     .Where(x =>
                         x.CategoryId == category.Id &&
                         x.Status != ForumStatusType.Deleted)
-                    .CountAsync(cancellationToken: cancellationToken);
+                    .CountAsync();
 
                 result.Categories.Add(new IndexPageModel.CategoryModel
                 {

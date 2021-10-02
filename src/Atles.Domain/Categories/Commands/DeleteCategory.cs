@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Atles.Infrastructure.Commands;
+using System;
 
 namespace Atles.Domain.Categories.Commands
 {

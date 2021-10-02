@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Atles.Infrastructure.Commands;
+using System;
 using Docs.Attributes;
 
 namespace Atles.Domain.Users.Commands

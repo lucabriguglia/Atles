@@ -19,8 +19,6 @@
     <PackageReference Include="FluentValidation" Version="8.6.2" />
     <PackageReference Include="LucaBriguglia.Docs" Version="1.2.0" />
     <PackageReference Include="Markdig" Version="0.26.0" />
-    <PackageReference Include="MediatR" Version="9.0.0" />
-    <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.Server" Version="5.0.9" />
     <PackageReference Include="Microsoft.VisualStudio.Web.CodeGeneration.Design" Version="5.0.2" />
     <PackageReference Include="Scrutor" Version="3.3.0" />
@@ -31,6 +29,7 @@
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
     <ProjectReference Include="..\Atles.Domain.Handlers\Atles.Domain.Handlers.csproj" />
     <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
+    <ProjectReference Include="..\Atles.Infrastructure\Atles.Infrastructure.csproj" />
     <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
     <ProjectReference Include="..\Atles.Reporting.Handlers\Atles.Reporting.Handlers.csproj" />
   </ItemGroup>

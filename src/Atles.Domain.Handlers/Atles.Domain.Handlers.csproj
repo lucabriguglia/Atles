@@ -11,6 +11,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
     <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
+    <ProjectReference Include="..\Atles.Infrastructure\Atles.Infrastructure.csproj" />
   </ItemGroup>
 
 </Project>

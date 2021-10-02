@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atles.Domain
+namespace Atles.Infrastructure.Commands
 {
     public interface ICommand
     {

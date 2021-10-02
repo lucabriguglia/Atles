@@ -1,4 +1,5 @@
-﻿using Atles.Models.Admin.Categories;
+﻿using Atles.Infrastructure.Queries;
+using Atles.Models.Admin.Categories;
 
 namespace Atles.Reporting.Admin.Categories
 {

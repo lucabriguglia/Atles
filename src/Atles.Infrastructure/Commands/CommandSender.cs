@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Atles.Domain
+namespace Atles.Infrastructure.Commands
 {
     public class CommandSender : ICommandSender
     {

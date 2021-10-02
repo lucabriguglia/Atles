@@ -208,26 +208,6 @@
             The unique identifier of the new permission set for the forum category.
             </summary>
         </member>
-        <member name="T:Atles.Domain.CommandBase">
-            <summary>
-            CommandBase
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.CommandBase.Id">
-            <summary>
-            The unique identifier of the Aggregate.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.CommandBase.SiteId">
-            <summary>
-            The unique identifier of the Site whose the request belongs to.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.CommandBase.UserId">
-            <summary>
-            The unique identifier of the User who initiated the request.
-            </summary>
-        </member>
         <member name="T:Atles.Domain.Forums.Commands.CreateForum">
             <summary>
             Request that creates a forum section.
