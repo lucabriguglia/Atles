@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atles.Models.Admin.Site;
+using Atles.Models.Admin.Sites;
 
 namespace Atles.Client.Components.Admin
 {

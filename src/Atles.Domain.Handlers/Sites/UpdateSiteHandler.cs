@@ -1,35 +1,34 @@
-﻿using System.Data;
-using System.Threading.Tasks;
+﻿using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain;
 using Atles.Domain.Sites;
 using Atles.Domain.Sites.Commands;
+using Atles.Infrastructure.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using System.Data;
+using System.Threading.Tasks;
 
-namespace Atles.Data.Services
+namespace Atles.Domain.Handlers.Categories
 {
-    public class SiteService : ISiteService
+    public class UpdateSiteHandler : ICommandHandler<UpdateSite>
     {
         private readonly AtlesDbContext _dbContext;
+        private readonly IValidator<UpdateSite> _validator;
         private readonly ICacheManager _cacheManager;
-        private readonly IValidator<UpdateSite> _updateValidator;
 
-        public SiteService(AtlesDbContext dbContext,
-            ICacheManager cacheManager,
-            IValidator<UpdateSite> updateValidator)
+        public UpdateSiteHandler(AtlesDbContext dbContext, IValidator<UpdateSite> validator, ICacheManager cacheManager)
         {
             _dbContext = dbContext;
+            _validator = validator;
             _cacheManager = cacheManager;
-            _updateValidator = updateValidator;
         }
 
-        public async Task UpdateAsync(UpdateSite command)
+        public async Task Handle(UpdateSite command)
         {
-            await _updateValidator.ValidateCommandAsync(command);
+            await _validator.ValidateCommandAsync(command);
 
             var site = await _dbContext.Sites
-                .FirstOrDefaultAsync(x => 
+                .FirstOrDefaultAsync(x =>
                     x.Id == command.SiteId);
 
             if (site == null)
@@ -37,11 +36,11 @@ namespace Atles.Data.Services
                 throw new DataException($"Site with Id {command.SiteId} not found.");
             }
 
-            site.UpdateDetails(command.Title, 
-                command.Theme, 
-                command.Css, 
-                command.Language, 
-                command.Privacy, 
+            site.UpdateDetails(command.Title,
+                command.Theme,
+                command.Css,
+                command.Language,
+                command.Privacy,
                 command.Terms,
                 command.HeadScript);
 

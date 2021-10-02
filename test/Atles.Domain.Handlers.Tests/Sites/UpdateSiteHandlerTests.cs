@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Data.Services;
+using Atles.Domain.Handlers.Categories;
 using Atles.Domain.Sites;
 using Atles.Domain.Sites.Commands;
 using AutoFixture;
@@ -12,10 +13,10 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Data.Tests.Services
+namespace Atles.Domain.Handlers.Tests.Sites
 {
     [TestFixture]
-    public class SiteServiceTests : TestFixtureBase
+    public class UpdateSiteHandlerTests : TestFixtureBase
     {
         [Test]
         public async Task Should_update_site_and_add_event()
@@ -35,23 +36,23 @@ namespace Atles.Data.Tests.Services
                         .With(x => x.SiteId, site.Id)
                         .Create();
 
-                var cacheManager = new Mock<ICacheManager>();
-
-                var updateValidator = new Mock<IValidator<UpdateSite>>();
-                updateValidator
+                var validator = new Mock<IValidator<UpdateSite>>();
+                validator
                     .Setup(x => x.ValidateAsync(command, new CancellationToken()))
                     .ReturnsAsync(new ValidationResult());
 
-                var sut = new SiteService(dbContext,
-                    cacheManager.Object,
-                    updateValidator.Object);
+                var cacheManager = new Mock<ICacheManager>();
 
-                await sut.UpdateAsync(command);
+                var sut = new UpdateSiteHandler(dbContext,
+                    validator.Object,
+                    cacheManager.Object);
+
+                await sut.Handle(command);
 
                 var updatedSite = await dbContext.Sites.FirstOrDefaultAsync(x => x.Id == command.SiteId);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.SiteId);
 
-                updateValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
+                validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.AreEqual(command.Title, updatedSite.Title);
                 Assert.NotNull(@event);
             }

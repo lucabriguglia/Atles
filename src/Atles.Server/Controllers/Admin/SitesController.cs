@@ -1,7 +1,10 @@
 ﻿using System.Threading.Tasks;
 using Atles.Domain.Sites;
 using Atles.Domain.Sites.Commands;
-using Atles.Models.Admin.Site;
+using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Queries;
+using Atles.Models.Admin.Sites;
+using Atles.Reporting.Admin.Sites.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -11,16 +14,16 @@ namespace Atles.Server.Controllers.Admin
     public class SitesController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly ISiteService _siteService;
-        private readonly ISiteModelBuilder _modelBuilder;
+        private readonly ICommandSender _commandSender;
+        private readonly IQuerySender _querySender;
 
         public SitesController(IContextService contextService,
-            ISiteService siteService,
-            ISiteModelBuilder modelBuilder)
+            ICommandSender commandSender,
+            IQuerySender querySender)
         {
             _contextService = contextService;
-            _siteService = siteService;
-            _modelBuilder = modelBuilder;
+            _commandSender = commandSender;
+            _querySender = querySender;
         }
 
         [HttpGet("settings")]
@@ -28,7 +31,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var result = await _modelBuilder.BuildSettingsPageModelAsync(site.Id);
+            var result = await _querySender.Send(new GetSettingsPageModel { SiteId = site.Id });
 
             if (result == null)
             {
@@ -57,7 +60,7 @@ namespace Atles.Server.Controllers.Admin
                 HeadScript = model.Site.HeadScript
             };
 
-            await _siteService.UpdateAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }

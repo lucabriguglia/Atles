@@ -1,26 +1,28 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Atles.Models.Admin.Site;
+﻿using Atles.Data;
+using Atles.Infrastructure.Queries;
+using Atles.Models.Admin.Sites;
+using Atles.Reporting.Admin.Sites.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Atles.Data.Builders.Admin
+namespace Atles.Reporting.Handlers.Admin.Sites
 {
-    public class SiteModelBuilder : ISiteModelBuilder
+    public class GetSettingsPageModelHandler : IQueryHandler<GetSettingsPageModel, SettingsPageModel>
     {
         private readonly AtlesDbContext _dbContext;
         private readonly IConfiguration _configuration;
 
-        public SiteModelBuilder(AtlesDbContext dbContext, IConfiguration configuration)
+        public GetSettingsPageModelHandler(AtlesDbContext dbContext, IConfiguration configuration)
         {
             _dbContext = dbContext;
             _configuration = configuration;
         }
 
-        public async Task<SettingsPageModel> BuildSettingsPageModelAsync(Guid siteId)
+        public async Task<SettingsPageModel> Handle(GetSettingsPageModel query)
         {
-            var site = await _dbContext.Sites.FirstOrDefaultAsync(x => x.Id == siteId);
+            var site = await _dbContext.Sites.FirstOrDefaultAsync(x => x.Id == query.SiteId);
 
             if (site == null)
             {
