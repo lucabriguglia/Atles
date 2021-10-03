@@ -6,7 +6,7 @@ using Atles.Domain.Categories.Rules;
 using Atles.Domain.Handlers.Categories.Rules;
 using NUnit.Framework;
 
-namespace Atles.Domain.Handlers.Tests.Rules
+namespace Atles.Domain.Handlers.Tests.Categories.Rules
 {
     [TestFixture]
     public class IsCategoryNameUniqueHandlerTests : TestFixtureBase

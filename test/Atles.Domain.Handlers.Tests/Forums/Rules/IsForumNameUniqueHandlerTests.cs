@@ -1,22 +1,30 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Data.Rules;
+using Atles.Data;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
+using Atles.Domain.Forums.Rules;
+using Atles.Domain.Handlers.Categories.Rules;
 using NUnit.Framework;
 
-namespace Atles.Data.Tests.Rules
+namespace Atles.Domain.Handlers.Tests.Forums.Rules
 {
     [TestFixture]
-    public class ForumRulesTests : TestFixtureBase
+    public class IsForumNameUniqueHandlerTests : TestFixtureBase
     {
         [Test]
         public async Task Should_return_true_when_name_is_unique()
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new ForumRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), Guid.NewGuid(), "My Forum");
+                var sut = new IsForumNameUniqueHandler(dbContext);
+                var query = new IsForumNameUnique 
+                { 
+                    SiteId = Guid.NewGuid(),
+                    CategoryId = Guid.NewGuid(),
+                    Name = "My Forum"
+                };
+                var actual = await sut.Handle(query);
 
                 Assert.IsTrue(actual);
             }
@@ -27,8 +35,15 @@ namespace Atles.Data.Tests.Rules
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new ForumRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), Guid.NewGuid(), "My Forum", Guid.NewGuid());
+                var sut = new IsForumNameUniqueHandler(dbContext);
+                var query = new IsForumNameUnique
+                {
+                    SiteId = Guid.NewGuid(),
+                    CategoryId = Guid.NewGuid(),
+                    Name = "My Forum",
+                    Id = Guid.NewGuid()
+                };
+                var actual = await sut.Handle(query);
 
                 Assert.IsTrue(actual);
             }
@@ -53,8 +68,14 @@ namespace Atles.Data.Tests.Rules
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var sut = new ForumRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(siteId, categoryId, forumName);
+                var sut = new IsForumNameUniqueHandler(dbContext);
+                var query = new IsForumNameUnique
+                {
+                    SiteId = siteId,
+                    CategoryId = categoryId,
+                    Name = forumName
+                };
+                var actual = await sut.Handle(query);
 
                 Assert.IsFalse(actual);
             }
@@ -81,8 +102,15 @@ namespace Atles.Data.Tests.Rules
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var sut = new ForumRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(siteId, categoryId, "Forum 1", forumId);
+                var sut = new IsForumNameUniqueHandler(dbContext);
+                var query = new IsForumNameUnique
+                {
+                    SiteId = siteId,
+                    CategoryId = categoryId,
+                    Name = "Forum 1",
+                    Id = forumId
+                };
+                var actual = await sut.Handle(query);
 
                 Assert.IsFalse(actual);
             }
@@ -104,8 +132,13 @@ namespace Atles.Data.Tests.Rules
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var sut = new ForumRules(dbContext);
-                var actual = await sut.IsValidAsync(forum.Category.SiteId, forum.Id);
+                var sut = new IsForumValidHandler(dbContext);
+                var query = new IsForumValid
+                {
+                    SiteId = forum.Category.SiteId,
+                    Id = forum.Id
+                };
+                var actual = await sut.Handle(query);
 
                 Assert.IsTrue(actual);
             }
@@ -116,8 +149,13 @@ namespace Atles.Data.Tests.Rules
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new ForumRules(dbContext);
-                var actual = await sut.IsValidAsync(Guid.NewGuid(), Guid.NewGuid());
+                var sut = new IsForumValidHandler(dbContext);
+                var query = new IsForumValid
+                {
+                    SiteId = Guid.NewGuid(),
+                    Id = Guid.NewGuid()
+                };
+                var actual = await sut.Handle(query);
 
                 Assert.IsFalse(actual);
             }

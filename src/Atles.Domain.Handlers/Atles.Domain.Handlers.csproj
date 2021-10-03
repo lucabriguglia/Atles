@@ -14,8 +14,4 @@
     <ProjectReference Include="..\Atles.Infrastructure\Atles.Infrastructure.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Forums\Rules\" />
-  </ItemGroup>
-
 </Project>
