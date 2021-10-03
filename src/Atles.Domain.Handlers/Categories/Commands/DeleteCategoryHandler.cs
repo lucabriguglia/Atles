@@ -37,6 +37,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
             }
 
             category.Delete();
+
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
                 EventType.Deleted,

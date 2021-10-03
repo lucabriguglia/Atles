@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Atles.Domain;
 using Atles.Domain.Forums;
 using Atles.Domain.Forums.Commands;
+using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Queries;
 using Atles.Models.Admin.Forums;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -13,19 +15,22 @@ namespace Atles.Server.Controllers.Admin
     public class ForumsController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IForumService _forumService;
         private readonly IForumRules _forumRules;
         private readonly IForumModelBuilder _modelBuilder;
+        private readonly ICommandSender _commandSender;
+        private readonly IQuerySender _querySender;
 
         public ForumsController(IContextService contextService,
-            IForumService forumService,
             IForumRules forumRules,
-            IForumModelBuilder modelBuilder)
+            IForumModelBuilder modelBuilder,
+            ICommandSender commandSender,
+            IQuerySender querySender)
         {
             _contextService = contextService;
-            _forumService = forumService;
             _forumRules = forumRules;
             _modelBuilder = modelBuilder;
+            _commandSender = commandSender;
+            _querySender = querySender;
         }
 
         [HttpGet("index-model")]
@@ -77,7 +82,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _forumService.CreateAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
@@ -115,7 +120,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _forumService.UpdateAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
@@ -134,7 +139,7 @@ namespace Atles.Server.Controllers.Admin
                 Direction = Direction.Up
             };
 
-            await _forumService.MoveAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
@@ -153,7 +158,7 @@ namespace Atles.Server.Controllers.Admin
                 Direction = Direction.Down
             };
 
-            await _forumService.MoveAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
@@ -171,7 +176,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _forumService.DeleteAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }

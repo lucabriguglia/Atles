@@ -3,7 +3,7 @@ using System.Threading;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Handlers.Categories;
+using Atles.Domain.Handlers.Categories.Commands;
 using Atles.Domain.Sites;
 using Atles.Domain.Sites.Commands;
 using AutoFixture;
