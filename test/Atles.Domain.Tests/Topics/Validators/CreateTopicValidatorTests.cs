@@ -1,6 +1,7 @@
-﻿using Atles.Domain.Forums;
+﻿using Atles.Domain.Forums.Rules;
 using Atles.Domain.Posts.Commands;
 using Atles.Domain.Posts.Validators;
+using Atles.Infrastructure.Queries;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
@@ -16,9 +17,9 @@ namespace Atles.Domain.Tests.Topics.Validators
         {
             var command = Fixture.Build<CreateTopic>().With(x => x.Title, string.Empty).Create();
 
-            var forumRules = new Mock<IForumRules>();
+            var queries = new Mock<IQuerySender>();
 
-            var sut = new CreateTopicValidator(forumRules.Object);
+            var sut = new CreateTopicValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Title, command);
         }
@@ -28,9 +29,9 @@ namespace Atles.Domain.Tests.Topics.Validators
         {
             var command = Fixture.Build<CreateTopic>().With(x => x.Title, new string('*', 101)).Create();
 
-            var forumRules = new Mock<IForumRules>();
+            var queries = new Mock<IQuerySender>();
 
-            var sut = new CreateTopicValidator(forumRules.Object);
+            var sut = new CreateTopicValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Title, command);
         }
@@ -40,9 +41,9 @@ namespace Atles.Domain.Tests.Topics.Validators
         {
             var command = Fixture.Build<CreateTopic>().With(x => x.Slug, new string('*', 51)).Create();
 
-            var forumRules = new Mock<IForumRules>();
+            var queries = new Mock<IQuerySender>();
 
-            var sut = new CreateTopicValidator(forumRules.Object);
+            var sut = new CreateTopicValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
         }
@@ -52,9 +53,9 @@ namespace Atles.Domain.Tests.Topics.Validators
         {
             var command = Fixture.Build<CreateTopic>().With(x => x.Content, string.Empty).Create();
 
-            var forumRules = new Mock<IForumRules>();
+            var queries = new Mock<IQuerySender>();
 
-            var sut = new CreateTopicValidator(forumRules.Object);
+            var sut = new CreateTopicValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Content, command);
         }
@@ -64,10 +65,10 @@ namespace Atles.Domain.Tests.Topics.Validators
         {
             var command = Fixture.Create<CreateTopic>();
 
-            var forumRules = new Mock<IForumRules>();
-            forumRules.Setup(x => x.IsValidAsync(command.SiteId, command.ForumId)).ReturnsAsync(false);
+            var queries = new Mock<IQuerySender>();
+            queries.Setup(x => x.Send(new IsForumValid { SiteId = command.SiteId, Id = command.ForumId })).ReturnsAsync(false);
 
-            var sut = new CreateTopicValidator(forumRules.Object);
+            var sut = new CreateTopicValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.ForumId, command);
         }

@@ -1,7 +1,8 @@
-﻿using Atles.Domain.Forums;
+﻿using Atles.Domain.Forums.Rules;
 using Atles.Domain.Posts;
 using Atles.Domain.Posts.Commands;
 using Atles.Domain.Posts.Validators;
+using Atles.Infrastructure.Queries;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
@@ -17,10 +18,10 @@ namespace Atles.Domain.Tests.Replies.Validators
         {
             var command = Fixture.Build<CreateReply>().With(x => x.Content, string.Empty).Create();
 
-            var forumRules = new Mock<IForumRules>();
+            var queries = new Mock<IQuerySender>();
             var topicRules = new Mock<ITopicRules>();
 
-            var sut = new CreateReplyValidator(forumRules.Object, topicRules.Object);
+            var sut = new CreateReplyValidator(queries.Object, topicRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Content, command);
         }
@@ -30,12 +31,12 @@ namespace Atles.Domain.Tests.Replies.Validators
         {
             var command = Fixture.Create<CreateReply>();
 
-            var forumRules = new Mock<IForumRules>();
-            forumRules.Setup(x => x.IsValidAsync(command.SiteId, command.ForumId)).ReturnsAsync(false);
+            var queries = new Mock<IQuerySender>();
+            queries.Setup(x => x.Send(new IsForumValid { SiteId = command.SiteId, Id = command.ForumId })).ReturnsAsync(false);
 
             var topicRules = new Mock<ITopicRules>();
 
-            var sut = new CreateReplyValidator(forumRules.Object, topicRules.Object);
+            var sut = new CreateReplyValidator(queries.Object, topicRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.ForumId, command);
         }
@@ -45,12 +46,12 @@ namespace Atles.Domain.Tests.Replies.Validators
         {
             var command = Fixture.Create<CreateReply>();
 
-            var forumRules = new Mock<IForumRules>();
+            var queries = new Mock<IQuerySender>();
 
             var topicRules = new Mock<ITopicRules>();
             topicRules.Setup(x => x.IsValidAsync(command.SiteId, command.ForumId, command.TopicId)).ReturnsAsync(false);
 
-            var sut = new CreateReplyValidator(forumRules.Object, topicRules.Object);
+            var sut = new CreateReplyValidator(queries.Object, topicRules.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.TopicId, command);
         }
