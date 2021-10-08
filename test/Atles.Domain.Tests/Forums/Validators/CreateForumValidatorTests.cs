@@ -1,13 +1,12 @@
-﻿using Atles.Domain.Forums;
-using Atles.Domain.Forums.Commands;
+﻿using Atles.Domain.Forums.Commands;
 using Atles.Domain.Forums.Rules;
 using Atles.Domain.Forums.Validators;
 using Atles.Domain.PermissionSets;
-using Atles.Infrastructure.Queries;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
+using OpenCqrs.Queries;
 
 namespace Atles.Domain.Tests.Forums.Validators
 {

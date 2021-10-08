@@ -9,6 +9,8 @@ using Atles.Infrastructure.Queries;
 using Atles.Models.Admin.Forums;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
+using OpenCqrs.Commands;
+using OpenCqrs.Queries;
 
 namespace Atles.Server.Controllers.Admin
 {

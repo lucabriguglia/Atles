@@ -1,10 +1,10 @@
 ﻿using Atles.Data;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
-using Atles.Infrastructure.Queries;
 using Atles.Models.Admin.Categories;
 using Atles.Reporting.Admin.Categories;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs.Queries;
 using System.Linq;
 using System.Threading.Tasks;
 

@@ -2,9 +2,9 @@
 using Atles.Data.Caching;
 using Atles.Domain.Sites;
 using Atles.Domain.Sites.Commands;
-using Atles.Infrastructure.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs.Commands;
 using System.Data;
 using System.Threading.Tasks;
 

@@ -9,6 +9,7 @@ using Atles.Domain.Forums.Commands;
 using Atles.Infrastructure.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs.Commands;
 
 namespace Atles.Domain.Handlers.Forums.Commands
 {

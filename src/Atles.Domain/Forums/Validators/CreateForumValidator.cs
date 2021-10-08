@@ -3,6 +3,7 @@ using Atles.Domain.Forums.Rules;
 using Atles.Domain.PermissionSets;
 using Atles.Infrastructure.Queries;
 using FluentValidation;
+using OpenCqrs.Queries;
 
 namespace Atles.Domain.Forums.Validators
 {

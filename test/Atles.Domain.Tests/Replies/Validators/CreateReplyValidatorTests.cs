@@ -2,11 +2,11 @@
 using Atles.Domain.Posts;
 using Atles.Domain.Posts.Commands;
 using Atles.Domain.Posts.Validators;
-using Atles.Infrastructure.Queries;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
+using OpenCqrs.Queries;
 
 namespace Atles.Domain.Tests.Replies.Validators
 {

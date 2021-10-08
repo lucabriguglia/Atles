@@ -5,6 +5,7 @@ using Atles.Domain.Categories.Commands;
 using Atles.Domain.Forums;
 using Atles.Infrastructure.Commands;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs.Commands;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;

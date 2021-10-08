@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenCqrs.Commands;
+using System;
 
 namespace Atles.Infrastructure.Commands
 {

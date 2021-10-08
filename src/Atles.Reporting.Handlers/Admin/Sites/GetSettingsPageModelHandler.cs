@@ -1,9 +1,9 @@
 ﻿using Atles.Data;
-using Atles.Infrastructure.Queries;
 using Atles.Models.Admin.Sites;
 using Atles.Reporting.Admin.Sites.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using OpenCqrs.Queries;
 using System.Linq;
 using System.Threading.Tasks;
 

@@ -3,12 +3,12 @@ using System.Threading.Tasks;
 using Atles.Domain;
 using Atles.Domain.Categories.Commands;
 using Atles.Domain.Categories.Rules;
-using Atles.Infrastructure.Commands;
-using Atles.Infrastructure.Queries;
 using Atles.Models.Admin.Categories;
 using Atles.Reporting.Admin.Categories;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
+using OpenCqrs.Commands;
+using OpenCqrs.Queries;
 
 namespace Atles.Server.Controllers.Admin
 {

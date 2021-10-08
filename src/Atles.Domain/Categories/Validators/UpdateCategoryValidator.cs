@@ -3,6 +3,7 @@ using Atles.Domain.Categories.Rules;
 using Atles.Domain.PermissionSets;
 using Atles.Infrastructure.Queries;
 using FluentValidation;
+using OpenCqrs.Queries;
 
 namespace Atles.Domain.Categories.Validators
 {

@@ -3,6 +3,7 @@ using Atles.Domain.Forums;
 using Atles.Domain.Forums.Rules;
 using Atles.Infrastructure.Queries;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs.Queries;
 using System.Threading.Tasks;
 
 namespace Atles.Domain.Handlers.Categories.Rules

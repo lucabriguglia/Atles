@@ -2,6 +2,7 @@
 using Atles.Domain.Posts.Commands;
 using Atles.Infrastructure.Queries;
 using FluentValidation;
+using OpenCqrs.Queries;
 
 namespace Atles.Domain.Posts.Validators
 {

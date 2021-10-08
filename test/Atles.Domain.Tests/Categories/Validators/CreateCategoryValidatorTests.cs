@@ -8,6 +8,7 @@ using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
+using OpenCqrs.Queries;
 
 namespace Atles.Domain.Tests.Categories.Validators
 {

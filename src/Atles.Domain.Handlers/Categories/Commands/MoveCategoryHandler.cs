@@ -4,6 +4,7 @@ using Atles.Domain.Categories;
 using Atles.Domain.Categories.Commands;
 using Atles.Infrastructure.Commands;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs.Commands;
 using System.Data;
 using System.Threading.Tasks;
 

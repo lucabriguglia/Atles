@@ -1,4 +1,5 @@
-﻿using System;
+﻿using OpenCqrs.Queries;
+using System;
 
 namespace Atles.Infrastructure.Queries
 {

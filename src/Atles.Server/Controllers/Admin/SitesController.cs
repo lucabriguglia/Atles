@@ -1,12 +1,11 @@
 ﻿using System.Threading.Tasks;
-using Atles.Domain.Sites;
 using Atles.Domain.Sites.Commands;
-using Atles.Infrastructure.Commands;
-using Atles.Infrastructure.Queries;
 using Atles.Models.Admin.Sites;
 using Atles.Reporting.Admin.Sites.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
+using OpenCqrs.Commands;
+using OpenCqrs.Queries;
 
 namespace Atles.Server.Controllers.Admin
 {
