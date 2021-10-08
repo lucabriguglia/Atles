@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Domain;
-using Atles.Domain.Forums;
 using Atles.Domain.Forums.Commands;
 using Atles.Domain.Forums.Rules;
-using Atles.Infrastructure.Commands;
-using Atles.Infrastructure.Queries;
 using Atles.Models.Admin.Forums;
+using Atles.Reporting.Admin.Forums;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs.Commands;
@@ -18,17 +16,14 @@ namespace Atles.Server.Controllers.Admin
     public class ForumsController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IForumModelBuilder _modelBuilder;
         private readonly ICommandSender _commandSender;
         private readonly IQuerySender _querySender;
 
         public ForumsController(IContextService contextService,
-            IForumModelBuilder modelBuilder,
             ICommandSender commandSender,
             IQuerySender querySender)
         {
             _contextService = contextService;
-            _modelBuilder = modelBuilder;
             _commandSender = commandSender;
             _querySender = querySender;
         }
@@ -38,7 +33,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildIndexPageModelAsync(site.Id);
+            return await _querySender.Send(new GetForumsIndex { SiteId = site.Id });
         }
 
         [HttpGet("index-model/{categoryId}")]
@@ -46,7 +41,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildIndexPageModelAsync(site.Id, categoryId);
+            return await _querySender.Send(new GetForumsIndex { SiteId = site.Id, CategoryId = categoryId });
         }
 
         [HttpGet("create")]
@@ -54,7 +49,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildCreateFormModelAsync(site.Id);
+            return await _querySender.Send(new GetForumCreateForm { SiteId = site.Id });
         }
 
         [HttpGet("create/{categoryId}")]
@@ -62,7 +57,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildCreateFormModelAsync(site.Id, categoryId);
+            return await _querySender.Send(new GetForumCreateForm { SiteId = site.Id, CategoryId = categoryId });
         }
 
         [HttpPost("save")]
@@ -92,7 +87,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var result = await _modelBuilder.BuildEditFormModelAsync(site.Id, id);
+            var result = await _querySender.Send(new GetForumEditForm { SiteId = site.Id, Id = id });
 
             if (result == null)
             {
