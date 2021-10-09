@@ -7,8 +7,7 @@ using Atles.Models.Admin.Categories;
 using Atles.Reporting.Admin.Categories;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
-using OpenCqrs.Commands;
-using OpenCqrs.Queries;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {
@@ -16,16 +15,12 @@ namespace Atles.Server.Controllers.Admin
     public class CategoriesController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly ICommandSender _commandSender;
-        private readonly IQuerySender _querySender;
+        private readonly ISender _sender;
 
-        public CategoriesController(IContextService contextService,
-            ICommandSender commandSender,
-            IQuerySender querySender)
+        public CategoriesController(IContextService contextService, ISender sender)
         {
             _contextService = contextService;
-            _commandSender = commandSender;
-            _querySender = querySender;
+            _sender = sender;
         }
 
         [HttpGet("list")]
@@ -33,7 +28,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var response = await _querySender.Send(new GetCategoriesIndex { SiteId = site.Id });
+            var response = await _sender.Send(new GetCategoriesIndex { SiteId = site.Id });
 
             return response;
         }
@@ -43,7 +38,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var response = await _querySender.Send(new GetCategoryForm { SiteId = site.Id });
+            var response = await _sender.Send(new GetCategoryForm { SiteId = site.Id });
 
             return response;
         }
@@ -62,7 +57,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _commandSender.Send(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -72,7 +67,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var result = await _querySender.Send(new GetCategoryForm { SiteId = site.Id, Id = id });
+            var result = await _sender.Send(new GetCategoryForm { SiteId = site.Id, Id = id });
 
             if (result == null)
             {
@@ -97,7 +92,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _commandSender.Send(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -116,7 +111,7 @@ namespace Atles.Server.Controllers.Admin
                 Direction = Direction.Up
             };
 
-            await _commandSender.Send(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -135,7 +130,7 @@ namespace Atles.Server.Controllers.Admin
                 Direction = Direction.Down
             };
 
-            await _commandSender.Send(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -153,7 +148,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _commandSender.Send(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -162,7 +157,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string name)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _querySender.Send(new IsCategoryNameUnique 
+            var isNameUnique = await _sender.Send(new IsCategoryNameUnique 
             {
                 SiteId = site.Id,
                 Name = name
@@ -174,7 +169,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string name, Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _querySender.Send(new IsCategoryNameUnique
+            var isNameUnique = await _sender.Send(new IsCategoryNameUnique
             {
                 SiteId = site.Id,
                 Name = name,

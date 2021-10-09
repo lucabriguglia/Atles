@@ -6,6 +6,7 @@ using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
+using OpenCqrs;
 using OpenCqrs.Queries;
 using System;
 
@@ -19,9 +20,9 @@ namespace Atles.Domain.Tests.Categories.Validators
         {
             var command = Fixture.Build<UpdateCategory>().With(x => x.Name, string.Empty).Create();
 
-            var querySender = new Mock<IQuerySender>();
+            var sender = new Mock<ISender>();
 
-            var sut = new UpdateCategoryValidator(querySender.Object);
+            var sut = new UpdateCategoryValidator(sender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -31,9 +32,9 @@ namespace Atles.Domain.Tests.Categories.Validators
         {
             var command = Fixture.Build<UpdateCategory>().With(x => x.Name, new string('*', 51)).Create();
 
-            var querySender = new Mock<IQuerySender>();
+            var sender = new Mock<ISender>();
 
-            var sut = new UpdateCategoryValidator(querySender.Object);
+            var sut = new UpdateCategoryValidator(sender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -43,10 +44,10 @@ namespace Atles.Domain.Tests.Categories.Validators
         {
             var command = Fixture.Create<UpdateCategory>();
 
-            var querySender = new Mock<IQuerySender>();
-            querySender.Setup(x => x.Send(It.IsAny<IsCategoryNameUnique>())).ReturnsAsync(false);
+            var sender = new Mock<ISender>();
+            sender.Setup(x => x.Send(It.IsAny<IsCategoryNameUnique>())).ReturnsAsync(false);
 
-            var sut = new UpdateCategoryValidator(querySender.Object);
+            var sut = new UpdateCategoryValidator(sender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -59,8 +60,8 @@ namespace Atles.Domain.Tests.Categories.Validators
             var querySiteId = Guid.NewGuid();
             var queryPermissionSetId = Guid.NewGuid();
 
-            var querySender = new Mock<IQuerySender>();
-            querySender
+            var sender = new Mock<ISender>();
+            sender
                 .Setup(x => x.Send(It.IsAny<IsPermissionSetValid>()))
                 .Callback<IQuery<bool>>(q =>
                 {
@@ -70,7 +71,7 @@ namespace Atles.Domain.Tests.Categories.Validators
                 })
                 .ReturnsAsync(false);
 
-            var sut = new UpdateCategoryValidator(querySender.Object);
+            var sut = new UpdateCategoryValidator(sender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.PermissionSetId, command);
             Assert.AreEqual(command.SiteId, querySiteId);

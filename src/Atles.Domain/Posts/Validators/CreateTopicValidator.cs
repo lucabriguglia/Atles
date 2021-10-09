@@ -1,14 +1,13 @@
 ﻿using Atles.Domain.Forums.Rules;
 using Atles.Domain.Posts.Commands;
-using Atles.Infrastructure.Queries;
 using FluentValidation;
-using OpenCqrs.Queries;
+using OpenCqrs;
 
 namespace Atles.Domain.Posts.Validators
 {
     public class CreateTopicValidator : AbstractValidator<CreateTopic>
     {
-        public CreateTopicValidator(IQuerySender queries)
+        public CreateTopicValidator(ISender sender)
         {
             RuleFor(c => c.Title)
                 .NotEmpty().WithMessage("Topic title is required.")
@@ -22,7 +21,7 @@ namespace Atles.Domain.Posts.Validators
                 .NotEmpty().WithMessage("Topic content is required.");
 
             RuleFor(c => c.ForumId)
-                .MustAsync((c, p, cancellation) => queries.Send(new IsForumValid { SiteId = c.SiteId, Id = p }))
+                .MustAsync((c, p, cancellation) => sender.Send(new IsForumValid { SiteId = c.SiteId, Id = p }))
                     .WithMessage(c => $"Forum with id {c.ForumId} does not exist.");
         }
     }

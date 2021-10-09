@@ -5,6 +5,7 @@ using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
+using OpenCqrs;
 using OpenCqrs.Queries;
 using System;
 
@@ -17,8 +18,10 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
         public void Should_have_validation_error_when_name_is_empty()
         {
             var command = Fixture.Build<CreatePermissionSet>().With(x => x.Name, string.Empty).Create();
-            var querySender = new Mock<IQuerySender>();
-            var sut = new CreatePermissionSetValidator(querySender.Object);
+
+            var sender = new Mock<ISender>();
+
+            var sut = new CreatePermissionSetValidator(sender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -27,8 +30,10 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
         public void Should_have_validation_error_when_name_is_too_long()
         {
             var command = Fixture.Build<CreatePermissionSet>().With(x => x.Name, new string('*', 51)).Create();
-            var querySender = new Mock<IQuerySender>();
-            var sut = new CreatePermissionSetValidator(querySender.Object);
+
+            var sender = new Mock<ISender>();
+
+            var sut = new CreatePermissionSetValidator(sender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -41,8 +46,8 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
             var querySiteId = Guid.NewGuid();
             var queryName = string.Empty;
 
-            var querySender = new Mock<IQuerySender>();
-            querySender
+            var sender = new Mock<ISender>();
+            sender
                 .Setup(x => x.Send(It.IsAny<IsPermissionSetNameUnique>()))
                 .Callback<IQuery<bool>>(q =>
                 {
@@ -52,7 +57,7 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
                 })
                 .ReturnsAsync(false);
 
-            var sut = new CreatePermissionSetValidator(querySender.Object);
+            var sut = new CreatePermissionSetValidator(sender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
             Assert.AreEqual(command.SiteId, querySiteId);

@@ -4,8 +4,7 @@ using Atles.Models.Admin.Sites;
 using Atles.Reporting.Admin.Sites.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
-using OpenCqrs.Commands;
-using OpenCqrs.Queries;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {
@@ -13,16 +12,12 @@ namespace Atles.Server.Controllers.Admin
     public class SitesController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly ICommandSender _commandSender;
-        private readonly IQuerySender _querySender;
+        private readonly ISender _sender;
 
-        public SitesController(IContextService contextService,
-            ICommandSender commandSender,
-            IQuerySender querySender)
+        public SitesController(IContextService contextService, ISender sender)
         {
             _contextService = contextService;
-            _commandSender = commandSender;
-            _querySender = querySender;
+            _sender = sender;
         }
 
         [HttpGet("settings")]
@@ -30,7 +25,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var result = await _querySender.Send(new GetSettingsPageModel { SiteId = site.Id });
+            var result = await _sender.Send(new GetSettingsPageModel { SiteId = site.Id });
 
             if (result == null)
             {
@@ -59,7 +54,7 @@ namespace Atles.Server.Controllers.Admin
                 HeadScript = model.Site.HeadScript
             };
 
-            await _commandSender.Send(command);
+            await _sender.Send(command);
 
             return Ok();
         }
