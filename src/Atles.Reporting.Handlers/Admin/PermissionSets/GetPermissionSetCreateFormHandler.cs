@@ -2,7 +2,8 @@
 using Atles.Domain.PermissionSets;
 using Atles.Models.Admin.PermissionSets;
 using Atles.Models.Admin.PermissionSets.Queries;
-using Atles.Models.Admin.Roles;
+using Atles.Reporting.Admin.Roles.Queries;
+using OpenCqrs;
 using OpenCqrs.Queries;
 using System;
 using System.Threading.Tasks;
@@ -11,18 +12,18 @@ namespace Atles.Reporting.Handlers.Admin.PermissionSets
 {
     public class GetPermissionSetCreateFormHandler : IQueryHandler<GetPermissionSetCreateForm, FormComponentModel>
     {
-        private readonly IRoleModelBuilder _roleManager;
+        private readonly ISender _sender;
 
-        public GetPermissionSetCreateFormHandler(IRoleModelBuilder roleManager)
+        public GetPermissionSetCreateFormHandler(ISender sender)
         {
-            _roleManager = roleManager;
+            _sender = sender;
         }
 
         public async Task<FormComponentModel> Handle(GetPermissionSetCreateForm query)
         {
             var result = new FormComponentModel();
 
-            foreach (var roleModel in await _roleManager.GetRoleModelsAsync())
+            foreach (var roleModel in await _sender.Send(new GetRoles()))
             {
                 var permissionModel = new FormComponentModel.PermissionModel
                 {

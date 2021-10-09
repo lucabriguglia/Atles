@@ -2,38 +2,41 @@
 using System.Threading.Tasks;
 using Atles.Domain;
 using Atles.Models.Admin.Roles;
+using Atles.Reporting.Admin.Roles.Queries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {
     [Route("api/admin/roles")]
     public class RolesController : AdminControllerBase
     {
-        private readonly IRoleModelBuilder _roleModelBuilder;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ISender _sender;
 
-        public RolesController(IRoleModelBuilder roleModelBuilder, 
+        public RolesController(
             RoleManager<IdentityRole> roleManager, 
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            ISender sender)
         {
-            _roleModelBuilder = roleModelBuilder;
             _roleManager = roleManager;
             _userManager = userManager;
+            _sender = sender;
         }
 
         [HttpGet("list")]
         public async Task<IndexPageModel> List()
         {
-            return await _roleModelBuilder.BuildIndexPageModelAsync();
+            return await _sender.Send(new GetRolesIndex());
         }
 
         [HttpGet("users-in-role/{roleName}")]
         public async Task<IList<IndexPageModel.UserModel>> UsersInRole(string roleName)
         {
-            return await _roleModelBuilder.BuildUsersInRoleModelsAsync(roleName);
+            return await _sender.Send(new GetUsersInRole { RoleName = roleName });
         }
 
         [HttpPost("create")]

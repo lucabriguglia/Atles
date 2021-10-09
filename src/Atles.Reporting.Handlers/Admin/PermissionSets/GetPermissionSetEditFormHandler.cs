@@ -3,8 +3,9 @@ using Atles.Domain;
 using Atles.Domain.PermissionSets;
 using Atles.Models.Admin.PermissionSets;
 using Atles.Models.Admin.PermissionSets.Queries;
-using Atles.Models.Admin.Roles;
+using Atles.Reporting.Admin.Roles.Queries;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs;
 using OpenCqrs.Queries;
 using System;
 using System.Linq;
@@ -15,12 +16,12 @@ namespace Atles.Reporting.Handlers.Admin.PermissionSets
     public class GetPermissionSetEditFormHandler : IQueryHandler<GetPermissionSetEditForm, FormComponentModel>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly IRoleModelBuilder _roleManager;
+        private readonly ISender _sender;
 
-        public GetPermissionSetEditFormHandler(AtlesDbContext dbContext, IRoleModelBuilder roleManager)
+        public GetPermissionSetEditFormHandler(AtlesDbContext dbContext, ISender sender)
         {
             _dbContext = dbContext;
-            _roleManager = roleManager;
+            _sender = sender;
         }
 
         public async Task<FormComponentModel> Handle(GetPermissionSetEditForm query)
@@ -45,7 +46,7 @@ namespace Atles.Reporting.Handlers.Admin.PermissionSets
                 Name = permissionSet.Name
             };
 
-            foreach (var roleModel in await _roleManager.GetRoleModelsAsync())
+            foreach (var roleModel in await _sender.Send(new GetRoles()))
             {
                 var permissionModel = new FormComponentModel.PermissionModel
                 {
