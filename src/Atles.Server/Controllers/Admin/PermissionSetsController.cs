@@ -5,6 +5,8 @@ using Atles.Domain.PermissionSets.Commands;
 using Atles.Models.Admin.PermissionSets;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
+using OpenCqrs.Commands;
+using OpenCqrs.Queries;
 
 namespace Atles.Server.Controllers.Admin
 {
@@ -12,19 +14,22 @@ namespace Atles.Server.Controllers.Admin
     public class PermissionSetsController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IPermissionSetService _permissionSetService;
         private readonly IPermissionSetRules _permissionSetRules;
         private readonly IPermissionSetModelBuilder _modelBuilder;
+        private readonly ICommandSender _commandSender;
+        private readonly IQuerySender _querySender;
 
         public PermissionSetsController(IContextService contextService,
-            IPermissionSetService permissionSetService,
             IPermissionSetRules permissionSetRules,
-            IPermissionSetModelBuilder modelBuilder)
+            IPermissionSetModelBuilder modelBuilder,
+            ICommandSender commandSender,
+            IQuerySender querySender)
         {
             _contextService = contextService;
-            _permissionSetService = permissionSetService;
             _permissionSetRules = permissionSetRules;
             _modelBuilder = modelBuilder;
+            _commandSender = commandSender;
+            _querySender = querySender;
         }
 
         [HttpGet("list")]
@@ -57,7 +62,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _permissionSetService.CreateAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
@@ -92,7 +97,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _permissionSetService.UpdateAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
@@ -110,7 +115,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _permissionSetService.DeleteAsync(command);
+            await _commandSender.Send(command);
 
             return Ok();
         }
