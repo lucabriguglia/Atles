@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Domain.PermissionSets;
 using Atles.Domain.PermissionSets.Commands;
+using Atles.Domain.PermissionSets.Rules;
 using Atles.Models.Admin.PermissionSets;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -14,19 +14,16 @@ namespace Atles.Server.Controllers.Admin
     public class PermissionSetsController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IPermissionSetRules _permissionSetRules;
         private readonly IPermissionSetModelBuilder _modelBuilder;
         private readonly ICommandSender _commandSender;
         private readonly IQuerySender _querySender;
 
         public PermissionSetsController(IContextService contextService,
-            IPermissionSetRules permissionSetRules,
             IPermissionSetModelBuilder modelBuilder,
             ICommandSender commandSender,
             IQuerySender querySender)
         {
             _contextService = contextService;
-            _permissionSetRules = permissionSetRules;
             _modelBuilder = modelBuilder;
             _commandSender = commandSender;
             _querySender = querySender;
@@ -124,7 +121,8 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string name)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _permissionSetRules.IsNameUniqueAsync(site.Id, name);
+            var query = new IsPermissionSetNameUnique { SiteId = site.Id, Name = name };
+            var isNameUnique = await _querySender.Send(query);
             return Ok(isNameUnique);
         }
 
@@ -132,7 +130,8 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string name, Guid id)
         {
             var site = await _contextService.CurrentSiteAsync();
-            var isNameUnique = await _permissionSetRules.IsNameUniqueAsync(site.Id, name, id);
+            var query = new IsPermissionSetNameUnique { SiteId = site.Id, Name = name, Id = id };
+            var isNameUnique = await _querySender.Send(query);
             return Ok(isNameUnique);
         }
     }

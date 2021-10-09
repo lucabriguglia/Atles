@@ -2,11 +2,13 @@
 using Atles.Domain.Forums.Rules;
 using Atles.Domain.Forums.Validators;
 using Atles.Domain.PermissionSets;
+using Atles.Domain.PermissionSets.Rules;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 using OpenCqrs.Queries;
+using System;
 
 namespace Atles.Domain.Tests.Forums.Validators
 {
@@ -19,9 +21,8 @@ namespace Atles.Domain.Tests.Forums.Validators
             var command = Fixture.Build<UpdateForum>().With(x => x.Name, string.Empty).Create();
 
             var queries = new Mock<IQuerySender>();
-            var permissionSetRules = new Mock<IPermissionSetRules>();
 
-            var sut = new UpdateForumValidator(queries.Object, permissionSetRules.Object);
+            var sut = new UpdateForumValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -32,9 +33,8 @@ namespace Atles.Domain.Tests.Forums.Validators
             var command = Fixture.Build<UpdateForum>().With(x => x.Name, new string('*', 51)).Create();
 
             var queries = new Mock<IQuerySender>();
-            var permissionSetRules = new Mock<IPermissionSetRules>();
 
-            var sut = new UpdateForumValidator(queries.Object, permissionSetRules.Object);
+            var sut = new UpdateForumValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -47,9 +47,7 @@ namespace Atles.Domain.Tests.Forums.Validators
             var queries = new Mock<IQuerySender>();
             queries.Setup(x => x.Send(new IsForumNameUnique { SiteId = command.SiteId, CategoryId = command.CategoryId, Name = command.Name, Id = command.Id })).ReturnsAsync(false);
 
-            var permissionSetRules = new Mock<IPermissionSetRules>();
-
-            var sut = new UpdateForumValidator(queries.Object, permissionSetRules.Object);
+            var sut = new UpdateForumValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -60,9 +58,8 @@ namespace Atles.Domain.Tests.Forums.Validators
             var command = Fixture.Build<CreateForum>().With(x => x.Slug, string.Empty).Create();
 
             var queries = new Mock<IQuerySender>();
-            var permissionSetRules = new Mock<IPermissionSetRules>();
 
-            var sut = new CreateForumValidator(queries.Object, permissionSetRules.Object);
+            var sut = new CreateForumValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
         }
@@ -73,9 +70,8 @@ namespace Atles.Domain.Tests.Forums.Validators
             var command = Fixture.Build<CreateForum>().With(x => x.Slug, new string('*', 51)).Create();
 
             var queries = new Mock<IQuerySender>();
-            var permissionSetRules = new Mock<IPermissionSetRules>();
 
-            var sut = new CreateForumValidator(queries.Object, permissionSetRules.Object);
+            var sut = new CreateForumValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
         }
@@ -88,9 +84,7 @@ namespace Atles.Domain.Tests.Forums.Validators
             var queries = new Mock<IQuerySender>();
             queries.Setup(x => x.Send(new IsForumSlugUnique { SiteId = command.SiteId, Slug = command.Slug, Id = command.Id })).ReturnsAsync(false);
 
-            var permissionSetRules = new Mock<IPermissionSetRules>();
-
-            var sut = new CreateForumValidator(queries.Object, permissionSetRules.Object);
+            var sut = new CreateForumValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
         }
@@ -101,9 +95,8 @@ namespace Atles.Domain.Tests.Forums.Validators
             var command = Fixture.Build<UpdateForum>().With(x => x.Description, new string('*', 201)).Create();
 
             var queries = new Mock<IQuerySender>();
-            var permissionSetRules = new Mock<IPermissionSetRules>();
 
-            var sut = new UpdateForumValidator(queries.Object, permissionSetRules.Object);
+            var sut = new UpdateForumValidator(queries.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Description, command);
         }
@@ -113,14 +106,25 @@ namespace Atles.Domain.Tests.Forums.Validators
         {
             var command = Fixture.Create<UpdateForum>();
 
-            var queries = new Mock<IQuerySender>();
+            var querySiteId = Guid.NewGuid();
+            var queryPermissionSetId = Guid.NewGuid();
 
-            var permissionSetRules = new Mock<IPermissionSetRules>();
-            permissionSetRules.Setup(x => x.IsValidAsync(command.SiteId, command.PermissionSetId.Value)).ReturnsAsync(false);
+            var querySender = new Mock<IQuerySender>();
+            querySender
+                .Setup(x => x.Send(It.IsAny<IsPermissionSetValid>()))
+                .Callback<IQuery<bool>>(q =>
+                {
+                    var query = q as IsPermissionSetValid;
+                    querySiteId = query.SiteId;
+                    queryPermissionSetId = query.Id;
+                })
+                .ReturnsAsync(false);
 
-            var sut = new UpdateForumValidator(queries.Object, permissionSetRules.Object);
+            var sut = new UpdateForumValidator(querySender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.PermissionSetId, command);
+            Assert.AreEqual(command.SiteId, querySiteId);
+            Assert.AreEqual(command.PermissionSetId.Value, queryPermissionSetId);
         }
     }
 }

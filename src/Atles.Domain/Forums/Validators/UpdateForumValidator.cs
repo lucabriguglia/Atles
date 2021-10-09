@@ -1,7 +1,6 @@
 ﻿using Atles.Domain.Forums.Commands;
 using Atles.Domain.Forums.Rules;
-using Atles.Domain.PermissionSets;
-using Atles.Infrastructure.Queries;
+using Atles.Domain.PermissionSets.Rules;
 using FluentValidation;
 using OpenCqrs.Queries;
 
@@ -9,7 +8,7 @@ namespace Atles.Domain.Forums.Validators
 {
     public class UpdateForumValidator : AbstractValidator<UpdateForum>
     {
-        public UpdateForumValidator(IQuerySender queries, IPermissionSetRules permissionSetRules)
+        public UpdateForumValidator(IQuerySender queries)
         {
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Forum name is required.")
@@ -28,7 +27,7 @@ namespace Atles.Domain.Forums.Validators
                 .When(c => !string.IsNullOrWhiteSpace(c.Description));
 
             RuleFor(c => c.PermissionSetId)
-                .MustAsync((c, p, cancellation) => permissionSetRules.IsValidAsync(c.SiteId, p.Value))
+                .MustAsync((c, p, cancellation) => queries.Send(new IsPermissionSetValid { SiteId = c.SiteId, Id = p.Value }))
                     .WithMessage(c => $"Permission set with id {c.PermissionSetId} does not exist.")
                     .When(c => c.PermissionSetId != null);
         }

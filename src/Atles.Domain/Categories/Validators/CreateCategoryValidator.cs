@@ -1,7 +1,6 @@
 ﻿using Atles.Domain.Categories.Commands;
 using Atles.Domain.Categories.Rules;
-using Atles.Domain.PermissionSets;
-using Atles.Infrastructure.Queries;
+using Atles.Domain.PermissionSets.Rules;
 using FluentValidation;
 using OpenCqrs.Queries;
 
@@ -9,7 +8,7 @@ namespace Atles.Domain.Categories.Validators
 {
     public class CreateCategoryValidator : AbstractValidator<CreateCategory>
     {
-        public CreateCategoryValidator(IQuerySender querySender, IPermissionSetRules permissionSetRules)
+        public CreateCategoryValidator(IQuerySender querySender)
         {
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Category name is required.")
@@ -18,7 +17,7 @@ namespace Atles.Domain.Categories.Validators
                     .WithMessage(c => $"A category with name {c.Name} already exists.");
 
             RuleFor(c => c.PermissionSetId)
-                .MustAsync((c, p, cancellation) => permissionSetRules.IsValidAsync(c.SiteId, p))
+                .MustAsync((c, p, cancellation) => querySender.Send(new IsPermissionSetValid { SiteId = c.SiteId, Id = p }))
                     .WithMessage(c => $"Permission set with id {c.PermissionSetId} does not exist.");
         }
     }

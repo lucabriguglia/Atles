@@ -1,14 +1,13 @@
-﻿using Atles.Domain.Categories;
-using Atles.Domain.Categories.Commands;
+﻿using Atles.Domain.Categories.Commands;
 using Atles.Domain.Categories.Rules;
 using Atles.Domain.Categories.Validators;
-using Atles.Domain.PermissionSets;
-using Atles.Infrastructure.Queries;
+using Atles.Domain.PermissionSets.Rules;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 using OpenCqrs.Queries;
+using System;
 
 namespace Atles.Domain.Tests.Categories.Validators
 {
@@ -21,9 +20,8 @@ namespace Atles.Domain.Tests.Categories.Validators
             var command = Fixture.Build<CreateCategory>().With(x => x.Name, string.Empty).Create();
 
             var querySender = new Mock<IQuerySender>();
-            var permissionSetRules = new Mock<IPermissionSetRules>();
 
-            var sut = new CreateCategoryValidator(querySender.Object, permissionSetRules.Object);
+            var sut = new CreateCategoryValidator(querySender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -34,9 +32,8 @@ namespace Atles.Domain.Tests.Categories.Validators
             var command = Fixture.Build<CreateCategory>().With(x => x.Name, new string('*', 51)).Create();
 
             var querySender = new Mock<IQuerySender>();
-            var permissionSetRules = new Mock<IPermissionSetRules>();
 
-            var sut = new CreateCategoryValidator(querySender.Object, permissionSetRules.Object);
+            var sut = new CreateCategoryValidator(querySender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -49,9 +46,7 @@ namespace Atles.Domain.Tests.Categories.Validators
             var querySender = new Mock<IQuerySender>();
             querySender.Setup(x => x.Send(It.IsAny<IsCategoryNameUnique>())).ReturnsAsync(false);
 
-            var permissionSetRules = new Mock<IPermissionSetRules>();
-
-            var sut = new CreateCategoryValidator(querySender.Object, permissionSetRules.Object);
+            var sut = new CreateCategoryValidator(querySender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -61,14 +56,25 @@ namespace Atles.Domain.Tests.Categories.Validators
         {
             var command = Fixture.Create<CreateCategory>();
 
+            var querySiteId = Guid.NewGuid();
+            var queryPermissionSetId = Guid.NewGuid();
+
             var querySender = new Mock<IQuerySender>();
+            querySender
+                .Setup(x => x.Send(It.IsAny<IsPermissionSetValid>()))
+                .Callback<IQuery<bool>>(q =>
+                {
+                    var query = q as IsPermissionSetValid;
+                    querySiteId = query.SiteId;
+                    queryPermissionSetId = query.Id;
+                })
+                .ReturnsAsync(false);
 
-            var permissionSetRules = new Mock<IPermissionSetRules>();
-            permissionSetRules.Setup(x => x.IsValidAsync(command.SiteId, command.PermissionSetId)).ReturnsAsync(false);
-
-            var sut = new CreateCategoryValidator(querySender.Object, permissionSetRules.Object);
+            var sut = new CreateCategoryValidator(querySender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.PermissionSetId, command);
+            Assert.AreEqual(command.SiteId, querySiteId);
+            Assert.AreEqual(command.PermissionSetId, queryPermissionSetId);
         }
     }
 }

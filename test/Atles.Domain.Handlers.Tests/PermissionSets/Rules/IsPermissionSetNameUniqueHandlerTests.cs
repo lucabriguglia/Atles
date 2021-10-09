@@ -1,24 +1,27 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atles.Data.Rules;
+using Atles.Data;
+using Atles.Domain.Handlers.PermissionSets.Rules;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.PermissionSets.Commands;
+using Atles.Domain.PermissionSets.Rules;
 using Atles.Domain.Sites;
 using NUnit.Framework;
 
-namespace Atles.Data.Tests.Rules
+namespace Atles.Domain.Handlers.Tests.PermissionSets.Rules
 {
     [TestFixture]
-    public class PermissionSetRulesTests : TestFixtureBase
+    public class IsPermissionSetNameUniqueHandlerTests : TestFixtureBase
     {
         [Test]
         public async Task Should_return_true_when_name_is_unique()
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new PermissionSetRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Permission Set");
+                var sut = new IsPermissionSetNameUniqueHandler(dbContext);
+                var query = new IsPermissionSetNameUnique { SiteId = Guid.NewGuid(), Name = "My Permission Set" };
+                var actual = await sut.Handle(query);
 
                 Assert.IsTrue(actual);
             }
@@ -29,8 +32,9 @@ namespace Atles.Data.Tests.Rules
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new PermissionSetRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(Guid.NewGuid(), "My Permission Set", Guid.NewGuid());
+                var sut = new IsPermissionSetNameUniqueHandler(dbContext);
+                var query = new IsPermissionSetNameUnique { SiteId = Guid.NewGuid(), Name = "My Permission Set", Id = Guid.NewGuid() };
+                var actual = await sut.Handle(query);
 
                 Assert.IsTrue(actual);
             }
@@ -54,8 +58,9 @@ namespace Atles.Data.Tests.Rules
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var sut = new PermissionSetRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(siteId, permissionSetName);
+                var sut = new IsPermissionSetNameUniqueHandler(dbContext);
+                var query = new IsPermissionSetNameUnique { SiteId = siteId, Name = permissionSetName };
+                var actual = await sut.Handle(query);
 
                 Assert.IsFalse(actual);
             }
@@ -81,43 +86,9 @@ namespace Atles.Data.Tests.Rules
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var sut = new PermissionSetRules(dbContext);
-                var actual = await sut.IsNameUniqueAsync(siteId, "Permission Set 1", permissionSetId);
-
-                Assert.IsFalse(actual);
-            }
-        }
-
-        [Test]
-        public async Task Should_return_true_when_permission_set_is_valid()
-        {
-            var options = Shared.CreateContextOptions();
-            var site = new Site(Guid.NewGuid(), "Name", "Title");
-            var permissionSet = new PermissionSet(Guid.NewGuid(), site.Id, "Permission Set", new List<PermissionCommand>());
-
-            using (var dbContext = new AtlesDbContext(options))
-            {
-                dbContext.Sites.Add(site);
-                dbContext.PermissionSets.Add(permissionSet);
-                await dbContext.SaveChangesAsync();
-            }
-
-            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
-            {
-                var sut = new PermissionSetRules(dbContext);
-                var actual = await sut.IsValidAsync(site.Id, permissionSet.Id);
-
-                Assert.IsTrue(actual);
-            }
-        }
-
-        [Test]
-        public async Task Should_return_false_when_permission_set_is_not_valid()
-        {
-            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
-            {
-                var sut = new PermissionSetRules(dbContext);
-                var actual = await sut.IsValidAsync(Guid.NewGuid(), Guid.NewGuid());
+                var sut = new IsPermissionSetNameUniqueHandler(dbContext);
+                var query = new IsPermissionSetNameUnique { SiteId = siteId, Name = "Permission Set 1", Id = permissionSetId };
+                var actual = await sut.Handle(query);
 
                 Assert.IsFalse(actual);
             }

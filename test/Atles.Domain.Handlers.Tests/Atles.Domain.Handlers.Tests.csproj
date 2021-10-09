@@ -22,9 +22,5 @@
     <ProjectReference Include="..\..\src\Atles.Domain.Handlers\Atles.Domain.Handlers.csproj" />
     <ProjectReference Include="..\..\src\Atles.Domain\Atles.Domain.csproj" />
   </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="PermissionSets\Rules\" />
-  </ItemGroup>
   
 </Project>
