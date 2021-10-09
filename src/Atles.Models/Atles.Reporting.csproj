@@ -10,7 +10,7 @@
     <PackageReference Include="Microsoft.AspNetCore.Components" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Forms" Version="5.0.9" />
     <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="5.0.9" />
-    <PackageReference Include="OpenCqrs" Version="1.0.1-Beta" />
+    <PackageReference Include="OpenCqrs" Version="1.0.2-Beta" />
     <PackageReference Include="System.ComponentModel.Annotations" Version="5.0.0" />
   </ItemGroup>
 

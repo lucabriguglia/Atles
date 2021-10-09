@@ -3,10 +3,10 @@ using System.Threading.Tasks;
 using Atles.Domain.PermissionSets.Commands;
 using Atles.Domain.PermissionSets.Rules;
 using Atles.Models.Admin.PermissionSets;
+using Atles.Models.Admin.PermissionSets.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
-using OpenCqrs.Commands;
-using OpenCqrs.Queries;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {
@@ -14,19 +14,12 @@ namespace Atles.Server.Controllers.Admin
     public class PermissionSetsController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IPermissionSetModelBuilder _modelBuilder;
-        private readonly ICommandSender _commandSender;
-        private readonly IQuerySender _querySender;
+        private readonly ISender _sender;
 
-        public PermissionSetsController(IContextService contextService,
-            IPermissionSetModelBuilder modelBuilder,
-            ICommandSender commandSender,
-            IQuerySender querySender)
+        public PermissionSetsController(IContextService contextService, ISender sender)
         {
             _contextService = contextService;
-            _modelBuilder = modelBuilder;
-            _commandSender = commandSender;
-            _querySender = querySender;
+            _sender = sender;
         }
 
         [HttpGet("list")]
@@ -34,7 +27,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildIndexPageModelAsync(site.Id);
+            return await _sender.Send(new GetPermissionSetsIndex { SiteId = site.Id });
         }
 
         [HttpGet("create")]
@@ -42,7 +35,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildCreateFormModelAsync(site.Id);
+            return await _sender.Send(new GetPermissionSetCreateForm { SiteId = site.Id });
         }
 
         [HttpPost("save")]
@@ -59,7 +52,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _commandSender.Send(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -69,7 +62,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var result = await _modelBuilder.BuildEditFormModelAsync(site.Id, id);
+            var result = await _sender.Send(new GetPermissionSetEditForm { SiteId = site.Id, Id = id });
 
             if (result == null)
             {
@@ -94,7 +87,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _commandSender.Send(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -112,7 +105,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _commandSender.Send(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -122,7 +115,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
             var query = new IsPermissionSetNameUnique { SiteId = site.Id, Name = name };
-            var isNameUnique = await _querySender.Send(query);
+            var isNameUnique = await _sender.Send(query);
             return Ok(isNameUnique);
         }
 
@@ -131,7 +124,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
             var query = new IsPermissionSetNameUnique { SiteId = site.Id, Name = name, Id = id };
-            var isNameUnique = await _querySender.Send(query);
+            var isNameUnique = await _sender.Send(query);
             return Ok(isNameUnique);
         }
     }
