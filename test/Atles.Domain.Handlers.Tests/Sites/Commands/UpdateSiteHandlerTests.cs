@@ -13,7 +13,7 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Domain.Handlers.Tests.Sites
+namespace Atles.Domain.Handlers.Tests.Sites.Commands
 {
     [TestFixture]
     public class UpdateSiteHandlerTests : TestFixtureBase

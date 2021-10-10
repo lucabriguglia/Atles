@@ -6,6 +6,7 @@ using Atles.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Public
 {
@@ -16,19 +17,19 @@ namespace Atles.Server.Controllers.Public
     {
         private readonly IContextService _contextService;
         private readonly IUserModelBuilder _modelBuilder;
-        private readonly IUserService _userService;
+        private readonly ISender _sender;
         private readonly IUserRules _userRules;
         private readonly ILogger<SettingsController> _logger;
 
         public SettingsController(IContextService contextService, 
             IUserModelBuilder modelBuilder,
-            IUserService userService, 
+            ISender sender, 
             IUserRules userRules, 
             ILogger<SettingsController> logger)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
-            _userService = userService;
+            _sender = sender;
             _userRules = userRules;
             _logger = logger;
         }
@@ -69,7 +70,7 @@ namespace Atles.Server.Controllers.Public
                 UserId = user.Id
             };
 
-            await _userService.UpdateAsync(command);
+            await _sender.Send(command);
 
             return Ok();
         }

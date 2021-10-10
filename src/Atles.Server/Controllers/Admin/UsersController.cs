@@ -16,21 +16,18 @@ namespace Atles.Server.Controllers.Admin
     public class UsersController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IUserService _userService;
         private readonly IUserRules _userRules;
         private readonly IUserModelBuilder _modelBuilder;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ISender _sender;
 
         public UsersController(IContextService contextService,
-            IUserService userService,
             IUserRules userRules,
             IUserModelBuilder modelBuilder, 
             UserManager<IdentityUser> userManager,
             ISender sender)
         {
             _contextService = contextService;
-            _userService = userService;
             _userRules = userRules;
             _modelBuilder = modelBuilder;
             _userManager = userManager;
@@ -79,7 +76,7 @@ namespace Atles.Server.Controllers.Admin
                 Confirm = true
             };
 
-            await _userService.CreateAsync(command);
+            await _sender.Send(command);
 
             return Ok(command.Id);
         }
@@ -148,7 +145,7 @@ namespace Atles.Server.Controllers.Admin
                 Roles = model.Roles.Where(x => x.Selected).Select(x => x.Name).ToList()
             };
 
-            await _userService.UpdateAsync(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -181,7 +178,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _userService.SuspendAsync(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -199,7 +196,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _userService.ReinstateAsync(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -218,7 +215,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _userService.DeleteAsync(command);
+            await _sender.Send(command);
 
             var identityUser = await _userManager.FindByIdAsync(identityUserId);
 
