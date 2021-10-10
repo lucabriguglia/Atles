@@ -2,7 +2,7 @@
 
 ![.NET Core](https://github.com/lucabriguglia/Atles/workflows/.NET%20Core/badge.svg)
 
-A forum software built with ASP.NET Blazor WebAssembly.
+A forum software built with ASP.NET Blazor WebAssembly and CQRS.
 
 **Documentation**: [Atles Wiki](https://lucabriguglia.github.io/Atles).
 
