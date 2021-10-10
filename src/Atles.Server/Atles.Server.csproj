@@ -31,7 +31,7 @@
     <ProjectReference Include="..\Atles.Domain.Handlers\Atles.Domain.Handlers.csproj" />
     <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
     <ProjectReference Include="..\Atles.Infrastructure\Atles.Infrastructure.csproj" />
-    <ProjectReference Include="..\Atles.Models\Atles.Reporting.csproj" />
+    <ProjectReference Include="..\Atles.Reporting\Atles.Reporting.csproj" />
     <ProjectReference Include="..\Atles.Reporting.Handlers\Atles.Reporting.Handlers.csproj" />
   </ItemGroup>
 

@@ -20,7 +20,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
-    <ProjectReference Include="..\Atles.Models\Atles.Reporting.csproj" />
+    <ProjectReference Include="..\Atles.Reporting\Atles.Reporting.csproj" />
   </ItemGroup>
   
 </Project>
