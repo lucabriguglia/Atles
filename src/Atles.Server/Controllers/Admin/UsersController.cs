@@ -8,6 +8,7 @@ using Atles.Models.Admin.Users;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {
@@ -19,18 +20,21 @@ namespace Atles.Server.Controllers.Admin
         private readonly IUserRules _userRules;
         private readonly IUserModelBuilder _modelBuilder;
         private readonly UserManager<IdentityUser> _userManager;
+        private readonly ISender _sender;
 
         public UsersController(IContextService contextService,
             IUserService userService,
             IUserRules userRules,
             IUserModelBuilder modelBuilder, 
-            UserManager<IdentityUser> userManager)
+            UserManager<IdentityUser> userManager,
+            ISender sender)
         {
             _contextService = contextService;
             _userService = userService;
             _userRules = userRules;
             _modelBuilder = modelBuilder;
             _userManager = userManager;
+            _sender = sender;
         }
 
         [HttpGet("index-model")]
