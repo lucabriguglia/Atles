@@ -1,13 +1,15 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Data.Rules;
+using Atles.Data;
+using Atles.Domain.Categories.Rules;
+using Atles.Domain.Handlers.Users.Rules;
 using Atles.Domain.Users;
 using NUnit.Framework;
 
-namespace Atles.Data.Tests.Rules
+namespace Atles.Domain.Handlers.Tests.Users.Rules
 {
     [TestFixture]
-    public class UserRulesTests : TestFixtureBase
+    public class IsUserDisplayNameUniqueTests : TestFixtureBase
     {
         [Test]
         [Ignore("")]
@@ -15,8 +17,8 @@ namespace Atles.Data.Tests.Rules
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new UserRules(dbContext);
-                var actual = await sut.IsDisplayNameUniqueAsync("Display Name");
+                var sut = new IsUserDisplayNameUniqueHandler(dbContext);
+                var actual = await sut.Handle(new IsUserDisplayNameUnique { DisplayName = "Display Name" });
 
                 Assert.IsTrue(actual);
             }
@@ -28,8 +30,8 @@ namespace Atles.Data.Tests.Rules
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new UserRules(dbContext);
-                var actual = await sut.IsDisplayNameUniqueAsync("Display Name", Guid.NewGuid());
+                var sut = new IsUserDisplayNameUniqueHandler(dbContext);
+                var actual = await sut.Handle(new IsUserDisplayNameUnique { DisplayName = "Display Name", Id = Guid.NewGuid() });
 
                 Assert.IsTrue(actual);
             }
@@ -50,8 +52,8 @@ namespace Atles.Data.Tests.Rules
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var sut = new UserRules(dbContext);
-                var actual = await sut.IsDisplayNameUniqueAsync(displayName);
+                var sut = new IsUserDisplayNameUniqueHandler(dbContext);
+                var actual = await sut.Handle(new IsUserDisplayNameUnique { DisplayName = displayName });
 
                 Assert.IsFalse(actual);
             }
@@ -74,8 +76,8 @@ namespace Atles.Data.Tests.Rules
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var sut = new UserRules(dbContext);
-                var actual = await sut.IsDisplayNameUniqueAsync("User 1", userId);
+                var sut = new IsUserDisplayNameUniqueHandler(dbContext);
+                var actual = await sut.Handle(new IsUserDisplayNameUnique { DisplayName = "User 1", Id = userId });
 
                 Assert.IsFalse(actual);
             }

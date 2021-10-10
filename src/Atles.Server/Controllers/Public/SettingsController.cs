@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atles.Domain.Users;
+using Atles.Domain.Categories.Rules;
 using Atles.Domain.Users.Commands;
 using Atles.Models.Public.Users;
 using Atles.Server.Services;
@@ -18,19 +18,16 @@ namespace Atles.Server.Controllers.Public
         private readonly IContextService _contextService;
         private readonly IUserModelBuilder _modelBuilder;
         private readonly ISender _sender;
-        private readonly IUserRules _userRules;
         private readonly ILogger<SettingsController> _logger;
 
         public SettingsController(IContextService contextService, 
             IUserModelBuilder modelBuilder,
             ISender sender, 
-            IUserRules userRules, 
             ILogger<SettingsController> logger)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
             _sender = sender;
-            _userRules = userRules;
             _logger = logger;
         }
 
@@ -78,7 +75,7 @@ namespace Atles.Server.Controllers.Public
         [HttpGet("is-display-name-unique/{name}")]
         public async Task<IActionResult> IsDisplayNameUnique(string name)
         {
-            var isNameUnique = await _userRules.IsDisplayNameUniqueAsync(name);
+            var isNameUnique = await _sender.Send(new IsUserDisplayNameUnique { DisplayName = name });
             return Ok(isNameUnique);
         }
     }

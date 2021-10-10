@@ -1,16 +1,18 @@
-﻿using Atles.Domain.Users.Commands;
+﻿using Atles.Domain.Categories.Rules;
+using Atles.Domain.Users.Commands;
 using FluentValidation;
+using OpenCqrs;
 
 namespace Atles.Domain.Users.Validators
 {
     public class UpdateUserValidator : AbstractValidator<UpdateUser>
     {
-        public UpdateUserValidator(IUserRules rules)
+        public UpdateUserValidator(ISender sender)
         {
             RuleFor(c => c.DisplayName)
                 .NotEmpty().WithMessage("Display name is required.")
                 .Length(1, 50).WithMessage("Display name must be at least 1 and at max 50 characters long.")
-                .MustAsync((c, p, cancellation) => rules.IsDisplayNameUniqueAsync(p, c.Id))
+                .MustAsync((c, p, cancellation) => sender.Send(new IsUserDisplayNameUnique { DisplayName = p, Id = c.Id }))
                     .WithMessage(c => $"A user with display name {c.DisplayName} already exists.");
         }
     }

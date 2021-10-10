@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atles.Domain.Users;
+using Atles.Domain.Categories.Rules;
 using Atles.Domain.Users.Commands;
 using Atles.Models;
 using Atles.Models.Admin.Users;
@@ -16,19 +16,16 @@ namespace Atles.Server.Controllers.Admin
     public class UsersController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IUserRules _userRules;
         private readonly IUserModelBuilder _modelBuilder;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ISender _sender;
 
         public UsersController(IContextService contextService,
-            IUserRules userRules,
             IUserModelBuilder modelBuilder, 
             UserManager<IdentityUser> userManager,
             ISender sender)
         {
             _contextService = contextService;
-            _userRules = userRules;
             _modelBuilder = modelBuilder;
             _userManager = userManager;
             _sender = sender;
@@ -230,14 +227,14 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("is-display-name-unique/{name}")]
         public async Task<IActionResult> IsDisplayNameUnique(string name)
         {
-            var isNameUnique = await _userRules.IsDisplayNameUniqueAsync(name);
+            var isNameUnique = await _sender.Send(new IsUserDisplayNameUnique { DisplayName = name });
             return Ok(isNameUnique);
         }
 
         [HttpGet("is-display-name-unique/{name}/{id}")]
         public async Task<IActionResult> IsNameUnique(string name, Guid id)
         {
-            var isNameUnique = await _userRules.IsDisplayNameUniqueAsync(name, id);
+            var isNameUnique = await _sender.Send(new IsUserDisplayNameUnique { DisplayName = name, Id = id });
             return Ok(isNameUnique);
         }
     }

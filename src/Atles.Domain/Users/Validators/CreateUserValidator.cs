@@ -5,7 +5,7 @@ namespace Atles.Domain.Users.Validators
 {
     public class CreateUserValidator : AbstractValidator<CreateUser>
     {
-        public CreateUserValidator(IUserRules rules)
+        public CreateUserValidator()
         {
             RuleFor(c => c.IdentityUserId)
                 .NotEmpty().WithMessage("UserId is required.");

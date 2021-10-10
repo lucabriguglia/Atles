@@ -1,10 +1,11 @@
-﻿using Atles.Domain.Users;
+﻿using Atles.Domain.Categories.Rules;
 using Atles.Domain.Users.Commands;
 using Atles.Domain.Users.Validators;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
+using OpenCqrs;
 
 namespace Atles.Domain.Tests.Users.Validators
 {
@@ -16,9 +17,9 @@ namespace Atles.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<UpdateUser>().With(x => x.DisplayName, string.Empty).Create();
 
-            var userRules = new Mock<IUserRules>();
+            var sender = new Mock<ISender>();
 
-            var sut = new UpdateUserValidator(userRules.Object);
+            var sut = new UpdateUserValidator(sender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
         }
@@ -28,9 +29,9 @@ namespace Atles.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<UpdateUser>().With(x => x.DisplayName, new string('*', 51)).Create();
 
-            var userRules = new Mock<IUserRules>();
+            var sender = new Mock<ISender>();
 
-            var sut = new UpdateUserValidator(userRules.Object);
+            var sut = new UpdateUserValidator(sender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
         }
@@ -40,10 +41,10 @@ namespace Atles.Domain.Tests.Users.Validators
         {
             var command = Fixture.Create<UpdateUser>();
 
-            var userRules = new Mock<IUserRules>();
-            userRules.Setup(x => x.IsDisplayNameUniqueAsync(command.DisplayName, command.Id)).ReturnsAsync(false);
+            var sender = new Mock<ISender>();
+            sender.Setup(x => x.Send(new IsUserDisplayNameUnique { DisplayName = command.DisplayName, Id = command.Id })).ReturnsAsync(false);
 
-            var sut = new UpdateUserValidator(userRules.Object);
+            var sut = new UpdateUserValidator(sender.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
         }

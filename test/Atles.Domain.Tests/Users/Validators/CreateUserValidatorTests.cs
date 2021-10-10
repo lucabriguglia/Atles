@@ -16,9 +16,7 @@ namespace Atles.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<CreateUser>().With(x => x.IdentityUserId, string.Empty).Create();
 
-            var userRules = new Mock<IUserRules>();
-
-            var sut = new CreateUserValidator(userRules.Object);
+            var sut = new CreateUserValidator();
 
             sut.ShouldHaveValidationErrorFor(x => x.IdentityUserId, command);
         }
@@ -28,9 +26,7 @@ namespace Atles.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<CreateUser>().With(x => x.Email, string.Empty).Create();
 
-            var userRules = new Mock<IUserRules>();
-
-            var sut = new CreateUserValidator(userRules.Object);
+            var sut = new CreateUserValidator();
 
             sut.ShouldHaveValidationErrorFor(x => x.Email, command);
         }
@@ -40,9 +36,7 @@ namespace Atles.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<CreateUser>().With(x => x.Email, "email").Create();
 
-            var userRules = new Mock<IUserRules>();
-
-            var sut = new CreateUserValidator(userRules.Object);
+            var sut = new CreateUserValidator();
 
             sut.ShouldHaveValidationErrorFor(x => x.Email, command);
         }
