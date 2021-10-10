@@ -10,5 +10,6 @@ namespace Atles.Domain.Users.Commands
     [DocRequest(typeof(User))]
     public class DeleteUser : CommandBase
     {
+        public string IdentityUserId { get; set; }
     }
 }

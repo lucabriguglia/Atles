@@ -10,7 +10,7 @@ namespace Atles.Domain.Users
         Task UpdateAsync(UpdateUser command);
         Task SuspendAsync(SuspendUser command);
         Task ReinstateAsync(ReinstateUser command);
-        Task<string> DeleteAsync(DeleteUser command);
+        Task DeleteAsync(DeleteUser command);
         Task<string> GenerateDisplayNameAsync();
     }
 }

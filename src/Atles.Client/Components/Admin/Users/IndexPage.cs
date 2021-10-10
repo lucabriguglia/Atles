@@ -13,6 +13,7 @@ namespace Atles.Client.Components.Admin.Users
         protected IndexPageModel Model { get; set; }
         protected Guid SuspendId { get; set; }
         protected Guid DeleteId { get; set; }
+        protected string DeleteIdentityUserId { get; set; }
         protected int CurrentPage { get; set; } = 1;
         protected int TotalPages { get; set; } = 1;
         protected string Search { get; set; }
@@ -108,15 +109,16 @@ namespace Atles.Client.Components.Admin.Users
             await LoadUsersAsync();
         }
 
-        protected void SetDeleteId(Guid id)
+        protected void SetDeleteIds(Guid id, string identityUserId)
         {
             DeleteId = id;
+            DeleteIdentityUserId = identityUserId;
         }
 
         protected async Task DeleteAsync(MouseEventArgs e)
         {
             Model.Users = null;
-            await ApiService.DeleteAsync($"api/admin/users/delete/{DeleteId}");
+            await ApiService.DeleteAsync($"api/admin/users/delete/{DeleteId}/{DeleteIdentityUserId}");
             await OnInitializedAsync();
         }
     }

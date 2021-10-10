@@ -52,15 +52,16 @@ namespace Atles.Data.Builders.Admin
                 .Take(options.PageSize)
                 .ToListAsync();
 
-            var items = users.Select(member => new IndexPageModel.UserModel
+            var items = users.Select(user => new IndexPageModel.UserModel
             {
-                Id = member.Id,
-                DisplayName = member.DisplayName,
-                Email = member.Email,
-                TotalTopics = member.TopicsCount,
-                TotalReplies = member.RepliesCount,
-                Status = member.Status,
-                TimeStamp = member.TimeStamp
+                Id = user.Id,
+                IdentityUserId = user.IdentityUserId,
+                DisplayName = user.DisplayName,
+                Email = user.Email,
+                TotalTopics = user.TopicsCount,
+                TotalReplies = user.RepliesCount,
+                Status = user.Status,
+                TimeStamp = user.TimeStamp
             })
             .ToList();
 

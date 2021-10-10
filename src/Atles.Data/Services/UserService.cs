@@ -198,11 +198,12 @@ namespace Atles.Data.Services
             await _dbContext.SaveChangesAsync();
         }
 
-        public async Task<string> DeleteAsync(DeleteUser command)
+        public async Task DeleteAsync(DeleteUser command)
         {
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.Id &&
+                    x.IdentityUserId == command.IdentityUserId &&
                     x.Status != UserStatusType.Deleted);
 
             if (user == null)
@@ -219,8 +220,6 @@ namespace Atles.Data.Services
                 command.Id));
 
             await _dbContext.SaveChangesAsync();
-
-            return user.IdentityUserId;
         }
     }
 }

@@ -204,8 +204,8 @@ namespace Atles.Server.Controllers.Admin
             return Ok();
         }
 
-        [HttpDelete("delete/{id}")]
-        public async Task<ActionResult> Delete(Guid id)
+        [HttpDelete("delete/{id}/{identityUserId}")]
+        public async Task<ActionResult> Delete(Guid id, string identityUserId)
         {
             var site = await _contextService.CurrentSiteAsync();
             var user = await _contextService.CurrentUserAsync();
@@ -213,11 +213,12 @@ namespace Atles.Server.Controllers.Admin
             var command = new DeleteUser
             {
                 Id = id,
+                IdentityUserId = identityUserId,
                 SiteId = site.Id,
                 UserId = user.Id
             };
 
-            var identityUserId = await _userService.DeleteAsync(command);
+            await _userService.DeleteAsync(command);
 
             var identityUser = await _userManager.FindByIdAsync(identityUserId);
 
