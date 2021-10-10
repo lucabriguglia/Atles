@@ -167,8 +167,9 @@ namespace Atles.Data.Tests.Services
             var options = Shared.CreateContextOptions();
 
             var userId = Guid.NewGuid();
+            var identityUserId = Guid.NewGuid();
 
-            var user = new User(userId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+            var user = new User(userId, identityUserId.ToString(), "me@email.com", "Display Name");
 
             using (var dbContext = new AtlesDbContext(options))
             {
@@ -180,6 +181,7 @@ namespace Atles.Data.Tests.Services
             {
                 var command = Fixture.Build<DeleteUser>()
                         .With(x => x.Id, user.Id)
+                        .With(x => x.IdentityUserId, user.IdentityUserId)
                         .Create();
 
                 var createValidator = new Mock<IValidator<CreateUser>>();
