@@ -5,6 +5,7 @@ using Atles.Domain.Categories.Rules;
 using Atles.Domain.Users.Commands;
 using Atles.Models;
 using Atles.Models.Admin.Users;
+using Atles.Reporting.Admin.Users.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -39,7 +40,8 @@ namespace Atles.Server.Controllers.Admin
             [FromQuery] string sortByField = null,
             [FromQuery] string sortByDirection = null)
         {
-            return await _modelBuilder.BuildIndexPageModelAsync(new QueryOptions(page, search, sortByField, sortByDirection), status);
+            var query = new GetUsersIndex { Options = new QueryOptions(page, search, sortByField, sortByDirection), Status = status };
+            return await _sender.Send(query);
         }
 
         [HttpGet("create")]

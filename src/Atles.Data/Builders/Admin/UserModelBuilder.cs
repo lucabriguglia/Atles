@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Atles.Data.Extensions;
 using Atles.Domain.Users;
 using Atles.Models;
 using Atles.Models.Admin.Users;
@@ -25,58 +24,6 @@ namespace Atles.Data.Builders.Admin
             _dbContext = dbContext;
             _roleManager = roleManager;
             _userManager = userManager;
-        }
-
-        public async Task<IndexPageModel> BuildIndexPageModelAsync(QueryOptions options, string status = null)
-        {
-            var result = new IndexPageModel();
-
-            var query = _dbContext.Users.Where(x => true);
-
-            if (options.SearchIsDefined())
-            {
-                query = query.Where(x => x.DisplayName.Contains(options.Search) || x.Email.Contains(options.Search));
-            }
-
-            query = options.OrderByIsDefined() 
-                ? query.OrderBy(options) 
-                : query.OrderBy(x => x.DisplayName);
-
-            if (!string.IsNullOrWhiteSpace(status) && Enum.TryParse(status, out UserStatusType memberStatus))
-            {
-                query = query.Where(x => x.Status == memberStatus);
-            }
-
-            var users = await query
-                .Skip(options.Skip)
-                .Take(options.PageSize)
-                .ToListAsync();
-
-            var items = users.Select(user => new IndexPageModel.UserModel
-            {
-                Id = user.Id,
-                IdentityUserId = user.IdentityUserId,
-                DisplayName = user.DisplayName,
-                Email = user.Email,
-                TotalTopics = user.TopicsCount,
-                TotalReplies = user.RepliesCount,
-                Status = user.Status,
-                TimeStamp = user.TimeStamp
-            })
-            .ToList();
-
-            var countQuery = _dbContext.Users.Where(x => true);
-
-            if (!string.IsNullOrWhiteSpace(options.Search))
-            {
-                countQuery = countQuery.Where(x => x.DisplayName.Contains(options.Search) || x.Email.Contains(options.Search));
-            }
-
-            var totalRecords = await countQuery.CountAsync();
-
-            result.Users = new PaginatedData<IndexPageModel.UserModel>(items, totalRecords, options.PageSize);
-
-            return result;
         }
 
         public async Task<CreatePageModel> BuildCreatePageModelAsync()
