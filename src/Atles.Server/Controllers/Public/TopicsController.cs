@@ -5,6 +5,7 @@ using Atles.Data;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.Posts;
 using Atles.Domain.Posts.Commands;
+using Atles.Domain.Posts.Generators;
 using Atles.Models;
 using Atles.Models.Public;
 using Atles.Models.Public.Posts;
@@ -14,6 +15,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Public
 {
@@ -24,29 +26,29 @@ namespace Atles.Server.Controllers.Public
         private readonly IContextService _contextService;
         private readonly ITopicModelBuilder _topicModelBuilder;
         private readonly IPostModelBuilder _postModelBuilder;
-        private readonly ITopicService _topicService;
         private readonly ISecurityService _securityService;
         private readonly AtlesDbContext _dbContext;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ILogger<TopicsController> _logger;
+        private readonly ISender _sender;
 
         public TopicsController(IContextService contextService,
             ITopicModelBuilder topicModelBuilder,
             IPostModelBuilder postModelBuilder,
-            ITopicService topicService,
             ISecurityService securityService, 
             AtlesDbContext dbContext, 
             IPermissionModelBuilder permissionModelBuilder, 
-            ILogger<TopicsController> logger)
+            ILogger<TopicsController> logger,
+            ISender sender)
         {
             _contextService = contextService;
             _topicModelBuilder = topicModelBuilder;
             _postModelBuilder = postModelBuilder;
-            _topicService = topicService;
             _securityService = securityService;
             _dbContext = dbContext;
             _permissionModelBuilder = permissionModelBuilder;
             _logger = logger;
+            _sender = sender;
         }
 
         [HttpGet("{forumSlug}/{topicSlug}")]
@@ -226,17 +228,20 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
+            var slug = await _sender.Send(new GenerateTopicSlug { ForumId = model.Forum.Id, Title = model.Topic.Title });
+
             var command = new CreateTopic
             {
                 ForumId = model.Forum.Id,
                 Title = model.Topic.Title,
+                Slug = slug,
                 Content = model.Topic.Content,
                 Status = PostStatusType.Published,
                 SiteId = site.Id,
                 UserId = user.Id
             };
 
-            var slug = await _topicService.CreateAsync(command);
+            await _sender.Send(command);
 
             return Ok(slug);
         }
@@ -248,11 +253,14 @@ namespace Atles.Server.Controllers.Public
             var site = await _contextService.CurrentSiteAsync();
             var user = await _contextService.CurrentUserAsync();
 
+            var slug = await _sender.Send(new GenerateTopicSlug { ForumId = model.Forum.Id, Title = model.Topic.Title });
+
             var command = new UpdateTopic
             {
                 Id = model.Topic.Id,
                 ForumId = model.Forum.Id,
                 Title = model.Topic.Title,
+                Slug = slug,
                 Content = model.Topic.Content,
                 Status = PostStatusType.Published,
                 SiteId = site.Id,
@@ -287,7 +295,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var slug = await _topicService.UpdateAsync(command);
+            await _sender.Send(command);
 
             return Ok(slug);
         }
@@ -324,7 +332,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _topicService.PinAsync(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -361,7 +369,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _topicService.LockAsync(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -409,7 +417,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _topicService.DeleteAsync(command);
+            await _sender.Send(command);
 
             return Ok();
         }

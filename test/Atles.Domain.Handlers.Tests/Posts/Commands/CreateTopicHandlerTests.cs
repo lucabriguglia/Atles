@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading;
 using System.Threading.Tasks;
+using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Data.Services;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
+using Atles.Domain.Handlers.Posts.Commands;
 using Atles.Domain.Posts;
 using Atles.Domain.Posts.Commands;
 using Atles.Domain.Users;
@@ -15,10 +16,10 @@ using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Data.Tests.Services
+namespace Atles.Domain.Handlers.Tests.Posts.Commands
 {
     [TestFixture]
-    public class TopicServiceTests : TestFixtureBase
+    public class CreateTopicHandlerTests : TestFixtureBase
     {
         [Test]
         public async Task Should_create_new_topic_and_add_event()
@@ -50,19 +51,14 @@ namespace Atles.Data.Tests.Services
 
                 var cacheManager = new Mock<ICacheManager>();
 
-                var createValidator = new Mock<IValidator<CreateTopic>>();
-                createValidator
+                var validator = new Mock<IValidator<CreateTopic>>();
+                validator
                     .Setup(x => x.ValidateAsync(command, new CancellationToken()))
                     .ReturnsAsync(new ValidationResult());
 
-                var updateValidator = new Mock<IValidator<UpdateTopic>>();
+                var sut = new CreateTopicHandler(dbContext, validator.Object, cacheManager.Object);
 
-                var sut = new TopicService(dbContext,
-                    cacheManager.Object,
-                    createValidator.Object,
-                    updateValidator.Object);
-
-                await sut.CreateAsync(command);
+                await sut.Handle(command);
 
                 var topic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
@@ -71,7 +67,7 @@ namespace Atles.Data.Tests.Services
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);
                 var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == userId);
 
-                createValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
+                validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.NotNull(topic);
                 Assert.NotNull(@event);
                 Assert.AreEqual(category.TopicsCount + 1, updatedCategory.TopicsCount);
@@ -114,24 +110,19 @@ namespace Atles.Data.Tests.Services
 
                 var cacheManager = new Mock<ICacheManager>();
 
-                var createValidator = new Mock<IValidator<CreateTopic>>();
-
-                var updateValidator = new Mock<IValidator<UpdateTopic>>();
-                updateValidator
+                var validator = new Mock<IValidator<UpdateTopic>>();
+                validator
                     .Setup(x => x.ValidateAsync(command, new CancellationToken()))
                     .ReturnsAsync(new ValidationResult());
 
-                var sut = new TopicService(dbContext,
-                    cacheManager.Object,
-                    createValidator.Object,
-                    updateValidator.Object);
+                var sut = new UpdateTopicHandler(dbContext, validator.Object, cacheManager.Object);
 
-                await sut.UpdateAsync(command);
+                await sut.Handle(command);
 
                 var updatedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
-                updateValidator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
+                validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.AreEqual(command.Title, updatedTopic.Title);
                 Assert.NotNull(@event);
             }
@@ -168,15 +159,10 @@ namespace Atles.Data.Tests.Services
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
-                var createValidator = new Mock<IValidator<CreateTopic>>();
-                var updateValidator = new Mock<IValidator<UpdateTopic>>();
 
-                var sut = new TopicService(dbContext,
-                    cacheManager.Object,
-                    createValidator.Object,
-                    updateValidator.Object);
+                var sut = new PinTopicHandler(dbContext, cacheManager.Object);
 
-                await sut.PinAsync(command);
+                await sut.Handle(command);
 
                 var pinnedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
@@ -217,15 +203,10 @@ namespace Atles.Data.Tests.Services
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
-                var createValidator = new Mock<IValidator<CreateTopic>>();
-                var updateValidator = new Mock<IValidator<UpdateTopic>>();
 
-                var sut = new TopicService(dbContext,
-                    cacheManager.Object,
-                    createValidator.Object,
-                    updateValidator.Object);
+                var sut = new LockTopicHandler(dbContext, cacheManager.Object);
 
-                await sut.LockAsync(command);
+                await sut.Handle(command);
 
                 var lockedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.Id);
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
@@ -273,15 +254,10 @@ namespace Atles.Data.Tests.Services
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();
-                var createValidator = new Mock<IValidator<CreateTopic>>();
-                var updateValidator = new Mock<IValidator<UpdateTopic>>();
 
-                var sut = new TopicService(dbContext,
-                    cacheManager.Object,
-                    createValidator.Object,
-                    updateValidator.Object);
+                var sut = new DeleteTopicHandler(dbContext, cacheManager.Object);
 
-                await sut.DeleteAsync(command);
+                await sut.Handle(command);
 
                 var topicDeleted = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == topic.Id);
                 var topicEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == topic.Id);

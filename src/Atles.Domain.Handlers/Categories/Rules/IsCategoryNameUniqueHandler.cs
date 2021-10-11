@@ -1,7 +1,6 @@
 ﻿using Atles.Data;
 using Atles.Domain.Categories;
 using Atles.Domain.Categories.Rules;
-using Atles.Infrastructure.Queries;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
 using System.Threading.Tasks;
