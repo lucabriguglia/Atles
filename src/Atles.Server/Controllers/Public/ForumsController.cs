@@ -4,9 +4,11 @@ using Atles.Domain.PermissionSets;
 using Atles.Models;
 using Atles.Models.Public;
 using Atles.Models.Public.Forums;
+using Atles.Reporting.Public.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Public
 {
@@ -15,22 +17,22 @@ namespace Atles.Server.Controllers.Public
     public class ForumsController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IForumModelBuilder _modelBuilder;
         private readonly ISecurityService _securityService;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ILogger<ForumsController> _logger;
+        private readonly ISender _sender;
 
         public ForumsController(IContextService contextService,
-            IForumModelBuilder modelBuilder,
             ISecurityService securityService,
             IPermissionModelBuilder permissionModelBuilder, 
-            ILogger<ForumsController> logger)
+            ILogger<ForumsController> logger,
+            ISender sender)
         {
             _contextService = contextService;
-            _modelBuilder = modelBuilder;
             _securityService = securityService;
             _permissionModelBuilder = permissionModelBuilder;
             _logger = logger;
+            _sender = sender;
         }
 
         [HttpGet("{slug}")]
@@ -39,7 +41,7 @@ namespace Atles.Server.Controllers.Public
             var site = await _contextService.CurrentSiteAsync();
             var user = await _contextService.CurrentUserAsync();
 
-            var model = await _modelBuilder.BuildForumPageModelAsync(site.Id, slug, new QueryOptions(page, search));
+            var model = await _sender.Send(new GetForumPage { SiteId = site.Id, Slug = slug, Options = new QueryOptions(page, search) });
 
             if (model == null)
             {
@@ -98,7 +100,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var result = await _modelBuilder.BuildForumPageModelTopicsAsync(id, new QueryOptions(page, search));
+            var result = await _sender.Send(new GetForumPageTopics { SiteId = site.Id, ForumId = id, Options = new QueryOptions(page, search) });
 
             return result;
         }
