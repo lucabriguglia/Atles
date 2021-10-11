@@ -1,15 +1,17 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Data.Rules;
+using Atles.Data;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
+using Atles.Domain.Handlers.Posts.Rules;
 using Atles.Domain.Posts;
+using Atles.Domain.Posts.Rules;
 using NUnit.Framework;
 
-namespace Atles.Data.Tests.Rules
+namespace Atles.Domain.Handlers.Tests.Forums.Rules
 {
     [TestFixture]
-    public class TopicRulesTests : TestFixtureBase
+    public class IsTopicValidHandlerTests : TestFixtureBase
     {
         [Test]
         public async Task Should_return_true_when_topic_is_valid()
@@ -29,8 +31,9 @@ namespace Atles.Data.Tests.Rules
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var sut = new TopicRules(dbContext);
-                var actual = await sut.IsValidAsync(category.SiteId, forum.Id, topic.Id);
+                var sut = new IsTopicValidHandler(dbContext);
+                var query = new IsTopicValid { SiteId = category.SiteId, ForumId = forum.Id, Id = topic.Id };
+                var actual = await sut.Handle(query);
 
                 Assert.IsTrue(actual);
             }
@@ -41,8 +44,9 @@ namespace Atles.Data.Tests.Rules
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new TopicRules(dbContext);
-                var actual = await sut.IsValidAsync(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid());
+                var sut = new IsTopicValidHandler(dbContext);
+                var query = new IsTopicValid { SiteId = Guid.NewGuid(), ForumId = Guid.NewGuid(), Id = Guid.NewGuid() };
+                var actual = await sut.Handle(query);
 
                 Assert.IsFalse(actual);
             }

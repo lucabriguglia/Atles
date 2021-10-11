@@ -1,5 +1,6 @@
 ﻿using Atles.Domain.Forums.Rules;
 using Atles.Domain.Posts.Commands;
+using Atles.Domain.Posts.Rules;
 using FluentValidation;
 using OpenCqrs;
 
@@ -7,7 +8,7 @@ namespace Atles.Domain.Posts.Validators
 {
     public class CreateReplyValidator : AbstractValidator<CreateReply>
     {
-        public CreateReplyValidator(ISender sender, ITopicRules topicRules)
+        public CreateReplyValidator(ISender sender)
         {
             RuleFor(c => c.Content)
                 .NotEmpty().WithMessage("Reply content is required.");
@@ -17,7 +18,7 @@ namespace Atles.Domain.Posts.Validators
                     .WithMessage(c => $"Forum with id {c.ForumId} does not exist.");
 
             RuleFor(c => c.TopicId)
-                .MustAsync((c, p, cancellation) => topicRules.IsValidAsync(c.SiteId, c.ForumId, p))
+                .MustAsync((c, p, cancellation) => sender.Send(new IsTopicValid { SiteId = c.SiteId, ForumId = c.ForumId, Id = p }))
                 .WithMessage(c => $"Topic with id {c.ForumId} does not exist.");
         }
     }

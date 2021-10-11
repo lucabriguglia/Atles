@@ -4,7 +4,7 @@ using Atles.Data;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
 using Atles.Domain.Forums.Rules;
-using Atles.Domain.Handlers.Categories.Rules;
+using Atles.Domain.Handlers.Forums.Rules;
 using NUnit.Framework;
 
 namespace Atles.Domain.Handlers.Tests.Forums.Rules
