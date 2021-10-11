@@ -1,22 +1,27 @@
-﻿using System.Security.Cryptography;
+﻿using Atles.Reporting.Shared.Queries;
+using OpenCqrs.Queries;
+using System.Security.Cryptography;
 using System.Text;
+using System.Threading.Tasks;
 
-namespace Atles.Data.Builders
+namespace Atles.Reporting.Handlers.Shared
 {
-    public class GravatarService : IGravatarService
+    public class GenerateEmailHashForGravatarHandler : IQueryHandler<GenerateEmailHashForGravatar, string>
     {
         /// <summary>
         /// https://www.danesparza.net/2010/10/using-gravatar-images-with-c-asp-net/
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public string HashEmailForGravatar(string email)
+        public async Task<string> Handle(GenerateEmailHashForGravatar query)
         {
+            await Task.CompletedTask;
+
             // Create a new instance of the MD5CryptoServiceProvider object.  
             MD5 md5Hasher = MD5.Create();
 
             // Convert the input string to a byte array and compute the hash.  
-            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(email));
+            byte[] data = md5Hasher.ComputeHash(Encoding.Default.GetBytes(query.Email));
 
             // Create a new Stringbuilder to collect the bytes  
             // and create a string.  
