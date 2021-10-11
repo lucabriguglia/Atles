@@ -1,39 +1,37 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
 using Atles.Models.Public.Index;
+using Atles.Reporting.Public.Queries;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs.Queries;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Atles.Data.Builders.Public
+namespace Atles.Reporting.Handlers.Public
 {
-    public class IndexModelBuilder : IIndexModelBuilder
+    public class GetIndexPageHandler : IQueryHandler<GetIndexPage, IndexPageModel>
     {
         private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
-        private readonly IGravatarService _gravatarService;
 
-        public IndexModelBuilder(AtlesDbContext dbContext,
-            ICacheManager cacheManager,
-            IGravatarService gravatarService)
+        public GetIndexPageHandler(AtlesDbContext dbContext, ICacheManager cacheManager)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
-            _gravatarService = gravatarService;
         }
 
-        public async Task<IndexPageModel> BuildIndexPageModelAsync(Guid siteId)
+        public async Task<IndexPageModel> Handle(GetIndexPage query)
         {
             var model = new IndexPageModel
             {
-                Categories = await _cacheManager.GetOrSetAsync(CacheKeys.Categories(siteId), async () =>
+                Categories = await _cacheManager.GetOrSetAsync(CacheKeys.Categories(query.SiteId), async () =>
                 {
                     var categories = await _dbContext.Categories
                         .Include(x => x.Forums)
-                        .Where(x => x.SiteId == siteId && x.Status == CategoryStatusType.Published)
+                        .Where(x => x.SiteId == query.SiteId && x.Status == CategoryStatusType.Published)
                         .OrderBy(x => x.SortOrder)
                         .ToListAsync();
 

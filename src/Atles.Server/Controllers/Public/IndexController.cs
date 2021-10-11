@@ -6,11 +6,13 @@ using Atles.Models;
 using Atles.Models.Public;
 using Atles.Models.Public.Index;
 using Atles.Models.Public.Search;
+using Atles.Reporting.Public.Queries;
 using Atles.Server.Services;
 using Markdig;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Mvc;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Public
 {
@@ -19,22 +21,22 @@ namespace Atles.Server.Controllers.Public
     public class IndexController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IIndexModelBuilder _indexModelBuilder;
         private readonly ISearchModelBuilder _searchModelBuilder;
         private readonly ISecurityService _securityService;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
+        private readonly ISender _sender;
 
         public IndexController(IContextService contextService,
-            IIndexModelBuilder indexModelBuilder,
             ISearchModelBuilder searchModelBuilder,
             ISecurityService securityService,
-            IPermissionModelBuilder permissionModelBuilder)
+            IPermissionModelBuilder permissionModelBuilder,
+            ISender sender)
         {
             _contextService = contextService;
-            _indexModelBuilder = indexModelBuilder;
             _searchModelBuilder = searchModelBuilder;
             _securityService = securityService;
             _permissionModelBuilder = permissionModelBuilder;
+            _sender = sender;
         }
 
         [HttpGet("index-model")]
@@ -42,7 +44,7 @@ namespace Atles.Server.Controllers.Public
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var modelToFilter = await _indexModelBuilder.BuildIndexPageModelAsync(site.Id);
+            var modelToFilter = await _sender.Send(new GetIndexPage { SiteId = site.Id });
 
             var filteredModel = await GetFilteredIndexModel(site.Id, modelToFilter);
 
