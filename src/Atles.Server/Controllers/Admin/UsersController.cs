@@ -17,17 +17,14 @@ namespace Atles.Server.Controllers.Admin
     public class UsersController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IUserModelBuilder _modelBuilder;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ISender _sender;
 
         public UsersController(IContextService contextService,
-            IUserModelBuilder modelBuilder, 
             UserManager<IdentityUser> userManager,
             ISender sender)
         {
             _contextService = contextService;
-            _modelBuilder = modelBuilder;
             _userManager = userManager;
             _sender = sender;
         }
@@ -47,7 +44,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("create")]
         public async Task<CreatePageModel> Create()
         {
-            return await _modelBuilder.BuildCreatePageModelAsync();
+            return await _sender.Send(new GetUserCreateForm());
         }
 
         [HttpPost("save")]
@@ -83,7 +80,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("edit/{id}")]
         public async Task<ActionResult<EditPageModel>> Edit(Guid id)
         {
-            var result = await _modelBuilder.BuildEditPageModelAsync(id);
+            var result = await _sender.Send(new GetUserEditForm { Id = id });
 
             if (result == null)
             {
@@ -96,7 +93,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("edit-by-identity-user-id/{id}")]
         public async Task<ActionResult<EditPageModel>> EditByIdentityUserId(string identityUserId)
         {
-            var result = await _modelBuilder.BuildEditPageModelAsync(identityUserId);
+            var result = await _sender.Send(new GetUserEditForm { IdentityUserId = identityUserId });
 
             if (result == null)
             {
@@ -154,7 +151,8 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var result = await _modelBuilder.BuildActivityPageModelAsync(site.Id, id, new QueryOptions(page, search));
+            var query = new GetUserActivity { Options = new QueryOptions(page, search), SiteId = site.Id, UserId = id  };
+            var result = await _sender.Send(query);
 
             if (result == null)
             {
