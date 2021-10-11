@@ -12,6 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Public
 {
@@ -21,25 +22,25 @@ namespace Atles.Server.Controllers.Public
     public class RepliesController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IReplyService _replyService;
         private readonly ISecurityService _securityService;
         private readonly AtlesDbContext _dbContext;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ILogger<RepliesController> _logger;
+        private readonly ISender _sender;
 
         public RepliesController(IContextService contextService,
-            IReplyService replyService, 
             ISecurityService securityService, 
             AtlesDbContext dbContext, 
             IPermissionModelBuilder permissionModelBuilder, 
-            ILogger<RepliesController> logger)
+            ILogger<RepliesController> logger,
+            ISender sender)
         {
             _contextService = contextService;
-            _replyService = replyService;
             _securityService = securityService;
             _dbContext = dbContext;
             _permissionModelBuilder = permissionModelBuilder;
             _logger = logger;
+            _sender = sender;
         }
 
         [HttpPost("create-reply")]
@@ -74,7 +75,7 @@ namespace Atles.Server.Controllers.Public
                 UserId = user.Id
             };
 
-            await _replyService.CreateAsync(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -125,7 +126,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _replyService.UpdateAsync(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -175,7 +176,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _replyService.SetAsAnswerAsync(command);
+            await _sender.Send(command);
 
             return Ok();
         }
@@ -224,7 +225,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _replyService.DeleteAsync(command);
+            await _sender.Send(command);
 
             return Ok();
         }

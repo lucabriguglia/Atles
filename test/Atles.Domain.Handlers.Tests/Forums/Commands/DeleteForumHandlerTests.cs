@@ -2,13 +2,11 @@
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Data.Services;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
 using Atles.Domain.Forums.Commands;
 using Atles.Domain.Handlers.Forums.Commands;
 using AutoFixture;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
