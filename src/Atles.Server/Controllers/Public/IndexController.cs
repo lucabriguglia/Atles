@@ -21,19 +21,16 @@ namespace Atles.Server.Controllers.Public
     public class IndexController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly ISearchModelBuilder _searchModelBuilder;
         private readonly ISecurityService _securityService;
         private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ISender _sender;
 
         public IndexController(IContextService contextService,
-            ISearchModelBuilder searchModelBuilder,
             ISecurityService securityService,
             IPermissionModelBuilder permissionModelBuilder,
             ISender sender)
         {
             _contextService = contextService;
-            _searchModelBuilder = searchModelBuilder;
             _securityService = securityService;
             _permissionModelBuilder = permissionModelBuilder;
             _sender = sender;
@@ -131,7 +128,12 @@ namespace Atles.Server.Controllers.Public
                 }
             }
 
-            var model = await _searchModelBuilder.BuildSearchPageModelAsync(site.Id, accessibleForumIds, new QueryOptions(page, search));
+            var model = await _sender.Send(new GetSearchPage 
+            { 
+                SiteId = site.Id,
+                AccessibleForumIds = accessibleForumIds, 
+                Options = new QueryOptions(page, search) 
+            });
 
             return model;
         }

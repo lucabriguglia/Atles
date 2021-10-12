@@ -4,9 +4,10 @@ using System.Threading.Tasks;
 using Atles.Data.Caching;
 using Atles.Domain.Users;
 using Atles.Models;
-using Atles.Models.Public.Search;
 using Atles.Models.Public.Users;
+using Atles.Reporting.Public.Queries;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs;
 
 namespace Atles.Data.Builders.Public
 {
@@ -15,17 +16,17 @@ namespace Atles.Data.Builders.Public
         private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly IGravatarService _gravatarService;
-        private readonly ISearchModelBuilder _searchModelBuilder;
+        private readonly ISender _sender;
 
         public UserModelBuilder(AtlesDbContext dbContext,
             ICacheManager cacheManager,
             IGravatarService gravatarService, 
-            ISearchModelBuilder searchModelBuilder)
+            ISender sender)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
             _gravatarService = gravatarService;
-            _searchModelBuilder = searchModelBuilder;
+            _sender = sender;
         }
 
         public async Task<UserPageModel> BuildUserPageModelAsync(Guid userId, IList<Guid> forumIds)
@@ -51,7 +52,7 @@ namespace Atles.Data.Builders.Public
                 Status = user.Status
             };
 
-            result.Posts = await _searchModelBuilder.SearchPostModels(forumIds, new QueryOptions(), userId);
+            result.Posts = await _sender.Send(new GetSearchPosts { AccessibleForumIds = forumIds, Options = new QueryOptions(), UserId = userId });
 
             return result;
         }

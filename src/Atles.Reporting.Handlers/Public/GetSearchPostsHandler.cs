@@ -1,67 +1,51 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Atles.Data.Caching;
+﻿using Atles.Data;
 using Atles.Data.Extensions;
 using Atles.Domain.Posts;
 using Atles.Models;
 using Atles.Models.Public.Search;
+using Atles.Reporting.Public.Queries;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs.Queries;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Atles.Data.Builders.Public
+namespace Atles.Reporting.Handlers.Public
 {
-    public class SearchModelBuilder : ISearchModelBuilder
+    public class GetSearchPostsHandler : IQueryHandler<GetSearchPosts, PaginatedData<SearchPostModel>>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly ICacheManager _cacheManager;
-        private readonly IGravatarService _gravatarService;
 
-        public SearchModelBuilder(AtlesDbContext dbContext,
-            ICacheManager cacheManager,
-            IGravatarService gravatarService)
+        public GetSearchPostsHandler(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
-            _cacheManager = cacheManager;
-            _gravatarService = gravatarService;
         }
 
-        public async Task<SearchPageModel> BuildSearchPageModelAsync(Guid siteId, IList<Guid> forumIds, QueryOptions options)
-        {
-            var result = new SearchPageModel
-            {
-                Posts = await SearchPostModels(forumIds, options)
-            };
-
-            return result;
-        }
-
-        public async Task<PaginatedData<SearchPostModel>> SearchPostModels(IList<Guid> forumIds, QueryOptions options, Guid? memberId = null)
+        public async Task<PaginatedData<SearchPostModel>> Handle(GetSearchPosts query)
         {
             var postsQuery = _dbContext.Posts
                 .Where(x =>
-                    forumIds.Contains(x.ForumId) &&
+                    query.AccessibleForumIds.Contains(x.ForumId) &&
                     x.Status == PostStatusType.Published &&
                     (x.Topic == null || x.Topic.Status == PostStatusType.Published));
 
-            if (options.SearchIsDefined())
+            if (query.Options.SearchIsDefined())
             {
-                postsQuery = postsQuery.Where(x => x.Title.Contains(options.Search) || x.Content.Contains(options.Search));
+                postsQuery = postsQuery.Where(x => x.Title.Contains(query.Options.Search) || x.Content.Contains(query.Options.Search));
             }
 
-            postsQuery = options.OrderByIsDefined() 
-                ? postsQuery.OrderBy(options) 
+            postsQuery = query.Options.OrderByIsDefined()
+                ? postsQuery.OrderBy(query.Options)
                 : postsQuery.OrderByDescending(x => x.CreatedOn);
 
-            if (memberId != null)
+            if (query.UserId != null)
             {
-                postsQuery = postsQuery.Where(x => x.CreatedBy == memberId);
+                postsQuery = postsQuery.Where(x => x.CreatedBy == query.UserId);
             }
 
             var posts = await postsQuery
-                .Skip(options.Skip)
-                .Take(options.PageSize)
+                .Skip(query.Options.Skip)
+                .Take(query.Options.PageSize)
                 .Select(p => new
                 {
                     p.Id,
@@ -97,7 +81,7 @@ namespace Atles.Data.Builders.Public
 
             var totalRecords = await postsQuery.CountAsync();
 
-            return new PaginatedData<SearchPostModel>(items, totalRecords, options.PageSize);
+            return new PaginatedData<SearchPostModel>(items, totalRecords, query.Options.PageSize);
         }
     }
 }
