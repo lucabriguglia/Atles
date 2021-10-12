@@ -2,6 +2,7 @@
 using Atles.Domain.Categories.Rules;
 using Atles.Domain.Users.Commands;
 using Atles.Models.Public.Users;
+using Atles.Reporting.Public.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -16,17 +17,14 @@ namespace Atles.Server.Controllers.Public
     public class SettingsController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IUserModelBuilder _modelBuilder;
         private readonly ISender _sender;
         private readonly ILogger<SettingsController> _logger;
 
         public SettingsController(IContextService contextService, 
-            IUserModelBuilder modelBuilder,
             ISender sender, 
             ILogger<SettingsController> logger)
         {
             _contextService = contextService;
-            _modelBuilder = modelBuilder;
             _sender = sender;
             _logger = logger;
         }
@@ -34,9 +32,10 @@ namespace Atles.Server.Controllers.Public
         [HttpGet("edit")]
         public async Task<ActionResult<SettingsPageModel>> Edit()
         {
+            var site = await _contextService.CurrentSiteAsync();
             var user = await _contextService.CurrentUserAsync();
 
-            var model = await _modelBuilder.BuildSettingsPageModelAsync(user.Id);
+            var model = await _sender.Send(new GetSettingsPage { SiteId = site.Id, UserId = user.Id });
 
             return model;
         }

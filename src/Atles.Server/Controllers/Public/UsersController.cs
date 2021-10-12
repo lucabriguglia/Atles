@@ -16,19 +16,16 @@ namespace Atles.Server.Controllers.Public
     public class UsersController : ControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IUserModelBuilder _modelBuilder;
         private readonly ISecurityService _securityService;
         private readonly ILogger<UsersController> _logger;
         private readonly ISender _sender;
 
         public UsersController(IContextService contextService,
-            IUserModelBuilder modelBuilder, 
             ISecurityService securityService, 
             ILogger<UsersController> logger,
             ISender sender)
         {
             _contextService = contextService;
-            _modelBuilder = modelBuilder;
             _securityService = securityService;
             _logger = logger;
             _sender = sender;
@@ -73,7 +70,7 @@ namespace Atles.Server.Controllers.Public
                 }
             }
 
-            var model = await _modelBuilder.BuildUserPageModelAsync(userId, accessibleForumIds);
+            var model = await _sender.Send(new GetUserPage { SiteId = site.Id, UserId = userId, AccessibleForumIds = accessibleForumIds });
 
             if (model == null)
             {
