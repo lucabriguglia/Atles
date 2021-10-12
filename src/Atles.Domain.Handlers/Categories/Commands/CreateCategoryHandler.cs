@@ -34,23 +34,26 @@ namespace Atles.Domain.Handlers.Categories.Commands
             var sortOrder = categoriesCount + 1;
 
             var category = new Category(command.Id,
-                command.SiteId,
-                command.Name,
-                sortOrder,
-                command.PermissionSetId);
+                                        command.SiteId,
+                                        command.Name,
+                                        sortOrder,
+                                        command.PermissionSetId);
 
             _dbContext.Categories.Add(category);
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Created,
-                typeof(Category),
-                category.Id,
-                new
-                {
-                    category.Name,
-                    category.PermissionSetId,
-                    category.SortOrder
-                }));
+
+            Event evnt = new(EventType.Created,
+                            category.Id,
+                            typeof(Category),
+                            command.SiteId,
+                            command.UserId,
+                            new
+                            {
+                                category.Name,
+                                category.PermissionSetId,
+                                category.SortOrder
+                            });
+
+            _dbContext.Events.Add(evnt);
 
             await _dbContext.SaveChangesAsync();
 
