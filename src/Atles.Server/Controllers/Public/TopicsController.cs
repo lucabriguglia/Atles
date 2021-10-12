@@ -25,7 +25,6 @@ namespace Atles.Server.Controllers.Public
     {
         private readonly IContextService _contextService;
         private readonly ITopicModelBuilder _topicModelBuilder;
-        private readonly IPostModelBuilder _postModelBuilder;
         private readonly ISecurityService _securityService;
         private readonly AtlesDbContext _dbContext;
         private readonly ILogger<TopicsController> _logger;
@@ -33,7 +32,6 @@ namespace Atles.Server.Controllers.Public
 
         public TopicsController(IContextService contextService,
             ITopicModelBuilder topicModelBuilder,
-            IPostModelBuilder postModelBuilder,
             ISecurityService securityService, 
             AtlesDbContext dbContext, 
             ILogger<TopicsController> logger,
@@ -41,7 +39,6 @@ namespace Atles.Server.Controllers.Public
         {
             _contextService = contextService;
             _topicModelBuilder = topicModelBuilder;
-            _postModelBuilder = postModelBuilder;
             _securityService = securityService;
             _dbContext = dbContext;
             _logger = logger;
@@ -128,7 +125,7 @@ namespace Atles.Server.Controllers.Public
             var site = await _contextService.CurrentSiteAsync();
             var user = await _contextService.CurrentUserAsync();
 
-            var model = await _postModelBuilder.BuildNewPostPageModelAsync(site.Id, forumId);
+            var model = await _sender.Send(new GetCreatePostPage { SiteId = site.Id, ForumId = forumId });
 
             if (model == null)
             {
@@ -167,7 +164,7 @@ namespace Atles.Server.Controllers.Public
             var site = await _contextService.CurrentSiteAsync();
             var user = await _contextService.CurrentUserAsync();
 
-            var model = await _postModelBuilder.BuildEditPostPageModelAsync(site.Id, forumId, topicId);
+            var model = await _sender.Send(new GetEditPostPage { SiteId = site.Id, ForumId = forumId, TopicId = topicId });
 
             if (model == null)
             {
