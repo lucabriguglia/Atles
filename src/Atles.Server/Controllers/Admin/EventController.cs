@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Models.Admin.Events;
+using Atles.Reporting.Admin.Events.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {
@@ -10,12 +12,12 @@ namespace Atles.Server.Controllers.Admin
     public class EventController : AdminControllerBase
     {
         private readonly IContextService _contextService;
-        private readonly IEventModelBuilder _modelBuilder;
+        private readonly ISender _sender;
 
-        public EventController(IContextService contextService, IEventModelBuilder modelBuilder)
+        public EventController(IContextService contextService, ISender sender)
         {
             _contextService = contextService;
-            _modelBuilder = modelBuilder;
+            _sender = sender;
         }
 
         [HttpGet("target-model/{id}")]
@@ -23,7 +25,11 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            return await _modelBuilder.BuildTargetModelAsync(site.Id, id);
+            return await _sender.Send(new GetTargetEventsComponent 
+            { 
+                SiteId = site.Id, 
+                Id = id 
+            });
         }
     }
 }
