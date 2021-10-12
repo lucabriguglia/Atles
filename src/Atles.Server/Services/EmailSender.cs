@@ -11,12 +11,12 @@ namespace Atles.Server.Services
     /// <summary>
     /// Only used for ASP.NET Core Identity
     /// </summary>
-    public class MailSender : IEmailSender
+    public class EmailSender : IEmailSender
     {
         private readonly MailSettings _mailSettings;
-        private readonly ILogger<MailSender> _logger;
+        private readonly ILogger<EmailSender> _logger;
 
-        public MailSender(IOptions<MailSettings> mailSettings, ILogger<MailSender> logger)
+        public EmailSender(IOptions<MailSettings> mailSettings, ILogger<EmailSender> logger)
         {
             _mailSettings = mailSettings.Value;
             _logger = logger;
