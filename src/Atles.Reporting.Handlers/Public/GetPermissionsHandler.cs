@@ -1,33 +1,58 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+﻿using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
 using Atles.Domain.Forums;
 using Atles.Domain.PermissionSets;
 using Atles.Models.Public;
+using Atles.Reporting.Public.Queries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
+using OpenCqrs.Queries;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
-namespace Atles.Data.Builders.Public
+namespace Atles.Reporting.Handlers.Public
 {
-    public class PermissionModelBuilder : IPermissionModelBuilder
+    public class GetPermissionsHandler : IQueryHandler<GetPermissions, IList<PermissionModel>>
     {
         private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
         private readonly RoleManager<IdentityRole> _roleManager;
 
-        public PermissionModelBuilder(AtlesDbContext dbContext, 
-            ICacheManager cacheManager,
-            RoleManager<IdentityRole> roleManager)
+        public GetPermissionsHandler(AtlesDbContext dbContext, ICacheManager cacheManager, RoleManager<IdentityRole> roleManager)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
             _roleManager = roleManager;
         }
 
-        public async Task<IList<PermissionModel>> BuildPermissionModels(Guid siteId, Guid permissionSetId)
+        public async Task<IList<PermissionModel>> Handle(GetPermissions query)
+        {
+            if (query.ForumId != null)
+            {
+                var permission = await _dbContext.Forums.Where(x =>
+                        x.Id == query.ForumId &&
+                        x.Category.SiteId == query.SiteId &&
+                        x.Status == ForumStatusType.Published)
+                    .Select(x => new { Id = x.PermissionSetId ?? x.Category.PermissionSetId })
+                    .FirstOrDefaultAsync();
+
+                if (permission != null)
+                {
+                    return await BuildPermissionModels(query.SiteId, permission.Id);
+                }
+            }
+            else if(query.PermissionSetId != null)
+            {
+                return await BuildPermissionModels(query.SiteId, query.PermissionSetId.Value);
+            }
+
+            return new List<PermissionModel>();
+        }
+
+        private async Task<IList<PermissionModel>> BuildPermissionModels(Guid siteId, Guid permissionSetId)
         {
             return await _cacheManager.GetOrSetAsync(CacheKeys.PermissionSet(permissionSetId), async () =>
             {
@@ -74,23 +99,6 @@ namespace Atles.Data.Builders.Public
 
                 return result;
             });
-        }
-
-        public async Task<IList<PermissionModel>> BuildPermissionModelsByForumId(Guid siteId, Guid forumId)
-        {
-            var permission = await _dbContext.Forums.Where(x =>
-                    x.Id == forumId &&
-                    x.Category.SiteId == siteId &&
-                    x.Status == ForumStatusType.Published)
-                .Select(x => new { Id = x.PermissionSetId ?? x.Category.PermissionSetId })
-                .FirstOrDefaultAsync();
-
-            if (permission == null)
-            {
-                return new List<PermissionModel>();
-            }
-
-            return await BuildPermissionModels(siteId, permission.Id);
         }
     }
 }

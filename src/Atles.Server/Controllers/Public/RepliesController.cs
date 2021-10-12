@@ -5,8 +5,8 @@ using Atles.Data;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.Posts;
 using Atles.Domain.Posts.Commands;
-using Atles.Models.Public;
 using Atles.Models.Public.Topics;
+using Atles.Reporting.Public.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -24,21 +24,18 @@ namespace Atles.Server.Controllers.Public
         private readonly IContextService _contextService;
         private readonly ISecurityService _securityService;
         private readonly AtlesDbContext _dbContext;
-        private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ILogger<RepliesController> _logger;
         private readonly ISender _sender;
 
         public RepliesController(IContextService contextService,
             ISecurityService securityService, 
             AtlesDbContext dbContext, 
-            IPermissionModelBuilder permissionModelBuilder, 
             ILogger<RepliesController> logger,
             ISender sender)
         {
             _contextService = contextService;
             _securityService = securityService;
             _dbContext = dbContext;
-            _permissionModelBuilder = permissionModelBuilder;
             _logger = logger;
             _sender = sender;
         }
@@ -49,7 +46,7 @@ namespace Atles.Server.Controllers.Public
             var site = await _contextService.CurrentSiteAsync();
             var user = await _contextService.CurrentUserAsync();
 
-            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
+            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
             var canReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !user.IsSuspended;
 
             if (!canReply)
@@ -107,7 +104,7 @@ namespace Atles.Server.Controllers.Public
                 .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 
-            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
+            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
             var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
             var authorized = (canEdit && replyUserId == user.Id || canModerate) && !user.IsSuspended;
@@ -157,7 +154,7 @@ namespace Atles.Server.Controllers.Public
                 .Select(x => x.Topic.CreatedBy)
                 .FirstOrDefaultAsync();
 
-            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
+            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = forumId });
             var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
             var authorized = (canEdit && topicUserId == user.Id || canModerate) && !user.IsSuspended;
@@ -206,7 +203,7 @@ namespace Atles.Server.Controllers.Public
                 .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 
-            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, forumId);
+            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = forumId });
             var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
             var authorized = (canDelete && replyUserId == user.Id || canModerate) && !user.IsSuspended;

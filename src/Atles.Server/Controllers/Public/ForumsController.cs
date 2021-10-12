@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Atles.Domain.PermissionSets;
 using Atles.Models;
-using Atles.Models.Public;
 using Atles.Models.Public.Forums;
 using Atles.Reporting.Public.Queries;
 using Atles.Server.Services;
@@ -18,19 +17,16 @@ namespace Atles.Server.Controllers.Public
     {
         private readonly IContextService _contextService;
         private readonly ISecurityService _securityService;
-        private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ILogger<ForumsController> _logger;
         private readonly ISender _sender;
 
         public ForumsController(IContextService contextService,
             ISecurityService securityService,
-            IPermissionModelBuilder permissionModelBuilder, 
             ILogger<ForumsController> logger,
             ISender sender)
         {
             _contextService = contextService;
             _securityService = securityService;
-            _permissionModelBuilder = permissionModelBuilder;
             _logger = logger;
             _sender = sender;
         }
@@ -55,7 +51,7 @@ namespace Atles.Server.Controllers.Public
                 return NotFound();
             }
 
-            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, model.Forum.Id);
+            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
 
             var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
             var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
@@ -83,7 +79,7 @@ namespace Atles.Server.Controllers.Public
         {
             var site = await _contextService.CurrentSiteAsync();
 
-            var permissions = await _permissionModelBuilder.BuildPermissionModelsByForumId(site.Id, id);
+            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = id });
 
             var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
             var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);

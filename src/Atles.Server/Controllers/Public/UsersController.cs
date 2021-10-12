@@ -2,11 +2,12 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atles.Domain.PermissionSets;
-using Atles.Models.Public;
 using Atles.Models.Public.Users;
+using Atles.Reporting.Public.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Public
 {
@@ -16,21 +17,21 @@ namespace Atles.Server.Controllers.Public
     {
         private readonly IContextService _contextService;
         private readonly IUserModelBuilder _modelBuilder;
-        private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ISecurityService _securityService;
         private readonly ILogger<UsersController> _logger;
+        private readonly ISender _sender;
 
         public UsersController(IContextService contextService,
             IUserModelBuilder modelBuilder, 
-            IPermissionModelBuilder permissionModelBuilder, 
             ISecurityService securityService, 
-            ILogger<UsersController> logger)
+            ILogger<UsersController> logger,
+            ISender sender)
         {
             _contextService = contextService;
             _modelBuilder = modelBuilder;
-            _permissionModelBuilder = permissionModelBuilder;
             _securityService = securityService;
             _logger = logger;
+            _sender = sender;
         }
 
         [HttpGet]
@@ -62,7 +63,7 @@ namespace Atles.Server.Controllers.Public
 
             foreach (var forum in currentForums)
             {
-                var permissions = await _permissionModelBuilder.BuildPermissionModels(site.Id, forum.PermissionSetId);
+                var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, PermissionSetId = forum.PermissionSetId });
                 var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
                 var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
                 var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions);

@@ -22,17 +22,14 @@ namespace Atles.Server.Controllers.Public
     {
         private readonly IContextService _contextService;
         private readonly ISecurityService _securityService;
-        private readonly IPermissionModelBuilder _permissionModelBuilder;
         private readonly ISender _sender;
 
         public IndexController(IContextService contextService,
             ISecurityService securityService,
-            IPermissionModelBuilder permissionModelBuilder,
             ISender sender)
         {
             _contextService = contextService;
             _securityService = securityService;
-            _permissionModelBuilder = permissionModelBuilder;
             _sender = sender;
         }
 
@@ -59,7 +56,7 @@ namespace Atles.Server.Controllers.Public
                 foreach (var forumToFilter in categoryToFilter.Forums)
                 {
                     var permissionSetId = forumToFilter.PermissionSetId ?? categoryToFilter.PermissionSetId;
-                    var permissions = await _permissionModelBuilder.BuildPermissionModels(siteId, permissionSetId);
+                    var permissions = await _sender.Send(new GetPermissions { SiteId = siteId, PermissionSetId = permissionSetId });
                     var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
                     if (!canViewForum) continue;
                     var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
@@ -118,7 +115,7 @@ namespace Atles.Server.Controllers.Public
 
             foreach (var forum in currentForums)
             {
-                var permissions = await _permissionModelBuilder.BuildPermissionModels(site.Id, forum.PermissionSetId);
+                var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, PermissionSetId = forum.PermissionSetId });
                 var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
                 var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
                 var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions);
