@@ -2,11 +2,10 @@
 using Atles.Domain.Posts;
 using Atles.Models;
 using Atles.Models.Public.Topics;
+using Atles.Reporting.Handlers.Services;
 using Atles.Reporting.Public.Queries;
-using Atles.Reporting.Shared.Queries;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs;
 using OpenCqrs.Queries;
 using System.Linq;
 using System.Threading.Tasks;
@@ -16,12 +15,12 @@ namespace Atles.Reporting.Handlers.Public
     public class GetTopicPageRepliesHandler : IQueryHandler<GetTopicPageReplies, PaginatedData<TopicPageModel.ReplyModel>>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly ISender _sender;
+        private readonly IGravatarService _gravatarService;
 
-        public GetTopicPageRepliesHandler(AtlesDbContext dbContext, ISender sender)
+        public GetTopicPageRepliesHandler(AtlesDbContext dbContext, IGravatarService gravatarService)
         {
             _dbContext = dbContext;
-            _sender = sender;
+            _gravatarService = gravatarService;
         }
 
         public async Task<PaginatedData<TopicPageModel.ReplyModel>> Handle(GetTopicPageReplies query)
@@ -53,7 +52,7 @@ namespace Atles.Reporting.Handlers.Public
                 UserId = reply.CreatedByUser.Id,
                 UserDisplayName = reply.CreatedByUser.DisplayName,
                 TimeStamp = reply.CreatedOn,
-                GravatarHash = _sender.Send(new GenerateEmailHashForGravatar { Email = reply.CreatedByUser.Email }).GetAwaiter().GetResult(),
+                GravatarHash = _gravatarService.GenerateEmailHash(reply.CreatedByUser.Email),
                 IsAnswer = reply.IsAnswer
             }).ToList();
 

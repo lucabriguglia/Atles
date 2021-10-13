@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace Atles.Data.Services
+namespace Atles.Reporting.Handlers.Services
 {
     public class GravatarService : IGravatarService
     {
@@ -10,7 +10,7 @@ namespace Atles.Data.Services
         /// </summary>
         /// <param name="email"></param>
         /// <returns></returns>
-        public string HashEmailForGravatar(string email)
+        public string GenerateEmailHash(string email)
         {
             // Create a new instance of the MD5CryptoServiceProvider object.  
             MD5 md5Hasher = MD5.Create();

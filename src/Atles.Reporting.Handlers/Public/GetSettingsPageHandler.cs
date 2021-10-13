@@ -1,8 +1,8 @@
 ﻿using Atles.Data;
 using Atles.Domain.Users;
 using Atles.Models.Public.Users;
+using Atles.Reporting.Handlers.Services;
 using Atles.Reporting.Public.Queries;
-using Atles.Reporting.Shared.Queries;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs;
 using OpenCqrs.Queries;
@@ -14,11 +14,12 @@ namespace Atles.Reporting.Handlers.Public
     {
         private readonly AtlesDbContext _dbContext;
         private readonly ISender _sender;
-
-        public GetSettingsPageHandler(AtlesDbContext dbContext, ISender sender)
+        private readonly IGravatarService _gravatarService;
+        public GetSettingsPageHandler(AtlesDbContext dbContext, ISender sender, IGravatarService gravatarService)
         {
             _dbContext = dbContext;
             _sender = sender;
+            _gravatarService = gravatarService;
         }
 
         public async Task<SettingsPageModel> Handle(GetSettingsPage query)
@@ -40,7 +41,7 @@ namespace Atles.Reporting.Handlers.Public
                 Id = user.Id,
                 Email = user.Email,
                 DisplayName = user.DisplayName,
-                GravatarHash = _sender.Send(new GenerateEmailHashForGravatar { Email = user.Email }).GetAwaiter().GetResult(),
+                GravatarHash = _gravatarService.GenerateEmailHash(user.Email),
                 IsSuspended = user.Status == UserStatusType.Suspended
             };
 

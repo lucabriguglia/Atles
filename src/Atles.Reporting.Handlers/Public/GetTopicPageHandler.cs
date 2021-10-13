@@ -1,8 +1,8 @@
 ﻿using Atles.Data;
 using Atles.Domain.Posts;
 using Atles.Models.Public.Topics;
+using Atles.Reporting.Handlers.Services;
 using Atles.Reporting.Public.Queries;
-using Atles.Reporting.Shared.Queries;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs;
@@ -16,11 +16,12 @@ namespace Atles.Reporting.Handlers.Public
     {
         private readonly AtlesDbContext _dbContext;
         private readonly ISender _sender;
-
-        public GetTopicPageHandler(AtlesDbContext dbContext, ISender sender)
+        private readonly IGravatarService _gravatarService;
+        public GetTopicPageHandler(AtlesDbContext dbContext, ISender sender, IGravatarService gravatarService)
         {
             _dbContext = dbContext;
             _sender = sender;
+            _gravatarService = gravatarService;
         }
 
         public async Task<TopicPageModel> Handle(GetTopicPage query)
@@ -58,7 +59,7 @@ namespace Atles.Reporting.Handlers.Public
                     UserDisplayName = topic.CreatedByUser.DisplayName,
                     TimeStamp = topic.CreatedOn,
                     IdentityUserId = topic.CreatedByUser.IdentityUserId,
-                    GravatarHash = _sender.Send(new GenerateEmailHashForGravatar { Email = topic.CreatedByUser.Email }).GetAwaiter().GetResult(),
+                    GravatarHash = _gravatarService.GenerateEmailHash(topic.CreatedByUser.Email),
                     Pinned = topic.Pinned,
                     Locked = topic.Locked,
                     HasAnswer = topic.HasAnswer
@@ -87,7 +88,7 @@ namespace Atles.Reporting.Handlers.Public
                         UserId = answer.CreatedByUser.Id,
                         UserDisplayName = answer.CreatedByUser.DisplayName,
                         TimeStamp = answer.CreatedOn,
-                        GravatarHash = _sender.Send(new GenerateEmailHashForGravatar { Email = answer.CreatedByUser.Email }).GetAwaiter().GetResult(),
+                        GravatarHash = _gravatarService.GenerateEmailHash(answer.CreatedByUser.Email),
                         IsAnswer = answer.IsAnswer
                     };
                 }

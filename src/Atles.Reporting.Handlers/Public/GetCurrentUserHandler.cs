@@ -1,8 +1,8 @@
 ﻿using Atles.Data;
 using Atles.Domain.Users;
 using Atles.Models.Public;
+using Atles.Reporting.Handlers.Services;
 using Atles.Reporting.Public.Queries;
-using Atles.Reporting.Shared.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs;
@@ -18,12 +18,17 @@ namespace Atles.Reporting.Handlers.Public
         private readonly AtlesDbContext _dbContext;
         private readonly ISender _sender;
         private readonly IHttpContextAccessor _httpContextAccessor;
+        private readonly IGravatarService _gravatarService;
 
-        public GetCurrentUserHandler(AtlesDbContext dbContext, ISender sender, IHttpContextAccessor httpContextAccessor)
+        public GetCurrentUserHandler(AtlesDbContext dbContext,
+                                     ISender sender,
+                                     IHttpContextAccessor httpContextAccessor,
+                                     IGravatarService gravatarService)
         {
             _dbContext = dbContext;
             _sender = sender;
             _httpContextAccessor = httpContextAccessor;
+            _gravatarService = gravatarService;
         }
 
         public async Task<CurrentUserModel> Handle(GetCurrentUser query)
@@ -49,7 +54,7 @@ namespace Atles.Reporting.Handlers.Public
                             IdentityUserId = user.IdentityUserId,
                             Email = user.Email,
                             DisplayName = user.DisplayName,
-                            GravatarHash = await _sender.Send(new GenerateEmailHashForGravatar { Email = user.Email }),
+                            GravatarHash = _gravatarService.GenerateEmailHash(user.Email),
                             IsSuspended = user.Status == UserStatusType.Suspended,
                             IsAuthenticated = true
                         };

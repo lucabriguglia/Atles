@@ -2,8 +2,8 @@
 using Atles.Domain.Posts;
 using Atles.Models;
 using Atles.Models.Public.Forums;
+using Atles.Reporting.Handlers.Services;
 using Atles.Reporting.Public.Queries;
-using Atles.Reporting.Shared.Queries;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs;
 using OpenCqrs.Queries;
@@ -16,11 +16,12 @@ namespace Atles.Reporting.Handlers.Public
     {
         private readonly AtlesDbContext _dbContext;
         private readonly ISender _sender;
-
-        public GetForumPageTopicsHandler(AtlesDbContext dbContext, ISender sender)
+        private readonly IGravatarService _gravatarService;
+        public GetForumPageTopicsHandler(AtlesDbContext dbContext, ISender sender, IGravatarService gravatarService)
         {
             _dbContext = dbContext;
             _sender = sender;
+            _gravatarService = gravatarService;
         }
 
         public async Task<PaginatedData<ForumPageModel.TopicModel>> Handle(GetForumPageTopics query)
@@ -55,7 +56,7 @@ namespace Atles.Reporting.Handlers.Public
                 UserId = topic.CreatedByUser.Id,
                 UserDisplayName = topic.CreatedByUser.DisplayName,
                 TimeStamp = topic.CreatedOn,
-                GravatarHash = _sender.Send(new GenerateEmailHashForGravatar { Email = topic.CreatedByUser.Email }).GetAwaiter().GetResult(),
+                GravatarHash = _gravatarService.GenerateEmailHash(topic.CreatedByUser.Email),
                 MostRecentUserId = topic.LastReply?.CreatedBy ?? topic.CreatedBy,
                 MostRecentUserDisplayName = topic.LastReply?.CreatedByUser?.DisplayName ?? topic.CreatedByUser.DisplayName,
                 MostRecentTimeStamp = topic.LastReply?.CreatedOn ?? topic.CreatedOn,
