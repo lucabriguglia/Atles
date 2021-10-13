@@ -17,8 +17,7 @@ using OpenCqrs;
 namespace Atles.Server.Controllers.Public
 {
     [Route("api/public")]
-    [ApiController]
-    public class IndexController : ControllerBase
+    public class IndexController : SiteControllerBase
     {
         private readonly IContextService _contextService;
         private readonly ISecurityService _securityService;
@@ -26,7 +25,7 @@ namespace Atles.Server.Controllers.Public
 
         public IndexController(IContextService contextService,
             ISecurityService securityService,
-            ISender sender)
+            ISender sender) : base(sender)
         {
             _contextService = contextService;
             _securityService = securityService;
@@ -36,7 +35,7 @@ namespace Atles.Server.Controllers.Public
         [HttpGet("index-model")]
         public async Task<IndexPageModel> Index()
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
 
             var modelToFilter = await _sender.Send(new GetIndexPage { SiteId = site.Id });
 
@@ -93,13 +92,13 @@ namespace Atles.Server.Controllers.Public
         }
 
         [HttpGet("current-site")]
-        public async Task<CurrentSiteModel> CurrentSite()
+        public async Task<CurrentSiteModel> GetCurrentSite()
         {
-            return await _contextService.CurrentSiteAsync();
+            return await CurrentSite();
         }
 
         [HttpGet("current-user")]
-        public async Task<CurrentUserModel> CurrentUser()
+        public async Task<CurrentUserModel> GetCurrentUser()
         {
             return await _contextService.CurrentUserAsync();
         }
@@ -107,7 +106,7 @@ namespace Atles.Server.Controllers.Public
         [HttpGet("search")]
         public async Task<SearchPageModel> Search([FromQuery] int page = 1, [FromQuery] string search = null)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
 
             var currentForums = await _contextService.CurrentForumsAsync();
 

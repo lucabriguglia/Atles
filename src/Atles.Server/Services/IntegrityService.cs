@@ -2,6 +2,7 @@
 using Atles.Data;
 using Atles.Domain.Users;
 using Atles.Domain.Users.Commands;
+using Atles.Reporting.Public.Queries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs;
@@ -10,15 +11,11 @@ namespace Atles.Server.Services
 {
     public class IntegrityService : IIntegrityService
     {
-        private readonly IContextService _contextService;
         private readonly ISender _sender;
         private readonly AtlesDbContext _dbContext;
 
-        public IntegrityService(IContextService contextService, 
-            ISender sender, 
-            AtlesDbContext dbContext)
+        public IntegrityService(ISender sender, AtlesDbContext dbContext)
         {
-            _contextService = contextService;
             _sender = sender;
             _dbContext = dbContext;
         }
@@ -29,7 +26,7 @@ namespace Atles.Server.Services
 
             if (user == null)
             {
-                var site = await _contextService.CurrentSiteAsync();
+                var site = await _sender.Send(new GetCurrentSite());
 
                 await _sender.Send(new CreateUser
                 {
@@ -47,7 +44,7 @@ namespace Atles.Server.Services
 
             if (user != null && user.Status == UserStatusType.Pending)
             {
-                var site = await _contextService.CurrentSiteAsync();
+                var site = await _sender.Send(new GetCurrentSite());
 
                 await _sender.Send(new ConfirmUser
                 {

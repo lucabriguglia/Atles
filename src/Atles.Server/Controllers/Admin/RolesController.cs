@@ -20,7 +20,7 @@ namespace Atles.Server.Controllers.Admin
         public RolesController(
             RoleManager<IdentityRole> roleManager, 
             UserManager<IdentityUser> userManager,
-            ISender sender)
+            ISender sender) : base(sender)
         {
             _roleManager = roleManager;
             _userManager = userManager;

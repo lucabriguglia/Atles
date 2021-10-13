@@ -17,7 +17,7 @@ namespace Atles.Server.Controllers.Admin
         private readonly IContextService _contextService;
         private readonly ISender _sender;
 
-        public CategoriesController(IContextService contextService, ISender sender)
+        public CategoriesController(IContextService contextService, ISender sender) : base(sender)
         {
             _contextService = contextService;
             _sender = sender;
@@ -26,7 +26,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("list")]
         public async Task<IndexPageModel> List()
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
 
             var response = await _sender.Send(new GetCategoriesIndex { SiteId = site.Id });
 
@@ -36,7 +36,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("create")]
         public async Task<FormComponentModel> Create()
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
 
             var response = await _sender.Send(new GetCategoryForm { SiteId = site.Id });
 
@@ -46,7 +46,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpPost("save")]
         public async Task<ActionResult> Save(FormComponentModel.CategoryModel model)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new CreateCategory
@@ -65,7 +65,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("edit/{id}")]
         public async Task<ActionResult<FormComponentModel>> Edit(Guid id)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
 
             var result = await _sender.Send(new GetCategoryForm { SiteId = site.Id, Id = id });
 
@@ -80,7 +80,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpPost("update")]
         public async Task<ActionResult> Update(FormComponentModel.CategoryModel model)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new UpdateCategory
@@ -100,7 +100,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpPost("move-up")]
         public async Task<ActionResult> MoveUp([FromBody] Guid id)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new MoveCategory
@@ -119,7 +119,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpPost("move-down")]
         public async Task<ActionResult> MoveDown([FromBody] Guid id)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new MoveCategory
@@ -138,7 +138,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new DeleteCategory
@@ -156,7 +156,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("is-name-unique/{name}")]
         public async Task<IActionResult> IsNameUnique(string name)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var isNameUnique = await _sender.Send(new IsCategoryNameUnique 
             {
                 SiteId = site.Id,
@@ -168,7 +168,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("is-name-unique/{name}/{id}")]
         public async Task<IActionResult> IsNameUnique(string name, Guid id)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var isNameUnique = await _sender.Send(new IsCategoryNameUnique
             {
                 SiteId = site.Id,

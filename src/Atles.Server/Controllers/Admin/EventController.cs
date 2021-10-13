@@ -14,7 +14,7 @@ namespace Atles.Server.Controllers.Admin
         private readonly IContextService _contextService;
         private readonly ISender _sender;
 
-        public EventController(IContextService contextService, ISender sender)
+        public EventController(IContextService contextService, ISender sender) : base(sender)
         {
             _contextService = contextService;
             _sender = sender;
@@ -23,7 +23,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("target-model/{id}")]
         public async Task<TargetEventsComponentModel> Target(Guid id)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
 
             return await _sender.Send(new GetTargetEventsComponent 
             { 

@@ -22,7 +22,7 @@ namespace Atles.Server.Controllers.Admin
 
         public UsersController(IContextService contextService,
             UserManager<IdentityUser> userManager,
-            ISender sender)
+            ISender sender) : base(sender)
         {
             _contextService = contextService;
             _userManager = userManager;
@@ -60,7 +60,7 @@ namespace Atles.Server.Controllers.Admin
             var code = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
             var confirmResult = await _userManager.ConfirmEmailAsync(identityUser, code);
 
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new CreateUser
@@ -106,7 +106,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpPost("update")]
         public async Task<ActionResult> Update(EditPageModel model)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var identityUser = await _userManager.FindByIdAsync(model.Info.UserId);
@@ -149,7 +149,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("activity/{id}")]
         public async Task<ActionResult<ActivityPageModel>> Activity(Guid id, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
 
             var query = new GetUserActivity { Options = new QueryOptions(page, search), SiteId = site.Id, UserId = id  };
             var result = await _sender.Send(query);
@@ -165,7 +165,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpPost("suspend")]
         public async Task<ActionResult> Suspend([FromBody] Guid id)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new SuspendUser
@@ -183,7 +183,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpPost("reinstate")]
         public async Task<ActionResult> Reinstate([FromBody] Guid id)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new ReinstateUser
@@ -201,7 +201,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpDelete("delete/{id}/{identityUserId}")]
         public async Task<ActionResult> Delete(Guid id, string identityUserId)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new DeleteUser

@@ -2,12 +2,17 @@
 using System.IO;
 using System.Linq;
 using Microsoft.AspNetCore.Mvc;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {
     [Route("api/admin/themes")]
     public class ThemesController : AdminControllerBase
     {
+        public ThemesController(ISender sender) : base(sender)
+        {
+        }
+
         private const long SizeLimit = 2097152;
         private readonly string[] _permittedExtensions = { ".zip" };
 

@@ -18,8 +18,7 @@ namespace Atles.Server.Controllers.Public
 {
     [Authorize]
     [Route("api/public/replies")]
-    [ApiController]
-    public class RepliesController : ControllerBase
+    public class RepliesController : SiteControllerBase
     {
         private readonly IContextService _contextService;
         private readonly ISecurityService _securityService;
@@ -31,7 +30,7 @@ namespace Atles.Server.Controllers.Public
             ISecurityService securityService, 
             AtlesDbContext dbContext, 
             ILogger<RepliesController> logger,
-            ISender sender)
+            ISender sender) : base(sender)
         {
             _contextService = contextService;
             _securityService = securityService;
@@ -43,7 +42,7 @@ namespace Atles.Server.Controllers.Public
         [HttpPost("create-reply")]
         public async Task<ActionResult> CreateReply(TopicPageModel model)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
@@ -80,7 +79,7 @@ namespace Atles.Server.Controllers.Public
         [HttpPost("update-reply")]
         public async Task<ActionResult> UpdateReply(TopicPageModel model)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new UpdateReply
@@ -131,7 +130,7 @@ namespace Atles.Server.Controllers.Public
         [HttpPost("set-reply-as-answer/{forumId}/{topicId}/{replyId}")]
         public async Task<ActionResult> SetReplyAsAnswer(Guid forumId, Guid topicId, Guid replyId, [FromBody] bool isAnswer)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new SetReplyAsAnswer
@@ -181,7 +180,7 @@ namespace Atles.Server.Controllers.Public
         [HttpDelete("delete-reply/{forumId}/{topicId}/{replyId}")]
         public async Task<ActionResult> DeleteReply(Guid forumId, Guid topicId, Guid replyId)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new DeleteReply

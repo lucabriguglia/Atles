@@ -12,8 +12,7 @@ using OpenCqrs;
 namespace Atles.Server.Controllers.Public
 {
     [Route("api/public/forums")]
-    [ApiController]
-    public class ForumsController : ControllerBase
+    public class ForumsController : SiteControllerBase
     {
         private readonly IContextService _contextService;
         private readonly ISecurityService _securityService;
@@ -23,7 +22,7 @@ namespace Atles.Server.Controllers.Public
         public ForumsController(IContextService contextService,
             ISecurityService securityService,
             ILogger<ForumsController> logger,
-            ISender sender)
+            ISender sender) : base(sender)
         {
             _contextService = contextService;
             _securityService = securityService;
@@ -34,7 +33,7 @@ namespace Atles.Server.Controllers.Public
         [HttpGet("{slug}")]
         public async Task<ActionResult<ForumPageModel>> Forum(string slug, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var model = await _sender.Send(new GetForumPage { SiteId = site.Id, Slug = slug, Options = new QueryOptions(page, search) });
@@ -77,7 +76,7 @@ namespace Atles.Server.Controllers.Public
         [HttpGet("{id}/topics")]
         public async Task<ActionResult<PaginatedData<ForumPageModel.TopicModel>>> Topics(Guid id, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
 
             var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = id });
 

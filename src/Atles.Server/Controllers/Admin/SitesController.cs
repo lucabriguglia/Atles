@@ -14,7 +14,7 @@ namespace Atles.Server.Controllers.Admin
         private readonly IContextService _contextService;
         private readonly ISender _sender;
 
-        public SitesController(IContextService contextService, ISender sender)
+        public SitesController(IContextService contextService, ISender sender) : base(sender)
         {
             _contextService = contextService;
             _sender = sender;
@@ -23,7 +23,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("settings")]
         public async Task<ActionResult<SettingsPageModel>> Settings()
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
 
             var result = await _sender.Send(new GetSettingsPageModel { SiteId = site.Id });
 
@@ -38,7 +38,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpPost("update")]
         public async Task<ActionResult> Update(SettingsPageModel model)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var command = new UpdateSite

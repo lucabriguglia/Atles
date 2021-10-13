@@ -12,8 +12,7 @@ using OpenCqrs;
 namespace Atles.Server.Controllers.Public
 {
     [Route("api/public/users")]
-    [ApiController]
-    public class UsersController : ControllerBase
+    public class UsersController : SiteControllerBase
     {
         private readonly IContextService _contextService;
         private readonly ISecurityService _securityService;
@@ -23,7 +22,7 @@ namespace Atles.Server.Controllers.Public
         public UsersController(IContextService contextService,
             ISecurityService securityService, 
             ILogger<UsersController> logger,
-            ISender sender)
+            ISender sender) : base(sender)
         {
             _contextService = contextService;
             _securityService = securityService;
@@ -36,7 +35,7 @@ namespace Atles.Server.Controllers.Public
         [Route("{id}")]
         public async Task<ActionResult<UserPageModel>> Index(Guid? id = null)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
 
             var userId = Guid.Empty;
 

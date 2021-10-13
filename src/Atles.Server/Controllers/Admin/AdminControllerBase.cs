@@ -1,11 +1,13 @@
 ﻿using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
+using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {
     [Authorize(Policy = "Admin")]
-    [ApiController]
-    public class AdminControllerBase : ControllerBase
+    public abstract class AdminControllerBase : SiteControllerBase
     {
+        public AdminControllerBase(ISender sender) : base(sender)
+        {
+        }
     }
 }

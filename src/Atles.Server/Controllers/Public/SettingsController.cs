@@ -13,8 +13,7 @@ namespace Atles.Server.Controllers.Public
 {
     [Authorize]
     [Route("api/public/settings")]
-    [ApiController]
-    public class SettingsController : ControllerBase
+    public class SettingsController : SiteControllerBase
     {
         private readonly IContextService _contextService;
         private readonly ISender _sender;
@@ -22,7 +21,7 @@ namespace Atles.Server.Controllers.Public
 
         public SettingsController(IContextService contextService, 
             ISender sender, 
-            ILogger<SettingsController> logger)
+            ILogger<SettingsController> logger) : base(sender)
         {
             _contextService = contextService;
             _sender = sender;
@@ -32,7 +31,7 @@ namespace Atles.Server.Controllers.Public
         [HttpGet("edit")]
         public async Task<ActionResult<SettingsPageModel>> Edit()
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             var model = await _sender.Send(new GetSettingsPage { SiteId = site.Id, UserId = user.Id });
@@ -43,7 +42,7 @@ namespace Atles.Server.Controllers.Public
         [HttpPost("update")]
         public async Task<ActionResult> Update(SettingsPageModel model)
         {
-            var site = await _contextService.CurrentSiteAsync();
+            var site = await CurrentSite();
             var user = await _contextService.CurrentUserAsync();
 
             if (model.User.Id != user.Id || user.IsSuspended)
