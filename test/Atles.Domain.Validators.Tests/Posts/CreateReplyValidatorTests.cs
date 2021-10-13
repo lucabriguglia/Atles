@@ -8,7 +8,7 @@ using Moq;
 using NUnit.Framework;
 using OpenCqrs;
 
-namespace Atles.Domain.Tests.Replies.Validators
+namespace Atles.Domain.Tests.Posts.Validators
 {
     [TestFixture]
     public class CreateReplyValidatorTests : TestFixtureBase
