@@ -2,6 +2,7 @@
 using Atles.Reporting.Public.Queries;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Atles.Server.Controllers
@@ -17,5 +18,7 @@ namespace Atles.Server.Controllers
         }
 
         protected async Task<CurrentSiteModel> CurrentSite() => await _sender.Send(new GetCurrentSite());
+        protected async Task<CurrentUserModel> CurrentUser() => await _sender.Send(new GetCurrentUser());
+        protected async Task<IList<CurrentForumModel>> CurrentForums() => await _sender.Send(new GetCurrentForums());
     }
 }

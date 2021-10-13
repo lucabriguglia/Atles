@@ -19,15 +19,12 @@ namespace Atles.Server.Controllers.Public
     [Route("api/public")]
     public class IndexController : SiteControllerBase
     {
-        private readonly IContextService _contextService;
         private readonly ISecurityService _securityService;
         private readonly ISender _sender;
 
-        public IndexController(IContextService contextService,
-            ISecurityService securityService,
+        public IndexController(ISecurityService securityService,
             ISender sender) : base(sender)
         {
-            _contextService = contextService;
             _securityService = securityService;
             _sender = sender;
         }
@@ -100,7 +97,7 @@ namespace Atles.Server.Controllers.Public
         [HttpGet("current-user")]
         public async Task<CurrentUserModel> GetCurrentUser()
         {
-            return await _contextService.CurrentUserAsync();
+            return await CurrentUser();
         }
 
         [HttpGet("search")]
@@ -108,7 +105,7 @@ namespace Atles.Server.Controllers.Public
         {
             var site = await CurrentSite();
 
-            var currentForums = await _contextService.CurrentForumsAsync();
+            var currentForums = await CurrentForums();
 
             var accessibleForumIds = new List<Guid>();
 

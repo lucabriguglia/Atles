@@ -5,7 +5,6 @@ using Atles.Domain.Categories.Commands;
 using Atles.Domain.Categories.Rules;
 using Atles.Models.Admin.Categories;
 using Atles.Reporting.Admin.Categories;
-using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
 
@@ -14,12 +13,10 @@ namespace Atles.Server.Controllers.Admin
     [Route("api/admin/categories")]
     public class CategoriesController : AdminControllerBase
     {
-        private readonly IContextService _contextService;
         private readonly ISender _sender;
 
-        public CategoriesController(IContextService contextService, ISender sender) : base(sender)
+        public CategoriesController(ISender sender) : base(sender)
         {
-            _contextService = contextService;
             _sender = sender;
         }
 
@@ -47,7 +44,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Save(FormComponentModel.CategoryModel model)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new CreateCategory
             {
@@ -81,7 +78,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Update(FormComponentModel.CategoryModel model)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new UpdateCategory
             {
@@ -101,7 +98,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> MoveUp([FromBody] Guid id)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new MoveCategory
             {
@@ -120,7 +117,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> MoveDown([FromBody] Guid id)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new MoveCategory
             {
@@ -139,7 +136,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Delete(Guid id)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new DeleteCategory
             {

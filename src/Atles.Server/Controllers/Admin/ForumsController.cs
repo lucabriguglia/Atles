@@ -5,7 +5,6 @@ using Atles.Domain.Forums.Commands;
 using Atles.Domain.Forums.Rules;
 using Atles.Models.Admin.Forums;
 using Atles.Reporting.Admin.Forums;
-using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
 
@@ -14,12 +13,10 @@ namespace Atles.Server.Controllers.Admin
     [Route("api/admin/forums")]
     public class ForumsController : AdminControllerBase
     {
-        private readonly IContextService _contextService;
         private readonly ISender _sender;
 
-        public ForumsController(IContextService contextService, ISender sender) : base(sender)
+        public ForumsController(ISender sender) : base(sender)
         {
-            _contextService = contextService;
             _sender = sender;
         }
 
@@ -59,7 +56,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Save(FormComponentModel.ForumModel model)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new CreateForum
             {
@@ -96,7 +93,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Update(FormComponentModel.ForumModel model)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new UpdateForum
             {
@@ -119,7 +116,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> MoveUp([FromBody] Guid id)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new MoveForum
             {
@@ -138,7 +135,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> MoveDown([FromBody] Guid id)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new MoveForum
             {
@@ -157,7 +154,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Delete(Guid id)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new DeleteForum
             {

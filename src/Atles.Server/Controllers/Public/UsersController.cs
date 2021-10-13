@@ -14,17 +14,14 @@ namespace Atles.Server.Controllers.Public
     [Route("api/public/users")]
     public class UsersController : SiteControllerBase
     {
-        private readonly IContextService _contextService;
         private readonly ISecurityService _securityService;
         private readonly ILogger<UsersController> _logger;
         private readonly ISender _sender;
 
-        public UsersController(IContextService contextService,
-            ISecurityService securityService, 
+        public UsersController(ISecurityService securityService, 
             ILogger<UsersController> logger,
             ISender sender) : base(sender)
         {
-            _contextService = contextService;
             _securityService = securityService;
             _logger = logger;
             _sender = sender;
@@ -41,7 +38,7 @@ namespace Atles.Server.Controllers.Public
 
             if (id == null)
             {
-                var user = await _contextService.CurrentUserAsync();
+                var user = await CurrentUser();
 
                 if (user != null)
                 {
@@ -53,7 +50,7 @@ namespace Atles.Server.Controllers.Public
                 userId = id.Value;
             }
 
-            var currentForums = await _contextService.CurrentForumsAsync();
+            var currentForums = await CurrentForums();
 
             var accessibleForumIds = new List<Guid>();
 

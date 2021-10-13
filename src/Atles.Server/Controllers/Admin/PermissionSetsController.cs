@@ -4,7 +4,6 @@ using Atles.Domain.PermissionSets.Commands;
 using Atles.Domain.PermissionSets.Rules;
 using Atles.Models.Admin.PermissionSets;
 using Atles.Models.Admin.PermissionSets.Queries;
-using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
 
@@ -13,12 +12,10 @@ namespace Atles.Server.Controllers.Admin
     [Route("api/admin/permission-sets")]
     public class PermissionSetsController : AdminControllerBase
     {
-        private readonly IContextService _contextService;
         private readonly ISender _sender;
 
-        public PermissionSetsController(IContextService contextService, ISender sender) : base(sender)
+        public PermissionSetsController(ISender sender) : base(sender)
         {
-            _contextService = contextService;
             _sender = sender;
         }
 
@@ -42,7 +39,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Save(FormComponentModel.PermissionSetModel model)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new CreatePermissionSet
             {
@@ -76,7 +73,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Update(FormComponentModel.PermissionSetModel model)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new UpdatePermissionSet
             {
@@ -96,7 +93,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Delete(Guid id)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new DeletePermissionSet
             {

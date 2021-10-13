@@ -2,7 +2,6 @@
 using Atles.Domain.Sites.Commands;
 using Atles.Models.Admin.Sites;
 using Atles.Reporting.Admin.Sites.Queries;
-using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
 
@@ -11,12 +10,10 @@ namespace Atles.Server.Controllers.Admin
     [Route("api/admin/sites")]
     public class SitesController : AdminControllerBase
     {
-        private readonly IContextService _contextService;
         private readonly ISender _sender;
 
-        public SitesController(IContextService contextService, ISender sender) : base(sender)
+        public SitesController(ISender sender) : base(sender)
         {
-            _contextService = contextService;
             _sender = sender;
         }
 
@@ -39,7 +36,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Update(SettingsPageModel model)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new UpdateSite
             {

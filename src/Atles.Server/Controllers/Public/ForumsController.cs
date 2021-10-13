@@ -14,17 +14,14 @@ namespace Atles.Server.Controllers.Public
     [Route("api/public/forums")]
     public class ForumsController : SiteControllerBase
     {
-        private readonly IContextService _contextService;
         private readonly ISecurityService _securityService;
         private readonly ILogger<ForumsController> _logger;
         private readonly ISender _sender;
 
-        public ForumsController(IContextService contextService,
-            ISecurityService securityService,
+        public ForumsController(ISecurityService securityService,
             ILogger<ForumsController> logger,
             ISender sender) : base(sender)
         {
-            _contextService = contextService;
             _securityService = securityService;
             _logger = logger;
             _sender = sender;
@@ -34,7 +31,7 @@ namespace Atles.Server.Controllers.Public
         public async Task<ActionResult<ForumPageModel>> Forum(string slug, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var model = await _sender.Send(new GetForumPage { SiteId = site.Id, Slug = slug, Options = new QueryOptions(page, search) });
 

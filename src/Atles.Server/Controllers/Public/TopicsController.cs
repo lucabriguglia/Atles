@@ -22,19 +22,16 @@ namespace Atles.Server.Controllers.Public
     [Route("api/public/topics")]
     public class TopicsController : SiteControllerBase
     {
-        private readonly IContextService _contextService;
         private readonly ISecurityService _securityService;
         private readonly AtlesDbContext _dbContext;
         private readonly ILogger<TopicsController> _logger;
         private readonly ISender _sender;
 
-        public TopicsController(IContextService contextService,
-            ISecurityService securityService, 
+        public TopicsController(ISecurityService securityService, 
             AtlesDbContext dbContext, 
             ILogger<TopicsController> logger,
             ISender sender) : base(sender)
         {
-            _contextService = contextService;
             _securityService = securityService;
             _dbContext = dbContext;
             _logger = logger;
@@ -45,7 +42,7 @@ namespace Atles.Server.Controllers.Public
         public async Task<ActionResult<TopicPageModel>> Topic(string forumSlug, string topicSlug, [FromQuery] int? page = 1, [FromQuery] string search = null)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var model = await _sender.Send(new GetTopicPage 
             { 
@@ -138,7 +135,7 @@ namespace Atles.Server.Controllers.Public
         public async Task<ActionResult<PostPageModel>> NewTopic(Guid forumId)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var model = await _sender.Send(new GetCreatePostPage { SiteId = site.Id, ForumId = forumId });
 
@@ -182,7 +179,7 @@ namespace Atles.Server.Controllers.Public
         public async Task<ActionResult<PostPageModel>> EditTopic(Guid forumId, Guid topicId)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var model = await _sender.Send(new GetEditPostPage { SiteId = site.Id, ForumId = forumId, TopicId = topicId });
 
@@ -230,7 +227,7 @@ namespace Atles.Server.Controllers.Public
         public async Task<ActionResult> CreateTopic(PostPageModel model)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var permissions = await _sender.Send(new GetPermissions 
             { 
@@ -279,7 +276,7 @@ namespace Atles.Server.Controllers.Public
         public async Task<ActionResult> UpdateTopic(PostPageModel model)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var slug = await _sender.Send(new GenerateTopicSlug 
             { 
@@ -342,7 +339,7 @@ namespace Atles.Server.Controllers.Public
         public async Task<ActionResult> PinTopic(Guid forumId, Guid topicId, [FromBody] bool pinned)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new PinTopic
             {
@@ -384,7 +381,7 @@ namespace Atles.Server.Controllers.Public
         public async Task<ActionResult> LockTopic(Guid forumId, Guid topicId, [FromBody] bool locked)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new LockTopic
             {
@@ -426,7 +423,7 @@ namespace Atles.Server.Controllers.Public
         public async Task<ActionResult> DeleteTopic(Guid forumId, Guid topicId)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new DeleteTopic
             {

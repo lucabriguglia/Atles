@@ -6,7 +6,6 @@ using Atles.Domain.Users.Commands;
 using Atles.Models;
 using Atles.Models.Admin.Users;
 using Atles.Reporting.Admin.Users.Queries;
-using Atles.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
@@ -16,15 +15,12 @@ namespace Atles.Server.Controllers.Admin
     [Route("api/admin/users")]
     public class UsersController : AdminControllerBase
     {
-        private readonly IContextService _contextService;
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ISender _sender;
 
-        public UsersController(IContextService contextService,
-            UserManager<IdentityUser> userManager,
+        public UsersController(UserManager<IdentityUser> userManager,
             ISender sender) : base(sender)
         {
-            _contextService = contextService;
             _userManager = userManager;
             _sender = sender;
         }
@@ -61,7 +57,7 @@ namespace Atles.Server.Controllers.Admin
             var confirmResult = await _userManager.ConfirmEmailAsync(identityUser, code);
 
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new CreateUser
             {
@@ -107,7 +103,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Update(EditPageModel model)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var identityUser = await _userManager.FindByIdAsync(model.Info.UserId);
 
@@ -166,7 +162,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Suspend([FromBody] Guid id)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new SuspendUser
             {
@@ -184,7 +180,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Reinstate([FromBody] Guid id)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new ReinstateUser
             {
@@ -202,7 +198,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<ActionResult> Delete(Guid id, string identityUserId)
         {
             var site = await CurrentSite();
-            var user = await _contextService.CurrentUserAsync();
+            var user = await CurrentUser();
 
             var command = new DeleteUser
             {
