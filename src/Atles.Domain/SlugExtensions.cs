@@ -7,18 +7,18 @@ namespace Atles.Domain
 {
     public static class SlugExtensions
     {
-        public static string ToSlug(this string phrase)
+        public static string ToSlug(this string text, int maxLength = 50)
         {
-            if (string.IsNullOrEmpty(phrase))
+            if (string.IsNullOrEmpty(text))
             {
-                throw new ArgumentNullException(nameof(phrase));
+                throw new ArgumentNullException(nameof(text));
             }
 
-            phrase = Regex.Replace(phrase, @"\s+", " "); // Remove multiple spaces from phrase
+            text = Regex.Replace(text, @"\s+", " "); // Remove multiple spaces from text
 
             var stringBuilder = new StringBuilder();
 
-            foreach (var c in phrase.ToArray())
+            foreach (var c in text.ToArray())
             {
                 if (char.IsLetterOrDigit(c))
                 {
@@ -32,9 +32,9 @@ namespace Atles.Domain
 
             var result = stringBuilder.ToString().ToLower();
 
-            if (result.Length > 50)
+            if (result.Length > maxLength)
             {
-                result = result.Substring(0, 50);
+                result = result.Substring(0, maxLength);
             }
 
             return result;
