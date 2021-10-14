@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Client.Components.Admin;
 using Atles.Models.Admin.Categories;
 using Microsoft.AspNetCore.Components;
 
-namespace Atles.Client.Components.Admin.Categories
+namespace Atles.Client.Pages.Admin.Categories
 {
     public abstract class EditPage : AdminPageBase
     {
