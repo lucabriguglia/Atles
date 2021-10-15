@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Client.Components.Admin;
 using Atles.Models.Admin.Forums;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 
-namespace Atles.Client.Components.Admin.Forums
+namespace Atles.Client.Pages.Admin.Forums
 {
     public abstract class IndexPage : AdminPageBase
     {
