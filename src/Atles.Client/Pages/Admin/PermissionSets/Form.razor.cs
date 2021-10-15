@@ -1,9 +1,10 @@
 ﻿using System.Threading.Tasks;
+using Atles.Client.Components.Admin;
 using Atles.Models.Admin.PermissionSets;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
-namespace Atles.Client.Components.Admin.PermissionSets
+namespace Atles.Client.Pages.Admin.PermissionSets
 {
     public abstract class FormComponent : AdminComponentBase
     {

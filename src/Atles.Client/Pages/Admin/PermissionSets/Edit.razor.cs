@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Client.Components.Admin;
 using Atles.Models.Admin.PermissionSets;
 using Microsoft.AspNetCore.Components;
 
-namespace Atles.Client.Components.Admin.PermissionSets
+namespace Atles.Client.Pages.Admin.PermissionSets
 {
     public abstract class EditPage : AdminPageBase
     {
