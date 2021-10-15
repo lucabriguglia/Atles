@@ -441,22 +441,26 @@
             Increase the number of topics by 1.
             </summary>
         </member>
-        <member name="M:Atles.Domain.Forums.Forum.DecreaseTopicsCount">
+        <member name="M:Atles.Domain.Forums.Forum.DecreaseTopicsCount(System.Int32)">
             <summary>
-            Decrease the number of topics by 1.
+            Decrease the number of topics by the given value.
+            If no value is given it will decrease by 1.
             If the resulting number is less than zero, the value will be set to zero.
             </summary>
+            <param name="count"></param>
         </member>
         <member name="M:Atles.Domain.Forums.Forum.IncreaseRepliesCount">
             <summary>
             Increase the number of replies by 1.
             </summary>
         </member>
-        <member name="M:Atles.Domain.Forums.Forum.DecreaseRepliesCount">
+        <member name="M:Atles.Domain.Forums.Forum.DecreaseRepliesCount(System.Int32)">
             <summary>
-            Decrease the number of replies by 1.
+            Decrease the number of replies by the given value.
+            If no value is given it will decrease by 1.
             If the resulting number is less than zero, the value will be set to zero.
             </summary>
+            <param name="count"></param>
         </member>
         <member name="M:Atles.Domain.Forums.Forum.Delete">
             <summary>
@@ -921,7 +925,7 @@
             Creates a new topic with the given values.
             </summary>
             <param name="forumId"></param>
-            <param name="memberId"></param>
+            <param name="userId"></param>
             <param name="title"></param>
             <param name="slug"></param>
             <param name="content"></param>
@@ -934,7 +938,7 @@
             </summary>
             <param name="id"></param>
             <param name="forumId"></param>
-            <param name="memberId"></param>
+            <param name="userId"></param>
             <param name="title"></param>
             <param name="slug"></param>
             <param name="content"></param>
@@ -947,7 +951,7 @@
             </summary>
             <param name="topicId"></param>
             <param name="forumId"></param>
-            <param name="memberId"></param>
+            <param name="userId"></param>
             <param name="content"></param>
             <param name="status"></param>
             <returns></returns>
@@ -959,7 +963,7 @@
             <param name="id"></param>
             <param name="topicId"></param>
             <param name="forumId"></param>
-            <param name="memberId"></param>
+            <param name="userId"></param>
             <param name="content"></param>
             <param name="status"></param>
             <returns></returns>
@@ -968,7 +972,7 @@
             <summary>
             Updates the details of the topic.
             </summary>
-            <param name="memberId"></param>
+            <param name="userId"></param>
             <param name="title"></param>
             <param name="slug"></param>
             <param name="content"></param>
@@ -978,7 +982,7 @@
             <summary>
             Updates the details of the reply.
             </summary>
-            <param name="memberId"></param>
+            <param name="userId"></param>
             <param name="content"></param>
             <param name="status"></param>
         </member>
@@ -1342,15 +1346,21 @@
             Increases the number of replies by 1.
             </summary>
         </member>
-        <member name="M:Atles.Domain.Users.User.DecreaseTopicsCount">
+        <member name="M:Atles.Domain.Users.User.DecreaseTopicsCount(System.Int32)">
             <summary>
-            Decreases the number of topics by 1.
+            Decrease the number of topics by the given value.
+            If no value is given it will decrease by 1.
+            If the resulting number is less than zero, the value will be set to zero.
             </summary>
+            <param name="count"></param>
         </member>
-        <member name="M:Atles.Domain.Users.User.DecreaseRepliesCount">
+        <member name="M:Atles.Domain.Users.User.DecreaseRepliesCount(System.Int32)">
             <summary>
-            Decreases the number of replies by 1.
+            Decrease the number of replies by the given value.
+            If no value is given it will decrease by 1.
+            If the resulting number is less than zero, the value will be set to zero.
             </summary>
+            <param name="count"></param>
         </member>
         <member name="M:Atles.Domain.Users.User.Suspend">
             <summary>

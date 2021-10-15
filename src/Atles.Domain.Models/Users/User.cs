@@ -147,11 +147,14 @@ namespace Atles.Domain.Users
         }
 
         /// <summary>
-        /// Decreases the number of topics by 1.
+        /// Decrease the number of topics by the given value.
+        /// If no value is given it will decrease by 1.
+        /// If the resulting number is less than zero, the value will be set to zero.
         /// </summary>
-        public void DecreaseTopicsCount()
+        /// <param name="count"></param>
+        public void DecreaseTopicsCount(int count = 1)
         {
-            TopicsCount -= 1;
+            TopicsCount -= count;
 
             if (TopicsCount < 0)
             {
@@ -160,11 +163,14 @@ namespace Atles.Domain.Users
         }
 
         /// <summary>
-        /// Decreases the number of replies by 1.
+        /// Decrease the number of replies by the given value.
+        /// If no value is given it will decrease by 1.
+        /// If the resulting number is less than zero, the value will be set to zero.
         /// </summary>
-        public void DecreaseRepliesCount()
+        /// <param name="count"></param>
+        public void DecreaseRepliesCount(int count = 1)
         {
-            RepliesCount -= 1;
+            RepliesCount -= count;
 
             if (RepliesCount < 0)
             {

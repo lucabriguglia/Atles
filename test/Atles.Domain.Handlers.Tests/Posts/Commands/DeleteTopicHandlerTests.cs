@@ -31,17 +31,23 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(forumId, userId, "Title", "slug", "Content", PostStatusType.Published);
+            var reply = Post.CreateReply(topic.Id, forumId, userId, "Content", PostStatusType.Published);
             var user = new User(userId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
             category.IncreaseTopicsCount();
+            category.IncreaseRepliesCount();
             forum.IncreaseTopicsCount();
+            forum.IncreaseRepliesCount();
+            topic.IncreaseRepliesCount();
             user.IncreaseTopicsCount();
+            user.IncreaseRepliesCount();
 
             using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
                 dbContext.Posts.Add(topic);
+                dbContext.Posts.Add(reply);
                 dbContext.Users.Add(user);
 
                 await dbContext.SaveChangesAsync();
@@ -70,9 +76,12 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
 
                 Assert.AreEqual(PostStatusType.Deleted, topicDeleted.Status);
                 Assert.NotNull(topicEvent);
-                Assert.AreEqual(0, updatedCategory.TopicsCount);
-                Assert.AreEqual(0, updatedForum.TopicsCount);
-                Assert.AreEqual(0, updatedUser.TopicsCount);
+                Assert.AreEqual(0, updatedCategory.TopicsCount, "Category topics count");
+                Assert.AreEqual(0, updatedCategory.RepliesCount, "Category replies count");
+                Assert.AreEqual(0, updatedForum.TopicsCount, "Forum topics count");
+                Assert.AreEqual(0, updatedForum.RepliesCount, "Forum replies count");
+                Assert.AreEqual(0, updatedUser.TopicsCount, "User topics count");
+                Assert.AreEqual(0, updatedUser.RepliesCount, "User replies count");
             }
         }
     }

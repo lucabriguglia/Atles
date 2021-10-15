@@ -49,8 +49,11 @@ namespace Atles.Domain.Handlers.Posts.Commands
                 command.Id));
 
             topic.Forum.DecreaseTopicsCount();
+            topic.Forum.DecreaseRepliesCount(topic.RepliesCount);
             topic.Forum.Category.DecreaseTopicsCount();
+            topic.Forum.Category.DecreaseRepliesCount(topic.RepliesCount);
             topic.CreatedByUser.DecreaseTopicsCount();
+            topic.CreatedByUser.DecreaseRepliesCount(topic.RepliesCount);
 
             if (topic.Forum.LastPost != null && (topic.Id == topic.Forum.LastPostId || topic.Id == topic.Forum.LastPost.TopicId))
             {

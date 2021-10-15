@@ -154,15 +154,15 @@ namespace Atles.Domain.Posts
         /// Creates a new topic with the given values.
         /// </summary>
         /// <param name="forumId"></param>
-        /// <param name="memberId"></param>
+        /// <param name="userId"></param>
         /// <param name="title"></param>
         /// <param name="slug"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public static Post CreateTopic(Guid forumId, Guid memberId, string title, string slug, string content, PostStatusType status)
+        public static Post CreateTopic(Guid forumId, Guid userId, string title, string slug, string content, PostStatusType status)
         {
-            return new Post(Guid.NewGuid(), null, forumId, memberId, title, slug, content, status);
+            return new Post(Guid.NewGuid(), null, forumId, userId, title, slug, content, status);
         }
 
         /// <summary>
@@ -170,15 +170,15 @@ namespace Atles.Domain.Posts
         /// </summary>
         /// <param name="id"></param>
         /// <param name="forumId"></param>
-        /// <param name="memberId"></param>
+        /// <param name="userId"></param>
         /// <param name="title"></param>
         /// <param name="slug"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public static Post CreateTopic(Guid id, Guid forumId, Guid memberId, string title, string slug, string content, PostStatusType status)
+        public static Post CreateTopic(Guid id, Guid forumId, Guid userId, string title, string slug, string content, PostStatusType status)
         {
-            return new Post(id, null, forumId, memberId, title, slug, content, status);
+            return new Post(id, null, forumId, userId, title, slug, content, status);
         }
 
         /// <summary>
@@ -186,13 +186,13 @@ namespace Atles.Domain.Posts
         /// </summary>
         /// <param name="topicId"></param>
         /// <param name="forumId"></param>
-        /// <param name="memberId"></param>
+        /// <param name="userId"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public static Post CreateReply(Guid topicId, Guid forumId, Guid memberId, string content, PostStatusType status)
+        public static Post CreateReply(Guid topicId, Guid forumId, Guid userId, string content, PostStatusType status)
         {
-            return new Post(Guid.NewGuid(), topicId, forumId, memberId, null, null, content, status);
+            return new Post(Guid.NewGuid(), topicId, forumId, userId, null, null, content, status);
         }
 
         /// <summary>
@@ -201,21 +201,21 @@ namespace Atles.Domain.Posts
         /// <param name="id"></param>
         /// <param name="topicId"></param>
         /// <param name="forumId"></param>
-        /// <param name="memberId"></param>
+        /// <param name="userId"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
         /// <returns></returns>
-        public static Post CreateReply(Guid id, Guid topicId, Guid forumId, Guid memberId, string content, PostStatusType status)
+        public static Post CreateReply(Guid id, Guid topicId, Guid forumId, Guid userId, string content, PostStatusType status)
         {
-            return new Post(id, topicId, forumId, memberId, null, null, content, status);
+            return new Post(id, topicId, forumId, userId, null, null, content, status);
         }
 
-        private Post(Guid id, Guid? topicId, Guid forumId, Guid memberId, string title, string slug, string content, PostStatusType status)
+        private Post(Guid id, Guid? topicId, Guid forumId, Guid userId, string title, string slug, string content, PostStatusType status)
         {
             Id = id;
             TopicId = topicId;
             ForumId = forumId;
-            CreatedBy = memberId;
+            CreatedBy = userId;
             Title = title;
             Slug = slug;
             Content = content;
@@ -226,14 +226,14 @@ namespace Atles.Domain.Posts
         /// <summary>
         /// Updates the details of the topic.
         /// </summary>
-        /// <param name="memberId"></param>
+        /// <param name="userId"></param>
         /// <param name="title"></param>
         /// <param name="slug"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        public void UpdateDetails(Guid memberId, string title, string slug, string content, PostStatusType status)
+        public void UpdateDetails(Guid userId, string title, string slug, string content, PostStatusType status)
         {
-            ModifiedBy = memberId;
+            ModifiedBy = userId;
             ModifiedOn = DateTime.UtcNow;
             Title = title;
             Slug = slug;
@@ -244,12 +244,12 @@ namespace Atles.Domain.Posts
         /// <summary>
         /// Updates the details of the reply.
         /// </summary>
-        /// <param name="memberId"></param>
+        /// <param name="userId"></param>
         /// <param name="content"></param>
         /// <param name="status"></param>
-        public void UpdateDetails(Guid memberId, string content, PostStatusType status)
+        public void UpdateDetails(Guid userId, string content, PostStatusType status)
         {
-            ModifiedBy = memberId;
+            ModifiedBy = userId;
             ModifiedOn = DateTime.UtcNow;
             Content = content;
             Status = status;
