@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Docs.Models;
+using Atles.Client.Components.Pages;
 
-namespace Atles.Client.Components.Pages
+namespace Atles.Client.Pages
 {
     public abstract class DocsPage : PageBase
     {

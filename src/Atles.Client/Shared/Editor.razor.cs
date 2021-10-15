@@ -1,7 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Atles.Client.Components.Shared;
 
-namespace Atles.Client.Components.Shared
+namespace Atles.Client.Shared
 {
     public abstract class EditorComponent : SharedComponentBase
     {

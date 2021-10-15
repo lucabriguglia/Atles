@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Client.Components.Shared;
+using Atles.Client.Shared;
 using Atles.Models.Admin.Users;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;

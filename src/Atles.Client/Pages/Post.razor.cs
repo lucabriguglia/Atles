@@ -1,7 +1,8 @@
 ﻿using System;
 using Microsoft.AspNetCore.Components;
+using Atles.Client.Components.Pages;
 
-namespace Atles.Client.Components.Pages
+namespace Atles.Client.Pages
 {
     public abstract class PostPage : PageBase
     {

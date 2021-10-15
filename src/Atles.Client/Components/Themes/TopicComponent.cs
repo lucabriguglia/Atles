@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Client.Components.Shared;
 using Atles.Client.Services;
+using Atles.Client.Shared;
 using Atles.Models;
 using Atles.Models.Public.Topics;
 using Markdig;

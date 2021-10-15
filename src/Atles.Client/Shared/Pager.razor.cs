@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
+using Atles.Client.Components.Shared;
 
-namespace Atles.Client.Components.Shared
+namespace Atles.Client.Shared
 {
     /// <summary>
     /// Based on: https://www.thecodehubs.com/visual-studio-blazor-template-with-dapper-and-net-core-3-1/

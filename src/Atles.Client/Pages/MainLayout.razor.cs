@@ -5,9 +5,9 @@ using Atles.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
 
-namespace Atles.Client.Components
+namespace Atles.Client.Pages
 {
-    public abstract class MainLayout : LayoutComponentBase
+    public partial class MainLayoutComponent : LayoutComponentBase
     {
         [Inject] public IJSRuntime JsRuntime { get; set; }
         [Inject] public ApiService ApiService { get; set; }

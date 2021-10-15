@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Client.Components.Shared;
+using Atles.Client.Shared;
 using Atles.Models;
 using Atles.Models.Public.Forums;
 using Microsoft.AspNetCore.Components;

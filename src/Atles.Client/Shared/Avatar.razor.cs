@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Atles.Client.Components.Shared;
 
-namespace Atles.Client.Components.Shared
+namespace Atles.Client.Shared
 {
     public abstract class AvatarComponent : SharedComponentBase
     {
