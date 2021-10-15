@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Client.Components.Admin;
 using Atles.Client.Components.Shared;
 using Atles.Models.Admin.Users;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
-namespace Atles.Client.Components.Admin.Users
+namespace Atles.Client.Pages.Admin.Users
 {
     public abstract class ActivityPage : AdminPageBase
     {

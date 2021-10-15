@@ -1,9 +1,10 @@
 ﻿using System;
 using System.Text.Json;
 using System.Threading.Tasks;
+using Atles.Client.Components.Admin;
 using Atles.Models.Admin.Users;
 
-namespace Atles.Client.Components.Admin.Users
+namespace Atles.Client.Pages.Admin.Users
 {
     public abstract class CreatePage : AdminPageBase
     {
