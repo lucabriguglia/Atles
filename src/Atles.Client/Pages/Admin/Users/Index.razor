@@ -100,14 +100,14 @@ else
                             <td class="text-center">@item.TimeStamp.ToAppLocalDate()</td>
                             <td>
                                 <a href="/admin/users/edit/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Edit"]</a>
-                                <a href="/admin/users/activity/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Activity"]</a>
+                                <a href="/admin/users/activity/@item.Id" class="btn btn-secondary mb-1 mr-1" role="button">@Loc["Activity"]</a>
                                 @if (item.Status == UserStatusType.Active)
                                 {
-                                    <button type="button" class="btn btn-warning mb-1" data-toggle="modal" data-target="#confirm-modal-suspend" @onclick="() => SetSuspendId(item.Id)">@Loc["Suspend"]</button>
+                                    <button type="button" class="btn btn-warning mb-1 mr-1" data-toggle="modal" data-target="#confirm-modal-suspend" @onclick="() => SetSuspendId(item.Id)">@Loc["Suspend"]</button>
                                 }
                                 @if (item.Status == UserStatusType.Suspended)
                                 {
-                                    <button type="button" class="btn btn-warning mb-1" @onclick="@(async () => await ReinstateAsync(item.Id))">@Loc["Reinstate"]</button>
+                                    <button type="button" class="btn btn-warning mb-1 mr-1" @onclick="@(async () => await ReinstateAsync(item.Id))">@Loc["Reinstate"]</button>
                                 }
                                 @if (item.Status != UserStatusType.Deleted)
                                 {

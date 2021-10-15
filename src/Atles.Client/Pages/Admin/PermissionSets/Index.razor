@@ -41,14 +41,14 @@ else
                 <tr>
                     <td>@item.Name</td>
                     <td>
-                        <a href="/admin/permission-sets/edit/@item.Id" class="btn btn-secondary" role="button">@Loc["Edit"]</a>
+                        <a href="/admin/permission-sets/edit/@item.Id" class="btn btn-secondary mb-1 mr-1" role="button">@Loc["Edit"]</a>
                         @if (!item.IsInUse)
                         {
-                            <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
+                            <button type="button" class="btn btn-danger mb-1 mr-1" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
                         }
                         else
                         {
-                            <a href="#" role="button" class="btn btn-danger disabled">@Loc["Delete"]</a>
+                            <button type="button" class="btn btn-danger mb-1 mr-1 disabled">@Loc["Delete"]</button>
                         }
                     </td>
                 </tr>
