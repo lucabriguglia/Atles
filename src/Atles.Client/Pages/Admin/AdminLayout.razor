@@ -1,12 +1,4 @@
-﻿@inherits LayoutComponentBase
-@using Atles.Client.Services
-@using Atles.Models.Public
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-@inject IJSRuntime JsRuntime
-@inject NavigationManager Navigation
-@inject SignOutSessionStateManager SignOutManager
-@inject IStringLocalizer<AdminResources> Loc
-@inject ApiService ApiService
+﻿@inherits Atles.Client.Pages.Admin.AdminLayoutComponent
 
 <nav class="navbar navbar-dark fixed-top bg-dark flex-md-nowrap p-0 shadow">
     <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="/admin/dashboard">Atles</a>
@@ -79,22 +71,3 @@
         </main>
     </div>
 </div>
-
-@code {
-    protected override async Task OnInitializedAsync()
-    {
-        var site = await ApiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
-        await JsRuntime.InvokeVoidAsync("atlas.interop.addCssFile", site.CssAdmin, site.CssPublic);
-    }
-
-    private void NavigateToAccount(MouseEventArgs args)
-    {
-        Navigation.NavigateTo("authentication/profile");
-    }
-
-    private async Task BeginSignOut(MouseEventArgs args)
-    {
-        await SignOutManager.SetSignOutState();
-        Navigation.NavigateTo("authentication/logout");
-    }
-}

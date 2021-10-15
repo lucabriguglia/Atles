@@ -1,10 +1,11 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
+using Atles.Client.Components.Admin;
 using Atles.Models.Admin.Roles;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
-namespace Atles.Client.Components.Admin
+namespace Atles.Client.Pages.Admin
 {
     public abstract class RolesPage : AdminPageBase
     {
