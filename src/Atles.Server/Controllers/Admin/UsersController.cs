@@ -86,7 +86,7 @@ namespace Atles.Server.Controllers.Admin
             return result;
         }
 
-        [HttpGet("edit-by-identity-user-id/{id}")]
+        [HttpGet("edit-by-identity-user-id/{identityUserId}")]
         public async Task<ActionResult<EditPageModel>> EditByIdentityUserId(string identityUserId)
         {
             var result = await _sender.Send(new GetUserEditForm { IdentityUserId = identityUserId });

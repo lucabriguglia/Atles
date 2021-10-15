@@ -17,7 +17,7 @@ namespace Atles.Client.Pages.Admin.Users
         {
             var requestUri = string.IsNullOrWhiteSpace(IdentityUserId)
                 ? $"api/admin/users/edit/{Id}"
-                : $"api/admin/users/edit-by-identity-user-Id/{IdentityUserId}";
+                : $"api/admin/users/edit-by-identity-user-id/{IdentityUserId}";
 
             Model = await ApiService.GetFromJsonAsync<EditPageModel>(requestUri);
         }
