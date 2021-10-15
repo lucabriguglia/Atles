@@ -21,11 +21,6 @@ namespace Atles.Domain.Posts.Commands
         public string Title { get; set; }
 
         /// <summary>
-        /// The new slug of the topic.
-        /// </summary>
-        public string Slug { get; set; }
-
-        /// <summary>
         /// The new content of the topic.
         /// </summary>
         public string Content { get; set; }

@@ -30,16 +30,6 @@ namespace Atles.Domain.Tests.Posts.Validators
         }
 
         [Test]
-        public void Should_have_validation_error_when_slug_is_too_long()
-        {
-            var command = Fixture.Build<UpdateTopic>().With(x => x.Slug, new string('*', 51)).Create();
-
-            var sut = new UpdateTopicValidator();
-
-            sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
-        }
-
-        [Test]
         public void Should_have_validation_error_when_content_is_empty()
         {
             var command = Fixture.Build<UpdateTopic>().With(x => x.Content, string.Empty).Create();

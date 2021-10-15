@@ -16,12 +16,17 @@ namespace Atles.Domain.Handlers.Posts.Commands
         private readonly AtlesDbContext _dbContext;
         private readonly IValidator<UpdateTopic> _validator;
         private readonly ICacheManager _cacheManager;
+        private readonly ITopicSlugGenerator _topicSlugGenerator;
 
-        public UpdateTopicHandler(AtlesDbContext dbContext, IValidator<UpdateTopic> validator, ICacheManager cacheManager)
+        public UpdateTopicHandler(AtlesDbContext dbContext,
+                                  IValidator<UpdateTopic> validator,
+                                  ICacheManager cacheManager,
+                                  ITopicSlugGenerator topicSlugGenerator)
         {
             _dbContext = dbContext;
             _validator = validator;
             _cacheManager = cacheManager;
+            _topicSlugGenerator = topicSlugGenerator;
         }
 
         public async Task Handle(UpdateTopic command)
@@ -43,7 +48,9 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
             var title = Regex.Replace(command.Title, @"\s+", " "); // Remove multiple spaces from title
 
-            topic.UpdateDetails(command.UserId, title, command.Slug, command.Content, command.Status);
+            var slug = title != topic.Title ? await _topicSlugGenerator.GenerateTopicSlug(topic.ForumId, title) : topic.Slug;
+
+            topic.UpdateDetails(command.UserId, title, slug, command.Content, command.Status);
 
             _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
@@ -53,7 +60,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
                 new
                 {
                     title,
-                    command.Slug,
+                    slug,
                     command.Content,
                     command.Status
                 }));

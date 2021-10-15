@@ -249,17 +249,10 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var slug = await _sender.Send(new GenerateTopicSlug 
-            { 
-                ForumId = model.Forum.Id, 
-                Title = model.Topic.Title 
-            });
-
             var command = new CreateTopic
             {
                 ForumId = model.Forum.Id,
                 Title = model.Topic.Title,
-                Slug = slug,
                 Content = model.Topic.Content,
                 Status = PostStatusType.Published,
                 SiteId = site.Id,
@@ -267,6 +260,11 @@ namespace Atles.Server.Controllers.Public
             };
 
             await _sender.Send(command);
+
+            var slug = await _sender.Send(new GetTopicSlug
+            {
+                TopicId = command.Id
+            });
 
             return Ok(slug);
         }
@@ -278,18 +276,11 @@ namespace Atles.Server.Controllers.Public
             var site = await CurrentSite();
             var user = await CurrentUser();
 
-            var slug = await _sender.Send(new GenerateTopicSlug 
-            { 
-                ForumId = model.Forum.Id, 
-                Title = model.Topic.Title 
-            });
-
             var command = new UpdateTopic
             {
                 Id = model.Topic.Id,
                 ForumId = model.Forum.Id,
                 Title = model.Topic.Title,
-                Slug = slug,
                 Content = model.Topic.Content,
                 Status = PostStatusType.Published,
                 SiteId = site.Id,
@@ -330,6 +321,11 @@ namespace Atles.Server.Controllers.Public
             }
 
             await _sender.Send(command);
+
+            var slug = await _sender.Send(new GetTopicSlug
+            {
+                TopicId = command.Id
+            });
 
             return Ok(slug);
         }

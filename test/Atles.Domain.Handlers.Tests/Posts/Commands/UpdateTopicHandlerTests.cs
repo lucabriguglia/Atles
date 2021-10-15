@@ -57,7 +57,12 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
                     .Setup(x => x.ValidateAsync(command, new CancellationToken()))
                     .ReturnsAsync(new ValidationResult());
 
-                var sut = new UpdateTopicHandler(dbContext, validator.Object, cacheManager.Object);
+                var topicSlugGenerator = new Mock<ITopicSlugGenerator>();
+                topicSlugGenerator
+                    .Setup(x => x.GenerateTopicSlug(command.ForumId, command.Title))
+                    .ReturnsAsync("slug");
+
+                var sut = new UpdateTopicHandler(dbContext, validator.Object, cacheManager.Object, topicSlugGenerator.Object);
 
                 await sut.Handle(command);
 

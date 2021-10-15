@@ -638,11 +638,6 @@
             The title of the topic.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Posts.Commands.CreateTopic.Slug">
-            <summary>
-            The slug of the topic.
-            </summary>
-        </member>
         <member name="P:Atles.Domain.Posts.Commands.CreateTopic.Content">
             <summary>
             The content of the topic.
@@ -766,11 +761,6 @@
         <member name="P:Atles.Domain.Posts.Commands.UpdateTopic.Title">
             <summary>
             The new title of the topic.
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Posts.Commands.UpdateTopic.Slug">
-            <summary>
-            The new slug of the topic.
             </summary>
         </member>
         <member name="P:Atles.Domain.Posts.Commands.UpdateTopic.Content">
