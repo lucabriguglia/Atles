@@ -14,9 +14,9 @@ namespace Atles.Server.Controllers.Admin
     {
         private readonly IDispatcher _dispatcher;
 
-        public PermissionSetsController(IDispatcher sender) : base(sender)
+        public PermissionSetsController(IDispatcher dispatcher) : base(dispatcher)
         {
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
         }
 
         [HttpGet("list")]

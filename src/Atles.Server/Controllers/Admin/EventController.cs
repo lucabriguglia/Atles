@@ -12,9 +12,9 @@ namespace Atles.Server.Controllers.Admin
     {
         private readonly IDispatcher _dispatcher;
 
-        public EventController(IDispatcher sender) : base(sender)
+        public EventController(IDispatcher dispatcher) : base(dispatcher)
         {
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
         }
 
         [HttpGet("target-model/{id}")]

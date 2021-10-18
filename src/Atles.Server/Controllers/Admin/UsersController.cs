@@ -19,10 +19,10 @@ namespace Atles.Server.Controllers.Admin
         private readonly IDispatcher _dispatcher;
 
         public UsersController(UserManager<IdentityUser> userManager,
-            IDispatcher sender) : base(sender)
+            IDispatcher dispatcher) : base(dispatcher)
         {
             _userManager = userManager;
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
         }
 
         [HttpGet("index-model")]

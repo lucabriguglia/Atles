@@ -30,12 +30,12 @@ namespace Atles.Server.Controllers.Public
         public TopicsController(ISecurityService securityService, 
             AtlesDbContext dbContext, 
             ILogger<TopicsController> logger,
-            IDispatcher sender) : base(sender)
+            IDispatcher dispatcher) : base(dispatcher)
         {
             _securityService = securityService;
             _dbContext = dbContext;
             _logger = logger;
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
         }
 
         [HttpGet("{forumSlug}/{topicSlug}")]

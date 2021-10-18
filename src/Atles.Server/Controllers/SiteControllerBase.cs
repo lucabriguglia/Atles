@@ -12,9 +12,9 @@ namespace Atles.Server.Controllers
     {
         private readonly IDispatcher _dispatcher;
 
-        protected SiteControllerBase(IDispatcher sender)
+        protected SiteControllerBase(IDispatcher dispatcher)
         {
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
         }
 
         protected async Task<CurrentSiteModel> CurrentSite() => await _dispatcher.Get(new GetCurrentSite());

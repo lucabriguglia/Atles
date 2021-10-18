@@ -14,9 +14,9 @@ namespace Atles.Server.Services
         private readonly IDispatcher _dispatcher;
         private readonly AtlesDbContext _dbContext;
 
-        public IntegrityService(IDispatcher sender, AtlesDbContext dbContext)
+        public IntegrityService(IDispatcher dispatcher, AtlesDbContext dbContext)
         {
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
             _dbContext = dbContext;
         }
 

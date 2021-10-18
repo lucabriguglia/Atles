@@ -17,9 +17,9 @@ namespace Atles.Server.Controllers.Public
         private readonly IDispatcher _dispatcher;
         private readonly ILogger<SettingsController> _logger;
 
-        public SettingsController(IDispatcher sender, ILogger<SettingsController> logger) : base(sender)
+        public SettingsController(IDispatcher dispatcher, ILogger<SettingsController> logger) : base(dispatcher)
         {
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
             _logger = logger;
         }
 

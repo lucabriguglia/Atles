@@ -20,11 +20,11 @@ namespace Atles.Server.Controllers.Admin
         public RolesController(
             RoleManager<IdentityRole> roleManager, 
             UserManager<IdentityUser> userManager,
-            IDispatcher sender) : base(sender)
+            IDispatcher dispatcher) : base(dispatcher)
         {
             _roleManager = roleManager;
             _userManager = userManager;
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
         }
 
         [HttpGet("list")]

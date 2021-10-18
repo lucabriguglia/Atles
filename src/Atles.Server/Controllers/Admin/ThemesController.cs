@@ -9,7 +9,7 @@ namespace Atles.Server.Controllers.Admin
     [Route("api/admin/themes")]
     public class ThemesController : AdminControllerBase
     {
-        public ThemesController(IDispatcher sender) : base(sender)
+        public ThemesController(IDispatcher dispatcher) : base(dispatcher)
         {
         }
 

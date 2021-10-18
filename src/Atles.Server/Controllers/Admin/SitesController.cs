@@ -12,9 +12,9 @@ namespace Atles.Server.Controllers.Admin
     {
         private readonly IDispatcher _dispatcher;
 
-        public SitesController(IDispatcher sender) : base(sender)
+        public SitesController(IDispatcher dispatcher) : base(dispatcher)
         {
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
         }
 
         [HttpGet("settings")]

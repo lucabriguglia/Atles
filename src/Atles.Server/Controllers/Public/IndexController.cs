@@ -23,10 +23,10 @@ namespace Atles.Server.Controllers.Public
         private readonly IDispatcher _dispatcher;
 
         public IndexController(ISecurityService securityService,
-            IDispatcher sender) : base(sender)
+            IDispatcher dispatcher) : base(dispatcher)
         {
             _securityService = securityService;
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
         }
 
         [HttpGet("index-model")]

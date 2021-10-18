@@ -20,11 +20,11 @@ namespace Atles.Server.Controllers.Public
 
         public ForumsController(ISecurityService securityService,
             ILogger<ForumsController> logger,
-            IDispatcher sender) : base(sender)
+            IDispatcher dispatcher) : base(dispatcher)
         {
             _securityService = securityService;
             _logger = logger;
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
         }
 
         [HttpGet("{slug}")]

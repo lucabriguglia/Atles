@@ -28,12 +28,12 @@ namespace Atles.Server.Controllers.Public
         public RepliesController(ISecurityService securityService, 
             AtlesDbContext dbContext, 
             ILogger<RepliesController> logger,
-            IDispatcher sender) : base(sender)
+            IDispatcher dispatcher) : base(dispatcher)
         {
             _securityService = securityService;
             _dbContext = dbContext;
             _logger = logger;
-            _dispatcher = sender;
+            _dispatcher = dispatcher;
         }
 
         [HttpPost("create-reply")]
