@@ -16,13 +16,13 @@ namespace Atles.Server.Controllers.Admin
     public class UsersController : AdminControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
         public UsersController(UserManager<IdentityUser> userManager,
-            ISender sender) : base(sender)
+            IDispatcher sender) : base(sender)
         {
             _userManager = userManager;
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpGet("index-model")]
@@ -34,13 +34,13 @@ namespace Atles.Server.Controllers.Admin
             [FromQuery] string sortByDirection = null)
         {
             var query = new GetUsersIndex { Options = new QueryOptions(page, search, sortByField, sortByDirection), Status = status };
-            return await _sender.Send(query);
+            return await _dispatcher.Get(query);
         }
 
         [HttpGet("create")]
         public async Task<CreatePageModel> Create()
         {
-            return await _sender.Send(new GetUserCreateForm());
+            return await _dispatcher.Get(new GetUserCreateForm());
         }
 
         [HttpPost("save")]
@@ -68,7 +68,7 @@ namespace Atles.Server.Controllers.Admin
                 Confirm = true
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok(command.Id);
         }
@@ -76,7 +76,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("edit/{id}")]
         public async Task<ActionResult<EditPageModel>> Edit(Guid id)
         {
-            var result = await _sender.Send(new GetUserEditForm { Id = id });
+            var result = await _dispatcher.Get(new GetUserEditForm { Id = id });
 
             if (result == null)
             {
@@ -89,7 +89,7 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("edit-by-identity-user-id/{identityUserId}")]
         public async Task<ActionResult<EditPageModel>> EditByIdentityUserId(string identityUserId)
         {
-            var result = await _sender.Send(new GetUserEditForm { IdentityUserId = identityUserId });
+            var result = await _dispatcher.Get(new GetUserEditForm { IdentityUserId = identityUserId });
 
             if (result == null)
             {
@@ -137,7 +137,7 @@ namespace Atles.Server.Controllers.Admin
                 Roles = model.Roles.Where(x => x.Selected).Select(x => x.Name).ToList()
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -148,7 +148,7 @@ namespace Atles.Server.Controllers.Admin
             var site = await CurrentSite();
 
             var query = new GetUserActivity { Options = new QueryOptions(page, search), SiteId = site.Id, UserId = id  };
-            var result = await _sender.Send(query);
+            var result = await _dispatcher.Get(query);
 
             if (result == null)
             {
@@ -171,7 +171,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -189,7 +189,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -208,7 +208,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             var identityUser = await _userManager.FindByIdAsync(identityUserId);
 
@@ -223,14 +223,14 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("is-display-name-unique/{name}")]
         public async Task<IActionResult> IsDisplayNameUnique(string name)
         {
-            var isNameUnique = await _sender.Send(new IsUserDisplayNameUnique { DisplayName = name });
+            var isNameUnique = await _dispatcher.Get(new IsUserDisplayNameUnique { DisplayName = name });
             return Ok(isNameUnique);
         }
 
         [HttpGet("is-display-name-unique/{name}/{id}")]
         public async Task<IActionResult> IsNameUnique(string name, Guid id)
         {
-            var isNameUnique = await _sender.Send(new IsUserDisplayNameUnique { DisplayName = name, Id = id });
+            var isNameUnique = await _dispatcher.Get(new IsUserDisplayNameUnique { DisplayName = name, Id = id });
             return Ok(isNameUnique);
         }
     }

@@ -10,11 +10,11 @@ namespace Atles.Server.Controllers.Admin
     [Route("api/admin/events")]
     public class EventController : AdminControllerBase
     {
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
-        public EventController(ISender sender) : base(sender)
+        public EventController(IDispatcher sender) : base(sender)
         {
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpGet("target-model/{id}")]
@@ -22,7 +22,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            return await _sender.Send(new GetTargetEventsComponent 
+            return await _dispatcher.Get(new GetTargetEventsComponent 
             { 
                 SiteId = site.Id, 
                 Id = id 

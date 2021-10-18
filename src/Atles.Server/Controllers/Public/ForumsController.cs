@@ -16,15 +16,15 @@ namespace Atles.Server.Controllers.Public
     {
         private readonly ISecurityService _securityService;
         private readonly ILogger<ForumsController> _logger;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
         public ForumsController(ISecurityService securityService,
             ILogger<ForumsController> logger,
-            ISender sender) : base(sender)
+            IDispatcher sender) : base(sender)
         {
             _securityService = securityService;
             _logger = logger;
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpGet("{slug}")]
@@ -33,7 +33,7 @@ namespace Atles.Server.Controllers.Public
             var site = await CurrentSite();
             var user = await CurrentUser();
 
-            var model = await _sender.Send(new GetForumPage { SiteId = site.Id, Slug = slug, Options = new QueryOptions(page, search) });
+            var model = await _dispatcher.Get(new GetForumPage { SiteId = site.Id, Slug = slug, Options = new QueryOptions(page, search) });
 
             if (model == null)
             {
@@ -47,7 +47,7 @@ namespace Atles.Server.Controllers.Public
                 return NotFound();
             }
 
-            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
 
             var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
             var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
@@ -75,7 +75,7 @@ namespace Atles.Server.Controllers.Public
         {
             var site = await CurrentSite();
 
-            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = id });
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = id });
 
             var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
             var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
@@ -92,7 +92,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var result = await _sender.Send(new GetForumPageTopics { SiteId = site.Id, ForumId = id, Options = new QueryOptions(page, search) });
+            var result = await _dispatcher.Get(new GetForumPageTopics { SiteId = site.Id, ForumId = id, Options = new QueryOptions(page, search) });
 
             return result;
         }

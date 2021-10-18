@@ -19,9 +19,9 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
         {
             var command = Fixture.Build<UpdatePermissionSet>().With(x => x.Name, string.Empty).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new UpdatePermissionSetValidator(sender.Object);
+            var sut = new UpdatePermissionSetValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -31,9 +31,9 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
         {
             var command = Fixture.Build<UpdatePermissionSet>().With(x => x.Name, new string('*', 51)).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new UpdatePermissionSetValidator(sender.Object);
+            var sut = new UpdatePermissionSetValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -47,9 +47,9 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
             var queryName = string.Empty;
             Guid? queryId = null;
 
-            var sender = new Mock<ISender>();
-            sender
-                .Setup(x => x.Send(It.IsAny<IsPermissionSetNameUnique>()))
+            var dispatcher = new Mock<IDispatcher>();
+            dispatcher
+                .Setup(x => x.Get(It.IsAny<IsPermissionSetNameUnique>()))
                 .Callback<IQuery<bool>>(q => 
                 {
                     var query = q as IsPermissionSetNameUnique;
@@ -59,7 +59,7 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
                 })
                 .ReturnsAsync(false);
 
-            var sut = new UpdatePermissionSetValidator(sender.Object);
+            var sut = new UpdatePermissionSetValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
             Assert.AreEqual(command.SiteId, querySiteId);

@@ -12,11 +12,11 @@ namespace Atles.Server.Controllers.Admin
     [Route("api/admin/permission-sets")]
     public class PermissionSetsController : AdminControllerBase
     {
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
-        public PermissionSetsController(ISender sender) : base(sender)
+        public PermissionSetsController(IDispatcher sender) : base(sender)
         {
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpGet("list")]
@@ -24,7 +24,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            return await _sender.Send(new GetPermissionSetsIndex { SiteId = site.Id });
+            return await _dispatcher.Get(new GetPermissionSetsIndex { SiteId = site.Id });
         }
 
         [HttpGet("create")]
@@ -32,7 +32,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            return await _sender.Send(new GetPermissionSetCreateForm { SiteId = site.Id });
+            return await _dispatcher.Get(new GetPermissionSetCreateForm { SiteId = site.Id });
         }
 
         [HttpPost("save")]
@@ -49,7 +49,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -59,7 +59,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            var result = await _sender.Send(new GetPermissionSetEditForm { SiteId = site.Id, Id = id });
+            var result = await _dispatcher.Get(new GetPermissionSetEditForm { SiteId = site.Id, Id = id });
 
             if (result == null)
             {
@@ -84,7 +84,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -102,7 +102,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -112,7 +112,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
             var query = new IsPermissionSetNameUnique { SiteId = site.Id, Name = name };
-            var isNameUnique = await _sender.Send(query);
+            var isNameUnique = await _dispatcher.Get(query);
             return Ok(isNameUnique);
         }
 
@@ -121,7 +121,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
             var query = new IsPermissionSetNameUnique { SiteId = site.Id, Name = name, Id = id };
-            var isNameUnique = await _sender.Send(query);
+            var isNameUnique = await _dispatcher.Get(query);
             return Ok(isNameUnique);
         }
     }

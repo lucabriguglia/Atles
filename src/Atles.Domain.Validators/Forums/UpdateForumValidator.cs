@@ -8,18 +8,18 @@ namespace Atles.Domain.Validators.Forums
 {
     public class UpdateForumValidator : AbstractValidator<UpdateForum>
     {
-        public UpdateForumValidator(ISender sender)
+        public UpdateForumValidator(IDispatcher dispatcher)
         {
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Forum name is required.")
                 .Length(1, 50).WithMessage("Forum name must be at least 1 and at max 50 characters long.")
-                .MustAsync((c, p, cancellation) => sender.Send(new IsForumNameUnique { SiteId = c.SiteId, CategoryId = c.CategoryId, Name = p, Id = c.Id }))
+                .MustAsync((c, p, cancellation) => dispatcher.Get(new IsForumNameUnique { SiteId = c.SiteId, CategoryId = c.CategoryId, Name = p, Id = c.Id }))
                     .WithMessage(c => $"A forum with name {c.Name} already exists.");
 
             RuleFor(c => c.Slug)
                 .NotEmpty().WithMessage("Forum slug is required.")
                 .Length(1, 50).WithMessage("Forum slug must be at least 1 and at max 50 characters long.")
-                .MustAsync((c, p, cancellation) => sender.Send(new IsForumSlugUnique { SiteId = c.SiteId, Slug = p, Id = c.Id }))
+                .MustAsync((c, p, cancellation) => dispatcher.Get(new IsForumSlugUnique { SiteId = c.SiteId, Slug = p, Id = c.Id }))
                 .WithMessage(c => $"A forum with slug {c.Slug} already exists.");
 
             RuleFor(c => c.Description)
@@ -27,7 +27,7 @@ namespace Atles.Domain.Validators.Forums
                 .When(c => !string.IsNullOrWhiteSpace(c.Description));
 
             RuleFor(c => c.PermissionSetId)
-                .MustAsync((c, p, cancellation) => sender.Send(new IsPermissionSetValid { SiteId = c.SiteId, Id = p.Value }))
+                .MustAsync((c, p, cancellation) => dispatcher.Get(new IsPermissionSetValid { SiteId = c.SiteId, Id = p.Value }))
                     .WithMessage(c => $"Permission set with id {c.PermissionSetId} does not exist.")
                     .When(c => c.PermissionSetId != null);
         }

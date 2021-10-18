@@ -16,15 +16,15 @@ namespace Atles.Server.Controllers.Public
     {
         private readonly ISecurityService _securityService;
         private readonly ILogger<UsersController> _logger;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
         public UsersController(ISecurityService securityService, 
             ILogger<UsersController> logger,
-            ISender sender) : base(sender)
+            IDispatcher sender) : base(sender)
         {
             _securityService = securityService;
             _logger = logger;
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpGet]
@@ -56,7 +56,7 @@ namespace Atles.Server.Controllers.Public
 
             foreach (var forum in currentForums)
             {
-                var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, PermissionSetId = forum.PermissionSetId });
+                var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, PermissionSetId = forum.PermissionSetId });
                 var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
                 var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
                 var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions);
@@ -66,7 +66,7 @@ namespace Atles.Server.Controllers.Public
                 }
             }
 
-            var model = await _sender.Send(new GetUserPage { SiteId = site.Id, UserId = userId, AccessibleForumIds = accessibleForumIds });
+            var model = await _dispatcher.Get(new GetUserPage { SiteId = site.Id, UserId = userId, AccessibleForumIds = accessibleForumIds });
 
             if (model == null)
             {

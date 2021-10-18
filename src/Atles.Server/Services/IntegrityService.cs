@@ -11,12 +11,12 @@ namespace Atles.Server.Services
 {
     public class IntegrityService : IIntegrityService
     {
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
         private readonly AtlesDbContext _dbContext;
 
-        public IntegrityService(ISender sender, AtlesDbContext dbContext)
+        public IntegrityService(IDispatcher sender, AtlesDbContext dbContext)
         {
-            _sender = sender;
+            _dispatcher = sender;
             _dbContext = dbContext;
         }
 
@@ -26,9 +26,9 @@ namespace Atles.Server.Services
 
             if (user == null)
             {
-                var site = await _sender.Send(new GetCurrentSite());
+                var site = await _dispatcher.Get(new GetCurrentSite());
 
-                await _sender.Send(new CreateUser
+                await _dispatcher.Send(new CreateUser
                 {
                     IdentityUserId = identityUser.Id,
                     Email = identityUser.Email,
@@ -44,9 +44,9 @@ namespace Atles.Server.Services
 
             if (user != null && user.Status == UserStatusType.Pending)
             {
-                var site = await _sender.Send(new GetCurrentSite());
+                var site = await _dispatcher.Get(new GetCurrentSite());
 
-                await _sender.Send(new ConfirmUser
+                await _dispatcher.Send(new ConfirmUser
                 {
                     Id = user.Id,
                     SiteId = site.Id

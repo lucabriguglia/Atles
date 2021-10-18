@@ -17,9 +17,9 @@ namespace Atles.Domain.Tests.Posts.Validators
         {
             var command = Fixture.Build<CreateTopic>().With(x => x.Title, string.Empty).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreateTopicValidator(sender.Object);
+            var sut = new CreateTopicValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Title, command);
         }
@@ -29,9 +29,9 @@ namespace Atles.Domain.Tests.Posts.Validators
         {
             var command = Fixture.Build<CreateTopic>().With(x => x.Title, new string('*', 101)).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreateTopicValidator(sender.Object);
+            var sut = new CreateTopicValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Title, command);
         }
@@ -41,9 +41,9 @@ namespace Atles.Domain.Tests.Posts.Validators
         {
             var command = Fixture.Build<CreateTopic>().With(x => x.Content, string.Empty).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreateTopicValidator(sender.Object);
+            var sut = new CreateTopicValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Content, command);
         }
@@ -53,10 +53,10 @@ namespace Atles.Domain.Tests.Posts.Validators
         {
             var command = Fixture.Create<CreateTopic>();
 
-            var sender = new Mock<ISender>();
-            sender.Setup(x => x.Send(new IsForumValid { SiteId = command.SiteId, Id = command.ForumId })).ReturnsAsync(false);
+            var dispatcher = new Mock<IDispatcher>();
+            dispatcher.Setup(x => x.Get(new IsForumValid { SiteId = command.SiteId, Id = command.ForumId })).ReturnsAsync(false);
 
-            var sut = new CreateTopicValidator(sender.Object);
+            var sut = new CreateTopicValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.ForumId, command);
         }

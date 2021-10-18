@@ -13,11 +13,11 @@ namespace Atles.Server.Controllers.Admin
     [Route("api/admin/categories")]
     public class CategoriesController : AdminControllerBase
     {
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
-        public CategoriesController(ISender sender) : base(sender)
+        public CategoriesController(IDispatcher sender) : base(sender)
         {
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpGet("list")]
@@ -25,7 +25,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            var response = await _sender.Send(new GetCategoriesIndex { SiteId = site.Id });
+            var response = await _dispatcher.Get(new GetCategoriesIndex { SiteId = site.Id });
 
             return response;
         }
@@ -35,7 +35,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            var response = await _sender.Send(new GetCategoryForm { SiteId = site.Id });
+            var response = await _dispatcher.Get(new GetCategoryForm { SiteId = site.Id });
 
             return response;
         }
@@ -54,7 +54,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -64,7 +64,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            var result = await _sender.Send(new GetCategoryForm { SiteId = site.Id, Id = id });
+            var result = await _dispatcher.Get(new GetCategoryForm { SiteId = site.Id, Id = id });
 
             if (result == null)
             {
@@ -89,7 +89,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -108,7 +108,7 @@ namespace Atles.Server.Controllers.Admin
                 Direction = Direction.Up
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -127,7 +127,7 @@ namespace Atles.Server.Controllers.Admin
                 Direction = Direction.Down
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -145,7 +145,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -154,7 +154,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string name)
         {
             var site = await CurrentSite();
-            var isNameUnique = await _sender.Send(new IsCategoryNameUnique 
+            var isNameUnique = await _dispatcher.Get(new IsCategoryNameUnique 
             {
                 SiteId = site.Id,
                 Name = name
@@ -166,7 +166,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string name, Guid id)
         {
             var site = await CurrentSite();
-            var isNameUnique = await _sender.Send(new IsCategoryNameUnique
+            var isNameUnique = await _dispatcher.Get(new IsCategoryNameUnique
             {
                 SiteId = site.Id,
                 Name = name,

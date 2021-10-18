@@ -16,17 +16,17 @@ namespace Atles.Reporting.Handlers.Public
     {
         private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
-        private readonly ISender _sender;
-        public GetCurrentForumsHandler(AtlesDbContext dbContext, ICacheManager cacheManager, ISender sender)
+        private readonly IDispatcher _dispatcher;
+        public GetCurrentForumsHandler(AtlesDbContext dbContext, ICacheManager cacheManager, IDispatcher sender)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         public async Task<IList<CurrentForumModel>> Handle(GetCurrentForums query)
         {
-            var site = await _sender.Send(new GetCurrentSite());
+            var site = await _dispatcher.Get(new GetCurrentSite());
 
             return await _cacheManager.GetOrSetAsync(CacheKeys.CurrentForums(site.Id), async () =>
             {

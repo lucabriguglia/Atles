@@ -7,7 +7,7 @@ namespace Atles.Domain.Validators.Posts
 {
     public class CreateTopicValidator : AbstractValidator<CreateTopic>
     {
-        public CreateTopicValidator(ISender sender)
+        public CreateTopicValidator(IDispatcher dispatcher)
         {
             RuleFor(c => c.Title)
                 .NotEmpty().WithMessage("Topic title is required.")
@@ -17,7 +17,7 @@ namespace Atles.Domain.Validators.Posts
                 .NotEmpty().WithMessage("Topic content is required.");
 
             RuleFor(c => c.ForumId)
-                .MustAsync((c, p, cancellation) => sender.Send(new IsForumValid { SiteId = c.SiteId, Id = p }))
+                .MustAsync((c, p, cancellation) => dispatcher.Get(new IsForumValid { SiteId = c.SiteId, Id = p }))
                     .WithMessage(c => $"Forum with id {c.ForumId} does not exist.");
         }
     }

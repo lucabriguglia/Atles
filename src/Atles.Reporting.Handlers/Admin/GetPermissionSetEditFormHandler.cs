@@ -16,12 +16,12 @@ namespace Atles.Reporting.Handlers.Admin.PermissionSets
     public class GetPermissionSetEditFormHandler : IQueryHandler<GetPermissionSetEditForm, FormComponentModel>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
-        public GetPermissionSetEditFormHandler(AtlesDbContext dbContext, ISender sender)
+        public GetPermissionSetEditFormHandler(AtlesDbContext dbContext, IDispatcher sender)
         {
             _dbContext = dbContext;
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         public async Task<FormComponentModel> Handle(GetPermissionSetEditForm query)
@@ -46,7 +46,7 @@ namespace Atles.Reporting.Handlers.Admin.PermissionSets
                 Name = permissionSet.Name
             };
 
-            foreach (var roleModel in await _sender.Send(new GetRoles()))
+            foreach (var roleModel in await _dispatcher.Get(new GetRoles()))
             {
                 var permissionModel = new FormComponentModel.PermissionModel
                 {

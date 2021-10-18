@@ -25,17 +25,17 @@ namespace Atles.Server.Controllers.Public
         private readonly ISecurityService _securityService;
         private readonly AtlesDbContext _dbContext;
         private readonly ILogger<TopicsController> _logger;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
         public TopicsController(ISecurityService securityService, 
             AtlesDbContext dbContext, 
             ILogger<TopicsController> logger,
-            ISender sender) : base(sender)
+            IDispatcher sender) : base(sender)
         {
             _securityService = securityService;
             _dbContext = dbContext;
             _logger = logger;
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpGet("{forumSlug}/{topicSlug}")]
@@ -44,7 +44,7 @@ namespace Atles.Server.Controllers.Public
             var site = await CurrentSite();
             var user = await CurrentUser();
 
-            var model = await _sender.Send(new GetTopicPage 
+            var model = await _dispatcher.Get(new GetTopicPage 
             { 
                 SiteId = site.Id, 
                 ForumSlug = forumSlug, 
@@ -65,7 +65,7 @@ namespace Atles.Server.Controllers.Public
                 return NotFound();
             }
 
-            var permissions = await _sender.Send(new GetPermissions 
+            var permissions = await _dispatcher.Get(new GetPermissions 
             { 
                 SiteId = site.Id, 
                 ForumId = model.Forum.Id 
@@ -99,7 +99,7 @@ namespace Atles.Server.Controllers.Public
         {
             var site = await CurrentSite();
 
-            var permissions = await _sender.Send(new GetPermissions 
+            var permissions = await _dispatcher.Get(new GetPermissions 
             { 
                 SiteId = site.Id, 
                 ForumId = forumId 
@@ -120,7 +120,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var result = await _sender.Send(new GetTopicPageReplies
+            var result = await _dispatcher.Get(new GetTopicPageReplies
             {
                 SiteId = site.Id,
                 TopicId = topicId,
@@ -137,7 +137,7 @@ namespace Atles.Server.Controllers.Public
             var site = await CurrentSite();
             var user = await CurrentUser();
 
-            var model = await _sender.Send(new GetCreatePostPage { SiteId = site.Id, ForumId = forumId });
+            var model = await _dispatcher.Get(new GetCreatePostPage { SiteId = site.Id, ForumId = forumId });
 
             if (model == null)
             {
@@ -151,7 +151,7 @@ namespace Atles.Server.Controllers.Public
                 return NotFound();
             }
 
-            var permissions = await _sender.Send(new GetPermissions 
+            var permissions = await _dispatcher.Get(new GetPermissions 
             { 
                 SiteId = site.Id, 
                 ForumId = model.Forum.Id 
@@ -181,7 +181,7 @@ namespace Atles.Server.Controllers.Public
             var site = await CurrentSite();
             var user = await CurrentUser();
 
-            var model = await _sender.Send(new GetEditPostPage { SiteId = site.Id, ForumId = forumId, TopicId = topicId });
+            var model = await _dispatcher.Get(new GetEditPostPage { SiteId = site.Id, ForumId = forumId, TopicId = topicId });
 
             if (model == null)
             {
@@ -196,7 +196,7 @@ namespace Atles.Server.Controllers.Public
                 return NotFound();
             }
 
-            var permissions = await _sender.Send(new GetPermissions 
+            var permissions = await _dispatcher.Get(new GetPermissions 
             { 
                 SiteId = site.Id, 
                 ForumId = forumId 
@@ -229,7 +229,7 @@ namespace Atles.Server.Controllers.Public
             var site = await CurrentSite();
             var user = await CurrentUser();
 
-            var permissions = await _sender.Send(new GetPermissions 
+            var permissions = await _dispatcher.Get(new GetPermissions 
             { 
                 SiteId = site.Id, 
                 ForumId = model.Forum.Id 
@@ -259,9 +259,9 @@ namespace Atles.Server.Controllers.Public
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
-            var slug = await _sender.Send(new GetTopicSlug
+            var slug = await _dispatcher.Get(new GetTopicSlug
             {
                 TopicId = command.Id
             });
@@ -297,7 +297,7 @@ namespace Atles.Server.Controllers.Public
                 .Select(x => new { UserId = x.CreatedBy, x.Locked})
                 .FirstOrDefaultAsync();
 
-            var permissions = await _sender.Send(new GetPermissions 
+            var permissions = await _dispatcher.Get(new GetPermissions 
             { 
                 SiteId = site.Id, 
                 ForumId = model.Forum.Id 
@@ -320,9 +320,9 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
-            var slug = await _sender.Send(new GetTopicSlug
+            var slug = await _dispatcher.Get(new GetTopicSlug
             {
                 TopicId = command.Id
             });
@@ -346,7 +346,7 @@ namespace Atles.Server.Controllers.Public
                 UserId = user.Id
             };
 
-            var permissions = await _sender.Send(new GetPermissions 
+            var permissions = await _dispatcher.Get(new GetPermissions 
             { 
                 SiteId = site.Id, 
                 ForumId = forumId 
@@ -367,7 +367,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -388,7 +388,7 @@ namespace Atles.Server.Controllers.Public
                 UserId = user.Id
             };
 
-            var permissions = await _sender.Send(new GetPermissions 
+            var permissions = await _dispatcher.Get(new GetPermissions 
             { 
                 SiteId = site.Id, 
                 ForumId = forumId 
@@ -409,7 +409,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -439,7 +439,7 @@ namespace Atles.Server.Controllers.Public
                 .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 
-            var permissions = await _sender.Send(new GetPermissions
+            var permissions = await _dispatcher.Get(new GetPermissions
             {
                 SiteId = site.Id,
                 ForumId = forumId
@@ -462,7 +462,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }

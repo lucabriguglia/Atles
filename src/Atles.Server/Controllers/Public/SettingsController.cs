@@ -14,12 +14,12 @@ namespace Atles.Server.Controllers.Public
     [Route("api/public/settings")]
     public class SettingsController : SiteControllerBase
     {
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
         private readonly ILogger<SettingsController> _logger;
 
-        public SettingsController(ISender sender, ILogger<SettingsController> logger) : base(sender)
+        public SettingsController(IDispatcher sender, ILogger<SettingsController> logger) : base(sender)
         {
-            _sender = sender;
+            _dispatcher = sender;
             _logger = logger;
         }
 
@@ -29,7 +29,7 @@ namespace Atles.Server.Controllers.Public
             var site = await CurrentSite();
             var user = await CurrentUser();
 
-            var model = await _sender.Send(new GetSettingsPage { SiteId = site.Id, UserId = user.Id });
+            var model = await _dispatcher.Get(new GetSettingsPage { SiteId = site.Id, UserId = user.Id });
 
             return model;
         }
@@ -60,7 +60,7 @@ namespace Atles.Server.Controllers.Public
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -68,7 +68,7 @@ namespace Atles.Server.Controllers.Public
         [HttpGet("is-display-name-unique/{name}")]
         public async Task<IActionResult> IsDisplayNameUnique(string name)
         {
-            var isNameUnique = await _sender.Send(new IsUserDisplayNameUnique { DisplayName = name });
+            var isNameUnique = await _dispatcher.Get(new IsUserDisplayNameUnique { DisplayName = name });
             return Ok(isNameUnique);
         }
     }

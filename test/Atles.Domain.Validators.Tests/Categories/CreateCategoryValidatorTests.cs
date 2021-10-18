@@ -20,9 +20,9 @@ namespace Atles.Domain.Tests.Categories.Validators
         {
             var command = Fixture.Build<CreateCategory>().With(x => x.Name, string.Empty).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreateCategoryValidator(sender.Object);
+            var sut = new CreateCategoryValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -32,9 +32,9 @@ namespace Atles.Domain.Tests.Categories.Validators
         {
             var command = Fixture.Build<CreateCategory>().With(x => x.Name, new string('*', 51)).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreateCategoryValidator(sender.Object);
+            var sut = new CreateCategoryValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -44,10 +44,10 @@ namespace Atles.Domain.Tests.Categories.Validators
         {
             var command = Fixture.Create<CreateCategory>();
 
-            var sender = new Mock<ISender>();
-            sender.Setup(x => x.Send(It.IsAny<IsCategoryNameUnique>())).ReturnsAsync(false);
+            var dispatcher = new Mock<IDispatcher>();
+            dispatcher.Setup(x => x.Get(It.IsAny<IsCategoryNameUnique>())).ReturnsAsync(false);
 
-            var sut = new CreateCategoryValidator(sender.Object);
+            var sut = new CreateCategoryValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -60,9 +60,9 @@ namespace Atles.Domain.Tests.Categories.Validators
             var querySiteId = Guid.NewGuid();
             var queryPermissionSetId = Guid.NewGuid();
 
-            var sender = new Mock<ISender>();
-            sender
-                .Setup(x => x.Send(It.IsAny<IsPermissionSetValid>()))
+            var dispatcher = new Mock<IDispatcher>();
+            dispatcher
+                .Setup(x => x.Get(It.IsAny<IsPermissionSetValid>()))
                 .Callback<IQuery<bool>>(q =>
                 {
                     var query = q as IsPermissionSetValid;
@@ -71,7 +71,7 @@ namespace Atles.Domain.Tests.Categories.Validators
                 })
                 .ReturnsAsync(false);
 
-            var sut = new CreateCategoryValidator(sender.Object);
+            var sut = new CreateCategoryValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.PermissionSetId, command);
             Assert.AreEqual(command.SiteId, querySiteId);

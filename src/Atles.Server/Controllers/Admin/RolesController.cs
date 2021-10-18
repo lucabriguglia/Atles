@@ -15,28 +15,28 @@ namespace Atles.Server.Controllers.Admin
     {
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
         public RolesController(
             RoleManager<IdentityRole> roleManager, 
             UserManager<IdentityUser> userManager,
-            ISender sender) : base(sender)
+            IDispatcher sender) : base(sender)
         {
             _roleManager = roleManager;
             _userManager = userManager;
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpGet("list")]
         public async Task<IndexPageModel> List()
         {
-            return await _sender.Send(new GetRolesIndex());
+            return await _dispatcher.Get(new GetRolesIndex());
         }
 
         [HttpGet("users-in-role/{roleName}")]
         public async Task<IList<IndexPageModel.UserModel>> UsersInRole(string roleName)
         {
-            return await _sender.Send(new GetUsersInRole { RoleName = roleName });
+            return await _dispatcher.Get(new GetUsersInRole { RoleName = roleName });
         }
 
         [HttpPost("create")]

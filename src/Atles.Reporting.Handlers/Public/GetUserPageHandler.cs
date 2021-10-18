@@ -13,12 +13,12 @@ namespace Atles.Reporting.Handlers.Public
     public class GetUserPageHandler : IQueryHandler<GetUserPage, UserPageModel>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
         private readonly IGravatarService _gravatarService;
-        public GetUserPageHandler(AtlesDbContext dbContext, ISender sender, IGravatarService gravatarService)
+        public GetUserPageHandler(AtlesDbContext dbContext, IDispatcher sender, IGravatarService gravatarService)
         {
             _dbContext = dbContext;
-            _sender = sender;
+            _dispatcher = sender;
             _gravatarService = gravatarService;
         }
 
@@ -45,7 +45,7 @@ namespace Atles.Reporting.Handlers.Public
                 Status = user.Status
             };
 
-            result.Posts = await _sender.Send(new GetSearchPosts 
+            result.Posts = await _dispatcher.Get(new GetSearchPosts 
             { 
                 AccessibleForumIds = query.AccessibleForumIds, 
                 Options = new QueryOptions(), 

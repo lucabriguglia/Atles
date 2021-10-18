@@ -18,9 +18,9 @@ namespace Atles.Domain.Tests.Posts.Validators
         {
             var command = Fixture.Build<CreateReply>().With(x => x.Content, string.Empty).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreateReplyValidator(sender.Object);
+            var sut = new CreateReplyValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Content, command);
         }
@@ -30,10 +30,10 @@ namespace Atles.Domain.Tests.Posts.Validators
         {
             var command = Fixture.Create<CreateReply>();
 
-            var sender = new Mock<ISender>();
-            sender.Setup(x => x.Send(new IsForumValid { SiteId = command.SiteId, Id = command.ForumId })).ReturnsAsync(false);
+            var dispatcher = new Mock<IDispatcher>();
+            dispatcher.Setup(x => x.Get(new IsForumValid { SiteId = command.SiteId, Id = command.ForumId })).ReturnsAsync(false);
 
-            var sut = new CreateReplyValidator(sender.Object);
+            var sut = new CreateReplyValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.ForumId, command);
         }
@@ -43,10 +43,10 @@ namespace Atles.Domain.Tests.Posts.Validators
         {
             var command = Fixture.Create<CreateReply>();
 
-            var sender = new Mock<ISender>();
-            sender.Setup(x => x.Send(new IsTopicValid { SiteId = command.SiteId, ForumId = command.ForumId, Id = command.TopicId })).ReturnsAsync(false);
+            var dispatcher = new Mock<IDispatcher>();
+            dispatcher.Setup(x => x.Get(new IsTopicValid { SiteId = command.SiteId, ForumId = command.ForumId, Id = command.TopicId })).ReturnsAsync(false);
 
-            var sut = new CreateReplyValidator(sender.Object);
+            var sut = new CreateReplyValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.TopicId, command);
         }

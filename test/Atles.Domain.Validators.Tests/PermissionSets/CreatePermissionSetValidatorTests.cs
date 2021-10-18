@@ -19,9 +19,9 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
         {
             var command = Fixture.Build<CreatePermissionSet>().With(x => x.Name, string.Empty).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreatePermissionSetValidator(sender.Object);
+            var sut = new CreatePermissionSetValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -31,9 +31,9 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
         {
             var command = Fixture.Build<CreatePermissionSet>().With(x => x.Name, new string('*', 51)).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreatePermissionSetValidator(sender.Object);
+            var sut = new CreatePermissionSetValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -46,9 +46,9 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
             var querySiteId = Guid.NewGuid();
             var queryName = string.Empty;
 
-            var sender = new Mock<ISender>();
-            sender
-                .Setup(x => x.Send(It.IsAny<IsPermissionSetNameUnique>()))
+            var dispatcher = new Mock<IDispatcher>();
+            dispatcher
+                .Setup(x => x.Get(It.IsAny<IsPermissionSetNameUnique>()))
                 .Callback<IQuery<bool>>(q =>
                 {
                     var query = q as IsPermissionSetNameUnique;
@@ -57,7 +57,7 @@ namespace Atles.Domain.Tests.PermissionSets.Validators
                 })
                 .ReturnsAsync(false);
 
-            var sut = new CreatePermissionSetValidator(sender.Object);
+            var sut = new CreatePermissionSetValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
             Assert.AreEqual(command.SiteId, querySiteId);

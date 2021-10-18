@@ -16,17 +16,17 @@ namespace Atles.Reporting.Handlers.Public
     public class GetCurrentUserHandler : IQueryHandler<GetCurrentUser, CurrentUserModel>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly IGravatarService _gravatarService;
 
         public GetCurrentUserHandler(AtlesDbContext dbContext,
-                                     ISender sender,
+                                     IDispatcher sender,
                                      IHttpContextAccessor httpContextAccessor,
                                      IGravatarService gravatarService)
         {
             _dbContext = dbContext;
-            _sender = sender;
+            _dispatcher = sender;
             _httpContextAccessor = httpContextAccessor;
             _gravatarService = gravatarService;
         }

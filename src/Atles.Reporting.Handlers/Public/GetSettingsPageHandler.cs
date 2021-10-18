@@ -13,12 +13,12 @@ namespace Atles.Reporting.Handlers.Public
     public class GetSettingsPageHandler : IQueryHandler<GetSettingsPage, SettingsPageModel>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
         private readonly IGravatarService _gravatarService;
-        public GetSettingsPageHandler(AtlesDbContext dbContext, ISender sender, IGravatarService gravatarService)
+        public GetSettingsPageHandler(AtlesDbContext dbContext, IDispatcher sender, IGravatarService gravatarService)
         {
             _dbContext = dbContext;
-            _sender = sender;
+            _dispatcher = sender;
             _gravatarService = gravatarService;
         }
 

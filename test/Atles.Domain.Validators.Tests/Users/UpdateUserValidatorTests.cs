@@ -17,9 +17,9 @@ namespace Atles.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<UpdateUser>().With(x => x.DisplayName, string.Empty).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new UpdateUserValidator(sender.Object);
+            var sut = new UpdateUserValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
         }
@@ -29,9 +29,9 @@ namespace Atles.Domain.Tests.Users.Validators
         {
             var command = Fixture.Build<UpdateUser>().With(x => x.DisplayName, new string('*', 51)).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new UpdateUserValidator(sender.Object);
+            var sut = new UpdateUserValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
         }
@@ -41,10 +41,10 @@ namespace Atles.Domain.Tests.Users.Validators
         {
             var command = Fixture.Create<UpdateUser>();
 
-            var sender = new Mock<ISender>();
-            sender.Setup(x => x.Send(new IsUserDisplayNameUnique { DisplayName = command.DisplayName, Id = command.Id })).ReturnsAsync(false);
+            var dispatcher = new Mock<IDispatcher>();
+            dispatcher.Setup(x => x.Get(new IsUserDisplayNameUnique { DisplayName = command.DisplayName, Id = command.Id })).ReturnsAsync(false);
 
-            var sut = new UpdateUserValidator(sender.Object);
+            var sut = new UpdateUserValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
         }

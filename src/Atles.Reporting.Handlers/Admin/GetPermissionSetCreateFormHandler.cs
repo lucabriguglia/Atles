@@ -12,18 +12,18 @@ namespace Atles.Reporting.Handlers.Admin.PermissionSets
 {
     public class GetPermissionSetCreateFormHandler : IQueryHandler<GetPermissionSetCreateForm, FormComponentModel>
     {
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
-        public GetPermissionSetCreateFormHandler(ISender sender)
+        public GetPermissionSetCreateFormHandler(IDispatcher sender)
         {
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         public async Task<FormComponentModel> Handle(GetPermissionSetCreateForm query)
         {
             var result = new FormComponentModel();
 
-            foreach (var roleModel in await _sender.Send(new GetRoles()))
+            foreach (var roleModel in await _dispatcher.Get(new GetRoles()))
             {
                 var permissionModel = new FormComponentModel.PermissionModel
                 {

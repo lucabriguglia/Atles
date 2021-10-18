@@ -13,11 +13,11 @@ namespace Atles.Server.Controllers.Admin
     [Route("api/admin/forums")]
     public class ForumsController : AdminControllerBase
     {
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
-        public ForumsController(ISender sender) : base(sender)
+        public ForumsController(IDispatcher sender) : base(sender)
         {
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpGet("index-model")]
@@ -25,7 +25,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            return await _sender.Send(new GetForumsIndex { SiteId = site.Id });
+            return await _dispatcher.Get(new GetForumsIndex { SiteId = site.Id });
         }
 
         [HttpGet("index-model/{categoryId}")]
@@ -33,7 +33,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            return await _sender.Send(new GetForumsIndex { SiteId = site.Id, CategoryId = categoryId });
+            return await _dispatcher.Get(new GetForumsIndex { SiteId = site.Id, CategoryId = categoryId });
         }
 
         [HttpGet("create")]
@@ -41,7 +41,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            return await _sender.Send(new GetForumCreateForm { SiteId = site.Id });
+            return await _dispatcher.Get(new GetForumCreateForm { SiteId = site.Id });
         }
 
         [HttpGet("create/{categoryId}")]
@@ -49,7 +49,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            return await _sender.Send(new GetForumCreateForm { SiteId = site.Id, CategoryId = categoryId });
+            return await _dispatcher.Get(new GetForumCreateForm { SiteId = site.Id, CategoryId = categoryId });
         }
 
         [HttpPost("save")]
@@ -69,7 +69,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -79,7 +79,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            var result = await _sender.Send(new GetForumEditForm { SiteId = site.Id, Id = id });
+            var result = await _dispatcher.Get(new GetForumEditForm { SiteId = site.Id, Id = id });
 
             if (result == null)
             {
@@ -107,7 +107,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -126,7 +126,7 @@ namespace Atles.Server.Controllers.Admin
                 Direction = Direction.Up
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -145,7 +145,7 @@ namespace Atles.Server.Controllers.Admin
                 Direction = Direction.Down
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -163,7 +163,7 @@ namespace Atles.Server.Controllers.Admin
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -172,7 +172,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(Guid categoryId, string name)
         {
             var site = await CurrentSite();
-            var isNameUnique = await _sender.Send(new IsForumNameUnique { SiteId = site.Id, CategoryId = categoryId, Name = name });
+            var isNameUnique = await _dispatcher.Get(new IsForumNameUnique { SiteId = site.Id, CategoryId = categoryId, Name = name });
             return Ok(isNameUnique);
         }
 
@@ -180,7 +180,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(Guid categoryId, string name, Guid id)
         {
             var site = await CurrentSite();
-            var isNameUnique = await _sender.Send(new IsForumNameUnique { SiteId = site.Id, CategoryId = categoryId, Name = name, Id = id });
+            var isNameUnique = await _dispatcher.Get(new IsForumNameUnique { SiteId = site.Id, CategoryId = categoryId, Name = name, Id = id });
             return Ok(isNameUnique);
         }
 
@@ -188,7 +188,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string slug)
         {
             var site = await CurrentSite();
-            var isSlugUnique = await _sender.Send(new IsForumSlugUnique { SiteId = site.Id, Slug = slug });
+            var isSlugUnique = await _dispatcher.Get(new IsForumSlugUnique { SiteId = site.Id, Slug = slug });
             return Ok(isSlugUnique);
         }
 
@@ -196,7 +196,7 @@ namespace Atles.Server.Controllers.Admin
         public async Task<IActionResult> IsNameUnique(string slug, Guid id)
         {
             var site = await CurrentSite();
-            var isSlugUnique = await _sender.Send(new IsForumSlugUnique { SiteId = site.Id, Slug = slug, Id = id });
+            var isSlugUnique = await _dispatcher.Get(new IsForumSlugUnique { SiteId = site.Id, Slug = slug, Id = id });
             return Ok(isSlugUnique);
         }
     }

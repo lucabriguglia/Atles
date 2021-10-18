@@ -8,18 +8,18 @@ namespace Atles.Reporting.Handlers.Public
 {
     public class GetSearchPageHandler : IQueryHandler<GetSearchPage, SearchPageModel>
     {
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
-        public GetSearchPageHandler(ISender sender)
+        public GetSearchPageHandler(IDispatcher sender)
         {
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         public async Task<SearchPageModel> Handle(GetSearchPage query)
         {
             var result = new SearchPageModel
             {
-                Posts = await _sender.Send(new GetSearchPosts { AccessibleForumIds = query.AccessibleForumIds, Options = query.Options })
+                Posts = await _dispatcher.Get(new GetSearchPosts { AccessibleForumIds = query.AccessibleForumIds, Options = query.Options })
             };
 
             return result;

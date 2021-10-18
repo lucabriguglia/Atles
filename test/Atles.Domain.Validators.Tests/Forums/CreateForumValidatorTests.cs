@@ -20,9 +20,9 @@ namespace Atles.Domain.Tests.Forums.Validators
         {
             var command = Fixture.Build<CreateForum>().With(x => x.Name, string.Empty).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreateForumValidator(sender.Object);
+            var sut = new CreateForumValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -32,9 +32,9 @@ namespace Atles.Domain.Tests.Forums.Validators
         {
             var command = Fixture.Build<CreateForum>().With(x => x.Name, new string('*', 51)).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreateForumValidator(sender.Object);
+            var sut = new CreateForumValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -44,10 +44,10 @@ namespace Atles.Domain.Tests.Forums.Validators
         {
             var command = Fixture.Create<CreateForum>();
 
-            var sender = new Mock<ISender>();
-            sender.Setup(x => x.Send(new IsForumNameUnique { SiteId = command.SiteId, CategoryId = command.CategoryId, Name = command.Name })).ReturnsAsync(false);
+            var dispatcher = new Mock<IDispatcher>();
+            dispatcher.Setup(x => x.Get(new IsForumNameUnique { SiteId = command.SiteId, CategoryId = command.CategoryId, Name = command.Name })).ReturnsAsync(false);
             
-            var sut = new CreateForumValidator(sender.Object);
+            var sut = new CreateForumValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
         }
@@ -57,9 +57,9 @@ namespace Atles.Domain.Tests.Forums.Validators
         {
             var command = Fixture.Build<CreateForum>().With(x => x.Slug, string.Empty).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreateForumValidator(sender.Object);
+            var sut = new CreateForumValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
         }
@@ -69,9 +69,9 @@ namespace Atles.Domain.Tests.Forums.Validators
         {
             var command = Fixture.Build<CreateForum>().With(x => x.Slug, new string('*', 51)).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreateForumValidator(sender.Object);
+            var sut = new CreateForumValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
         }
@@ -81,10 +81,10 @@ namespace Atles.Domain.Tests.Forums.Validators
         {
             var command = Fixture.Create<CreateForum>();
 
-            var sender = new Mock<ISender>();
-            sender.Setup(x => x.Send(new IsForumSlugUnique { SiteId = command.SiteId, Slug = command.Slug })).ReturnsAsync(false);
+            var dispatcher = new Mock<IDispatcher>();
+            dispatcher.Setup(x => x.Get(new IsForumSlugUnique { SiteId = command.SiteId, Slug = command.Slug })).ReturnsAsync(false);
 
-            var sut = new CreateForumValidator(sender.Object);
+            var sut = new CreateForumValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
         }
@@ -94,9 +94,9 @@ namespace Atles.Domain.Tests.Forums.Validators
         {
             var command = Fixture.Build<CreateForum>().With(x => x.Description, new string('*', 201)).Create();
 
-            var sender = new Mock<ISender>();
+            var dispatcher = new Mock<IDispatcher>();
 
-            var sut = new CreateForumValidator(sender.Object);
+            var sut = new CreateForumValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.Description, command);
         }
@@ -109,9 +109,9 @@ namespace Atles.Domain.Tests.Forums.Validators
             var querySiteId = Guid.NewGuid();
             var queryPermissionSetId = Guid.NewGuid();
 
-            var sender = new Mock<ISender>();
-            sender
-                .Setup(x => x.Send(It.IsAny<IsPermissionSetValid>()))
+            var dispatcher = new Mock<IDispatcher>();
+            dispatcher
+                .Setup(x => x.Get(It.IsAny<IsPermissionSetValid>()))
                 .Callback<IQuery<bool>>(q =>
                 {
                     var query = q as IsPermissionSetValid;
@@ -120,7 +120,7 @@ namespace Atles.Domain.Tests.Forums.Validators
                 })
                 .ReturnsAsync(false);
 
-            var sut = new CreateForumValidator(sender.Object);
+            var sut = new CreateForumValidator(dispatcher.Object);
 
             sut.ShouldHaveValidationErrorFor(x => x.PermissionSetId, command);
             Assert.AreEqual(command.SiteId, querySiteId);

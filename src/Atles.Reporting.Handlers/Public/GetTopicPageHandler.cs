@@ -15,12 +15,12 @@ namespace Atles.Reporting.Handlers.Public
     public class GetTopicPageHandler : IQueryHandler<GetTopicPage, TopicPageModel>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
         private readonly IGravatarService _gravatarService;
-        public GetTopicPageHandler(AtlesDbContext dbContext, ISender sender, IGravatarService gravatarService)
+        public GetTopicPageHandler(AtlesDbContext dbContext, IDispatcher sender, IGravatarService gravatarService)
         {
             _dbContext = dbContext;
-            _sender = sender;
+            _dispatcher = sender;
             _gravatarService = gravatarService;
         }
 
@@ -64,7 +64,7 @@ namespace Atles.Reporting.Handlers.Public
                     Locked = topic.Locked,
                     HasAnswer = topic.HasAnswer
                 },
-                Replies = await _sender.Send(new GetTopicPageReplies { TopicId = topic.Id, Options = query.Options })
+                Replies = await _dispatcher.Get(new GetTopicPageReplies { TopicId = topic.Id, Options = query.Options })
             };
 
             if (topic.HasAnswer)

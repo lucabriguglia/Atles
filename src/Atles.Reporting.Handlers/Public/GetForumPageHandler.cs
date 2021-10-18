@@ -12,12 +12,12 @@ namespace Atles.Reporting.Handlers.Public
     public class GetForumPageHandler : IQueryHandler<GetForumPage, ForumPageModel>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
-        public GetForumPageHandler(AtlesDbContext dbContext, ISender sender)
+        public GetForumPageHandler(AtlesDbContext dbContext, IDispatcher sender)
         {
             _dbContext = dbContext;
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         public async Task<ForumPageModel> Handle(GetForumPage query)
@@ -43,7 +43,7 @@ namespace Atles.Reporting.Handlers.Public
                     Description = forum.Description,
                     Slug = forum.Slug
                 },
-                Topics = await _sender.Send(new GetForumPageTopics { ForumId = forum.Id, Options = query.Options })
+                Topics = await _dispatcher.Get(new GetForumPageTopics { ForumId = forum.Id, Options = query.Options })
             };
 
             return result;

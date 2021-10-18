@@ -10,11 +10,11 @@ namespace Atles.Server.Controllers.Admin
     [Route("api/admin/sites")]
     public class SitesController : AdminControllerBase
     {
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
-        public SitesController(ISender sender) : base(sender)
+        public SitesController(IDispatcher sender) : base(sender)
         {
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpGet("settings")]
@@ -22,7 +22,7 @@ namespace Atles.Server.Controllers.Admin
         {
             var site = await CurrentSite();
 
-            var result = await _sender.Send(new GetSettingsPageModel { SiteId = site.Id });
+            var result = await _dispatcher.Get(new GetSettingsPageModel { SiteId = site.Id });
 
             if (result == null)
             {
@@ -51,7 +51,7 @@ namespace Atles.Server.Controllers.Admin
                 HeadScript = model.Site.HeadScript
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }

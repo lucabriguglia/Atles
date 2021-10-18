@@ -13,7 +13,7 @@
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
-    <PackageReference Include="OpenCqrs" Version="1.0.2-Beta" />
+    <PackageReference Include="OpenCqrs" Version="1.0.4-Beta" />
   </ItemGroup>
 
   <ItemGroup>

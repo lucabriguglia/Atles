@@ -23,17 +23,17 @@ namespace Atles.Server.Controllers.Public
         private readonly ISecurityService _securityService;
         private readonly AtlesDbContext _dbContext;
         private readonly ILogger<RepliesController> _logger;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
         public RepliesController(ISecurityService securityService, 
             AtlesDbContext dbContext, 
             ILogger<RepliesController> logger,
-            ISender sender) : base(sender)
+            IDispatcher sender) : base(sender)
         {
             _securityService = securityService;
             _dbContext = dbContext;
             _logger = logger;
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpPost("create-reply")]
@@ -42,7 +42,7 @@ namespace Atles.Server.Controllers.Public
             var site = await CurrentSite();
             var user = await CurrentUser();
 
-            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
             var canReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !user.IsSuspended;
 
             if (!canReply)
@@ -68,7 +68,7 @@ namespace Atles.Server.Controllers.Public
                 UserId = user.Id
             };
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -100,7 +100,7 @@ namespace Atles.Server.Controllers.Public
                 .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 
-            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
             var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
             var authorized = (canEdit && replyUserId == user.Id || canModerate) && !user.IsSuspended;
@@ -119,7 +119,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -150,7 +150,7 @@ namespace Atles.Server.Controllers.Public
                 .Select(x => x.Topic.CreatedBy)
                 .FirstOrDefaultAsync();
 
-            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = forumId });
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = forumId });
             var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
             var authorized = (canEdit && topicUserId == user.Id || canModerate) && !user.IsSuspended;
@@ -169,7 +169,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }
@@ -199,7 +199,7 @@ namespace Atles.Server.Controllers.Public
                 .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 
-            var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, ForumId = forumId });
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = forumId });
             var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
             var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
             var authorized = (canDelete && replyUserId == user.Id || canModerate) && !user.IsSuspended;
@@ -218,7 +218,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            await _sender.Send(command);
+            await _dispatcher.Send(command);
 
             return Ok();
         }

@@ -20,13 +20,13 @@ namespace Atles.Server.Controllers.Public
     public class IndexController : SiteControllerBase
     {
         private readonly ISecurityService _securityService;
-        private readonly ISender _sender;
+        private readonly IDispatcher _dispatcher;
 
         public IndexController(ISecurityService securityService,
-            ISender sender) : base(sender)
+            IDispatcher sender) : base(sender)
         {
             _securityService = securityService;
-            _sender = sender;
+            _dispatcher = sender;
         }
 
         [HttpGet("index-model")]
@@ -34,7 +34,7 @@ namespace Atles.Server.Controllers.Public
         {
             var site = await CurrentSite();
 
-            var modelToFilter = await _sender.Send(new GetIndexPage { SiteId = site.Id });
+            var modelToFilter = await _dispatcher.Get(new GetIndexPage { SiteId = site.Id });
 
             var filteredModel = await GetFilteredIndexModel(site.Id, modelToFilter);
 
@@ -52,7 +52,7 @@ namespace Atles.Server.Controllers.Public
                 foreach (var forumToFilter in categoryToFilter.Forums)
                 {
                     var permissionSetId = forumToFilter.PermissionSetId ?? categoryToFilter.PermissionSetId;
-                    var permissions = await _sender.Send(new GetPermissions { SiteId = siteId, PermissionSetId = permissionSetId });
+                    var permissions = await _dispatcher.Get(new GetPermissions { SiteId = siteId, PermissionSetId = permissionSetId });
                     var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
                     if (!canViewForum) continue;
                     var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
@@ -111,7 +111,7 @@ namespace Atles.Server.Controllers.Public
 
             foreach (var forum in currentForums)
             {
-                var permissions = await _sender.Send(new GetPermissions { SiteId = site.Id, PermissionSetId = forum.PermissionSetId });
+                var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, PermissionSetId = forum.PermissionSetId });
                 var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
                 var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
                 var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions);
@@ -121,7 +121,7 @@ namespace Atles.Server.Controllers.Public
                 }
             }
 
-            var model = await _sender.Send(new GetSearchPage 
+            var model = await _dispatcher.Get(new GetSearchPage 
             { 
                 SiteId = site.Id,
                 AccessibleForumIds = accessibleForumIds, 
