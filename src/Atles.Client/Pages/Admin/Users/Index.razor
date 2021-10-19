@@ -105,9 +105,13 @@ else
                                 {
                                     <button type="button" class="btn btn-warning mb-1 mr-1" data-toggle="modal" data-target="#confirm-modal-suspend" @onclick="() => SetSuspendId(item.Id)">@Loc["Suspend"]</button>
                                 }
-                                @if (item.Status == UserStatusType.Suspended)
+                                else if (item.Status == UserStatusType.Suspended)
                                 {
                                     <button type="button" class="btn btn-warning mb-1 mr-1" @onclick="@(async () => await ReinstateAsync(item.Id))">@Loc["Reinstate"]</button>
+                                }
+                                else
+                                {
+                                    <button type="button" class="btn btn-warning mb-1 disabled">@Loc["Suspend"]</button>
                                 }
                                 @if (item.Status != UserStatusType.Deleted)
                                 {
@@ -115,7 +119,7 @@ else
                                 }
                                 else
                                 {
-                                    <button type="button" class="btn btn-warning mb-1 disabled">@Loc["Suspend"]</button>
+
                                     <button type="button" class="btn btn-danger mb-1 disabled">@Loc["Delete"]</button>
                                 }
                             </td>
