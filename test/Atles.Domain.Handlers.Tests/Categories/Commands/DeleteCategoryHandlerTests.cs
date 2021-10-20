@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Data;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
@@ -16,6 +17,16 @@ namespace Atles.Domain.Handlers.Tests.Categories.Commands
     [TestFixture]
     public class DeleteCategoryHandlerTests : TestFixtureBase
     {
+        [Test]
+        public void Should_throw_data_exption_when_category_not_found()
+        {
+            using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
+            {
+                var sut = new DeleteCategoryHandler(dbContext, new Mock<ICacheManager>().Object);
+                Assert.ThrowsAsync<DataException>(async () => await sut.Handle(Fixture.Create<DeleteCategory>()));
+            }
+        }
+
         [Test]
         public async Task Should_delete_category_and_reorder_other_categories_and_add_event()
         {
