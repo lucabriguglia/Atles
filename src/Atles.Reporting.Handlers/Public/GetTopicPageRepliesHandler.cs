@@ -26,6 +26,7 @@ namespace Atles.Reporting.Handlers.Public
         public async Task<PaginatedData<TopicPageModel.ReplyModel>> Handle(GetTopicPageReplies query)
         {
             var repliesQuery = _dbContext.Posts
+                .Include(x => x.PostReactionCounts)
                 .Include(x => x.CreatedByUser)
                 .Where(x =>
                     x.TopicId == query.TopicId &&
@@ -53,7 +54,8 @@ namespace Atles.Reporting.Handlers.Public
                 UserDisplayName = reply.CreatedByUser.DisplayName,
                 TimeStamp = reply.CreatedOn,
                 GravatarHash = _gravatarService.GenerateEmailHash(reply.CreatedByUser.Email),
-                IsAnswer = reply.IsAnswer
+                IsAnswer = reply.IsAnswer,
+                Reactions = reply.PostReactionCounts.Select(x => new TopicPageModel.ReactionModel { Type = x.Type, Count = x.Count }).ToList()
             }).ToList();
 
             var totalRecords = await repliesQuery.CountAsync();

@@ -27,6 +27,7 @@ namespace Atles.Reporting.Handlers.Public
         public async Task<TopicPageModel> Handle(GetTopicPage query)
         {
             var topic = await _dbContext.Posts
+                .Include(x => x.PostReactionCounts)
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.CreatedByUser)
                 .FirstOrDefaultAsync(x =>
@@ -62,7 +63,8 @@ namespace Atles.Reporting.Handlers.Public
                     GravatarHash = _gravatarService.GenerateEmailHash(topic.CreatedByUser.Email),
                     Pinned = topic.Pinned,
                     Locked = topic.Locked,
-                    HasAnswer = topic.HasAnswer
+                    HasAnswer = topic.HasAnswer,
+                    Reactions = topic.PostReactionCounts.Select(x => new TopicPageModel.ReactionModel { Type = x.Type, Count = x.Count }).ToList()
                 },
                 Replies = await _dispatcher.Get(new GetTopicPageReplies { TopicId = topic.Id, Options = query.Options })
             };

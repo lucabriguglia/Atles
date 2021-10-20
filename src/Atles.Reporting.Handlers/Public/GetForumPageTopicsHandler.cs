@@ -27,6 +27,7 @@ namespace Atles.Reporting.Handlers.Public
         public async Task<PaginatedData<ForumPageModel.TopicModel>> Handle(GetForumPageTopics query)
         {
             var topicsQuery = _dbContext.Posts
+                .Include(x => x.PostReactionCounts)
                 .Include(x => x.CreatedByUser)
                 .Include(x => x.LastReply).ThenInclude(x => x.CreatedByUser)
                 .Where(x =>
@@ -62,7 +63,8 @@ namespace Atles.Reporting.Handlers.Public
                 MostRecentTimeStamp = topic.LastReply?.CreatedOn ?? topic.CreatedOn,
                 Pinned = topic.Pinned,
                 Locked = topic.Locked,
-                HasAnswer = topic.HasAnswer
+                HasAnswer = topic.HasAnswer,
+                Reactions = topic.PostReactionCounts.Select(x => new ForumPageModel.ReactionModel { Type = x.Type, Count = x.Count }).ToList()
             })
             .ToList();
 
