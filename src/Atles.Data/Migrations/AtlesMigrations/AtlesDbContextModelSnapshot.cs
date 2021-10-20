@@ -172,7 +172,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.ToTable("PermissionSet");
                 });
 
-            modelBuilder.Entity("Atles.Domain.PostLikes.PostLike", b =>
+            modelBuilder.Entity("Atles.Domain.PostReactions.PostReaction", b =>
                 {
                     b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
@@ -180,17 +180,17 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Property<Guid>("UserId")
                         .HasColumnType("uniqueidentifier");
 
-                    b.Property<bool>("Like")
-                        .HasColumnType("bit");
-
                     b.Property<DateTime>("TimeStamp")
                         .HasColumnType("datetime2");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
 
                     b.HasKey("PostId", "UserId");
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("PostLike");
+                    b.ToTable("PostReaction");
                 });
 
             modelBuilder.Entity("Atles.Domain.Posts.Post", b =>
@@ -208,9 +208,6 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("DislikesCount")
-                        .HasColumnType("int");
-
                     b.Property<Guid>("ForumId")
                         .HasColumnType("uniqueidentifier");
 
@@ -222,9 +219,6 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
                     b.Property<Guid?>("LastReplyId")
                         .HasColumnType("uniqueidentifier");
-
-                    b.Property<int>("LikesCount")
-                        .HasColumnType("int");
 
                     b.Property<bool>("Locked")
                         .HasColumnType("bit");
@@ -266,6 +260,22 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.HasIndex("TopicId");
 
                     b.ToTable("Post");
+                });
+
+            modelBuilder.Entity("Atles.Domain.Posts.PostReactionCount", b =>
+                {
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Count")
+                        .HasColumnType("int");
+
+                    b.HasKey("PostId", "Type");
+
+                    b.ToTable("PostReactionCount");
                 });
 
             modelBuilder.Entity("Atles.Domain.Sites.Site", b =>
@@ -405,16 +415,16 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Navigation("PermissionSet");
                 });
 
-            modelBuilder.Entity("Atles.Domain.PostLikes.PostLike", b =>
+            modelBuilder.Entity("Atles.Domain.PostReactions.PostReaction", b =>
                 {
                     b.HasOne("Atles.Domain.Posts.Post", "Post")
-                        .WithMany("PostLikes")
+                        .WithMany("PostReactions")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
                     b.HasOne("Atles.Domain.Users.User", "User")
-                        .WithMany("PostLikes")
+                        .WithMany("PostReactions")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -461,6 +471,17 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Navigation("Topic");
                 });
 
+            modelBuilder.Entity("Atles.Domain.Posts.PostReactionCount", b =>
+                {
+                    b.HasOne("Atles.Domain.Posts.Post", "Post")
+                        .WithMany("PostReactionCounts")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+                });
+
             modelBuilder.Entity("Atles.Domain.Categories.Category", b =>
                 {
                     b.Navigation("Forums");
@@ -482,7 +503,9 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
             modelBuilder.Entity("Atles.Domain.Posts.Post", b =>
                 {
-                    b.Navigation("PostLikes");
+                    b.Navigation("PostReactionCounts");
+
+                    b.Navigation("PostReactions");
                 });
 
             modelBuilder.Entity("Atles.Domain.Sites.Site", b =>
@@ -494,7 +517,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 {
                     b.Navigation("Events");
 
-                    b.Navigation("PostLikes");
+                    b.Navigation("PostReactions");
 
                     b.Navigation("Posts");
                 });

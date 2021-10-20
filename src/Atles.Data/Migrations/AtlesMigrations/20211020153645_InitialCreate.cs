@@ -178,8 +178,6 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     Pinned = table.Column<bool>(type: "bit", nullable: false),
                     Locked = table.Column<bool>(type: "bit", nullable: false),
                     IsAnswer = table.Column<bool>(type: "bit", nullable: false),
-                    LikesCount = table.Column<int>(type: "int", nullable: false),
-                    DislikesCount = table.Column<int>(type: "int", nullable: false),
                     HasAnswer = table.Column<bool>(type: "bit", nullable: false),
                     TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
                     LastReplyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
@@ -218,26 +216,44 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PostLike",
+                name: "PostReaction",
                 columns: table => new
                 {
                     PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    Like = table.Column<bool>(type: "bit", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostLike", x => new { x.PostId, x.UserId });
+                    table.PrimaryKey("PK_PostReaction", x => new { x.PostId, x.UserId });
                     table.ForeignKey(
-                        name: "FK_PostLike_Post_PostId",
+                        name: "FK_PostReaction_Post_PostId",
                         column: x => x.PostId,
                         principalTable: "Post",
                         principalColumn: "Id");
                     table.ForeignKey(
-                        name: "FK_PostLike_User_UserId",
+                        name: "FK_PostReaction_User_UserId",
                         column: x => x.UserId,
                         principalTable: "User",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostReactionCount",
+                columns: table => new
+                {
+                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Count = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostReactionCount", x => new { x.PostId, x.Type });
+                    table.ForeignKey(
+                        name: "FK_PostReactionCount_Post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Post",
                         principalColumn: "Id");
                 });
 
@@ -297,8 +313,8 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 column: "TopicId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_PostLike_UserId",
-                table: "PostLike",
+                name: "IX_PostReaction_UserId",
+                table: "PostReaction",
                 column: "UserId");
 
             migrationBuilder.AddForeignKey(
@@ -347,7 +363,10 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "Permission");
 
             migrationBuilder.DropTable(
-                name: "PostLike");
+                name: "PostReaction");
+
+            migrationBuilder.DropTable(
+                name: "PostReactionCount");
 
             migrationBuilder.DropTable(
                 name: "PermissionSet");
