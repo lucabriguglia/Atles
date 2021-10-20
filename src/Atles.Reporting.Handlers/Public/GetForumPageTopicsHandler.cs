@@ -53,6 +53,8 @@ namespace Atles.Reporting.Handlers.Public
                 Title = topic.Title,
                 Slug = topic.Slug,
                 TotalReplies = topic.RepliesCount,
+                TotalLikes = topic.LikesCount,
+                TotalDislikes = topic.DislikesCount,
                 UserId = topic.CreatedByUser.Id,
                 UserDisplayName = topic.CreatedByUser.DisplayName,
                 TimeStamp = topic.CreatedOn,

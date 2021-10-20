@@ -53,7 +53,9 @@ namespace Atles.Reporting.Handlers.Public
                 UserDisplayName = reply.CreatedByUser.DisplayName,
                 TimeStamp = reply.CreatedOn,
                 GravatarHash = _gravatarService.GenerateEmailHash(reply.CreatedByUser.Email),
-                IsAnswer = reply.IsAnswer
+                IsAnswer = reply.IsAnswer,
+                TotalLikes = reply.LikesCount,
+                TotalDislikes = reply.DislikesCount
             }).ToList();
 
             var totalRecords = await repliesQuery.CountAsync();

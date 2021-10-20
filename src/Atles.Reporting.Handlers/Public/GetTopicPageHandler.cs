@@ -62,7 +62,9 @@ namespace Atles.Reporting.Handlers.Public
                     GravatarHash = _gravatarService.GenerateEmailHash(topic.CreatedByUser.Email),
                     Pinned = topic.Pinned,
                     Locked = topic.Locked,
-                    HasAnswer = topic.HasAnswer
+                    HasAnswer = topic.HasAnswer,
+                    TotalLikes = topic.LikesCount,
+                    TotalDislikes = topic.DislikesCount
                 },
                 Replies = await _dispatcher.Get(new GetTopicPageReplies { TopicId = topic.Id, Options = query.Options })
             };
