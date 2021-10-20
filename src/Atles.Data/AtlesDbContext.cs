@@ -3,6 +3,7 @@ using Atles.Domain;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
 using Atles.Domain.PermissionSets;
+using Atles.Domain.PostLikes;
 using Atles.Domain.Posts;
 using Atles.Domain.Sites;
 using Atles.Domain.Users;
@@ -30,6 +31,7 @@ namespace Atles.Data
         public DbSet<User> Users { get; set; }
         public DbSet<PermissionSet> PermissionSets { get; set; }
         public DbSet<Permission> Permissions { get; set; }
+        public DbSet<PostLike> PostLikes { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Site> Sites { get; set; }
     }

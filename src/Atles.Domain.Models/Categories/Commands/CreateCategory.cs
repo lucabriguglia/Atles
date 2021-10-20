@@ -1,4 +1,5 @@
 ﻿using Atles.Infrastructure.Commands;
+using Docs.Attributes;
 using System;
 
 namespace Atles.Domain.Categories.Commands
@@ -6,6 +7,7 @@ namespace Atles.Domain.Categories.Commands
     /// <summary>
     /// Request that creates a new Forum Category.
     /// </summary>
+    [DocRequest(typeof(Category))]
     public class CreateCategory : CommandBase
     {
         /// <summary>

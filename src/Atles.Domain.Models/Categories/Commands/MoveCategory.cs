@@ -1,11 +1,12 @@
 ﻿using Atles.Infrastructure.Commands;
-using System;
+using Docs.Attributes;
 
 namespace Atles.Domain.Categories.Commands
 {
     /// <summary>
     /// Request that changes the sort order of a forum category.
     /// </summary>
+    [DocRequest(typeof(Category))]
     public class MoveCategory : CommandBase
     {
         /// <summary>

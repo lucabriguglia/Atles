@@ -3,13 +3,13 @@ using Atles.Domain.Posts;
 using AutoFixture;
 using NUnit.Framework;
 
-namespace Atles.Domain.Tests.Topics
+namespace Atles.Domain.Models.Tests
 {
     [TestFixture]
     public class TopicTests : TestFixtureBase
     {
         [Test]
-        public void New()
+        public void Should_create_new_topic()
         {
             var forumId = Guid.NewGuid();
             var userId = Guid.NewGuid();
@@ -29,7 +29,7 @@ namespace Atles.Domain.Tests.Topics
         }
 
         [Test]
-        public void New_passing_id()
+        public void Should_create_new_topic_with_id()
         {
             var id = Guid.NewGuid();
             var forumId = Guid.NewGuid();
@@ -51,7 +51,7 @@ namespace Atles.Domain.Tests.Topics
         }
 
         [Test]
-        public void Update_details()
+        public void Should_update_topic_details()
         {
             var sut = Fixture.Create<Post>();
 
@@ -158,16 +158,6 @@ namespace Atles.Domain.Tests.Topics
             sut.SetAsAnswered(hasAnswer);
 
             Assert.AreEqual(hasAnswer, sut.HasAnswer, nameof(sut.HasAnswer));
-        }
-
-        [Test]
-        public void Delete()
-        {
-            var sut = Fixture.Create<Post>();
-
-            sut.Delete();
-
-            Assert.AreEqual(PostStatusType.Deleted, sut.Status, nameof(sut.Status));
         }
     }
 }

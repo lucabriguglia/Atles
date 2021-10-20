@@ -905,6 +905,11 @@
             Reference to the user who last updated the post.
             </summary>
         </member>
+        <member name="P:Atles.Domain.Posts.Post.PostLikes">
+            <summary>
+            Reference to post likes.
+            </summary>
+        </member>
         <member name="M:Atles.Domain.Posts.Post.#ctor">
             <summary>
             Creates an empty forum post.
@@ -990,6 +995,28 @@
         <member name="M:Atles.Domain.Posts.Post.DecreaseRepliesCount">
             <summary>
             Decreases the number of replies of the topic by 1.
+            If the resulting number is less than zero, the value is set to zero.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Posts.Post.IncreaseLikesCount">
+            <summary>
+            Increases the number of likes by 1.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Posts.Post.DecreaseLikesCount">
+            <summary>
+            Decreases the number of likes by 1.
+            If the resulting number is less than zero, the value is set to zero.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Posts.Post.IncreaseDislikesCount">
+            <summary>
+            Increases the number of dislikes by 1.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Posts.Post.DecreaseDislikesCount">
+            <summary>
+            Decreases the number of dislikes by 1.
             If the resulting number is less than zero, the value is set to zero.
             </summary>
         </member>
@@ -1286,6 +1313,11 @@
         <member name="P:Atles.Domain.Users.User.Posts">
             <summary>
             The list of posts created by the user.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Users.User.PostLikes">
+            <summary>
+            Reference to post likes.
             </summary>
         </member>
         <member name="P:Atles.Domain.Users.User.Events">

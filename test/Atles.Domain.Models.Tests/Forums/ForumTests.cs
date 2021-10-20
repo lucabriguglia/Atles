@@ -3,7 +3,7 @@ using Atles.Domain.Forums;
 using AutoFixture;
 using NUnit.Framework;
 
-namespace Atles.Domain.Tests.Forums
+namespace Atles.Domain.Models.Tests
 {
     [TestFixture]
     public class ForumTests : TestFixtureBase

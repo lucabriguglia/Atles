@@ -4,24 +4,22 @@ using Atles.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace Atles.Data.Migrations.AtlesMigrations
 {
     [DbContext(typeof(AtlesDbContext))]
-    [Migration("20200910120038_InitialCreate")]
-    partial class InitialCreate
+    partial class AtlesDbContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "3.1.6")
                 .HasAnnotation("Relational:MaxIdentifierLength", 128)
+                .HasAnnotation("ProductVersion", "5.0.11")
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-            modelBuilder.Entity("Atlas.Domain.Categories.Category", b =>
+            modelBuilder.Entity("Atles.Domain.Categories.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -57,7 +55,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.ToTable("Category");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Event", b =>
+            modelBuilder.Entity("Atles.Domain.Event", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -91,7 +89,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.ToTable("Event");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Forums.Forum", b =>
+            modelBuilder.Entity("Atles.Domain.Forums.Forum", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -138,7 +136,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.ToTable("Forum");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.PermissionSets.Permission", b =>
+            modelBuilder.Entity("Atles.Domain.PermissionSets.Permission", b =>
                 {
                     b.Property<Guid>("PermissionSetId")
                         .HasColumnType("uniqueidentifier");
@@ -154,7 +152,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.ToTable("Permission");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.PermissionSets.PermissionSet", b =>
+            modelBuilder.Entity("Atles.Domain.PermissionSets.PermissionSet", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -174,7 +172,28 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.ToTable("PermissionSet");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Posts.Post", b =>
+            modelBuilder.Entity("Atles.Domain.PostLikes.PostLike", b =>
+                {
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<bool>("Like")
+                        .HasColumnType("bit");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("PostId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PostLike");
+                });
+
+            modelBuilder.Entity("Atles.Domain.Posts.Post", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -189,6 +208,9 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Property<DateTime>("CreatedOn")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("DislikesCount")
+                        .HasColumnType("int");
+
                     b.Property<Guid>("ForumId")
                         .HasColumnType("uniqueidentifier");
 
@@ -200,6 +222,9 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
                     b.Property<Guid?>("LastReplyId")
                         .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("LikesCount")
+                        .HasColumnType("int");
 
                     b.Property<bool>("Locked")
                         .HasColumnType("bit");
@@ -243,7 +268,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.ToTable("Post");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Sites.Site", b =>
+            modelBuilder.Entity("Atles.Domain.Sites.Site", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -284,7 +309,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.ToTable("Site");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Users.User", b =>
+            modelBuilder.Entity("Atles.Domain.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -316,81 +341,162 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.ToTable("User");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Categories.Category", b =>
+            modelBuilder.Entity("Atles.Domain.Categories.Category", b =>
                 {
-                    b.HasOne("Atlas.Domain.PermissionSets.PermissionSet", "PermissionSet")
+                    b.HasOne("Atles.Domain.PermissionSets.PermissionSet", "PermissionSet")
                         .WithMany("Categories")
                         .HasForeignKey("PermissionSetId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atlas.Domain.Sites.Site", "Site")
+                    b.HasOne("Atles.Domain.Sites.Site", "Site")
                         .WithMany("Categories")
                         .HasForeignKey("SiteId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("PermissionSet");
+
+                    b.Navigation("Site");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Event", b =>
+            modelBuilder.Entity("Atles.Domain.Event", b =>
                 {
-                    b.HasOne("Atlas.Domain.Users.User", "User")
+                    b.HasOne("Atles.Domain.Users.User", "User")
                         .WithMany("Events")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Forums.Forum", b =>
+            modelBuilder.Entity("Atles.Domain.Forums.Forum", b =>
                 {
-                    b.HasOne("Atlas.Domain.Categories.Category", "Category")
+                    b.HasOne("Atles.Domain.Categories.Category", "Category")
                         .WithMany("Forums")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atlas.Domain.Posts.Post", "LastPost")
+                    b.HasOne("Atles.Domain.Posts.Post", "LastPost")
                         .WithMany()
                         .HasForeignKey("LastPostId");
 
-                    b.HasOne("Atlas.Domain.PermissionSets.PermissionSet", "PermissionSet")
+                    b.HasOne("Atles.Domain.PermissionSets.PermissionSet", "PermissionSet")
                         .WithMany("Forums")
                         .HasForeignKey("PermissionSetId")
                         .OnDelete(DeleteBehavior.NoAction);
+
+                    b.Navigation("Category");
+
+                    b.Navigation("LastPost");
+
+                    b.Navigation("PermissionSet");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.PermissionSets.Permission", b =>
+            modelBuilder.Entity("Atles.Domain.PermissionSets.Permission", b =>
                 {
-                    b.HasOne("Atlas.Domain.PermissionSets.PermissionSet", "PermissionSet")
+                    b.HasOne("Atles.Domain.PermissionSets.PermissionSet", "PermissionSet")
                         .WithMany("Permissions")
                         .HasForeignKey("PermissionSetId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
+
+                    b.Navigation("PermissionSet");
                 });
 
-            modelBuilder.Entity("Atlas.Domain.Posts.Post", b =>
+            modelBuilder.Entity("Atles.Domain.PostLikes.PostLike", b =>
                 {
-                    b.HasOne("Atlas.Domain.Users.User", "CreatedByUser")
+                    b.HasOne("Atles.Domain.Posts.Post", "Post")
+                        .WithMany("PostLikes")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Atles.Domain.Users.User", "User")
+                        .WithMany("PostLikes")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Atles.Domain.Posts.Post", b =>
+                {
+                    b.HasOne("Atles.Domain.Users.User", "CreatedByUser")
                         .WithMany("Posts")
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atlas.Domain.Forums.Forum", "Forum")
+                    b.HasOne("Atles.Domain.Forums.Forum", "Forum")
                         .WithMany("Posts")
                         .HasForeignKey("ForumId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atlas.Domain.Posts.Post", "LastReply")
+                    b.HasOne("Atles.Domain.Posts.Post", "LastReply")
                         .WithMany()
                         .HasForeignKey("LastReplyId");
 
-                    b.HasOne("Atlas.Domain.Users.User", "ModifiedByUser")
+                    b.HasOne("Atles.Domain.Users.User", "ModifiedByUser")
                         .WithMany()
                         .HasForeignKey("ModifiedBy");
 
-                    b.HasOne("Atlas.Domain.Posts.Post", "Topic")
+                    b.HasOne("Atles.Domain.Posts.Post", "Topic")
                         .WithMany()
                         .HasForeignKey("TopicId");
+
+                    b.Navigation("CreatedByUser");
+
+                    b.Navigation("Forum");
+
+                    b.Navigation("LastReply");
+
+                    b.Navigation("ModifiedByUser");
+
+                    b.Navigation("Topic");
+                });
+
+            modelBuilder.Entity("Atles.Domain.Categories.Category", b =>
+                {
+                    b.Navigation("Forums");
+                });
+
+            modelBuilder.Entity("Atles.Domain.Forums.Forum", b =>
+                {
+                    b.Navigation("Posts");
+                });
+
+            modelBuilder.Entity("Atles.Domain.PermissionSets.PermissionSet", b =>
+                {
+                    b.Navigation("Categories");
+
+                    b.Navigation("Forums");
+
+                    b.Navigation("Permissions");
+                });
+
+            modelBuilder.Entity("Atles.Domain.Posts.Post", b =>
+                {
+                    b.Navigation("PostLikes");
+                });
+
+            modelBuilder.Entity("Atles.Domain.Sites.Site", b =>
+                {
+                    b.Navigation("Categories");
+                });
+
+            modelBuilder.Entity("Atles.Domain.Users.User", b =>
+                {
+                    b.Navigation("Events");
+
+                    b.Navigation("PostLikes");
+
+                    b.Navigation("Posts");
                 });
 #pragma warning restore 612, 618
         }

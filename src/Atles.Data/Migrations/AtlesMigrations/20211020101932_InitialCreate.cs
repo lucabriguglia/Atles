@@ -11,10 +11,10 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "PermissionSet",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    SiteId = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Status = table.Column<int>(nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SiteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -25,17 +25,17 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "Site",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Title = table.Column<string>(nullable: true),
-                    PublicTheme = table.Column<string>(nullable: true),
-                    PublicCss = table.Column<string>(nullable: true),
-                    AdminTheme = table.Column<string>(nullable: true),
-                    AdminCss = table.Column<string>(nullable: true),
-                    Language = table.Column<string>(nullable: true),
-                    Privacy = table.Column<string>(nullable: true),
-                    Terms = table.Column<string>(nullable: true),
-                    HeadScript = table.Column<string>(nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PublicTheme = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    PublicCss = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdminTheme = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AdminCss = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Language = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Privacy = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Terms = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    HeadScript = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -46,14 +46,14 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "User",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    IdentityUserId = table.Column<string>(nullable: true),
-                    Email = table.Column<string>(nullable: true),
-                    DisplayName = table.Column<string>(nullable: true),
-                    TopicsCount = table.Column<int>(nullable: false),
-                    RepliesCount = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    TimeStamp = table.Column<DateTime>(nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    IdentityUserId = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Email = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TopicsCount = table.Column<int>(type: "int", nullable: false),
+                    RepliesCount = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -64,9 +64,9 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "Permission",
                 columns: table => new
                 {
-                    PermissionSetId = table.Column<Guid>(nullable: false),
-                    Type = table.Column<int>(nullable: false),
-                    RoleId = table.Column<string>(nullable: false)
+                    PermissionSetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -82,14 +82,14 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "Category",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    SiteId = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    SortOrder = table.Column<int>(nullable: false),
-                    TopicsCount = table.Column<int>(nullable: false),
-                    RepliesCount = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    PermissionSetId = table.Column<Guid>(nullable: false)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    SiteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    TopicsCount = table.Column<int>(type: "int", nullable: false),
+                    RepliesCount = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    PermissionSetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -110,14 +110,14 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "Event",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    SiteId = table.Column<Guid>(nullable: false),
-                    TimeStamp = table.Column<DateTime>(nullable: false),
-                    TargetId = table.Column<Guid>(nullable: false),
-                    TargetType = table.Column<string>(nullable: true),
-                    Type = table.Column<string>(nullable: true),
-                    Data = table.Column<string>(nullable: true),
-                    UserId = table.Column<Guid>(nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TargetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TargetType = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SiteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -133,17 +133,17 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "Forum",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    CategoryId = table.Column<Guid>(nullable: false),
-                    Name = table.Column<string>(nullable: true),
-                    Slug = table.Column<string>(nullable: true),
-                    Description = table.Column<string>(nullable: true),
-                    SortOrder = table.Column<int>(nullable: false),
-                    TopicsCount = table.Column<int>(nullable: false),
-                    RepliesCount = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    PermissionSetId = table.Column<Guid>(nullable: true),
-                    LastPostId = table.Column<Guid>(nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CategoryId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    TopicsCount = table.Column<int>(type: "int", nullable: false),
+                    RepliesCount = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    PermissionSetId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastPostId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -164,32 +164,29 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "Post",
                 columns: table => new
                 {
-                    Id = table.Column<Guid>(nullable: false),
-                    ForumId = table.Column<Guid>(nullable: false),
-                    Title = table.Column<string>(nullable: true),
-                    Slug = table.Column<string>(nullable: true),
-                    Content = table.Column<string>(nullable: true),
-                    RepliesCount = table.Column<int>(nullable: false),
-                    Status = table.Column<int>(nullable: false),
-                    CreatedBy = table.Column<Guid>(nullable: false),
-                    CreatedOn = table.Column<DateTime>(nullable: false),
-                    ModifiedBy = table.Column<Guid>(nullable: true),
-                    ModifiedOn = table.Column<DateTime>(nullable: true),
-                    Pinned = table.Column<bool>(nullable: false),
-                    Locked = table.Column<bool>(nullable: false),
-                    IsAnswer = table.Column<bool>(nullable: false),
-                    HasAnswer = table.Column<bool>(nullable: false),
-                    TopicId = table.Column<Guid>(nullable: true),
-                    LastReplyId = table.Column<Guid>(nullable: true)
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    ForumId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Title = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Slug = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Content = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    RepliesCount = table.Column<int>(type: "int", nullable: false),
+                    Status = table.Column<int>(type: "int", nullable: false),
+                    CreatedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    CreatedOn = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    ModifiedBy = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    ModifiedOn = table.Column<DateTime>(type: "datetime2", nullable: true),
+                    Pinned = table.Column<bool>(type: "bit", nullable: false),
+                    Locked = table.Column<bool>(type: "bit", nullable: false),
+                    IsAnswer = table.Column<bool>(type: "bit", nullable: false),
+                    LikesCount = table.Column<int>(type: "int", nullable: false),
+                    DislikesCount = table.Column<int>(type: "int", nullable: false),
+                    HasAnswer = table.Column<bool>(type: "bit", nullable: false),
+                    TopicId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
+                    LastReplyId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Post", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Post_User_CreatedBy",
-                        column: x => x.CreatedBy,
-                        principalTable: "User",
-                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Post_Forum_ForumId",
                         column: x => x.ForumId,
@@ -202,17 +199,46 @@ namespace Atles.Data.Migrations.AtlesMigrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_Post_User_ModifiedBy",
-                        column: x => x.ModifiedBy,
-                        principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
-                    table.ForeignKey(
                         name: "FK_Post_Post_TopicId",
                         column: x => x.TopicId,
                         principalTable: "Post",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_Post_User_CreatedBy",
+                        column: x => x.CreatedBy,
+                        principalTable: "User",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_Post_User_ModifiedBy",
+                        column: x => x.ModifiedBy,
+                        principalTable: "User",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "PostLike",
+                columns: table => new
+                {
+                    PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Like = table.Column<bool>(type: "bit", nullable: false),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_PostLike", x => new { x.PostId, x.UserId });
+                    table.ForeignKey(
+                        name: "FK_PostLike_Post_PostId",
+                        column: x => x.PostId,
+                        principalTable: "Post",
+                        principalColumn: "Id");
+                    table.ForeignKey(
+                        name: "FK_PostLike_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -270,6 +296,11 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 table: "Post",
                 column: "TopicId");
 
+            migrationBuilder.CreateIndex(
+                name: "IX_PostLike_UserId",
+                table: "PostLike",
+                column: "UserId");
+
             migrationBuilder.AddForeignKey(
                 name: "FK_Forum_Post_LastPostId",
                 table: "Forum",
@@ -314,6 +345,9 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
             migrationBuilder.DropTable(
                 name: "Permission");
+
+            migrationBuilder.DropTable(
+                name: "PostLike");
 
             migrationBuilder.DropTable(
                 name: "PermissionSet");

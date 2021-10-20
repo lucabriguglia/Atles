@@ -3,13 +3,13 @@ using Atles.Domain.Posts;
 using AutoFixture;
 using NUnit.Framework;
 
-namespace Atles.Domain.Tests.Replies
+namespace Atles.Domain.Models.Tests
 {
     [TestFixture]
     public class ReplyTests : TestFixtureBase
     {
         [Test]
-        public void New()
+        public void Should_create_new_reply()
         {
             var topicId = Guid.NewGuid();
             var forumId = Guid.NewGuid();
@@ -27,7 +27,7 @@ namespace Atles.Domain.Tests.Replies
         }
 
         [Test]
-        public void New_passing_id()
+        public void Should_create_new_reply_with_id()
         {
             var id = Guid.NewGuid();
             var topicId = Guid.NewGuid();
@@ -47,7 +47,7 @@ namespace Atles.Domain.Tests.Replies
         }
 
         [Test]
-        public void Update_details()
+        public void Should_update_reply_details()
         {
             var sut = Fixture.Create<Post>();
 
@@ -64,7 +64,7 @@ namespace Atles.Domain.Tests.Replies
 
         [TestCase(true)]
         [TestCase(false)]
-        public void SetAsAnswer(bool isAnswer)
+        public void Should_set_reply_as_answer(bool isAnswer)
         {
             var sut = Post.CreateReply(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "Content", PostStatusType.Published);
 
@@ -74,7 +74,7 @@ namespace Atles.Domain.Tests.Replies
         }
 
         [Test]
-        public void Delete()
+        public void Should_delete_post()
         {
             var sut = Fixture.Create<Post>();
 

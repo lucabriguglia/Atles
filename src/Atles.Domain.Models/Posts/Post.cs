@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Atles.Domain.Forums;
+using Atles.Domain.PostLikes;
 using Atles.Domain.Users;
 using Docs.Attributes;
 
@@ -97,6 +99,10 @@ namespace Atles.Domain.Posts
         /// </summary>
         public bool IsAnswer { get; private set; }
 
+        public int LikesCount { get; private set; }
+
+        public int DislikesCount { get; private set; }
+
         /// <summary>
         /// Value indicating whether the post has an answer or not.
         /// It is only used if the post is the initial message (topic).
@@ -142,7 +148,12 @@ namespace Atles.Domain.Posts
         /// Reference to the user who last updated the post.
         /// </summary>
         public virtual User ModifiedByUser { get; set; }
-        
+
+        /// <summary>
+        /// Reference to post likes.
+        /// </summary>
+        public virtual ICollection<PostLike> PostLikes { get; set; }
+
         /// <summary>
         /// Creates an empty forum post.
         /// </summary>
@@ -286,6 +297,50 @@ namespace Atles.Domain.Posts
             if (RepliesCount < 0)
             {
                 RepliesCount = 0;
+            }
+        }
+
+        /// <summary>
+        /// Increases the number of likes by 1.
+        /// </summary>
+        public void IncreaseLikesCount()
+        {
+            LikesCount += 1;
+        }
+
+        /// <summary>
+        /// Decreases the number of likes by 1.
+        /// If the resulting number is less than zero, the value is set to zero.
+        /// </summary>
+        public void DecreaseLikesCount()
+        {
+            LikesCount -= 1;
+
+            if (LikesCount < 0)
+            {
+                LikesCount = 0;
+            }
+        }
+
+        /// <summary>
+        /// Increases the number of dislikes by 1.
+        /// </summary>
+        public void IncreaseDislikesCount()
+        {
+            DislikesCount += 1;
+        }
+
+        /// <summary>
+        /// Decreases the number of dislikes by 1.
+        /// If the resulting number is less than zero, the value is set to zero.
+        /// </summary>
+        public void DecreaseDislikesCount()
+        {
+            DislikesCount -= 1;
+
+            if (DislikesCount < 0)
+            {
+                DislikesCount = 0;
             }
         }
 

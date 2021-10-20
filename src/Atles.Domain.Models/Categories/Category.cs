@@ -3,12 +3,14 @@ using System.Collections.Generic;
 using Atles.Domain.Forums;
 using Atles.Domain.PermissionSets;
 using Atles.Domain.Sites;
+using Docs.Attributes;
 
 namespace Atles.Domain.Categories
 {
     /// <summary>
     /// A forum category acts as a container to group logically different forums.
     /// </summary>
+    [DocTarget(Consts.DocsContextForum)]
     public class Category
     {
         /// <summary>

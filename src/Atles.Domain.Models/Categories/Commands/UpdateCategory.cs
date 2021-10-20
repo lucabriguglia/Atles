@@ -1,4 +1,5 @@
 ﻿using Atles.Infrastructure.Commands;
+using Docs.Attributes;
 using System;
 
 namespace Atles.Domain.Categories.Commands
@@ -6,6 +7,7 @@ namespace Atles.Domain.Categories.Commands
     /// <summary>
     /// Request that updates a forum category.
     /// </summary>
+    [DocRequest(typeof(Category))]
     public class UpdateCategory : CommandBase
     {
         /// <summary>

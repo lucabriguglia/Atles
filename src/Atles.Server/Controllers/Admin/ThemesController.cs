@@ -36,7 +36,7 @@ namespace Atles.Server.Controllers.Admin
 
                 var extension = Path.GetExtension(file.FileName).ToLowerInvariant();
 
-                if (string.IsNullOrEmpty(extension) || _permittedExtensions.Contains(extension))
+                if (string.IsNullOrEmpty(extension) || !_permittedExtensions.Contains(extension))
                 {
                     return BadRequest("The file type isn't permitted.");
                 }
