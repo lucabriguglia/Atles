@@ -1,6 +1,10 @@
-﻿using Atles.Domain.Posts;
+﻿using Atles.Domain.PostReactions;
+using Atles.Domain.Posts;
 using AutoFixture;
 using NUnit.Framework;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Atles.Domain.Models.Tests
 {
@@ -18,73 +22,26 @@ namespace Atles.Domain.Models.Tests
         }
 
         [Test]
-        public void Increase_likes_count()
+        public void Should_add_reaction()
         {
-            var sut = Fixture.Create<Post>();
+            var sut = Fixture.Build<Post>().With(x => x.PostReactionCounts, new List<PostReactionCount>()).Create();
 
-            var currentCount = sut.LikesCount;
+            sut.AddReaction(PostReactionType.Celebrate);
 
-            sut.IncreaseLikesCount();
-
-            Assert.AreEqual(currentCount + 1, sut.LikesCount, nameof(sut.LikesCount));
+            Assert.AreEqual(1, sut.PostReactionCounts.FirstOrDefault(x => x.Type == PostReactionType.Celebrate).Count);
         }
 
         [Test]
-        public void Decrease_likes_count()
+        public void Should_remove_reaction()
         {
-            var sut = Fixture.Create<Post>();
-            sut.IncreaseLikesCount();
+            var postReactionCount = new PostReactionCount(Guid.NewGuid(), PostReactionType.Insightful);
+            postReactionCount.IncreaseCount();
 
-            var currentCount = sut.LikesCount;
+            var sut = Fixture.Build<Post>().With(x => x.PostReactionCounts, new List<PostReactionCount> { postReactionCount }).Create();
 
-            sut.DecreaseLikesCount();
+            sut.RemoveReaction(PostReactionType.Insightful);
 
-            Assert.AreEqual(currentCount - 1, sut.LikesCount, nameof(sut.LikesCount));
-        }
-
-        [Test]
-        public void Decrease_likes_count_less_than_zero()
-        {
-            var sut = Fixture.Create<Post>();
-
-            sut.DecreaseLikesCount();
-
-            Assert.AreEqual(0, sut.LikesCount, nameof(sut.LikesCount));
-        }
-
-        [Test]
-        public void Increase_dislikes_count()
-        {
-            var sut = Fixture.Create<Post>();
-
-            var currentCount = sut.DislikesCount;
-
-            sut.IncreaseDislikesCount();
-
-            Assert.AreEqual(currentCount + 1, sut.DislikesCount, nameof(sut.DislikesCount));
-        }
-
-        [Test]
-        public void Decrease_dislikes_count()
-        {
-            var sut = Fixture.Create<Post>();
-            sut.IncreaseDislikesCount();
-
-            var currentCount = sut.DislikesCount;
-
-            sut.DecreaseDislikesCount();
-
-            Assert.AreEqual(currentCount - 1, sut.DislikesCount, nameof(sut.DislikesCount));
-        }
-
-        [Test]
-        public void Decrease_dislikes_count_less_than_zero()
-        {
-            var sut = Fixture.Create<Post>();
-
-            sut.DecreaseDislikesCount();
-
-            Assert.AreEqual(0, sut.DislikesCount, nameof(sut.DislikesCount));
+            Assert.AreEqual(1, sut.PostReactionCounts.FirstOrDefault(x => x.Type == PostReactionType.Insightful).Count);
         }
     }
 }

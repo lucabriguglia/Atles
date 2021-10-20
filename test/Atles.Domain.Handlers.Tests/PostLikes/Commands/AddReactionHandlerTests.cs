@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Data;
+using System.Linq;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain.Categories;
 using Atles.Domain.Forums;
-using Atles.Domain.Handlers.PostLikes.Commands;
-using Atles.Domain.PostLikes.Commands;
+using Atles.Domain.Handlers.PostReactions.Commands;
+using Atles.Domain.PostReactions.Commands;
 using Atles.Domain.Posts;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;
@@ -14,20 +15,20 @@ using NUnit.Framework;
 namespace Atles.Domain.Handlers.Tests.PostLikes.Commands
 {
     [TestFixture]
-    public class AddLikeHandlerTests : TestFixtureBase
+    public class AddReactionHandlerTests : TestFixtureBase
     {
         [Test]
         public void Should_throw_data_exption_when_post_not_found()
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new AddLikeHandler(dbContext);
-                Assert.ThrowsAsync<DataException>(async () => await sut.Handle(Fixture.Create<AddLike>()));
+                var sut = new AddReactionHandler(dbContext);
+                Assert.ThrowsAsync<DataException>(async () => await sut.Handle(Fixture.Create<AddReaction>()));
             }
         }
 
         [Test]
-        public async Task Should_add_like_and_increase_count()
+        public async Task Should_add_reaction_and_increase_count()
         {
             var options = Shared.CreateContextOptions();
 
@@ -50,20 +51,21 @@ namespace Atles.Domain.Handlers.Tests.PostLikes.Commands
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var command = Fixture.Build<AddLike>()
+                var command = Fixture.Build<AddReaction>()
                         .With(x => x.PostId, topic.Id)
                         .With(x => x.SiteId, siteId)
                     .Create();
 
-                var sut = new AddLikeHandler(dbContext);
+                var sut = new AddReactionHandler(dbContext);
 
                 await sut.Handle(command);
 
-                var updatedPost = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.PostId);
-                var postLike = await dbContext.PostLikes.FirstOrDefaultAsync(x => x.PostId == command.PostId);
+                var updatedPost = await dbContext.Posts.Include(x => x.PostReactionCounts).FirstOrDefaultAsync(x => x.Id == command.PostId);
+                var postReactionCount = updatedPost.PostReactionCounts.FirstOrDefault(x => x.Type == command.Type);
+                var postReaction = await dbContext.PostReactions.FirstOrDefaultAsync(x => x.PostId == command.PostId && x.UserId == command.UserId);
 
-                Assert.AreEqual(1, updatedPost.LikesCount);
-                Assert.NotNull(postLike);
+                Assert.AreEqual(1, postReactionCount.Count);
+                Assert.NotNull(postReaction);
             }
         }
     }

@@ -905,9 +905,14 @@
             Reference to the user who last updated the post.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Posts.Post.PostLikes">
+        <member name="P:Atles.Domain.Posts.Post.PostReactions">
             <summary>
-            Reference to post likes.
+            Reference to post reactions.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Posts.Post.PostReactionCounts">
+            <summary>
+            Reference to post reaction counts.
             </summary>
         </member>
         <member name="M:Atles.Domain.Posts.Post.#ctor">
@@ -998,28 +1003,6 @@
             If the resulting number is less than zero, the value is set to zero.
             </summary>
         </member>
-        <member name="M:Atles.Domain.Posts.Post.IncreaseLikesCount">
-            <summary>
-            Increases the number of likes by 1.
-            </summary>
-        </member>
-        <member name="M:Atles.Domain.Posts.Post.DecreaseLikesCount">
-            <summary>
-            Decreases the number of likes by 1.
-            If the resulting number is less than zero, the value is set to zero.
-            </summary>
-        </member>
-        <member name="M:Atles.Domain.Posts.Post.IncreaseDislikesCount">
-            <summary>
-            Increases the number of dislikes by 1.
-            </summary>
-        </member>
-        <member name="M:Atles.Domain.Posts.Post.DecreaseDislikesCount">
-            <summary>
-            Decreases the number of dislikes by 1.
-            If the resulting number is less than zero, the value is set to zero.
-            </summary>
-        </member>
         <member name="M:Atles.Domain.Posts.Post.Pin(System.Boolean)">
             <summary>
             Pin and unpin the topic based of the passed value.
@@ -1054,6 +1037,17 @@
             Indicates if the post is an initial message (topic).
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Posts.PostReactionCount.IncreaseCount">
+            <summary>
+            Increases count by 1.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Posts.PostReactionCount.DecreaseCount">
+            <summary>
+            Decreases count by 1.
+            If the resulting number is less than zero, the value is set to zero.
+            </summary>
         </member>
         <member name="T:Atles.Domain.Sites.Commands.UpdateSite">
             <summary>
@@ -1315,7 +1309,7 @@
             The list of posts created by the user.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Users.User.PostLikes">
+        <member name="P:Atles.Domain.Users.User.PostReactions">
             <summary>
             Reference to post likes.
             </summary>

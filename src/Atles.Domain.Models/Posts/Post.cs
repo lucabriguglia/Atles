@@ -326,10 +326,6 @@ namespace Atles.Domain.Posts
                 if (postReactionCount != null)
                 {
                     postReactionCount.DecreaseCount();
-                    if (postReactionCount.Count == 0)
-                    {
-                        PostReactionCounts.Remove(postReactionCount);
-                    }
                 }
             }
         }

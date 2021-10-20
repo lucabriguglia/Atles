@@ -1,26 +1,26 @@
-﻿using Atles.Domain.PostLikes;
+﻿using Atles.Domain.PostReactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Atles.Data.Configurations
 {
-    public class PostLikeConfiguration : IEntityTypeConfiguration<PostLike>
+    public class PostReactionConfiguration : IEntityTypeConfiguration<PostReaction>
     {
-        public void Configure(EntityTypeBuilder<PostLike> builder)
+        public void Configure(EntityTypeBuilder<PostReaction> builder)
         {
-            builder.ToTable("PostLike");
+            builder.ToTable("PostReaction");
 
             builder.HasKey(x => new { x.PostId, x.UserId });
 
             builder
                 .HasOne(x => x.Post)
-                .WithMany(x => x.PostLikes)
+                .WithMany(x => x.PostReactions)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
 
             builder
                 .HasOne(x => x.User)
-                .WithMany(x => x.PostLikes)
+                .WithMany(x => x.PostReactions)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
         }

@@ -19,37 +19,22 @@ namespace Atles.Domain.Handlers.PostReactions.Commands
 
         public async Task Handle(RemoveReaction command)
         {
-            var postLike = await _dbContext.PostLikes
+            var postReaction = await _dbContext.PostReactions
+                .Include(x => x.Post).ThenInclude(x => x.PostReactionCounts)
                 .FirstOrDefaultAsync(x =>
                     x.PostId == command.PostId &&
-                    x.UserId == command.UserId);
+                    x.UserId == command.UserId &&
+                    x.Post.Forum.Category.SiteId == command.SiteId &&
+                    x.Post.Status != PostStatusType.Deleted);
 
-            if (postLike == null)
+            if (postReaction == null)
             {
-                throw new DataException($"Post like for post id {command.PostId} and user id {command.UserId} not found.");
+                throw new DataException($"Post reaction for post id {command.PostId} and user id {command.UserId} not found.");
             }
 
-            var post = await _dbContext.Posts
-                .FirstOrDefaultAsync(x =>
-                    x.Forum.Category.SiteId == command.SiteId &&
-                    x.Id == postLike.PostId &&
-                    x.Status != PostStatusType.Deleted);
+            postReaction.Post.RemoveReaction(postReaction.Type);
 
-            if (post == null)
-            {
-                throw new DataException($"Post with Id {postLike.PostId} not found.");
-            }
-
-            if (postLike.Like)
-            {
-                post.DecreaseLikesCount();
-            }
-            else
-            {
-                post.DecreaseDislikesCount();
-            }
-
-            _dbContext.PostLikes.Remove(postLike);
+            _dbContext.PostReactions.Remove(postReaction);
 
             await _dbContext.SaveChangesAsync();
         }

@@ -31,18 +31,11 @@ namespace Atles.Domain.Handlers.PostReactions.Commands
                 throw new DataException($"Post with Id {command.Id} not found.");
             }
 
-            if (command.Like)
-            {
-                post.IncreaseLikesCount();
-            }
-            else
-            {
-                post.IncreaseDislikesCount();
-            }
+            post.AddReaction(command.Type);
 
-            var postLike = new PostReaction(command.PostId, command.UserId, command.Like);
+            var postReaction = new PostReaction(command.PostId, command.UserId, command.Type);
 
-            _dbContext.PostLikes.Add(postLike);
+            _dbContext.PostReactions.Add(postReaction);
 
             await _dbContext.SaveChangesAsync();
         }

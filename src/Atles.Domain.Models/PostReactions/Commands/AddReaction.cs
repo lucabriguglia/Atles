@@ -1,5 +1,4 @@
-﻿using Atles.Domain.Reactions;
-using Atles.Infrastructure.Commands;
+﻿using Atles.Infrastructure.Commands;
 using Docs.Attributes;
 using System;
 
