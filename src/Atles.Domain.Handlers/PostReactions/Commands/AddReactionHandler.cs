@@ -21,6 +21,7 @@ namespace Atles.Domain.Handlers.PostReactions.Commands
         public async Task Handle(AddReaction command)
         {
             var post = await _dbContext.Posts
+                .Include(x => x.PostReactionCounts)
                 .FirstOrDefaultAsync(x =>
                     x.Forum.Category.SiteId == command.SiteId &&
                     x.Id == command.PostId &&

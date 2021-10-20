@@ -304,17 +304,19 @@ namespace Atles.Domain.Posts
 
         public void AddReaction(PostReactionType type)
         {
-            if (PostReactionCounts != null)
+            if (PostReactionCounts == null)
             {
-                var postReactionCount = PostReactionCounts.FirstOrDefault(x => x.Type == type);
-                if (postReactionCount != null)
-                {
-                    postReactionCount.IncreaseCount();
-                }
-                else
-                {
-                    PostReactionCounts.Add(new PostReactionCount(Id, type));
-                }
+                PostReactionCounts = new List<PostReactionCount>();
+            }
+
+            var postReactionCount = PostReactionCounts.FirstOrDefault(x => x.Type == type);
+            if (postReactionCount != null)
+            {
+                postReactionCount.IncreaseCount();
+            }
+            else
+            {
+                PostReactionCounts.Add(new PostReactionCount(Id, type));
             }
         }
 
