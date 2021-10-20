@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Atles.Domain.PostReactions;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
 namespace Atles.Models.Public.Topics
@@ -37,8 +39,7 @@ namespace Atles.Models.Public.Topics
             public bool Pinned { get; set; }
             public bool Locked { get; set; }
             public bool HasAnswer { get; set; }
-            public int TotalLikes { get; set; }
-            public int TotalDislikes { get; set; }
+            public IList<ReactionModel> Reactions { get; set; } = new List<ReactionModel>();
         }
 
         public class ReplyModel
@@ -52,8 +53,13 @@ namespace Atles.Models.Public.Topics
             public DateTime TimeStamp { get; set; }
             public string GravatarHash { get; set; }
             public bool IsAnswer { get; set; }
-            public int TotalLikes { get; set; }
-            public int TotalDislikes { get; set; }
+            public IList<ReactionModel> Reactions { get; set; } = new List<ReactionModel>();
+        }
+
+        public class ReactionModel
+        {
+            public PostReactionType Type { get; set; }
+            public int Count { get; set; }
         }
 
         public class PostModel

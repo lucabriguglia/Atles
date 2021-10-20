@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Atles.Domain.PostReactions;
+using System;
+using System.Collections.Generic;
 
 namespace Atles.Models.Public.Forums
 {
@@ -25,8 +27,6 @@ namespace Atles.Models.Public.Forums
             public string Title { get; set; }
             public string Slug { get; set; }
             public int TotalReplies { get; set; }
-            public int TotalLikes { get; set; }
-            public int TotalDislikes { get; set; }
             public Guid UserId { get; set; }
             public string UserDisplayName { get; set; }
             public DateTime TimeStamp { get; set; }
@@ -37,6 +37,13 @@ namespace Atles.Models.Public.Forums
             public bool Pinned { get; set; }
             public bool Locked { get; set; }
             public bool HasAnswer { get; set; }
+            public IList<ReactionModel> Reactions { get; set; } = new List<ReactionModel>();
+        }
+
+        public class ReactionModel
+        {
+            public PostReactionType Type { get; set; }
+            public int Count { get; set; }
         }
     }
 }
