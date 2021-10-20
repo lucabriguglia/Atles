@@ -3,16 +3,16 @@ using Atles.Domain.Users;
 using Docs.Attributes;
 using System;
 
-namespace Atles.Domain.PostLikes
+namespace Atles.Domain.PostReactions
 {
     [DocTarget(Consts.DocsContextForum)]
-    public class PostLike
+    public class PostReaction
     {
         public Guid PostId { get; private set; }
 
         public Guid UserId { get; private set; }
 
-        public bool Like { get; private set; }
+        public PostReactionType Type { get; private set; }
 
         public DateTime TimeStamp { get; private set; }
 
@@ -20,15 +20,15 @@ namespace Atles.Domain.PostLikes
 
         public virtual User User { get; set; }
 
-        public PostLike()
+        public PostReaction()
         {
         }
 
-        public PostLike(Guid postId, Guid userId, bool like = true)
+        public PostReaction(Guid postId, Guid userId, PostReactionType type)
         {
             PostId = postId;
             UserId = userId;
-            Like = like;
+            Type = type;
             TimeStamp = DateTime.UtcNow;
         }
     }

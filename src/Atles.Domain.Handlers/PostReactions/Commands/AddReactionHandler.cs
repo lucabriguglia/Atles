@@ -1,24 +1,24 @@
 ﻿using Atles.Data;
-using Atles.Domain.PostLikes;
-using Atles.Domain.PostLikes.Commands;
+using Atles.Domain.PostReactions;
+using Atles.Domain.PostReactions.Commands;
 using Atles.Domain.Posts;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Commands;
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Atles.Domain.Handlers.PostLikes.Commands
+namespace Atles.Domain.Handlers.PostReactions.Commands
 {
-    public class AddLikeHandler : ICommandHandler<AddLike>
+    public class AddReactionHandler : ICommandHandler<AddReaction>
     {
         private readonly AtlesDbContext _dbContext;
 
-        public AddLikeHandler(AtlesDbContext dbContext)
+        public AddReactionHandler(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task Handle(AddLike command)
+        public async Task Handle(AddReaction command)
         {
             var post = await _dbContext.Posts
                 .FirstOrDefaultAsync(x =>
@@ -40,7 +40,7 @@ namespace Atles.Domain.Handlers.PostLikes.Commands
                 post.IncreaseDislikesCount();
             }
 
-            var postLike = new PostLike(command.PostId, command.UserId, command.Like);
+            var postLike = new PostReaction(command.PostId, command.UserId, command.Like);
 
             _dbContext.PostLikes.Add(postLike);
 

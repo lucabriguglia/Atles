@@ -1,23 +1,23 @@
 ﻿using Atles.Data;
-using Atles.Domain.PostLikes.Commands;
+using Atles.Domain.PostReactions.Commands;
 using Atles.Domain.Posts;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Commands;
 using System.Data;
 using System.Threading.Tasks;
 
-namespace Atles.Domain.Handlers.PostLikes.Commands
+namespace Atles.Domain.Handlers.PostReactions.Commands
 {
-    public class RemoveLikeHandler : ICommandHandler<RemoveLike>
+    public class RemoveReactionHandler : ICommandHandler<RemoveReaction>
     {
         private readonly AtlesDbContext _dbContext;
 
-        public RemoveLikeHandler(AtlesDbContext dbContext)
+        public RemoveReactionHandler(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task Handle(RemoveLike command)
+        public async Task Handle(RemoveReaction command)
         {
             var postLike = await _dbContext.PostLikes
                 .FirstOrDefaultAsync(x =>

@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using Atles.Domain.Forums;
-using Atles.Domain.PostLikes;
+using Atles.Domain.PostReactions;
 using Atles.Domain.Users;
 using Docs.Attributes;
 
@@ -99,10 +100,6 @@ namespace Atles.Domain.Posts
         /// </summary>
         public bool IsAnswer { get; private set; }
 
-        public int LikesCount { get; private set; }
-
-        public int DislikesCount { get; private set; }
-
         /// <summary>
         /// Value indicating whether the post has an answer or not.
         /// It is only used if the post is the initial message (topic).
@@ -150,9 +147,14 @@ namespace Atles.Domain.Posts
         public virtual User ModifiedByUser { get; set; }
 
         /// <summary>
-        /// Reference to post likes.
+        /// Reference to post reactions.
         /// </summary>
-        public virtual ICollection<PostLike> PostLikes { get; set; }
+        public virtual ICollection<PostReaction> PostReactions { get; set; }
+
+        /// <summary>
+        /// Reference to post reaction counts.
+        /// </summary>
+        public virtual ICollection<PostReactionCount> PostReactionCounts { get; set; }
 
         /// <summary>
         /// Creates an empty forum post.
@@ -300,47 +302,35 @@ namespace Atles.Domain.Posts
             }
         }
 
-        /// <summary>
-        /// Increases the number of likes by 1.
-        /// </summary>
-        public void IncreaseLikesCount()
+        public void AddReaction(PostReactionType type)
         {
-            LikesCount += 1;
-        }
-
-        /// <summary>
-        /// Decreases the number of likes by 1.
-        /// If the resulting number is less than zero, the value is set to zero.
-        /// </summary>
-        public void DecreaseLikesCount()
-        {
-            LikesCount -= 1;
-
-            if (LikesCount < 0)
+            if (PostReactionCounts != null)
             {
-                LikesCount = 0;
+                var postReactionCount = PostReactionCounts.FirstOrDefault(x => x.Type == type);
+                if (postReactionCount != null)
+                {
+                    postReactionCount.IncreaseCount();
+                }
+                else
+                {
+                    PostReactionCounts.Add(new PostReactionCount(Id, type));
+                }
             }
         }
 
-        /// <summary>
-        /// Increases the number of dislikes by 1.
-        /// </summary>
-        public void IncreaseDislikesCount()
+        public void RemoveReaction(PostReactionType type)
         {
-            DislikesCount += 1;
-        }
-
-        /// <summary>
-        /// Decreases the number of dislikes by 1.
-        /// If the resulting number is less than zero, the value is set to zero.
-        /// </summary>
-        public void DecreaseDislikesCount()
-        {
-            DislikesCount -= 1;
-
-            if (DislikesCount < 0)
+            if (PostReactionCounts != null)
             {
-                DislikesCount = 0;
+                var postReactionCount = PostReactionCounts.FirstOrDefault(x => x.Type == type);
+                if (postReactionCount != null)
+                {
+                    postReactionCount.DecreaseCount();
+                    if (postReactionCount.Count == 0)
+                    {
+                        PostReactionCounts.Remove(postReactionCount);
+                    }
+                }
             }
         }
 

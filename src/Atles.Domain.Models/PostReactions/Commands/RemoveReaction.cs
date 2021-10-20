@@ -2,10 +2,10 @@
 using Docs.Attributes;
 using System;
 
-namespace Atles.Domain.PostLikes.Commands
+namespace Atles.Domain.PostReactions.Commands
 {
-    [DocRequest(typeof(PostLike))]
-    public class RemoveLike : CommandBase
+    [DocRequest(typeof(PostReaction))]
+    public class RemoveReaction : CommandBase
     {
         public Guid PostId { get; set; }
     }
