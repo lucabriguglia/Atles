@@ -29,7 +29,7 @@ namespace Atles.Domain.Handlers.Tests.PostLikes.Commands
         }
 
         [Test]
-        public async Task Should_add_like_and_increase_count()
+        public async Task Should_add_reaction_and_increase_count()
         {
             var options = Shared.CreateContextOptions();
 
