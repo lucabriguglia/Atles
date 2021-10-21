@@ -7,12 +7,12 @@ namespace Atles.Client.Services
     public class ApiService
     {
         private readonly AuthenticationStateProvider _authenticationStateProvider;
-        private readonly AnonymousService _anonymousService;
-        private readonly AuthenticatedService _authenticatedService;
+        private readonly ApiServiceAnonymous _anonymousService;
+        private readonly ApiServiceAuthenticated _authenticatedService;
 
         public ApiService(AuthenticationStateProvider authenticationStateProvider, 
-            AnonymousService anonymousService, 
-            AuthenticatedService authenticatedService)
+            ApiServiceAnonymous anonymousService, 
+            ApiServiceAuthenticated authenticatedService)
         {
             _anonymousService = anonymousService;
             _authenticatedService = authenticatedService;

@@ -23,12 +23,12 @@ namespace Atles.Client
 
             builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Atles.ServerAPI"));
 
-            builder.Services.AddHttpClient<AnonymousService>(client => 
+            builder.Services.AddHttpClient<ApiServiceAnonymous>(client => 
             { 
                 client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); 
             });
 
-            builder.Services.AddHttpClient<AuthenticatedService>(client =>
+            builder.Services.AddHttpClient<ApiServiceAuthenticated>(client =>
             {
                 client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
             }).AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();

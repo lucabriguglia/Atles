@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 
 namespace Atles.Client.Services
 {
-    public class AuthenticatedService
+    public class ApiServiceAuthenticated
     {
         private readonly HttpClient _httpClient;
 
-        public AuthenticatedService(HttpClient httpClient)
+        public ApiServiceAuthenticated(HttpClient httpClient)
         {
             _httpClient = httpClient;
         }
