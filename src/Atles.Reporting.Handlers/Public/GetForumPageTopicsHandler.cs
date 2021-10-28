@@ -1,7 +1,6 @@
 ﻿using Atles.Data;
 using Atles.Reporting.Handlers.Services;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs;
 using OpenCqrs.Queries;
 using System.Linq;
 using System.Threading.Tasks;
