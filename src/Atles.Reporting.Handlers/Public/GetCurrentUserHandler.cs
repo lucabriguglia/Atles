@@ -1,8 +1,5 @@
 ﻿using Atles.Data;
-using Atles.Domain.Users;
-using Atles.Models.Public;
 using Atles.Reporting.Handlers.Services;
-using Atles.Reporting.Public.Queries;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs;
@@ -10,6 +7,9 @@ using OpenCqrs.Queries;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Atles.Domain.Models.Users;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
 
 namespace Atles.Reporting.Handlers.Public
 {

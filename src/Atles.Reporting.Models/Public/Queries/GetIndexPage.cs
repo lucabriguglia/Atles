@@ -1,7 +1,6 @@
 ﻿using Atles.Infrastructure.Queries;
-using Atles.Models.Public.Index;
 
-namespace Atles.Reporting.Public.Queries
+namespace Atles.Reporting.Models.Public.Queries
 {
     public class GetIndexPage : QueryBase<IndexPageModel>
     {

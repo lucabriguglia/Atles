@@ -1,7 +1,7 @@
 ﻿using Atles.Infrastructure.Commands;
 using Docs.Attributes;
 
-namespace Atles.Domain.Sites.Commands
+namespace Atles.Domain.Models.Sites.Commands
 {
     /// <summary>
     /// Request to update the details of a site.

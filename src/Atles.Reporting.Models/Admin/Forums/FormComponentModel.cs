@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Atles.Models.Admin.Forums
+namespace Atles.Reporting.Models.Admin.Forums
 {
     public class FormComponentModel
     {

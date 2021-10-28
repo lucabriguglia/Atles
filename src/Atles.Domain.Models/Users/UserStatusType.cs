@@ -1,4 +1,4 @@
-﻿namespace Atles.Domain.Users
+﻿namespace Atles.Domain.Models.Users
 {
     public enum UserStatusType
     {

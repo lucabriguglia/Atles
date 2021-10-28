@@ -1,13 +1,13 @@
-﻿using Atles.Data;
-using Atles.Models.Admin.Users;
+﻿using System.Threading.Tasks;
+using Atles.Data;
+using Atles.Domain.Models.Users;
+using Atles.Reporting.Models.Admin.Users;
+using Atles.Reporting.Models.Admin.Users.Queries;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
-using System.Threading.Tasks;
-using Atles.Reporting.Admin.Users.Queries;
-using Atles.Domain.Users;
-using Microsoft.AspNetCore.Identity;
 
-namespace Atles.Reporting.Handlers.Admin.Users
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetUserEditFormHandler : IQueryHandler<GetUserEditForm, EditPageModel>
     {

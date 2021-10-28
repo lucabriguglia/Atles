@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Models.Admin.Events;
 using Microsoft.AspNetCore.Components;
 using Atles.Client.Components.Shared;
+using Atles.Reporting.Models.Admin.Events;
 
 namespace Atles.Client.Shared
 {

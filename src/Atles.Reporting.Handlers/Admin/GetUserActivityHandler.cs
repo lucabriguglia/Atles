@@ -1,15 +1,15 @@
-﻿using Atles.Data;
-using Atles.Models.Admin.Users;
-using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Atles.Reporting.Admin.Users.Queries;
-using Atles.Models;
-using System.Collections.Generic;
+using Atles.Data;
+using Atles.Reporting.Models.Admin.Users;
+using Atles.Reporting.Models.Admin.Users.Queries;
+using Atles.Reporting.Models.Shared;
+using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
+using OpenCqrs.Queries;
 
-namespace Atles.Reporting.Handlers.Admin.Users
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetUserActivityHandler : IQueryHandler<GetUserActivity, ActivityPageModel>
     {

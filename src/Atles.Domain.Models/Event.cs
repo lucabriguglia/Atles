@@ -1,8 +1,8 @@
 ﻿using System;
-using Atles.Domain.Users;
+using Atles.Domain.Models.Users;
 using Newtonsoft.Json;
 
-namespace Atles.Domain
+namespace Atles.Domain.Models
 {
     public class Event
     {

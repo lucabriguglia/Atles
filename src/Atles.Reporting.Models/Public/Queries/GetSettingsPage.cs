@@ -1,8 +1,7 @@
-﻿using Atles.Infrastructure.Queries;
-using Atles.Models.Public.Users;
-using System;
+﻿using System;
+using Atles.Infrastructure.Queries;
 
-namespace Atles.Reporting.Public.Queries
+namespace Atles.Reporting.Models.Public.Queries
 {
     public class GetSettingsPage : QueryBase<SettingsPageModel>
     {

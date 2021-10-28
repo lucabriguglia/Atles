@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Atles.Client.Services;
 using Atles.Client.Shared;
-using Atles.Models;
-using Atles.Models.Public.Topics;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Shared;
 using Markdig;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;

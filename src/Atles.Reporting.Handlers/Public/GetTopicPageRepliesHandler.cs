@@ -1,14 +1,14 @@
 ﻿using Atles.Data;
-using Atles.Domain.Posts;
-using Atles.Models;
-using Atles.Models.Public.Topics;
 using Atles.Reporting.Handlers.Services;
-using Atles.Reporting.Public.Queries;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Domain.Models.Posts;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
+using Atles.Reporting.Models.Shared;
 
 namespace Atles.Reporting.Handlers.Public
 {

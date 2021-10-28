@@ -1,11 +1,11 @@
 ﻿using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Models.Public;
-using Atles.Reporting.Public.Queries;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
 using System.Threading.Tasks;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
 
 namespace Atles.Reporting.Handlers.Public
 {

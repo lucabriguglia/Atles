@@ -1,6 +1,6 @@
 ﻿using Atles.Client.Services;
 using Atles.Client.Shared;
-using Atles.Models.Public;
+using Atles.Reporting.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;

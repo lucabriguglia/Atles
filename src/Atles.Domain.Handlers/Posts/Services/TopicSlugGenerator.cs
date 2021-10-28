@@ -1,10 +1,11 @@
-﻿using Atles.Data;
-using Atles.Domain.Posts;
-using Microsoft.EntityFrameworkCore;
-using System;
+﻿using System;
 using System.Threading.Tasks;
+using Atles.Data;
+using Atles.Domain.Models;
+using Atles.Domain.Models.Posts;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Handlers.Posts.Commands
+namespace Atles.Domain.Handlers.Posts.Services
 {
     public class TopicSlugGenerator : ITopicSlugGenerator
     {

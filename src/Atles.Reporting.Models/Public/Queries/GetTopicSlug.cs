@@ -1,7 +1,7 @@
-﻿using Atles.Infrastructure.Queries;
-using System;
+﻿using System;
+using Atles.Infrastructure.Queries;
 
-namespace Atles.Domain.Posts.Generators
+namespace Atles.Reporting.Models.Public.Queries
 {
     public class GetTopicSlug : QueryBase<string>
     {

@@ -1,6 +1,6 @@
-﻿using Atles.Domain.Categories.Commands;
-using Atles.Domain.Categories.Rules;
-using Atles.Domain.PermissionSets.Rules;
+﻿using Atles.Domain.Models.Categories.Commands;
+using Atles.Domain.Models.Categories.Rules;
+using Atles.Domain.Models.PermissionSets.Rules;
 using FluentValidation;
 using OpenCqrs;
 

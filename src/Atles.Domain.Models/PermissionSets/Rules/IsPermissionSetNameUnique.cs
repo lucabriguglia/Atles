@@ -1,7 +1,7 @@
-﻿using Atles.Infrastructure.Queries;
-using System;
+﻿using System;
+using Atles.Infrastructure.Queries;
 
-namespace Atles.Domain.PermissionSets.Rules
+namespace Atles.Domain.Models.PermissionSets.Rules
 {
     public class IsPermissionSetNameUnique : QueryBase<bool>
     {

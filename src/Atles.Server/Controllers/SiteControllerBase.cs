@@ -1,9 +1,9 @@
-﻿using Atles.Models.Public;
-using Atles.Reporting.Public.Queries;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
 
 namespace Atles.Server.Controllers
 {

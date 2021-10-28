@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Data;
-using Atles.Domain.Categories;
-using Atles.Domain.Forums;
-using Atles.Domain.Forums.Rules;
 using Atles.Domain.Handlers.Forums.Rules;
+using Atles.Domain.Models.Categories;
+using Atles.Domain.Models.Forums;
+using Atles.Domain.Models.Forums.Rules;
 using NUnit.Framework;
 
 namespace Atles.Domain.Handlers.Tests.Forums.Rules

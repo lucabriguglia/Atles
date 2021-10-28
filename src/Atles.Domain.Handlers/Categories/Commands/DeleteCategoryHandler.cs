@@ -1,14 +1,14 @@
 ﻿using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Categories;
-using Atles.Domain.Categories.Commands;
-using Atles.Domain.Forums;
-using Atles.Infrastructure.Commands;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Commands;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Domain.Models;
+using Atles.Domain.Models.Categories;
+using Atles.Domain.Models.Categories.Commands;
+using Atles.Domain.Models.Forums;
 
 namespace Atles.Domain.Handlers.Categories.Commands
 {

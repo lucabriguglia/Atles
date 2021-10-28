@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Atles.Domain.PermissionSets;
-using Atles.Models.Public;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Reporting.Models.Public;
 using Microsoft.AspNetCore.Http;
 
 namespace Atles.Server.Services

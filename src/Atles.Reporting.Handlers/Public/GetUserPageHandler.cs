@@ -1,12 +1,12 @@
 ﻿using Atles.Data;
-using Atles.Models;
-using Atles.Models.Public.Users;
 using Atles.Reporting.Handlers.Services;
-using Atles.Reporting.Public.Queries;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs;
 using OpenCqrs.Queries;
 using System.Threading.Tasks;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
+using Atles.Reporting.Models.Shared;
 
 namespace Atles.Reporting.Handlers.Public
 {

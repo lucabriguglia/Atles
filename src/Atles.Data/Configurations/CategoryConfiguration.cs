@@ -1,4 +1,4 @@
-﻿using Atles.Domain.Categories;
+﻿using Atles.Domain.Models.Categories;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

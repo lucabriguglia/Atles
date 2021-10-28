@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atles.Data;
-using Atles.Domain.PermissionSets;
-using Atles.Domain.PermissionSets.Rules;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Domain.Models.PermissionSets.Rules;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
 

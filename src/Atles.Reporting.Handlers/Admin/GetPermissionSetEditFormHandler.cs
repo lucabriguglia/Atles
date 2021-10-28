@@ -1,17 +1,17 @@
-﻿using Atles.Data;
-using Atles.Domain;
-using Atles.Domain.PermissionSets;
-using Atles.Models.Admin.PermissionSets;
-using Atles.Models.Admin.PermissionSets.Queries;
-using Atles.Reporting.Admin.Roles.Queries;
+﻿using System;
+using System.Linq;
+using System.Threading.Tasks;
+using Atles.Data;
+using Atles.Domain.Models;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Reporting.Models.Admin.PermissionSets;
+using Atles.Reporting.Models.Admin.PermissionSets.Queries;
+using Atles.Reporting.Models.Admin.Roles.Queries;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs;
 using OpenCqrs.Queries;
-using System;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Atles.Reporting.Handlers.Admin.PermissionSets
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetPermissionSetEditFormHandler : IQueryHandler<GetPermissionSetEditForm, FormComponentModel>
     {

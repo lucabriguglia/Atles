@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Models.Admin.Categories;
+using Atles.Reporting.Models.Admin.Categories;
 
 namespace Atles.Client.Pages.Admin.Categories
 {

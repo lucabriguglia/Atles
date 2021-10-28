@@ -3,8 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.PermissionSets;
-using Atles.Domain.PermissionSets.Commands;
+using Atles.Domain.Models;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Domain.Models.PermissionSets.Commands;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Commands;
 

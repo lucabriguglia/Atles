@@ -1,8 +1,7 @@
-﻿using Atles.Infrastructure.Queries;
-using Atles.Models.Admin.Categories;
-using System;
+﻿using System;
+using Atles.Infrastructure.Queries;
 
-namespace Atles.Reporting.Admin.Categories
+namespace Atles.Reporting.Models.Admin.Categories.Queries
 {
     public class GetCategoryForm : QueryBase<FormComponentModel>
     {

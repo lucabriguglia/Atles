@@ -1,7 +1,7 @@
-﻿using Atles.Infrastructure.Commands;
-using System;
+﻿using System;
+using Atles.Infrastructure.Commands;
 
-namespace Atles.Domain.Categories.Commands
+namespace Atles.Domain.Models.Categories.Commands
 {
     /// <summary>
     /// Request that creates a new Forum Category.

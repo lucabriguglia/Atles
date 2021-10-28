@@ -1,13 +1,13 @@
-﻿using Atles.Data;
-using Atles.Models.Admin.Sites;
-using Atles.Reporting.Admin.Sites.Queries;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Atles.Data;
+using Atles.Reporting.Models.Admin.Sites;
+using Atles.Reporting.Models.Admin.Sites.Queries;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using OpenCqrs.Queries;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Atles.Reporting.Handlers.Admin.Sites
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetSettingsPageModelHandler : IQueryHandler<GetSettingsPageModel, SettingsPageModel>
     {

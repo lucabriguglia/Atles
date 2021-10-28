@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atles.Domain.PermissionSets
+namespace Atles.Domain.Models.PermissionSets
 {
     public class Permission
     {

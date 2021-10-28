@@ -1,4 +1,4 @@
-﻿namespace Atles.Models
+﻿namespace Atles.Reporting.Models.Shared
 {
     public enum OrderByDirectionType
     {

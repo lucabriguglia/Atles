@@ -1,10 +1,6 @@
 ﻿using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
-using Atles.Domain.Forums;
-using Atles.Domain.PermissionSets;
-using Atles.Models.Public;
-using Atles.Reporting.Public.Queries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
@@ -12,6 +8,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Domain.Models;
+using Atles.Domain.Models.Forums;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
 
 namespace Atles.Reporting.Handlers.Public
 {

@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atles.Models.Public.Index;
+using Atles.Reporting.Models.Public;
 
 namespace Atles.Client.Components.Themes
 {

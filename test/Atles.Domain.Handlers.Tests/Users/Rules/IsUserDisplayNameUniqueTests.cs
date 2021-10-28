@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Data;
-using Atles.Domain.Categories.Rules;
 using Atles.Domain.Handlers.Users.Rules;
-using Atles.Domain.Users;
+using Atles.Domain.Models.Users;
+using Atles.Domain.Models.Users.Rules;
 using NUnit.Framework;
 
 namespace Atles.Domain.Handlers.Tests.Users.Rules

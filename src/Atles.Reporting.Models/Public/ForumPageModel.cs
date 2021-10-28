@@ -1,6 +1,7 @@
 ﻿using System;
+using Atles.Reporting.Models.Shared;
 
-namespace Atles.Models.Public.Forums
+namespace Atles.Reporting.Models.Public
 {
     public class ForumPageModel
     {

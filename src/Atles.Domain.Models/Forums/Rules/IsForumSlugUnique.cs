@@ -1,7 +1,7 @@
-﻿using Atles.Infrastructure.Queries;
-using System;
+﻿using System;
+using Atles.Infrastructure.Queries;
 
-namespace Atles.Domain.Forums.Rules
+namespace Atles.Domain.Models.Forums.Rules
 {
     public class IsForumSlugUnique : QueryBase<bool>
     {

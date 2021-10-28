@@ -1,11 +1,11 @@
-﻿using Atles.Models.Admin.Roles;
+﻿using System.Threading.Tasks;
+using Atles.Reporting.Models.Admin.Roles;
+using Atles.Reporting.Models.Admin.Roles.Queries;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
-using System.Threading.Tasks;
-using Atles.Reporting.Admin.Roles.Queries;
-using Microsoft.AspNetCore.Identity;
 
-namespace Atles.Reporting.Handlers.Admin.Roles
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetRolesIndexHandler : IQueryHandler<GetRolesIndex, IndexPageModel>
     {

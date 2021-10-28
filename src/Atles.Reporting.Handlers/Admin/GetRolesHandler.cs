@@ -1,14 +1,14 @@
-﻿using Atles.Models.Admin.Roles;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Atles.Domain.Models;
+using Atles.Reporting.Models.Admin.Roles;
+using Atles.Reporting.Models.Admin.Roles.Queries;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
-using System.Threading.Tasks;
-using Atles.Reporting.Admin.Roles.Queries;
-using Microsoft.AspNetCore.Identity;
-using System.Collections.Generic;
-using Atles.Domain;
-using System.Linq;
 
-namespace Atles.Reporting.Handlers.Admin.Roles
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetRolesHandler : IQueryHandler<GetRoles, IList<RoleModel>>
     {

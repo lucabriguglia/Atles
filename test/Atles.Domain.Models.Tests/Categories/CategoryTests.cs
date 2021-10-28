@@ -1,9 +1,9 @@
 ﻿using System;
-using Atles.Domain.Categories;
+using Atles.Domain.Models.Categories;
 using AutoFixture;
 using NUnit.Framework;
 
-namespace Atles.Domain.Tests.Categories
+namespace Atles.Domain.Models.Tests.Categories
 {
     [TestFixture]
     public class CategoryTests : TestFixtureBase

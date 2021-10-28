@@ -2,7 +2,7 @@
 using System.Text.Json;
 using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Models.Admin.Users;
+using Atles.Reporting.Models.Admin.Users;
 
 namespace Atles.Client.Pages.Admin.Users
 {

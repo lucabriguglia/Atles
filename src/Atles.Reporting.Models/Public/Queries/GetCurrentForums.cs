@@ -1,8 +1,7 @@
-﻿using Atles.Models.Public;
+﻿using System.Collections.Generic;
 using OpenCqrs.Queries;
-using System.Collections.Generic;
 
-namespace Atles.Reporting.Public.Queries
+namespace Atles.Reporting.Models.Public.Queries
 {
     public class GetCurrentForums : IQuery<IList<CurrentForumModel>>
     {

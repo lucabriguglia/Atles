@@ -1,7 +1,6 @@
-﻿using Atles.Models.Public;
-using OpenCqrs.Queries;
+﻿using OpenCqrs.Queries;
 
-namespace Atles.Reporting.Public.Queries
+namespace Atles.Reporting.Models.Public.Queries
 {
     public class GetCurrentUser : IQuery<CurrentUserModel>
     {

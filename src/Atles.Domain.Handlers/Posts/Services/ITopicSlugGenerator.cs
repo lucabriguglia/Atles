@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 
-namespace Atles.Domain.Handlers.Posts.Commands
+namespace Atles.Domain.Handlers.Posts.Services
 {
     public interface ITopicSlugGenerator
     {

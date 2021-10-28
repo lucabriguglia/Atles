@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain.Handlers.PermissionSets.Rules;
-using Atles.Domain.PermissionSets;
-using Atles.Domain.PermissionSets.Commands;
-using Atles.Domain.PermissionSets.Rules;
-using Atles.Domain.Sites;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Domain.Models.PermissionSets.Commands;
+using Atles.Domain.Models.PermissionSets.Rules;
+using Atles.Domain.Models.Sites;
 using NUnit.Framework;
 
 namespace Atles.Domain.Handlers.Tests.PermissionSets.Rules

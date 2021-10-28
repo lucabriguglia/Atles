@@ -1,4 +1,4 @@
-﻿using Atles.Domain.Sites;
+﻿using Atles.Domain.Models.Sites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,10 +1,10 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations.Schema;
-using Atles.Domain.Forums;
-using Atles.Domain.Users;
+using Atles.Domain.Models.Forums;
+using Atles.Domain.Models.Users;
 using Docs.Attributes;
 
-namespace Atles.Domain.Posts
+namespace Atles.Domain.Models.Posts
 {
     /// <summary>
     /// A forum post is a message created in a forum.

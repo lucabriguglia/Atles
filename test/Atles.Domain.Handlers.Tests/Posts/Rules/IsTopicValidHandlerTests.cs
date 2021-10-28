@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Data;
-using Atles.Domain.Categories;
-using Atles.Domain.Forums;
 using Atles.Domain.Handlers.Posts.Rules;
-using Atles.Domain.Posts;
-using Atles.Domain.Posts.Rules;
+using Atles.Domain.Models.Categories;
+using Atles.Domain.Models.Forums;
+using Atles.Domain.Models.Posts;
+using Atles.Domain.Models.Posts.Rules;
 using NUnit.Framework;
 
-namespace Atles.Domain.Handlers.Tests.Forums.Rules
+namespace Atles.Domain.Handlers.Tests.Posts.Rules
 {
     [TestFixture]
     public class IsTopicValidHandlerTests : TestFixtureBase

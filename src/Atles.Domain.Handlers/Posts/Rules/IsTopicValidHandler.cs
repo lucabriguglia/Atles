@@ -1,9 +1,9 @@
 ﻿using Atles.Data;
-using Atles.Domain.Posts;
-using Atles.Domain.Posts.Rules;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
 using System.Threading.Tasks;
+using Atles.Domain.Models.Posts;
+using Atles.Domain.Models.Posts.Rules;
 
 namespace Atles.Domain.Handlers.Posts.Rules
 {

@@ -1,11 +1,12 @@
 ﻿using Atles.Data;
-using Atles.Domain.Users;
-using Atles.Domain.Users.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Commands;
 using System.Data;
 using System.Threading.Tasks;
+using Atles.Domain.Models;
+using Atles.Domain.Models.Users;
+using Atles.Domain.Models.Users.Commands;
 
 namespace Atles.Domain.Handlers.Users.Commands
 {

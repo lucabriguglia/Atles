@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Domain.PermissionSets.Commands;
-using Atles.Domain.PermissionSets.Rules;
-using Atles.Models.Admin.PermissionSets;
-using Atles.Models.Admin.PermissionSets.Queries;
+using Atles.Domain.Models.PermissionSets.Commands;
+using Atles.Domain.Models.PermissionSets.Rules;
+using Atles.Reporting.Models.Admin.PermissionSets;
+using Atles.Reporting.Models.Admin.PermissionSets.Queries;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
 

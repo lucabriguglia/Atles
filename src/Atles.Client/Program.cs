@@ -3,7 +3,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Atles.Client.Services;
-using Atles.Models.Public;
+using Atles.Reporting.Models.Public;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;

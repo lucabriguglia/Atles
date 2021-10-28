@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
-using Atles.Domain.Categories.Rules;
-using Atles.Domain.Users.Commands;
-using Atles.Models.Public.Users;
-using Atles.Reporting.Public.Queries;
+using Atles.Domain.Models.Users.Commands;
+using Atles.Domain.Models.Users.Rules;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

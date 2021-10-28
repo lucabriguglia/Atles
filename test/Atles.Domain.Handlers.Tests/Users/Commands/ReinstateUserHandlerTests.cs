@@ -1,13 +1,11 @@
 ﻿using System;
-using System.Threading;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain.Handlers.Users.Commands;
-using Atles.Domain.Users;
-using Atles.Domain.Users.Commands;
+using Atles.Domain.Models.Users;
+using Atles.Domain.Models.Users.Commands;
 using AutoFixture;
 using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;

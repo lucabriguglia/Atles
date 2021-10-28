@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Domain;
-using Atles.Domain.Categories.Commands;
-using Atles.Domain.Categories.Rules;
-using Atles.Models.Admin.Categories;
-using Atles.Reporting.Admin.Categories;
+using Atles.Domain.Models;
+using Atles.Domain.Models.Categories.Commands;
+using Atles.Domain.Models.Categories.Rules;
+using Atles.Reporting.Models.Admin.Categories;
+using Atles.Reporting.Models.Admin.Categories.Queries;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
 
