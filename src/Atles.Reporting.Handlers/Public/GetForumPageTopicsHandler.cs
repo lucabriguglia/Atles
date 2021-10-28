@@ -15,12 +15,10 @@ namespace Atles.Reporting.Handlers.Public
     public class GetForumPageTopicsHandler : IQueryHandler<GetForumPageTopics, PaginatedData<ForumPageModel.TopicModel>>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly IDispatcher _dispatcher;
         private readonly IGravatarService _gravatarService;
-        public GetForumPageTopicsHandler(AtlesDbContext dbContext, IDispatcher sender, IGravatarService gravatarService)
+        public GetForumPageTopicsHandler(AtlesDbContext dbContext, IGravatarService gravatarService)
         {
             _dbContext = dbContext;
-            _dispatcher = sender;
             _gravatarService = gravatarService;
         }
 
