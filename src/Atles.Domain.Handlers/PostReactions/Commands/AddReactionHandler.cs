@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Commands;
 using System.Data;
 using System.Threading.Tasks;
+using Atles.Domain.Models.PostReactions;
+using Atles.Domain.Models.Posts;
 
 namespace Atles.Domain.Handlers.PostReactions.Commands
 {

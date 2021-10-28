@@ -1,14 +1,14 @@
-﻿using Atles.Data;
-using Atles.Models.Admin.Events;
-using Atles.Reporting.Admin.Events.Queries;
+﻿using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
+using Atles.Data;
+using Atles.Reporting.Models.Admin.Events;
+using Atles.Reporting.Models.Admin.Events.Queries;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 using OpenCqrs.Queries;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Atles.Reporting.Handlers.Admin.Events
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetTargetEventsComponentHandler : IQueryHandler<GetTargetEventsComponent, TargetEventsComponentModel>
     {

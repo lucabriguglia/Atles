@@ -1,8 +1,7 @@
 ﻿using Atles.Infrastructure.Commands;
-using System;
 using Docs.Attributes;
 
-namespace Atles.Domain.Users.Commands
+namespace Atles.Domain.Models.Users.Commands
 {
     /// <summary>
     /// Request to create a new user.

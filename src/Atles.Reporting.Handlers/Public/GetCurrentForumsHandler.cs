@@ -1,14 +1,14 @@
 ﻿using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Forums;
-using Atles.Models.Public;
-using Atles.Reporting.Public.Queries;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs;
 using OpenCqrs.Queries;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Domain.Models.Forums;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
 
 namespace Atles.Reporting.Handlers.Public
 {

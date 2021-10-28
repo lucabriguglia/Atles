@@ -1,7 +1,7 @@
 ﻿using Atles.Infrastructure.Commands;
 using Docs.Attributes;
 
-namespace Atles.Domain.Categories.Commands
+namespace Atles.Domain.Models.Categories.Commands
 {
     /// <summary>
     /// Request that changes the sort order of a forum category.

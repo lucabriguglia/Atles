@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atles.Models
+namespace Atles.Reporting.Models.Shared
 {
     public class QueryOptions
     {

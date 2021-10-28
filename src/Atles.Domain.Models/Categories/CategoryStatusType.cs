@@ -1,4 +1,4 @@
-﻿namespace Atles.Domain.Categories
+﻿namespace Atles.Domain.Models.Categories
 {
     public enum CategoryStatusType
     {

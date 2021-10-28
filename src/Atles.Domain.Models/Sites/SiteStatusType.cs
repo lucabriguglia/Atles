@@ -1,4 +1,4 @@
-﻿namespace Atles.Domain.Sites
+﻿namespace Atles.Domain.Models.Sites
 {
     public enum SiteStatusType
     {

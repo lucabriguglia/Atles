@@ -1,8 +1,9 @@
 ﻿using Atles.Domain.PostReactions;
 using System;
+using Atles.Reporting.Models.Shared;
 using System.Collections.Generic;
 
-namespace Atles.Models.Public.Forums
+namespace Atles.Reporting.Models.Public
 {
     public class ForumPageModel
     {

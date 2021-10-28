@@ -1,16 +1,16 @@
-﻿using Atles.Domain.Categories.Commands;
-using Atles.Domain.Categories.Rules;
+﻿using System;
+using Atles.Domain.Models.Categories.Commands;
+using Atles.Domain.Models.Categories.Rules;
+using Atles.Domain.Models.PermissionSets.Rules;
 using Atles.Domain.Validators.Categories;
-using Atles.Domain.PermissionSets.Rules;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 using OpenCqrs;
 using OpenCqrs.Queries;
-using System;
 
-namespace Atles.Domain.Tests.Categories.Validators
+namespace Atles.Domain.Validators.Tests.Categories
 {
     [TestFixture]
     public class CreateCategoryValidatorTests : TestFixtureBase

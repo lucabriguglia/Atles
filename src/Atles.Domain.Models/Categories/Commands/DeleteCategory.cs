@@ -1,7 +1,7 @@
 ﻿using Atles.Infrastructure.Commands;
 using Docs.Attributes;
 
-namespace Atles.Domain.Categories.Commands
+namespace Atles.Domain.Models.Categories.Commands
 {
     /// <summary>
     /// Request that deletes a Forum Category.

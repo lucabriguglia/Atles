@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Atles.Models.Admin.Roles
+namespace Atles.Reporting.Models.Admin.Roles
 {
     public class IndexPageModel
     {

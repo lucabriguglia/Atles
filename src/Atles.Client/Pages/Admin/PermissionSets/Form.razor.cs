@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Models.Admin.PermissionSets;
+using Atles.Reporting.Models.Admin.PermissionSets;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 

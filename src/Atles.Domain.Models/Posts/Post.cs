@@ -2,12 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
-using Atles.Domain.Forums;
+using Atles.Domain.Models.Forums;
+using Atles.Domain.Models.PostReactions;
+using Atles.Domain.Models.Users;
 using Atles.Domain.PostReactions;
-using Atles.Domain.Users;
+using Atles.Domain.Posts;
 using Docs.Attributes;
 
-namespace Atles.Domain.Posts
+namespace Atles.Domain.Models.Posts
 {
     /// <summary>
     /// A forum post is a message created in a forum.

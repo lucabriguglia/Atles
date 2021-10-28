@@ -1,26 +1,23 @@
 ﻿using Atles.Data;
-using Atles.Domain.Posts;
-using Atles.Models;
-using Atles.Models.Public.Forums;
 using Atles.Reporting.Handlers.Services;
-using Atles.Reporting.Public.Queries;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs;
 using OpenCqrs.Queries;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Domain.Models.Posts;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
+using Atles.Reporting.Models.Shared;
 
 namespace Atles.Reporting.Handlers.Public
 {
     public class GetForumPageTopicsHandler : IQueryHandler<GetForumPageTopics, PaginatedData<ForumPageModel.TopicModel>>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly IDispatcher _dispatcher;
         private readonly IGravatarService _gravatarService;
-        public GetForumPageTopicsHandler(AtlesDbContext dbContext, IDispatcher sender, IGravatarService gravatarService)
+        public GetForumPageTopicsHandler(AtlesDbContext dbContext, IGravatarService gravatarService)
         {
             _dbContext = dbContext;
-            _dispatcher = sender;
             _gravatarService = gravatarService;
         }
 

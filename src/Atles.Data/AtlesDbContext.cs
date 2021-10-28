@@ -1,12 +1,14 @@
 ﻿using System.Reflection;
 using Atles.Domain;
-using Atles.Domain.Categories;
-using Atles.Domain.Forums;
-using Atles.Domain.PermissionSets;
-using Atles.Domain.PostReactions;
+using Atles.Domain.Models;
+using Atles.Domain.Models.Categories;
+using Atles.Domain.Models.Forums;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Domain.Models.PostReactions;
+using Atles.Domain.Models.Posts;
+using Atles.Domain.Models.Sites;
+using Atles.Domain.Models.Users;
 using Atles.Domain.Posts;
-using Atles.Domain.Sites;
-using Atles.Domain.Users;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Data

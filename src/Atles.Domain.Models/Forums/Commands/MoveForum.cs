@@ -1,8 +1,7 @@
 ﻿using Atles.Infrastructure.Commands;
-using System;
 using Docs.Attributes;
 
-namespace Atles.Domain.Forums.Commands
+namespace Atles.Domain.Models.Forums.Commands
 {
     /// <summary>
     /// Request that changes the sort order of a forum.

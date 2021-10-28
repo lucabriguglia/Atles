@@ -3,11 +3,11 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Data;
-using Atles.Domain.Categories;
-using Atles.Domain.Forums;
 using Atles.Domain.Handlers.PostReactions.Commands;
+using Atles.Domain.Models.Categories;
+using Atles.Domain.Models.Forums;
+using Atles.Domain.Models.Posts;
 using Atles.Domain.PostReactions.Commands;
-using Atles.Domain.Posts;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
@@ -18,7 +18,7 @@ namespace Atles.Domain.Handlers.Tests.PostLikes.Commands
     public class AddReactionHandlerTests : TestFixtureBase
     {
         [Test]
-        public void Should_throw_data_exption_when_post_not_found()
+        public void Should_throw_data_exception_when_post_not_found()
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {

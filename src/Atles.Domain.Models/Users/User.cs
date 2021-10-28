@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
-using Atles.Domain.PostReactions;
-using Atles.Domain.Posts;
+using Atles.Domain.Models.PostReactions;
+using Atles.Domain.Models.Posts;
 using Docs.Attributes;
 
-namespace Atles.Domain.Users
+namespace Atles.Domain.Models.Users
 {
     /// <summary>
     /// User

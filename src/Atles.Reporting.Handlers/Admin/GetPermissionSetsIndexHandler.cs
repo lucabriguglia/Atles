@@ -1,13 +1,13 @@
-﻿using Atles.Data;
-using Atles.Domain.PermissionSets;
-using Atles.Models.Admin.PermissionSets.Queries;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Atles.Data;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Reporting.Models.Admin.PermissionSets.Queries;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
-using System.Linq;
-using System.Threading.Tasks;
-using IndexPageModel = Atles.Models.Admin.PermissionSets.IndexPageModel;
+using IndexPageModel = Atles.Reporting.Models.Admin.PermissionSets.IndexPageModel;
 
-namespace Atles.Reporting.Handlers.Admin.PermissionSets
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetPermissionSetsIndexHandler : IQueryHandler<GetPermissionSetsIndex, IndexPageModel>
     {

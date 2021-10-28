@@ -1,16 +1,16 @@
-﻿using Atles.Data;
-using Atles.Data.Extensions;
-using Atles.Domain.Users;
-using Atles.Models.Admin.Users;
-using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atles.Reporting.Admin.Users.Queries;
-using Atles.Models;
-using System;
+using Atles.Data;
+using Atles.Data.Extensions;
+using Atles.Domain.Models.Users;
+using Atles.Reporting.Models.Admin.Users;
+using Atles.Reporting.Models.Admin.Users.Queries;
+using Atles.Reporting.Models.Shared;
+using Microsoft.EntityFrameworkCore;
+using OpenCqrs.Queries;
 
-namespace Atles.Reporting.Handlers.Admin.Users
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetUsersIndexHandler : IQueryHandler<GetUsersIndex, IndexPageModel>
     {

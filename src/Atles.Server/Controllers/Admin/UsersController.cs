@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atles.Domain.Categories.Rules;
-using Atles.Domain.Users.Commands;
-using Atles.Models;
-using Atles.Models.Admin.Users;
-using Atles.Reporting.Admin.Users.Queries;
+using Atles.Domain.Models.Users.Commands;
+using Atles.Domain.Models.Users.Rules;
+using Atles.Reporting.Models.Admin.Users;
+using Atles.Reporting.Models.Admin.Users.Queries;
+using Atles.Reporting.Models.Shared;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;

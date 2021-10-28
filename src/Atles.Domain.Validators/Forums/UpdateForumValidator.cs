@@ -1,6 +1,6 @@
-﻿using Atles.Domain.Forums.Commands;
-using Atles.Domain.Forums.Rules;
-using Atles.Domain.PermissionSets.Rules;
+﻿using Atles.Domain.Models.Forums.Commands;
+using Atles.Domain.Models.Forums.Rules;
+using Atles.Domain.Models.PermissionSets.Rules;
 using FluentValidation;
 using OpenCqrs;
 

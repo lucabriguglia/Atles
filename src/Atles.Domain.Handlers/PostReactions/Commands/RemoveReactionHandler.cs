@@ -1,6 +1,6 @@
 ﻿using Atles.Data;
+using Atles.Domain.Models.Posts;
 using Atles.Domain.PostReactions.Commands;
-using Atles.Domain.Posts;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Commands;
 using System.Data;

@@ -1,4 +1,6 @@
-﻿namespace Atles.Models.Public.Search
+﻿using Atles.Reporting.Models.Shared;
+
+namespace Atles.Reporting.Models.Public
 {
     public class SearchPageModel
     {

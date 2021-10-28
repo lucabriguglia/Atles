@@ -1,7 +1,7 @@
-﻿using Atles.Infrastructure.Queries;
-using System;
+﻿using System;
+using Atles.Infrastructure.Queries;
 
-namespace Atles.Domain.Categories.Rules
+namespace Atles.Domain.Models.Users.Rules
 {
     public class IsUserDisplayNameUnique : QueryBase<bool>
     {

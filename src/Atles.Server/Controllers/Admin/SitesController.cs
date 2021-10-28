@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
-using Atles.Domain.Sites.Commands;
-using Atles.Models.Admin.Sites;
-using Atles.Reporting.Admin.Sites.Queries;
+using Atles.Domain.Models.Sites.Commands;
+using Atles.Reporting.Models.Admin.Sites;
+using Atles.Reporting.Models.Admin.Sites.Queries;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
 

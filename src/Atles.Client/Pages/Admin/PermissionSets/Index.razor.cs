@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Models.Admin.PermissionSets;
+using Atles.Reporting.Models.Admin.PermissionSets;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace Atles.Client.Pages.Admin.PermissionSets

@@ -1,9 +1,9 @@
-﻿using Atles.Models.Admin.Users;
+﻿using System.Threading.Tasks;
+using Atles.Reporting.Models.Admin.Users;
+using Atles.Reporting.Models.Admin.Users.Queries;
 using OpenCqrs.Queries;
-using System.Threading.Tasks;
-using Atles.Reporting.Admin.Users.Queries;
 
-namespace Atles.Reporting.Handlers.Admin.Users
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetUserCreateFormHandler : IQueryHandler<GetUserCreateForm, CreatePageModel>
     {

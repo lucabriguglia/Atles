@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Atles.Domain.PermissionSets;
-using Atles.Models.Public;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Reporting.Models.Public;
 
 namespace Atles.Server.Services
 {

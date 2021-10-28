@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atles.Domain.PermissionSets;
-using Atles.Models.Public.Users;
-using Atles.Reporting.Public.Queries;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

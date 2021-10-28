@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Atles.Data;
-using Atles.Domain.Users;
-using Atles.Domain.Users.Commands;
-using Atles.Reporting.Public.Queries;
+using Atles.Domain.Models.Users;
+using Atles.Domain.Models.Users.Commands;
+using Atles.Reporting.Models.Public.Queries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs;

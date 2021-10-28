@@ -1,12 +1,13 @@
-﻿using Atles.Domain.PostReactions;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using Atles.Domain.Models.Posts;
+using Atles.Domain.PostReactions;
 using Atles.Domain.Posts;
 using AutoFixture;
 using NUnit.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
-namespace Atles.Domain.Models.Tests
+namespace Atles.Domain.Models.Tests.Posts
 {
     [TestFixture]
     public class PostTests : TestFixtureBase

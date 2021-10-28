@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Client.Services;
-using Atles.Models.Public.Posts;
+using Atles.Reporting.Models.Public;
 using Microsoft.AspNetCore.Components;
 
 namespace Atles.Client.Components.Themes

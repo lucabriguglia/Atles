@@ -1,8 +1,8 @@
-﻿using Atles.Infrastructure.Commands;
-using System;
+﻿using System;
+using Atles.Infrastructure.Commands;
 using Docs.Attributes;
 
-namespace Atles.Domain.Posts.Commands
+namespace Atles.Domain.Models.Posts.Commands
 {
     /// <summary>
     /// Request to update a topic.

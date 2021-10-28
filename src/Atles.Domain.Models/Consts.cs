@@ -1,4 +1,4 @@
-﻿namespace Atles.Domain
+﻿namespace Atles.Domain.Models
 {
     public static class Consts
     {

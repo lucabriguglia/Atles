@@ -1,12 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atles.Domain.PermissionSets;
-using Atles.Models;
-using Atles.Models.Public;
-using Atles.Models.Public.Index;
-using Atles.Models.Public.Search;
-using Atles.Reporting.Public.Queries;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
+using Atles.Reporting.Models.Shared;
 using Atles.Server.Services;
 using Markdig;
 using Microsoft.AspNetCore.Authorization;

@@ -1,5 +1,5 @@
-﻿using Atles.Domain.Categories.Rules;
-using Atles.Domain.Users.Commands;
+﻿using Atles.Domain.Models.Users.Commands;
+using Atles.Domain.Models.Users.Rules;
 using Atles.Domain.Validators.Users;
 using AutoFixture;
 using FluentValidation.TestHelper;
@@ -7,7 +7,7 @@ using Moq;
 using NUnit.Framework;
 using OpenCqrs;
 
-namespace Atles.Domain.Tests.Users.Validators
+namespace Atles.Domain.Validators.Tests.Users
 {
     [TestFixture]
     public class UpdateUserValidatorTests : TestFixtureBase

@@ -1,15 +1,15 @@
-﻿using Atles.Data;
-using Atles.Domain.Categories;
-using Atles.Domain.PermissionSets;
-using Atles.Models.Admin.Forums;
-using Atles.Reporting.Admin.Forums;
-using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
-using System;
+﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Data;
+using Atles.Domain.Models.Categories;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Reporting.Models.Admin.Forums;
+using Atles.Reporting.Models.Admin.Forums.Queries;
+using Microsoft.EntityFrameworkCore;
+using OpenCqrs.Queries;
 
-namespace Atles.Reporting.Handlers.Admin.Forums
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetForumCreateFormHandler : IQueryHandler<GetForumCreateForm, FormComponentModel>
     {

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Atles.Domain.PermissionSets;
+using Atles.Domain.Models.PermissionSets;
 
-namespace Atles.Models.Admin.PermissionSets
+namespace Atles.Reporting.Models.Admin.PermissionSets
 {
     public class FormComponentModel
     {

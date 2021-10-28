@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Models.Admin.Events;
-using Atles.Reporting.Admin.Events.Queries;
+using Atles.Reporting.Models.Admin.Events;
+using Atles.Reporting.Models.Admin.Events.Queries;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
 

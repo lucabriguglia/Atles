@@ -2,8 +2,9 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using Atles.Reporting.Models.Shared;
 
-namespace Atles.Models.Public.Topics
+namespace Atles.Reporting.Models.Public
 {
     public class TopicPageModel
     {

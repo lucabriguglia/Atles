@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
-using Atles.Domain.Categories;
-using Atles.Domain.PermissionSets;
-using Atles.Domain.Posts;
+using Atles.Domain.Models.Categories;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Domain.Models.Posts;
 using Docs.Attributes;
 
-namespace Atles.Domain.Forums
+namespace Atles.Domain.Models.Forums
 {
     /// <summary>
     /// A forum is a board where users can hold conversations.

@@ -1,5 +1,6 @@
-﻿using Atles.Domain.PermissionSets.Commands;
-using Atles.Domain.PermissionSets.Rules;
+﻿using System;
+using Atles.Domain.Models.PermissionSets.Commands;
+using Atles.Domain.Models.PermissionSets.Rules;
 using Atles.Domain.Validators.PermissionSets;
 using AutoFixture;
 using FluentValidation.TestHelper;
@@ -7,9 +8,8 @@ using Moq;
 using NUnit.Framework;
 using OpenCqrs;
 using OpenCqrs.Queries;
-using System;
 
-namespace Atles.Domain.Tests.PermissionSets.Validators
+namespace Atles.Domain.Validators.Tests.PermissionSets
 {
     [TestFixture]
     public class CreatePermissionSetValidatorTests : TestFixtureBase

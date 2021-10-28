@@ -1,5 +1,5 @@
-﻿using Atles.Domain.Categories.Rules;
-using Atles.Domain.Users.Commands;
+﻿using Atles.Domain.Models.Users.Commands;
+using Atles.Domain.Models.Users.Rules;
 using FluentValidation;
 using OpenCqrs;
 

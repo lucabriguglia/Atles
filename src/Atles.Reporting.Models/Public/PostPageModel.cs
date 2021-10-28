@@ -1,7 +1,7 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace Atles.Models.Public.Posts
+namespace Atles.Reporting.Models.Public
 {
     public class PostPageModel
     {

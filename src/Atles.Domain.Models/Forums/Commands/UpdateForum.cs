@@ -1,8 +1,8 @@
-﻿using Atles.Infrastructure.Commands;
-using System;
+﻿using System;
+using Atles.Infrastructure.Commands;
 using Docs.Attributes;
 
-namespace Atles.Domain.Forums.Commands
+namespace Atles.Domain.Models.Forums.Commands
 {
     /// <summary>
     /// Request that updates the forum details.

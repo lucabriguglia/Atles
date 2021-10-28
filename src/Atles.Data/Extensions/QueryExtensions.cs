@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Linq.Expressions;
 using System.Reflection;
-using Atles.Models;
+using Atles.Reporting.Models.Shared;
 
 namespace Atles.Data.Extensions
 {

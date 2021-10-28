@@ -1,8 +1,8 @@
-﻿using Atles.Models.Public.Search;
-using Atles.Reporting.Public.Queries;
-using OpenCqrs;
+﻿using OpenCqrs;
 using OpenCqrs.Queries;
 using System.Threading.Tasks;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
 
 namespace Atles.Reporting.Handlers.Public
 {

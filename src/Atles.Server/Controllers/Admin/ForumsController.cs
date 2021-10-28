@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Domain;
-using Atles.Domain.Forums.Commands;
-using Atles.Domain.Forums.Rules;
-using Atles.Models.Admin.Forums;
-using Atles.Reporting.Admin.Forums;
+using Atles.Domain.Models;
+using Atles.Domain.Models.Forums.Commands;
+using Atles.Domain.Models.Forums.Rules;
+using Atles.Reporting.Models.Admin.Forums;
+using Atles.Reporting.Models.Admin.Forums.Queries;
 using Microsoft.AspNetCore.Mvc;
 using OpenCqrs;
 

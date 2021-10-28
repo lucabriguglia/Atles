@@ -1,14 +1,14 @@
-﻿using Atles.Data;
-using Atles.Domain.Categories;
-using Atles.Domain.Forums;
-using Atles.Models.Admin.Categories;
-using Atles.Reporting.Admin.Categories;
+﻿using System.Linq;
+using System.Threading.Tasks;
+using Atles.Data;
+using Atles.Domain.Models.Categories;
+using Atles.Domain.Models.Forums;
+using Atles.Reporting.Models.Admin.Categories;
+using Atles.Reporting.Models.Admin.Categories.Queries;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
-using System.Linq;
-using System.Threading.Tasks;
 
-namespace Atles.Reporting.Handlers.Admin.Categories
+namespace Atles.Reporting.Handlers.Admin
 {
     public class GetCategoriesIndexHandler : IQueryHandler<GetCategoriesIndex, IndexPageModel>
     {

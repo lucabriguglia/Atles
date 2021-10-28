@@ -2,11 +2,11 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Data;
-using Atles.Domain.PermissionSets;
-using Atles.Domain.Posts;
-using Atles.Domain.Posts.Commands;
-using Atles.Models.Public.Topics;
-using Atles.Reporting.Public.Queries;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Domain.Models.Posts;
+using Atles.Domain.Models.Posts.Commands;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

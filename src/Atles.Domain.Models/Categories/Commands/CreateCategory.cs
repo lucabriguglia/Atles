@@ -2,7 +2,7 @@
 using Docs.Attributes;
 using System;
 
-namespace Atles.Domain.Categories.Commands
+namespace Atles.Domain.Models.Categories.Commands
 {
     /// <summary>
     /// Request that creates a new Forum Category.

@@ -1,5 +1,5 @@
-﻿using Atles.Domain.Forums.Rules;
-using Atles.Domain.Posts.Commands;
+﻿using Atles.Domain.Models.Forums.Rules;
+using Atles.Domain.Models.Posts.Commands;
 using Atles.Domain.Validators.Posts;
 using AutoFixture;
 using FluentValidation.TestHelper;
@@ -7,7 +7,7 @@ using Moq;
 using NUnit.Framework;
 using OpenCqrs;
 
-namespace Atles.Domain.Tests.Posts.Validators
+namespace Atles.Domain.Validators.Tests.Posts
 {
     [TestFixture]
     public class CreateTopicValidatorTests : TestFixtureBase

@@ -1,8 +1,7 @@
 ﻿using Atles.Infrastructure.Queries;
-using Atles.Models;
-using Atles.Models.Public.Forums;
+using Atles.Reporting.Models.Shared;
 
-namespace Atles.Reporting.Public.Queries
+namespace Atles.Reporting.Models.Public.Queries
 {
     public class GetForumPage : QueryBase<ForumPageModel>
     {

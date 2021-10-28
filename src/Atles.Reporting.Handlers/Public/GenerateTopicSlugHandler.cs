@@ -1,10 +1,10 @@
-﻿using Atles.Data;
-using Atles.Domain.Posts.Generators;
+﻿using System.Threading.Tasks;
+using Atles.Data;
+using Atles.Reporting.Models.Public.Queries;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
-using System.Threading.Tasks;
 
-namespace Atles.Domain.Handlers.Posts.Generators
+namespace Atles.Reporting.Handlers.Public
 {
     public class GetTopicSlugHandler : IQueryHandler<GetTopicSlug, string>
     {

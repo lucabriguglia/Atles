@@ -1,8 +1,7 @@
-﻿using Atles.Infrastructure.Queries;
-using Atles.Models.Admin.Forums;
-using System;
+﻿using System;
+using Atles.Infrastructure.Queries;
 
-namespace Atles.Reporting.Admin.Forums
+namespace Atles.Reporting.Models.Admin.Forums.Queries
 {
     public class GetForumsIndex : QueryBase<IndexPageModel>
     {

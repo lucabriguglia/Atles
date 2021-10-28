@@ -1,9 +1,8 @@
-﻿using Atles.Infrastructure.Commands;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
+using Atles.Infrastructure.Commands;
 using Docs.Attributes;
 
-namespace Atles.Domain.PermissionSets.Commands
+namespace Atles.Domain.Models.PermissionSets.Commands
 {
     /// <summary>
     /// Request that creates a new permission set.

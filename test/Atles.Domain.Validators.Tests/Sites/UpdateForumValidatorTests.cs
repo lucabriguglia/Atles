@@ -1,10 +1,10 @@
-﻿using Atles.Domain.Sites.Commands;
+﻿using Atles.Domain.Models.Sites.Commands;
 using Atles.Domain.Validators.Sites;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using NUnit.Framework;
 
-namespace Atles.Domain.Tests.Sites.Validators
+namespace Atles.Domain.Validators.Tests.Sites
 {
     [TestFixture]
     public class UpdateSiteValidatorTests : TestFixtureBase

@@ -1,16 +1,16 @@
-﻿using Atles.Domain.Forums.Commands;
-using Atles.Domain.Forums.Rules;
+﻿using System;
+using Atles.Domain.Models.Forums.Commands;
+using Atles.Domain.Models.Forums.Rules;
+using Atles.Domain.Models.PermissionSets.Rules;
 using Atles.Domain.Validators.Forums;
-using Atles.Domain.PermissionSets.Rules;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 using OpenCqrs;
 using OpenCqrs.Queries;
-using System;
 
-namespace Atles.Domain.Tests.Forums.Validators
+namespace Atles.Domain.Validators.Tests.Forums
 {
     [TestFixture]
     public class UpdateForumValidatorTests : TestFixtureBase

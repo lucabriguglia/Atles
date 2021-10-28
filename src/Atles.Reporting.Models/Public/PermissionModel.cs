@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
-using Atles.Domain.PermissionSets;
+using Atles.Domain.Models.PermissionSets;
 
-namespace Atles.Models.Public
+namespace Atles.Reporting.Models.Public
 {
     public class PermissionModel
     {

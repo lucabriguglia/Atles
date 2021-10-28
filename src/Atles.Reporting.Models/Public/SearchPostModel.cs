@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atles.Models.Public.Search
+namespace Atles.Reporting.Models.Public
 {
     public class SearchPostModel
     {

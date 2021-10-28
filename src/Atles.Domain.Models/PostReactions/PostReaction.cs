@@ -1,9 +1,10 @@
-﻿using Atles.Domain.Posts;
-using Atles.Domain.Users;
+﻿using System;
+using Atles.Domain.Models.Posts;
+using Atles.Domain.Models.Users;
+using Atles.Domain.PostReactions;
 using Docs.Attributes;
-using System;
 
-namespace Atles.Domain.PostReactions
+namespace Atles.Domain.Models.PostReactions
 {
     [DocTarget(Consts.DocsContextForum)]
     public class PostReaction

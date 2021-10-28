@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atles.Client.Pages;
 using Atles.Client.Services;
-using Atles.Models.Public;
+using Atles.Reporting.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;

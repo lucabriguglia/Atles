@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Atles.Domain.PermissionSets;
-using Atles.Domain.PermissionSets.Commands;
+using Atles.Domain.Models.PermissionSets;
+using Atles.Domain.Models.PermissionSets.Commands;
 using AutoFixture;
 using NUnit.Framework;
 
-namespace Atles.Domain.Models.Tests
+namespace Atles.Domain.Models.Tests.PermissionSets
 {
     [TestFixture]
     public class PermissionSetTests : TestFixtureBase

@@ -1,7 +1,6 @@
 ﻿using Atles.Infrastructure.Queries;
-using Atles.Models.Admin.Roles;
 
-namespace Atles.Reporting.Admin.Roles.Queries
+namespace Atles.Reporting.Models.Admin.Roles.Queries
 {
     public class GetRolesIndex : QueryBase<IndexPageModel>
     {

@@ -1,10 +1,10 @@
 ﻿using Atles.Data;
-using Atles.Domain.Forums;
-using Atles.Models.Public.Posts;
-using Atles.Reporting.Public.Queries;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
 using System.Threading.Tasks;
+using Atles.Domain.Models.Forums;
+using Atles.Reporting.Models.Public;
+using Atles.Reporting.Models.Public.Queries;
 
 namespace Atles.Reporting.Handlers.Public
 {

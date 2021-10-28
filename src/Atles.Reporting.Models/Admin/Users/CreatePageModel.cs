@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Atles.Models.Admin.Users
+namespace Atles.Reporting.Models.Admin.Users
 {
     public class CreatePageModel
     {

@@ -1,4 +1,5 @@
-﻿using Atles.Domain.PostReactions;
+﻿using Atles.Domain.Models.PostReactions;
+using Atles.Domain.PostReactions;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 

@@ -1,9 +1,9 @@
 ﻿using Atles.Data;
-using Atles.Domain.Forums;
-using Atles.Domain.Forums.Rules;
 using Microsoft.EntityFrameworkCore;
 using OpenCqrs.Queries;
 using System.Threading.Tasks;
+using Atles.Domain.Models.Forums;
+using Atles.Domain.Models.Forums.Rules;
 
 namespace Atles.Domain.Handlers.Forums.Rules
 {

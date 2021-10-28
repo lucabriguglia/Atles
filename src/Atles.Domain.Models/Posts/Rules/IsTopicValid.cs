@@ -1,7 +1,7 @@
-﻿using Atles.Infrastructure.Queries;
-using System;
+﻿using System;
+using Atles.Infrastructure.Queries;
 
-namespace Atles.Domain.Posts.Rules
+namespace Atles.Domain.Models.Posts.Rules
 {
     public class IsTopicValid : QueryBase<bool>
     {
