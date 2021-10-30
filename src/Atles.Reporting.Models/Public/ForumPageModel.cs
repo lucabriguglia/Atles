@@ -7,9 +7,9 @@ namespace Atles.Reporting.Models.Public
 {
     public class ForumPageModel
     {
-        public ForumModel Forum { get; set; } = new ForumModel();
+        public ForumModel Forum { get; set; } = new();
 
-        public PaginatedData<TopicModel> Topics { get; set; } = new PaginatedData<TopicModel>();
+        public PaginatedData<TopicModel> Topics { get; set; } = new();
 
         public bool CanRead { get; set; }
         public bool CanStart { get; set; }

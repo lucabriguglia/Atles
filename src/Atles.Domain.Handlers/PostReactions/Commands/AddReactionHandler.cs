@@ -34,7 +34,7 @@ namespace Atles.Domain.Handlers.PostReactions.Commands
                 throw new DataException($"Post with Id {command.Id} not found.");
             }
 
-            post.AddReaction(command.Type);
+            post.IncreaseReactionCount(command.Type);
 
             var postReaction = new PostReaction(command.PostId, command.UserId, command.Type);
 

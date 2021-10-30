@@ -8,11 +8,11 @@ namespace Atles.Reporting.Models.Public
 {
     public class TopicPageModel
     {
-        public ForumModel Forum { get; set; } = new ForumModel();
-        public TopicModel Topic { get; set; } = new TopicModel();
-        public ReplyModel Answer { get; set; } = new ReplyModel();
-        public PaginatedData<ReplyModel> Replies { get; set; } = new PaginatedData<ReplyModel>();
-        public PostModel Post { get; set; } = new PostModel();
+        public ForumModel Forum { get; set; } = new();
+        public TopicModel Topic { get; set; } = new();
+        public ReplyModel Answer { get; set; } = new();
+        public PaginatedData<ReplyModel> Replies { get; set; } = new();
+        public PostModel Post { get; set; } = new();
 
         public bool CanReply { get; set; }
         public bool CanEdit { get; set; }

@@ -32,7 +32,7 @@ namespace Atles.Domain.Handlers.PostReactions.Commands
                 throw new DataException($"Post reaction for post id {command.PostId} and user id {command.UserId} not found.");
             }
 
-            postReaction.Post.RemoveReaction(postReaction.Type);
+            postReaction.Post.DecreaseReactionCount(postReaction.Type);
 
             _dbContext.PostReactions.Remove(postReaction);
 

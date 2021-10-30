@@ -1003,6 +1003,18 @@
             If the resulting number is less than zero, the value is set to zero.
             </summary>
         </member>
+        <member name="M:Atles.Domain.Models.Posts.Post.IncreaseReactionCount(Atles.Domain.PostReactions.PostReactionType)">
+            <summary>
+            Increases count for the specified reaction type.
+            </summary>
+            <param name="type">The post reaction type.</param>
+        </member>
+        <member name="M:Atles.Domain.Models.Posts.Post.DecreaseReactionCount(Atles.Domain.PostReactions.PostReactionType)">
+            <summary>
+            Decreases count for the specified reaction type.
+            </summary>
+            <param name="type">The post reaction type.</param>
+        </member>
         <member name="M:Atles.Domain.Models.Posts.Post.Pin(System.Boolean)">
             <summary>
             Pin and unpin the topic based of the passed value.

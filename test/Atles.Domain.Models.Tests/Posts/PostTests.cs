@@ -23,24 +23,24 @@ namespace Atles.Domain.Models.Tests.Posts
         }
 
         [Test]
-        public void Should_add_reaction()
+        public void Should_increase_reaction_count()
         {
             var sut = Fixture.Build<Post>().With(x => x.PostReactionCounts, new List<PostReactionCount>()).Create();
 
-            sut.AddReaction(PostReactionType.Celebrate);
+            sut.IncreaseReactionCount(PostReactionType.Celebrate);
 
             Assert.AreEqual(1, sut.PostReactionCounts.FirstOrDefault(x => x.Type == PostReactionType.Celebrate).Count);
         }
 
         [Test]
-        public void Should_remove_reaction()
+        public void Should_decrease_reaction_count()
         {
             var postReactionCount = new PostReactionCount(Guid.NewGuid(), PostReactionType.Insightful);
             postReactionCount.IncreaseCount();
 
             var sut = Fixture.Build<Post>().With(x => x.PostReactionCounts, new List<PostReactionCount> { postReactionCount }).Create();
 
-            sut.RemoveReaction(PostReactionType.Insightful);
+            sut.DecreaseReactionCount(PostReactionType.Insightful);
 
             Assert.AreEqual(1, sut.PostReactionCounts.FirstOrDefault(x => x.Type == PostReactionType.Insightful).Count);
         }

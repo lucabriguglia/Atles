@@ -44,7 +44,7 @@ namespace Atles.Domain.Handlers.Tests.PostLikes.Commands
             var topic = Post.CreateTopic(topicId, forumId, Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
             var postReaction = new PostReaction(topicId, Guid.NewGuid(), PostReactionType.Support);
 
-            topic.AddReaction(PostReactionType.Support);
+            topic.IncreaseReactionCount(PostReactionType.Support);
 
             using (var dbContext = new AtlesDbContext(options))
             {

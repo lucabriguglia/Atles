@@ -304,12 +304,13 @@ namespace Atles.Domain.Models.Posts
             }
         }
 
-        public void AddReaction(PostReactionType type)
+        /// <summary>
+        /// Increases count for the specified reaction type.
+        /// </summary>
+        /// <param name="type">The post reaction type.</param>
+        public void IncreaseReactionCount(PostReactionType type)
         {
-            if (PostReactionCounts == null)
-            {
-                PostReactionCounts = new List<PostReactionCount>();
-            }
+            PostReactionCounts ??= new List<PostReactionCount>();
 
             var postReactionCount = PostReactionCounts.FirstOrDefault(x => x.Type == type);
             if (postReactionCount != null)
@@ -322,16 +323,14 @@ namespace Atles.Domain.Models.Posts
             }
         }
 
-        public void RemoveReaction(PostReactionType type)
+        /// <summary>
+        /// Decreases count for the specified reaction type.
+        /// </summary>
+        /// <param name="type">The post reaction type.</param>
+        public void DecreaseReactionCount(PostReactionType type)
         {
-            if (PostReactionCounts != null)
-            {
-                var postReactionCount = PostReactionCounts.FirstOrDefault(x => x.Type == type);
-                if (postReactionCount != null)
-                {
-                    postReactionCount.DecreaseCount();
-                }
-            }
+            var postReactionCount = PostReactionCounts?.FirstOrDefault(x => x.Type == type);
+            postReactionCount?.DecreaseCount();
         }
 
         /// <summary>
