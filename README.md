@@ -11,8 +11,8 @@ A forum software built with ASP.NET Blazor WebAssembly and CQRS.
 
 ## Technology
 
-- Blazor WebAssembly 5.0.1
-- Entity Framework Core 5.0.1
+- Blazor WebAssembly 6.0.1
+- Entity Framework Core 6.0.1
 - SQL Server
 
 ## Features
