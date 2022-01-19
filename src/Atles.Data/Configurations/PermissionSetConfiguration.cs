@@ -10,6 +10,15 @@ namespace Atles.Data.Configurations
         {
             builder.ToTable("PermissionSet");
 
+            builder.OwnsMany(s => s.Permissions, b =>
+            {
+                b.ToTable("Permission")
+                    .HasKey("PermissionSetId", "RoleId", "Type");
+
+                b.Property(e => e.Type);
+                b.Property(e => e.RoleId);
+            });
+
             //builder
             //    .Property(x => x.Permissions)
             //    .HasField("_permissions");

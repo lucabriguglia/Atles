@@ -4,11 +4,11 @@ using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Extensions;
 using Atles.Domain.Models.Users;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.Users;
 using Atles.Reporting.Models.Admin.Users.Queries;
 using Atles.Reporting.Models.Shared;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 
 namespace Atles.Reporting.Handlers.Admin
 {

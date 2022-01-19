@@ -1,13 +1,13 @@
 ﻿using Atles.Data;
 using Atles.Data.Caching;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Commands;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Posts.Commands;
+using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Posts.Commands
 {

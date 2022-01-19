@@ -1,11 +1,11 @@
 ﻿using Atles.Domain.Models.Users.Commands;
 using Atles.Domain.Models.Users.Rules;
 using Atles.Domain.Validators.Users;
+using Atles.Infrastructure;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using OpenCqrs;
 
 namespace Atles.Domain.Validators.Tests.Users
 {

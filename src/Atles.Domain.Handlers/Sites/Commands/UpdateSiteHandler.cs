@@ -5,9 +5,9 @@ using Atles.Data.Caching;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Sites;
 using Atles.Domain.Models.Sites.Commands;
+using Atles.Infrastructure.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Commands;
 
 namespace Atles.Domain.Handlers.Sites.Commands
 {

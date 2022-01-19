@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain.Models.PermissionSets;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.PermissionSets.Queries;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 using IndexPageModel = Atles.Reporting.Models.Admin.PermissionSets.IndexPageModel;
 
 namespace Atles.Reporting.Handlers.Admin

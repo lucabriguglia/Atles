@@ -4,10 +4,10 @@ using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.PermissionSets;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.Categories;
 using Atles.Reporting.Models.Admin.Categories.Queries;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 
 namespace Atles.Reporting.Handlers.Admin
 {

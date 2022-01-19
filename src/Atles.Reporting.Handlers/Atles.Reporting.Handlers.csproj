@@ -10,8 +10,4 @@
     <ProjectReference Include="..\Atles.Reporting.Models\Atles.Reporting.Models.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="OpenCqrs" Version="1.0.4-Beta" />
-  </ItemGroup>
-
 </Project>

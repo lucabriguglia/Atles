@@ -6,7 +6,6 @@
 
   <ItemGroup>
     <PackageReference Include="FluentValidation" Version="10.3.3" />
-    <PackageReference Include="OpenCqrs" Version="1.0.4-Beta" />
   </ItemGroup>
 
   <ItemGroup>

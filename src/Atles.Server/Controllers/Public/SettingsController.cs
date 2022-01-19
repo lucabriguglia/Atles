@@ -1,12 +1,12 @@
 ﻿using System.Threading.Tasks;
 using Atles.Domain.Models.Users.Commands;
 using Atles.Domain.Models.Users.Rules;
+using Atles.Infrastructure;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using OpenCqrs;
 
 namespace Atles.Server.Controllers.Public
 {

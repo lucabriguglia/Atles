@@ -564,7 +564,7 @@
             Creates an empty permission set.
             </summary>
         </member>
-        <member name="M:Atles.Domain.Models.PermissionSets.PermissionSet.#ctor(System.Guid,System.String,System.Collections.Generic.ICollection{Atles.Domain.Models.PermissionSets.Commands.PermissionCommand})">
+        <member name="M:Atles.Domain.Models.PermissionSets.PermissionSet.#ctor(System.Guid,System.String,System.Collections.Generic.IEnumerable{Atles.Domain.Models.PermissionSets.Commands.PermissionCommand})">
             <summary>
             Creates a new permission set  with the given values.
             The unique identifier is automatically assigned.
@@ -574,7 +574,7 @@
             <param name="name"></param>
             <param name="permissions"></param>
         </member>
-        <member name="M:Atles.Domain.Models.PermissionSets.PermissionSet.#ctor(System.Guid,System.Guid,System.String,System.Collections.Generic.ICollection{Atles.Domain.Models.PermissionSets.Commands.PermissionCommand})">
+        <member name="M:Atles.Domain.Models.PermissionSets.PermissionSet.#ctor(System.Guid,System.Guid,System.String,System.Collections.Generic.IEnumerable{Atles.Domain.Models.PermissionSets.Commands.PermissionCommand})">
             <summary>
             Creates a new permission set with the given values including a unique identifier.
             The default status is published.

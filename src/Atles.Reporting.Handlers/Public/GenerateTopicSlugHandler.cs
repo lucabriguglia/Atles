@@ -1,8 +1,8 @@
 ﻿using System.Threading.Tasks;
 using Atles.Data;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Public.Queries;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 
 namespace Atles.Reporting.Handlers.Public
 {

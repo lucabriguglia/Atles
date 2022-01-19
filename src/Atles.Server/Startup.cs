@@ -4,6 +4,7 @@ using Atles.Data;
 using Atles.Domain.Handlers.Categories.Commands;
 using Atles.Domain.Models.Sites;
 using Atles.Domain.Validators.Categories;
+using Atles.Infrastructure.Extensions;
 using Atles.Reporting.Handlers.Admin;
 using Atles.Reporting.Models.Admin.Categories;
 using Atles.Server.Services;
@@ -18,7 +19,6 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using OpenCqrs.Extensions;
 
 namespace Atles.Server
 {
@@ -86,7 +86,7 @@ namespace Atles.Server
 
             services.AddDocs();
 
-            services.AddOpenCQRS(typeof(CreateCategoryHandler), typeof(GetCategoriesIndexHandler));
+            services.AddHandlers(typeof(CreateCategoryHandler), typeof(GetCategoriesIndexHandler));
 
             services.Scan(s => s
                 .FromAssembliesOf(typeof(Startup), typeof(Site), typeof(CreateCategoryValidator), typeof(IndexPageModel), typeof(AtlesDbContext))

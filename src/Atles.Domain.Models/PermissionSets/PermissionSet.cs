@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.PermissionSets.Commands;
@@ -40,7 +41,9 @@ namespace Atles.Domain.Models.PermissionSets
         /// Each permission is a combination of a user role and a permission type.
         /// For example, role Subscriber and type Read which means that only users in the role Subscriber can read the discussions.
         /// </summary>
-        public ICollection<Permission> Permissions { get; set; }
+        public IReadOnlyCollection<Permission> Permissions => _permissions;
+        private readonly List<Permission> _permissions = new();
+        //public ICollection<Permission> Permissions { get; set; }
 
         /// <summary>
         /// List of forum categories that use the permission set.
@@ -67,7 +70,7 @@ namespace Atles.Domain.Models.PermissionSets
         /// <param name="siteId"></param>
         /// <param name="name"></param>
         /// <param name="permissions"></param>
-        public PermissionSet(Guid siteId, string name, ICollection<PermissionCommand> permissions)
+        public PermissionSet(Guid siteId, string name, IEnumerable<PermissionCommand> permissions)
         {
             New(Guid.NewGuid(), siteId, name, permissions);
         }
@@ -80,12 +83,12 @@ namespace Atles.Domain.Models.PermissionSets
         /// <param name="siteId"></param>
         /// <param name="name"></param>
         /// <param name="permissions"></param>
-        public PermissionSet(Guid id, Guid siteId, string name, ICollection<PermissionCommand> permissions)
+        public PermissionSet(Guid id, Guid siteId, string name, IEnumerable<PermissionCommand> permissions)
         {
             New(id, siteId, name, permissions);
         }
 
-        private void New(Guid id, Guid siteId, string name, ICollection<PermissionCommand> permissions)
+        private void New(Guid id, Guid siteId, string name, IEnumerable<PermissionCommand> permissions)
         {
             Id = id;
             SiteId = siteId;
@@ -94,13 +97,13 @@ namespace Atles.Domain.Models.PermissionSets
             AddPermissions(permissions);
         }
 
-        private void AddPermissions(ICollection<PermissionCommand> permissions)
+        private void AddPermissions(IEnumerable<PermissionCommand> permissions)
         {
-            Permissions = new List<Permission>();
+            if (permissions == null) return;
 
             foreach (var permission in permissions)
             {
-                Permissions.Add(new Permission(Id, permission.Type, permission.RoleId));
+                _permissions.Add(new Permission(permission.Type, permission.RoleId));
             }
         }
 

@@ -1,11 +1,11 @@
 ﻿using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain.Models.Users;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.Users;
 using Atles.Reporting.Models.Admin.Users.Queries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 
 namespace Atles.Reporting.Handlers.Admin
 {

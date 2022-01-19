@@ -2,9 +2,9 @@
 using Atles.Domain.Models.Posts;
 using Atles.Domain.PostReactions.Commands;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Commands;
 using System.Data;
 using System.Threading.Tasks;
+using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.PostReactions.Commands
 {

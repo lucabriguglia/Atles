@@ -1,5 +1,5 @@
-﻿using Microsoft.AspNetCore.Authorization;
-using OpenCqrs;
+﻿using Atles.Infrastructure;
+using Microsoft.AspNetCore.Authorization;
 
 namespace Atles.Server.Controllers.Admin
 {

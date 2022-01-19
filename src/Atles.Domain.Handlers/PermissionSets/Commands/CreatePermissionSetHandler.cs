@@ -3,8 +3,8 @@ using Atles.Data;
 using Atles.Domain.Models;
 using Atles.Domain.Models.PermissionSets;
 using Atles.Domain.Models.PermissionSets.Commands;
+using Atles.Infrastructure.Commands;
 using FluentValidation;
-using OpenCqrs.Commands;
 
 namespace Atles.Domain.Handlers.PermissionSets.Commands
 {

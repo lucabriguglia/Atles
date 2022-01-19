@@ -1,8 +1,8 @@
 ﻿using System;
 using System.IO;
 using System.Linq;
+using Atles.Infrastructure;
 using Microsoft.AspNetCore.Mvc;
-using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {

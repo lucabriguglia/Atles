@@ -1,9 +1,9 @@
 ﻿using Atles.Data;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 using System.Threading.Tasks;
 using Atles.Domain.Models.Users;
 using Atles.Domain.Models.Users.Rules;
+using Atles.Infrastructure.Queries;
 
 namespace Atles.Domain.Handlers.Users.Rules
 {

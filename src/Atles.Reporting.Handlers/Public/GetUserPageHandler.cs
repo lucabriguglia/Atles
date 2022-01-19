@@ -1,9 +1,9 @@
 ﻿using Atles.Data;
 using Atles.Reporting.Handlers.Services;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs;
-using OpenCqrs.Queries;
 using System.Threading.Tasks;
+using Atles.Infrastructure;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Reporting.Models.Shared;

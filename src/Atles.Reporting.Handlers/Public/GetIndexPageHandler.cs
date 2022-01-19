@@ -1,12 +1,12 @@
 ﻿using Atles.Data;
 using Atles.Data.Caching;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Forums;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 

@@ -1,8 +1,8 @@
 ﻿using Atles.Data;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 using System.Threading.Tasks;
 using Atles.Domain.Models.Posts;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 

@@ -5,6 +5,7 @@ using Atles.Data;
 using Atles.Domain.Models.PermissionSets;
 using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Posts.Commands;
+using Atles.Infrastructure;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Reporting.Models.Shared;
@@ -13,7 +14,6 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using OpenCqrs;
 
 namespace Atles.Server.Controllers.Public
 {

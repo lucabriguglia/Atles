@@ -2,8 +2,8 @@
 using Atles.Data;
 using Atles.Domain.Models.PermissionSets;
 using Atles.Domain.Models.PermissionSets.Rules;
+using Atles.Infrastructure.Queries;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 
 namespace Atles.Domain.Handlers.PermissionSets.Rules
 {

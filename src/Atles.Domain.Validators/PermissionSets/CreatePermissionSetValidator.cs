@@ -1,7 +1,7 @@
 ﻿using Atles.Domain.Models.PermissionSets.Commands;
 using Atles.Domain.Models.PermissionSets.Rules;
+using Atles.Infrastructure;
 using FluentValidation;
-using OpenCqrs;
 
 namespace Atles.Domain.Validators.PermissionSets
 {

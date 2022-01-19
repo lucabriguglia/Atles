@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.Users;
 using Atles.Reporting.Models.Admin.Users.Queries;
-using OpenCqrs.Queries;
 
 namespace Atles.Reporting.Handlers.Admin
 {

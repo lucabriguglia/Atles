@@ -2,10 +2,10 @@
 using System.Threading.Tasks;
 using Atles.Domain.Models.PermissionSets.Commands;
 using Atles.Domain.Models.PermissionSets.Rules;
+using Atles.Infrastructure;
 using Atles.Reporting.Models.Admin.PermissionSets;
 using Atles.Reporting.Models.Admin.PermissionSets.Queries;
 using Microsoft.AspNetCore.Mvc;
-using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {

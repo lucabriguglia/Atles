@@ -2,11 +2,11 @@
 using Atles.Reporting.Handlers.Services;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs;
-using OpenCqrs.Queries;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Domain.Models.Posts;
+using Atles.Infrastructure;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 

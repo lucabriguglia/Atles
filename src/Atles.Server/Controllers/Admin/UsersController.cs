@@ -3,12 +3,12 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atles.Domain.Models.Users.Commands;
 using Atles.Domain.Models.Users.Rules;
+using Atles.Infrastructure;
 using Atles.Reporting.Models.Admin.Users;
 using Atles.Reporting.Models.Admin.Users.Queries;
 using Atles.Reporting.Models.Shared;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
-using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {

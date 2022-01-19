@@ -1,8 +1,8 @@
 ﻿using Atles.Domain.Models.Forums.Commands;
 using Atles.Domain.Models.Forums.Rules;
 using Atles.Domain.Models.PermissionSets.Rules;
+using Atles.Infrastructure;
 using FluentValidation;
-using OpenCqrs;
 
 namespace Atles.Domain.Validators.Forums
 {

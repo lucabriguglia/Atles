@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Infrastructure;
 using Atles.Reporting.Models.Admin.Events;
 using Atles.Reporting.Models.Admin.Events.Queries;
 using Microsoft.AspNetCore.Mvc;
-using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {

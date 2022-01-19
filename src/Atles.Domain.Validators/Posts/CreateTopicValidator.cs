@@ -1,7 +1,7 @@
 ﻿using Atles.Domain.Models.Forums.Rules;
 using Atles.Domain.Models.Posts.Commands;
+using Atles.Infrastructure;
 using FluentValidation;
-using OpenCqrs;
 
 namespace Atles.Domain.Validators.Posts
 {

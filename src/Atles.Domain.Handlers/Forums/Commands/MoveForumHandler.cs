@@ -5,8 +5,8 @@ using Atles.Data.Caching;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.Forums.Commands;
+using Atles.Infrastructure.Commands;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Commands;
 
 namespace Atles.Domain.Handlers.Forums.Commands
 {

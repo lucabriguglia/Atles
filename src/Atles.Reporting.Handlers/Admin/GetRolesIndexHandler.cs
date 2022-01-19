@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.Roles;
 using Atles.Reporting.Models.Admin.Roles.Queries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 
 namespace Atles.Reporting.Handlers.Admin
 {

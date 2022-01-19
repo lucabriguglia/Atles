@@ -3,12 +3,12 @@ using Atles.Domain.Models.Categories.Commands;
 using Atles.Domain.Models.Categories.Rules;
 using Atles.Domain.Models.PermissionSets.Rules;
 using Atles.Domain.Validators.Categories;
+using Atles.Infrastructure;
+using Atles.Infrastructure.Queries;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using OpenCqrs;
-using OpenCqrs.Queries;
 
 namespace Atles.Domain.Validators.Tests.Categories
 {

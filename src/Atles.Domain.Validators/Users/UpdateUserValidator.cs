@@ -1,7 +1,7 @@
 ﻿using Atles.Domain.Models.Users.Commands;
 using Atles.Domain.Models.Users.Rules;
+using Atles.Infrastructure;
 using FluentValidation;
-using OpenCqrs;
 
 namespace Atles.Domain.Validators.Users
 {

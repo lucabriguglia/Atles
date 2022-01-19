@@ -1,11 +1,11 @@
 ﻿using Atles.Domain.Models.Forums.Rules;
 using Atles.Domain.Models.Posts.Commands;
 using Atles.Domain.Validators.Posts;
+using Atles.Infrastructure;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
-using OpenCqrs;
 
 namespace Atles.Domain.Validators.Tests.Posts
 {

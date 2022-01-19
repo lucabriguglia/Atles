@@ -2,7 +2,6 @@
 using Atles.Data.Caching;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Commands;
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -10,6 +9,7 @@ using Atles.Domain.Handlers.Posts.Services;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Posts.Commands;
+using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Posts.Commands
 {

@@ -3,11 +3,11 @@ using Atles.Domain.PostReactions;
 using Atles.Domain.PostReactions.Commands;
 using Atles.Domain.Posts;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Commands;
 using System.Data;
 using System.Threading.Tasks;
 using Atles.Domain.Models.PostReactions;
 using Atles.Domain.Models.Posts;
+using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.PostReactions.Commands
 {

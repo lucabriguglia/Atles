@@ -2,11 +2,11 @@
 using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.PermissionSets;
+using Atles.Infrastructure;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.PermissionSets;
 using Atles.Reporting.Models.Admin.PermissionSets.Queries;
 using Atles.Reporting.Models.Admin.Roles.Queries;
-using OpenCqrs;
-using OpenCqrs.Queries;
 
 namespace Atles.Reporting.Handlers.Admin
 {

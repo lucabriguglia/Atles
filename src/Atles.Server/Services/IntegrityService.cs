@@ -2,10 +2,10 @@
 using Atles.Data;
 using Atles.Domain.Models.Users;
 using Atles.Domain.Models.Users.Commands;
+using Atles.Infrastructure;
 using Atles.Reporting.Models.Public.Queries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs;
 
 namespace Atles.Server.Services
 {

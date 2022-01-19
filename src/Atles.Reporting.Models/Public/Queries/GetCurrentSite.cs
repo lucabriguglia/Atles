@@ -1,4 +1,4 @@
-﻿using OpenCqrs.Queries;
+﻿using Atles.Infrastructure.Queries;
 
 namespace Atles.Reporting.Models.Public.Queries
 {

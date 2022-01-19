@@ -1,10 +1,10 @@
 ﻿using Atles.Data;
 using Atles.Reporting.Handlers.Services;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Domain.Models.Posts;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Reporting.Models.Shared;

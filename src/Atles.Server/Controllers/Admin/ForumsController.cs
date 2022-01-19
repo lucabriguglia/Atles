@@ -4,10 +4,10 @@ using Atles.Domain;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Forums.Commands;
 using Atles.Domain.Models.Forums.Rules;
+using Atles.Infrastructure;
 using Atles.Reporting.Models.Admin.Forums;
 using Atles.Reporting.Models.Admin.Forums.Queries;
 using Microsoft.AspNetCore.Mvc;
-using OpenCqrs;
 
 namespace Atles.Server.Controllers.Admin
 {

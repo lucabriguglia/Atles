@@ -2,12 +2,12 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Data;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.Users;
 using Atles.Reporting.Models.Admin.Users.Queries;
 using Atles.Reporting.Models.Shared;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
-using OpenCqrs.Queries;
 
 namespace Atles.Reporting.Handlers.Admin
 {

@@ -1,9 +1,9 @@
 ﻿using Atles.Data;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 using System.Threading.Tasks;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Categories.Rules;
+using Atles.Infrastructure.Queries;
 
 namespace Atles.Domain.Handlers.Categories.Rules
 {

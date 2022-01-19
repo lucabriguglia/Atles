@@ -2,8 +2,8 @@
 using Atles.Data.Caching;
 using Markdig;
 using Microsoft.EntityFrameworkCore;
-using OpenCqrs.Queries;
 using System.Threading.Tasks;
+using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 
