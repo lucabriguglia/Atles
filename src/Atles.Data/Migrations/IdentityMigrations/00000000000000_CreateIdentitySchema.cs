@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
-namespace Atles.Data.Migrations.ApplicationMigrations
+namespace Atles.Data.Migrations.IdentityMigrations
 {
     public partial class CreateIdentitySchema : Migration
     {

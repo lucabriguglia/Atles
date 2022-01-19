@@ -41,17 +41,17 @@ namespace Atles.Server
                 options.UseSqlServer(
                     Configuration.GetConnectionString("AtlesConnection")));
 
-            services.AddDbContext<ApplicationDbContext>(options =>
+            services.AddDbContext<IdentityDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("ApplicationConnection")));
+                    Configuration.GetConnectionString("IdentityConnection")));
 
             services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
                 .AddRoles<IdentityRole>()
-                .AddEntityFrameworkStores<ApplicationDbContext>();
+                .AddEntityFrameworkStores<IdentityDbContext>();
 
             // https://github.com/dotnet/aspnetcore/issues/20436#issuecomment-607718936
             services.AddIdentityServer()
-                .AddApiAuthorization<IdentityUser, ApplicationDbContext>(options => 
+                .AddApiAuthorization<IdentityUser, IdentityDbContext>(options => 
                 {
                     options.IdentityResources["openid"].UserClaims.Add("role");
                     options.ApiResources.Single().UserClaims.Add("role");
@@ -98,7 +98,7 @@ namespace Atles.Server
         public void Configure(IApplicationBuilder app,
             IWebHostEnvironment env,
             AtlesDbContext atlasDbContext,
-            ApplicationDbContext applicationDbContext,
+            IdentityDbContext applicationDbContext,
             IInstallationService installationService,
             IDocumentationService documentationService)
         {

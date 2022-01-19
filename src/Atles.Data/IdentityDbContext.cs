@@ -6,9 +6,9 @@ using Microsoft.Extensions.Options;
 
 namespace Atles.Data
 {
-    public class ApplicationDbContext : ApiAuthorizationDbContext<IdentityUser>
+    public class IdentityDbContext : ApiAuthorizationDbContext<IdentityUser>
     {
-        public ApplicationDbContext(
+        public IdentityDbContext(
             DbContextOptions options,
             IOptions<OperationalStoreOptions> operationalStoreOptions) : base(options, operationalStoreOptions)
         {
