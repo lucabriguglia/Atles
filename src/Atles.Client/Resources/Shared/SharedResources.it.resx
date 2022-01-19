@@ -150,6 +150,9 @@
   <data name="First" xml:space="preserve">
     <value>Prima</value>
   </data>
+  <data name="History" xml:space="preserve">
+    <value>Modifiche</value>
+  </data>
   <data name="Last" xml:space="preserve">
     <value>Ultima</value>
   </data>
@@ -206,9 +209,6 @@
   </data>
   <data name="Unpin" xml:space="preserve">
     <value>Stacca</value>
-  </data>
-  <data name="View Events" xml:space="preserve">
-    <value>Visualizza Eventi</value>
   </data>
   <data name="You are not authorized to access this resource." xml:space="preserve">
     <value>Non siete autorizzati ad accedere a questa risorsa.</value>
