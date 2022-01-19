@@ -98,7 +98,7 @@ namespace Atles.Server
         public void Configure(IApplicationBuilder app,
             IWebHostEnvironment env,
             AtlesDbContext atlasDbContext,
-            IdentityDbContext applicationDbContext,
+            IdentityDbContext identityDbContext,
             IInstallationService installationService,
             IDocumentationService documentationService)
         {
@@ -144,7 +144,7 @@ namespace Atles.Server
             if (Configuration["MigrateDatabases"] == "true")
             {
                 atlasDbContext.Database.Migrate();
-                applicationDbContext.Database.Migrate();
+                identityDbContext.Database.Migrate();
             }
 
             if (Configuration["EnsureDefaultSiteInitialized"] == "true")
