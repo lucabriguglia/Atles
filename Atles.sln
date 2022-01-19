@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 17
-VisualStudioVersion = 17.0.32014.148
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.31911.196
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8540BC55-5403-4EE2-8D4C-E4492EE6AC4F}"
 	ProjectSection(SolutionItems) = preProject
@@ -59,8 +59,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "workflows", "workflows", "{
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{0C907861-F928-46E5-915E-1F153E1661D4}"
 	ProjectSection(SolutionItems) = preProject
-		sql\ApplicationConnection.Migrations.sql = sql\ApplicationConnection.Migrations.sql
 		sql\AtlasConnection.Migrations.sql = sql\AtlasConnection.Migrations.sql
+		sql\IdentityConnection.Migrations.sql = sql\IdentityConnection.Migrations.sql
 	EndProjectSection
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Handlers", "src\Atles.Domain.Handlers\Atles.Domain.Handlers.csproj", "{9A7D347B-FEE6-4EEA-80B8-E2D5157B36AC}"
@@ -75,7 +75,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Validators", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Validators.Tests", "test\Atles.Domain.Validators.Tests\Atles.Domain.Validators.Tests.csproj", "{B3D193A6-360E-45C4-805E-747096958BAE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Infrastructure.Tests", "test\Atles.Infrastructure.Tests\Atles.Infrastructure.Tests.csproj", "{660CB9AE-00AD-49D3-9D47-0E270405B66C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Infrastructure.Tests", "test\Atles.Infrastructure.Tests\Atles.Infrastructure.Tests.csproj", "{660CB9AE-00AD-49D3-9D47-0E270405B66C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
