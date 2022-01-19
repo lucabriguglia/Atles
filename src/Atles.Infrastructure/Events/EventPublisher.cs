@@ -1,5 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Atles.Infrastructure.Services;
 
@@ -23,12 +23,7 @@ namespace Atles.Infrastructure.Events
 
             var handlers = _serviceProvider.GetServices<IEventHandler<TEvent>>();
 
-            var tasks = new List<Task>();
-
-            foreach (var handler in handlers)
-            {
-                tasks.Add(handler.Handle(@event));
-            }
+            var tasks = handlers.Select(handler => handler.Handle(@event)).ToList();
 
             await Task.WhenAll(tasks);
         }
