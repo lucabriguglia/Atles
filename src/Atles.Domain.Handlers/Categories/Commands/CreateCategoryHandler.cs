@@ -7,6 +7,8 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Categories.Commands;
+using Atles.Domain.Models.Categories.Events;
+using Atles.Infrastructure;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Categories.Commands
@@ -16,12 +18,14 @@ namespace Atles.Domain.Handlers.Categories.Commands
         private readonly AtlesDbContext _dbContext;
         private readonly IValidator<CreateCategory> _validator;
         private readonly ICacheManager _cacheManager;
+        private readonly IDispatcher _dispatcher;
 
-        public CreateCategoryHandler(AtlesDbContext dbContext, IValidator<CreateCategory> validator, ICacheManager cacheManager)
+        public CreateCategoryHandler(AtlesDbContext dbContext, IValidator<CreateCategory> validator, ICacheManager cacheManager, IDispatcher dispatcher)
         {
             _dbContext = dbContext;
             _validator = validator;
             _cacheManager = cacheManager;
+            _dispatcher = dispatcher;
         }
 
         public async Task Handle(CreateCategory command)
@@ -42,24 +46,25 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
             _dbContext.Categories.Add(category);
 
-            Event evnt = new(EventType.Created,
-                            category.Id,
-                            typeof(Category),
-                            command.SiteId,
-                            command.UserId,
-                            new
-                            {
-                                category.Name,
-                                category.PermissionSetId,
-                                category.SortOrder
-                            });
+            var @event = new CategoryCreated
+            {
+                Name = category.Name,
+                PermissionSetId = category.PermissionSetId,
+                SortOrder = category.SortOrder,
+                TargetId = category.Id,
+                TargetType = nameof(Category),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
 
-            _dbContext.Events.Add(evnt);
+            _dbContext.HistoryItems.Add(@event.ToHistoryItem());
 
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.Categories(command.SiteId));
             _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
+
+            await _dispatcher.Publish(@event);
         }
     }
 }

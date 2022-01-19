@@ -48,7 +48,7 @@ namespace Atles.Domain.Handlers.Tests.PermissionSets.Commands
                 await sut.Handle(command);
 
                 var permissionSet = await dbContext.PermissionSets.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var @event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.NotNull(permissionSet);

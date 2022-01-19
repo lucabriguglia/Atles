@@ -38,7 +38,7 @@ namespace Atles.Reporting.Handlers.Admin
                 }
             };
 
-            var query = _dbContext.Events.Where(x => x.SiteId == request.SiteId && x.UserId == request.UserId);
+            var query = _dbContext.HistoryItems.Where(x => x.SiteId == request.SiteId && x.UserId == request.UserId);
 
             if (!string.IsNullOrWhiteSpace(request.Options.Search))
             {

@@ -32,7 +32,7 @@ namespace Atles.Domain.Handlers.Users.Commands
 
             user.Reinstate();
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Reinstated,
                 typeof(User),

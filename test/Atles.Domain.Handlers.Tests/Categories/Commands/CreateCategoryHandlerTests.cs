@@ -42,7 +42,7 @@ namespace Atles.Domain.Handlers.Tests.Categories.Commands
                 await sut.Handle(command);
 
                 var category = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var @event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.NotNull(category);
@@ -84,7 +84,7 @@ namespace Atles.Domain.Handlers.Tests.Categories.Commands
                 await sut.Handle(command);
 
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var @event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.AreEqual(command.Name, updatedCategory.Name);

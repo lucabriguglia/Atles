@@ -31,7 +31,7 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
 
             _dbContext.PermissionSets.Add(permissionSet);
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Created,
                 typeof(PermissionSet),

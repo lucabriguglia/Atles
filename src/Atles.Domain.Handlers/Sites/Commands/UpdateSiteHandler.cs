@@ -45,7 +45,7 @@ namespace Atles.Domain.Handlers.Sites.Commands
                 command.Terms,
                 command.HeadScript);
 
-            _dbContext.Events.Add(new Event(site.Id,
+            _dbContext.HistoryItems.Add(new HistoryItem(site.Id,
                 command.UserId,
                 EventType.Updated,
                 typeof(Site),

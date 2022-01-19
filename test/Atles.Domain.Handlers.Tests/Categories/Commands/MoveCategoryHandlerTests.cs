@@ -53,8 +53,8 @@ namespace Atles.Domain.Handlers.Tests.Categories.Commands
                 var updatedCategory1 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category1.Id);
                 var updatedCategory2 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category2.Id);
 
-                var event1 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category1.Id);
-                var event2 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category2.Id);
+                var event1 = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == category1.Id);
+                var event2 = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == category2.Id);
 
                 Assert.AreEqual(category2.SortOrder, updatedCategory1.SortOrder);
                 Assert.AreEqual(category1.SortOrder, updatedCategory2.SortOrder);
@@ -100,8 +100,8 @@ namespace Atles.Domain.Handlers.Tests.Categories.Commands
                 var updatedCategory1 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category1.Id);
                 var updatedCategory2 = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category2.Id);
 
-                var event1 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category1.Id);
-                var event2 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category2.Id);
+                var event1 = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == category1.Id);
+                var event2 = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == category2.Id);
 
                 Assert.AreEqual(category2.SortOrder, updatedCategory1.SortOrder);
                 Assert.AreEqual(category1.SortOrder, updatedCategory2.SortOrder);

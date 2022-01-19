@@ -43,7 +43,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
                 category.MoveDown();
             }
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Reordered,
                 typeof(Category),
@@ -70,7 +70,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
                 adjacentCategory.MoveUp();
             }
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Reordered,
                 typeof(Category),

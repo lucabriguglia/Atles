@@ -44,7 +44,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
                 forum.MoveDown();
             }
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Reordered,
                 typeof(Forum),
@@ -71,7 +71,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
                 adjacentForum.MoveUp();
             }
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Reordered,
                 typeof(Forum),

@@ -65,7 +65,7 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
                 await sut.Handle(command);
 
                 var updatedReply = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var @event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.AreEqual(command.Content, updatedReply.Content);

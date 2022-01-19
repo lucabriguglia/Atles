@@ -36,7 +36,7 @@ namespace Atles.Domain.Handlers.Users.Commands
 
             user.UpdateDetails(command.DisplayName);
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Updated,
                 typeof(User),
@@ -48,7 +48,7 @@ namespace Atles.Domain.Handlers.Users.Commands
 
             if (command.Roles != null && command.Roles.Count > 0)
             {
-                _dbContext.Events.Add(new Event(command.SiteId,
+                _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                     command.UserId,
                     EventType.Updated,
                     typeof(User),

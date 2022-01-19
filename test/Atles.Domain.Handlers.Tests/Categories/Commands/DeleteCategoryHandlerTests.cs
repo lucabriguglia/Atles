@@ -76,13 +76,13 @@ namespace Atles.Domain.Handlers.Tests.Categories.Commands
                 var forum1Deleted = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum1.Id);
                 var forum2Deleted = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum2.Id);
 
-                var category1Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category1.Id);
-                var category2Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
-                var category3Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category3.Id);
-                var category4Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category4.Id);
+                var category1Event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == category1.Id);
+                var category2Event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var category3Event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == category3.Id);
+                var category4Event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == category4.Id);
 
-                var forum1Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum1.Id);
-                var forum2Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum2.Id);
+                var forum1Event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == forum1.Id);
+                var forum2Event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == forum2.Id);
 
                 Assert.AreEqual(category1.SortOrder, category1Reordered.SortOrder);
                 Assert.AreEqual(CategoryStatusType.Deleted, category2Deleted.Status);

@@ -1,5 +1,4 @@
 ﻿using System.Reflection;
-using Atles.Domain;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Forums;
@@ -28,7 +27,7 @@ namespace Atles.Data
         }
 
         public DbSet<Category> Categories { get; set; }
-        public DbSet<Event> Events { get; set; }
+        public DbSet<HistoryItem> HistoryItems { get; set; }
         public DbSet<Forum> Forums { get; set; }
         public DbSet<User> Users { get; set; }
         public DbSet<PermissionSet> PermissionSets { get; set; }

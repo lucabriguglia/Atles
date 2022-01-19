@@ -15,6 +15,7 @@ namespace Atles.Domain.Handlers.Posts.Services
         {
             _dbContext = dbContext;
         }
+
         public async Task<string> GenerateTopicSlug(Guid forumId, string title)
         {
             var slug = string.Empty;

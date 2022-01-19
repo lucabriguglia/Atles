@@ -51,7 +51,7 @@ namespace Atles.Domain.Handlers.Tests.Sites.Commands
                 await sut.Handle(command);
 
                 var updatedSite = await dbContext.Sites.FirstOrDefaultAsync(x => x.Id == command.SiteId);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.SiteId);
+                var @event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == command.SiteId);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.AreEqual(command.Title, updatedSite.Title);

@@ -47,7 +47,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
                 command.Status);
 
             _dbContext.Posts.Add(topic);
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Created,
                 typeof(Post),

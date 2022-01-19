@@ -21,7 +21,7 @@ namespace Atles.Reporting.Handlers.Admin
 
         public async Task<TargetEventsComponentModel> Handle(GetTargetEventsComponent query)
         {
-            var events = await _dbContext.Events
+            var events = await _dbContext.HistoryItems
                 .Include(x => x.User)
                 .Where(x => x.SiteId == query.SiteId && x.TargetId == query.Id)
                 .OrderByDescending(x => x.TimeStamp)
@@ -58,6 +58,8 @@ namespace Atles.Reporting.Handlers.Admin
                     foreach (var x in parsedData)
                     {
                         if (x.Key != nameof(@event.Id) &&
+                            x.Key != nameof(@event.TimeStamp) &&
+                            x.Key != nameof(@event.Type) &&
                             x.Key != nameof(@event.TargetId) &&
                             x.Key != nameof(@event.TargetType) &&
                             x.Key != nameof(@event.SiteId) &&

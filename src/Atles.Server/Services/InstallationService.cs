@@ -42,7 +42,7 @@ namespace Atles.Server.Services
 
             var site = new Site("Default", "Atles");
             _dbContext.Sites.Add(site);
-            _dbContext.Events.Add(new Event(site.Id,
+            _dbContext.HistoryItems.Add(new HistoryItem(site.Id,
                 null,
                 EventType.Created,
                 typeof(Site),
@@ -94,7 +94,7 @@ namespace Atles.Server.Services
                 memberAdmin = new User(userAdmin.Id, _configuration["DefaultAdminUserEmail"], _configuration["DefaultAdminUserDisplayName"]);
                 memberAdmin.Confirm();
                 _dbContext.Users.Add(memberAdmin);
-                _dbContext.Events.Add(new Event(site.Id,
+                _dbContext.HistoryItems.Add(new HistoryItem(site.Id,
                     null,
                     EventType.Created,
                     typeof(User),
@@ -131,7 +131,7 @@ namespace Atles.Server.Services
                 new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleAdmin.Id}
             });
             _dbContext.PermissionSets.Add(permissionSetDefault);
-            _dbContext.Events.Add(new Event(site.Id,
+            _dbContext.HistoryItems.Add(new HistoryItem(site.Id,
                 null,
                 EventType.Created,
                 typeof(PermissionSet),
@@ -163,7 +163,7 @@ namespace Atles.Server.Services
                 new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleAdmin.Id}
             });
             _dbContext.PermissionSets.Add(permissionSetMembersOnly);
-            _dbContext.Events.Add(new Event(site.Id,
+            _dbContext.HistoryItems.Add(new HistoryItem(site.Id,
                 null,
                 EventType.Created,
                 typeof(PermissionSet),
@@ -185,7 +185,7 @@ namespace Atles.Server.Services
                 new PermissionCommand{Type = PermissionType.Moderate, RoleId = roleAdmin.Id}
             });
             _dbContext.PermissionSets.Add(permissionSetAdminOnly);
-            _dbContext.Events.Add(new Event(site.Id,
+            _dbContext.HistoryItems.Add(new HistoryItem(site.Id,
                 null,
                 EventType.Created,
                 typeof(PermissionSet),
@@ -198,7 +198,7 @@ namespace Atles.Server.Services
             // Categories
             var categoryGeneral = new Category(site.Id, "General", 1, permissionSetDefault.Id);
             _dbContext.Categories.Add(categoryGeneral);
-            _dbContext.Events.Add(new Event(site.Id,
+            _dbContext.HistoryItems.Add(new HistoryItem(site.Id,
                 null,
                 EventType.Created,
                 typeof(Category),
@@ -213,7 +213,7 @@ namespace Atles.Server.Services
             // Forums
             var forumWelcome = new Forum(categoryGeneral.Id, "Welcome", "welcome", "Welcome Forum", 1);
             _dbContext.Forums.Add(forumWelcome);
-            _dbContext.Events.Add(new Event(site.Id,
+            _dbContext.HistoryItems.Add(new HistoryItem(site.Id,
                 null,
                 EventType.Created,
                 typeof(Forum),
@@ -228,7 +228,7 @@ namespace Atles.Server.Services
 
             var forumMembersOnly = new Forum(categoryGeneral.Id, "Members Only", "members-only", "Members Only Forum", 2, permissionSetMembersOnly.Id);
             _dbContext.Forums.Add(forumMembersOnly);
-            _dbContext.Events.Add(new Event(site.Id,
+            _dbContext.HistoryItems.Add(new HistoryItem(site.Id,
                 null,
                 EventType.Created,
                 typeof(Forum),
@@ -243,7 +243,7 @@ namespace Atles.Server.Services
 
             var forumAdminOnly = new Forum(categoryGeneral.Id, "Admin Only", "admin-only", "Admin Only Forum", 3, permissionSetAdminOnly.Id);
             _dbContext.Forums.Add(forumAdminOnly);
-            _dbContext.Events.Add(new Event(site.Id,
+            _dbContext.HistoryItems.Add(new HistoryItem(site.Id,
                 null,
                 EventType.Created,
                 typeof(Forum),
@@ -260,7 +260,7 @@ namespace Atles.Server.Services
             var topicWelcomeTitle = "Welcome to Atles!";
             var topicWelcome = Post.CreateTopic(forumWelcome.Id, memberAdmin.Id, topicWelcomeTitle, topicWelcomeTitle.ToSlug(), "Welcome...", PostStatusType.Published);
             _dbContext.Posts.Add(topicWelcome);
-            _dbContext.Events.Add(new Event(site.Id,
+            _dbContext.HistoryItems.Add(new HistoryItem(site.Id,
                 topicWelcome.CreatedBy,
                 EventType.Created,
                 typeof(Post),

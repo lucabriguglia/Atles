@@ -33,7 +33,7 @@ namespace Atles.Domain.Handlers.Users.Commands
 
             user.Delete();
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Deleted,
                 typeof(User),

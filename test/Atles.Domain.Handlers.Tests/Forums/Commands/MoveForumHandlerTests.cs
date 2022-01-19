@@ -57,8 +57,8 @@ namespace Atles.Domain.Handlers.Tests.Forums.Commands
                 var updatedForum1 = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum1.Id);
                 var updatedForum2 = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum2.Id);
 
-                var event1 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum1.Id);
-                var event2 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum2.Id);
+                var event1 = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == forum1.Id);
+                var event2 = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == forum2.Id);
 
                 Assert.AreEqual(forum2.SortOrder, updatedForum1.SortOrder);
                 Assert.AreEqual(forum1.SortOrder, updatedForum2.SortOrder);
@@ -109,8 +109,8 @@ namespace Atles.Domain.Handlers.Tests.Forums.Commands
                 var updatedForum1 = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum1.Id);
                 var updatedForum2 = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum2.Id);
 
-                var event1 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum1.Id);
-                var event2 = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum2.Id);
+                var event1 = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == forum1.Id);
+                var event2 = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == forum2.Id);
 
                 Assert.AreEqual(forum2.SortOrder, updatedForum1.SortOrder);
                 Assert.AreEqual(forum1.SortOrder, updatedForum2.SortOrder);

@@ -38,7 +38,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
             }
 
             forum.Delete();
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Deleted,
                 typeof(Forum),
@@ -66,7 +66,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
             for (int i = 0; i < forums.Count; i++)
             {
                 forums[i].Reorder(i + 1);
-                _dbContext.Events.Add(new Event(siteId,
+                _dbContext.HistoryItems.Add(new HistoryItem(siteId,
                     memberId,
                     EventType.Reordered,
                     typeof(Forum),

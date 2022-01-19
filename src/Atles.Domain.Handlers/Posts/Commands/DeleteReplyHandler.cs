@@ -42,7 +42,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
             reply.Delete();
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Deleted,
                 typeof(Post),

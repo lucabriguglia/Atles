@@ -38,11 +38,13 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
             topic.Lock(command.Locked);
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            var @event = new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Locked,
                 typeof(Post),
-                command.Id));
+                command.Id);
+
+            _dbContext.HistoryItems.Add(@event);
 
             await _dbContext.SaveChangesAsync();
 

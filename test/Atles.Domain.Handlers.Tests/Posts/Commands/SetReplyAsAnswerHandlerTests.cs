@@ -67,7 +67,7 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
                 await sut.Handle(command);
 
                 var replyUpdated = await dbContext.Posts.Include(x => x.Topic).FirstOrDefaultAsync(x => x.Id == reply.Id);
-                var replyEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == reply.Id);
+                var replyEvent = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == reply.Id);
 
                 Assert.AreEqual(true, replyUpdated.IsAnswer);
                 Assert.AreEqual(true, replyUpdated.Topic.HasAnswer);

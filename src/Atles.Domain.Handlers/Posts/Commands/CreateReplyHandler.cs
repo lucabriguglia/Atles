@@ -36,7 +36,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
             _dbContext.Posts.Add(reply);
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Created,
                 typeof(Post),

@@ -66,7 +66,7 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
                 await sut.Handle(command);
 
                 var replyDeleted = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == reply.Id);
-                var replyEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == reply.Id);
+                var replyEvent = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == reply.Id);
 
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);

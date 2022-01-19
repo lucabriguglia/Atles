@@ -39,7 +39,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
             category.Delete();
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Deleted,
                 typeof(Category),
@@ -55,7 +55,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
             for (int i = 0; i < otherCategories.Count; i++)
             {
                 otherCategories[i].Reorder(i + 1);
-                _dbContext.Events.Add(new Event(command.SiteId,
+                _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                     command.UserId,
                     EventType.Reordered,
                     typeof(Category),
@@ -69,7 +69,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
             foreach (var forum in category.Forums)
             {
                 forum.Delete();
-                _dbContext.Events.Add(new Event(command.SiteId,
+                _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                     command.UserId,
                     EventType.Deleted,
                     typeof(Forum),

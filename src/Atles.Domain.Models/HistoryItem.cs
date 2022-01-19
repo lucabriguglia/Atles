@@ -1,31 +1,30 @@
 ﻿using System;
+using System.Text.Json;
 using Atles.Domain.Models.Users;
-using Newtonsoft.Json;
 
 namespace Atles.Domain.Models
 {
-    public class Event
+    public class HistoryItem
     {
-        public Guid Id { get; private set; } = Guid.NewGuid();        
-        public string Type { get; private set; }
+        public Guid Id { get; set; } = Guid.NewGuid();
+        public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
 
-        public Guid TargetId { get; private set; }
-        public string TargetType { get; private set; }
+        public string Type { get; set; }
+        public string Data { get; set; }
 
-        public Guid SiteId { get; private set; }
-        public Guid? UserId { get; private set; }
+        public Guid TargetId { get; set; }
+        public string TargetType { get; set; }
 
-        public string Data { get; private set; }
-
-        public DateTime TimeStamp { get; private set; } = DateTime.UtcNow;
+        public Guid SiteId { get; set; }
+        public Guid? UserId { get; set; }
 
         public virtual User User { get; set; }
 
-        public Event()
+        public HistoryItem()
         {
         }
 
-        public Event(
+        public HistoryItem(
             EventType eventType,
             Guid targetId,
             Type targetType,
@@ -38,10 +37,10 @@ namespace Atles.Domain.Models
             TargetType = targetType.Name;
             SiteId = siteId;
             UserId = userId;
-            if(data != null) Data = JsonConvert.SerializeObject(data);
+            if(data != null) Data = JsonSerializer.Serialize(data);
         }
 
-        public Event(
+        public HistoryItem(
             Guid siteId,
             Guid? userId,
             EventType eventType,
@@ -54,7 +53,7 @@ namespace Atles.Domain.Models
             TargetType = targetType.Name;
             SiteId = siteId;
             UserId = userId;
-            if (data != null) Data = JsonConvert.SerializeObject(data);
+            if (data != null) Data = JsonSerializer.Serialize(data);
         }
     }
 }

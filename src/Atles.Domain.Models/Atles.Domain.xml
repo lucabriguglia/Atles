@@ -208,6 +208,18 @@
             The unique identifier of the new permission set for the forum category.
             </summary>
         </member>
+        <member name="T:Atles.Domain.Models.EventExtensions">
+            <summary>
+            Extensions for IEvent
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Models.EventExtensions.ToHistoryItem(Atles.Infrastructure.Events.IEvent)">
+            <summary>
+            Converts IEvent to HistoryItem
+            </summary>
+            <param name="event"></param>
+            <returns></returns>
+        </member>
         <member name="T:Atles.Domain.Models.Forums.Commands.CreateForum">
             <summary>
             Request that creates a forum section.

@@ -41,7 +41,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
             category.UpdateDetails(command.Name, command.PermissionSetId);
 
-            _dbContext.Events.Add(new Event(command.SiteId,
+            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
                 command.UserId,
                 EventType.Updated,
                 typeof(Category),
