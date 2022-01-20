@@ -50,7 +50,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
                 UserId = command.UserId
             };
 
-            _dbContext.HistoryItems.Add(@event.ToHistoryItem());
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 

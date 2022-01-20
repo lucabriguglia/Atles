@@ -49,7 +49,7 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
 
             permissionSet.UpdateDetails(command.Name, command.Permissions);
 
-            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
+            _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
                 EventType.Updated,
                 typeof(PermissionSet),

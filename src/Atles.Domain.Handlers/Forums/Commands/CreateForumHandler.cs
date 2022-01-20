@@ -45,7 +45,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
                 command.PermissionSetId);
 
             _dbContext.Forums.Add(forum);
-            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
+            _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
                 EventType.Created,
                 typeof(Forum),

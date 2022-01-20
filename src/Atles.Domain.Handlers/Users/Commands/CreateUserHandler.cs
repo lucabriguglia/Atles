@@ -43,7 +43,7 @@ namespace Atles.Domain.Handlers.Users.Commands
                 ? user.Id
                 : command.UserId;
 
-            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
+            _dbContext.Events.Add(new Event(command.SiteId,
                 userIdForEvent,
                 EventType.Created,
                 typeof(User),

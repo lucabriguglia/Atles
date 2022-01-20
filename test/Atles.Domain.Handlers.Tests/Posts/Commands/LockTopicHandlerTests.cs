@@ -54,7 +54,7 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
                 await sut.Handle(command);
 
                 var lockedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 Assert.AreEqual(command.Locked, lockedTopic.Locked);
                 Assert.NotNull(@event);

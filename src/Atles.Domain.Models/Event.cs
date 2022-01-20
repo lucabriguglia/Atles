@@ -4,7 +4,7 @@ using Atles.Domain.Models.Users;
 
 namespace Atles.Domain.Models
 {
-    public class HistoryItem
+    public class Event
     {
         public Guid Id { get; set; } = Guid.NewGuid();
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
@@ -20,11 +20,11 @@ namespace Atles.Domain.Models
 
         public virtual User User { get; set; }
 
-        public HistoryItem()
+        public Event()
         {
         }
 
-        public HistoryItem(
+        public Event(
             EventType eventType,
             Guid targetId,
             Type targetType,
@@ -40,7 +40,7 @@ namespace Atles.Domain.Models
             if(data != null) Data = JsonSerializer.Serialize(data);
         }
 
-        public HistoryItem(
+        public Event(
             Guid siteId,
             Guid? userId,
             EventType eventType,

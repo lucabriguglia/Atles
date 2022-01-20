@@ -39,7 +39,7 @@ namespace Atles.Domain.Handlers.Tests.Users.Commands
                 await sut.Handle(command);
 
                 var userConfirmed = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
-                var userEvent = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == user.Id);
+                var userEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == user.Id);
 
                 Assert.AreEqual(UserStatusType.Active, userConfirmed.Status);
                 Assert.NotNull(userEvent);

@@ -45,7 +45,7 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
 
             permissionSet.Delete();
 
-            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
+            _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
                 EventType.Deleted,
                 typeof(PermissionSet),

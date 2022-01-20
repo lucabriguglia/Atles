@@ -45,7 +45,7 @@ namespace Atles.Domain.Handlers.Tests.PermissionSets.Commands
                 await sut.Handle(command);
 
                 var permissionSetDeleted = await dbContext.PermissionSets.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var permissionSetEvent = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var permissionSetEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
 
                 Assert.AreEqual(PermissionSetStatusType.Deleted, permissionSetDeleted.Status);
                 Assert.NotNull(permissionSetEvent);

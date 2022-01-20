@@ -39,7 +39,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
             reply.SetAsAnswer(command.IsAnswer);
 
-            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
+            _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
                 EventType.Updated,
                 typeof(Post),

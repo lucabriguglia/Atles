@@ -21,7 +21,7 @@ namespace Atles.Reporting.Handlers.Admin
 
         public async Task<TargetEventsComponentModel> Handle(GetTargetEventsComponent query)
         {
-            var events = await _dbContext.HistoryItems
+            var events = await _dbContext.Events
                 .Include(x => x.User)
                 .Where(x => x.SiteId == query.SiteId && x.TargetId == query.Id)
                 .OrderByDescending(x => x.TimeStamp)

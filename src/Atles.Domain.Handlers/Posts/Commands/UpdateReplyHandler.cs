@@ -43,7 +43,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
             reply.UpdateDetails(command.UserId, command.Content, command.Status);
 
-            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
+            _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
                 EventType.Updated,
                 typeof(Post),

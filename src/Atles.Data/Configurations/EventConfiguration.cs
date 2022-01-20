@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Atles.Data.Configurations
 {
-    public class EventConfiguration : IEntityTypeConfiguration<HistoryItem>
+    public class EventConfiguration : IEntityTypeConfiguration<Event>
     {
-        public void Configure(EntityTypeBuilder<HistoryItem> builder)
+        public void Configure(EntityTypeBuilder<Event> builder)
         {
             builder.ToTable("Event");
 

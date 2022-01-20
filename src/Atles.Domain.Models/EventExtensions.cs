@@ -14,7 +14,7 @@ namespace Atles.Domain.Models
         /// </summary>
         /// <param name="event"></param>
         /// <returns></returns>
-        public static HistoryItem ToHistoryItem(this IEvent @event)
+        public static Event ToDbEntity(this IEvent @event)
         {
             if (@event.Id == Guid.Empty || 
                 @event.TimeStamp == DateTime.MinValue || 
@@ -30,7 +30,7 @@ namespace Atles.Domain.Models
                                             $"{nameof(@event.SiteId)}.");
             }
 
-            return new HistoryItem
+            return new Event
             {
                 Id = @event.Id,
                 TimeStamp = @event.TimeStamp,

@@ -38,7 +38,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
             topic.Pin(command.Pinned);
 
-            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
+            _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
                 EventType.Pinned,
                 typeof(Post),

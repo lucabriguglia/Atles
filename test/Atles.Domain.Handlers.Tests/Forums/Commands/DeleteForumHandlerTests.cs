@@ -61,10 +61,10 @@ namespace Atles.Domain.Handlers.Tests.Forums.Commands
                 var forum3Reordered = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum3.Id);
                 var forum4Reordered = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum4.Id);
 
-                var forum1Event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == forum1.Id);
-                var forum2Event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == forum2.Id);
-                var forum3Event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == forum3.Id);
-                var forum4Event = await dbContext.HistoryItems.FirstOrDefaultAsync(x => x.TargetId == forum4.Id);
+                var forum1Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum1.Id);
+                var forum2Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum2.Id);
+                var forum3Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum3.Id);
+                var forum4Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == forum4.Id);
 
                 Assert.AreEqual(forum1.SortOrder, forum1Reordered.SortOrder);
                 Assert.AreEqual(ForumStatusType.Deleted, forum2Deleted.Status);

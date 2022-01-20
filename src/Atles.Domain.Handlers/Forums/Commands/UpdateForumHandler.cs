@@ -66,7 +66,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
 
             forum.UpdateDetails(command.CategoryId, command.Name, command.Slug, command.Description, command.PermissionSetId);
 
-            _dbContext.HistoryItems.Add(new HistoryItem(command.SiteId,
+            _dbContext.Events.Add(new Event(command.SiteId,
                 command.UserId,
                 EventType.Updated,
                 typeof(Forum),
@@ -99,7 +99,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
             for (int i = 0; i < forums.Count; i++)
             {
                 forums[i].Reorder(i + 1);
-                _dbContext.HistoryItems.Add(new HistoryItem(siteId,
+                _dbContext.Events.Add(new Event(siteId,
                     memberId,
                     EventType.Reordered,
                     typeof(Forum),
