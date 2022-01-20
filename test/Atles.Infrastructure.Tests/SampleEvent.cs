@@ -2,7 +2,7 @@
 
 namespace Atles.Infrastructure.Tests
 {
-    public class SampleEvent : IEvent
+    public class SampleEvent : EventBase
     {
     }
 }

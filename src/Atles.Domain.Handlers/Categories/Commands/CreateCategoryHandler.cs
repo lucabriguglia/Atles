@@ -8,7 +8,6 @@ using Atles.Domain.Models;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Categories.Commands;
 using Atles.Domain.Models.Categories.Events;
-using Atles.Infrastructure;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Categories.Commands
@@ -18,14 +17,12 @@ namespace Atles.Domain.Handlers.Categories.Commands
         private readonly AtlesDbContext _dbContext;
         private readonly IValidator<CreateCategory> _validator;
         private readonly ICacheManager _cacheManager;
-        private readonly IDispatcher _dispatcher;
 
-        public CreateCategoryHandler(AtlesDbContext dbContext, IValidator<CreateCategory> validator, ICacheManager cacheManager, IDispatcher dispatcher)
+        public CreateCategoryHandler(AtlesDbContext dbContext, IValidator<CreateCategory> validator, ICacheManager cacheManager)
         {
             _dbContext = dbContext;
             _validator = validator;
             _cacheManager = cacheManager;
-            _dispatcher = dispatcher;
         }
 
         public async Task Handle(CreateCategory command)
@@ -38,11 +35,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
             var sortOrder = categoriesCount + 1;
 
-            var category = new Category(command.Id,
-                                        command.SiteId,
-                                        command.Name,
-                                        sortOrder,
-                                        command.PermissionSetId);
+            var category = new Category(command.Id, command.SiteId, command.Name, sortOrder, command.PermissionSetId);
 
             _dbContext.Categories.Add(category);
 
@@ -63,8 +56,6 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
             _cacheManager.Remove(CacheKeys.Categories(command.SiteId));
             _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
-
-            await _dispatcher.Publish(@event);
         }
     }
 }
