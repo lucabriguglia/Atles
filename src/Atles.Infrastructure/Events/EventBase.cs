@@ -1,5 +1,4 @@
 ﻿using System;
-using Atles.Infrastructure.Commands;
 
 namespace Atles.Infrastructure.Events
 {
@@ -14,5 +13,12 @@ namespace Atles.Infrastructure.Events
         public Guid UserId { get; set; }
 
         public DateTime TimeStamp { get; set; } = DateTime.UtcNow;
+
+        public bool ShouldSerializeId() => false;
+        public bool ShouldSerializeTargetId() => false;
+        public bool ShouldSerializeTargetType() => false;
+        public bool ShouldSerializeSiteId() => false;
+        public bool ShouldSerializeUserId() => false;
+        public bool ShouldSerializeTimeStamp() => false;
     }
 }

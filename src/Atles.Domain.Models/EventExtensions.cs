@@ -22,7 +22,7 @@ namespace Atles.Domain.Models
                 string.IsNullOrEmpty(@event.TargetType) || 
                 @event.SiteId == Guid.Empty)
             {
-                throw new ArgumentException("The event is not valid. Required values: " +
+                throw new ArgumentException("The event is not valid. Required values are: " +
                                             $"{nameof(@event.Id)}, " +
                                             $"{nameof(@event.TimeStamp)}, " +
                                             $"{nameof(@event.TargetId)}, " +
