@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Categories.Commands;
+using Atles.Domain.Models.Categories.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Categories.Commands
@@ -41,16 +42,17 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
             category.UpdateDetails(command.Name, command.PermissionSetId);
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Updated,
-                typeof(Category),
-                category.Id,
-                new
-                {
-                    category.Name,
-                    category.PermissionSetId
-                }));
+            var @event = new CategoryUpdated
+            {
+                Name = category.Name,
+                PermissionSetId = category.PermissionSetId,
+                TargetId = category.Id,
+                TargetType = nameof(Category),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 

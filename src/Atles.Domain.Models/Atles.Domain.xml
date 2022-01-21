@@ -208,6 +208,56 @@
             The unique identifier of the new permission set for the forum category.
             </summary>
         </member>
+        <member name="T:Atles.Domain.Models.Categories.Events.CategoryCreated">
+            <summary>
+            Event published when a new category is created
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Categories.Events.CategoryCreated.Name">
+            <summary>
+            The name of the new category
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Categories.Events.CategoryCreated.PermissionSetId">
+            <summary>
+            The identifier of the permission set of the new category
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Categories.Events.CategoryCreated.SortOrder">
+            <summary>
+            The sort order of the new category
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Categories.Events.CategoryDeleted">
+            <summary>
+            Event published when a category is deleted
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Categories.Events.CategoryMoved">
+            <summary>
+            Event published when a category is reordered
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Categories.Events.CategoryMoved.SortOrder">
+            <summary>
+            The new sort order of the category
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Categories.Events.CategoryUpdated">
+            <summary>
+            Event published when a category is updated
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Categories.Events.CategoryUpdated.Name">
+            <summary>
+            The new name of the category
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Categories.Events.CategoryUpdated.PermissionSetId">
+            <summary>
+            The new identifier of the permission set of the category
+            </summary>
+        </member>
         <member name="T:Atles.Domain.Models.EventExtensions">
             <summary>
             Extensions for IEvent
@@ -295,6 +345,11 @@
         <member name="P:Atles.Domain.Models.Forums.Commands.UpdateForum.PermissionSetId">
             <summary>
             The unique identifier of the new permission set for the forum.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Forums.Events.ForumDeleted">
+            <summary>
+            Event published when a forum is deleted
             </summary>
         </member>
         <member name="T:Atles.Domain.Models.Forums.Forum">
