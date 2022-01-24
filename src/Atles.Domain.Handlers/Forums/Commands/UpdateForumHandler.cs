@@ -30,7 +30,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
 
         public async Task Handle(UpdateForum command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var forum = await _dbContext.Forums
                 .Include(x => x.Category)

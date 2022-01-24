@@ -32,7 +32,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
         public async Task Handle(CreateTopic command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var title = Regex.Replace(command.Title, @"\s+", " "); // Remove multiple spaces from title
 

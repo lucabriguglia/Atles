@@ -79,7 +79,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
                 var forumDeletedEvent = new ForumDeleted
                 {
-                    TargetId = category.Id,
+                    TargetId = forum.Id,
                     TargetType = nameof(Category),
                     SiteId = command.SiteId,
                     UserId = command.UserId

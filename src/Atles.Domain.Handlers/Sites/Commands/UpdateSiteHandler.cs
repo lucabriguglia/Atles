@@ -26,7 +26,7 @@ namespace Atles.Domain.Handlers.Sites.Commands
 
         public async Task Handle(UpdateSite command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var site = await _dbContext.Sites
                 .FirstOrDefaultAsync(x =>

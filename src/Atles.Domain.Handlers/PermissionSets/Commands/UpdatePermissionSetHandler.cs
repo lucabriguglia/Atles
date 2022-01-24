@@ -28,7 +28,7 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
 
         public async Task Handle(UpdatePermissionSet command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var permissionSet = await _dbContext.PermissionSets
                 .Include(x => x.Permissions)

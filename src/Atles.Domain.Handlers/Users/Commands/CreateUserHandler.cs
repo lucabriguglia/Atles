@@ -23,7 +23,7 @@ namespace Atles.Domain.Handlers.Users.Commands
 
         public async Task Handle(CreateUser command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var displayName = await GenerateDisplayNameAsync();
 

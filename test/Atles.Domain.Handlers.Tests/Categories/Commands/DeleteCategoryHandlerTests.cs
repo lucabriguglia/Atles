@@ -18,7 +18,7 @@ namespace Atles.Domain.Handlers.Tests.Categories.Commands
     public class DeleteCategoryHandlerTests : TestFixtureBase
     {
         [Test]
-        public void Should_throw_data_exption_when_category_not_found()
+        public void Should_throw_data_exception_when_category_not_found()
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {

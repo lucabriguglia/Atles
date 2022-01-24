@@ -33,7 +33,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
         public async Task Handle(UpdateTopic command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var topic = await _dbContext.Posts
                 .FirstOrDefaultAsync(x =>

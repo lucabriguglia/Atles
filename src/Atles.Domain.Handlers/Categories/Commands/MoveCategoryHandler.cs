@@ -75,7 +75,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
             var adjacentCategoryMovedEvent = new CategoryMoved
             {
                 SortOrder = category.SortOrder,
-                TargetId = category.Id,
+                TargetId = adjacentCategory.Id,
                 TargetType = nameof(Category),
                 SiteId = command.SiteId,
                 UserId = command.UserId

@@ -23,7 +23,7 @@ namespace Atles.Domain.Handlers.Users.Commands
 
         public async Task Handle(UpdateUser command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>

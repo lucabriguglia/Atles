@@ -1462,6 +1462,21 @@
             Sets the status of the user as deleted.
             </summary>
         </member>
+        <member name="T:Atles.Domain.Models.ValidatorExtensions">
+            <summary>
+            Validator Extensions
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Models.ValidatorExtensions.ValidateCommand``1(FluentValidation.IValidator{``0},``0)">
+            <summary>
+            Validates the command and throws an exception if not valid.
+            </summary>
+            <param name="validator"></param>
+            <param name="command"></param>
+            <typeparam name="TCommand"></typeparam>
+            <exception cref="T:System.ArgumentNullException"></exception>
+            <exception cref="T:System.ApplicationException"></exception>
+        </member>
         <member name="M:Atles.Domain.Posts.PostReactionCount.IncreaseCount">
             <summary>
             Increases count by 1.

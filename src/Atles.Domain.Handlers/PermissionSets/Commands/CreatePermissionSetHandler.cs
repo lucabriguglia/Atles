@@ -22,7 +22,7 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
 
         public async Task Handle(CreatePermissionSet command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var permissionSet = new PermissionSet(command.Id,
                 command.SiteId,

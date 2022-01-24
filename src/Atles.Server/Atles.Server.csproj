@@ -28,7 +28,6 @@
     <ProjectReference Include="..\Atles.Client\Atles.Client.csproj" />
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
     <ProjectReference Include="..\Atles.Domain.Handlers\Atles.Domain.Handlers.csproj" />
-    <ProjectReference Include="..\Atles.Domain.Validators\Atles.Domain.Validators.csproj" />
     <ProjectReference Include="..\Atles.Domain.Models\Atles.Domain.Models.csproj" />
     <ProjectReference Include="..\Atles.Infrastructure\Atles.Infrastructure.csproj" />
     <ProjectReference Include="..\Atles.Reporting.Models\Atles.Reporting.Models.csproj" />

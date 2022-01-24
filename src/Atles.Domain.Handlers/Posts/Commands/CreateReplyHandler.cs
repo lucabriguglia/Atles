@@ -25,7 +25,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
         public async Task Handle(CreateReply command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var reply = Post.CreateReply(command.Id,
                 command.TopicId,

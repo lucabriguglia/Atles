@@ -27,7 +27,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
         public async Task Handle(CreateCategory command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var categoriesCount = await _dbContext.Categories
                 .Where(x => x.SiteId == command.SiteId && x.Status != CategoryStatusType.Deleted)

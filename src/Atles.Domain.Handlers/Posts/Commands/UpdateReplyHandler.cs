@@ -26,7 +26,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
         public async Task Handle(UpdateReply command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var reply = await _dbContext.Posts
                 .FirstOrDefaultAsync(x =>

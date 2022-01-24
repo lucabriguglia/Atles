@@ -28,7 +28,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
 
         public async Task Handle(CreateForum command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var forumsCount = await _dbContext.Forums
                 .Where(x => x.CategoryId == command.CategoryId && x.Status != ForumStatusType.Deleted)

@@ -27,7 +27,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
         public async Task Handle(UpdateCategory command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var category = await _dbContext.Categories
                 .FirstOrDefaultAsync(x =>
