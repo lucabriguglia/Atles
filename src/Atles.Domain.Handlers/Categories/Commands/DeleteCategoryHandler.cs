@@ -1,4 +1,5 @@
-﻿using Atles.Data;
+﻿using System.Collections.Generic;
+using Atles.Data;
 using Atles.Data.Caching;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -10,6 +11,7 @@ using Atles.Domain.Models.Categories.Commands;
 using Atles.Domain.Models.Categories.Events;
 using Atles.Domain.Models.Forums.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Handlers.Categories.Commands
 {
@@ -40,7 +42,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
             category.Delete();
 
-            var categoryDeletedEvent = new CategoryDeleted
+            var categoryDeleted = new CategoryDeleted
             {
                 TargetId = category.Id,
                 TargetType = nameof(Category),
@@ -48,7 +50,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
                 UserId = command.UserId
             };
 
-            _dbContext.Events.Add(categoryDeletedEvent.ToDbEntity());
+            _dbContext.Events.Add(categoryDeleted.ToDbEntity());
 
             var otherCategories = await _dbContext.Categories
                 .Where(x =>
@@ -61,7 +63,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
             {
                 otherCategories[i].Reorder(i + 1);
 
-                var categoryMovedEvent = new CategoryMoved
+                var categoryMoved = new CategoryMoved
                 {
                     SortOrder = otherCategories[i].SortOrder,
                     TargetId = otherCategories[i].Id,
@@ -70,14 +72,14 @@ namespace Atles.Domain.Handlers.Categories.Commands
                     UserId = command.UserId
                 };
 
-                _dbContext.Events.Add(categoryMovedEvent.ToDbEntity());
+                _dbContext.Events.Add(categoryMoved.ToDbEntity());
             }
 
             foreach (var forum in category.Forums)
             {
                 forum.Delete();
 
-                var forumDeletedEvent = new ForumDeleted
+                var forumDeleted = new ForumDeleted
                 {
                     TargetId = forum.Id,
                     TargetType = nameof(Category),
@@ -85,7 +87,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
                     UserId = command.UserId
                 };
 
-                _dbContext.Events.Add(forumDeletedEvent.ToDbEntity());
+                _dbContext.Events.Add(forumDeleted.ToDbEntity());
             }
 
             await _dbContext.SaveChangesAsync();

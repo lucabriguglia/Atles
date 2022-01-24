@@ -44,7 +44,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
                 category.MoveDown();
             }
 
-            var categoryMovedEvent = new CategoryMoved
+            var categoryMoved = new CategoryMoved
             {
                 SortOrder = category.SortOrder,
                 TargetId = category.Id,
@@ -53,7 +53,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
                 UserId = command.UserId
             };
 
-            _dbContext.Events.Add(categoryMovedEvent.ToDbEntity());
+            _dbContext.Events.Add(categoryMoved.ToDbEntity());
 
             var sortOrderToReplace = category.SortOrder;
 
@@ -72,7 +72,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
                 adjacentCategory.MoveUp();
             }
 
-            var adjacentCategoryMovedEvent = new CategoryMoved
+            var adjacentCategoryMoved = new CategoryMoved
             {
                 SortOrder = category.SortOrder,
                 TargetId = adjacentCategory.Id,
@@ -81,7 +81,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
                 UserId = command.UserId
             };
 
-            _dbContext.Events.Add(adjacentCategoryMovedEvent.ToDbEntity());
+            _dbContext.Events.Add(adjacentCategoryMoved.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 
