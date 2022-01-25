@@ -54,16 +54,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
                 UserId = command.UserId
             };
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Updated,
-                typeof(Post),
-                command.Id,
-                new
-                {
-                    command.Content,
-                    command.Status
-                }));
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
         }

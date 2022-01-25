@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Text.Json;
 using Atles.Domain.Models.Users;
 
 namespace Atles.Domain.Models
@@ -19,25 +18,5 @@ namespace Atles.Domain.Models
         public Guid? UserId { get; set; }
 
         public virtual User User { get; set; }
-
-        public Event()
-        {
-        }
-
-        public Event(
-            Guid siteId,
-            Guid? userId,
-            EventType eventType,
-            Type targetType,
-            Guid targetId,
-            object data = null)
-        {
-            Type = eventType.ToString();
-            TargetId = targetId;
-            TargetType = targetType.Name;
-            SiteId = siteId;
-            UserId = userId;
-            if (data != null) Data = JsonSerializer.Serialize(data);
-        }
     }
 }

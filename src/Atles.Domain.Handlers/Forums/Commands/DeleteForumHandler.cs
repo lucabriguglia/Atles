@@ -72,7 +72,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
             {
                 forums[i].Reorder(i + 1);
 
-                var @event = new ForumReordered
+                var @event = new ForumMoved
                 {
                     SortOrder = forums[i].SortOrder,
                     TargetId = forums[i].Id,

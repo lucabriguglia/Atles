@@ -3,12 +3,12 @@
 namespace Atles.Domain.Models.Forums.Events
 {
     /// <summary>
-    /// Event published when a forum is reordered
+    /// Event published when a forum is moved
     /// </summary>
-    public class ForumReordered : EventBase
+    public class ForumMoved : EventBase
     {
         /// <summary>
-        /// New sort order
+        /// The new sort order of the forum
         /// </summary>
         public int SortOrder { get; set; }
     }

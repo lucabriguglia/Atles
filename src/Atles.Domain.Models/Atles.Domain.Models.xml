@@ -387,14 +387,14 @@
             Event published when a forum is deleted
             </summary>
         </member>
-        <member name="T:Atles.Domain.Models.Forums.Events.ForumReordered">
+        <member name="T:Atles.Domain.Models.Forums.Events.ForumMoved">
             <summary>
-            Event published when a forum is reordered
+            Event published when a forum is moved
             </summary>
         </member>
-        <member name="P:Atles.Domain.Models.Forums.Events.ForumReordered.SortOrder">
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumMoved.SortOrder">
             <summary>
-            New sort order
+            The new sort order of the forum
             </summary>
         </member>
         <member name="T:Atles.Domain.Models.Forums.Events.ForumUpdated">
@@ -1613,6 +1613,66 @@
             <summary>
             The list of roles to be assigned to the user.
             This value is populated only an administrator updates a user.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Users.Events.UserConfirmed">
+            <summary>
+            Event published when a user has confirmed their email.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Users.Events.UserCreated">
+            <summary>
+            Event published when a user is created.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Users.Events.UserCreated.IdentityUserId">
+            <summary>
+            The unique identifier of the user in the membership database.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Users.Events.UserCreated.Email">
+            <summary>
+            The email of the user in the membership database.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Users.Events.UserCreated.DisplayName">
+            <summary>
+            The display name.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Users.Events.UserCreated.Status">
+            <summary>
+            The status.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Users.Events.UserDeleted">
+            <summary>
+            Event published when a user is deleted.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Users.Events.UserReinstated">
+            <summary>
+            Event published when a user is reinstated.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Users.Events.UserSuspended">
+            <summary>
+            Event published when a user is suspended.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Users.Events.UserUpdated">
+            <summary>
+            Event published when a user is updated.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Users.Events.UserUpdated.DisplayName">
+            <summary>
+            The new display name of the user.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Users.Events.UserUpdated.Roles">
+            <summary>
+            The list of roles assigned to the user.
             </summary>
         </member>
         <member name="T:Atles.Domain.Models.Users.User">
