@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Users;
 using Atles.Domain.Models.Users.Commands;
+using Atles.Domain.Models.Users.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Users.Commands
@@ -39,22 +40,19 @@ namespace Atles.Domain.Handlers.Users.Commands
 
             _dbContext.Users.Add(user);
 
-            var userIdForEvent = command.UserId == Guid.Empty
-                ? user.Id
-                : command.UserId;
+            var @event = new UserCreated
+            {
+                IdentityUserId = user.IdentityUserId,
+                Email = user.Email,
+                DisplayName = displayName,
+                Status = user.Status,
+                TargetId = command.UserId == Guid.Empty ? user.Id : command.UserId,
+                TargetType = nameof(User),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                userIdForEvent,
-                EventType.Created,
-                typeof(User),
-                command.Id,
-                new
-                {
-                    UserId = command.IdentityUserId,
-                    command.Email,
-                    DisplayName = displayName,
-                    user.Status
-                }));
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
         }
