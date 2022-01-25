@@ -10,7 +10,7 @@ namespace Atles.Infrastructure.Events
         string TargetType { get; set; }
 
         Guid SiteId { get; set; }
-        Guid UserId { get; set; }
+        Guid? UserId { get; set; }
 
         DateTime TimeStamp { get; set; }
     }

@@ -55,7 +55,7 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
                 Name = permissionSet.Name,
                 Permissions = command.Permissions,
                 TargetId = permissionSet.Id,
-                TargetType = nameof(permissionSet),
+                TargetType = nameof(PermissionSet),
                 SiteId = command.SiteId,
                 UserId = command.UserId
             };

@@ -3,6 +3,7 @@ using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain.Models;
+using Atles.Domain.Models.Sites;
 using Atles.Domain.Models.Sites.Commands;
 using Atles.Domain.Models.Sites.Events;
 using Atles.Infrastructure.Commands;
@@ -55,7 +56,7 @@ namespace Atles.Domain.Handlers.Sites.Commands
                 Terms = site.Terms,
                 HeadScript = site.HeadScript,
                 TargetId = site.Id,
-                TargetType = nameof(site),
+                TargetType = nameof(Site),
                 SiteId = command.SiteId,
                 UserId = command.UserId
             };

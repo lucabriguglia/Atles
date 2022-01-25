@@ -49,7 +49,7 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
             var @event = new PermissionSetDeleted
             {
                 TargetId = permissionSet.Id,
-                TargetType = nameof(permissionSet),
+                TargetType = nameof(PermissionSet),
                 SiteId = command.SiteId,
                 UserId = command.UserId
             };
