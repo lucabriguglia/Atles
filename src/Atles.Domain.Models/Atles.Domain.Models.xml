@@ -1407,6 +1407,41 @@
             The script for the head section of the HTML document.
             </summary>
         </member>
+        <member name="T:Atles.Domain.Models.Sites.Events.SiteCreated">
+            <summary>
+            Event published when a site is created.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteCreated.Name">
+            <summary>
+            The name of the site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteCreated.Title">
+            <summary>
+            The new tile of the site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteCreated.PublicTheme">
+            <summary>
+            The new theme for the public site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteCreated.PublicCss">
+            <summary>
+            The new Cascading Style Sheet for the public site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteCreated.AdminTheme">
+            <summary>
+            The new theme for the public site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteCreated.AdminCss">
+            <summary>
+            The new Cascading Style Sheet for the public site.
+            </summary>
+        </member>
         <member name="T:Atles.Domain.Models.Sites.Events.SiteUpdated">
             <summary>
             Event published when a site is updated.
