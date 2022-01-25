@@ -25,22 +25,6 @@ namespace Atles.Domain.Models
         }
 
         public Event(
-            EventType eventType,
-            Guid targetId,
-            Type targetType,
-            Guid siteId,
-            Guid? userId,
-            object data = null)
-        {
-            Type = eventType.ToString();
-            TargetId = targetId;
-            TargetType = targetType.Name;
-            SiteId = siteId;
-            UserId = userId;
-            if(data != null) Data = JsonSerializer.Serialize(data);
-        }
-
-        public Event(
             Guid siteId,
             Guid? userId,
             EventType eventType,

@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.PermissionSets.Commands;

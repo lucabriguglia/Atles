@@ -1,7 +1,6 @@
 ﻿using System;
 using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Users;
-using Atles.Domain.PostReactions;
 using Docs.Attributes;
 
 namespace Atles.Domain.Models.PostReactions

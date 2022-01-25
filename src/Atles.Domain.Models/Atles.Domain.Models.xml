@@ -347,9 +347,89 @@
             The unique identifier of the new permission set for the forum.
             </summary>
         </member>
+        <member name="T:Atles.Domain.Models.Forums.Events.ForumCreated">
+            <summary>
+            Event published when a new forum is created
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumCreated.CategoryId">
+            <summary>
+            The new forum category for the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumCreated.Name">
+            <summary>
+            The new name of the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumCreated.Slug">
+            <summary>
+            The new slug of the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumCreated.Description">
+            <summary>
+            The new description of the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumCreated.PermissionSetId">
+            <summary>
+            The unique identifier of the new permission set for the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumCreated.SortOrder">
+            <summary>
+            New sort order
+            </summary>
+        </member>
         <member name="T:Atles.Domain.Models.Forums.Events.ForumDeleted">
             <summary>
             Event published when a forum is deleted
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Forums.Events.ForumReordered">
+            <summary>
+            Event published when a forum is reordered
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumReordered.SortOrder">
+            <summary>
+            New sort order
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Forums.Events.ForumUpdated">
+            <summary>
+            Event published when a forum is updated
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumUpdated.CategoryId">
+            <summary>
+            The new forum category for the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumUpdated.Name">
+            <summary>
+            The new name of the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumUpdated.Slug">
+            <summary>
+            The new slug of the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumUpdated.Description">
+            <summary>
+            The new description of the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumUpdated.PermissionSetId">
+            <summary>
+            The unique identifier of the new permission set for the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Forums.Events.ForumUpdated.SortOrder">
+            <summary>
+            New sort order
             </summary>
         </member>
         <member name="T:Atles.Domain.Models.Forums.Forum">
@@ -578,6 +658,41 @@
             </summary>
         </member>
         <member name="P:Atles.Domain.Models.PermissionSets.Commands.UpdatePermissionSet.Permissions">
+            <summary>
+            The new permissions for the permission set.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.PermissionSets.Events.PermissionSetCreated">
+            <summary>
+            Event published when a new permission set is created.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.PermissionSets.Events.PermissionSetCreated.Name">
+            <summary>
+            The name of the new permission set.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.PermissionSets.Events.PermissionSetCreated.Permissions">
+            <summary>
+            The permissions of the new permission set.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.PermissionSets.Events.PermissionSetDeleted">
+            <summary>
+            Event published when a permission set is deleted.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.PermissionSets.Events.PermissionSetUpdated">
+            <summary>
+            Event published when a permission set is updated.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.PermissionSets.Events.PermissionSetUpdated.Name">
+            <summary>
+            The new name for the permission set.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.PermissionSets.Events.PermissionSetUpdated.Permissions">
             <summary>
             The new permissions for the permission set.
             </summary>
@@ -840,6 +955,141 @@
             The new status of the topic.
             </summary>
         </member>
+        <member name="T:Atles.Domain.Models.Posts.Events.ReplyCreated">
+            <summary>
+            Event published when a reply is created.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.ReplyCreated.ForumId">
+            <summary>
+            The unique identifier of the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.ReplyCreated.TopicId">
+            <summary>
+            The unique identifier of the topic.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.ReplyCreated.Content">
+            <summary>
+            The content of the reply.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.ReplyCreated.Status">
+            <summary>
+            The status of the reply.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Posts.Events.ReplyDeleted">
+            <summary>
+            Event published when a reply is deleted.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Posts.Events.ReplySetAsAnswer">
+            <summary>
+            Event published when a reply is set as an answer.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.ReplySetAsAnswer.IsAnswer">
+            <summary>
+            Value indicating whether the reply needs to be set as answer (true) or not (false).
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Posts.Events.ReplyUpdated">
+            <summary>
+            Event published when a reply is updated.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.ReplyUpdated.Content">
+            <summary>
+            The new content of the reply.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.ReplyUpdated.Status">
+            <summary>
+            The new status of the reply.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Posts.Events.TopicCreated">
+            <summary>
+            Event published when a topic is created.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.TopicCreated.ForumId">
+            <summary>
+            The unique identifier of the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.TopicCreated.Title">
+            <summary>
+            The title of the topic.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.TopicCreated.Slug">
+            <summary>
+            The slug of the topic.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.TopicCreated.Content">
+            <summary>
+            The content of the topic.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.TopicCreated.Status">
+            <summary>
+            The status of the topic.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Posts.Events.TopicDeleted">
+            <summary>
+            Event published when a topic is deleted.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Posts.Events.TopicLocked">
+            <summary>
+            Event published when a topic is locked.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.TopicLocked.Locked">
+            <summary>
+            Value indicating whether the topic is locked (true) or unlocked (false).
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Posts.Events.TopicPinned">
+            <summary>
+            Event published when a topic is pinned.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.TopicPinned.Pinned">
+            <summary>
+            Value indicating whether the topic is pinned (true) or unpinned (false).
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Posts.Events.TopicUpdated">
+            <summary>
+            Event published when a topic is updated.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.TopicUpdated.Title">
+            <summary>
+            The new title of the topic.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.TopicUpdated.Slug">
+            <summary>
+            The new slug of the topic.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.TopicUpdated.Content">
+            <summary>
+            The new content of the topic.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Events.TopicUpdated.Status">
+            <summary>
+            The new status of the topic.
+            </summary>
+        </member>
         <member name="T:Atles.Domain.Models.Posts.Post">
             <summary>
             A forum post is a message created in a forum.
@@ -1070,13 +1320,13 @@
             If the resulting number is less than zero, the value is set to zero.
             </summary>
         </member>
-        <member name="M:Atles.Domain.Models.Posts.Post.IncreaseReactionCount(Atles.Domain.PostReactions.PostReactionType)">
+        <member name="M:Atles.Domain.Models.Posts.Post.IncreaseReactionCount(Atles.Domain.Models.PostReactions.PostReactionType)">
             <summary>
             Increases count for the specified reaction type.
             </summary>
             <param name="type">The post reaction type.</param>
         </member>
-        <member name="M:Atles.Domain.Models.Posts.Post.DecreaseReactionCount(Atles.Domain.PostReactions.PostReactionType)">
+        <member name="M:Atles.Domain.Models.Posts.Post.DecreaseReactionCount(Atles.Domain.Models.PostReactions.PostReactionType)">
             <summary>
             Decreases count for the specified reaction type.
             </summary>
@@ -1153,6 +1403,56 @@
             </summary>
         </member>
         <member name="P:Atles.Domain.Models.Sites.Commands.UpdateSite.HeadScript">
+            <summary>
+            The script for the head section of the HTML document.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Sites.Events.SiteUpdated">
+            <summary>
+            Event published when a site is updated.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteUpdated.Title">
+            <summary>
+            The new tile of the site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteUpdated.PublicTheme">
+            <summary>
+            The new theme for the public site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteUpdated.PublicCss">
+            <summary>
+            The new Cascading Style Sheet for the public site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteUpdated.AdminTheme">
+            <summary>
+            The new theme for the public site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteUpdated.AdminCss">
+            <summary>
+            The new Cascading Style Sheet for the public site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteUpdated.Language">
+            <summary>
+            The new language ISO code of the site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteUpdated.Privacy">
+            <summary>
+            The new content of the privacy page.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteUpdated.Terms">
+            <summary>
+            The new content of the terms page.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Sites.Events.SiteUpdated.HeadScript">
             <summary>
             The script for the head section of the HTML document.
             </summary>

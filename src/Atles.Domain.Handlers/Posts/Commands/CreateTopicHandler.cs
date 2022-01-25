@@ -8,6 +8,7 @@ using Atles.Domain.Handlers.Posts.Services;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Posts.Commands;
+using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Posts.Commands
@@ -47,19 +48,21 @@ namespace Atles.Domain.Handlers.Posts.Commands
                 command.Status);
 
             _dbContext.Posts.Add(topic);
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Created,
-                typeof(Post),
-                command.Id,
-                new
-                {
-                    command.ForumId,
-                    title,
-                    slug,
-                    command.Content,
-                    command.Status
-                }));
+
+            var @event = new TopicCreated
+            {
+                ForumId = command.ForumId,
+                Title = title,
+                Slug = slug,
+                Content = command.Content,
+                Status = command.Status,
+                TargetId = command.Id,
+                TargetType = nameof(Post),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             var forum = await _dbContext.Forums.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == topic.ForumId);
             forum.UpdateLastPost(topic.Id);

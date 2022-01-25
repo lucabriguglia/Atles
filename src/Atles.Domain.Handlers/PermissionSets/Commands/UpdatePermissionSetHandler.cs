@@ -5,6 +5,7 @@ using Atles.Data.Caching;
 using Atles.Domain.Models;
 using Atles.Domain.Models.PermissionSets;
 using Atles.Domain.Models.PermissionSets.Commands;
+using Atles.Domain.Models.PermissionSets.Events;
 using Atles.Infrastructure.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -49,16 +50,17 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
 
             permissionSet.UpdateDetails(command.Name, command.Permissions);
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Updated,
-                typeof(PermissionSet),
-                command.Id,
-                new
-                {
-                    command.Name,
-                    command.Permissions
-                }));
+            var @event = new PermissionSetUpdated
+            {
+                Name = permissionSet.Name,
+                Permissions = command.Permissions,
+                TargetId = permissionSet.Id,
+                TargetType = nameof(permissionSet),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 

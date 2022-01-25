@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Atles.Data;
+﻿using Atles.Data;
 using Atles.Data.Caching;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -11,7 +10,6 @@ using Atles.Domain.Models.Categories.Commands;
 using Atles.Domain.Models.Categories.Events;
 using Atles.Domain.Models.Forums.Events;
 using Atles.Infrastructure.Commands;
-using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Handlers.Categories.Commands
 {

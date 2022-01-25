@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Posts.Commands;
+using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Posts.Commands
@@ -36,18 +37,19 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
             _dbContext.Posts.Add(reply);
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Created,
-                typeof(Post),
-                command.Id,
-                new
-                {
-                    command.TopicId,
-                    command.ForumId,
-                    command.Content,
-                    command.Status
-                }));
+            var @event = new ReplyCreated
+            {
+                TopicId = command.TopicId,
+                ForumId = command.ForumId,
+                Content = command.Content,
+                Status = command.Status,
+                TargetId = command.Id,
+                TargetType = nameof(Post),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             var topic = await _dbContext.Posts
                     .Include(x => x.Forum)
