@@ -1,4 +1,5 @@
-﻿using Atles.Data;
+﻿using System.Collections.Generic;
+using Atles.Data;
 using Atles.Data.Caching;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Categories.Commands;
 using Atles.Domain.Models.Categories.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Handlers.Categories.Commands
 {
@@ -25,7 +27,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
             _cacheManager = cacheManager;
         }
 
-        public async Task Handle(UpdateCategory command)
+        public async Task<IEnumerable<IEvent>> Handle(UpdateCategory command)
         {
             await _validator.ValidateCommand(command);
 

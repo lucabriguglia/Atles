@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.Forums.Commands;
 using Atles.Domain.Models.Forums.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -29,7 +31,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
             _validator = validator;
         }
 
-        public async Task Handle(UpdateForum command)
+        public async Task<IEnumerable<IEvent>> Handle(UpdateForum command)
         {
             await _validator.ValidateCommand(command);
 

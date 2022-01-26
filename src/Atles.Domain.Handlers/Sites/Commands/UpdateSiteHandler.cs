@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
@@ -7,6 +8,7 @@ using Atles.Domain.Models.Sites;
 using Atles.Domain.Models.Sites.Commands;
 using Atles.Domain.Models.Sites.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -25,7 +27,7 @@ namespace Atles.Domain.Handlers.Sites.Commands
             _cacheManager = cacheManager;
         }
 
-        public async Task Handle(UpdateSite command)
+        public async Task<IEnumerable<IEvent>> Handle(UpdateSite command)
         {
             await _validator.ValidateCommand(command);
 

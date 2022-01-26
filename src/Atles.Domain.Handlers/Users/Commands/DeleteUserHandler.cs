@@ -1,4 +1,5 @@
-﻿using Atles.Data;
+﻿using System.Collections.Generic;
+using Atles.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Threading.Tasks;
@@ -7,6 +8,7 @@ using Atles.Domain.Models.Users;
 using Atles.Domain.Models.Users.Commands;
 using Atles.Domain.Models.Users.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Handlers.Users.Commands
 {
@@ -19,7 +21,7 @@ namespace Atles.Domain.Handlers.Users.Commands
             _dbContext = dbContext;
         }
 
-        public async Task Handle(DeleteUser command)
+        public async Task<IEnumerable<IEvent>> Handle(DeleteUser command)
         {
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>

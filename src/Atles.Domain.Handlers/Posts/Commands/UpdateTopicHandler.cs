@@ -1,4 +1,5 @@
-﻿using Atles.Data;
+﻿using System.Collections.Generic;
+using Atles.Data;
 using Atles.Data.Caching;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -11,6 +12,7 @@ using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Posts.Commands;
 using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Handlers.Posts.Commands
 {
@@ -32,7 +34,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
             _topicSlugGenerator = topicSlugGenerator;
         }
 
-        public async Task Handle(UpdateTopic command)
+        public async Task<IEnumerable<IEvent>> Handle(UpdateTopic command)
         {
             await _validator.ValidateCommand(command);
 

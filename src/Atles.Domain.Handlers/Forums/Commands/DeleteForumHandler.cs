@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.Forums.Commands;
 using Atles.Domain.Models.Forums.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Domain.Handlers.Forums.Commands
@@ -24,7 +26,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
             _cacheManager = cacheManager;
         }
 
-        public async Task Handle(DeleteForum command)
+        public async Task<IEnumerable<IEvent>> Handle(DeleteForum command)
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
