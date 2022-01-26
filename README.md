@@ -1,5 +1,7 @@
 # Atles (Alpha)
 
+[![.NET 6](https://github.com/lucabriguglia/Atles/actions/workflows/dotnet-6.yml/badge.svg)](https://github.com/lucabriguglia/Atles/actions/workflows/dotnet-6.yml)
+
 A forum software built with ASP.NET Blazor WebAssembly and CQRS.
 
 **Documentation**: [Atles Wiki](https://lucabriguglia.github.io/Atles).
