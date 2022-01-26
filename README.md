@@ -1,7 +1,5 @@
 # Atles (Alpha)
 
-![.NET Core](https://github.com/lucabriguglia/Atles/workflows/.NET%20Core/badge.svg)
-
 A forum software built with ASP.NET Blazor WebAssembly and CQRS.
 
 **Documentation**: [Atles Wiki](https://lucabriguglia.github.io/Atles).
@@ -11,8 +9,8 @@ A forum software built with ASP.NET Blazor WebAssembly and CQRS.
 
 ## Technology
 
-- Blazor WebAssembly 5.0.1
-- Entity Framework Core 5.0.1
+- Blazor WebAssembly 6.0.1
+- Entity Framework Core 6.0.1
 - SQL Server
 
 ## Features
@@ -21,7 +19,7 @@ A forum software built with ASP.NET Blazor WebAssembly and CQRS.
 - Multi language
 - Granular permissions
 - Markdown editor
-- You can use your own ASP.NET Identity
+- An existing ASP.NET Identity database can be used
 
 ## Run on local
 
