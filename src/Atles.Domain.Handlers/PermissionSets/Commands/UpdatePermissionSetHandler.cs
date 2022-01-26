@@ -67,6 +67,8 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.PermissionSet(command.Id));
+
+            return new IEvent[] { @event };
         }
     }
 }

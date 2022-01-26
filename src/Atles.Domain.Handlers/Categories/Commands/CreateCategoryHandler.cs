@@ -58,6 +58,8 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
             _cacheManager.Remove(CacheKeys.Categories(command.SiteId));
             _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
+
+            return new IEvent[] { @event };
         }
     }
 }

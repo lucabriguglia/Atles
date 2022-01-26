@@ -77,6 +77,8 @@ namespace Atles.Domain.Handlers.Posts.Commands
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.Forum(forum.Id));
+
+            return new IEvent[] { @event };
         }
     }
 }

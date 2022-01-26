@@ -52,6 +52,8 @@ namespace Atles.Domain.Handlers.Users.Commands
             _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
+
+            return new IEvent[] { @event };
         }
     }
 }

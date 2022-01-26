@@ -59,6 +59,8 @@ namespace Atles.Domain.Handlers.Posts.Commands
             _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
+
+            return new IEvent[] { @event };
         }
     }
 }

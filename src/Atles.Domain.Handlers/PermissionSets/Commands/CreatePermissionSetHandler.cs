@@ -1,10 +1,12 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain.Models;
 using Atles.Domain.Models.PermissionSets;
 using Atles.Domain.Models.PermissionSets.Commands;
 using Atles.Domain.Models.PermissionSets.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 using FluentValidation;
 
 namespace Atles.Domain.Handlers.PermissionSets.Commands
@@ -21,7 +23,7 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
             _validator = validator;
         }
 
-        public async Task Handle(CreatePermissionSet command)
+        public async Task<IEnumerable<IEvent>> Handle(CreatePermissionSet command)
         {
             await _validator.ValidateCommand(command);
 
@@ -45,6 +47,8 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
             _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
+
+            return new IEvent[] { @event };
         }
     }
 }

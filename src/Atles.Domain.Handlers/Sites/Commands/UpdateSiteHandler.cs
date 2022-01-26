@@ -68,6 +68,8 @@ namespace Atles.Domain.Handlers.Sites.Commands
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.CurrentSite(site.Name));
+
+            return new IEvent[] { @event };
         }
     }
 }

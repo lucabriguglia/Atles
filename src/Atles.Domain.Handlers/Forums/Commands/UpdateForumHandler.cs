@@ -89,6 +89,8 @@ namespace Atles.Domain.Handlers.Forums.Commands
 
             _cacheManager.Remove(CacheKeys.Forum(command.Id));
             _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
+
+            return new IEvent[] { @event };
         }
 
         private async Task ReorderForumsInCategory(Guid categoryId, Guid forumIdToExclude, Guid siteId, Guid userId)

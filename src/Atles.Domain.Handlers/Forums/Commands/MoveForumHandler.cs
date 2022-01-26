@@ -89,6 +89,8 @@ namespace Atles.Domain.Handlers.Forums.Commands
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.Categories(command.SiteId));
+
+            return new IEvent[] { @event };
         }
     }
 }
