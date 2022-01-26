@@ -33,7 +33,8 @@ namespace Atles.Domain.Handlers.Tests.PermissionSets.Commands
                             Type = PermissionType.Start,
                             RoleId = Guid.NewGuid().ToString()
                         }
-                    }
+                    },
+                    SiteId = Guid.NewGuid()
                 };
 
                 var cacheManager = new Mock<ICacheManager>();

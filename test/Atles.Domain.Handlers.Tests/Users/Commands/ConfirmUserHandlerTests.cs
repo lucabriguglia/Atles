@@ -18,9 +18,7 @@ namespace Atles.Domain.Handlers.Tests.Users.Commands
         {
             var options = Shared.CreateContextOptions();
 
-            var userId = Guid.NewGuid();
-
-            var user = new User(userId, Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+            var user = new User(Guid.NewGuid().ToString(), "me@email.com", "Display Name");
 
             using (var dbContext = new AtlesDbContext(options))
             {

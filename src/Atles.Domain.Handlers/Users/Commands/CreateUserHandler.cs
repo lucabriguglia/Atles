@@ -46,7 +46,7 @@ namespace Atles.Domain.Handlers.Users.Commands
                 Email = user.Email,
                 DisplayName = displayName,
                 Status = user.Status,
-                TargetId = command.UserId == Guid.Empty ? user.Id : command.UserId,
+                TargetId = user.Id,
                 TargetType = nameof(User),
                 SiteId = command.SiteId,
                 UserId = command.UserId

@@ -37,7 +37,7 @@ namespace Atles.Domain.Handlers.Users.Commands
 
             var @event = new UserConfirmed
             {
-                TargetId = command.UserId == Guid.Empty ? user.Id : command.UserId,
+                TargetId = user.Id,
                 TargetType = nameof(User),
                 SiteId = command.SiteId,
                 UserId = command.UserId
