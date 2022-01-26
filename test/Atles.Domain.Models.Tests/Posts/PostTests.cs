@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using Atles.Domain.Models.PostReactions;
 using Atles.Domain.Models.Posts;
-using Atles.Domain.PostReactions;
 using Atles.Domain.Posts;
 using AutoFixture;
 using NUnit.Framework;

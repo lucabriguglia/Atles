@@ -8,7 +8,6 @@ using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.PostReactions;
 using Atles.Domain.Models.Posts;
-using Atles.Domain.PostReactions;
 using Atles.Domain.PostReactions.Commands;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;

@@ -1,9 +1,7 @@
 ﻿using Atles.Data;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Data;
 using System.Threading.Tasks;
-using Atles.Data.Configurations;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Users;
 using Atles.Domain.Models.Users.Commands;

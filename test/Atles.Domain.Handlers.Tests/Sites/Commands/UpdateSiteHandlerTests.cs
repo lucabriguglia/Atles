@@ -3,7 +3,6 @@ using System.Threading;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Handlers.Categories.Commands;
 using Atles.Domain.Handlers.Sites.Commands;
 using Atles.Domain.Models.Sites;
 using Atles.Domain.Models.Sites.Commands;

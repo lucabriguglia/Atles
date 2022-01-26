@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using Atles.Infrastructure.Events;
+﻿using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Models.Users.Events
 {

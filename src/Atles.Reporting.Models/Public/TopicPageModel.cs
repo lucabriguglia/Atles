@@ -1,5 +1,4 @@
-﻿using Atles.Domain.PostReactions;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using Atles.Domain.Models.PostReactions;

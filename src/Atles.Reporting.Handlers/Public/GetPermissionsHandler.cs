@@ -1,6 +1,5 @@
 ﻿using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;

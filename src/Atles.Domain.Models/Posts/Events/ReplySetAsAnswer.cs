@@ -1,5 +1,4 @@
-﻿using System;
-using Atles.Infrastructure.Events;
+﻿using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Models.Posts.Events
 {
