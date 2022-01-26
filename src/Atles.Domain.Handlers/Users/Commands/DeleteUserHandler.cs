@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Users;
 using Atles.Domain.Models.Users.Commands;
+using Atles.Domain.Models.Users.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Users.Commands
@@ -33,11 +34,15 @@ namespace Atles.Domain.Handlers.Users.Commands
 
             user.Delete();
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Deleted,
-                typeof(User),
-                command.Id));
+            var @event = new UserDeleted
+            {
+                TargetId = user.Id,
+                TargetType = nameof(User),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
         }

@@ -9,6 +9,7 @@ using Atles.Domain.Handlers.Posts.Services;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Posts.Commands;
+using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Posts.Commands
@@ -33,7 +34,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
         public async Task Handle(UpdateTopic command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var topic = await _dbContext.Posts
                 .FirstOrDefaultAsync(x =>
@@ -54,18 +55,19 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
             topic.UpdateDetails(command.UserId, title, slug, command.Content, command.Status);
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Updated,
-                typeof(Post),
-                command.Id,
-                new
-                {
-                    title,
-                    slug,
-                    command.Content,
-                    command.Status
-                }));
+            var @event = new TopicUpdated
+            {
+                Title = topic.Title,
+                Slug = topic.Slug,
+                Content = topic.Content,
+                Status = topic.Status,
+                TargetId = topic.Id,
+                TargetType = nameof(Post),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 

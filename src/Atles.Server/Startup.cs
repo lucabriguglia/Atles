@@ -2,11 +2,12 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Atles.Data;
 using Atles.Domain.Handlers.Categories.Commands;
+using Atles.Domain.Handlers.Categories.Commands.Validators;
 using Atles.Domain.Models.Sites;
-using Atles.Domain.Validators.Categories;
 using Atles.Infrastructure.Extensions;
 using Atles.Reporting.Handlers.Admin;
 using Atles.Reporting.Models.Admin.Categories;
+using Atles.Server.Middlewares;
 using Atles.Server.Services;
 using Docs;
 using Docs.Extensions;
@@ -102,9 +103,11 @@ namespace Atles.Server
             IInstallationService installationService,
             IDocumentationService documentationService)
         {
+            app.UseMiddleware<ExceptionHandlerMiddleware>();
+
             if (env.IsDevelopment())
             {
-                app.UseExceptionHandler("/Error");
+                //app.UseExceptionHandler("/Error");
 
                 //app.UseDeveloperExceptionPage();
                 //app.UseDatabaseErrorPage();
@@ -112,7 +115,7 @@ namespace Atles.Server
             }
             else
             {
-                app.UseExceptionHandler("/Error");
+                //app.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
                 app.UseHsts();
             }

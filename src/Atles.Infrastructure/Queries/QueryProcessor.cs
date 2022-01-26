@@ -9,7 +9,7 @@ namespace Atles.Infrastructure.Queries
     {
         private readonly IServiceProviderWrapper _serviceProvider;
 
-        private static readonly ConcurrentDictionary<Type, object> _queryHandlerWrappers = new();
+        private static readonly ConcurrentDictionary<Type, object> QueryHandlerWrappers = new();
 
         public QueryProcessor(IServiceProviderWrapper serviceProvider)
         {
@@ -25,7 +25,7 @@ namespace Atles.Infrastructure.Queries
 
             var queryType = query.GetType();
 
-            var handler = (QueryHandlerWrapperBase<TResult>)_queryHandlerWrappers.GetOrAdd(queryType,
+            var handler = (QueryHandlerWrapperBase<TResult>)QueryHandlerWrappers.GetOrAdd(queryType,
                 t => Activator.CreateInstance(typeof(QueryHandlerWrapper<,>).MakeGenericType(queryType, typeof(TResult))));
 
             return await handler.Handle(query, _serviceProvider);

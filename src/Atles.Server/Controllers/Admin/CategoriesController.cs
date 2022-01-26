@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Domain;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Categories.Commands;
 using Atles.Domain.Models.Categories.Rules;

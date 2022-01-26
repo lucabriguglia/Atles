@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Categories.Commands;
+using Atles.Domain.Models.Categories.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Categories.Commands
@@ -43,15 +44,16 @@ namespace Atles.Domain.Handlers.Categories.Commands
                 category.MoveDown();
             }
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Reordered,
-                typeof(Category),
-                category.Id,
-                new
-                {
-                    category.SortOrder
-                }));
+            var categoryMoved = new CategoryMoved
+            {
+                SortOrder = category.SortOrder,
+                TargetId = category.Id,
+                TargetType = nameof(Category),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(categoryMoved.ToDbEntity());
 
             var sortOrderToReplace = category.SortOrder;
 
@@ -70,15 +72,16 @@ namespace Atles.Domain.Handlers.Categories.Commands
                 adjacentCategory.MoveUp();
             }
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Reordered,
-                typeof(Category),
-                adjacentCategory.Id,
-                new
-                {
-                    adjacentCategory.SortOrder
-                }));
+            var adjacentCategoryMoved = new CategoryMoved
+            {
+                SortOrder = category.SortOrder,
+                TargetId = adjacentCategory.Id,
+                TargetType = nameof(Category),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(adjacentCategoryMoved.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 

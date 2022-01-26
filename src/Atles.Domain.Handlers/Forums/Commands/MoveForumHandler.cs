@@ -5,6 +5,7 @@ using Atles.Data.Caching;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.Forums.Commands;
+using Atles.Domain.Models.Forums.Events;
 using Atles.Infrastructure.Commands;
 using Microsoft.EntityFrameworkCore;
 
@@ -44,15 +45,16 @@ namespace Atles.Domain.Handlers.Forums.Commands
                 forum.MoveDown();
             }
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Reordered,
-                typeof(Forum),
-                forum.Id,
-                new
-                {
-                    forum.SortOrder
-                }));
+            var @event = new ForumMoved
+            {
+                SortOrder = forum.SortOrder,
+                TargetId = forum.Id,
+                TargetType = nameof(Forum),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             var sortOrderToReplace = forum.SortOrder;
 
@@ -71,15 +73,16 @@ namespace Atles.Domain.Handlers.Forums.Commands
                 adjacentForum.MoveUp();
             }
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Reordered,
-                typeof(Forum),
-                adjacentForum.Id,
-                new
-                {
-                    adjacentForum.SortOrder
-                }));
+            var adjacentForumMoved = new ForumMoved
+            {
+                SortOrder = adjacentForum.SortOrder,
+                TargetId = adjacentForum.Id,
+                TargetType = nameof(Forum),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(adjacentForumMoved.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 

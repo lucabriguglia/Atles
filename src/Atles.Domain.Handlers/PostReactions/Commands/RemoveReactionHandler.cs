@@ -4,6 +4,8 @@ using Atles.Domain.PostReactions.Commands;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Threading.Tasks;
+using Atles.Domain.Models;
+using Atles.Domain.Models.PostReactions.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.PostReactions.Commands
@@ -35,6 +37,16 @@ namespace Atles.Domain.Handlers.PostReactions.Commands
             postReaction.Post.DecreaseReactionCount(postReaction.Type);
 
             _dbContext.PostReactions.Remove(postReaction);
+
+            var @event = new ReactionRemoved
+            {
+                TargetId = postReaction.PostId,
+                TargetType = nameof(Post),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
         }

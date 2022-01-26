@@ -5,7 +5,6 @@ using System.Linq;
 using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.PostReactions;
 using Atles.Domain.Models.Users;
-using Atles.Domain.PostReactions;
 using Atles.Domain.Posts;
 using Docs.Attributes;
 

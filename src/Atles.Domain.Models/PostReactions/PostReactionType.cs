@@ -1,4 +1,4 @@
-﻿namespace Atles.Domain.PostReactions
+﻿namespace Atles.Domain.Models.PostReactions
 {
     public enum PostReactionType
     {

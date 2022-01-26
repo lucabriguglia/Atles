@@ -1,11 +1,11 @@
 ﻿using Atles.Data;
-using Atles.Domain.PostReactions;
 using Atles.Domain.PostReactions.Commands;
-using Atles.Domain.Posts;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Threading.Tasks;
+using Atles.Domain.Models;
 using Atles.Domain.Models.PostReactions;
+using Atles.Domain.Models.PostReactions.Events;
 using Atles.Domain.Models.Posts;
 using Atles.Infrastructure.Commands;
 
@@ -39,6 +39,17 @@ namespace Atles.Domain.Handlers.PostReactions.Commands
             var postReaction = new PostReaction(command.PostId, command.UserId, command.Type);
 
             _dbContext.PostReactions.Add(postReaction);
+
+            var @event = new ReactionAdded
+            {
+                Type = postReaction.Type,
+                TargetId = postReaction.PostId,
+                TargetType = nameof(Post),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
         }

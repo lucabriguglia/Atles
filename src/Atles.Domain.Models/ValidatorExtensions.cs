@@ -7,9 +7,20 @@ using FluentValidation.Results;
 
 namespace Atles.Domain.Models
 {
+    /// <summary>
+    /// Validator Extensions
+    /// </summary>
     public static class ValidatorExtensions
     {
-        public static async Task ValidateCommandAsync<TCommand>(this IValidator<TCommand> validator, TCommand command)
+        /// <summary>
+        /// Validates the command and throws an exception if not valid.
+        /// </summary>
+        /// <param name="validator"></param>
+        /// <param name="command"></param>
+        /// <typeparam name="TCommand"></typeparam>
+        /// <exception cref="ArgumentNullException"></exception>
+        /// <exception cref="ApplicationException"></exception>
+        public static async Task ValidateCommand<TCommand>(this IValidator<TCommand> validator, TCommand command)
         {
             if (validator == null)
             {

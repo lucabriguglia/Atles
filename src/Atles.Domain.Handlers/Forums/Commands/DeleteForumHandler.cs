@@ -7,6 +7,7 @@ using Atles.Data.Caching;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.Forums.Commands;
+using Atles.Domain.Models.Forums.Events;
 using Atles.Infrastructure.Commands;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,8 +18,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
         private readonly AtlesDbContext _dbContext;
         private readonly ICacheManager _cacheManager;
 
-        public DeleteForumHandler(AtlesDbContext dbContext,
-            ICacheManager cacheManager)
+        public DeleteForumHandler(AtlesDbContext dbContext, ICacheManager cacheManager)
         {
             _dbContext = dbContext;
             _cacheManager = cacheManager;
@@ -38,11 +38,16 @@ namespace Atles.Domain.Handlers.Forums.Commands
             }
 
             forum.Delete();
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Deleted,
-                typeof(Forum),
-                forum.Id));
+
+            var @event = new ForumDeleted
+            {
+                TargetId = forum.Id,
+                TargetType = nameof(Forum),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await ReorderForumsInCategory(forum.CategoryId, command.Id, command.SiteId, command.UserId);
 
@@ -53,7 +58,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
             _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
         }
 
-        private async Task ReorderForumsInCategory(Guid categoryId, Guid forumIdToExclude, Guid siteId, Guid memberId)
+        private async Task ReorderForumsInCategory(Guid categoryId, Guid forumIdToExclude, Guid siteId, Guid userId)
         {
             var forums = await _dbContext.Forums
                 .Where(x =>
@@ -63,18 +68,20 @@ namespace Atles.Domain.Handlers.Forums.Commands
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
-            for (int i = 0; i < forums.Count; i++)
+            for (var i = 0; i < forums.Count; i++)
             {
                 forums[i].Reorder(i + 1);
-                _dbContext.Events.Add(new Event(siteId,
-                    memberId,
-                    EventType.Reordered,
-                    typeof(Forum),
-                    forums[i].Id,
-                    new
-                    {
-                        forums[i].SortOrder
-                    }));
+
+                var @event = new ForumMoved
+                {
+                    SortOrder = forums[i].SortOrder,
+                    TargetId = forums[i].Id,
+                    TargetType = nameof(Forum),
+                    SiteId = siteId,
+                    UserId = userId
+                };
+
+                _dbContext.Events.Add(@event.ToDbEntity());
             }
         }
     }

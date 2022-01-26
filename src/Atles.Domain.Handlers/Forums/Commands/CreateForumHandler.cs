@@ -5,6 +5,7 @@ using Atles.Data.Caching;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.Forums.Commands;
+using Atles.Domain.Models.Forums.Events;
 using Atles.Infrastructure.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -28,7 +29,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
 
         public async Task Handle(CreateForum command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var forumsCount = await _dbContext.Forums
                 .Where(x => x.CategoryId == command.CategoryId && x.Status != ForumStatusType.Deleted)
@@ -45,20 +46,22 @@ namespace Atles.Domain.Handlers.Forums.Commands
                 command.PermissionSetId);
 
             _dbContext.Forums.Add(forum);
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Created,
-                typeof(Forum),
-                forum.Id,
-                new
-                {
-                    forum.Name,
-                    forum.Slug,
-                    forum.Description,
-                    forum.CategoryId,
-                    forum.PermissionSetId,
-                    forum.SortOrder
-                }));
+
+            var @event = new ForumCreated
+            {
+                Name = forum.Name,
+                Slug = forum.Slug,
+                Description = forum.Description,
+                CategoryId = forum.CategoryId,
+                PermissionSetId = forum.PermissionSetId,
+                SortOrder = forum.SortOrder,
+                TargetId = forum.Id,
+                TargetType = nameof(Forum),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 

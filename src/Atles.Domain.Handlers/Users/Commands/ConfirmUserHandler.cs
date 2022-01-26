@@ -3,9 +3,11 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Data;
 using System.Threading.Tasks;
+using Atles.Data.Configurations;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Users;
 using Atles.Domain.Models.Users.Commands;
+using Atles.Domain.Models.Users.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Users.Commands
@@ -33,15 +35,15 @@ namespace Atles.Domain.Handlers.Users.Commands
 
             user.Confirm();
 
-            var userIdForEvent = command.UserId == Guid.Empty
-                ? user.Id
-                : command.UserId;
+            var @event = new UserConfirmed
+            {
+                TargetId = user.Id,
+                TargetType = nameof(User),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                userIdForEvent,
-                EventType.Confirmed,
-                typeof(User),
-                command.Id));
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
         }

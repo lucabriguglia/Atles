@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Users;
 using Atles.Domain.Models.Users.Commands;
+using Atles.Domain.Models.Users.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Users.Commands
@@ -23,7 +24,7 @@ namespace Atles.Domain.Handlers.Users.Commands
 
         public async Task Handle(UpdateUser command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
@@ -36,28 +37,17 @@ namespace Atles.Domain.Handlers.Users.Commands
 
             user.UpdateDetails(command.DisplayName);
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Updated,
-                typeof(User),
-                command.Id,
-                new
-                {
-                    command.DisplayName
-                }));
-
-            if (command.Roles != null && command.Roles.Count > 0)
+            var @event = new UserUpdated
             {
-                _dbContext.Events.Add(new Event(command.SiteId,
-                    command.UserId,
-                    EventType.Updated,
-                    typeof(User),
-                    command.Id,
-                    new
-                    {
-                        Roles = string.Join(", ", command.Roles)
-                    }));
-            }
+                DisplayName = user.DisplayName,
+                Roles = command.Roles is { Count: > 0 } ? string.Join(", ", command.Roles) : string.Empty,
+                TargetId = user.Id,
+                TargetType = nameof(User),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
         }

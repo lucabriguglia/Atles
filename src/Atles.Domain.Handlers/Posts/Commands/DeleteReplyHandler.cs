@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Posts.Commands;
+using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Posts.Commands
@@ -42,11 +43,15 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
             reply.Delete();
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Deleted,
-                typeof(Post),
-                command.Id));
+            var @event = new ReplyDeleted
+            {
+                TargetId = command.Id,
+                TargetType = nameof(Post),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             if (reply.IsAnswer)
             {

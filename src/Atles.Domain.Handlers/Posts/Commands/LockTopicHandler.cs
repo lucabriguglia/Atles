@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Posts.Commands;
+using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Posts.Commands
@@ -38,11 +39,16 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
             topic.Lock(command.Locked);
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Locked,
-                typeof(Post),
-                command.Id));
+            var @event = new TopicLocked
+            {
+                Locked = topic.Locked,
+                TargetId = command.Id,
+                TargetType = nameof(Post),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 

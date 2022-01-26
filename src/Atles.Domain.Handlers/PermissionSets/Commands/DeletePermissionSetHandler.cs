@@ -6,6 +6,7 @@ using Atles.Data.Caching;
 using Atles.Domain.Models;
 using Atles.Domain.Models.PermissionSets;
 using Atles.Domain.Models.PermissionSets.Commands;
+using Atles.Domain.Models.PermissionSets.Events;
 using Atles.Infrastructure.Commands;
 using Microsoft.EntityFrameworkCore;
 
@@ -45,11 +46,15 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
 
             permissionSet.Delete();
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Deleted,
-                typeof(PermissionSet),
-                command.Id));
+            var @event = new PermissionSetDeleted
+            {
+                TargetId = permissionSet.Id,
+                TargetType = nameof(PermissionSet),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 

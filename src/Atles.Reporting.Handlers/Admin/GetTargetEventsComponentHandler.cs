@@ -58,6 +58,8 @@ namespace Atles.Reporting.Handlers.Admin
                     foreach (var x in parsedData)
                     {
                         if (x.Key != nameof(@event.Id) &&
+                            x.Key != nameof(@event.TimeStamp) &&
+                            x.Key != nameof(@event.Type) &&
                             x.Key != nameof(@event.TargetId) &&
                             x.Key != nameof(@event.TargetType) &&
                             x.Key != nameof(@event.SiteId) &&

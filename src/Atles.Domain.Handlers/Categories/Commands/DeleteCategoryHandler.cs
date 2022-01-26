@@ -7,7 +7,8 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Categories.Commands;
-using Atles.Domain.Models.Forums;
+using Atles.Domain.Models.Categories.Events;
+using Atles.Domain.Models.Forums.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Categories.Commands
@@ -39,11 +40,15 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
             category.Delete();
 
-            _dbContext.Events.Add(new Event(command.SiteId,
-                command.UserId,
-                EventType.Deleted,
-                typeof(Category),
-                category.Id));
+            var categoryDeleted = new CategoryDeleted
+            {
+                TargetId = category.Id,
+                TargetType = nameof(Category),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(categoryDeleted.ToDbEntity());
 
             var otherCategories = await _dbContext.Categories
                 .Where(x =>
@@ -52,28 +57,35 @@ namespace Atles.Domain.Handlers.Categories.Commands
                     x.Status != CategoryStatusType.Deleted)
                 .ToListAsync();
 
-            for (int i = 0; i < otherCategories.Count; i++)
+            for (var i = 0; i < otherCategories.Count; i++)
             {
                 otherCategories[i].Reorder(i + 1);
-                _dbContext.Events.Add(new Event(command.SiteId,
-                    command.UserId,
-                    EventType.Reordered,
-                    typeof(Category),
-                    otherCategories[i].Id,
-                    new
-                    {
-                        otherCategories[i].SortOrder
-                    }));
+
+                var categoryMoved = new CategoryMoved
+                {
+                    SortOrder = otherCategories[i].SortOrder,
+                    TargetId = otherCategories[i].Id,
+                    TargetType = nameof(Category),
+                    SiteId = command.SiteId,
+                    UserId = command.UserId
+                };
+
+                _dbContext.Events.Add(categoryMoved.ToDbEntity());
             }
 
             foreach (var forum in category.Forums)
             {
                 forum.Delete();
-                _dbContext.Events.Add(new Event(command.SiteId,
-                    command.UserId,
-                    EventType.Deleted,
-                    typeof(Forum),
-                    forum.Id));
+
+                var forumDeleted = new ForumDeleted
+                {
+                    TargetId = forum.Id,
+                    TargetType = nameof(Category),
+                    SiteId = command.SiteId,
+                    UserId = command.UserId
+                };
+
+                _dbContext.Events.Add(forumDeleted.ToDbEntity());
             }
 
             await _dbContext.SaveChangesAsync();

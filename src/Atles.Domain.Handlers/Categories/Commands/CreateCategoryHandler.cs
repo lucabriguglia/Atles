@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Categories.Commands;
+using Atles.Domain.Models.Categories.Events;
 using Atles.Infrastructure.Commands;
 
 namespace Atles.Domain.Handlers.Categories.Commands
@@ -26,7 +27,7 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
         public async Task Handle(CreateCategory command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var categoriesCount = await _dbContext.Categories
                 .Where(x => x.SiteId == command.SiteId && x.Status != CategoryStatusType.Deleted)
@@ -34,27 +35,22 @@ namespace Atles.Domain.Handlers.Categories.Commands
 
             var sortOrder = categoriesCount + 1;
 
-            var category = new Category(command.Id,
-                                        command.SiteId,
-                                        command.Name,
-                                        sortOrder,
-                                        command.PermissionSetId);
+            var category = new Category(command.Id, command.SiteId, command.Name, sortOrder, command.PermissionSetId);
 
             _dbContext.Categories.Add(category);
 
-            Event evnt = new(EventType.Created,
-                            category.Id,
-                            typeof(Category),
-                            command.SiteId,
-                            command.UserId,
-                            new
-                            {
-                                category.Name,
-                                category.PermissionSetId,
-                                category.SortOrder
-                            });
+            var @event = new CategoryCreated
+            {
+                Name = category.Name,
+                PermissionSetId = category.PermissionSetId,
+                SortOrder = category.SortOrder,
+                TargetId = category.Id,
+                TargetType = nameof(Category),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
 
-            _dbContext.Events.Add(evnt);
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 

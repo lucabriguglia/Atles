@@ -2,6 +2,7 @@
 using Docs.Attributes;
 using System;
 using Atles.Domain.Models;
+using Atles.Domain.Models.PostReactions;
 using Atles.Domain.Models.Posts;
 
 namespace Atles.Domain.Posts

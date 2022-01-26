@@ -5,6 +5,7 @@ using Atles.Data.Caching;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Sites;
 using Atles.Domain.Models.Sites.Commands;
+using Atles.Domain.Models.Sites.Events;
 using Atles.Infrastructure.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -26,7 +27,7 @@ namespace Atles.Domain.Handlers.Sites.Commands
 
         public async Task Handle(UpdateSite command)
         {
-            await _validator.ValidateCommandAsync(command);
+            await _validator.ValidateCommand(command);
 
             var site = await _dbContext.Sites
                 .FirstOrDefaultAsync(x =>
@@ -45,21 +46,22 @@ namespace Atles.Domain.Handlers.Sites.Commands
                 command.Terms,
                 command.HeadScript);
 
-            _dbContext.Events.Add(new Event(site.Id,
-                command.UserId,
-                EventType.Updated,
-                typeof(Site),
-                site.Id,
-                new
-                {
-                    site.Title,
-                    site.PublicTheme,
-                    site.PublicCss,
-                    site.Language,
-                    site.Privacy,
-                    site.Terms,
-                    site.HeadScript
-                }));
+            var @event = new SiteUpdated
+            {
+                Title = site.Title,
+                PublicTheme = site.PublicTheme,
+                PublicCss = site.PublicCss,
+                Language = site.Language,
+                Privacy = site.Privacy,
+                Terms = site.Terms,
+                HeadScript = site.HeadScript,
+                TargetId = site.Id,
+                TargetType = nameof(Site),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 
