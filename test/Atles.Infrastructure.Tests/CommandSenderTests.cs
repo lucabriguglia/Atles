@@ -16,7 +16,7 @@ namespace Atles.Infrastructure.Tests
         {
             var serviceProvider = new Mock<IServiceProviderWrapper>();
             var sut = new CommandSender(serviceProvider.Object);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await sut.Send<SampleCommand>(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await sut.Send(default(SampleCommand)!));
         }
 
         [Test]

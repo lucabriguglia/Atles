@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Events;
 using Atles.Infrastructure.Queries;

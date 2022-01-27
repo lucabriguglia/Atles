@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
+using Atles.Infrastructure.Events;
 using Atles.Infrastructure.Services;
 
 namespace Atles.Infrastructure.Commands
@@ -13,7 +15,7 @@ namespace Atles.Infrastructure.Commands
             _serviceProvider = serviceProvider;
         }
 
-        public async Task Send<TCommand>(TCommand command) where TCommand : ICommand
+        public async Task<IEnumerable<IEvent>> Send<TCommand>(TCommand command) where TCommand : ICommand
         {
             if (command == null)
             {
@@ -27,7 +29,7 @@ namespace Atles.Infrastructure.Commands
                 throw new Exception($"Handler not found for command of type {typeof(TCommand)}");
             }
 
-            await handler.Handle(command);
+            return await handler.Handle(command);
         }
     }
 }

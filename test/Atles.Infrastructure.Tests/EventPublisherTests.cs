@@ -18,7 +18,7 @@ namespace Atles.Infrastructure.Tests
 
             var sut = new EventPublisher(serviceProvider.Object);
 
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await sut.Publish<SampleEvent>(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await sut.Publish(default(SampleEvent)!));
         }
 
         [Test]

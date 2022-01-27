@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Events;
 using Atles.Infrastructure.Queries;
@@ -13,13 +14,16 @@ namespace Atles.Infrastructure.Tests
         public async Task Should_send_command()
         {
             var command = new SampleCommand();
+            var @event = new SampleEvent();
+            var events = new List<IEvent>{@event};
 
             var commandSender = new Mock<ICommandSender>();
-            commandSender.Setup(x => x.Send(command)).Returns(Task.CompletedTask);
+            commandSender.Setup(x => x.Send(command)).ReturnsAsync(events);
 
             var queryProcessor = new Mock<IQueryProcessor>();
 
             var eventPublisher = new Mock<IEventPublisher>();
+            eventPublisher.Setup(x => x.Publish(@event)).Returns(Task.CompletedTask);
 
             var sut = new Dispatcher(commandSender.Object, queryProcessor.Object, eventPublisher.Object);
 
