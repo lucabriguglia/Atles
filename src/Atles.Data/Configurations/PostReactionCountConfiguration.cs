@@ -1,20 +1,20 @@
-﻿using Atles.Domain.Posts;
+﻿using Atles.Domain.Models.Posts;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Atles.Data.Configurations
 {
-    public class PostReactionCountConfiguration : IEntityTypeConfiguration<PostReactionCount>
+    public class PostReactionCountConfiguration : IEntityTypeConfiguration<PostReaction>
     {
-        public void Configure(EntityTypeBuilder<PostReactionCount> builder)
+        public void Configure(EntityTypeBuilder<PostReaction> builder)
         {
-            builder.ToTable("PostReactionCount");
+            builder.ToTable("PostReaction");
 
             builder.HasKey(x => new { x.PostId, x.Type });
 
             builder
                 .HasOne(x => x.Post)
-                .WithMany(x => x.PostReactionCounts)
+                .WithMany(x => x.PostReactions)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
         }

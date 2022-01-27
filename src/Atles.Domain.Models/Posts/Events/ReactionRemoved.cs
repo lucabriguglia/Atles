@@ -1,12 +1,13 @@
 ﻿using System;
+using Atles.Domain.Models.PostReactions;
 using Atles.Infrastructure.Events;
 using Docs.Attributes;
 
-namespace Atles.Domain.Models.PostReactions.Events
+namespace Atles.Domain.Models.Posts.Events
 {
     [DocRequest(typeof(PostReaction))]
     public class ReactionRemoved : EventBase
     {
-        public Guid PostId { get; set; }
+        public PostReactionType Type { get; set; }
     }
 }
