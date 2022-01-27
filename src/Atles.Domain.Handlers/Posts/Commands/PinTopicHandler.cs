@@ -1,4 +1,5 @@
-﻿using Atles.Data;
+﻿using System.Collections.Generic;
+using Atles.Data;
 using Atles.Data.Caching;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
@@ -8,6 +9,7 @@ using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Posts.Commands;
 using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Handlers.Posts.Commands
 {
@@ -22,7 +24,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
             _cacheManager = cacheManager;
         }
 
-        public async Task Handle(PinTopic command)
+        public async Task<IEnumerable<IEvent>> Handle(PinTopic command)
         {
             var topic = await _dbContext.Posts
                 .FirstOrDefaultAsync(x =>
@@ -53,6 +55,8 @@ namespace Atles.Domain.Handlers.Posts.Commands
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.Forum(topic.ForumId));
+
+            return new IEvent[] { @event };
         }
     }
 }

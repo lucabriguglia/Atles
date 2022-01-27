@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System.Linq;
+using System.Threading.Tasks;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Events;
 using Atles.Infrastructure.Queries;
@@ -20,7 +21,9 @@ namespace Atles.Infrastructure
 
         public async Task Send<TCommand>(TCommand command) where TCommand : ICommand
         {
-            await _commandSender.Send(command);
+            var events = await _commandSender.Send(command);
+            var tasks = events.Select(@event => _eventPublisher.Publish(@event)).ToList();
+            await Task.WhenAll(tasks);
         }
 
         public async Task<TResult> Get<TResult>(IQuery<TResult> query)

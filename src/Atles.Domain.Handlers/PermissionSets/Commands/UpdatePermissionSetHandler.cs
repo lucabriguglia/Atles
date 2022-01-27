@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
@@ -7,6 +8,7 @@ using Atles.Domain.Models.PermissionSets;
 using Atles.Domain.Models.PermissionSets.Commands;
 using Atles.Domain.Models.PermissionSets.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -27,7 +29,7 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
             _cacheManager = cacheManager;
         }
 
-        public async Task Handle(UpdatePermissionSet command)
+        public async Task<IEnumerable<IEvent>> Handle(UpdatePermissionSet command)
         {
             await _validator.ValidateCommand(command);
 
@@ -65,6 +67,8 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.PermissionSet(command.Id));
+
+            return new IEvent[] { @event };
         }
     }
 }

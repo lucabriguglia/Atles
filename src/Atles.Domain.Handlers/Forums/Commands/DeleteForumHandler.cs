@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
@@ -9,6 +10,7 @@ using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.Forums.Commands;
 using Atles.Domain.Models.Forums.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Domain.Handlers.Forums.Commands
@@ -24,7 +26,7 @@ namespace Atles.Domain.Handlers.Forums.Commands
             _cacheManager = cacheManager;
         }
 
-        public async Task Handle(DeleteForum command)
+        public async Task<IEnumerable<IEvent>> Handle(DeleteForum command)
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
@@ -56,6 +58,8 @@ namespace Atles.Domain.Handlers.Forums.Commands
             _cacheManager.Remove(CacheKeys.Forum(forum.Id));
             _cacheManager.Remove(CacheKeys.Categories(command.SiteId));
             _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
+
+            return new IEvent[] { @event };
         }
 
         private async Task ReorderForumsInCategory(Guid categoryId, Guid forumIdToExclude, Guid siteId, Guid userId)

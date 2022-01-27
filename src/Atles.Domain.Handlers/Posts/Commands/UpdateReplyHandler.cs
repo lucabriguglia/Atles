@@ -1,4 +1,5 @@
-﻿using Atles.Data;
+﻿using System.Collections.Generic;
+using Atles.Data;
 using Atles.Data.Caching;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
@@ -9,6 +10,7 @@ using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Posts.Commands;
 using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Handlers.Posts.Commands
 {
@@ -25,7 +27,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
             _cacheManager = cacheManager;
         }
 
-        public async Task Handle(UpdateReply command)
+        public async Task<IEnumerable<IEvent>> Handle(UpdateReply command)
         {
             await _validator.ValidateCommand(command);
 
@@ -57,6 +59,8 @@ namespace Atles.Domain.Handlers.Posts.Commands
             _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
+
+            return new IEvent[] { @event };
         }
     }
 }

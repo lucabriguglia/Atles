@@ -1,4 +1,5 @@
-﻿using Atles.Data;
+﻿using System.Collections.Generic;
+using Atles.Data;
 using Atles.Domain.Models.Posts;
 using Atles.Domain.PostReactions.Commands;
 using Microsoft.EntityFrameworkCore;
@@ -7,6 +8,7 @@ using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.PostReactions.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Handlers.PostReactions.Commands
 {
@@ -19,7 +21,7 @@ namespace Atles.Domain.Handlers.PostReactions.Commands
             _dbContext = dbContext;
         }
 
-        public async Task Handle(RemoveReaction command)
+        public async Task<IEnumerable<IEvent>> Handle(RemoveReaction command)
         {
             var postReaction = await _dbContext.PostReactions
                 .Include(x => x.Post).ThenInclude(x => x.PostReactionCounts)
@@ -49,6 +51,8 @@ namespace Atles.Domain.Handlers.PostReactions.Commands
             _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
+
+            return new IEvent[] { @event };
         }
     }
 }

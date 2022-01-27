@@ -1,4 +1,5 @@
-﻿using System.Data;
+﻿using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Data;
@@ -8,6 +9,7 @@ using Atles.Domain.Models.PermissionSets;
 using Atles.Domain.Models.PermissionSets.Commands;
 using Atles.Domain.Models.PermissionSets.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Domain.Handlers.PermissionSets.Commands
@@ -24,7 +26,7 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
             _cacheManager = cacheManager;
         }
 
-        public async Task Handle(DeletePermissionSet command)
+        public async Task<IEnumerable<IEvent>> Handle(DeletePermissionSet command)
         {
             var permissionSet = await _dbContext.PermissionSets
                 .Include(x => x.Categories)
@@ -59,6 +61,8 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
             await _dbContext.SaveChangesAsync();
 
             _cacheManager.Remove(CacheKeys.PermissionSet(command.Id));
+
+            return new IEvent[] { @event };
         }
     }
 }

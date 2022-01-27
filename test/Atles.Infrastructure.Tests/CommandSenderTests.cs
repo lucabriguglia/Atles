@@ -1,6 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 using Atles.Infrastructure.Services;
 using Moq;
 using NUnit.Framework;
@@ -14,7 +16,7 @@ namespace Atles.Infrastructure.Tests
         {
             var serviceProvider = new Mock<IServiceProviderWrapper>();
             var sut = new CommandSender(serviceProvider.Object);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await sut.Send<SampleCommand>(null));
+            Assert.ThrowsAsync<ArgumentNullException>(async () => await sut.Send(default(SampleCommand)!));
         }
 
         [Test]
@@ -31,7 +33,7 @@ namespace Atles.Infrastructure.Tests
             var command = new SampleCommand();
 
             var handler = new Mock<ICommandHandler<SampleCommand>>();
-            handler.Setup(x => x.Handle(command)).Returns(Task.CompletedTask);
+            handler.Setup(x => x.Handle(command)).ReturnsAsync(new List<IEvent>());
 
             var serviceProvider = new Mock<IServiceProviderWrapper>();
             serviceProvider.Setup(x => x.GetService<ICommandHandler<SampleCommand>>()).Returns(handler.Object);

@@ -2,12 +2,14 @@
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atles.Domain.Models;
 using Atles.Domain.Models.Users;
 using Atles.Domain.Models.Users.Commands;
 using Atles.Domain.Models.Users.Events;
 using Atles.Infrastructure.Commands;
+using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Handlers.Users.Commands
 {
@@ -22,7 +24,7 @@ namespace Atles.Domain.Handlers.Users.Commands
             _validator = validator;
         }
 
-        public async Task Handle(CreateUser command)
+        public async Task<IEnumerable<IEvent>> Handle(CreateUser command)
         {
             await _validator.ValidateCommand(command);
 
@@ -55,6 +57,8 @@ namespace Atles.Domain.Handlers.Users.Commands
             _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
+
+            return new IEvent[] { @event };
         }
 
         private async Task<string> GenerateDisplayNameAsync()
