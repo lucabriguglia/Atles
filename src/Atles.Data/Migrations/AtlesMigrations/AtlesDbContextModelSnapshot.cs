@@ -6,6 +6,8 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
+#nullable disable
+
 namespace Atles.Data.Migrations.AtlesMigrations
 {
     [DbContext(typeof(AtlesDbContext))]
@@ -15,11 +17,12 @@ namespace Atles.Data.Migrations.AtlesMigrations
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Relational:MaxIdentifierLength", 128)
-                .HasAnnotation("ProductVersion", "5.0.11")
-                .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+                .HasAnnotation("ProductVersion", "6.0.1")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
-            modelBuilder.Entity("Atles.Domain.Categories.Category", b =>
+            SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
+
+            modelBuilder.Entity("Atles.Domain.Models.Categories.Category", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -52,10 +55,10 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
                     b.HasIndex("SiteId");
 
-                    b.ToTable("Category");
+                    b.ToTable("Category", (string)null);
                 });
 
-            modelBuilder.Entity("Atles.Domain.Event", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Event", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,10 +89,10 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
                     b.HasIndex("UserId");
 
-                    b.ToTable("Event");
+                    b.ToTable("Event", (string)null);
                 });
 
-            modelBuilder.Entity("Atles.Domain.Forums.Forum", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Forums.Forum", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -133,26 +136,10 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
                     b.HasIndex("PermissionSetId");
 
-                    b.ToTable("Forum");
+                    b.ToTable("Forum", (string)null);
                 });
 
-            modelBuilder.Entity("Atles.Domain.PermissionSets.Permission", b =>
-                {
-                    b.Property<Guid>("PermissionSetId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<string>("RoleId")
-                        .HasColumnType("nvarchar(450)");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("PermissionSetId", "RoleId", "Type");
-
-                    b.ToTable("Permission");
-                });
-
-            modelBuilder.Entity("Atles.Domain.PermissionSets.PermissionSet", b =>
+            modelBuilder.Entity("Atles.Domain.Models.PermissionSets.PermissionSet", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -169,31 +156,10 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("PermissionSet");
+                    b.ToTable("PermissionSet", (string)null);
                 });
 
-            modelBuilder.Entity("Atles.Domain.PostReactions.PostReaction", b =>
-                {
-                    b.Property<Guid>("PostId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<Guid>("UserId")
-                        .HasColumnType("uniqueidentifier");
-
-                    b.Property<DateTime>("TimeStamp")
-                        .HasColumnType("datetime2");
-
-                    b.Property<int>("Type")
-                        .HasColumnType("int");
-
-                    b.HasKey("PostId", "UserId");
-
-                    b.HasIndex("UserId");
-
-                    b.ToTable("PostReaction");
-                });
-
-            modelBuilder.Entity("Atles.Domain.Posts.Post", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Posts.Post", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -259,10 +225,31 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
                     b.HasIndex("TopicId");
 
-                    b.ToTable("Post");
+                    b.ToTable("Post", (string)null);
                 });
 
-            modelBuilder.Entity("Atles.Domain.Posts.PostReactionCount", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Posts.PostReaction", b =>
+                {
+                    b.Property<Guid>("PostId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<DateTime>("TimeStamp")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("PostId", "UserId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("PostReaction", (string)null);
+                });
+
+            modelBuilder.Entity("Atles.Domain.Models.Posts.PostReactionSummary", b =>
                 {
                     b.Property<Guid>("PostId")
                         .HasColumnType("uniqueidentifier");
@@ -275,10 +262,10 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
                     b.HasKey("PostId", "Type");
 
-                    b.ToTable("PostReactionCount");
+                    b.ToTable("PostReactionSummary", (string)null);
                 });
 
-            modelBuilder.Entity("Atles.Domain.Sites.Site", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Sites.Site", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -316,10 +303,10 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Site");
+                    b.ToTable("Site", (string)null);
                 });
 
-            modelBuilder.Entity("Atles.Domain.Users.User", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
                         .ValueGeneratedOnAdd()
@@ -348,18 +335,18 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("User", (string)null);
                 });
 
-            modelBuilder.Entity("Atles.Domain.Categories.Category", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Categories.Category", b =>
                 {
-                    b.HasOne("Atles.Domain.PermissionSets.PermissionSet", "PermissionSet")
+                    b.HasOne("Atles.Domain.Models.PermissionSets.PermissionSet", "PermissionSet")
                         .WithMany("Categories")
                         .HasForeignKey("PermissionSetId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atles.Domain.Sites.Site", "Site")
+                    b.HasOne("Atles.Domain.Models.Sites.Site", "Site")
                         .WithMany("Categories")
                         .HasForeignKey("SiteId")
                         .OnDelete(DeleteBehavior.NoAction)
@@ -370,9 +357,9 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Navigation("Site");
                 });
 
-            modelBuilder.Entity("Atles.Domain.Event", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Event", b =>
                 {
-                    b.HasOne("Atles.Domain.Users.User", "User")
+                    b.HasOne("Atles.Domain.Models.Users.User", "User")
                         .WithMany("Events")
                         .HasForeignKey("UserId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -380,19 +367,19 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Navigation("User");
                 });
 
-            modelBuilder.Entity("Atles.Domain.Forums.Forum", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Forums.Forum", b =>
                 {
-                    b.HasOne("Atles.Domain.Categories.Category", "Category")
+                    b.HasOne("Atles.Domain.Models.Categories.Category", "Category")
                         .WithMany("Forums")
                         .HasForeignKey("CategoryId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atles.Domain.Posts.Post", "LastPost")
+                    b.HasOne("Atles.Domain.Models.Posts.Post", "LastPost")
                         .WithMany()
                         .HasForeignKey("LastPostId");
 
-                    b.HasOne("Atles.Domain.PermissionSets.PermissionSet", "PermissionSet")
+                    b.HasOne("Atles.Domain.Models.PermissionSets.PermissionSet", "PermissionSet")
                         .WithMany("Forums")
                         .HasForeignKey("PermissionSetId")
                         .OnDelete(DeleteBehavior.NoAction);
@@ -404,59 +391,53 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Navigation("PermissionSet");
                 });
 
-            modelBuilder.Entity("Atles.Domain.PermissionSets.Permission", b =>
+            modelBuilder.Entity("Atles.Domain.Models.PermissionSets.PermissionSet", b =>
                 {
-                    b.HasOne("Atles.Domain.PermissionSets.PermissionSet", "PermissionSet")
-                        .WithMany("Permissions")
-                        .HasForeignKey("PermissionSetId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
+                    b.OwnsMany("Atles.Domain.Models.PermissionSets.Permission", "Permissions", b1 =>
+                        {
+                            b1.Property<Guid>("PermissionSetId")
+                                .HasColumnType("uniqueidentifier");
 
-                    b.Navigation("PermissionSet");
+                            b1.Property<string>("RoleId")
+                                .HasColumnType("nvarchar(450)");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("int");
+
+                            b1.HasKey("PermissionSetId", "RoleId", "Type");
+
+                            b1.ToTable("Permission", (string)null);
+
+                            b1.WithOwner()
+                                .HasForeignKey("PermissionSetId");
+                        });
+
+                    b.Navigation("Permissions");
                 });
 
-            modelBuilder.Entity("Atles.Domain.PostReactions.PostReaction", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Posts.Post", b =>
                 {
-                    b.HasOne("Atles.Domain.Posts.Post", "Post")
-                        .WithMany("PostReactions")
-                        .HasForeignKey("PostId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.HasOne("Atles.Domain.Users.User", "User")
-                        .WithMany("PostReactions")
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.NoAction)
-                        .IsRequired();
-
-                    b.Navigation("Post");
-
-                    b.Navigation("User");
-                });
-
-            modelBuilder.Entity("Atles.Domain.Posts.Post", b =>
-                {
-                    b.HasOne("Atles.Domain.Users.User", "CreatedByUser")
+                    b.HasOne("Atles.Domain.Models.Users.User", "CreatedByUser")
                         .WithMany("Posts")
                         .HasForeignKey("CreatedBy")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atles.Domain.Forums.Forum", "Forum")
+                    b.HasOne("Atles.Domain.Models.Forums.Forum", "Forum")
                         .WithMany("Posts")
                         .HasForeignKey("ForumId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
 
-                    b.HasOne("Atles.Domain.Posts.Post", "LastReply")
+                    b.HasOne("Atles.Domain.Models.Posts.Post", "LastReply")
                         .WithMany()
                         .HasForeignKey("LastReplyId");
 
-                    b.HasOne("Atles.Domain.Users.User", "ModifiedByUser")
+                    b.HasOne("Atles.Domain.Models.Users.User", "ModifiedByUser")
                         .WithMany()
                         .HasForeignKey("ModifiedBy");
 
-                    b.HasOne("Atles.Domain.Posts.Post", "Topic")
+                    b.HasOne("Atles.Domain.Models.Posts.Post", "Topic")
                         .WithMany()
                         .HasForeignKey("TopicId");
 
@@ -471,10 +452,29 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Navigation("Topic");
                 });
 
-            modelBuilder.Entity("Atles.Domain.Posts.PostReactionCount", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Posts.PostReaction", b =>
                 {
-                    b.HasOne("Atles.Domain.Posts.Post", "Post")
-                        .WithMany("PostReactionCounts")
+                    b.HasOne("Atles.Domain.Models.Posts.Post", "Post")
+                        .WithMany("PostReactions")
+                        .HasForeignKey("PostId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.HasOne("Atles.Domain.Models.Users.User", "User")
+                        .WithMany("PostReactions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("Post");
+
+                    b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Atles.Domain.Models.Posts.PostReactionSummary", b =>
+                {
+                    b.HasOne("Atles.Domain.Models.Posts.Post", "Post")
+                        .WithMany("PostReactionSummaries")
                         .HasForeignKey("PostId")
                         .OnDelete(DeleteBehavior.NoAction)
                         .IsRequired();
@@ -482,38 +482,36 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Navigation("Post");
                 });
 
-            modelBuilder.Entity("Atles.Domain.Categories.Category", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Categories.Category", b =>
                 {
                     b.Navigation("Forums");
                 });
 
-            modelBuilder.Entity("Atles.Domain.Forums.Forum", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Forums.Forum", b =>
                 {
                     b.Navigation("Posts");
                 });
 
-            modelBuilder.Entity("Atles.Domain.PermissionSets.PermissionSet", b =>
+            modelBuilder.Entity("Atles.Domain.Models.PermissionSets.PermissionSet", b =>
                 {
                     b.Navigation("Categories");
 
                     b.Navigation("Forums");
-
-                    b.Navigation("Permissions");
                 });
 
-            modelBuilder.Entity("Atles.Domain.Posts.Post", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Posts.Post", b =>
                 {
-                    b.Navigation("PostReactionCounts");
+                    b.Navigation("PostReactionSummaries");
 
                     b.Navigation("PostReactions");
                 });
 
-            modelBuilder.Entity("Atles.Domain.Sites.Site", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Sites.Site", b =>
                 {
                     b.Navigation("Categories");
                 });
 
-            modelBuilder.Entity("Atles.Domain.Users.User", b =>
+            modelBuilder.Entity("Atles.Domain.Models.Users.User", b =>
                 {
                     b.Navigation("Events");
 

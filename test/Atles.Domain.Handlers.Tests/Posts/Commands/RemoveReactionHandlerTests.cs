@@ -57,7 +57,6 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
                 var command = new RemoveReaction
                 {
                     Id = topic.Id,
-                    Type = PostReactionType.Support,
                     SiteId = siteId
                 };
 
