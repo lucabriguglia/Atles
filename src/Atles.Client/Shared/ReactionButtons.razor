@@ -4,16 +4,14 @@
 {
     if (!Reacted)
     {
-        <a href="#" @onclick:preventDefault="true" @onclick="@AddReactionCallback">
-            <i class="fas fa-thumbtack mr-1"></i>
-            Like
+        <a href="#" @onclick:preventDefault="true" @onclick="@AddReactionCallback" title="@Loc["Like"]">
+            <i class="far fa-thumbs-up"></i>
         </a>
     }
     else
     {
-        <a href="#" @onclick:preventDefault="true" @onclick="@RemoveReactionCallback">
-            <i class="fas fa-thumbtack mr-1"></i>
-            Remove Like
+        <a href="#" @onclick:preventDefault="true" @onclick="@RemoveReactionCallback" title="@Loc["Remove Like"]">
+            <i class="fas fa-thumbs-up"></i>
         </a>
     }
 }
