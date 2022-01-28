@@ -24,8 +24,9 @@ namespace Atles.Domain.Handlers.Posts.Commands
         public async Task<IEnumerable<IEvent>> Handle(AddReaction command)
         {
             var post = await _dbContext.Posts
-                .Include(x => x.PostReactions)
+                .Include(x => x.PostReactionSummaries)
                 .FirstOrDefaultAsync(x =>
+                    x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
                     x.Id == command.Id &&
                     x.Status != PostStatusType.Deleted);
@@ -35,7 +36,11 @@ namespace Atles.Domain.Handlers.Posts.Commands
                 throw new DataException($"Post with Id {command.Id} not found.");
             }
 
-            post.AddReaction(command.Type);
+            post.AddReactionToSummary(command.Type);
+
+            var postReaction = new PostReaction(command.Id, command.UserId, command.Type);
+
+            _dbContext.PostReactions.Add(postReaction);
 
             var @event = new ReactionAdded
             {

@@ -1,7 +1,9 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Atles.Client.Services;
 using Atles.Client.Shared;
+using Atles.Domain.Models.PostReactions;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Shared;
 using Markdig;
@@ -209,6 +211,40 @@ namespace Atles.Client.Components.Themes
             Pager.ReInitialize(TotalPages);
         }
 
+        protected async Task AddReactionAsync(Guid? replyId)
+        {
+            var postId = replyId ?? Model.Topic.Id;
+
+            await ApiService.PostAsJsonAsync($"api/public/reactions/add-reaction/{Model.Forum.Id}/{postId}", PostReactionType.Like);
+
+            if (replyId == null)
+            {
+                Model.Topic.Reacted = true;
+            }
+            else
+            {
+                var reply = Model.Replies.Items.FirstOrDefault(x => x.Id == replyId);
+                if (reply != null) reply.Reacted = true;
+            }
+        }
+
+        protected async Task RemoveReactionAsync(Guid? replyId)
+        {
+            var postId = replyId ?? Model.Topic.Id;
+
+            await ApiService.PostAsJsonAsync($"api/public/reactions/remove-reaction/{Model.Forum.Id}/{postId}", PostReactionType.Like);
+
+            if (replyId == null)
+            {
+                Model.Topic.Reacted = false;
+            }
+            else
+            {
+                var reply = Model.Replies.Items.FirstOrDefault(x => x.Id == replyId);
+                if (reply != null) reply.Reacted = false;
+            }
+        }
+
         protected void Cancel()
         {
             Model.Post.Id = null;
@@ -246,6 +282,11 @@ namespace Atles.Client.Components.Themes
         protected bool CanDeleteReply(string replyUserId)
         {
             return Model.CanDelete && replyUserId == User.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
+        }
+
+        protected bool CanReact()
+        {
+            return Model.CanReact || Model.CanModerate;
         }
     }
 }

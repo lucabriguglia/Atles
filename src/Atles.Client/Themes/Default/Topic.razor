@@ -61,6 +61,14 @@ else
                     </div>
                 </div>
                 <div class="card-text">@((MarkupString)Model.Topic.Content)</div>
+                <div class="row">
+                    <div class="col">
+                        <ReactionButtons CanReact="CanReact()"
+                                         AddReactionCallback="@(async () => await AddReactionAsync(null))"
+                                         RemoveReactionCallback="@(async () => await RemoveReactionAsync(null))"
+                                         Reacted="Model.Topic.Reacted" />
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -93,6 +101,14 @@ else
                         </div>
                     </div>
                     <div class="card-text">@((MarkupString)Model.Answer.Content)</div>
+                    <div class="row">
+                        <div class="col">
+                            <ReactionButtons CanReact="CanReact()"
+                                             AddReactionCallback="@(async () => await AddReactionAsync(Model.Answer.Id))"
+                                             RemoveReactionCallback="@(async () => await RemoveReactionAsync(Model.Answer.Id))"
+                                             Reacted="Model.Answer.Reacted" />
+                        </div>
+                    </div>
                 </div>
             </div>
         }
@@ -161,6 +177,14 @@ else
                                     </div>
                                 </div>
                                 <div class="card-text">@((MarkupString)reply.Content)</div>
+                                <div class="row">
+                                    <div class="col">
+                                        <ReactionButtons CanReact="CanReact()"
+                                                         AddReactionCallback="@(async () => await AddReactionAsync(reply.Id))"
+                                                         RemoveReactionCallback="@(async () => await RemoveReactionAsync(reply.Id))"
+                                                         Reacted="reply.Reacted" />
+                                    </div>
+                                </div>
                             </li>
                         }
                     </ul>

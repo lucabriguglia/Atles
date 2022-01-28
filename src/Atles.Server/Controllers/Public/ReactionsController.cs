@@ -1,8 +1,9 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Atles.Domain.Models.PermissionSets;
+using Atles.Domain.Models.PostReactions;
 using Atles.Domain.Models.Posts.Commands;
 using Atles.Infrastructure;
-using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -25,39 +26,75 @@ namespace Atles.Server.Controllers.Public
             _logger = logger;
         }
 
-        //[HttpPost("add-reaction")]
-        //public async Task<ActionResult> AddReaction(TopicPageModel model)
-        //{
-        //    var site = await CurrentSite();
-        //    var user = await CurrentUser();
+        [HttpPost("add-reaction/{forumId}/{postId}")]
+        public async Task<ActionResult> AddReaction(Guid forumId, Guid postId, [FromBody] PostReactionType postReactionType)
+        {
+            var site = await CurrentSite();
+            var user = await CurrentUser();
 
-        //    var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
-        //    var canReact = _securityService.HasPermission(PermissionType.Reactions, permissions) && !user.IsSuspended;
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = forumId });
+            var canReact = _securityService.HasPermission(PermissionType.Reactions, permissions) && !user.IsSuspended;
 
-        //    if (!canReact)
-        //    {
-        //        _logger.LogWarning("Unauthorized access to add reaction.", new
-        //        {
-        //            SiteId = site.Id,
-        //            ForumId = model.Forum?.Id,
-        //            TopicId = model.Topic?.Id,
-        //            User = User.Identity.Name
-        //        });
+            if (!canReact)
+            {
+                _logger.LogWarning("Unauthorized access to add reaction.", new
+                {
+                    SiteId = site.Id,
+                    ForumId = forumId,
+                    PostId = postId,
+                    User = User.Identity.Name
+                });
 
-        //        return Unauthorized();
-        //    }
+                return Unauthorized();
+            }
 
-        //    var command = new AddReaction
-        //    {
-        //        Id = postId,
-        //        Type = type,
-        //        SiteId = site.Id,
-        //        UserId = user.Id
-        //    };
+            var command = new AddReaction
+            {
+                Id = postId,
+                ForumId = forumId,
+                Type = postReactionType,
+                SiteId = site.Id,
+                UserId = user.Id
+            };
 
-        //    await _dispatcher.Send(command);
+            await _dispatcher.Send(command);
 
-        //    return Ok();
-        //}
+            return Ok();
+        }
+
+        [HttpPost("remove-reaction/{forumId}/{postId}")]
+        public async Task<ActionResult> RemoveReaction(Guid forumId, Guid postId)
+        {
+            var site = await CurrentSite();
+            var user = await CurrentUser();
+
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = forumId });
+            var canReact = _securityService.HasPermission(PermissionType.Reactions, permissions) && !user.IsSuspended;
+
+            if (!canReact)
+            {
+                _logger.LogWarning("Unauthorized access to remove reaction.", new
+                {
+                    SiteId = site.Id,
+                    ForumId = forumId,
+                    PostId = postId,
+                    User = User.Identity.Name
+                });
+
+                return Unauthorized();
+            }
+
+            var command = new RemoveReaction
+            {
+                Id = postId,
+                ForumId = forumId,
+                SiteId = site.Id,
+                UserId = user.Id
+            };
+
+            await _dispatcher.Send(command);
+
+            return Ok();
+        }
     }
 }

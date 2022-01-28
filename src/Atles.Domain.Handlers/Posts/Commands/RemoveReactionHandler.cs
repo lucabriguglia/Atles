@@ -23,23 +23,27 @@ namespace Atles.Domain.Handlers.Posts.Commands
 
         public async Task<IEnumerable<IEvent>> Handle(RemoveReaction command)
         {
-            var post = await _dbContext.Posts
-                .Include(x => x.PostReactions)
+            var postReaction = await _dbContext.PostReactions
+                .Include(x => x.Post).ThenInclude(x => x.PostReactionSummaries)
                 .FirstOrDefaultAsync(x =>
-                    x.Forum.Category.SiteId == command.SiteId &&
-                    x.Id == command.Id &&
-                    x.Status != PostStatusType.Deleted);
+                    x.PostId == command.Id &&
+                    x.UserId == command.UserId &&
+                    x.Post.ForumId == command.ForumId &&
+                    x.Post.Forum.Category.SiteId == command.SiteId &&
+                    x.Post.Status != PostStatusType.Deleted);
 
-            if (post == null)
+            if (postReaction == null)
             {
-                throw new DataException($"Post with Id {command.Id} not found.");
+                throw new DataException($"Post reaction for post id {command.Id} and user id {command.UserId} not found.");
             }
 
-            post.RemoveReaction(command.Type);
+            postReaction.Post.RemoveReactionFromSummary(postReaction.Type);
+
+            _dbContext.PostReactions.Remove(postReaction);
 
             var @event = new ReactionRemoved
             {
-                Type = command.Type,
+                Type = postReaction.Type,
                 TargetId = command.Id,
                 TargetType = nameof(Post),
                 SiteId = command.SiteId,

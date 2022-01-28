@@ -1224,7 +1224,12 @@
         </member>
         <member name="P:Atles.Domain.Models.Posts.Post.PostReactions">
             <summary>
-            Reference to post reaction counts.
+            Reference to post reactions.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Posts.Post.PostReactionSummaries">
+            <summary>
+            Reference to post reaction summaries.
             </summary>
         </member>
         <member name="M:Atles.Domain.Models.Posts.Post.#ctor">
@@ -1315,13 +1320,13 @@
             If the resulting number is less than zero, the value is set to zero.
             </summary>
         </member>
-        <member name="M:Atles.Domain.Models.Posts.Post.AddReaction(Atles.Domain.Models.PostReactions.PostReactionType)">
+        <member name="M:Atles.Domain.Models.Posts.Post.AddReactionToSummary(Atles.Domain.Models.PostReactions.PostReactionType)">
             <summary>
             Increases count for the specified reaction type.
             </summary>
             <param name="type">The post reaction type.</param>
         </member>
-        <member name="M:Atles.Domain.Models.Posts.Post.RemoveReaction(Atles.Domain.Models.PostReactions.PostReactionType)">
+        <member name="M:Atles.Domain.Models.Posts.Post.RemoveReactionFromSummary(Atles.Domain.Models.PostReactions.PostReactionType)">
             <summary>
             Decreases count for the specified reaction type.
             </summary>
@@ -1362,12 +1367,12 @@
             </summary>
             <returns></returns>
         </member>
-        <member name="M:Atles.Domain.Models.Posts.PostReaction.IncreaseCount">
+        <member name="M:Atles.Domain.Models.Posts.PostReactionSummary.IncreaseCount">
             <summary>
             Increases count by 1.
             </summary>
         </member>
-        <member name="M:Atles.Domain.Models.Posts.PostReaction.DecreaseCount">
+        <member name="M:Atles.Domain.Models.Posts.PostReactionSummary.DecreaseCount">
             <summary>
             Decreases count by 1.
             If the resulting number is less than zero, the value is set to zero.

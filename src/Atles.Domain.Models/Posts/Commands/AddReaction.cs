@@ -5,9 +5,10 @@ using Docs.Attributes;
 
 namespace Atles.Domain.Models.Posts.Commands
 {
-    [DocRequest(typeof(PostReaction))]
+    [DocRequest(typeof(PostReactionSummary))]
     public class AddReaction : CommandBase
     {
+        public Guid ForumId { get; set; }
         public PostReactionType Type { get; set; }
     }
 }

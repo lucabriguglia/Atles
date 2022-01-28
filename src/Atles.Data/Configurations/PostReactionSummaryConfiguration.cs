@@ -4,17 +4,17 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Atles.Data.Configurations
 {
-    public class PostReactionCountConfiguration : IEntityTypeConfiguration<PostReaction>
+    public class PostReactionSummaryConfiguration : IEntityTypeConfiguration<PostReactionSummary>
     {
-        public void Configure(EntityTypeBuilder<PostReaction> builder)
+        public void Configure(EntityTypeBuilder<PostReactionSummary> builder)
         {
-            builder.ToTable("PostReaction");
+            builder.ToTable("PostReactionSummary");
 
             builder.HasKey(x => new { x.PostId, x.Type });
 
             builder
                 .HasOne(x => x.Post)
-                .WithMany(x => x.PostReactions)
+                .WithMany(x => x.PostReactionSummaries)
                 .OnDelete(DeleteBehavior.NoAction)
                 .IsRequired();
         }

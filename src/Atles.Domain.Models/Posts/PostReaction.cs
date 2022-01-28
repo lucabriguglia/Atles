@@ -1,51 +1,34 @@
 ﻿using System;
 using Atles.Domain.Models.PostReactions;
+using Atles.Domain.Models.Users;
 using Docs.Attributes;
 
-namespace Atles.Domain.Models.Posts
+namespace Atles.Domain.Models.Posts;
+
+[DocTarget(Consts.DocsContextForum)]
+public class PostReaction
 {
-    [DocTarget(Consts.DocsContextForum)]
-    public class PostReaction
+    public Guid PostId { get; private set; }
+
+    public Guid UserId { get; private set; }
+
+    public PostReactionType Type { get; private set; }
+
+    public DateTime TimeStamp { get; private set; }
+
+    public virtual Post Post { get; set; }
+
+    public virtual User User { get; set; }
+
+    public PostReaction()
     {
-        public Guid PostId { get; private set; }
+    }
 
-        public PostReactionType Type { get; private set; }
-
-        public int Count { get; private set; }
-
-        public virtual Post Post { get; set; }
-
-        public PostReaction()
-        {
-        }
-
-        public PostReaction(Guid postId, PostReactionType type)
-        {
-            PostId = postId;
-            Type = type;
-            Count = 1;
-        }
-
-        /// <summary>
-        /// Increases count by 1.
-        /// </summary>
-        public void IncreaseCount()
-        {
-            Count += 1;
-        }
-
-        /// <summary>
-        /// Decreases count by 1.
-        /// If the resulting number is less than zero, the value is set to zero.
-        /// </summary>
-        public void DecreaseCount()
-        {
-            Count -= 1;
-
-            if (Count < 0)
-            {
-                Count = 0;
-            }
-        }
+    public PostReaction(Guid postId, Guid userId, PostReactionType type)
+    {
+        PostId = postId;
+        UserId = userId;
+        Type = type;
+        TimeStamp = DateTime.UtcNow;
     }
 }

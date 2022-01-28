@@ -5,7 +5,7 @@ using Docs.Attributes;
 
 namespace Atles.Domain.Models.Posts.Events
 {
-    [DocRequest(typeof(PostReaction))]
+    [DocRequest(typeof(PostReactionSummary))]
     public class ReactionRemoved : EventBase
     {
         public PostReactionType Type { get; set; }

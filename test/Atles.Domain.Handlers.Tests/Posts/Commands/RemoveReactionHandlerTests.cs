@@ -41,7 +41,7 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
             var category = new Category(categoryId, siteId, "Category", 1, Guid.NewGuid());
             var forum = new Forum(forumId, categoryId, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(topicId, forumId, Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
-            topic.AddReaction(PostReactionType.Support);
+            topic.AddReactionToSummary(PostReactionType.Support);
 
             using (var dbContext = new AtlesDbContext(options))
             {
@@ -65,9 +65,9 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
 
                 await sut.Handle(command);
 
-                var updatedPost = await dbContext.Posts.Include(x => x.PostReactions).FirstOrDefaultAsync(x => x.Id == command.Id);
+                var updatedPost = await dbContext.Posts.Include(x => x.PostReactionSummaries).FirstOrDefaultAsync(x => x.Id == command.Id);
 
-                Assert.AreEqual(0, updatedPost.PostReactions.FirstOrDefault(x => x.Type == PostReactionType.Support).Count);
+                Assert.AreEqual(0, updatedPost.PostReactionSummaries.FirstOrDefault(x => x.Type == PostReactionType.Support).Count);
             }
         }
     }

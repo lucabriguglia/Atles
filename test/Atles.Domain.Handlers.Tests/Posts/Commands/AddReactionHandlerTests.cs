@@ -60,8 +60,8 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
 
                 await sut.Handle(command);
 
-                var updatedPost = await dbContext.Posts.Include(x => x.PostReactions).FirstOrDefaultAsync(x => x.Id == command.Id);
-                var postReaction = updatedPost.PostReactions.FirstOrDefault(x => x.Type == command.Type);
+                var updatedPost = await dbContext.Posts.Include(x => x.PostReactionSummaries).FirstOrDefaultAsync(x => x.Id == command.Id);
+                var postReaction = updatedPost.PostReactionSummaries.FirstOrDefault(x => x.Type == command.Type);
 
                 Assert.AreEqual(1, postReaction.Count);
             }
