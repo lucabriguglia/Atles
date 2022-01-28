@@ -121,6 +121,7 @@ namespace Atles.Server.Services
                 new PermissionCommand {Type = PermissionType.Reply, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand {Type = PermissionType.Edit, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand {Type = PermissionType.Delete, RoleId = Consts.RoleIdRegistered},
+                new PermissionCommand {Type = PermissionType.Reactions, RoleId = Consts.RoleIdRegistered},
 
                 new PermissionCommand {Type = PermissionType.Moderate, RoleId = roleModerator.Id},
 
@@ -131,7 +132,8 @@ namespace Atles.Server.Services
                 new PermissionCommand {Type = PermissionType.Reply, RoleId = roleAdmin.Id},
                 new PermissionCommand {Type = PermissionType.Edit, RoleId = roleAdmin.Id},
                 new PermissionCommand {Type = PermissionType.Delete, RoleId = roleAdmin.Id},
-                new PermissionCommand {Type = PermissionType.Moderate, RoleId = roleAdmin.Id}
+                new PermissionCommand {Type = PermissionType.Moderate, RoleId = roleAdmin.Id},
+                new PermissionCommand {Type = PermissionType.Reactions, RoleId = roleAdmin.Id}
             };
             var permissionSetDefault = new PermissionSet(site.Id, "Default", permissionsDefault);
             _dbContext.PermissionSets.Add(permissionSetDefault);
@@ -155,6 +157,7 @@ namespace Atles.Server.Services
                 new PermissionCommand {Type = PermissionType.Reply, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand {Type = PermissionType.Edit, RoleId = Consts.RoleIdRegistered},
                 new PermissionCommand {Type = PermissionType.Delete, RoleId = Consts.RoleIdRegistered},
+                new PermissionCommand {Type = PermissionType.Reactions, RoleId = Consts.RoleIdRegistered},
 
                 new PermissionCommand {Type = PermissionType.Moderate, RoleId = roleModerator.Id},
 
@@ -165,7 +168,8 @@ namespace Atles.Server.Services
                 new PermissionCommand {Type = PermissionType.Reply, RoleId = roleAdmin.Id},
                 new PermissionCommand {Type = PermissionType.Edit, RoleId = roleAdmin.Id},
                 new PermissionCommand {Type = PermissionType.Delete, RoleId = roleAdmin.Id},
-                new PermissionCommand {Type = PermissionType.Moderate, RoleId = roleAdmin.Id}
+                new PermissionCommand {Type = PermissionType.Moderate, RoleId = roleAdmin.Id},
+                new PermissionCommand {Type = PermissionType.Reactions, RoleId = roleAdmin.Id}
             };
             var permissionSetMembersOnly = new PermissionSet(site.Id, "Members Only", permissionsMembersOnly);
             _dbContext.PermissionSets.Add(permissionSetMembersOnly);
@@ -189,7 +193,8 @@ namespace Atles.Server.Services
                 new PermissionCommand {Type = PermissionType.Reply, RoleId = roleAdmin.Id},
                 new PermissionCommand {Type = PermissionType.Edit, RoleId = roleAdmin.Id},
                 new PermissionCommand {Type = PermissionType.Delete, RoleId = roleAdmin.Id},
-                new PermissionCommand {Type = PermissionType.Moderate, RoleId = roleAdmin.Id}
+                new PermissionCommand {Type = PermissionType.Moderate, RoleId = roleAdmin.Id},
+                new PermissionCommand {Type = PermissionType.Reactions, RoleId = roleAdmin.Id}
             };
             var permissionSetAdminOnly = new PermissionSet(site.Id, "Admin Only", permissionsAdminOnly);
             _dbContext.PermissionSets.Add(permissionSetAdminOnly);
