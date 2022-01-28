@@ -18,6 +18,7 @@ namespace Atles.Reporting.Models.Public
         public bool CanEdit { get; set; }
         public bool CanDelete { get; set; }
         public bool CanModerate { get; set; }
+        public bool CanReact { get; set; }
 
         public class ForumModel
         {

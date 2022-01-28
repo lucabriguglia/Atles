@@ -9,6 +9,7 @@
         Reply = 4,
         Edit = 5,
         Delete = 6,
-        Moderate = 9
+        Moderate = 9,
+        Reactions = 10
     }
 }

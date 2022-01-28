@@ -40,7 +40,7 @@ namespace Atles.Domain.Handlers.Posts.Commands
             var @event = new ReactionAdded
             {
                 Type = command.Type,
-                TargetId = post.Id,
+                TargetId = command.Id,
                 TargetType = nameof(Post),
                 SiteId = command.SiteId,
                 UserId = command.UserId

@@ -88,6 +88,7 @@ namespace Atles.Server.Controllers.Public
             model.CanReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !user.IsSuspended;
             model.CanDelete = _securityService.HasPermission(PermissionType.Delete, permissions) && !user.IsSuspended;
             model.CanModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !user.IsSuspended;
+            model.CanReact = _securityService.HasPermission(PermissionType.Reactions, permissions) && !user.IsSuspended;
 
             return model;
         }
