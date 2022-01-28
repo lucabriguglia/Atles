@@ -38,14 +38,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!canReact && !canModerate)
             {
-                _logger.LogWarning("Unauthorized access to add reaction.", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    PostId = postId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to add reaction.");
                 return Unauthorized();
             }
 
@@ -75,14 +68,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!canReact && !canModerate)
             {
-                _logger.LogWarning("Unauthorized access to remove reaction.", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    PostId = postId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to remove reaction.");
                 return Unauthorized();
             }
 

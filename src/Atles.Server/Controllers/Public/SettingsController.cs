@@ -42,13 +42,7 @@ namespace Atles.Server.Controllers.Public
 
             if (model.User.Id != user.Id || user.IsSuspended)
             {
-                _logger.LogWarning("Unauthorized access to update settings.", new
-                {
-                    SiteId = site.Id,
-                    UserId = model.User?.Id,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to update settings.");
                 return Unauthorized();
             }
 

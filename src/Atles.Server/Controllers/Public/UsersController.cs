@@ -70,13 +70,7 @@ namespace Atles.Server.Controllers.Public
 
             if (model == null)
             {
-                _logger.LogWarning("User not found.", new
-                {
-                    SiteId = site.Id,
-                    MemebrId = userId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("User not found.");
                 return NotFound();
             }
 

@@ -47,14 +47,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!canReply)
             {
-                _logger.LogWarning("Unauthorized access to create reply.", new
-                {
-                    SiteId = site.Id,
-                    ForumId = model.Forum?.Id,
-                    TopicId = model.Topic?.Id,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to create reply.");
                 return Unauthorized();
             }
 
@@ -107,15 +100,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!authorized)
             {
-                _logger.LogWarning("Unauthorized access to update reply.", new
-                {
-                    SiteId = site.Id,
-                    ForumId = model.Forum?.Id,
-                    TopicId = model.Topic?.Id,
-                    ReplyId = model.Post?.Id,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to update reply.");
                 return Unauthorized();
             }
 
@@ -157,15 +142,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!authorized)
             {
-                _logger.LogWarning("Unauthorized access to set reply as answer.", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    TopicId = topicId,
-                    ReplyId = replyId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to set reply as answer.");
                 return Unauthorized();
             }
 
@@ -206,15 +183,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!authorized)
             {
-                _logger.LogWarning("Unauthorized access to delete reply.", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    TopicId = topicId,
-                    ReplyId = replyId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to delete reply.");
                 return Unauthorized();
             }
 

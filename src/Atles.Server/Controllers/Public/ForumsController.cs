@@ -37,13 +37,7 @@ namespace Atles.Server.Controllers.Public
 
             if (model == null)
             {
-                _logger.LogWarning("Forum not found.", new
-                {
-                    SiteId = site.Id,
-                    ForumSlug = slug,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Forum not found.");
                 return NotFound();
             }
 
@@ -54,13 +48,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!canViewForum || !canViewTopics)
             {
-                _logger.LogWarning("Unauthorized access to forum.", new
-                {
-                    SiteId = site.Id,
-                    ForumSlug = slug,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to forum.");
                 return Unauthorized();
             }
 
@@ -82,13 +70,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!canViewForum || !canViewTopics)
             {
-                _logger.LogWarning("Unauthorized access to forum topics.", new
-                {
-                    SiteId = site.Id,
-                    ForumId = id,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to forum topics.");
                 return Unauthorized();
             }
 
