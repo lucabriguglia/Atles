@@ -34,8 +34,9 @@ namespace Atles.Server.Controllers.Public
 
             var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = forumId });
             var canReact = _securityService.HasPermission(PermissionType.Reactions, permissions) && !user.IsSuspended;
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !user.IsSuspended;
 
-            if (!canReact)
+            if (!canReact && !canModerate)
             {
                 _logger.LogWarning("Unauthorized access to add reaction.", new
                 {
@@ -70,8 +71,9 @@ namespace Atles.Server.Controllers.Public
 
             var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = forumId });
             var canReact = _securityService.HasPermission(PermissionType.Reactions, permissions) && !user.IsSuspended;
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !user.IsSuspended;
 
-            if (!canReact)
+            if (!canReact && !canModerate)
             {
                 _logger.LogWarning("Unauthorized access to remove reaction.", new
                 {
