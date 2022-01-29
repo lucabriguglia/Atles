@@ -50,6 +50,9 @@ namespace Atles.Client
                 options.ResourcesPath = "Resources";
             });
 
+            builder.Services.AddScoped(typeof(ILocalStorageService<>), typeof(LocalStorageService<>));
+            builder.Services.AddScoped(typeof(ISessionStorageService<>), typeof(SessionStorageService<>));
+
             builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
             var host = builder.Build();

@@ -1,12 +1,5 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿namespace Atles.Client.Services;
 
-namespace Atles.Client.Services;
-
-public interface ILocalStorageService<T> where T : ILocalStorageCommand
+public interface ILocalStorageService<T> : IBrowserStorageService<T> where T : IBrowserStorageCommand
 {
-    Task<List<T>> GetList();
-    Task AddToList(T request);
-    Task RemoveFromList(T request);
-    Task DeleteList();
 }

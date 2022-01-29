@@ -42,7 +42,6 @@ namespace Atles.Reporting.Models.Public
             public bool Locked { get; set; }
             public bool HasAnswer { get; set; }
             public IList<ReactionModel> Reactions { get; set; } = new List<ReactionModel>();
-            public bool Reacted { get; set; }
         }
 
         public class ReplyModel
@@ -57,7 +56,6 @@ namespace Atles.Reporting.Models.Public
             public string GravatarHash { get; set; }
             public bool IsAnswer { get; set; }
             public IList<ReactionModel> Reactions { get; set; } = new List<ReactionModel>();
-            public bool Reacted { get; set; }
         }
 
         public class ReactionModel
