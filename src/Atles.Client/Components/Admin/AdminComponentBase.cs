@@ -1,5 +1,4 @@
 ﻿using Atles.Client.Pages.Admin;
-using Atles.Client.Services;
 using Atles.Client.Services.Api;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;

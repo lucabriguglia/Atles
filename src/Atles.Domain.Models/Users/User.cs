@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using Atles.Domain.Models.PostReactions;
 using Atles.Domain.Models.Posts;
 using Docs.Attributes;
 

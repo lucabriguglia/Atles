@@ -1,5 +1,4 @@
-﻿using System;
-using Atles.Domain.Models.PostReactions;
+﻿using Atles.Domain.Models.PostReactions;
 using Atles.Infrastructure.Events;
 
 namespace Atles.Domain.Models.Posts.Events
