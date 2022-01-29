@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.Threading.Tasks;
 using Atles.Client.Services;
 using Atles.Client.Shared;
@@ -23,7 +22,7 @@ namespace Atles.Client.Components.Themes
         [Parameter] public string TopicSlug { get; set; }
 
         protected TopicPageModel Model { get; set; }
-        protected UserTopicReactionsModel UserInfo { get; set; }
+        protected UserTopicReactionsModel UserTopicReactions { get; set; }
 
         protected string PinButtonText => Model.Topic.Pinned
             ? Loc["Unpin"]
@@ -60,7 +59,7 @@ namespace Atles.Client.Components.Themes
             try
             {
                 Model = await ApiService.GetFromJsonAsync<TopicPageModel>($"api/public/topics/{ForumSlug}/{TopicSlug}?page=1");
-                UserInfo = new UserTopicReactionsModel();
+                UserTopicReactions = await ApiService.GetFromJsonAsync<UserTopicReactionsModel>($"api/public/users/topic-reactions/{Model.Topic.Id}");
                 TotalPages = Model.Replies.TotalPages;
                 DisplayPage = true;
             }
@@ -219,15 +218,7 @@ namespace Atles.Client.Components.Themes
 
             await ApiService.PostAsJsonAsync($"api/public/reactions/add-reaction/{Model.Forum.Id}/{postId}", PostReactionType.Like);
 
-            //if (replyId == null)
-            //{
-            //    Model.Topic.Reacted = true;
-            //}
-            //else
-            //{
-            //    var reply = Model.Replies.Items.FirstOrDefault(x => x.Id == replyId);
-            //    if (reply != null) reply.Reacted = true;
-            //}
+            UserTopicReactions.PostReactions.Add(postId, PostReactionType.Like);
         }
 
         protected async Task RemoveReactionAsync(Guid? replyId)
@@ -236,15 +227,7 @@ namespace Atles.Client.Components.Themes
 
             await ApiService.PostAsJsonAsync($"api/public/reactions/remove-reaction/{Model.Forum.Id}/{postId}", PostReactionType.Like);
 
-            //if (replyId == null)
-            //{
-            //    Model.Topic.Reacted = false;
-            //}
-            //else
-            //{
-            //    var reply = Model.Replies.Items.FirstOrDefault(x => x.Id == replyId);
-            //    if (reply != null) reply.Reacted = false;
-            //}
+            UserTopicReactions.PostReactions.Remove(postId);
         }
 
         protected void Cancel()

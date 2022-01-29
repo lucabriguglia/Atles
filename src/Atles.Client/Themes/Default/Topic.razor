@@ -66,7 +66,7 @@ else
                         <ReactionButtons CanReact="CanReact()"
                                          AddReactionCallback="@(async () => await AddReactionAsync(null))"
                                          RemoveReactionCallback="@(async () => await RemoveReactionAsync(null))"
-                                         Reacted="UserInfo.HasReactedTo(Model.Topic.Id)" />
+                                         Reacted="UserTopicReactions.HasReactedTo(Model.Topic.Id)" />
                     </div>
                 </div>
             </div>
@@ -106,7 +106,7 @@ else
                             <ReactionButtons CanReact="CanReact()"
                                              AddReactionCallback="@(async () => await AddReactionAsync(Model.Answer.Id))"
                                              RemoveReactionCallback="@(async () => await RemoveReactionAsync(Model.Answer.Id))"
-                                             Reacted="UserInfo.HasReactedTo(Model.Answer.Id)" />
+                                             Reacted="UserTopicReactions.HasReactedTo(Model.Answer.Id)" />
                         </div>
                     </div>
                 </div>
@@ -182,7 +182,7 @@ else
                                         <ReactionButtons CanReact="CanReact()"
                                                          AddReactionCallback="@(async () => await AddReactionAsync(reply.Id))"
                                                          RemoveReactionCallback="@(async () => await RemoveReactionAsync(reply.Id))"
-                                                         Reacted="UserInfo.HasReactedTo(reply.Id)" />
+                                                         Reacted="UserTopicReactions.HasReactedTo(reply.Id)" />
                                     </div>
                                 </div>
                             </li>
