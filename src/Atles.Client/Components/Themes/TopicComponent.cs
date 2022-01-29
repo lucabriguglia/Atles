@@ -23,7 +23,7 @@ namespace Atles.Client.Components.Themes
         [Parameter] public string TopicSlug { get; set; }
 
         protected TopicPageModel Model { get; set; }
-        protected UserInfoModel UserInfo { get; set; }
+        protected UserTopicReactionsModel UserInfo { get; set; }
 
         protected string PinButtonText => Model.Topic.Pinned
             ? Loc["Unpin"]
@@ -60,7 +60,7 @@ namespace Atles.Client.Components.Themes
             try
             {
                 Model = await ApiService.GetFromJsonAsync<TopicPageModel>($"api/public/topics/{ForumSlug}/{TopicSlug}?page=1");
-                UserInfo = new UserInfoModel();
+                UserInfo = new UserTopicReactionsModel();
                 TotalPages = Model.Replies.TotalPages;
                 DisplayPage = true;
             }

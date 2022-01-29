@@ -2,7 +2,7 @@
 using System.Net.Http.Json;
 using System.Threading.Tasks;
 
-namespace Atles.Client.Services
+namespace Atles.Client.Services.Api
 {
     public class ApiServiceAuthenticated
     {

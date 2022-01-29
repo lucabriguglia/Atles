@@ -4,7 +4,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.JSInterop;
 
-namespace Atles.Client.Services
+namespace Atles.Client.Services.Storage
 {
     public abstract class BrowserStorageService<T> : IBrowserStorageService<T> where T : IBrowserStorageCommand
     {

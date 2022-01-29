@@ -1,4 +1,5 @@
 ﻿using Atles.Client.Services;
+using Atles.Client.Services.Api;
 using Atles.Client.Shared;
 using Atles.Reporting.Models.Public;
 using Microsoft.AspNetCore.Components;

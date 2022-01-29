@@ -1,6 +1,6 @@
 ﻿using Microsoft.JSInterop;
 
-namespace Atles.Client.Services;
+namespace Atles.Client.Services.Storage;
 
 public class SessionStorageService<T> : BrowserStorageService<T>, ISessionStorageService<T> where T : IBrowserStorageCommand
 {

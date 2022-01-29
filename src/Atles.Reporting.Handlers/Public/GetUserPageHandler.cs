@@ -15,6 +15,7 @@ namespace Atles.Reporting.Handlers.Public
         private readonly AtlesDbContext _dbContext;
         private readonly IDispatcher _dispatcher;
         private readonly IGravatarService _gravatarService;
+
         public GetUserPageHandler(AtlesDbContext dbContext, IDispatcher sender, IGravatarService gravatarService)
         {
             _dbContext = dbContext;

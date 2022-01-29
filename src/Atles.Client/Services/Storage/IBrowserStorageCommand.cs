@@ -1,4 +1,4 @@
-﻿namespace Atles.Client.Services;
+﻿namespace Atles.Client.Services.Storage;
 
 public interface IBrowserStorageCommand
 {
