@@ -15,9 +15,6 @@ namespace Atles.Client.Components.Themes
 {
     public abstract class TopicComponent : ThemeComponentBase
     {
-        [CascadingParameter]
-        private Task<AuthenticationState> AuthenticationStateTask { get; set; }
-
         [Parameter] public string ForumSlug { get; set; }
         [Parameter] public string TopicSlug { get; set; }
 
@@ -59,7 +56,9 @@ namespace Atles.Client.Components.Themes
             try
             {
                 Model = await ApiService.GetFromJsonAsync<TopicPageModel>($"api/public/topics/{ForumSlug}/{TopicSlug}?page=1");
-                UserTopicReactions = await ApiService.GetFromJsonAsync<UserTopicReactionsModel>($"api/public/users/topic-reactions/{Model.Topic.Id}");
+                UserTopicReactions = User.IsAuthenticated 
+                    ? await ApiService.GetFromJsonAsync<UserTopicReactionsModel>($"api/public/users/topic-reactions/{Model.Topic.Id}") 
+                    : new UserTopicReactionsModel();
                 TotalPages = Model.Replies.TotalPages;
                 DisplayPage = true;
             }
@@ -218,6 +217,7 @@ namespace Atles.Client.Components.Themes
 
             await ApiService.PostAsJsonAsync($"api/public/reactions/add-reaction/{Model.Forum.Id}/{postId}", PostReactionType.Like);
 
+            Model.Topic.AddReaction(PostReactionType.Like);
             UserTopicReactions.PostReactions.Add(postId, PostReactionType.Like);
         }
 
@@ -227,6 +227,7 @@ namespace Atles.Client.Components.Themes
 
             await ApiService.PostAsJsonAsync($"api/public/reactions/remove-reaction/{Model.Forum.Id}/{postId}", PostReactionType.Like);
 
+            Model.Topic.RemoveReaction(PostReactionType.Like);
             UserTopicReactions.PostReactions.Remove(postId);
         }
 

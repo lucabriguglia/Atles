@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Atles.Domain.Models.PostReactions;
+using Atles.Domain.Models.Posts;
 using Atles.Reporting.Models.Shared;
 
 namespace Atles.Reporting.Models.Public
@@ -42,6 +44,30 @@ namespace Atles.Reporting.Models.Public
             public bool Locked { get; set; }
             public bool HasAnswer { get; set; }
             public IList<ReactionModel> Reactions { get; set; } = new List<ReactionModel>();
+
+            public void AddReaction(PostReactionType type)
+            {
+                var reaction = Reactions.FirstOrDefault(x => x.Type == type);
+
+                if (reaction != null)
+                {
+                    reaction.Count++;
+                }
+                else
+                {
+                    Reactions.Add(new ReactionModel {Type = type, Count = 1});
+                }
+            }
+
+            public void RemoveReaction(PostReactionType type)
+            {
+                var reaction = Reactions.FirstOrDefault(x => x.Type == type);
+
+                if (reaction != null)
+                {
+                    reaction.Count--;
+                }
+            }
         }
 
         public class ReplyModel

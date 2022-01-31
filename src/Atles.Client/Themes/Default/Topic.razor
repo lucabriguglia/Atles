@@ -61,6 +61,14 @@ else
                     </div>
                 </div>
                 <div class="card-text">@((MarkupString)Model.Topic.Content)</div>
+                <div class="row small">
+                    <div class="col mb-1">
+                        @*<i class="fas fa-thumbs-up"></i>*@
+                        @*<i class="far fa-thumbs-up"></i> <span class="font-weight-bold">@item.TotalLikes</span>*@
+                        @*&bull;*@
+                        <span class="font-weight-bold">@Model.Topic.Reactions.Sum(x => x.Count)</span> @Loc["Likes"]
+                    </div>
+                </div>
                 <div class="row">
                     <div class="col">
                         <ReactionButtons CanReact="CanReact()"

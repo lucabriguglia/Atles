@@ -7,8 +7,8 @@ namespace Atles.Client.Shared
     public abstract class ReactionButtonsComponent : SharedComponentBase
     {
         [Parameter] public bool CanReact { get; set; }
-
         [Parameter] public bool Reacted { get; set; }
+        [Parameter] public int ReactionsCount { get; set; }
 
         [Parameter] public EventCallback<MouseEventArgs> AddReactionCallback { get; set; }
         [Parameter] public EventCallback<MouseEventArgs> RemoveReactionCallback { get; set; }
