@@ -61,21 +61,14 @@ else
                     </div>
                 </div>
                 <div class="card-text">@((MarkupString)Model.Topic.Content)</div>
-                <div class="row small">
-                    <div class="col mb-1">
-                        @*<i class="fas fa-thumbs-up"></i>*@
-                        @*<i class="far fa-thumbs-up"></i> <span class="font-weight-bold">@item.TotalLikes</span>*@
-                        @*&bull;*@
-                        <span class="font-weight-bold">@Model.Topic.Reactions.Sum(x => x.Count)</span> @Loc["Likes"]
-                    </div>
+                <div class="card-text small pb-3">
+                    <span class="font-weight-bold">@Model.Topic.Reactions.Sum(x => x.Count)</span> @Loc["Likes"]
                 </div>
-                <div class="row">
-                    <div class="col">
-                        <ReactionButtons CanReact="CanReact()"
+                <div class="card-text border-top pt-3">
+                    <ReactionButtons CanReact="CanReact()"
                                          AddReactionCallback="@(async () => await AddReactionAsync(null))"
                                          RemoveReactionCallback="@(async () => await RemoveReactionAsync(null))"
                                          Reacted="UserTopicReactions.HasReactedTo(Model.Topic.Id)" />
-                    </div>
                 </div>
             </div>
         </div>
@@ -109,13 +102,14 @@ else
                         </div>
                     </div>
                     <div class="card-text">@((MarkupString)Model.Answer.Content)</div>
-                    <div class="row">
-                        <div class="col">
-                            <ReactionButtons CanReact="CanReact()"
-                                             AddReactionCallback="@(async () => await AddReactionAsync(Model.Answer.Id))"
-                                             RemoveReactionCallback="@(async () => await RemoveReactionAsync(Model.Answer.Id))"
-                                             Reacted="UserTopicReactions.HasReactedTo(Model.Answer.Id)" />
-                        </div>
+                    <div class="card-text small pb-3">
+                        <span class="font-weight-bold">@Model.Answer.Reactions.Sum(x => x.Count)</span> @Loc["Likes"]
+                    </div>
+                    <div class="card-text border-top pt-3">
+                        <ReactionButtons CanReact="CanReact()"
+                                         AddReactionCallback="@(async () => await AddReactionAsync(Model.Answer.Id))"
+                                         RemoveReactionCallback="@(async () => await RemoveReactionAsync(Model.Answer.Id))"
+                                         Reacted="UserTopicReactions.HasReactedTo(Model.Answer.Id)" />
                     </div>
                 </div>
             </div>
@@ -185,13 +179,14 @@ else
                                     </div>
                                 </div>
                                 <div class="card-text">@((MarkupString)reply.Content)</div>
-                                <div class="row">
-                                    <div class="col">
-                                        <ReactionButtons CanReact="CanReact()"
-                                                         AddReactionCallback="@(async () => await AddReactionAsync(reply.Id))"
-                                                         RemoveReactionCallback="@(async () => await RemoveReactionAsync(reply.Id))"
-                                                         Reacted="UserTopicReactions.HasReactedTo(reply.Id)" />
-                                    </div>
+                                <div class="card-text small pb-3">
+                                    <span class="font-weight-bold">@reply.Reactions.Sum(x => x.Count)</span> @Loc["Likes"]
+                                </div>
+                                <div class="card-text border-top pt-3">
+                                    <ReactionButtons CanReact="CanReact()"
+                                                     AddReactionCallback="@(async () => await AddReactionAsync(reply.Id))"
+                                                     RemoveReactionCallback="@(async () => await RemoveReactionAsync(reply.Id))"
+                                                     Reacted="UserTopicReactions.HasReactedTo(reply.Id)" />
                                 </div>
                             </li>
                         }

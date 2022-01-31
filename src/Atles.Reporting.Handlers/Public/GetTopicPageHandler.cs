@@ -72,6 +72,7 @@ namespace Atles.Reporting.Handlers.Public
             if (topic.HasAnswer)
             {
                 var answer = await _dbContext.Posts
+                    .Include(x => x.PostReactionSummaries)
                     .Include(x => x.CreatedByUser)
                     .Where(x =>
                         x.TopicId == topic.Id &&
@@ -91,7 +92,8 @@ namespace Atles.Reporting.Handlers.Public
                         UserDisplayName = answer.CreatedByUser.DisplayName,
                         TimeStamp = answer.CreatedOn,
                         GravatarHash = _gravatarService.GenerateEmailHash(answer.CreatedByUser.Email),
-                        IsAnswer = answer.IsAnswer
+                        IsAnswer = answer.IsAnswer,
+                        Reactions = answer.PostReactionSummaries.Select(x => new TopicPageModel.ReactionModel { Type = x.Type, Count = x.Count }).ToList()
                     };
                 }
             }

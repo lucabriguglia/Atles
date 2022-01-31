@@ -29,7 +29,7 @@ namespace Atles.Reporting.Models.Public
             public string Slug { get; set; }
         }
 
-        public class TopicModel
+        public class TopicModel : PostReactionBase
         {
             public Guid Id { get; set; }
             public string Title { get; set; }
@@ -43,6 +43,23 @@ namespace Atles.Reporting.Models.Public
             public bool Pinned { get; set; }
             public bool Locked { get; set; }
             public bool HasAnswer { get; set; }
+        }
+
+        public class ReplyModel : PostReactionBase
+        {
+            public Guid Id { get; set; }
+            public string Content { get; set; }
+            public string OriginalContent { get; set; }
+            public string IdentityUserId { get; set; }
+            public Guid UserId { get; set; }
+            public string UserDisplayName { get; set; }
+            public DateTime TimeStamp { get; set; }
+            public string GravatarHash { get; set; }
+            public bool IsAnswer { get; set; }
+        }
+
+        public abstract class PostReactionBase
+        {
             public IList<ReactionModel> Reactions { get; set; } = new List<ReactionModel>();
 
             public void AddReaction(PostReactionType type)
@@ -55,7 +72,7 @@ namespace Atles.Reporting.Models.Public
                 }
                 else
                 {
-                    Reactions.Add(new ReactionModel {Type = type, Count = 1});
+                    Reactions.Add(new ReactionModel { Type = type, Count = 1 });
                 }
             }
 
@@ -68,20 +85,6 @@ namespace Atles.Reporting.Models.Public
                     reaction.Count--;
                 }
             }
-        }
-
-        public class ReplyModel
-        {
-            public Guid Id { get; set; }
-            public string Content { get; set; }
-            public string OriginalContent { get; set; }
-            public string IdentityUserId { get; set; }
-            public Guid UserId { get; set; }
-            public string UserDisplayName { get; set; }
-            public DateTime TimeStamp { get; set; }
-            public string GravatarHash { get; set; }
-            public bool IsAnswer { get; set; }
-            public IList<ReactionModel> Reactions { get; set; } = new List<ReactionModel>();
         }
 
         public class ReactionModel

@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using System.Threading.Tasks;
+using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Atles.Client.Components.Shared;
 
@@ -13,8 +14,12 @@ namespace Atles.Client.Shared
         [Parameter] public EventCallback<MouseEventArgs> AddReactionCallback { get; set; }
         [Parameter] public EventCallback<MouseEventArgs> RemoveReactionCallback { get; set; }
 
-        protected override void OnInitialized()
+        public bool UserIsAuthenticated { get; set; }
+
+        protected override async Task OnInitializedAsync()
         {
+            var claimsPrincipal = await GetClaimsPrincipal();
+            UserIsAuthenticated = claimsPrincipal.Identity.IsAuthenticated;
         }
     }
 }

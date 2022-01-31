@@ -55,8 +55,7 @@ namespace Atles.Reporting.Handlers.Public
                             Email = user.Email,
                             DisplayName = user.DisplayName,
                             GravatarHash = _gravatarService.GenerateEmailHash(user.Email),
-                            IsSuspended = user.Status == UserStatusType.Suspended,
-                            IsAuthenticated = true
+                            IsSuspended = user.Status == UserStatusType.Suspended
                         };
                     }
                 }

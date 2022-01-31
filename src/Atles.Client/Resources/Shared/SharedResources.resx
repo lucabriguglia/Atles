@@ -156,6 +156,9 @@
   <data name="Last" xml:space="preserve">
     <value>Last</value>
   </data>
+  <data name="Like" xml:space="preserve">
+    <value>Like</value>
+  </data>
   <data name="Loading..." xml:space="preserve">
     <value>Loading...</value>
   </data>
@@ -180,6 +183,9 @@
   <data name="Pin" xml:space="preserve">
     <value>Pin</value>
   </data>
+  <data name="Please login to react to posts." xml:space="preserve">
+    <value>Please login to react to posts.</value>
+  </data>
   <data name="Preview" xml:space="preserve">
     <value>Preview</value>
   </data>
@@ -194,6 +200,9 @@
   </data>
   <data name="Remove Answer" xml:space="preserve">
     <value>Remove Answer</value>
+  </data>
+  <data name="Remove Like" xml:space="preserve">
+    <value>Remove Like</value>
   </data>
   <data name="Settings" xml:space="preserve">
     <value>Settings</value>
@@ -212,6 +221,9 @@
   </data>
   <data name="You are not authorized to access this resource." xml:space="preserve">
     <value>You are not authorized to access this resource.</value>
+  </data>
+  <data name="You are not authorized to react to posts." xml:space="preserve">
+    <value>You are not authorized to react to posts.</value>
   </data>
   <data name="Your text here..." xml:space="preserve">
     <value>Your text here...</value>

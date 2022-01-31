@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Linq;
 using System.Threading.Tasks;
 using Atles.Client.Services;
 using Atles.Client.Shared;
@@ -7,7 +8,6 @@ using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Shared;
 using Markdig;
 using Microsoft.AspNetCore.Components;
-using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 
@@ -56,11 +56,13 @@ namespace Atles.Client.Components.Themes
             try
             {
                 Model = await ApiService.GetFromJsonAsync<TopicPageModel>($"api/public/topics/{ForumSlug}/{TopicSlug}?page=1");
-                UserTopicReactions = User.IsAuthenticated 
-                    ? await ApiService.GetFromJsonAsync<UserTopicReactionsModel>($"api/public/users/topic-reactions/{Model.Topic.Id}") 
-                    : new UserTopicReactionsModel();
                 TotalPages = Model.Replies.TotalPages;
                 DisplayPage = true;
+
+                var claimsPrincipal = await GetClaimsPrincipal();
+                UserTopicReactions = claimsPrincipal.Identity.IsAuthenticated
+                    ? await ApiService.GetFromJsonAsync<UserTopicReactionsModel>($"api/public/users/topic-reactions/{Model.Topic.Id}")
+                    : new UserTopicReactionsModel();
             }
             catch (Exception)
             {
@@ -217,8 +219,22 @@ namespace Atles.Client.Components.Themes
 
             await ApiService.PostAsJsonAsync($"api/public/reactions/add-reaction/{Model.Forum.Id}/{postId}", PostReactionType.Like);
 
-            Model.Topic.AddReaction(PostReactionType.Like);
             UserTopicReactions.PostReactions.Add(postId, PostReactionType.Like);
+
+            if (replyId != null)
+            {
+                var reply = Model.Replies.Items.FirstOrDefault(x => x.Id == replyId);
+                reply?.AddReaction(PostReactionType.Like);
+
+                if (Model.Answer.Id == replyId)
+                {
+                    Model.Answer.AddReaction(PostReactionType.Like);
+                }
+            }
+            else
+            {
+                Model.Topic.AddReaction(PostReactionType.Like);
+            }
         }
 
         protected async Task RemoveReactionAsync(Guid? replyId)
@@ -227,8 +243,22 @@ namespace Atles.Client.Components.Themes
 
             await ApiService.PostAsJsonAsync($"api/public/reactions/remove-reaction/{Model.Forum.Id}/{postId}", PostReactionType.Like);
 
-            Model.Topic.RemoveReaction(PostReactionType.Like);
             UserTopicReactions.PostReactions.Remove(postId);
+
+            if (replyId != null)
+            {
+                var reply = Model.Replies.Items.FirstOrDefault(x => x.Id == replyId);
+                reply?.RemoveReaction(PostReactionType.Like);
+
+                if (Model.Answer.Id == replyId)
+                {
+                    Model.Answer.RemoveReaction(PostReactionType.Like);
+                }
+            }
+            else
+            {
+                Model.Topic.RemoveReaction(PostReactionType.Like);
+            }
         }
 
         protected void Cancel()
