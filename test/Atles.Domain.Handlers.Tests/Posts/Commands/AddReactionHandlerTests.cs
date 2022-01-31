@@ -53,6 +53,7 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
             {
                 var command = Fixture.Build<AddReaction>()
                         .With(x => x.Id, topic.Id)
+                        .With(x => x.ForumId, forum.Id)
                         .With(x => x.SiteId, siteId)
                     .Create();
 

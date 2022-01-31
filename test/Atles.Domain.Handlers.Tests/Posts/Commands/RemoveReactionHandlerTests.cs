@@ -42,12 +42,14 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
             var forum = new Forum(forumId, categoryId, "Forum", "my-forum", "My Forum", 1);
             var topic = Post.CreateTopic(topicId, forumId, Guid.NewGuid(), "Title", "slug", "Content", PostStatusType.Published);
             topic.AddReactionToSummary(PostReactionType.Support);
+            var postReaction = new PostReaction(topic.Id, topic.CreatedBy, PostReactionType.Support);
 
             using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
                 dbContext.Posts.Add(topic);
+                dbContext.PostReactions.Add(postReaction);
 
                 await dbContext.SaveChangesAsync();
             }
@@ -57,7 +59,9 @@ namespace Atles.Domain.Handlers.Tests.Posts.Commands
                 var command = new RemoveReaction
                 {
                     Id = topic.Id,
-                    SiteId = siteId
+                    ForumId = forumId,
+                    SiteId = siteId,
+                    UserId = postReaction.UserId
                 };
 
                 var sut = new RemoveReactionHandler(dbContext);
