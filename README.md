@@ -1,4 +1,4 @@
-# Atles (Alpha)
+# Atles (Beta)
 
 [![.NET 6](https://github.com/lucabriguglia/Atles/actions/workflows/dotnet-6.yml/badge.svg)](https://github.com/lucabriguglia/Atles/actions/workflows/dotnet-6.yml)
 
@@ -43,4 +43,4 @@ A forum software built with ASP.NET Blazor WebAssembly and CQRS.
   - **Email**: admin@default.com
   - **Password**: !P455w0rd?
 
-**Note**: Please delete any databases previously created if you pull new versions. It's still an Alpha version and some breaking changes might occur between commits.
+**Note**: Please delete any databases previously created if you pull new versions. It's still a Beta version and some breaking changes might occur between commits.
