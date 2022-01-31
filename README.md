@@ -6,7 +6,18 @@ A forum software built with ASP.NET Blazor WebAssembly and CQRS.
 
 **Documentation**: [Atles Wiki](https://lucabriguglia.github.io/Atles).
 
+## Screenshots
+
+**Topic View**
+
+![Forum Topic](docs/assets/img/forum-topic.png)
+
+**Forums Admin**
+
 ![Forums Admin](docs/assets/img/admin-forums.png)
+
+**Permission Sets Admin**
+
 ![Permission Set Admin](docs/assets/img/admin-permission-set-edit.png)
 
 ## Technology
