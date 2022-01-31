@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Client.Models;
 using Atles.Client.Services;
 using Atles.Client.Shared;
 using Atles.Domain.Models.PostReactions;
@@ -213,51 +214,45 @@ namespace Atles.Client.Components.Themes
             Pager.ReInitialize(TotalPages);
         }
 
-        protected async Task AddReactionAsync(Guid? replyId)
+        protected async Task AddReactionAsync(ReactionCommandModel command)
         {
-            var postId = replyId ?? Model.Topic.Id;
+            await ApiService.PostAsJsonAsync($"api/public/reactions/add-reaction/{Model.Forum.Id}/{command.PostId}", command.PostReactionType);
 
-            await ApiService.PostAsJsonAsync($"api/public/reactions/add-reaction/{Model.Forum.Id}/{postId}", PostReactionType.Like);
+            UserTopicReactions.PostReactions.Add(command.PostId, command.PostReactionType);
 
-            UserTopicReactions.PostReactions.Add(postId, PostReactionType.Like);
-
-            if (replyId != null)
+            if (command.PostId == Model.Topic.Id)
             {
-                var reply = Model.Replies.Items.FirstOrDefault(x => x.Id == replyId);
-                reply?.AddReaction(PostReactionType.Like);
-
-                if (Model.Answer.Id == replyId)
-                {
-                    Model.Answer.AddReaction(PostReactionType.Like);
-                }
+                Model.Topic.AddReaction(command.PostReactionType);
+            }
+            else if(command.PostId == Model.Answer.Id)
+            {
+                Model.Answer.AddReaction(command.PostReactionType);
             }
             else
             {
-                Model.Topic.AddReaction(PostReactionType.Like);
+                var reply = Model.Replies.Items.FirstOrDefault(x => x.Id == command.PostId);
+                reply?.AddReaction(command.PostReactionType);
             }
         }
 
-        protected async Task RemoveReactionAsync(Guid? replyId)
+        protected async Task RemoveReactionAsync(ReactionCommandModel command)
         {
-            var postId = replyId ?? Model.Topic.Id;
+            await ApiService.PostAsJsonAsync($"api/public/reactions/remove-reaction/{Model.Forum.Id}/{command.PostId}", command.PostReactionType);
 
-            await ApiService.PostAsJsonAsync($"api/public/reactions/remove-reaction/{Model.Forum.Id}/{postId}", PostReactionType.Like);
+            UserTopicReactions.PostReactions.Remove(command.PostId);
 
-            UserTopicReactions.PostReactions.Remove(postId);
-
-            if (replyId != null)
+            if (command.PostId == Model.Topic.Id)
             {
-                var reply = Model.Replies.Items.FirstOrDefault(x => x.Id == replyId);
-                reply?.RemoveReaction(PostReactionType.Like);
-
-                if (Model.Answer.Id == replyId)
-                {
-                    Model.Answer.RemoveReaction(PostReactionType.Like);
-                }
+                Model.Topic.RemoveReaction(command.PostReactionType);
+            }
+            else if (command.PostId == Model.Answer.Id)
+            {
+                Model.Answer.RemoveReaction(command.PostReactionType);
             }
             else
             {
-                Model.Topic.RemoveReaction(PostReactionType.Like);
+                var reply = Model.Replies.Items.FirstOrDefault(x => x.Id == command.PostId);
+                reply?.RemoveReaction(command.PostReactionType);
             }
         }
 

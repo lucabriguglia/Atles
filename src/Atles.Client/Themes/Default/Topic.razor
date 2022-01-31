@@ -65,10 +65,11 @@ else
                     <span class="font-weight-bold">@Model.Topic.Reactions.Sum(x => x.Count)</span> @Loc["Likes"]
                 </div>
                 <div class="card-text border-top pt-3">
-                    <ReactionButtons CanReact="CanReact()"
-                                         AddReactionCallback="@(async () => await AddReactionAsync(null))"
-                                         RemoveReactionCallback="@(async () => await RemoveReactionAsync(null))"
-                                         Reacted="UserTopicReactions.HasReactedTo(Model.Topic.Id)" />
+                    <ReactionButtons PostId="Model.Topic.Id" 
+                                     CanReact="CanReact()"
+                                     AddReactionCallback="AddReactionAsync"
+                                     RemoveReactionCallback="RemoveReactionAsync"
+                                     Reacted="UserTopicReactions.HasReactedTo(Model.Topic.Id)" />
                 </div>
             </div>
         </div>
@@ -106,9 +107,10 @@ else
                         <span class="font-weight-bold">@Model.Answer.Reactions.Sum(x => x.Count)</span> @Loc["Likes"]
                     </div>
                     <div class="card-text border-top pt-3">
-                        <ReactionButtons CanReact="CanReact()"
-                                         AddReactionCallback="@(async () => await AddReactionAsync(Model.Answer.Id))"
-                                         RemoveReactionCallback="@(async () => await RemoveReactionAsync(Model.Answer.Id))"
+                        <ReactionButtons PostId="Model.Answer.Id" 
+                                         CanReact="CanReact()"
+                                         AddReactionCallback="AddReactionAsync"
+                                         RemoveReactionCallback="RemoveReactionAsync"
                                          Reacted="UserTopicReactions.HasReactedTo(Model.Answer.Id)" />
                     </div>
                 </div>
@@ -183,9 +185,10 @@ else
                                     <span class="font-weight-bold">@reply.Reactions.Sum(x => x.Count)</span> @Loc["Likes"]
                                 </div>
                                 <div class="card-text border-top pt-3">
-                                    <ReactionButtons CanReact="CanReact()"
-                                                     AddReactionCallback="@(async () => await AddReactionAsync(reply.Id))"
-                                                     RemoveReactionCallback="@(async () => await RemoveReactionAsync(reply.Id))"
+                                    <ReactionButtons PostId="reply.Id" 
+                                                     CanReact="CanReact()"
+                                                     AddReactionCallback="AddReactionAsync"
+                                                     RemoveReactionCallback="RemoveReactionAsync"
                                                      Reacted="UserTopicReactions.HasReactedTo(reply.Id)" />
                                 </div>
                             </li>

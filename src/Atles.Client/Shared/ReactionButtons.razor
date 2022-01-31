@@ -1,16 +1,17 @@
-﻿@inherits Atles.Client.Shared.ReactionButtonsComponent
+﻿@using Atles.Domain.Models.PostReactions
+@inherits Atles.Client.Shared.ReactionButtonsComponent
 
 @if (CanReact)
 {
     if (!Reacted)
     {
-        <a href="#" @onclick:preventDefault="true" @onclick="@AddReactionCallback" title="@Loc["Like"]">
+        <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await AddReaction(PostReactionType.Like))" title="@Loc["Like"]">
             <i class="far fa-thumbs-up"></i>
         </a>
     }
     else
     {
-        <a href="#" @onclick:preventDefault="true" @onclick="@RemoveReactionCallback" title="@Loc["Remove Like"]">
+        <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await RemoveReaction(PostReactionType.Like))" title="@Loc["Remove Like"]">
             <i class="fas fa-thumbs-up"></i>
         </a>
     }
