@@ -5,7 +5,6 @@ using System.Linq;
 using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.PostReactions;
 using Atles.Domain.Models.Users;
-using Atles.Domain.Posts;
 using Docs.Attributes;
 
 namespace Atles.Domain.Models.Posts
@@ -153,9 +152,9 @@ namespace Atles.Domain.Models.Posts
         public virtual ICollection<PostReaction> PostReactions { get; set; }
 
         /// <summary>
-        /// Reference to post reaction counts.
+        /// Reference to post reaction summaries.
         /// </summary>
-        public virtual ICollection<PostReactionCount> PostReactionCounts { get; set; }
+        public virtual ICollection<PostReactionSummary> PostReactionSummaries { get; set; }
 
         /// <summary>
         /// Creates an empty forum post.
@@ -307,18 +306,18 @@ namespace Atles.Domain.Models.Posts
         /// Increases count for the specified reaction type.
         /// </summary>
         /// <param name="type">The post reaction type.</param>
-        public void IncreaseReactionCount(PostReactionType type)
+        public void AddReactionToSummary(PostReactionType type)
         {
-            PostReactionCounts ??= new List<PostReactionCount>();
+            PostReactionSummaries ??= new List<PostReactionSummary>();
 
-            var postReactionCount = PostReactionCounts.FirstOrDefault(x => x.Type == type);
+            var postReactionCount = PostReactionSummaries.FirstOrDefault(x => x.Type == type);
             if (postReactionCount != null)
             {
                 postReactionCount.IncreaseCount();
             }
             else
             {
-                PostReactionCounts.Add(new PostReactionCount(Id, type));
+                PostReactionSummaries.Add(new PostReactionSummary(Id, type));
             }
         }
 
@@ -326,9 +325,9 @@ namespace Atles.Domain.Models.Posts
         /// Decreases count for the specified reaction type.
         /// </summary>
         /// <param name="type">The post reaction type.</param>
-        public void DecreaseReactionCount(PostReactionType type)
+        public void RemoveReactionFromSummary(PostReactionType type)
         {
-            var postReactionCount = PostReactionCounts?.FirstOrDefault(x => x.Type == type);
+            var postReactionCount = PostReactionSummaries?.FirstOrDefault(x => x.Type == type);
             postReactionCount?.DecreaseCount();
         }
 

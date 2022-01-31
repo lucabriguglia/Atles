@@ -52,14 +52,7 @@ namespace Atles.Server.Controllers.Public
 
             if (model == null)
             {
-                _logger.LogWarning("Topic not found.", new
-                {
-                    SiteId = site.Id,
-                    ForumSlug = forumSlug,
-                    TopicSlug = topicSlug,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Topic not found.");
                 return NotFound();
             }
 
@@ -73,14 +66,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!canRead)
             {
-                _logger.LogWarning("Unauthorized access to topic", new
-                {
-                    SiteId = site.Id,
-                    ForumSlug = forumSlug,
-                    TopicSlug = topicSlug,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to topic");
                 return Unauthorized();
             }
 
@@ -88,6 +74,7 @@ namespace Atles.Server.Controllers.Public
             model.CanReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !user.IsSuspended;
             model.CanDelete = _securityService.HasPermission(PermissionType.Delete, permissions) && !user.IsSuspended;
             model.CanModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !user.IsSuspended;
+            model.CanReact = _securityService.HasPermission(PermissionType.Reactions, permissions) && !user.IsSuspended;
 
             return model;
         }
@@ -107,14 +94,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!canRead)
             {
-                _logger.LogWarning("Unauthorized access to topic replies", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    TopicId = topicId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to topic replies");
                 return Unauthorized();
             }
 
@@ -139,13 +119,7 @@ namespace Atles.Server.Controllers.Public
 
             if (model == null)
             {
-                _logger.LogWarning("Forum for new topic not found.", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Forum for new topic not found.");
                 return NotFound();
             }
 
@@ -159,13 +133,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!canPost)
             {
-                _logger.LogWarning("Unauthorized access to new topic", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to new topic");
                 return Unauthorized();
             }
 
@@ -183,14 +151,7 @@ namespace Atles.Server.Controllers.Public
 
             if (model == null)
             {
-                _logger.LogWarning("Topic to edit not found.", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    TopicId = topicId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Topic to edit not found.");
                 return NotFound();
             }
 
@@ -206,14 +167,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!authorized)
             {
-                _logger.LogWarning("Unauthorized access to edit topic", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    TopicId = topicId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to edit topic");
                 return Unauthorized();
             }
 
@@ -237,13 +191,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!canPost)
             {
-                _logger.LogWarning("Unauthorized access to create topic", new
-                {
-                    SiteId = site.Id,
-                    ForumId = model.Forum?.Id,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to create topic");
                 return Unauthorized();
             }
 
@@ -307,14 +255,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!authorized)
             {
-                _logger.LogWarning("Unauthorized access to update topic", new
-                {
-                    SiteId = site.Id,
-                    ForumId = model.Forum?.Id,
-                    TopicId = model.Topic?.Id,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to update topic");
                 return Unauthorized();
             }
 
@@ -354,14 +295,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!canModerate)
             {
-                _logger.LogWarning("Unauthorized access to pin topic", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    TopicId = topicId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to pin topic");
                 return Unauthorized();
             }
 
@@ -396,14 +330,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!canModerate)
             {
-                _logger.LogWarning("Unauthorized access to lock topic", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    TopicId = topicId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to lock topic");
                 return Unauthorized();
             }
 
@@ -449,14 +376,7 @@ namespace Atles.Server.Controllers.Public
 
             if (!authorized)
             {
-                _logger.LogWarning("Unauthorized access to delete topic", new
-                {
-                    SiteId = site.Id,
-                    ForumId = forumId,
-                    TopicId = topicId,
-                    User = User.Identity.Name
-                });
-
+                _logger.LogWarning("Unauthorized access to delete topic");
                 return Unauthorized();
             }
 

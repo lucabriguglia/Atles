@@ -3,16 +3,16 @@ using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Data;
-using Atles.Domain.Handlers.PostReactions.Commands;
+using Atles.Domain.Handlers.Posts.Commands;
 using Atles.Domain.Models.Categories;
 using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.Posts;
-using Atles.Domain.PostReactions.Commands;
+using Atles.Domain.Models.Posts.Commands;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;
 
-namespace Atles.Domain.Handlers.Tests.PostLikes.Commands
+namespace Atles.Domain.Handlers.Tests.Posts.Commands
 {
     [TestFixture]
     public class AddReactionHandlerTests : TestFixtureBase
@@ -28,7 +28,7 @@ namespace Atles.Domain.Handlers.Tests.PostLikes.Commands
         }
 
         [Test]
-        public async Task Should_add_reaction_and_increase_count()
+        public async Task Should_add_reaction()
         {
             var options = Shared.CreateContextOptions();
 
@@ -52,7 +52,8 @@ namespace Atles.Domain.Handlers.Tests.PostLikes.Commands
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<AddReaction>()
-                        .With(x => x.PostId, topic.Id)
+                        .With(x => x.Id, topic.Id)
+                        .With(x => x.ForumId, forum.Id)
                         .With(x => x.SiteId, siteId)
                     .Create();
 
@@ -60,12 +61,10 @@ namespace Atles.Domain.Handlers.Tests.PostLikes.Commands
 
                 await sut.Handle(command);
 
-                var updatedPost = await dbContext.Posts.Include(x => x.PostReactionCounts).FirstOrDefaultAsync(x => x.Id == command.PostId);
-                var postReactionCount = updatedPost.PostReactionCounts.FirstOrDefault(x => x.Type == command.Type);
-                var postReaction = await dbContext.PostReactions.FirstOrDefaultAsync(x => x.PostId == command.PostId && x.UserId == command.UserId);
+                var updatedPost = await dbContext.Posts.Include(x => x.PostReactionSummaries).FirstOrDefaultAsync(x => x.Id == command.Id);
+                var postReaction = updatedPost.PostReactionSummaries.FirstOrDefault(x => x.Type == command.Type);
 
-                Assert.AreEqual(1, postReactionCount.Count);
-                Assert.NotNull(postReaction);
+                Assert.AreEqual(1, postReaction.Count);
             }
         }
     }

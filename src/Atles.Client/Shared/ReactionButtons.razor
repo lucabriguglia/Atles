@@ -1,0 +1,28 @@
+﻿@inherits Atles.Client.Shared.ReactionButtonsComponent
+
+@if (CanReact)
+{
+    if (!Reacted)
+    {
+        <a href="#" @onclick:preventDefault="true" @onclick="@AddReactionCallback" title="@Loc["Like"]">
+            <i class="far fa-thumbs-up"></i>
+        </a>
+    }
+    else
+    {
+        <a href="#" @onclick:preventDefault="true" @onclick="@RemoveReactionCallback" title="@Loc["Remove Like"]">
+            <i class="fas fa-thumbs-up"></i>
+        </a>
+    }
+}
+else
+{
+    @if (UserIsAuthenticated)
+    {
+        <i class="far fa-thumbs-up" title="@Loc["You are not authorized to react to posts."]"></i>
+    }
+    else
+    {
+        <i class="far fa-thumbs-up" title="@Loc["Please login to react to posts."]"></i>
+    }
+}

@@ -1,6 +1,8 @@
 ﻿using System;
 using Microsoft.EntityFrameworkCore.Migrations;
 
+#nullable disable
+
 namespace Atles.Data.Migrations.AtlesMigrations
 {
     public partial class InitialCreate : Migration
@@ -64,9 +66,9 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "Permission",
                 columns: table => new
                 {
-                    PermissionSetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
-                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false)
+                    RoleId = table.Column<string>(type: "nvarchar(450)", nullable: false),
+                    PermissionSetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -75,7 +77,8 @@ namespace Atles.Data.Migrations.AtlesMigrations
                         name: "FK_Permission_PermissionSet_PermissionSetId",
                         column: x => x.PermissionSetId,
                         principalTable: "PermissionSet",
-                        principalColumn: "Id");
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -111,13 +114,13 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 columns: table => new
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false),
                     Type = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Data = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TargetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     TargetType = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     SiteId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
-                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true),
-                    Data = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -194,14 +197,12 @@ namespace Atles.Data.Migrations.AtlesMigrations
                         name: "FK_Post_Post_LastReplyId",
                         column: x => x.LastReplyId,
                         principalTable: "Post",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Post_Post_TopicId",
                         column: x => x.TopicId,
                         principalTable: "Post",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_Post_User_CreatedBy",
                         column: x => x.CreatedBy,
@@ -211,8 +212,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                         name: "FK_Post_User_ModifiedBy",
                         column: x => x.ModifiedBy,
                         principalTable: "User",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -240,7 +240,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "PostReactionCount",
+                name: "PostReactionSummary",
                 columns: table => new
                 {
                     PostId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
@@ -249,9 +249,9 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_PostReactionCount", x => new { x.PostId, x.Type });
+                    table.PrimaryKey("PK_PostReactionSummary", x => new { x.PostId, x.Type });
                     table.ForeignKey(
-                        name: "FK_PostReactionCount_Post_PostId",
+                        name: "FK_PostReactionSummary_Post_PostId",
                         column: x => x.PostId,
                         principalTable: "Post",
                         principalColumn: "Id");
@@ -322,20 +322,11 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 table: "Forum",
                 column: "LastPostId",
                 principalTable: "Post",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Restrict);
+                principalColumn: "Id");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.DropForeignKey(
-                name: "FK_Category_PermissionSet_PermissionSetId",
-                table: "Category");
-
-            migrationBuilder.DropForeignKey(
-                name: "FK_Forum_PermissionSet_PermissionSetId",
-                table: "Forum");
-
             migrationBuilder.DropForeignKey(
                 name: "FK_Category_Site_SiteId",
                 table: "Category");
@@ -353,6 +344,10 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 table: "Forum");
 
             migrationBuilder.DropForeignKey(
+                name: "FK_Forum_PermissionSet_PermissionSetId",
+                table: "Forum");
+
+            migrationBuilder.DropForeignKey(
                 name: "FK_Forum_Post_LastPostId",
                 table: "Forum");
 
@@ -366,10 +361,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "PostReaction");
 
             migrationBuilder.DropTable(
-                name: "PostReactionCount");
-
-            migrationBuilder.DropTable(
-                name: "PermissionSet");
+                name: "PostReactionSummary");
 
             migrationBuilder.DropTable(
                 name: "Site");
@@ -379,6 +371,9 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
             migrationBuilder.DropTable(
                 name: "Category");
+
+            migrationBuilder.DropTable(
+                name: "PermissionSet");
 
             migrationBuilder.DropTable(
                 name: "Post");

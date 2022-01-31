@@ -1227,9 +1227,9 @@
             Reference to post reactions.
             </summary>
         </member>
-        <member name="P:Atles.Domain.Models.Posts.Post.PostReactionCounts">
+        <member name="P:Atles.Domain.Models.Posts.Post.PostReactionSummaries">
             <summary>
-            Reference to post reaction counts.
+            Reference to post reaction summaries.
             </summary>
         </member>
         <member name="M:Atles.Domain.Models.Posts.Post.#ctor">
@@ -1320,13 +1320,13 @@
             If the resulting number is less than zero, the value is set to zero.
             </summary>
         </member>
-        <member name="M:Atles.Domain.Models.Posts.Post.IncreaseReactionCount(Atles.Domain.Models.PostReactions.PostReactionType)">
+        <member name="M:Atles.Domain.Models.Posts.Post.AddReactionToSummary(Atles.Domain.Models.PostReactions.PostReactionType)">
             <summary>
             Increases count for the specified reaction type.
             </summary>
             <param name="type">The post reaction type.</param>
         </member>
-        <member name="M:Atles.Domain.Models.Posts.Post.DecreaseReactionCount(Atles.Domain.Models.PostReactions.PostReactionType)">
+        <member name="M:Atles.Domain.Models.Posts.Post.RemoveReactionFromSummary(Atles.Domain.Models.PostReactions.PostReactionType)">
             <summary>
             Decreases count for the specified reaction type.
             </summary>
@@ -1366,6 +1366,17 @@
             Indicates if the post is an initial message (topic).
             </summary>
             <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Models.Posts.PostReactionSummary.IncreaseCount">
+            <summary>
+            Increases count by 1.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Models.Posts.PostReactionSummary.DecreaseCount">
+            <summary>
+            Decreases count by 1.
+            If the resulting number is less than zero, the value is set to zero.
+            </summary>
         </member>
         <member name="T:Atles.Domain.Models.Sites.Commands.UpdateSite">
             <summary>
@@ -1871,17 +1882,6 @@
             <typeparam name="TCommand"></typeparam>
             <exception cref="T:System.ArgumentNullException"></exception>
             <exception cref="T:System.ApplicationException"></exception>
-        </member>
-        <member name="M:Atles.Domain.Posts.PostReactionCount.IncreaseCount">
-            <summary>
-            Increases count by 1.
-            </summary>
-        </member>
-        <member name="M:Atles.Domain.Posts.PostReactionCount.DecreaseCount">
-            <summary>
-            Decreases count by 1.
-            If the resulting number is less than zero, the value is set to zero.
-            </summary>
         </member>
     </members>
 </doc>

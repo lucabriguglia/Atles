@@ -6,6 +6,7 @@ using Atles.Infrastructure;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -18,7 +19,7 @@ namespace Atles.Server.Controllers.Public
         private readonly ILogger<UsersController> _logger;
         private readonly IDispatcher _dispatcher;
 
-        public UsersController(ISecurityService securityService, 
+        public UsersController(ISecurityService securityService,
             ILogger<UsersController> logger,
             IDispatcher dispatcher) : base(dispatcher)
         {
@@ -56,7 +57,7 @@ namespace Atles.Server.Controllers.Public
 
             foreach (var forum in currentForums)
             {
-                var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, PermissionSetId = forum.PermissionSetId });
+                var permissions = await _dispatcher.Get(new GetPermissions {SiteId = site.Id, PermissionSetId = forum.PermissionSetId});
                 var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
                 var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
                 var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions);
@@ -66,21 +67,43 @@ namespace Atles.Server.Controllers.Public
                 }
             }
 
-            var model = await _dispatcher.Get(new GetUserPage { SiteId = site.Id, UserId = userId, AccessibleForumIds = accessibleForumIds });
+            var model = await _dispatcher.Get(new GetUserPage
+                {SiteId = site.Id, UserId = userId, AccessibleForumIds = accessibleForumIds});
 
-            if (model == null)
+            if (model != null)
             {
-                _logger.LogWarning("User not found.", new
-                {
-                    SiteId = site.Id,
-                    MemebrId = userId,
-                    User = User.Identity.Name
-                });
-
-                return NotFound();
+                return model;
             }
 
-            return model;
+            _logger.LogWarning("User not found.");
+
+            return NotFound();
+        }
+
+        [Authorize]
+        [HttpGet("topic-reactions/{topicId}")]
+        public async Task<ActionResult<UserTopicReactionsModel>> TopicReactions(Guid topicId)
+        {
+            var site = await CurrentSite();
+            var user = await CurrentUser();
+
+            var query = new GetUserTopicReactions
+            {
+                SiteId = site.Id, 
+                UserId = user.Id, 
+                TopicId = topicId
+            };
+
+            var model = await _dispatcher.Get(query);
+
+            if (model != null)
+            {
+                return model;
+            }
+
+            _logger.LogWarning("User not found.");
+
+            return NotFound();
         }
     }
 }

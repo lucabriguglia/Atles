@@ -2,7 +2,8 @@ using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Atles.Client.Services;
+using Atles.Client.Services.Api;
+using Atles.Client.Services.Storage;
 using Atles.Reporting.Models.Public;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
@@ -49,6 +50,9 @@ namespace Atles.Client
             {
                 options.ResourcesPath = "Resources";
             });
+
+            builder.Services.AddScoped(typeof(ILocalStorageService<>), typeof(LocalStorageService<>));
+            builder.Services.AddScoped(typeof(ISessionStorageService<>), typeof(SessionStorageService<>));
 
             builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 

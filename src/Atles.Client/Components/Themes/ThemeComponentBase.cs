@@ -1,10 +1,12 @@
 ﻿using System;
 using System.Net.Http;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Atles.Client.Pages;
-using Atles.Client.Services;
+using Atles.Client.Services.Api;
 using Atles.Reporting.Models.Public;
 using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 
@@ -19,6 +21,7 @@ namespace Atles.Client.Components.Themes
         [Inject] public IJSRuntime JsRuntime { get; set; }
         [Inject] public IStringLocalizer<PublicResources> Loc { get; set; }
         [Inject] public NavigationManager Navigation { get; set; }
+        [Inject] public AuthenticationStateProvider AuthenticationStateProvider { get; set; }
 
         public bool SavingData { get; set; }
         protected string CssClassDisabled => SavingData ? "disabled" : string.Empty;
@@ -29,6 +32,13 @@ namespace Atles.Client.Components.Themes
             var response = await actionAsync();
             SavingData = false;
             return response;
+        }
+
+        protected async Task<ClaimsPrincipal> GetClaimsPrincipal()
+        {
+            var state = await AuthenticationStateProvider.GetAuthenticationStateAsync();
+            var user = state.User;
+            return user;
         }
     }
 }

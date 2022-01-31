@@ -1,16 +1,16 @@
 ﻿using System.Collections.Generic;
-using Atles.Data;
-using Atles.Domain.Models.Posts;
-using Atles.Domain.PostReactions.Commands;
-using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Threading.Tasks;
+using Atles.Data;
 using Atles.Domain.Models;
-using Atles.Domain.Models.PostReactions.Events;
+using Atles.Domain.Models.Posts;
+using Atles.Domain.Models.Posts.Commands;
+using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Events;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Handlers.PostReactions.Commands
+namespace Atles.Domain.Handlers.Posts.Commands
 {
     public class RemoveReactionHandler : ICommandHandler<RemoveReaction>
     {
@@ -24,25 +24,27 @@ namespace Atles.Domain.Handlers.PostReactions.Commands
         public async Task<IEnumerable<IEvent>> Handle(RemoveReaction command)
         {
             var postReaction = await _dbContext.PostReactions
-                .Include(x => x.Post).ThenInclude(x => x.PostReactionCounts)
+                .Include(x => x.Post).ThenInclude(x => x.PostReactionSummaries)
                 .FirstOrDefaultAsync(x =>
-                    x.PostId == command.PostId &&
+                    x.PostId == command.Id &&
                     x.UserId == command.UserId &&
+                    x.Post.ForumId == command.ForumId &&
                     x.Post.Forum.Category.SiteId == command.SiteId &&
                     x.Post.Status != PostStatusType.Deleted);
 
             if (postReaction == null)
             {
-                throw new DataException($"Post reaction for post id {command.PostId} and user id {command.UserId} not found.");
+                throw new DataException($"Post reaction for post id {command.Id} and user id {command.UserId} not found.");
             }
 
-            postReaction.Post.DecreaseReactionCount(postReaction.Type);
+            postReaction.Post.RemoveReactionFromSummary(postReaction.Type);
 
             _dbContext.PostReactions.Remove(postReaction);
 
             var @event = new ReactionRemoved
             {
-                TargetId = postReaction.PostId,
+                Type = postReaction.Type,
+                TargetId = command.Id,
                 TargetType = nameof(Post),
                 SiteId = command.SiteId,
                 UserId = command.UserId

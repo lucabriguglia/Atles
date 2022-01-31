@@ -27,7 +27,7 @@ namespace Atles.Reporting.Handlers.Public
         public async Task<TopicPageModel> Handle(GetTopicPage query)
         {
             var topic = await _dbContext.Posts
-                .Include(x => x.PostReactionCounts)
+                .Include(x => x.PostReactionSummaries)
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.CreatedByUser)
                 .FirstOrDefaultAsync(x =>
@@ -64,7 +64,7 @@ namespace Atles.Reporting.Handlers.Public
                     Pinned = topic.Pinned,
                     Locked = topic.Locked,
                     HasAnswer = topic.HasAnswer,
-                    Reactions = topic.PostReactionCounts.Select(x => new TopicPageModel.ReactionModel { Type = x.Type, Count = x.Count }).ToList()
+                    Reactions = topic.PostReactionSummaries.Select(x => new TopicPageModel.ReactionModel { Type = x.Type, Count = x.Count }).ToList()
                 },
                 Replies = await _dispatcher.Get(new GetTopicPageReplies { TopicId = topic.Id, Options = query.Options })
             };
@@ -72,6 +72,7 @@ namespace Atles.Reporting.Handlers.Public
             if (topic.HasAnswer)
             {
                 var answer = await _dbContext.Posts
+                    .Include(x => x.PostReactionSummaries)
                     .Include(x => x.CreatedByUser)
                     .Where(x =>
                         x.TopicId == topic.Id &&
@@ -91,7 +92,8 @@ namespace Atles.Reporting.Handlers.Public
                         UserDisplayName = answer.CreatedByUser.DisplayName,
                         TimeStamp = answer.CreatedOn,
                         GravatarHash = _gravatarService.GenerateEmailHash(answer.CreatedByUser.Email),
-                        IsAnswer = answer.IsAnswer
+                        IsAnswer = answer.IsAnswer,
+                        Reactions = answer.PostReactionSummaries.Select(x => new TopicPageModel.ReactionModel { Type = x.Type, Count = x.Count }).ToList()
                     };
                 }
             }

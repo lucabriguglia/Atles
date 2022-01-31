@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 using Atles.Domain.Models.PostReactions;
+using Atles.Domain.Models.Posts;
 using Atles.Reporting.Models.Shared;
 
 namespace Atles.Reporting.Models.Public
@@ -18,6 +20,7 @@ namespace Atles.Reporting.Models.Public
         public bool CanEdit { get; set; }
         public bool CanDelete { get; set; }
         public bool CanModerate { get; set; }
+        public bool CanReact { get; set; }
 
         public class ForumModel
         {
@@ -26,7 +29,7 @@ namespace Atles.Reporting.Models.Public
             public string Slug { get; set; }
         }
 
-        public class TopicModel
+        public class TopicModel : PostReactionBase
         {
             public Guid Id { get; set; }
             public string Title { get; set; }
@@ -40,10 +43,9 @@ namespace Atles.Reporting.Models.Public
             public bool Pinned { get; set; }
             public bool Locked { get; set; }
             public bool HasAnswer { get; set; }
-            public IList<ReactionModel> Reactions { get; set; } = new List<ReactionModel>();
         }
 
-        public class ReplyModel
+        public class ReplyModel : PostReactionBase
         {
             public Guid Id { get; set; }
             public string Content { get; set; }
@@ -54,7 +56,35 @@ namespace Atles.Reporting.Models.Public
             public DateTime TimeStamp { get; set; }
             public string GravatarHash { get; set; }
             public bool IsAnswer { get; set; }
+        }
+
+        public abstract class PostReactionBase
+        {
             public IList<ReactionModel> Reactions { get; set; } = new List<ReactionModel>();
+
+            public void AddReaction(PostReactionType type)
+            {
+                var reaction = Reactions.FirstOrDefault(x => x.Type == type);
+
+                if (reaction != null)
+                {
+                    reaction.Count++;
+                }
+                else
+                {
+                    Reactions.Add(new ReactionModel { Type = type, Count = 1 });
+                }
+            }
+
+            public void RemoveReaction(PostReactionType type)
+            {
+                var reaction = Reactions.FirstOrDefault(x => x.Type == type);
+
+                if (reaction != null)
+                {
+                    reaction.Count--;
+                }
+            }
         }
 
         public class ReactionModel

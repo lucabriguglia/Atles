@@ -1,14 +1,53 @@
 @page "/authentication/{action}"
-@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
-<RemoteAuthenticatorView Action="@Action" />
 
-@*
-      <RemoteAuthenticatorView Action="@Action">
-        <LoggingIn>
-            You are about to be redirected to https://login.microsoftonline.com.
-        </LoggingIn>
-    </RemoteAuthenticatorView>
-*@
+@using Microsoft.AspNetCore.Components.WebAssembly.Authentication
+
+<RemoteAuthenticatorView Action="@Action">
+    @*authentication/login
+    <LoggingIn>
+        <Loading />
+    </LoggingIn>*@
+
+    @*authentication/login-callback
+    <CompletingLoggingIn>
+        <Loading />
+    </CompletingLoggingIn>*@
+
+    @*authentication/login-failed
+    <LogInFailed>
+        <Loading />
+    </LogInFailed>*@
+
+    @*authentication/logout
+    <LogOut>
+        <Loading />
+    </LogOut>*@
+
+    @*authentication/logout-callback
+    <CompletingLogOut>
+        <Loading />
+    </CompletingLogOut>*@
+
+    @*authentication/logout-failed
+    <LogOutFailed>
+        <Loading />
+    </LogOutFailed>*@
+
+    @*authentication/logged-out
+    <LogOutSucceeded>
+        <Loading />
+    </LogOutSucceeded>*@
+
+    @*authentication/profile
+    <UserProfile>
+        <Loading />
+    </UserProfile>*@
+
+    @*authentication/register
+    <Registering>
+        <Loading />
+    </Registering>*@
+</RemoteAuthenticatorView>
 
 @code{
     [Parameter] 

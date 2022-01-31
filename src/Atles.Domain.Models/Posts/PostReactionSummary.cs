@@ -1,13 +1,11 @@
-﻿using Docs.Attributes;
-using System;
-using Atles.Domain.Models;
+﻿using System;
 using Atles.Domain.Models.PostReactions;
-using Atles.Domain.Models.Posts;
+using Docs.Attributes;
 
-namespace Atles.Domain.Posts
+namespace Atles.Domain.Models.Posts
 {
     [DocTarget(Consts.DocsContextForum)]
-    public class PostReactionCount
+    public class PostReactionSummary
     {
         public Guid PostId { get; private set; }
 
@@ -17,11 +15,11 @@ namespace Atles.Domain.Posts
 
         public virtual Post Post { get; set; }
 
-        public PostReactionCount()
+        public PostReactionSummary()
         {
         }
 
-        public PostReactionCount(Guid postId, PostReactionType type)
+        public PostReactionSummary(Guid postId, PostReactionType type)
         {
             PostId = postId;
             Type = type;
