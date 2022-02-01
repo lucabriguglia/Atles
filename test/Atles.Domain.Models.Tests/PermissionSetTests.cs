@@ -1,8 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Domain.Models.PermissionSets.Commands;
 using AutoFixture;
 using NUnit.Framework;
 
@@ -18,7 +16,7 @@ namespace Atles.Domain.Models.Tests
             const string name = "New Permission Set";
             var permissions = new List<Permission>();
 
-            var sut = new PermissionSet(siteId, name, new List<PermissionCommand>());
+            var sut = new PermissionSet(siteId, name, new List<Permission>());
 
             Assert.AreEqual(siteId, sut.SiteId, nameof(sut.SiteId));
             Assert.AreEqual(name, sut.Name, nameof(sut.Name));
@@ -31,7 +29,7 @@ namespace Atles.Domain.Models.Tests
             var id = Guid.NewGuid();
             var siteId = Guid.NewGuid();
             const string name = "New Permission Set";
-            var permissions = new List<PermissionCommand>();
+            var permissions = new List<Permission>();
 
             var sut = new PermissionSet(id, siteId, name, permissions);
 
@@ -47,11 +45,7 @@ namespace Atles.Domain.Models.Tests
             var sut = Fixture.Create<PermissionSet>();
 
             const string name = "Updated Permission Set";
-            var permissions = new List<PermissionCommand> {new PermissionCommand
-            {
-                Type = PermissionType.Start, 
-                RoleId = Guid.NewGuid().ToString()
-            }};
+            var permissions = new List<Permission> {new Permission(PermissionType.Start, Guid.NewGuid().ToString())};
 
             sut.UpdateDetails(name, permissions);
 

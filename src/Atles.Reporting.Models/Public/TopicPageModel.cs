@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using Atles.Domain.Models.PostReactions;
-using Atles.Domain.Models.Posts;
+using Atles.Domain.Models;
 using Atles.Reporting.Models.Shared;
 
 namespace Atles.Reporting.Models.Public

@@ -1,4 +1,4 @@
-﻿using Atles.Domain.Models.Posts.Commands;
+﻿using Atles.Domain.Commands;
 using FluentValidation;
 
 namespace Atles.Domain.Handlers.Posts.Commands.Validators

@@ -2,9 +2,8 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Data;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Domain.Models.Posts;
-using Atles.Domain.Models.Posts.Commands;
+using Atles.Domain.Commands;
+using Atles.Domain.Models;
 using Atles.Infrastructure;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;

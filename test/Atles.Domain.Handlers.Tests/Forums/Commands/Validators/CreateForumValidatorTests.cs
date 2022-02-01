@@ -1,8 +1,7 @@
 ﻿using System;
+using Atles.Domain.Commands;
 using Atles.Domain.Handlers.Forums.Commands.Validators;
-using Atles.Domain.Models.Forums.Commands;
-using Atles.Domain.Models.Forums.Rules;
-using Atles.Domain.Models.PermissionSets.Rules;
+using Atles.Domain.Rules;
 using Atles.Infrastructure;
 using Atles.Infrastructure.Queries;
 using AutoFixture;

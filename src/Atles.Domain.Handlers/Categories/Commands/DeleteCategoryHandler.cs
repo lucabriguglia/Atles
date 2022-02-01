@@ -5,11 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Domain.Commands;
+using Atles.Domain.Events;
 using Atles.Domain.Models;
-using Atles.Domain.Models.Categories;
-using Atles.Domain.Models.Categories.Commands;
-using Atles.Domain.Models.Categories.Events;
-using Atles.Domain.Models.Forums.Events;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Events;
 

@@ -1,5 +1,4 @@
 ﻿using System;
-using Atles.Domain.Models.Categories;
 using AutoFixture;
 using NUnit.Framework;
 

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Data;
+using Atles.Domain.Commands;
 using Atles.Domain.Handlers.Users.Commands;
-using Atles.Domain.Models.Users;
-using Atles.Domain.Models.Users.Commands;
+using Atles.Domain.Models;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;
 using NUnit.Framework;

@@ -3,10 +3,8 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain.Handlers.PermissionSets.Rules;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Domain.Models.PermissionSets.Commands;
-using Atles.Domain.Models.PermissionSets.Rules;
-using Atles.Domain.Models.Sites;
+using Atles.Domain.Models;
+using Atles.Domain.Rules;
 using NUnit.Framework;
 
 namespace Atles.Domain.Handlers.Tests.PermissionSets.Rules
@@ -50,7 +48,7 @@ namespace Atles.Domain.Handlers.Tests.PermissionSets.Rules
             using (var dbContext = new AtlesDbContext(options))
             {
                 var site = new Site(siteId, "Name", "Title");
-                var permissionSet = new PermissionSet(siteId, permissionSetName, new List<PermissionCommand>());
+                var permissionSet = new PermissionSet(siteId, permissionSetName, new List<Permission>());
                 dbContext.Sites.Add(site);
                 dbContext.PermissionSets.Add(permissionSet);
                 await dbContext.SaveChangesAsync();
@@ -76,8 +74,8 @@ namespace Atles.Domain.Handlers.Tests.PermissionSets.Rules
             using (var dbContext = new AtlesDbContext(options))
             {
                 var site = new Site(siteId, "Name", "Title");
-                var permissionSet1 = new PermissionSet(siteId, "Permission Set 1", new List<PermissionCommand>());
-                var permissionSet2 = new PermissionSet(permissionSetId, siteId, "Permission Set 2", new List<PermissionCommand>());
+                var permissionSet1 = new PermissionSet(siteId, "Permission Set 1", new List<Permission>());
+                var permissionSet2 = new PermissionSet(permissionSetId, siteId, "Permission Set 2", new List<Permission>());
                 dbContext.Sites.Add(site);
                 dbContext.PermissionSets.Add(permissionSet1);
                 dbContext.PermissionSets.Add(permissionSet2);

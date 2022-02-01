@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain.Handlers.Categories.Rules;
-using Atles.Domain.Models.Categories;
-using Atles.Domain.Models.Categories.Rules;
+using Atles.Domain.Models;
+using Atles.Domain.Rules;
 using NUnit.Framework;
 
 namespace Atles.Domain.Handlers.Tests.Categories.Rules

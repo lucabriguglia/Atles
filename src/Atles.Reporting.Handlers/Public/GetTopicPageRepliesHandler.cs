@@ -4,7 +4,7 @@ using Markdig;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
-using Atles.Domain.Models.Posts;
+using Atles.Domain.Models;
 using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;

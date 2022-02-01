@@ -4,11 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
+using Atles.Domain.Commands;
 using Atles.Domain.Handlers.Categories.Commands;
-using Atles.Domain.Models.Categories;
-using Atles.Domain.Models.Categories.Commands;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Domain.Models.PermissionSets.Commands;
+using Atles.Domain.Models;
 using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;
@@ -55,7 +53,7 @@ namespace Atles.Domain.Handlers.Tests.Categories.Commands
         public async Task Should_update_category_and_add_event()
         {
             var options = Shared.CreateContextOptions();
-            var permissionSet = new PermissionSet(Guid.NewGuid(), Guid.NewGuid(), "Default", new List<PermissionCommand>());
+            var permissionSet = new PermissionSet(Guid.NewGuid(), Guid.NewGuid(), "Default", new List<Permission>());
             var category = new Category(Guid.NewGuid(), permissionSet.SiteId, "Category", 1, permissionSet.Id);
 
             using (var dbContext = new AtlesDbContext(options))

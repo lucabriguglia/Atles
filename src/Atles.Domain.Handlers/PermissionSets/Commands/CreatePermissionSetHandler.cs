@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atles.Data;
+using Atles.Domain.Commands;
+using Atles.Domain.Events;
 using Atles.Domain.Models;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Domain.Models.PermissionSets.Commands;
-using Atles.Domain.Models.PermissionSets.Events;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Events;
 using FluentValidation;
@@ -30,14 +29,14 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
             var permissionSet = new PermissionSet(command.Id,
                 command.SiteId,
                 command.Name,
-                command.Permissions);
+                command.Permissions.ToDomainPermissions());
 
             _dbContext.PermissionSets.Add(permissionSet);
 
             var @event = new PermissionSetCreated
             {
                 Name = permissionSet.Name,
-                Permissions = command.Permissions,
+                Permissions = command.Permissions.ToDomainPermissions(),
                 TargetId = permissionSet.Id,
                 TargetType = nameof(PermissionSet),
                 SiteId = command.SiteId,

@@ -2,11 +2,9 @@
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
+using Atles.Domain.Commands;
 using Atles.Domain.Handlers.Forums.Commands;
 using Atles.Domain.Models;
-using Atles.Domain.Models.Categories;
-using Atles.Domain.Models.Forums;
-using Atles.Domain.Models.Forums.Commands;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Moq;

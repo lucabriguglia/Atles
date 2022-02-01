@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
+using Atles.Domain.Commands;
 using Atles.Domain.Handlers.Forums.Commands;
-using Atles.Domain.Models.Forums.Commands;
 using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;

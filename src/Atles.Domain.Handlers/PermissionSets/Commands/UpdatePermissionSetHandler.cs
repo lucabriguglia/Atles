@@ -3,10 +3,9 @@ using System.Data;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
+using Atles.Domain.Commands;
+using Atles.Domain.Events;
 using Atles.Domain.Models;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Domain.Models.PermissionSets.Commands;
-using Atles.Domain.Models.PermissionSets.Events;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Events;
 using FluentValidation;
@@ -50,12 +49,12 @@ namespace Atles.Domain.Handlers.PermissionSets.Commands
                 _dbContext.Permissions.Remove(permission);
             }
 
-            permissionSet.UpdateDetails(command.Name, command.Permissions);
+            permissionSet.UpdateDetails(command.Name, command.Permissions.ToDomainPermissions());
 
             var @event = new PermissionSetUpdated
             {
                 Name = permissionSet.Name,
-                Permissions = command.Permissions,
+                Permissions = command.Permissions.ToDomainPermissions(),
                 TargetId = permissionSet.Id,
                 TargetType = nameof(PermissionSet),
                 SiteId = command.SiteId,

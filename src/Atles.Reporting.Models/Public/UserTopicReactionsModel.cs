@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using Atles.Domain.Models.PostReactions;
+using Atles.Domain.Models;
 
 namespace Atles.Reporting.Models.Public;
 

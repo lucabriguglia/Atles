@@ -1,5 +1,4 @@
 ﻿using System;
-using Atles.Domain.Models.Subscriptions;
 using NUnit.Framework;
 
 namespace Atles.Domain.Models.Tests

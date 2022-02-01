@@ -1,5 +1,4 @@
 ﻿using System;
-using Atles.Domain.Models.Forums;
 using AutoFixture;
 using NUnit.Framework;
 

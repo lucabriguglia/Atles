@@ -1,8 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Domain.Models.PostReactions;
-using Atles.Domain.Models.Posts.Commands;
+using Atles.Domain.Commands;
+using Atles.Domain.Models;
 using Atles.Infrastructure;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Server.Services;

@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.31911.196
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32014.148
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{8540BC55-5403-4EE2-8D4C-E4492EE6AC4F}"
 	ProjectSection(SolutionItems) = preProject
@@ -73,6 +73,12 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Handlers.Tests
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Infrastructure.Tests", "test\Atles.Infrastructure.Tests\Atles.Infrastructure.Tests.csproj", "{660CB9AE-00AD-49D3-9D47-0E270405B66C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Domain.Commands", "src\Atles.Domain.Commands\Atles.Domain.Commands.csproj", "{0222E5BC-64A2-49D3-9009-4C478D3F8675}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Domain.Events", "src\Atles.Domain.Events\Atles.Domain.Events.csproj", "{FD0C509A-807F-4A3E-B3FE-D6EA0D96AFED}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Domain.Rules", "src\Atles.Domain.Rules\Atles.Domain.Rules.csproj", "{956D8A8B-EABC-450B-BE5E-31B0D9B9DC9F}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -123,6 +129,18 @@ Global
 		{660CB9AE-00AD-49D3-9D47-0E270405B66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{660CB9AE-00AD-49D3-9D47-0E270405B66C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{660CB9AE-00AD-49D3-9D47-0E270405B66C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0222E5BC-64A2-49D3-9009-4C478D3F8675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0222E5BC-64A2-49D3-9009-4C478D3F8675}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0222E5BC-64A2-49D3-9009-4C478D3F8675}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0222E5BC-64A2-49D3-9009-4C478D3F8675}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FD0C509A-807F-4A3E-B3FE-D6EA0D96AFED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FD0C509A-807F-4A3E-B3FE-D6EA0D96AFED}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FD0C509A-807F-4A3E-B3FE-D6EA0D96AFED}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FD0C509A-807F-4A3E-B3FE-D6EA0D96AFED}.Release|Any CPU.Build.0 = Release|Any CPU
+		{956D8A8B-EABC-450B-BE5E-31B0D9B9DC9F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{956D8A8B-EABC-450B-BE5E-31B0D9B9DC9F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{956D8A8B-EABC-450B-BE5E-31B0D9B9DC9F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{956D8A8B-EABC-450B-BE5E-31B0D9B9DC9F}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -142,6 +160,9 @@ Global
 		{24866719-3065-47E9-B96B-3839E6C595BF} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
 		{1F1263D3-B780-4049-9D8D-CAFD533CD8D9} = {71898E1F-3251-4DE9-AAFE-7D99540F2379}
 		{660CB9AE-00AD-49D3-9D47-0E270405B66C} = {71898E1F-3251-4DE9-AAFE-7D99540F2379}
+		{0222E5BC-64A2-49D3-9009-4C478D3F8675} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
+		{FD0C509A-807F-4A3E-B3FE-D6EA0D96AFED} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
+		{956D8A8B-EABC-450B-BE5E-31B0D9B9DC9F} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2747CCE7-65F1-47E8-8F5F-4598AAA8A5B9}

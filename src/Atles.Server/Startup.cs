@@ -3,7 +3,7 @@ using System.Linq;
 using Atles.Data;
 using Atles.Domain.Handlers.Categories.Commands;
 using Atles.Domain.Handlers.Categories.Commands.Validators;
-using Atles.Domain.Models.Sites;
+using Atles.Domain.Models;
 using Atles.Infrastructure.Extensions;
 using Atles.Reporting.Handlers.Admin;
 using Atles.Reporting.Models.Admin.Categories;

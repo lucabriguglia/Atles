@@ -1,8 +1,8 @@
 ﻿using System.Threading;
 using System.Threading.Tasks;
 using Atles.Data;
+using Atles.Domain.Commands;
 using Atles.Domain.Handlers.Users.Commands;
-using Atles.Domain.Models.Users.Commands;
 using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;

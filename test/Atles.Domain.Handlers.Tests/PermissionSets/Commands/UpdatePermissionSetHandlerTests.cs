@@ -4,9 +4,9 @@ using System.Threading;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
+using Atles.Domain.Commands;
 using Atles.Domain.Handlers.PermissionSets.Commands;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Domain.Models.PermissionSets.Commands;
+using Atles.Domain.Models;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
@@ -22,7 +22,7 @@ namespace Atles.Domain.Handlers.Tests.PermissionSets.Commands
         public async Task Should_update_permission_set_and_add_event()
         {
             var options = Shared.CreateContextOptions();
-            var permissionSet = new PermissionSet(Guid.NewGuid(), Guid.NewGuid(), "Default", new List<PermissionCommand>());
+            var permissionSet = new PermissionSet(Guid.NewGuid(), Guid.NewGuid(), "Default", new List<Permission>());
 
             using (var dbContext = new AtlesDbContext(options))
             {

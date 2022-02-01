@@ -1,5 +1,5 @@
-﻿using Atles.Domain.Models.Forums.Rules;
-using Atles.Domain.Models.Posts.Commands;
+﻿using Atles.Domain.Commands;
+using Atles.Domain.Rules;
 using Atles.Infrastructure;
 using FluentValidation;
 

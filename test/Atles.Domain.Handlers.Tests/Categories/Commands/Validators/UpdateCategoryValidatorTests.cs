@@ -1,8 +1,7 @@
 ﻿using System;
+using Atles.Domain.Commands;
 using Atles.Domain.Handlers.Categories.Commands.Validators;
-using Atles.Domain.Models.Categories.Commands;
-using Atles.Domain.Models.Categories.Rules;
-using Atles.Domain.Models.PermissionSets.Rules;
+using Atles.Domain.Rules;
 using Atles.Infrastructure;
 using Atles.Infrastructure.Queries;
 using AutoFixture;

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Data;
-using Atles.Domain.Models.Users;
+using Atles.Domain.Models;
 using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.Users;
 using Atles.Reporting.Models.Admin.Users.Queries;

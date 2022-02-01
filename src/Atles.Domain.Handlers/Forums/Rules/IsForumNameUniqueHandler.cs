@@ -1,8 +1,8 @@
 ﻿using Atles.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using Atles.Domain.Models.Forums;
-using Atles.Domain.Models.Forums.Rules;
+using Atles.Domain.Models;
+using Atles.Domain.Rules;
 using Atles.Infrastructure.Queries;
 
 namespace Atles.Domain.Handlers.Forums.Rules

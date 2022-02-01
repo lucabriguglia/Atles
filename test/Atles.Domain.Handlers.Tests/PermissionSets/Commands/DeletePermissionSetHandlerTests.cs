@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
+using Atles.Domain.Commands;
 using Atles.Domain.Handlers.PermissionSets.Commands;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Domain.Models.PermissionSets.Commands;
+using Atles.Domain.Models;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -23,7 +23,7 @@ namespace Atles.Domain.Handlers.Tests.PermissionSets.Commands
 
             var siteId = Guid.NewGuid();
 
-            var permissionSet = new PermissionSet(siteId, "Permission Set", new List<PermissionCommand>());
+            var permissionSet = new PermissionSet(siteId, "Permission Set", new List<Permission>());
 
             using (var dbContext = new AtlesDbContext(options))
             {

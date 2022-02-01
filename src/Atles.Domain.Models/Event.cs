@@ -1,5 +1,4 @@
 ﻿using System;
-using Atles.Domain.Models.Users;
 
 namespace Atles.Domain.Models
 {

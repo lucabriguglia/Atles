@@ -4,10 +4,9 @@ using Atles.Data.Caching;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
+using Atles.Domain.Commands;
+using Atles.Domain.Events;
 using Atles.Domain.Models;
-using Atles.Domain.Models.Posts;
-using Atles.Domain.Models.Posts.Commands;
-using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Events;
 

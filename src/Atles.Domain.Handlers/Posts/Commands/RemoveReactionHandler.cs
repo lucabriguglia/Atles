@@ -2,10 +2,9 @@
 using System.Data;
 using System.Threading.Tasks;
 using Atles.Data;
+using Atles.Domain.Commands;
+using Atles.Domain.Events;
 using Atles.Domain.Models;
-using Atles.Domain.Models.Posts;
-using Atles.Domain.Models.Posts.Commands;
-using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Events;
 using Microsoft.EntityFrameworkCore;

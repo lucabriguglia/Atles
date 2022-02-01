@@ -1,6 +1,6 @@
-﻿using Atles.Domain.Handlers.Posts.Commands.Validators;
-using Atles.Domain.Models.Forums.Rules;
-using Atles.Domain.Models.Posts.Commands;
+﻿using Atles.Domain.Commands;
+using Atles.Domain.Handlers.Posts.Commands.Validators;
+using Atles.Domain.Rules;
 using Atles.Infrastructure;
 using AutoFixture;
 using FluentValidation.TestHelper;

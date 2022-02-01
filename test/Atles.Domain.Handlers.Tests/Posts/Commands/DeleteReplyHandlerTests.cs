@@ -2,12 +2,9 @@
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Data.Caching;
+using Atles.Domain.Commands;
 using Atles.Domain.Handlers.Posts.Commands;
-using Atles.Domain.Models.Categories;
-using Atles.Domain.Models.Forums;
-using Atles.Domain.Models.Posts;
-using Atles.Domain.Models.Posts.Commands;
-using Atles.Domain.Models.Users;
+using Atles.Domain.Models;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;
 using Moq;

@@ -2,8 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Data;
-using Atles.Domain.Models.Categories;
-using Atles.Domain.Models.PermissionSets;
+using Atles.Domain.Models;
 using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.Forums;
 using Atles.Reporting.Models.Admin.Forums.Queries;

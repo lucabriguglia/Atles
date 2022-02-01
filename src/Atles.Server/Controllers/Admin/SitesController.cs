@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using Atles.Domain.Models.Sites.Commands;
+using Atles.Domain.Commands;
 using Atles.Infrastructure;
 using Atles.Reporting.Models.Admin.Sites;
 using Atles.Reporting.Models.Admin.Sites.Queries;

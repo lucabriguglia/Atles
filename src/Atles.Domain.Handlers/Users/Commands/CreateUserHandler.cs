@@ -4,10 +4,9 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Atles.Domain.Commands;
+using Atles.Domain.Events;
 using Atles.Domain.Models;
-using Atles.Domain.Models.Users;
-using Atles.Domain.Models.Users.Commands;
-using Atles.Domain.Models.Users.Events;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Events;
 

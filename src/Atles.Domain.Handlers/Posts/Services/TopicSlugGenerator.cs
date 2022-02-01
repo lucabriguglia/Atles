@@ -2,7 +2,6 @@
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain.Models;
-using Atles.Domain.Models.Posts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Domain.Handlers.Posts.Services

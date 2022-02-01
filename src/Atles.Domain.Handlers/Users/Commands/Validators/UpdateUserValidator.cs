@@ -1,5 +1,5 @@
-﻿using Atles.Domain.Models.Users.Commands;
-using Atles.Domain.Models.Users.Rules;
+﻿using Atles.Domain.Commands;
+using Atles.Domain.Rules;
 using Atles.Infrastructure;
 using FluentValidation;
 

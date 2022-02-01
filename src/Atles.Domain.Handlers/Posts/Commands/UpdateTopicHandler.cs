@@ -6,11 +6,10 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Atles.Domain.Commands;
+using Atles.Domain.Events;
 using Atles.Domain.Handlers.Posts.Services;
 using Atles.Domain.Models;
-using Atles.Domain.Models.Posts;
-using Atles.Domain.Models.Posts.Commands;
-using Atles.Domain.Models.Posts.Events;
 using Atles.Infrastructure.Commands;
 using Atles.Infrastructure.Events;
 
