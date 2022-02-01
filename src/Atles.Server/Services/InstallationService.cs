@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain.Commands;
 using Atles.Domain.Events;
-using Atles.Domain.Handlers;
 using Atles.Domain.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;

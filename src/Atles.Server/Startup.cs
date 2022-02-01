@@ -1,9 +1,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Atles.Data;
-using Atles.Domain.Handlers.Categories.Commands;
-using Atles.Domain.Handlers.Categories.Commands.Validators;
+using Atles.Domain.Commands.Handlers;
+using Atles.Domain.Commands.Handlers.Validators;
 using Atles.Domain.Models;
+using Atles.Domain.Rules;
+using Atles.Domain.Rules.Handlers;
+using Atles.Infrastructure;
 using Atles.Infrastructure.Extensions;
 using Atles.Reporting.Handlers.Admin;
 using Atles.Reporting.Models.Admin.Categories;
@@ -87,10 +90,16 @@ namespace Atles.Server
 
             services.AddDocs();
 
-            services.AddHandlers(typeof(CreateCategoryHandler), typeof(GetCategoriesIndexHandler));
-
             services.Scan(s => s
-                .FromAssembliesOf(typeof(Startup), typeof(Site), typeof(CreateCategoryValidator), typeof(IndexPageModel), typeof(AtlesDbContext))
+                .FromAssembliesOf(
+                    typeof(Startup), 
+                    typeof(Dispatcher), 
+                    typeof(CreateCategoryHandler), 
+                    typeof(CreateCategoryValidator), 
+                    typeof(IsCategoryNameUniqueHandler), 
+                    typeof(IndexPageModel), 
+                    typeof(GetCategoriesIndexHandler), 
+                    typeof(AtlesDbContext))
                 .AddClasses()
                 .AsImplementedInterfaces());
         }
