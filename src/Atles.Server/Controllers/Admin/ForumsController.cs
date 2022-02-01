@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Core;
-using Atles.Domain.Commands;
 using Atles.Domain.Commands.Forums;
 using Atles.Domain.Models;
-using Atles.Domain.Rules;
 using Atles.Domain.Rules.Forums;
 using Atles.Reporting.Models.Admin.Forums;
 using Atles.Reporting.Models.Admin.Forums.Queries;

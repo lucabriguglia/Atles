@@ -1,7 +1,6 @@
 ﻿using Atles.Core;
 using Atles.Domain.Commands.Handlers.Posts.Validators;
 using Atles.Domain.Commands.Posts;
-using Atles.Domain.Rules;
 using Atles.Domain.Rules.Forums;
 using AutoFixture;
 using FluentValidation.TestHelper;

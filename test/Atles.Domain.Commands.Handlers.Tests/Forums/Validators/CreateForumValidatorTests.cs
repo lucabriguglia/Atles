@@ -2,7 +2,6 @@
 using Atles.Core.Queries;
 using Atles.Domain.Commands.Forums;
 using Atles.Domain.Commands.Handlers.Forums.Validators;
-using Atles.Domain.Rules;
 using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.PermissionSets;
 using AutoFixture;

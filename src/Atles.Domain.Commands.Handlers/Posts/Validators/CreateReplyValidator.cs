@@ -1,6 +1,5 @@
 ﻿using Atles.Core;
 using Atles.Domain.Commands.Posts;
-using Atles.Domain.Rules;
 using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.Posts;
 using FluentValidation;

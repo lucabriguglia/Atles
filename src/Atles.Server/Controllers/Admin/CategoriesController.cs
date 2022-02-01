@@ -1,10 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Core;
-using Atles.Domain.Commands;
 using Atles.Domain.Commands.Categories;
 using Atles.Domain.Models;
-using Atles.Domain.Rules;
 using Atles.Domain.Rules.Categories;
 using Atles.Reporting.Models.Admin.Categories;
 using Atles.Reporting.Models.Admin.Categories.Queries;

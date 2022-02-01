@@ -2,7 +2,6 @@
 using Atles.Core.Events;
 using Atles.Data;
 using Atles.Domain.Commands.Users;
-using Atles.Domain.Events;
 using Atles.Domain.Events.Users;
 using Atles.Domain.Models;
 using FluentValidation;

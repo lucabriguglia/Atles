@@ -1,7 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Data;
-using Atles.Domain.Commands;
 using Atles.Domain.Commands.Users;
 using Atles.Domain.Models;
 using Atles.Reporting.Models.Public.Queries;

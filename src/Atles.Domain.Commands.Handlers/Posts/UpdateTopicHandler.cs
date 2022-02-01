@@ -6,7 +6,6 @@ using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain.Commands.Handlers.Posts.Services;
 using Atles.Domain.Commands.Posts;
-using Atles.Domain.Events;
 using Atles.Domain.Events.Posts;
 using Atles.Domain.Models;
 using FluentValidation;

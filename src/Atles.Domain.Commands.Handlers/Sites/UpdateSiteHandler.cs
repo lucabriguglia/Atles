@@ -4,7 +4,6 @@ using Atles.Core.Events;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain.Commands.Sites;
-using Atles.Domain.Events;
 using Atles.Domain.Events.Sites;
 using Atles.Domain.Models;
 using FluentValidation;

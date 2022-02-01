@@ -4,7 +4,6 @@ using Atles.Core.Events;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain.Commands.Categories;
-using Atles.Domain.Events;
 using Atles.Domain.Events.Categories;
 using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
