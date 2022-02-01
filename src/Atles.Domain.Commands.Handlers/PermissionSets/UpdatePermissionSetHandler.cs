@@ -42,11 +42,6 @@ namespace Atles.Domain.Commands.Handlers.PermissionSets
                 throw new DataException($"Permission Set with Id {command.PermissionSetId} not found.");
             }
 
-            foreach (var permission in permissionSet.Permissions)
-            {
-                _dbContext.Permissions.Remove(permission);
-            }
-
             permissionSet.UpdateDetails(command.Name, command.Permissions.ToDomainPermissions());
 
             var @event = new PermissionSetUpdated

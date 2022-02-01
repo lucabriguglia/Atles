@@ -19,17 +19,8 @@ namespace Atles.Data.Configurations
                 b.Property(e => e.RoleId);
             });
 
-            //builder
-            //    .Property(x => x.Permissions)
-            //    .HasField("_permissions");
-
-            //builder.Metadata.FindNavigation("Permissions")
-            //    .SetPropertyAccessMode(PropertyAccessMode.Field);
-
-            //builder
-            //    .HasMany(e => e.Permissions)
-            //    .WithOne(e => e.PermissionSet)
-            //    .Metadata.PrincipalToDependent.SetPropertyAccessMode(PropertyAccessMode.Field);
+            var navigation = builder.Metadata.FindNavigation(nameof(PermissionSet.Permissions));
+            navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }
 }

@@ -96,6 +96,8 @@ namespace Atles.Domain.Models
         {
             if (permissions == null) return;
 
+            _permissions.Clear();
+
             foreach (var permission in permissions)
             {
                 _permissions.Add(new Permission(permission.Type, permission.RoleId));
