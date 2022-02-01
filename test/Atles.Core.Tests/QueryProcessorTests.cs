@@ -5,7 +5,7 @@ using Atles.Core.Services;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Infrastructure.Tests
+namespace Atles.Core.Tests
 {
     public class QueryProcessorTests
     {

@@ -7,12 +7,12 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
     <ProjectReference Include="..\Atles.Domain.Commands\Atles.Domain.Commands.csproj" />
     <ProjectReference Include="..\Atles.Domain.Events\Atles.Domain.Events.csproj" />
     <ProjectReference Include="..\Atles.Domain.Models\Atles.Domain.Models.csproj" />
     <ProjectReference Include="..\Atles.Domain.Rules\Atles.Domain.Rules.csproj" />
-    <ProjectReference Include="..\Atles.Infrastructure\Atles.Core.csproj" />
   </ItemGroup>
 
 </Project>

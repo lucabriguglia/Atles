@@ -1,13 +1,12 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atles.Core;
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Core.Queries;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Infrastructure.Tests
+namespace Atles.Core.Tests
 {
     public class DispatcherTests
     {
