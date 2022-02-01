@@ -1,7 +1,9 @@
 ﻿using System.Threading.Tasks;
-using Atles.Domain.Models.Users.Commands;
-using Atles.Domain.Models.Users.Rules;
-using Atles.Infrastructure;
+using Atles.Core;
+using Atles.Domain.Commands;
+using Atles.Domain.Commands.Users;
+using Atles.Domain.Rules;
+using Atles.Domain.Rules.Users;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Microsoft.AspNetCore.Authorization;
@@ -48,7 +50,7 @@ namespace Atles.Server.Controllers.Public
 
             var command = new UpdateUser
             {
-                Id = user.Id,
+                UpdateUserId = user.Id,
                 DisplayName = model.User.DisplayName,
                 SiteId = site.Id,
                 UserId = user.Id

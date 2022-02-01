@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Atles.Domain.Models.Users.Commands;
-using Atles.Domain.Models.Users.Rules;
-using Atles.Infrastructure;
+using Atles.Core;
+using Atles.Domain.Commands;
+using Atles.Domain.Commands.Users;
+using Atles.Domain.Rules;
+using Atles.Domain.Rules.Users;
 using Atles.Reporting.Models.Admin.Users;
 using Atles.Reporting.Models.Admin.Users.Queries;
 using Atles.Reporting.Models.Shared;
@@ -70,7 +72,7 @@ namespace Atles.Server.Controllers.Admin
 
             await _dispatcher.Send(command);
 
-            return Ok(command.Id);
+            return Ok(command.CreateUserId);
         }
 
         [HttpGet("edit/{id}")]
@@ -130,7 +132,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new UpdateUser
             {
-                Id = model.User.Id,
+                UpdateUserId = model.User.Id,
                 DisplayName = model.User.DisplayName,
                 SiteId = site.Id,
                 UserId = user.Id,
@@ -166,7 +168,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new SuspendUser
             {
-                Id = id,
+                SuspendUserId = id,
                 SiteId = site.Id,
                 UserId = user.Id
             };
@@ -184,7 +186,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new ReinstateUser
             {
-                Id = id,
+                ReinstateUserId = id,
                 SiteId = site.Id,
                 UserId = user.Id
             };
@@ -202,7 +204,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new DeleteUser
             {
-                Id = id,
+                DeleteUserId = id,
                 IdentityUserId = identityUserId,
                 SiteId = site.Id,
                 UserId = user.Id

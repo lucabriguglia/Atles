@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using Atles.Client.Models;
 using Atles.Client.Services;
 using Atles.Client.Shared;
-using Atles.Domain.Models.PostReactions;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Shared;
 using Markdig;

@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Atles.Core;
 using Atles.Data;
-using Atles.Domain.Models.Users;
-using Atles.Domain.Models.Users.Commands;
-using Atles.Infrastructure;
+using Atles.Domain.Commands;
+using Atles.Domain.Commands.Users;
+using Atles.Domain.Models;
 using Atles.Reporting.Models.Public.Queries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
@@ -48,7 +49,7 @@ namespace Atles.Server.Services
 
                 await _dispatcher.Send(new ConfirmUser
                 {
-                    Id = user.Id,
+                    ConfirmUserId = user.Id,
                     SiteId = site.Id
                 });
             }

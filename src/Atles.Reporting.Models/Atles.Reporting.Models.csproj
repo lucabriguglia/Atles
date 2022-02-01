@@ -14,8 +14,9 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Atles.Domain.Commands\Atles.Domain.Commands.csproj" />
     <ProjectReference Include="..\Atles.Domain.Models\Atles.Domain.Models.csproj" />
-    <ProjectReference Include="..\Atles.Infrastructure\Atles.Infrastructure.csproj" />
+    <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
   </ItemGroup>
 
 </Project>

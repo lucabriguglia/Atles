@@ -1,10 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Core.Queries;
 using Atles.Data;
-using Atles.Domain.Models.Categories;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Infrastructure.Queries;
+using Atles.Domain.Models;
 using Atles.Reporting.Models.Admin.Categories;
 using Atles.Reporting.Models.Admin.Categories.Queries;
 using Microsoft.EntityFrameworkCore;

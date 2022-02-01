@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
-using Atles.Infrastructure.Queries;
+using Atles.Core.Queries;
 
 namespace Atles.Reporting.Models.Public.Queries
 {

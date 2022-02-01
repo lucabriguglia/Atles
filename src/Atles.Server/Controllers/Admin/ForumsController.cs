@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Core;
+using Atles.Domain.Commands;
+using Atles.Domain.Commands.Forums;
 using Atles.Domain.Models;
-using Atles.Domain.Models.Forums.Commands;
-using Atles.Domain.Models.Forums.Rules;
-using Atles.Infrastructure;
+using Atles.Domain.Rules;
+using Atles.Domain.Rules.Forums;
 using Atles.Reporting.Models.Admin.Forums;
 using Atles.Reporting.Models.Admin.Forums.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -97,7 +99,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new UpdateForum
             {
-                Id = model.Id,
+                ForumId = model.Id,
                 CategoryId = model.CategoryId,
                 Name = model.Name,
                 Slug = model.Slug,
@@ -120,7 +122,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new MoveForum
             {
-                Id = id,
+                ForumId = id,
                 SiteId = site.Id,
                 UserId = user.Id,
                 Direction = Direction.Up
@@ -139,7 +141,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new MoveForum
             {
-                Id = id,
+                ForumId = id,
                 SiteId = site.Id,
                 UserId = user.Id,
                 Direction = Direction.Down
@@ -158,7 +160,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new DeleteForum
             {
-                Id = id,
+                ForumId = id,
                 SiteId = site.Id,
                 UserId = user.Id
             };

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Domain.Models.PostReactions;
-using Atles.Domain.Models.Posts.Commands;
-using Atles.Infrastructure;
+using Atles.Core;
+using Atles.Domain.Commands;
+using Atles.Domain.Commands.Posts;
+using Atles.Domain.Models;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
@@ -42,9 +42,9 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var command = new AddReaction
+            var command = new AddPostReaction
             {
-                Id = postId,
+                PostId = postId,
                 ForumId = forumId,
                 Type = postReactionType,
                 SiteId = site.Id,
@@ -72,9 +72,9 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var command = new RemoveReaction
+            var command = new RemovePostReaction
             {
-                Id = postId,
+                PostId = postId,
                 ForumId = forumId,
                 SiteId = site.Id,
                 UserId = user.Id

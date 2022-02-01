@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Atles.Core.Queries;
 using Atles.Data;
-using Atles.Domain.Models.Users;
-using Atles.Infrastructure.Queries;
+using Atles.Domain.Models;
 using Atles.Reporting.Models.Admin.Users;
 using Atles.Reporting.Models.Admin.Users.Queries;
 using Microsoft.AspNetCore.Identity;

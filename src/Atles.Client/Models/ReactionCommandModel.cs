@@ -1,5 +1,5 @@
 ﻿using System;
-using Atles.Domain.Models.PostReactions;
+using Atles.Domain.Models;
 
 namespace Atles.Client.Models
 {

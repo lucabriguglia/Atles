@@ -1,9 +1,9 @@
 ﻿using Atles.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using Atles.Domain.Models.Forums;
-using Atles.Infrastructure;
-using Atles.Infrastructure.Queries;
+using Atles.Core;
+using Atles.Core.Queries;
+using Atles.Domain.Models;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 

@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
-using Atles.Domain.Models.PermissionSets;
+using Atles.Domain.Models;
 using Atles.Reporting.Models.Public;
 using Microsoft.AspNetCore.Http;
 

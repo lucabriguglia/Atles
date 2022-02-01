@@ -1,4 +1,4 @@
-﻿using Atles.Infrastructure;
+﻿using Atles.Core;
 using Microsoft.AspNetCore.Authorization;
 
 namespace Atles.Server.Controllers.Admin

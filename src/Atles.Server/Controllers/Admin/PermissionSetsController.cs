@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Domain.Models.PermissionSets.Commands;
-using Atles.Domain.Models.PermissionSets.Rules;
-using Atles.Infrastructure;
+using Atles.Core;
+using Atles.Domain.Commands;
+using Atles.Domain.Commands.PermissionSets;
+using Atles.Domain.Rules;
+using Atles.Domain.Rules.PermissionSets;
 using Atles.Reporting.Models.Admin.PermissionSets;
 using Atles.Reporting.Models.Admin.PermissionSets.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -77,7 +79,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new UpdatePermissionSet
             {
-                Id = model.Id,
+                PermissionSetId = model.Id,
                 Name = model.Name,
                 Permissions = model.Permissions.ToPermissionCommands(),
                 SiteId = site.Id,
@@ -97,7 +99,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new DeletePermissionSet
             {
-                Id = id,
+                PermissionSetId = id,
                 SiteId = site.Id,
                 UserId = user.Id
             };

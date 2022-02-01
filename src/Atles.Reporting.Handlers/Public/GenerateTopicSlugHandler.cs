@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Atles.Core.Queries;
 using Atles.Data;
-using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Public.Queries;
 using Microsoft.EntityFrameworkCore;
 

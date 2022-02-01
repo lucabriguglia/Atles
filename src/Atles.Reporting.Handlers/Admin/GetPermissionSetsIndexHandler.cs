@@ -1,8 +1,8 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Atles.Core.Queries;
 using Atles.Data;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Infrastructure.Queries;
+using Atles.Domain.Models;
 using Atles.Reporting.Models.Admin.PermissionSets.Queries;
 using Microsoft.EntityFrameworkCore;
 using IndexPageModel = Atles.Reporting.Models.Admin.PermissionSets.IndexPageModel;

@@ -1,21 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Atles.Core.Extensions;
 using Atles.Data;
+using Atles.Domain.Commands;
+using Atles.Domain.Commands.Handlers;
+using Atles.Domain.Commands.PermissionSets;
+using Atles.Domain.Events;
+using Atles.Domain.Events.Categories;
+using Atles.Domain.Events.Forums;
+using Atles.Domain.Events.PermissionSets;
+using Atles.Domain.Events.Posts;
+using Atles.Domain.Events.Sites;
+using Atles.Domain.Events.Users;
 using Atles.Domain.Models;
-using Atles.Domain.Models.Categories;
-using Atles.Domain.Models.Categories.Events;
-using Atles.Domain.Models.Forums;
-using Atles.Domain.Models.Forums.Events;
-using Atles.Domain.Models.PermissionSets;
-using Atles.Domain.Models.PermissionSets.Commands;
-using Atles.Domain.Models.PermissionSets.Events;
-using Atles.Domain.Models.Posts;
-using Atles.Domain.Models.Posts.Events;
-using Atles.Domain.Models.Sites;
-using Atles.Domain.Models.Sites.Events;
-using Atles.Domain.Models.Users;
-using Atles.Domain.Models.Users.Events;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
@@ -135,12 +133,12 @@ namespace Atles.Server.Services
                 new PermissionCommand {Type = PermissionType.Moderate, RoleId = roleAdmin.Id},
                 new PermissionCommand {Type = PermissionType.Reactions, RoleId = roleAdmin.Id}
             };
-            var permissionSetDefault = new PermissionSet(site.Id, "Default", permissionsDefault);
+            var permissionSetDefault = new PermissionSet(site.Id, "Default", permissionsDefault.ToDomainPermissions());
             _dbContext.PermissionSets.Add(permissionSetDefault);
             var permissionSetDefaultCreated = new PermissionSetCreated
             {
                 Name = permissionSetDefault.Name,
-                Permissions = permissionsDefault,
+                Permissions = permissionsDefault.ToDomainPermissions(),
                 TargetId = permissionSetDefault.Id,
                 TargetType = nameof(PermissionSet),
                 SiteId = site.Id,
@@ -171,12 +169,12 @@ namespace Atles.Server.Services
                 new PermissionCommand {Type = PermissionType.Moderate, RoleId = roleAdmin.Id},
                 new PermissionCommand {Type = PermissionType.Reactions, RoleId = roleAdmin.Id}
             };
-            var permissionSetMembersOnly = new PermissionSet(site.Id, "Members Only", permissionsMembersOnly);
+            var permissionSetMembersOnly = new PermissionSet(site.Id, "Members Only", permissionsMembersOnly.ToDomainPermissions());
             _dbContext.PermissionSets.Add(permissionSetMembersOnly);
             var permissionSetMembersOnlyCreated = new PermissionSetCreated
             {
                 Name = permissionSetMembersOnly.Name,
-                Permissions = permissionsMembersOnly,
+                Permissions = permissionsMembersOnly.ToDomainPermissions(),
                 TargetId = permissionSetMembersOnly.Id,
                 TargetType = nameof(PermissionSet),
                 SiteId = site.Id,
@@ -196,12 +194,12 @@ namespace Atles.Server.Services
                 new PermissionCommand {Type = PermissionType.Moderate, RoleId = roleAdmin.Id},
                 new PermissionCommand {Type = PermissionType.Reactions, RoleId = roleAdmin.Id}
             };
-            var permissionSetAdminOnly = new PermissionSet(site.Id, "Admin Only", permissionsAdminOnly);
+            var permissionSetAdminOnly = new PermissionSet(site.Id, "Admin Only", permissionsAdminOnly.ToDomainPermissions());
             _dbContext.PermissionSets.Add(permissionSetAdminOnly);
             var permissionSetAdminOnlyCreated = new PermissionSetCreated
             {
                 Name = permissionSetAdminOnly.Name,
-                Permissions = permissionsAdminOnly,
+                Permissions = permissionsAdminOnly.ToDomainPermissions(),
                 TargetId = permissionSetAdminOnly.Id,
                 TargetType = nameof(PermissionSet),
                 SiteId = site.Id,

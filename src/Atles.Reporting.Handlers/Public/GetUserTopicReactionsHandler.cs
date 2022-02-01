@@ -2,7 +2,7 @@
 using Atles.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
-using Atles.Infrastructure.Queries;
+using Atles.Core.Queries;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 

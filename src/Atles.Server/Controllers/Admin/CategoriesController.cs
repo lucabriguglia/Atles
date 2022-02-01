@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Core;
+using Atles.Domain.Commands;
+using Atles.Domain.Commands.Categories;
 using Atles.Domain.Models;
-using Atles.Domain.Models.Categories.Commands;
-using Atles.Domain.Models.Categories.Rules;
-using Atles.Infrastructure;
+using Atles.Domain.Rules;
+using Atles.Domain.Rules.Categories;
 using Atles.Reporting.Models.Admin.Categories;
 using Atles.Reporting.Models.Admin.Categories.Queries;
 using Microsoft.AspNetCore.Mvc;
@@ -82,7 +84,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new UpdateCategory
             {
-                Id = model.Id,
+                CategoryId = model.Id,
                 Name = model.Name,
                 PermissionSetId = model.PermissionSetId,
                 SiteId = site.Id,
@@ -102,7 +104,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new MoveCategory
             {
-                Id = id,
+                CategoryId = id,
                 SiteId = site.Id,
                 UserId = user.Id,
                 Direction = Direction.Up
@@ -121,7 +123,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new MoveCategory
             {
-                Id = id,
+                CategoryId = id,
                 SiteId = site.Id,
                 UserId = user.Id,
                 Direction = Direction.Down
@@ -140,7 +142,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new DeleteCategory
             {
-                Id = id,
+                CategoryId = id,
                 SiteId = site.Id,
                 UserId = user.Id
             };
