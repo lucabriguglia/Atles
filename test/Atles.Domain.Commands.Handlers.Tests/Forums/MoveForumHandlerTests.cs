@@ -39,7 +39,7 @@ namespace Atles.Domain.Commands.Handlers.Tests.Forums
                 var command = new MoveForum
                 {
                     ForumId = forum2.Id,
-                    Direction = Direction.Up,
+                    Direction = DirectionType.Up,
                     SiteId = siteId
                 };
 
@@ -89,7 +89,7 @@ namespace Atles.Domain.Commands.Handlers.Tests.Forums
                 var command = new MoveForum
                 {
                     ForumId = forum1.Id,
-                    Direction = Direction.Down,
+                    Direction = DirectionType.Down,
                     SiteId = siteId
                 };
 

@@ -16,6 +16,6 @@ namespace Atles.Domain.Commands.Categories
         /// The direction.
         /// Can be either up or down.
         /// </summary>
-        public Direction Direction { get; set; }
+        public DirectionType Direction { get; set; }
     }
 }

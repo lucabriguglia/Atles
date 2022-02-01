@@ -35,11 +35,11 @@ namespace Atles.Domain.Commands.Handlers.Forums
                 throw new DataException($"Forum with Id {command.ForumId} not found.");
             }
 
-            if (command.Direction == Direction.Up)
+            if (command.Direction == DirectionType.Up)
             {
                 forum.MoveUp();
             }
-            else if (command.Direction == Direction.Down)
+            else if (command.Direction == DirectionType.Down)
             {
                 forum.MoveDown();
             }
@@ -63,11 +63,11 @@ namespace Atles.Domain.Commands.Handlers.Forums
                     x.SortOrder == sortOrderToReplace &&
                     x.Status != ForumStatusType.Deleted);
 
-            if (command.Direction == Direction.Up)
+            if (command.Direction == DirectionType.Up)
             {
                 adjacentForum.MoveDown();
             }
-            else if (command.Direction == Direction.Down)
+            else if (command.Direction == DirectionType.Down)
             {
                 adjacentForum.MoveUp();
             }

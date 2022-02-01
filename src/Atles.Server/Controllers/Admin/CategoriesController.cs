@@ -105,7 +105,7 @@ namespace Atles.Server.Controllers.Admin
                 CategoryId = id,
                 SiteId = site.Id,
                 UserId = user.Id,
-                Direction = Direction.Up
+                Direction = DirectionType.Up
             };
 
             await _dispatcher.Send(command);
@@ -124,7 +124,7 @@ namespace Atles.Server.Controllers.Admin
                 CategoryId = id,
                 SiteId = site.Id,
                 UserId = user.Id,
-                Direction = Direction.Down
+                Direction = DirectionType.Down
             };
 
             await _dispatcher.Send(command);

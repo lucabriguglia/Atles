@@ -34,11 +34,11 @@ namespace Atles.Domain.Commands.Handlers.Categories
                 throw new DataException($"Category with Id {command.CategoryId} not found.");
             }
 
-            if (command.Direction == Direction.Up)
+            if (command.Direction == DirectionType.Up)
             {
                 category.MoveUp();
             }
-            else if (command.Direction == Direction.Down)
+            else if (command.Direction == DirectionType.Down)
             {
                 category.MoveDown();
             }
@@ -62,11 +62,11 @@ namespace Atles.Domain.Commands.Handlers.Categories
                     x.SortOrder == sortOrderToReplace &&
                     x.Status != CategoryStatusType.Deleted);
 
-            if (command.Direction == Direction.Up)
+            if (command.Direction == DirectionType.Up)
             {
                 adjacentCategory.MoveDown();
             }
-            else if (command.Direction == Direction.Down)
+            else if (command.Direction == DirectionType.Down)
             {
                 adjacentCategory.MoveUp();
             }

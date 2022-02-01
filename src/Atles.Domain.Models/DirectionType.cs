@@ -1,6 +1,6 @@
 ﻿namespace Atles.Domain.Models
 {
-    public enum Direction
+    public enum DirectionType
     {
         Up,
         Down
