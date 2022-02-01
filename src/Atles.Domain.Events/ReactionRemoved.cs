@@ -1,5 +1,5 @@
-﻿using Atles.Domain.Models;
-using Atles.Infrastructure.Events;
+﻿using Atles.Core.Events;
+using Atles.Domain.Models;
 using Docs.Attributes;
 
 namespace Atles.Domain.Events

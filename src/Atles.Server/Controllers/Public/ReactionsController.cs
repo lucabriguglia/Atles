@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Core;
 using Atles.Domain.Commands;
 using Atles.Domain.Models;
-using Atles.Infrastructure;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;

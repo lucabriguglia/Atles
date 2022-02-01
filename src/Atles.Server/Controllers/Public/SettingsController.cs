@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
+using Atles.Core;
 using Atles.Domain.Commands;
 using Atles.Domain.Rules;
-using Atles.Infrastructure;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Microsoft.AspNetCore.Authorization;

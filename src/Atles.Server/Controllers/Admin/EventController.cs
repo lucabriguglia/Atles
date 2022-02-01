@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Infrastructure;
+using Atles.Core;
 using Atles.Reporting.Models.Admin.Events;
 using Atles.Reporting.Models.Admin.Events.Queries;
 using Microsoft.AspNetCore.Mvc;

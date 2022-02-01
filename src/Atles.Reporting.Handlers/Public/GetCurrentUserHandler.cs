@@ -5,9 +5,9 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using Atles.Core;
+using Atles.Core.Queries;
 using Atles.Domain.Models;
-using Atles.Infrastructure;
-using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 

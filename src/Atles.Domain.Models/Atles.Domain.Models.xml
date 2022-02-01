@@ -165,7 +165,7 @@
             Extensions for IEvent
             </summary>
         </member>
-        <member name="M:Atles.Domain.Models.EventExtensions.ToDbEntity(Atles.Infrastructure.Events.IEvent)">
+        <member name="M:Atles.Domain.Models.EventExtensions.ToDbEntity(Atles.Core.Events.IEvent)">
             <summary>
             Converts IEvent to HistoryItem
             </summary>

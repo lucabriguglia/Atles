@@ -1,7 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
+using Atles.Core.Queries;
 using Atles.Data;
-using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.Sites;
 using Atles.Reporting.Models.Admin.Sites.Queries;
 using Microsoft.EntityFrameworkCore;

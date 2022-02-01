@@ -30,7 +30,7 @@
     <ProjectReference Include="..\Atles.Domain.Commands.Handlers\Atles.Domain.Commands.Handlers.csproj" />
     <ProjectReference Include="..\Atles.Domain.Models\Atles.Domain.Models.csproj" />
     <ProjectReference Include="..\Atles.Domain.Rules.Handlers\Atles.Domain.Rules.Handlers.csproj" />
-    <ProjectReference Include="..\Atles.Infrastructure\Atles.Infrastructure.csproj" />
+    <ProjectReference Include="..\Atles.Infrastructure\Atles.Core.csproj" />
     <ProjectReference Include="..\Atles.Reporting.Models\Atles.Reporting.Models.csproj" />
     <ProjectReference Include="..\Atles.Reporting.Handlers\Atles.Reporting.Handlers.csproj" />
   </ItemGroup>

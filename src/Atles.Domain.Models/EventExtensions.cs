@@ -1,5 +1,5 @@
 ﻿using System;
-using Atles.Infrastructure.Events;
+using Atles.Core.Events;
 using Newtonsoft.Json;
 
 namespace Atles.Domain.Models

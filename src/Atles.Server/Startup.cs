@@ -1,13 +1,12 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using Atles.Core;
 using Atles.Data;
 using Atles.Domain.Commands.Handlers;
 using Atles.Domain.Commands.Handlers.Validators;
 using Atles.Domain.Models;
 using Atles.Domain.Rules;
 using Atles.Domain.Rules.Handlers;
-using Atles.Infrastructure;
-using Atles.Infrastructure.Extensions;
 using Atles.Reporting.Handlers.Admin;
 using Atles.Reporting.Models.Admin.Categories;
 using Atles.Server.Middlewares;

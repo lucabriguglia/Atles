@@ -1,9 +1,9 @@
 ﻿using System;
+using Atles.Core;
+using Atles.Core.Queries;
 using Atles.Domain.Commands;
 using Atles.Domain.Handlers.PermissionSets.Commands.Validators;
 using Atles.Domain.Rules;
-using Atles.Infrastructure;
-using Atles.Infrastructure.Queries;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;

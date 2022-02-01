@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Core;
+using Atles.Core.Queries;
 using Atles.Domain.Models;
-using Atles.Infrastructure;
-using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Admin.PermissionSets;
 using Atles.Reporting.Models.Admin.PermissionSets.Queries;
 using Atles.Reporting.Models.Admin.Roles.Queries;

@@ -4,8 +4,8 @@ using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Core.Queries;
 using Atles.Domain.Models;
-using Atles.Infrastructure.Queries;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 

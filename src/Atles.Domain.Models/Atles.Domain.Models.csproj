@@ -17,7 +17,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Atles.Infrastructure\Atles.Infrastructure.csproj" />
+    <ProjectReference Include="..\Atles.Infrastructure\Atles.Core.csproj" />
   </ItemGroup>
 
 </Project>

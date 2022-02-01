@@ -1,5 +1,5 @@
 ﻿using System;
-using Atles.Infrastructure.Queries;
+using Atles.Core.Queries;
 
 namespace Atles.Reporting.Models.Admin.Events.Queries
 {

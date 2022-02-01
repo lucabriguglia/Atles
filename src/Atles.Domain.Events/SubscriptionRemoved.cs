@@ -1,4 +1,4 @@
-﻿using Atles.Infrastructure.Events;
+﻿using Atles.Core.Events;
 
 namespace Atles.Domain.Events
 {

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
+using Atles.Core;
 using Atles.Domain.Commands;
-using Atles.Infrastructure;
 using Atles.Reporting.Models.Admin.Sites;
 using Atles.Reporting.Models.Admin.Sites.Queries;
 using Microsoft.AspNetCore.Mvc;

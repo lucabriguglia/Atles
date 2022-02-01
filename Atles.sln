@@ -65,11 +65,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "sql", "sql", "{0C907861-F92
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Reporting.Handlers", "src\Atles.Reporting.Handlers\Atles.Reporting.Handlers.csproj", "{2FF5949C-F428-48BF-9253-255BACA5C9C6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Infrastructure", "src\Atles.Infrastructure\Atles.Infrastructure.csproj", "{24866719-3065-47E9-B96B-3839E6C595BF}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Core", "src\Atles.Core\Atles.Core.csproj", "{24866719-3065-47E9-B96B-3839E6C595BF}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Handlers.Tests", "test\Atles.Domain.Handlers.Tests\Atles.Domain.Handlers.Tests.csproj", "{1F1263D3-B780-4049-9D8D-CAFD533CD8D9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Infrastructure.Tests", "test\Atles.Infrastructure.Tests\Atles.Infrastructure.Tests.csproj", "{660CB9AE-00AD-49D3-9D47-0E270405B66C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Core.Tests", "test\Atles.Core.Tests\Atles.Core.Tests.csproj", "{660CB9AE-00AD-49D3-9D47-0E270405B66C}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Commands", "src\Atles.Domain.Commands\Atles.Domain.Commands.csproj", "{0222E5BC-64A2-49D3-9009-4C478D3F8675}"
 EndProject
@@ -77,9 +77,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Events", "src\
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Rules", "src\Atles.Domain.Rules\Atles.Domain.Rules.csproj", "{956D8A8B-EABC-450B-BE5E-31B0D9B9DC9F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Domain.Commands.Handlers", "src\Atles.Domain.Commands.Handlers\Atles.Domain.Commands.Handlers.csproj", "{89C67853-19F0-4139-A971-9B28219F1C49}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Commands.Handlers", "src\Atles.Domain.Commands.Handlers\Atles.Domain.Commands.Handlers.csproj", "{89C67853-19F0-4139-A971-9B28219F1C49}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Domain.Rules.Handlers", "src\Atles.Domain.Rules.Handlers\Atles.Domain.Rules.Handlers.csproj", "{C0D1002B-715E-4843-8E0B-9C7484D0BBD4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Rules.Handlers", "src\Atles.Domain.Rules.Handlers\Atles.Domain.Rules.Handlers.csproj", "{C0D1002B-715E-4843-8E0B-9C7484D0BBD4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

@@ -1,6 +1,6 @@
-﻿using Atles.Data;
+﻿using Atles.Core.Queries;
+using Atles.Data;
 using Atles.Domain.Models;
-using Atles.Infrastructure.Queries;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Domain.Rules.Handlers

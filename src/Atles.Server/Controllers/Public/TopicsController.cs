@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Core;
 using Atles.Data;
 using Atles.Domain.Commands;
 using Atles.Domain.Models;
-using Atles.Infrastructure;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Reporting.Models.Shared;

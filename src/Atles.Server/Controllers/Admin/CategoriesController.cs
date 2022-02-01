@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Core;
 using Atles.Domain.Commands;
 using Atles.Domain.Models;
 using Atles.Domain.Rules;
-using Atles.Infrastructure;
 using Atles.Reporting.Models.Admin.Categories;
 using Atles.Reporting.Models.Admin.Categories.Queries;
 using Microsoft.AspNetCore.Mvc;

@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Core;
 using Atles.Domain.Commands;
 using Atles.Domain.Rules;
-using Atles.Infrastructure;
 using Atles.Reporting.Models.Admin.Users;
 using Atles.Reporting.Models.Admin.Users.Queries;
 using Atles.Reporting.Models.Shared;

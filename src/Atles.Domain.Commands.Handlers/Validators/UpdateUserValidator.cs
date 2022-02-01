@@ -1,5 +1,5 @@
-﻿using Atles.Domain.Rules;
-using Atles.Infrastructure;
+﻿using Atles.Core;
+using Atles.Domain.Rules;
 using FluentValidation;
 
 namespace Atles.Domain.Commands.Handlers.Validators

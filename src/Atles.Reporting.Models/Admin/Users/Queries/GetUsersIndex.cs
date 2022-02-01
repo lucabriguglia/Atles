@@ -1,4 +1,4 @@
-﻿using Atles.Infrastructure.Queries;
+﻿using Atles.Core.Queries;
 using Atles.Reporting.Models.Shared;
 
 namespace Atles.Reporting.Models.Admin.Users.Queries

@@ -1,4 +1,4 @@
-﻿using Atles.Infrastructure.Queries;
+﻿using Atles.Core.Queries;
 
 namespace Atles.Domain.Rules
 {

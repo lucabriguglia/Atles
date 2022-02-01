@@ -6,7 +6,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
-    <ProjectReference Include="..\Atles.Infrastructure\Atles.Infrastructure.csproj" />
+    <ProjectReference Include="..\Atles.Infrastructure\Atles.Core.csproj" />
     <ProjectReference Include="..\Atles.Reporting.Models\Atles.Reporting.Models.csproj" />
   </ItemGroup>
 

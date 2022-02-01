@@ -9,7 +9,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
     <ProjectReference Include="..\Atles.Domain.Rules\Atles.Domain.Rules.csproj" />
-    <ProjectReference Include="..\Atles.Infrastructure\Atles.Infrastructure.csproj" />
+    <ProjectReference Include="..\Atles.Infrastructure\Atles.Core.csproj" />
   </ItemGroup>
 
 </Project>
