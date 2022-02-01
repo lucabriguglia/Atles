@@ -8,16 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Domain.Commands.Handlers
 {
-    public class AddReactionHandler : ICommandHandler<AddReaction>
+    public class AddPostReactionHandler : ICommandHandler<AddPostReaction>
     {
         private readonly AtlesDbContext _dbContext;
 
-        public AddReactionHandler(AtlesDbContext dbContext)
+        public AddPostReactionHandler(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(AddReaction command)
+        public async Task<IEnumerable<IEvent>> Handle(AddPostReaction command)
         {
             var post = await _dbContext.Posts
                 .Include(x => x.PostReactionSummaries)
@@ -38,7 +38,7 @@ namespace Atles.Domain.Commands.Handlers
 
             _dbContext.PostReactions.Add(postReaction);
 
-            var @event = new ReactionAdded
+            var @event = new PostReactionAdded
             {
                 Type = command.Type,
                 TargetId = command.Id,

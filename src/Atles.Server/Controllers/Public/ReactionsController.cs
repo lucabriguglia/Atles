@@ -41,7 +41,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var command = new AddReaction
+            var command = new AddPostReaction
             {
                 Id = postId,
                 ForumId = forumId,
@@ -71,7 +71,7 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            var command = new RemoveReaction
+            var command = new RemovePostReaction
             {
                 Id = postId,
                 ForumId = forumId,

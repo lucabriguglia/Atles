@@ -8,16 +8,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Domain.Commands.Handlers
 {
-    public class RemoveReactionHandler : ICommandHandler<RemoveReaction>
+    public class RemovePostReactionHandler : ICommandHandler<RemovePostReaction>
     {
         private readonly AtlesDbContext _dbContext;
 
-        public RemoveReactionHandler(AtlesDbContext dbContext)
+        public RemovePostReactionHandler(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(RemoveReaction command)
+        public async Task<IEnumerable<IEvent>> Handle(RemovePostReaction command)
         {
             var postReaction = await _dbContext.PostReactions
                 .Include(x => x.Post).ThenInclude(x => x.PostReactionSummaries)
@@ -37,7 +37,7 @@ namespace Atles.Domain.Commands.Handlers
 
             _dbContext.PostReactions.Remove(postReaction);
 
-            var @event = new ReactionRemoved
+            var @event = new PostReactionRemoved
             {
                 Type = postReaction.Type,
                 TargetId = command.Id,

@@ -15,8 +15,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new AddReactionHandler(dbContext);
-                Assert.ThrowsAsync<DataException>(async () => await sut.Handle(Fixture.Create<AddReaction>()));
+                var sut = new AddPostReactionHandler(dbContext);
+                Assert.ThrowsAsync<DataException>(async () => await sut.Handle(Fixture.Create<AddPostReaction>()));
             }
         }
 
@@ -44,13 +44,13 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var command = Fixture.Build<AddReaction>()
+                var command = Fixture.Build<AddPostReaction>()
                         .With(x => x.Id, topic.Id)
                         .With(x => x.ForumId, forum.Id)
                         .With(x => x.SiteId, siteId)
                     .Create();
 
-                var sut = new AddReactionHandler(dbContext);
+                var sut = new AddPostReactionHandler(dbContext);
 
                 await sut.Handle(command);
 

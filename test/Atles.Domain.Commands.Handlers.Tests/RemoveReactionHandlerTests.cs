@@ -15,8 +15,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
         {
             using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
             {
-                var sut = new RemoveReactionHandler(dbContext);
-                Assert.ThrowsAsync<DataException>(async () => await sut.Handle(Fixture.Create<RemoveReaction>()));
+                var sut = new RemovePostReactionHandler(dbContext);
+                Assert.ThrowsAsync<DataException>(async () => await sut.Handle(Fixture.Create<RemovePostReaction>()));
             }
         }
 
@@ -48,7 +48,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
             using (var dbContext = new AtlesDbContext(options))
             {
-                var command = new RemoveReaction
+                var command = new RemovePostReaction
                 {
                     Id = topic.Id,
                     ForumId = forumId,
@@ -56,7 +56,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
                     UserId = postReaction.UserId
                 };
 
-                var sut = new RemoveReactionHandler(dbContext);
+                var sut = new RemovePostReactionHandler(dbContext);
 
                 await sut.Handle(command);
 
