@@ -2,7 +2,9 @@
 using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Domain.Commands;
+using Atles.Domain.Commands.PermissionSets;
 using Atles.Domain.Rules;
+using Atles.Domain.Rules.PermissionSets;
 using Atles.Reporting.Models.Admin.PermissionSets;
 using Atles.Reporting.Models.Admin.PermissionSets.Queries;
 using Microsoft.AspNetCore.Mvc;
