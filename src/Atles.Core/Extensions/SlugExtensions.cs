@@ -3,10 +3,20 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 
-namespace Atles.Domain.Models
+namespace Atles.Core.Extensions
 {
+    /// <summary>
+    /// SlugExtensions
+    /// </summary>
     public static class SlugExtensions
     {
+        /// <summary>
+        /// Convert text to slug
+        /// </summary>
+        /// <param name="text"></param>
+        /// <param name="maxLength"></param>
+        /// <returns></returns>
+        /// <exception cref="ArgumentNullException"></exception>
         public static string ToSlug(this string text, int maxLength = 50)
         {
             if (string.IsNullOrEmpty(text))

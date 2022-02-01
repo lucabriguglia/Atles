@@ -1,4 +1,5 @@
-﻿using Atles.Data;
+﻿using Atles.Core.Extensions;
+using Atles.Data;
 using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 

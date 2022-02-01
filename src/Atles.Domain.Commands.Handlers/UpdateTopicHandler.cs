@@ -4,6 +4,7 @@ using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
 using Atles.Data.Caching;
+using Atles.Domain.Commands.Handlers.Extensions;
 using Atles.Domain.Commands.Handlers.Services;
 using Atles.Domain.Events;
 using Atles.Domain.Models;

@@ -1,8 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Atles.Core.Extensions;
 using Atles.Data;
 using Atles.Domain.Commands;
+using Atles.Domain.Commands.Extensions;
+using Atles.Domain.Commands.Handlers.Extensions;
 using Atles.Domain.Events;
 using Atles.Domain.Models;
 using Microsoft.AspNetCore.Identity;

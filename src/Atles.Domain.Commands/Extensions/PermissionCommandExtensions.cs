@@ -1,6 +1,6 @@
 ﻿using Atles.Domain.Models;
 
-namespace Atles.Domain.Commands
+namespace Atles.Domain.Commands.Extensions
 {
     public static class PermissionCommandExtensions
     {

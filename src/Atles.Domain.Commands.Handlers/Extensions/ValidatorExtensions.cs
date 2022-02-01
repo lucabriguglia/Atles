@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using FluentValidation;
+﻿using FluentValidation;
 using FluentValidation.Results;
 
-namespace Atles.Domain.Models
+namespace Atles.Domain.Commands.Handlers.Extensions
 {
     /// <summary>
     /// Validator Extensions
@@ -45,6 +41,5 @@ namespace Atles.Domain.Models
             var errorsText = errors.Select(x => $"\r\n - {x.ErrorMessage}").ToArray();
             return $"Validation failed: {string.Join("", errorsText)}";
         }
-
     }
 }

@@ -1,8 +1,8 @@
-﻿using System;
-using Atles.Core.Events;
+﻿using Atles.Core.Events;
+using Atles.Domain.Models;
 using Newtonsoft.Json;
 
-namespace Atles.Domain.Models
+namespace Atles.Domain.Commands.Handlers.Extensions
 {
     /// <summary>
     /// Extensions for IEvent

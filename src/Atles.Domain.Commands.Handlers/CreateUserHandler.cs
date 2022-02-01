@@ -1,6 +1,7 @@
 ﻿using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
+using Atles.Domain.Commands.Handlers.Extensions;
 using Atles.Domain.Events;
 using Atles.Domain.Models;
 using FluentValidation;
