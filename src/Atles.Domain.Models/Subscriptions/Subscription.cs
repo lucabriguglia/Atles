@@ -11,11 +11,6 @@ namespace Atles.Domain.Models.Subscriptions
     public class Subscription
     {
         /// <summary>
-        /// Type of subscription
-        /// </summary>
-        public SubscriptionType Type { get; private set; }
-
-        /// <summary>
         /// UserId
         /// </summary>
         public Guid UserId { get; private set; }
@@ -24,6 +19,11 @@ namespace Atles.Domain.Models.Subscriptions
         /// TargetId
         /// </summary>
         public Guid TargetId { get; private set; }
+
+        /// <summary>
+        /// Type of subscription
+        /// </summary>
+        public SubscriptionType Type { get; private set; }
 
         /// <summary>
         /// Reference to the user who added the subscription.
@@ -35,6 +35,19 @@ namespace Atles.Domain.Models.Subscriptions
         /// </summary>
         public Subscription()
         {
+        }
+
+        /// <summary>
+        /// Subscription
+        /// </summary>
+        /// <param name="userId"></param>
+        /// <param name="targetId"></param>
+        /// <param name="type"></param>
+        public Subscription(Guid userId, Guid targetId, SubscriptionType type)
+        {
+            UserId = userId;
+            TargetId = targetId;
+            Type = type;
         }
     }
 }

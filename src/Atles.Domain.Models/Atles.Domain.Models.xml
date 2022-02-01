@@ -1646,11 +1646,6 @@
             Subscription
             </summary>
         </member>
-        <member name="P:Atles.Domain.Models.Subscriptions.Subscription.Type">
-            <summary>
-            Type of subscription
-            </summary>
-        </member>
         <member name="P:Atles.Domain.Models.Subscriptions.Subscription.UserId">
             <summary>
             UserId
@@ -1659,6 +1654,11 @@
         <member name="P:Atles.Domain.Models.Subscriptions.Subscription.TargetId">
             <summary>
             TargetId
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Subscriptions.Subscription.Type">
+            <summary>
+            Type of subscription
             </summary>
         </member>
         <member name="P:Atles.Domain.Models.Subscriptions.Subscription.User">
@@ -1670,6 +1670,14 @@
             <summary>
             Subscription
             </summary>
+        </member>
+        <member name="M:Atles.Domain.Models.Subscriptions.Subscription.#ctor(System.Guid,System.Guid,Atles.Domain.Models.Subscriptions.SubscriptionType)">
+            <summary>
+            Subscription
+            </summary>
+            <param name="userId"></param>
+            <param name="targetId"></param>
+            <param name="type"></param>
         </member>
         <member name="T:Atles.Domain.Models.Subscriptions.SubscriptionType">
             <summary>
