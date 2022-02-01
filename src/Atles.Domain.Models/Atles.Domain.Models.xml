@@ -1601,6 +1601,96 @@
             <param name="terms"></param>
             <param name="headScript"></param>
         </member>
+        <member name="T:Atles.Domain.Models.Subscriptions.Commands.AddSubscription">
+            <summary>
+            Request to add a subscription.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Subscriptions.Commands.AddSubscription.Type">
+            <summary>
+            Type of subscription
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Subscriptions.Commands.AddSubscription.TargetId">
+            <summary>
+            TargetId
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Subscriptions.Commands.RemoveSubscription">
+            <summary>
+            Request to remove a subscription.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Subscriptions.Commands.RemoveSubscription.TargetId">
+            <summary>
+            TargetId
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Subscriptions.Events.SubscriptionAdded">
+            <summary>
+            Event published when a new subscription is added.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Subscriptions.Events.SubscriptionAdded.Type">
+            <summary>
+            Type of subscription
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Subscriptions.Events.SubscriptionRemoved">
+            <summary>
+            Event published when a new subscription is removed.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Subscriptions.Subscription">
+            <summary>
+            Subscription
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Subscriptions.Subscription.Type">
+            <summary>
+            Type of subscription
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Subscriptions.Subscription.UserId">
+            <summary>
+            UserId
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Subscriptions.Subscription.TargetId">
+            <summary>
+            TargetId
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Subscriptions.Subscription.User">
+            <summary>
+            Reference to the user who added the subscription.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Models.Subscriptions.Subscription.#ctor">
+            <summary>
+            Subscription
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.Subscriptions.SubscriptionType">
+            <summary>
+            Type of subscription
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.Subscriptions.SubscriptionType.Category">
+            <summary>
+            User will be notified for every post in the category.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.Subscriptions.SubscriptionType.Forum">
+            <summary>
+            User will be notified for every post in the forum.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.Subscriptions.SubscriptionType.Topic">
+            <summary>
+            User will be notified for every reply in the topic.
+            </summary>
+        </member>
         <member name="T:Atles.Domain.Models.Users.Commands.ConfirmUser">
             <summary>
             Request to set the status of a user to active after the email has been confirmed.
@@ -1784,6 +1874,11 @@
             </summary>
         </member>
         <member name="P:Atles.Domain.Models.Users.User.PostReactions">
+            <summary>
+            Reference to post likes.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.Users.User.Subscriptions">
             <summary>
             Reference to post likes.
             </summary>

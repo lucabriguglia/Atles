@@ -5,6 +5,7 @@ using Atles.Domain.Models.Forums;
 using Atles.Domain.Models.PermissionSets;
 using Atles.Domain.Models.Posts;
 using Atles.Domain.Models.Sites;
+using Atles.Domain.Models.Subscriptions;
 using Atles.Domain.Models.Users;
 using Microsoft.EntityFrameworkCore;
 
@@ -34,5 +35,6 @@ namespace Atles.Data
         public DbSet<PostReactionSummary> PostReactionSummaries { get; set; }
         public DbSet<Post> Posts { get; set; }
         public DbSet<Site> Sites { get; set; }
+        public DbSet<Subscription> Subscriptions { get; set; }
     }
 }

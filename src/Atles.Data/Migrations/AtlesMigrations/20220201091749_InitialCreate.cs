@@ -133,6 +133,24 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Subscription",
+                columns: table => new
+                {
+                    UserId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    TargetId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Subscription", x => new { x.UserId, x.TargetId });
+                    table.ForeignKey(
+                        name: "FK_Subscription_User_UserId",
+                        column: x => x.UserId,
+                        principalTable: "User",
+                        principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Forum",
                 columns: table => new
                 {
@@ -362,6 +380,9 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
             migrationBuilder.DropTable(
                 name: "PostReactionSummary");
+
+            migrationBuilder.DropTable(
+                name: "Subscription");
 
             migrationBuilder.DropTable(
                 name: "Site");

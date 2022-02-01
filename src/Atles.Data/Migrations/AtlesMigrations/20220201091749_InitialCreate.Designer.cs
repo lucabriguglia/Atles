@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atles.Data.Migrations.AtlesMigrations
 {
     [DbContext(typeof(AtlesDbContext))]
-    [Migration("20220128152906_InitialCreate")]
+    [Migration("20220201091749_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -308,6 +308,22 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.ToTable("Site", (string)null);
                 });
 
+            modelBuilder.Entity("Atles.Domain.Models.Subscriptions.Subscription", b =>
+                {
+                    b.Property<Guid>("UserId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<Guid>("TargetId")
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<int>("Type")
+                        .HasColumnType("int");
+
+                    b.HasKey("UserId", "TargetId");
+
+                    b.ToTable("Subscription", (string)null);
+                });
+
             modelBuilder.Entity("Atles.Domain.Models.Users.User", b =>
                 {
                     b.Property<Guid>("Id")
@@ -484,6 +500,17 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Navigation("Post");
                 });
 
+            modelBuilder.Entity("Atles.Domain.Models.Subscriptions.Subscription", b =>
+                {
+                    b.HasOne("Atles.Domain.Models.Users.User", "User")
+                        .WithMany("Subscriptions")
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.NoAction)
+                        .IsRequired();
+
+                    b.Navigation("User");
+                });
+
             modelBuilder.Entity("Atles.Domain.Models.Categories.Category", b =>
                 {
                     b.Navigation("Forums");
@@ -520,6 +547,8 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Navigation("PostReactions");
 
                     b.Navigation("Posts");
+
+                    b.Navigation("Subscriptions");
                 });
 #pragma warning restore 612, 618
         }
