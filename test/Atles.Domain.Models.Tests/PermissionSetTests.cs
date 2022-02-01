@@ -6,7 +6,7 @@ using Atles.Domain.Models.PermissionSets.Commands;
 using AutoFixture;
 using NUnit.Framework;
 
-namespace Atles.Domain.Models.Tests.PermissionSets
+namespace Atles.Domain.Models.Tests
 {
     [TestFixture]
     public class PermissionSetTests : TestFixtureBase

@@ -2,7 +2,7 @@
 using Atles.Domain.Models.Subscriptions;
 using NUnit.Framework;
 
-namespace Atles.Domain.Models.Tests.Subscriptions
+namespace Atles.Domain.Models.Tests
 {
     [TestFixture]
     public class SubscriptionTests : TestFixtureBase

@@ -3,7 +3,7 @@ using Atles.Domain.Models.Users;
 using AutoFixture;
 using NUnit.Framework;
 
-namespace Atles.Domain.Models.Tests.Users
+namespace Atles.Domain.Models.Tests
 {
     [TestFixture]
     public class UserTests : TestFixtureBase
