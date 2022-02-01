@@ -48,6 +48,14 @@ namespace Atles.Domain.Commands.Handlers
 
             _dbContext.Posts.Add(topic);
 
+            var forum = await _dbContext.Forums.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == topic.ForumId);
+            forum.UpdateLastPost(topic.Id);
+            forum.IncreaseTopicsCount();
+            forum.Category.IncreaseTopicsCount();
+
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == topic.CreatedBy);
+            user.IncreaseTopicsCount();
+
             var @event = new TopicCreated
             {
                 ForumId = command.ForumId,
@@ -62,14 +70,6 @@ namespace Atles.Domain.Commands.Handlers
             };
 
             _dbContext.Events.Add(@event.ToDbEntity());
-
-            var forum = await _dbContext.Forums.Include(x => x.Category).FirstOrDefaultAsync(x => x.Id == topic.ForumId);
-            forum.UpdateLastPost(topic.Id);
-            forum.IncreaseTopicsCount();
-            forum.Category.IncreaseTopicsCount();
-
-            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == topic.CreatedBy);
-            user.IncreaseTopicsCount();
 
             await _dbContext.SaveChangesAsync();
 

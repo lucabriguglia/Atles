@@ -36,20 +36,6 @@ namespace Atles.Domain.Commands.Handlers
 
             _dbContext.Posts.Add(reply);
 
-            var @event = new ReplyCreated
-            {
-                TopicId = command.TopicId,
-                ForumId = command.ForumId,
-                Content = command.Content,
-                Status = command.Status,
-                TargetId = command.ReplyId,
-                TargetType = nameof(Post),
-                SiteId = command.SiteId,
-                UserId = command.UserId
-            };
-
-            _dbContext.Events.Add(@event.ToDbEntity());
-
             var topic = await _dbContext.Posts
                     .Include(x => x.Forum)
                         .ThenInclude(x => x.Category)
@@ -63,6 +49,20 @@ namespace Atles.Domain.Commands.Handlers
 
             var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == reply.CreatedBy);
             user.IncreaseRepliesCount();
+
+            var @event = new ReplyCreated
+            {
+                TopicId = command.TopicId,
+                ForumId = command.ForumId,
+                Content = command.Content,
+                Status = command.Status,
+                TargetId = command.ReplyId,
+                TargetType = nameof(Post),
+                SiteId = command.SiteId,
+                UserId = command.UserId
+            };
+
+            _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
 
