@@ -39,7 +39,6 @@ namespace Atles.Domain.Models
         /// </summary>
         public IReadOnlyCollection<Permission> Permissions => _permissions;
         private readonly List<Permission> _permissions = new();
-        //public ICollection<Permission> Permissions { get; set; }
 
         /// <summary>
         /// List of forum categories that use the permission set.
