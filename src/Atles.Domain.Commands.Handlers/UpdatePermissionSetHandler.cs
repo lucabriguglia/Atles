@@ -35,12 +35,12 @@ namespace Atles.Domain.Commands.Handlers
                 .Include(x => x.Permissions)
                 .FirstOrDefaultAsync(x =>
                     x.SiteId == command.SiteId &&
-                    x.Id == command.Id &&
+                    x.Id == command.PermissionSetId &&
                     x.Status != PermissionSetStatusType.Deleted);
 
             if (permissionSet == null)
             {
-                throw new DataException($"Permission Set with Id {command.Id} not found.");
+                throw new DataException($"Permission Set with Id {command.PermissionSetId} not found.");
             }
 
             foreach (var permission in permissionSet.Permissions)
@@ -64,7 +64,7 @@ namespace Atles.Domain.Commands.Handlers
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.PermissionSet(command.Id));
+            _cacheManager.Remove(CacheKeys.PermissionSet(command.PermissionSetId));
 
             return new IEvent[] { @event };
         }

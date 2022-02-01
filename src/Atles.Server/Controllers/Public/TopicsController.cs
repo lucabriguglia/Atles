@@ -208,7 +208,7 @@ namespace Atles.Server.Controllers.Public
 
             var slug = await _dispatcher.Get(new GetTopicSlug
             {
-                TopicId = command.Id
+                TopicId = command.TopicId
             });
 
             return Ok(slug);
@@ -223,7 +223,7 @@ namespace Atles.Server.Controllers.Public
 
             var command = new UpdateTopic
             {
-                Id = model.Topic.Id,
+                TopicId = model.Topic.Id,
                 ForumId = model.Forum.Id,
                 Title = model.Topic.Title,
                 Content = model.Topic.Content,
@@ -234,7 +234,7 @@ namespace Atles.Server.Controllers.Public
 
             var topicInfo = await _dbContext.Posts
                 .Where(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.TopicId &&
                     x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
@@ -262,7 +262,7 @@ namespace Atles.Server.Controllers.Public
 
             var slug = await _dispatcher.Get(new GetTopicSlug
             {
-                TopicId = command.Id
+                TopicId = command.TopicId
             });
 
             return Ok(slug);
@@ -277,7 +277,7 @@ namespace Atles.Server.Controllers.Public
 
             var command = new PinTopic
             {
-                Id = topicId,
+                TopicId = topicId,
                 ForumId = forumId,
                 Pinned = pinned,
                 SiteId = site.Id,
@@ -312,7 +312,7 @@ namespace Atles.Server.Controllers.Public
 
             var command = new LockTopic
             {
-                Id = topicId,
+                TopicId = topicId,
                 ForumId = forumId,
                 Locked = locked,
                 SiteId = site.Id,
@@ -347,7 +347,7 @@ namespace Atles.Server.Controllers.Public
 
             var command = new DeleteTopic
             {
-                Id = topicId,
+                TopicId = topicId,
                 ForumId = forumId,
                 SiteId = site.Id,
                 UserId = user.Id
@@ -355,7 +355,7 @@ namespace Atles.Server.Controllers.Public
 
             var topicUserId = await _dbContext.Posts
                 .Where(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.TopicId &&
                     x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&

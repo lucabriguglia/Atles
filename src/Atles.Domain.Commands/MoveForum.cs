@@ -10,6 +10,8 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(Forum))]
     public class MoveForum : CommandBase
     {
+        public Guid ForumId { get; set; } = Guid.NewGuid();
+
         /// <summary>
         /// The direction.
         /// Can be either up or down.

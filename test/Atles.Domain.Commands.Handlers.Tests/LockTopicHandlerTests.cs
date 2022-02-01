@@ -36,7 +36,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<LockTopic>()
-                    .With(x => x.Id, topic.Id)
+                    .With(x => x.TopicId, topic.Id)
                     .With(x => x.ForumId, forumId)
                     .With(x => x.SiteId, siteId)
                     .Create();
@@ -47,8 +47,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var lockedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var lockedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.TopicId);
+                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.TopicId);
 
                 Assert.AreEqual(command.Locked, lockedTopic.Locked);
                 Assert.NotNull(@event);

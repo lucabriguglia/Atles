@@ -50,7 +50,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             {
                 var command = new RemovePostReaction
                 {
-                    Id = topic.Id,
+                    PostId = topic.Id,
                     ForumId = forumId,
                     SiteId = siteId,
                     UserId = postReaction.UserId
@@ -60,7 +60,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var updatedPost = await dbContext.Posts.Include(x => x.PostReactionSummaries).FirstOrDefaultAsync(x => x.Id == command.Id);
+                var updatedPost = await dbContext.Posts.Include(x => x.PostReactionSummaries).FirstOrDefaultAsync(x => x.Id == command.PostId);
 
                 Assert.AreEqual(0, updatedPost.PostReactionSummaries.FirstOrDefault(x => x.Type == PostReactionType.Support).Count);
             }

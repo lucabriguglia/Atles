@@ -10,6 +10,8 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(User))]
     public class UpdateUser : CommandBase
     {
+        public Guid UpdateUserId { get; set; } = Guid.NewGuid();
+
         /// <summary>
         /// The new display name of the user.
         /// </summary>

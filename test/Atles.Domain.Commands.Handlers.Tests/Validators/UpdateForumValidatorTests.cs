@@ -42,7 +42,7 @@ namespace Atles.Domain.Commands.Handlers.Tests.Validators
             var command = Fixture.Create<UpdateForum>();
 
             var dispatcher = new Mock<IDispatcher>();
-            dispatcher.Setup(x => x.Get(new IsForumNameUnique { SiteId = command.SiteId, CategoryId = command.CategoryId, Name = command.Name, Id = command.Id })).ReturnsAsync(false);
+            dispatcher.Setup(x => x.Get(new IsForumNameUnique { SiteId = command.SiteId, CategoryId = command.CategoryId, Name = command.Name, Id = command.ForumId })).ReturnsAsync(false);
 
             var sut = new UpdateForumValidator(dispatcher.Object);
 
@@ -79,7 +79,7 @@ namespace Atles.Domain.Commands.Handlers.Tests.Validators
             var command = Fixture.Create<UpdateForum>();
 
             var dispatcher = new Mock<IDispatcher>();
-            dispatcher.Setup(x => x.Get(new IsForumSlugUnique { SiteId = command.SiteId, Slug = command.Slug, Id = command.Id })).ReturnsAsync(false);
+            dispatcher.Setup(x => x.Get(new IsForumSlugUnique { SiteId = command.SiteId, Slug = command.Slug, Id = command.ForumId })).ReturnsAsync(false);
 
             var sut = new UpdateForumValidator(dispatcher.Object);
 

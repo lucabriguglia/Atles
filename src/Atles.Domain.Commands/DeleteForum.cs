@@ -10,5 +10,6 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(Forum))]
     public class DeleteForum : CommandBase
     {
+        public Guid ForumId { get; set; } = Guid.NewGuid();
     }
 }

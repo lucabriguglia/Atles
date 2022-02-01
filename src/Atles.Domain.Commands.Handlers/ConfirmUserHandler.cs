@@ -22,12 +22,12 @@ namespace Atles.Domain.Commands.Handlers
         {
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.ConfirmUserId &&
                     x.Status == UserStatusType.Pending);
 
             if (user == null)
             {
-                throw new DataException($"User with Id {command.Id} not found.");
+                throw new DataException($"User with Id {command.ConfirmUserId} not found.");
             }
 
             user.Confirm();

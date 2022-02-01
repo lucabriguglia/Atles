@@ -10,6 +10,8 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(Category))]
     public class UpdateCategory : CommandBase
     {
+        public Guid CategoryId { get; set; } = Guid.NewGuid();
+
         /// <summary>
         /// The new name of the forum category.
         /// </summary>

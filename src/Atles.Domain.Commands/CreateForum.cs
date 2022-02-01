@@ -10,6 +10,8 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(Forum))]
     public class CreateForum : CommandBase
     {
+        public Guid ForumId { get; set; } = Guid.NewGuid();
+
         /// <summary>
         /// The unique identifier of the forum category which the new forum belongs to.
         /// </summary>

@@ -27,11 +27,11 @@ namespace Atles.Domain.Commands.Handlers
 
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
-                    x.Id == command.Id);
+                    x.Id == command.UpdateUserId);
 
             if (user == null)
             {
-                throw new DataException($"User with Id {command.Id} not found.");
+                throw new DataException($"User with Id {command.UpdateUserId} not found.");
             }
 
             user.UpdateDetails(command.DisplayName);

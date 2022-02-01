@@ -27,7 +27,7 @@ namespace Atles.Domain.Commands.Handlers
         {
             await _validator.ValidateCommand(command);
 
-            var reply = Post.CreateReply(command.Id,
+            var reply = Post.CreateReply(command.ReplyId,
                 command.TopicId,
                 command.ForumId,
                 command.UserId,
@@ -42,7 +42,7 @@ namespace Atles.Domain.Commands.Handlers
                 ForumId = command.ForumId,
                 Content = command.Content,
                 Status = command.Status,
-                TargetId = command.Id,
+                TargetId = command.ReplyId,
                 TargetType = nameof(Post),
                 SiteId = command.SiteId,
                 UserId = command.UserId

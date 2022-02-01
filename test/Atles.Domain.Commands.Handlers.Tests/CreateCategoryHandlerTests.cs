@@ -33,8 +33,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var category = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var category = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.CategoryId);
+                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.CategoryId);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.NotNull(category);
@@ -60,7 +60,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<UpdateCategory>()
-                        .With(x => x.Id, category.Id)
+                        .With(x => x.CategoryId, category.Id)
                         .With(x => x.SiteId, category.SiteId)
                     .Create();
 
@@ -75,8 +75,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.CategoryId);
+                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.CategoryId);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.AreEqual(command.Name, updatedCategory.Name);

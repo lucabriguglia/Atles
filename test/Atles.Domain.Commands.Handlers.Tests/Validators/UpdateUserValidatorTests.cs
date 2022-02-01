@@ -41,7 +41,7 @@ namespace Atles.Domain.Commands.Handlers.Tests.Validators
             var command = Fixture.Create<UpdateUser>();
 
             var dispatcher = new Mock<IDispatcher>();
-            dispatcher.Setup(x => x.Get(new IsUserDisplayNameUnique { DisplayName = command.DisplayName, Id = command.Id })).ReturnsAsync(false);
+            dispatcher.Setup(x => x.Get(new IsUserDisplayNameUnique { DisplayName = command.DisplayName, Id = command.UpdateUserId })).ReturnsAsync(false);
 
             var sut = new UpdateUserValidator(dispatcher.Object);
 

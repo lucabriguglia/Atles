@@ -49,7 +49,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<DeleteTopic>()
-                        .With(x => x.Id, topic.Id)
+                        .With(x => x.TopicId, topic.Id)
                         .With(x => x.ForumId, forumId)
                         .With(x => x.SiteId, siteId)
                     .Create();

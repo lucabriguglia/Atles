@@ -82,7 +82,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new UpdateCategory
             {
-                Id = model.Id,
+                CategoryId = model.Id,
                 Name = model.Name,
                 PermissionSetId = model.PermissionSetId,
                 SiteId = site.Id,
@@ -102,7 +102,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new MoveCategory
             {
-                Id = id,
+                CategoryId = id,
                 SiteId = site.Id,
                 UserId = user.Id,
                 Direction = Direction.Up
@@ -121,7 +121,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new MoveCategory
             {
-                Id = id,
+                CategoryId = id,
                 SiteId = site.Id,
                 UserId = user.Id,
                 Direction = Direction.Down
@@ -140,7 +140,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new DeleteCategory
             {
-                Id = id,
+                CategoryId = id,
                 SiteId = site.Id,
                 UserId = user.Id
             };

@@ -46,7 +46,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<DeleteReply>()
-                        .With(x => x.Id, reply.Id)
+                        .With(x => x.ReplyId, reply.Id)
                         .With(x => x.SiteId, siteId)
                         .With(x => x.ForumId, forumId)
                         .With(x => x.TopicId, topicId)

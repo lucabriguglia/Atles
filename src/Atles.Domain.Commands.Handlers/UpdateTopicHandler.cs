@@ -37,7 +37,7 @@ namespace Atles.Domain.Commands.Handlers
 
             var topic = await _dbContext.Posts
                 .FirstOrDefaultAsync(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.TopicId &&
                     x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
@@ -45,7 +45,7 @@ namespace Atles.Domain.Commands.Handlers
 
             if (topic == null)
             {
-                throw new DataException($"Topic with Id {command.Id} not found.");
+                throw new DataException($"Topic with Id {command.TopicId} not found.");
             }
 
             var title = Regex.Replace(command.Title, @"\s+", " "); // Remove multiple spaces from title

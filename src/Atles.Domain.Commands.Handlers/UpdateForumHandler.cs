@@ -34,12 +34,12 @@ namespace Atles.Domain.Commands.Handlers
                 .Include(x => x.Category)
                 .FirstOrDefaultAsync(x =>
                     x.Category.SiteId == command.SiteId &&
-                    x.Id == command.Id &&
+                    x.Id == command.ForumId &&
                     x.Status != ForumStatusType.Deleted);
 
             if (forum == null)
             {
-                throw new DataException($"Forum with Id {command.Id} not found.");
+                throw new DataException($"Forum with Id {command.ForumId} not found.");
             }
 
             var originalCategoryId = forum.CategoryId;
@@ -53,7 +53,7 @@ namespace Atles.Domain.Commands.Handlers
                 newCategory.IncreaseTopicsCount(forum.TopicsCount);
                 newCategory.IncreaseRepliesCount(forum.RepliesCount);
 
-                await ReorderForumsInCategory(originalCategoryId, command.Id, command.SiteId, command.UserId);
+                await ReorderForumsInCategory(originalCategoryId, command.ForumId, command.SiteId, command.UserId);
 
                 var newCategoryForumsCount = await _dbContext.Forums
                     .Where(x => x.CategoryId == command.CategoryId && x.Status != ForumStatusType.Deleted)
@@ -82,7 +82,7 @@ namespace Atles.Domain.Commands.Handlers
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.Forum(command.Id));
+            _cacheManager.Remove(CacheKeys.Forum(command.ForumId));
             _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
 
             return new IEvent[] { @event };

@@ -10,6 +10,8 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(PermissionSet))]
     public class UpdatePermissionSet : CommandBase
     {
+        public Guid PermissionSetId { get; set; } = Guid.NewGuid();
+
         /// <summary>
         /// The new name for the permission set.
         /// </summary>

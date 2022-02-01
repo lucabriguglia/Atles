@@ -35,7 +35,7 @@ namespace Atles.Domain.Commands.Handlers
 
             var sortOrder = forumsCount + 1;
 
-            var forum = new Forum(command.Id,
+            var forum = new Forum(command.ForumId,
                 command.CategoryId,
                 command.Name,
                 command.Slug,

@@ -12,6 +12,8 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(User))]
     public class CreateUser : CommandBase
     {
+        public Guid CreateUserId { get; set; } = Guid.NewGuid();
+
         /// <summary>
         /// The unique identifier of the user in the membership database.
         /// </summary>

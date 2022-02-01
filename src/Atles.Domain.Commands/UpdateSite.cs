@@ -10,6 +10,8 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(Site))]
     public class UpdateSite : CommandBase
     {
+        public Guid UpdateSiteId { get; set; } = Guid.NewGuid();
+
         /// <summary>
         /// The new tile of the site.
         /// </summary>

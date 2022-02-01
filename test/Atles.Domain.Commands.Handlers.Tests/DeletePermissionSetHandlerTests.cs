@@ -29,7 +29,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<DeletePermissionSet>()
-                        .With(x => x.Id, permissionSet.Id)
+                        .With(x => x.PermissionSetId, permissionSet.Id)
                         .With(x => x.SiteId, siteId)
                     .Create();
 
@@ -39,8 +39,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var permissionSetDeleted = await dbContext.PermissionSets.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var permissionSetEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var permissionSetDeleted = await dbContext.PermissionSets.FirstOrDefaultAsync(x => x.Id == command.PermissionSetId);
+                var permissionSetEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.PermissionSetId);
 
                 Assert.AreEqual(PermissionSetStatusType.Deleted, permissionSetDeleted.Status);
                 Assert.NotNull(permissionSetEvent);

@@ -10,6 +10,8 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(Post))]
     public class PinTopic : CommandBase
     {
+        public Guid TopicId { get; set; } = Guid.NewGuid();
+
         /// <summary>
         /// The unique identifier of the forum.
         /// </summary>

@@ -62,7 +62,7 @@ namespace Atles.Domain.Commands.Handlers.Tests.Validators
             sut.ShouldHaveValidationErrorFor(x => x.Name, command);
             Assert.AreEqual(command.SiteId, querySiteId);
             Assert.AreEqual(command.Name, queryName);
-            Assert.AreEqual(command.Id, queryId);
+            Assert.AreEqual(command.PermissionSetId, queryId);
         }
     }
 }

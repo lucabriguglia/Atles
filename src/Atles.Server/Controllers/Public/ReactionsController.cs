@@ -43,7 +43,7 @@ namespace Atles.Server.Controllers.Public
 
             var command = new AddPostReaction
             {
-                Id = postId,
+                PostId = postId,
                 ForumId = forumId,
                 Type = postReactionType,
                 SiteId = site.Id,
@@ -73,7 +73,7 @@ namespace Atles.Server.Controllers.Public
 
             var command = new RemovePostReaction
             {
-                Id = postId,
+                PostId = postId,
                 ForumId = forumId,
                 SiteId = site.Id,
                 UserId = user.Id

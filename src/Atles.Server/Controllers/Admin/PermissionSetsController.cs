@@ -77,7 +77,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new UpdatePermissionSet
             {
-                Id = model.Id,
+                PermissionSetId = model.Id,
                 Name = model.Name,
                 Permissions = model.Permissions.ToPermissionCommands(),
                 SiteId = site.Id,
@@ -97,7 +97,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new DeletePermissionSet
             {
-                Id = id,
+                PermissionSetId = id,
                 SiteId = site.Id,
                 UserId = user.Id
             };

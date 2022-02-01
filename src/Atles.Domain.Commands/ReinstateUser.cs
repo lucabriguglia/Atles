@@ -10,5 +10,6 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(User))]
     public class ReinstateUser : CommandBase
     {
+        public Guid ReinstateUserId { get; set; } = Guid.NewGuid();
     }
 }

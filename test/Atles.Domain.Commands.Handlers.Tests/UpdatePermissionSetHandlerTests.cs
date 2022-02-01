@@ -29,7 +29,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
                 var command = new UpdatePermissionSet
                 {
                     SiteId = permissionSet.SiteId,
-                    Id = permissionSet.Id,
+                    PermissionSetId = permissionSet.Id,
                     Name = "Permission Set",
                     Permissions = new List<PermissionCommand>
                     {
@@ -54,8 +54,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var updatedPermissionSet = await dbContext.PermissionSets.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var updatedPermissionSet = await dbContext.PermissionSets.FirstOrDefaultAsync(x => x.Id == command.PermissionSetId);
+                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.PermissionSetId);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.AreEqual(command.Name, updatedPermissionSet.Name);

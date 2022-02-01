@@ -28,7 +28,7 @@ namespace Atles.Domain.Commands.Handlers
                 .Include(x => x.Topic).ThenInclude(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Topic).ThenInclude(x => x.Forum).ThenInclude(x => x.LastPost)
                 .FirstOrDefaultAsync(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.ReplyId &&
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
@@ -36,14 +36,14 @@ namespace Atles.Domain.Commands.Handlers
 
             if (reply == null)
             {
-                throw new DataException($"Reply with Id {command.Id} not found.");
+                throw new DataException($"Reply with Id {command.ReplyId} not found.");
             }
 
             reply.Delete();
 
             var @event = new ReplyDeleted
             {
-                TargetId = command.Id,
+                TargetId = command.ReplyId,
                 TargetType = nameof(Post),
                 SiteId = command.SiteId,
                 UserId = command.UserId

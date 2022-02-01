@@ -27,7 +27,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<SuspendUser>()
-                    .With(x => x.Id, user.Id)
+                    .With(x => x.SuspendUserId, user.Id)
                     .Create();
 
                 var sut = new SuspendUserHandler(dbContext);

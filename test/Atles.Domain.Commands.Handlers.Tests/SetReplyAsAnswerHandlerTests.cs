@@ -46,7 +46,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             {
                 var command = new SetReplyAsAnswer
                 {
-                    Id = reply.Id,
+                    ReplyId = reply.Id,
                     SiteId = siteId,
                     ForumId = forumId,
                     TopicId = topicId,

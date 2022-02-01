@@ -22,13 +22,13 @@ namespace Atles.Domain.Commands.Handlers
         {
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.DeleteUserId &&
                     x.IdentityUserId == command.IdentityUserId &&
                     x.Status != UserStatusType.Deleted);
 
             if (user == null)
             {
-                throw new DataException($"User with Id {command.Id} not found.");
+                throw new DataException($"User with Id {command.DeleteUserId} not found.");
             }
 
             user.Delete();

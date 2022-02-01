@@ -10,5 +10,6 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(PermissionSet))]
     public class DeletePermissionSet : CommandBase
     {
+        public Guid PermissionSetId { get; set; } = Guid.NewGuid();
     }
 }

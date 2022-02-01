@@ -53,7 +53,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<DeleteCategory>()
-                        .With(x => x.Id, category2.Id)
+                        .With(x => x.CategoryId, category2.Id)
                         .With(x => x.SiteId, siteId)
                     .Create();
 
@@ -64,7 +64,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
                 await sut.Handle(command);
 
                 var category1Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category1.Id);
-                var category2Deleted = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.Id);
+                var category2Deleted = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == command.CategoryId);
                 var category3Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category3.Id);
                 var category4Reordered = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category4.Id);
 
@@ -72,7 +72,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
                 var forum2Deleted = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum2.Id);
 
                 var category1Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category1.Id);
-                var category2Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var category2Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.CategoryId);
                 var category3Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category3.Id);
                 var category4Event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == category4.Id);
 

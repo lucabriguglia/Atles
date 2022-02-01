@@ -25,24 +25,24 @@ namespace Atles.Domain.Commands.Handlers
                 .FirstOrDefaultAsync(x =>
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
-                    x.Id == command.Id &&
+                    x.Id == command.PostId &&
                     x.Status != PostStatusType.Deleted);
 
             if (post == null)
             {
-                throw new DataException($"Post with Id {command.Id} not found.");
+                throw new DataException($"Post with Id {command.PostId} not found.");
             }
 
             post.AddReactionToSummary(command.Type);
 
-            var postReaction = new PostReaction(command.Id, command.UserId, command.Type);
+            var postReaction = new PostReaction(command.PostId, command.UserId, command.Type);
 
             _dbContext.PostReactions.Add(postReaction);
 
             var @event = new PostReactionAdded
             {
                 Type = command.Type,
-                TargetId = command.Id,
+                TargetId = command.PostId,
                 TargetType = nameof(Post),
                 SiteId = command.SiteId,
                 UserId = command.UserId

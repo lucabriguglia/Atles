@@ -26,12 +26,12 @@ namespace Atles.Domain.Commands.Handlers
             var category = await _dbContext.Categories
                 .FirstOrDefaultAsync(x =>
                     x.SiteId == command.SiteId &&
-                    x.Id == command.Id &&
+                    x.Id == command.CategoryId &&
                     x.Status != CategoryStatusType.Deleted);
 
             if (category == null)
             {
-                throw new DataException($"Category with Id {command.Id} not found.");
+                throw new DataException($"Category with Id {command.CategoryId} not found.");
             }
 
             if (command.Direction == Direction.Up)

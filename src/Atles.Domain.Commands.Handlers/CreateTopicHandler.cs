@@ -38,7 +38,7 @@ namespace Atles.Domain.Commands.Handlers
 
             var slug = await _topicSlugGenerator.GenerateTopicSlug(command.ForumId, title);
 
-            var topic = Post.CreateTopic(command.Id,
+            var topic = Post.CreateTopic(command.TopicId,
                 command.ForumId,
                 command.UserId,
                 title,
@@ -55,7 +55,7 @@ namespace Atles.Domain.Commands.Handlers
                 Slug = slug,
                 Content = command.Content,
                 Status = command.Status,
-                TargetId = command.Id,
+                TargetId = command.TopicId,
                 TargetType = nameof(Post),
                 SiteId = command.SiteId,
                 UserId = command.UserId

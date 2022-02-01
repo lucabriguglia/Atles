@@ -73,7 +73,7 @@ namespace Atles.Server.Controllers.Public
 
             var command = new UpdateReply
             {
-                Id = model.Post.Id.Value,
+                ReplyId = model.Post.Id.Value,
                 ForumId = model.Forum.Id,
                 TopicId = model.Topic.Id,
                 Content = model.Post.Content,
@@ -84,7 +84,7 @@ namespace Atles.Server.Controllers.Public
 
             var replyUserId = await _dbContext.Posts
                 .Where(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.ReplyId &&
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
@@ -116,7 +116,7 @@ namespace Atles.Server.Controllers.Public
 
             var command = new SetReplyAsAnswer
             {
-                Id = replyId,
+                ReplyId = replyId,
                 TopicId = topicId,
                 ForumId = forumId,
                 SiteId = site.Id,
@@ -126,7 +126,7 @@ namespace Atles.Server.Controllers.Public
 
             var topicUserId = await _dbContext.Posts
                 .Where(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.ReplyId &&
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
@@ -158,7 +158,7 @@ namespace Atles.Server.Controllers.Public
 
             var command = new DeleteReply
             {
-                Id = replyId,
+                ReplyId = replyId,
                 TopicId = topicId,
                 ForumId = forumId,
                 SiteId = site.Id,
@@ -167,7 +167,7 @@ namespace Atles.Server.Controllers.Public
 
             var replyUserId = await _dbContext.Posts
                 .Where(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.ReplyId &&
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&

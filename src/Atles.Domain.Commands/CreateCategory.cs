@@ -10,6 +10,8 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(Category))]
     public class CreateCategory : CommandBase
     {
+        public Guid CategoryId { get; set; } = Guid.NewGuid();
+
         /// <summary>
         /// The name for the Forum Category.
         /// This value is mandatory.

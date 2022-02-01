@@ -10,5 +10,6 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(User))]
     public class SuspendUser : CommandBase
     {
+        public Guid SuspendUserId { get; set; } = Guid.NewGuid();
     }
 }

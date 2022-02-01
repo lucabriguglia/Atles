@@ -41,7 +41,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             {
                 var command = Fixture.Build<DeleteForum>()
                         .With(x => x.SiteId, siteId)
-                        .With(x => x.Id, forum2.Id)
+                        .With(x => x.ForumId, forum2.Id)
                     .Create();
 
                 var cacheManager = new Mock<ICacheManager>();

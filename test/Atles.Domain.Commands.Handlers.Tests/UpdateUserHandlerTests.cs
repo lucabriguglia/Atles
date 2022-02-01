@@ -27,7 +27,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<UpdateUser>()
-                        .With(x => x.Id, user.Id)
+                        .With(x => x.UpdateUserId, user.Id)
                         .Create();
 
                 var validator = new Mock<IValidator<UpdateUser>>();
@@ -39,8 +39,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == command.UpdateUserId);
+                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.UpdateUserId);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.AreEqual(command.DisplayName, updatedUser.DisplayName);

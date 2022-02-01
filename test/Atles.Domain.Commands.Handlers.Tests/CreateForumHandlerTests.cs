@@ -32,8 +32,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var forum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var forum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == command.ForumId);
+                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.ForumId);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.NotNull(forum);

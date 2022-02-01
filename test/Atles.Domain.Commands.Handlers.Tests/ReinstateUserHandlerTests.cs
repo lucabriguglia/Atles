@@ -29,7 +29,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<ReinstateUser>()
-                    .With(x => x.Id, user.Id)
+                    .With(x => x.ReinstateUserId, user.Id)
                     .Create();
 
                 var createValidator = new Mock<IValidator<CreateUser>>();

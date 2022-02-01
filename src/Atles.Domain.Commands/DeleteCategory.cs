@@ -10,5 +10,6 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(Category))]
     public class DeleteCategory : CommandBase
     {
+        public Guid CategoryId { get; set; } = Guid.NewGuid();
     }
 }

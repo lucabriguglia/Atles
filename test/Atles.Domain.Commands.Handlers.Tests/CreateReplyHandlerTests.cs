@@ -56,8 +56,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var reply = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var reply = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.ReplyId);
+                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.ReplyId);
 
                 var updatedCategory = await dbContext.Categories.FirstOrDefaultAsync(x => x.Id == category.Id);
                 var updatedForum = await dbContext.Forums.FirstOrDefaultAsync(x => x.Id == forum.Id);

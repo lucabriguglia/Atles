@@ -30,7 +30,7 @@ namespace Atles.Domain.Commands.Handlers
 
             var reply = await _dbContext.Posts
                 .FirstOrDefaultAsync(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.ReplyId &&
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
@@ -38,7 +38,7 @@ namespace Atles.Domain.Commands.Handlers
 
             if (reply == null)
             {
-                throw new DataException($"Reply with Id {command.Id} not found.");
+                throw new DataException($"Reply with Id {command.ReplyId} not found.");
             }
 
             reply.UpdateDetails(command.UserId, command.Content, command.Status);
@@ -47,7 +47,7 @@ namespace Atles.Domain.Commands.Handlers
             {
                 Content = reply.Content,
                 Status = reply.Status,
-                TargetId = command.Id,
+                TargetId = command.ReplyId,
                 TargetType = nameof(Post),
                 SiteId = command.SiteId,
                 UserId = command.UserId

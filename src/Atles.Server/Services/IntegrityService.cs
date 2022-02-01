@@ -48,7 +48,7 @@ namespace Atles.Server.Services
 
                 await _dispatcher.Send(new ConfirmUser
                 {
-                    Id = user.Id,
+                    ConfirmUserId = user.Id,
                     SiteId = site.Id
                 });
             }

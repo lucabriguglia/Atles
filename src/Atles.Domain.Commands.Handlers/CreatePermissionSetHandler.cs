@@ -25,7 +25,7 @@ namespace Atles.Domain.Commands.Handlers
         {
             await _validator.ValidateCommand(command);
 
-            var permissionSet = new PermissionSet(command.Id,
+            var permissionSet = new PermissionSet(command.PermissionSetId,
                 command.SiteId,
                 command.Name,
                 command.Permissions.ToDomainPermissions());

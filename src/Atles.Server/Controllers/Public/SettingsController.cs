@@ -48,7 +48,7 @@ namespace Atles.Server.Controllers.Public
 
             var command = new UpdateUser
             {
-                Id = user.Id,
+                UpdateUserId = user.Id,
                 DisplayName = model.User.DisplayName,
                 SiteId = site.Id,
                 UserId = user.Id

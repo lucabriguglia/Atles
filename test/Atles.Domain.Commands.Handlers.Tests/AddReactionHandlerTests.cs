@@ -45,7 +45,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<AddPostReaction>()
-                        .With(x => x.Id, topic.Id)
+                        .With(x => x.PostId, topic.Id)
                         .With(x => x.ForumId, forum.Id)
                         .With(x => x.SiteId, siteId)
                     .Create();
@@ -54,7 +54,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var updatedPost = await dbContext.Posts.Include(x => x.PostReactionSummaries).FirstOrDefaultAsync(x => x.Id == command.Id);
+                var updatedPost = await dbContext.Posts.Include(x => x.PostReactionSummaries).FirstOrDefaultAsync(x => x.Id == command.PostId);
                 var postReaction = updatedPost.PostReactionSummaries.FirstOrDefault(x => x.Type == command.Type);
 
                 Assert.AreEqual(1, postReaction.Count);

@@ -11,13 +11,13 @@ namespace Atles.Domain.Commands.Handlers.Validators
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Forum name is required.")
                 .Length(1, 50).WithMessage("Forum name must be at least 1 and at max 50 characters long.")
-                .MustAsync((c, p, cancellation) => dispatcher.Get(new IsForumNameUnique { SiteId = c.SiteId, CategoryId = c.CategoryId, Name = p, Id = c.Id }))
+                .MustAsync((c, p, cancellation) => dispatcher.Get(new IsForumNameUnique { SiteId = c.SiteId, CategoryId = c.CategoryId, Name = p, Id = c.ForumId }))
                     .WithMessage(c => $"A forum with name {c.Name} already exists.");
 
             RuleFor(c => c.Slug)
                 .NotEmpty().WithMessage("Forum slug is required.")
                 .Length(1, 50).WithMessage("Forum slug must be at least 1 and at max 50 characters long.")
-                .MustAsync((c, p, cancellation) => dispatcher.Get(new IsForumSlugUnique { SiteId = c.SiteId, Slug = p, Id = c.Id }))
+                .MustAsync((c, p, cancellation) => dispatcher.Get(new IsForumSlugUnique { SiteId = c.SiteId, Slug = p, Id = c.ForumId }))
                 .WithMessage(c => $"A forum with slug {c.Slug} already exists.");
 
             RuleFor(c => c.Description)

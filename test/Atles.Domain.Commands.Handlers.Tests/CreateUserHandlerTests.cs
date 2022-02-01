@@ -27,8 +27,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var user = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == command.CreateUserId);
+                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.CreateUserId);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.NotNull(user);

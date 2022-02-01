@@ -26,7 +26,7 @@ namespace Atles.Domain.Commands.Handlers
             var reply = await _dbContext.Posts
                 .Include(x => x.Topic)
                 .FirstOrDefaultAsync(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.ReplyId &&
                     x.TopicId == command.TopicId &&
                     x.Topic.ForumId == command.ForumId &&
                     x.Topic.Forum.Category.SiteId == command.SiteId &&
@@ -34,7 +34,7 @@ namespace Atles.Domain.Commands.Handlers
 
             if (reply == null)
             {
-                throw new DataException($"Reply with Id {command.Id} not found.");
+                throw new DataException($"Reply with Id {command.ReplyId} not found.");
             }
 
             reply.SetAsAnswer(command.IsAnswer);
@@ -42,7 +42,7 @@ namespace Atles.Domain.Commands.Handlers
             var @event = new ReplySetAsAnswer
             {
                 IsAnswer = reply.IsAnswer,
-                TargetId = command.Id,
+                TargetId = command.ReplyId,
                 TargetType = nameof(Post),
                 SiteId = command.SiteId,
                 UserId = command.UserId

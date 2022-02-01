@@ -33,7 +33,7 @@ namespace Atles.Domain.Commands.Handlers
 
             var sortOrder = categoriesCount + 1;
 
-            var category = new Category(command.Id, command.SiteId, command.Name, sortOrder, command.PermissionSetId);
+            var category = new Category(command.CategoryId, command.SiteId, command.Name, sortOrder, command.PermissionSetId);
 
             _dbContext.Categories.Add(category);
 

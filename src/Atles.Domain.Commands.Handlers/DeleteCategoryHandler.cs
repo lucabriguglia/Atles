@@ -27,12 +27,12 @@ namespace Atles.Domain.Commands.Handlers
                 .Include(x => x.Forums)
                 .FirstOrDefaultAsync(x =>
                     x.SiteId == command.SiteId &&
-                    x.Id == command.Id &&
+                    x.Id == command.CategoryId &&
                     x.Status != CategoryStatusType.Deleted);
 
             if (category == null)
             {
-                throw new DataException($"Category with Id {command.Id} not found.");
+                throw new DataException($"Category with Id {command.CategoryId} not found.");
             }
 
             category.Delete();
@@ -50,7 +50,7 @@ namespace Atles.Domain.Commands.Handlers
             var otherCategories = await _dbContext.Categories
                 .Where(x =>
                     x.SiteId == command.SiteId &&
-                    x.Id != command.Id &&
+                    x.Id != command.CategoryId &&
                     x.Status != CategoryStatusType.Deleted)
                 .ToListAsync();
 

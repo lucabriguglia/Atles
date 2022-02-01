@@ -28,7 +28,7 @@ namespace Atles.Domain.Commands.Handlers
                 .Include(x => x.Forum).ThenInclude(x => x.Category)
                 .Include(x => x.Forum).ThenInclude(x => x.LastPost)
                 .FirstOrDefaultAsync(x =>
-                    x.Id == command.Id &&
+                    x.Id == command.TopicId &&
                     x.TopicId == null &&
                     x.ForumId == command.ForumId &&
                     x.Forum.Category.SiteId == command.SiteId &&
@@ -36,14 +36,14 @@ namespace Atles.Domain.Commands.Handlers
 
             if (topic == null)
             {
-                throw new DataException($"Topic with Id {command.Id} not found.");
+                throw new DataException($"Topic with Id {command.TopicId} not found.");
             }
 
             topic.Delete();
 
             var @event = new TopicDeleted
             {
-                TargetId = command.Id,
+                TargetId = command.TopicId,
                 TargetType = nameof(Post),
                 SiteId = command.SiteId,
                 UserId = command.UserId

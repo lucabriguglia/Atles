@@ -26,7 +26,7 @@ namespace Atles.Domain.Commands.Handlers
 
             var displayName = await GenerateDisplayNameAsync();
 
-            var user = new User(command.Id,
+            var user = new User(command.CreateUserId,
                 command.IdentityUserId,
                 command.Email,
                 displayName);

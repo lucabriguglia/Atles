@@ -39,7 +39,7 @@ namespace Atles.Domain.Commands.Handlers.Tests
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<UpdateTopic>()
-                    .With(x => x.Id, topic.Id)
+                    .With(x => x.TopicId, topic.Id)
                     .With(x => x.ForumId, forumId)
                     .With(x => x.SiteId, siteId)
                     .Create();
@@ -60,8 +60,8 @@ namespace Atles.Domain.Commands.Handlers.Tests
 
                 await sut.Handle(command);
 
-                var updatedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.Id);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.Id);
+                var updatedTopic = await dbContext.Posts.FirstOrDefaultAsync(x => x.Id == command.TopicId);
+                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.TopicId);
 
                 validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
                 Assert.AreEqual(command.Title, updatedTopic.Title);

@@ -29,17 +29,17 @@ namespace Atles.Domain.Commands.Handlers
                 .Include(x => x.Forums)
                 .FirstOrDefaultAsync(x =>
                     x.SiteId == command.SiteId &&
-                    x.Id == command.Id &&
+                    x.Id == command.PermissionSetId &&
                     x.Status != PermissionSetStatusType.Deleted);
 
             if (permissionSet == null)
             {
-                throw new DataException($"Permission set with Id {command.Id} not found.");
+                throw new DataException($"Permission set with Id {command.PermissionSetId} not found.");
             }
 
             if (permissionSet.Categories.Any() || permissionSet.Forums.Any())
             {
-                throw new DataException($"Permission set with Id {command.Id} is in use and cannot be deleted.");
+                throw new DataException($"Permission set with Id {command.PermissionSetId} is in use and cannot be deleted.");
             }
 
             permissionSet.Delete();
@@ -56,7 +56,7 @@ namespace Atles.Domain.Commands.Handlers
 
             await _dbContext.SaveChangesAsync();
 
-            _cacheManager.Remove(CacheKeys.PermissionSet(command.Id));
+            _cacheManager.Remove(CacheKeys.PermissionSet(command.PermissionSetId));
 
             return new IEvent[] { @event };
         }

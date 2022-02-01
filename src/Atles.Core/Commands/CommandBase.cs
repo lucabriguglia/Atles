@@ -8,11 +8,6 @@ namespace Atles.Core.Commands
     public abstract class CommandBase : ICommand
     {
         /// <summary>
-        /// The unique identifier of the Aggregate.
-        /// </summary>
-        public Guid Id { get; set; } = Guid.NewGuid();
-
-        /// <summary>
         /// The unique identifier of the Site whose the request belongs to.
         /// </summary>
         public Guid SiteId { get; set; }

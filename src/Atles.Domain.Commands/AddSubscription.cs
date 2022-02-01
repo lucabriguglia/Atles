@@ -15,6 +15,8 @@ namespace Atles.Domain.Commands
         /// </summary>
         public SubscriptionType Type { get; set; }
 
+        public Guid SubscriptionUserId { get; set; }
+
         /// <summary>
         /// TargetId
         /// </summary>

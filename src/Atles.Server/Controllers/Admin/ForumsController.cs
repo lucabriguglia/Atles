@@ -97,7 +97,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new UpdateForum
             {
-                Id = model.Id,
+                ForumId = model.Id,
                 CategoryId = model.CategoryId,
                 Name = model.Name,
                 Slug = model.Slug,
@@ -120,7 +120,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new MoveForum
             {
-                Id = id,
+                ForumId = id,
                 SiteId = site.Id,
                 UserId = user.Id,
                 Direction = Direction.Up
@@ -139,7 +139,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new MoveForum
             {
-                Id = id,
+                ForumId = id,
                 SiteId = site.Id,
                 UserId = user.Id,
                 Direction = Direction.Down
@@ -158,7 +158,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new DeleteForum
             {
-                Id = id,
+                ForumId = id,
                 SiteId = site.Id,
                 UserId = user.Id
             };

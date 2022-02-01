@@ -10,6 +10,8 @@ namespace Atles.Domain.Commands
     [DocRequest(typeof(Category))]
     public class MoveCategory : CommandBase
     {
+        public Guid CategoryId { get; set; } = Guid.NewGuid();
+
         /// <summary>
         /// The direction.
         /// Can be either up or down.

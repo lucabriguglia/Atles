@@ -23,7 +23,7 @@ namespace Atles.Domain.Commands.Handlers
             var postReaction = await _dbContext.PostReactions
                 .Include(x => x.Post).ThenInclude(x => x.PostReactionSummaries)
                 .FirstOrDefaultAsync(x =>
-                    x.PostId == command.Id &&
+                    x.PostId == command.PostId &&
                     x.UserId == command.UserId &&
                     x.Post.ForumId == command.ForumId &&
                     x.Post.Forum.Category.SiteId == command.SiteId &&
@@ -31,7 +31,7 @@ namespace Atles.Domain.Commands.Handlers
 
             if (postReaction == null)
             {
-                throw new DataException($"Post reaction for post id {command.Id} and user id {command.UserId} not found.");
+                throw new DataException($"Post reaction for post id {command.PostId} and user id {command.UserId} not found.");
             }
 
             postReaction.Post.RemoveReactionFromSummary(postReaction.Type);
@@ -41,7 +41,7 @@ namespace Atles.Domain.Commands.Handlers
             var @event = new PostReactionRemoved
             {
                 Type = postReaction.Type,
-                TargetId = command.Id,
+                TargetId = command.PostId,
                 TargetType = nameof(Post),
                 SiteId = command.SiteId,
                 UserId = command.UserId

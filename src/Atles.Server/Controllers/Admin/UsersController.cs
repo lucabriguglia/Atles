@@ -70,7 +70,7 @@ namespace Atles.Server.Controllers.Admin
 
             await _dispatcher.Send(command);
 
-            return Ok(command.Id);
+            return Ok(command.CreateUserId);
         }
 
         [HttpGet("edit/{id}")]
@@ -130,7 +130,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new UpdateUser
             {
-                Id = model.User.Id,
+                UpdateUserId = model.User.Id,
                 DisplayName = model.User.DisplayName,
                 SiteId = site.Id,
                 UserId = user.Id,
@@ -166,7 +166,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new SuspendUser
             {
-                Id = id,
+                SuspendUserId = id,
                 SiteId = site.Id,
                 UserId = user.Id
             };
@@ -184,7 +184,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new ReinstateUser
             {
-                Id = id,
+                ReinstateUserId = id,
                 SiteId = site.Id,
                 UserId = user.Id
             };
@@ -202,7 +202,7 @@ namespace Atles.Server.Controllers.Admin
 
             var command = new DeleteUser
             {
-                Id = id,
+                DeleteUserId = id,
                 IdentityUserId = identityUserId,
                 SiteId = site.Id,
                 UserId = user.Id

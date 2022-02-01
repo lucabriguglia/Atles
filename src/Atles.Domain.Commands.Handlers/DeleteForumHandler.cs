@@ -26,12 +26,12 @@ namespace Atles.Domain.Commands.Handlers
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
                     x.Category.SiteId == command.SiteId &&
-                    x.Id == command.Id &&
+                    x.Id == command.ForumId &&
                     x.Status != ForumStatusType.Deleted);
 
             if (forum == null)
             {
-                throw new DataException($"Forum with Id {command.Id} not found.");
+                throw new DataException($"Forum with Id {command.ForumId} not found.");
             }
 
             forum.Delete();
@@ -46,7 +46,7 @@ namespace Atles.Domain.Commands.Handlers
 
             _dbContext.Events.Add(@event.ToDbEntity());
 
-            await ReorderForumsInCategory(forum.CategoryId, command.Id, command.SiteId, command.UserId);
+            await ReorderForumsInCategory(forum.CategoryId, command.ForumId, command.SiteId, command.UserId);
 
             await _dbContext.SaveChangesAsync();
 
