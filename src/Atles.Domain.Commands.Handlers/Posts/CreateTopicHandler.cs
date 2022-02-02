@@ -56,6 +56,12 @@ namespace Atles.Domain.Commands.Handlers.Posts
             var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == topic.CreatedBy);
             user.IncreaseTopicsCount();
 
+            if (command.Subscribe)
+            {
+                var subscription = new Subscription(command.UserId, command.TopicId, SubscriptionType.Topic);
+                _dbContext.Subscriptions.Add(subscription);
+            }
+
             var @event = new TopicCreated
             {
                 ForumId = command.ForumId,

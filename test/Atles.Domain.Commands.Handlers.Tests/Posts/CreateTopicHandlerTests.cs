@@ -29,7 +29,7 @@ namespace Atles.Domain.Commands.Handlers.Tests.Posts
             var forum = new Forum(forumId, category.Id, "Forum", "my-forum", "My Forum", 1);
             var user = new User(userId, Guid.NewGuid().ToString(), "Email", "Display Name");
 
-            using (var dbContext = new AtlesDbContext(options))
+            await using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Categories.Add(category);
                 dbContext.Forums.Add(forum);
@@ -37,7 +37,7 @@ namespace Atles.Domain.Commands.Handlers.Tests.Posts
                 await dbContext.SaveChangesAsync();
             }
 
-            using (var dbContext = new AtlesDbContext(options))
+            await using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<CreateTopic>()
                         .With(x => x.ForumId, forum.Id)
@@ -75,6 +75,111 @@ namespace Atles.Domain.Commands.Handlers.Tests.Posts
                 Assert.AreEqual(forum.TopicsCount + 1, updatedForum.TopicsCount);
                 Assert.AreEqual(forum.TopicsCount + 1, updatedForum.TopicsCount);
                 Assert.AreEqual(user.TopicsCount + 1, updatedUser.TopicsCount);
+            }
+        }
+
+        [Test]
+        public async Task Should_add_subscription()
+        {
+            var options = Shared.CreateContextOptions();
+
+            var category = new Category(Guid.NewGuid(), Guid.NewGuid(), "Category", 1, Guid.NewGuid());
+            var forum = new Forum(Guid.NewGuid(), category.Id, "Forum", "my-forum", "My Forum", 1);
+            var user = new User(Guid.NewGuid(), Guid.NewGuid().ToString(), "Email", "Display Name");
+
+            await using (var dbContext = new AtlesDbContext(options))
+            {
+                dbContext.Categories.Add(category);
+                dbContext.Forums.Add(forum);
+                dbContext.Users.Add(user);
+                await dbContext.SaveChangesAsync();
+            }
+
+            await using (var dbContext = new AtlesDbContext(options))
+            {
+                var command = Fixture.Build<CreateTopic>()
+                        .With(x => x.ForumId, forum.Id)
+                        .With(x => x.UserId, user.Id)
+                        .With(x => x.Subscribe, true)
+                    .Create();
+
+                var cacheManager = new Mock<ICacheManager>();
+
+                var validator = new Mock<IValidator<CreateTopic>>();
+                validator
+                    .Setup(x => x.ValidateAsync(command, new CancellationToken()))
+                    .ReturnsAsync(new ValidationResult());
+
+                var topicSlugGenerator = new Mock<ITopicSlugGenerator>();
+                topicSlugGenerator
+                    .Setup(x => x.GenerateTopicSlug(command.ForumId, command.Title))
+                    .ReturnsAsync("slug");
+
+                var sut = new CreateTopicHandler(dbContext, validator.Object, cacheManager.Object, topicSlugGenerator.Object);
+
+                await sut.Handle(command);
+
+                var subscription = await dbContext.Subscriptions
+                    .FirstOrDefaultAsync(x => 
+                        x.UserId == command.UserId && 
+                        x.TargetId == command.TopicId && 
+                        x.Type == SubscriptionType.Topic);
+
+                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.TopicId);
+
+                Assert.NotNull(subscription);
+                Assert.NotNull(@event);
+            }
+        }
+
+        [Test]
+        public async Task Should_not_add_subscription()
+        {
+            var options = Shared.CreateContextOptions();
+
+            var category = new Category(Guid.NewGuid(), Guid.NewGuid(), "Category", 1, Guid.NewGuid());
+            var forum = new Forum(Guid.NewGuid(), category.Id, "Forum", "my-forum", "My Forum", 1);
+            var user = new User(Guid.NewGuid(), Guid.NewGuid().ToString(), "Email", "Display Name");
+
+            await using (var dbContext = new AtlesDbContext(options))
+            {
+                dbContext.Categories.Add(category);
+                dbContext.Forums.Add(forum);
+                dbContext.Users.Add(user);
+                await dbContext.SaveChangesAsync();
+            }
+
+            await using (var dbContext = new AtlesDbContext(options))
+            {
+                var command = Fixture.Build<CreateTopic>()
+                        .With(x => x.ForumId, forum.Id)
+                        .With(x => x.UserId, user.Id)
+                        .With(x => x.Subscribe, false)
+                    .Create();
+
+                var cacheManager = new Mock<ICacheManager>();
+
+                var validator = new Mock<IValidator<CreateTopic>>();
+                validator
+                    .Setup(x => x.ValidateAsync(command, new CancellationToken()))
+                    .ReturnsAsync(new ValidationResult());
+
+                var topicSlugGenerator = new Mock<ITopicSlugGenerator>();
+                topicSlugGenerator
+                    .Setup(x => x.GenerateTopicSlug(command.ForumId, command.Title))
+                    .ReturnsAsync("slug");
+
+                var sut = new CreateTopicHandler(dbContext, validator.Object, cacheManager.Object, topicSlugGenerator.Object);
+
+                await sut.Handle(command);
+
+                var subscription = await dbContext.Subscriptions
+                    .FirstOrDefaultAsync(x =>
+                        x.UserId == command.UserId &&
+                        x.TargetId == command.TopicId &&
+                        x.Type == SubscriptionType.Topic);
+
+                Assert.Null(subscription);
             }
         }
     }

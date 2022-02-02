@@ -2,7 +2,7 @@
 using Atles.Domain.Models;
 using Docs.Attributes;
 
-namespace Atles.Domain.Commands
+namespace Atles.Domain.Commands.Subscriptions
 {
     /// <summary>
     /// Request to add a subscription.

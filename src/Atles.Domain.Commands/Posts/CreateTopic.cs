@@ -31,5 +31,10 @@ namespace Atles.Domain.Commands.Posts
         /// The status of the topic.
         /// </summary>
         public PostStatusType Status { get; set; }
+
+        /// <summary>
+        /// Receive notifications for replies.
+        /// </summary>
+        public bool Subscribe { get; set; }
     }
 }

@@ -15,4 +15,8 @@
     <ProjectReference Include="..\Atles.Domain.Rules\Atles.Domain.Rules.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Subscriptions\" />
+  </ItemGroup>
+
 </Project>
