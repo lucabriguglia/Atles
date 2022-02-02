@@ -2,7 +2,6 @@
 using Atles.Core.Settings;
 using Atles.Data;
 using Atles.Domain.Events.Posts;
-using Atles.Domain.Models;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -23,10 +22,8 @@ namespace Atles.Domain.Events.Handlers.ReplyCreatedHandlers
             _databaseSettings = databaseSettings.Value;
         }
 
-        public async Task Handle(ReplyCreated @event)
+        public Task Handle(ReplyCreated @event)
         {
-            await Task.CompletedTask;
-
             Thread thread = new(delegate ()
             {
                 Thread.Sleep(10000);
@@ -48,7 +45,6 @@ namespace Atles.Domain.Events.Handlers.ReplyCreatedHandlers
                             _emailSender.SendEmailAsync(subscription.User.Email, "Reply", "Reply").ConfigureAwait(false);
                         }                        
                     }
-
                 }
                 catch (Exception ex)
                 {
@@ -57,6 +53,8 @@ namespace Atles.Domain.Events.Handlers.ReplyCreatedHandlers
             });
 
             thread.Start();
+
+            return Task.CompletedTask;
         }
     }
 }
