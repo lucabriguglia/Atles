@@ -32,6 +32,8 @@ namespace Atles.Reporting.Models.Public
             public Guid UserId { get; set; }
 
             public bool Locked { get; set; }
+
+            public bool Subscribe { get; set; }
         }
     }
 }

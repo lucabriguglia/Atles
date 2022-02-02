@@ -201,7 +201,8 @@ namespace Atles.Server.Controllers.Public
                 Content = model.Topic.Content,
                 Status = PostStatusType.Published,
                 SiteId = site.Id,
-                UserId = user.Id
+                UserId = user.Id,
+                Subscribe = model.Topic.Subscribe
             };
 
             await _dispatcher.Send(command);
