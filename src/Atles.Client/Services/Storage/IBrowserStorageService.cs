@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 
 namespace Atles.Client.Services.Storage;
 
-public interface IBrowserStorageService<T> where T : IBrowserStorageCommand
+public interface IBrowserStorageService<T> where T : IBrowserStorageItem
 {
     Task<List<T>> GetList();
     Task AddToList(T request);

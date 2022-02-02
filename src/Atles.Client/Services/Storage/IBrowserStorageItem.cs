@@ -1,6 +1,6 @@
 ﻿namespace Atles.Client.Services.Storage;
 
-public interface IBrowserStorageCommand
+public interface IBrowserStorageItem
 {
     string Key { get; set; }
 }

@@ -6,7 +6,7 @@ using Microsoft.JSInterop;
 
 namespace Atles.Client.Services.Storage
 {
-    public abstract class BrowserStorageService<T> : IBrowserStorageService<T> where T : IBrowserStorageCommand
+    public abstract class BrowserStorageService<T> : IBrowserStorageService<T> where T : IBrowserStorageItem
     {
         protected readonly string StorageType;
         private readonly IJSRuntime _jSRuntime;
