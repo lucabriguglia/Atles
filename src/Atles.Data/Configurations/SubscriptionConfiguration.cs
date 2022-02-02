@@ -10,7 +10,7 @@ public class SubscriptionConfiguration : IEntityTypeConfiguration<Subscription>
     {
         builder.ToTable("Subscription");
 
-        builder.HasKey(x => new { x.UserId, x.TargetId });
+        builder.HasKey(x => new { x.UserId, TargetId = x.ItemId });
 
         builder
             .HasOne(x => x.User)

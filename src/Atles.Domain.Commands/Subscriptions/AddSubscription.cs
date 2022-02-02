@@ -11,18 +11,18 @@ namespace Atles.Domain.Commands.Subscriptions
     public class AddSubscription : CommandBase
     {
         /// <summary>
-        /// Type of subscription
+        /// The type of subscription  (category, forum or topic).
         /// </summary>
         public SubscriptionType Type { get; set; }
 
         /// <summary>
-        /// SubscriptionUserId
+        /// The id of the item (category, forum or topic).
         /// </summary>
-        public Guid AddSubscriptionUserId { get; set; }
+        public Guid ItemId { get; set; }
 
         /// <summary>
-        /// TargetId
+        /// The id of the forum.
         /// </summary>
-        public Guid TargetId { get; set; }
+        public Guid ForumId { get; set; }
     }
 }

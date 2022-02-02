@@ -10,6 +10,8 @@ namespace Atles.Domain.Commands.Subscriptions;
 [DocRequest(typeof(Subscription))]
 public class RemoveSubscription : CommandBase
 {
-    public Guid RemoveSubscriptionUserId { get; set; }
-    public Guid TargetId { get; set; }
+    /// <summary>
+    /// The id of the item (category, forum or topic).
+    /// </summary>
+    public Guid ItemId { get; set; }
 }

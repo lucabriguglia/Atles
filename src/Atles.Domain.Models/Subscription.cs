@@ -15,14 +15,14 @@ namespace Atles.Domain.Models
         public Guid UserId { get; private set; }
 
         /// <summary>
-        /// TargetId
-        /// </summary>
-        public Guid TargetId { get; private set; }
-
-        /// <summary>
         /// Type of subscription
         /// </summary>
         public SubscriptionType Type { get; private set; }
+
+        /// <summary>
+        /// TargetId
+        /// </summary>
+        public Guid ItemId { get; private set; }
 
         /// <summary>
         /// Reference to the user who added the subscription.
@@ -40,13 +40,13 @@ namespace Atles.Domain.Models
         /// Subscription
         /// </summary>
         /// <param name="userId"></param>
-        /// <param name="targetId"></param>
         /// <param name="type"></param>
-        public Subscription(Guid userId, Guid targetId, SubscriptionType type)
+        /// <param name="itemId"></param>
+        public Subscription(Guid userId, SubscriptionType type, Guid itemId)
         {
             UserId = userId;
-            TargetId = targetId;
             Type = type;
+            ItemId = itemId;
         }
     }
 }

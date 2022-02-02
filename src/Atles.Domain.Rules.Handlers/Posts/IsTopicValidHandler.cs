@@ -17,13 +17,13 @@ namespace Atles.Domain.Rules.Handlers.Posts
 
         public async Task<bool> Handle(IsTopicValid query)
         {
-            var any = await _dbContext.Posts
-                .AnyAsync(x => x.ForumId == query.ForumId &&
-                               x.Forum.Category.SiteId == query.SiteId &&
-                               x.Id == query.Id &&
-                               x.TopicId == null &&
-                               x.Status == PostStatusType.Published);
-            return any;
+            return await _dbContext.Posts
+                .AnyAsync(x => 
+                    x.ForumId == query.ForumId &&
+                    x.Forum.Category.SiteId == query.SiteId &&
+                    x.Id == query.Id &&
+                    x.TopicId == null &&
+                    x.Status == PostStatusType.Published);
         }
     }
 }

@@ -58,7 +58,7 @@ namespace Atles.Domain.Commands.Handlers.Posts
 
             if (command.Subscribe)
             {
-                var subscription = new Subscription(command.UserId, command.TopicId, SubscriptionType.Topic);
+                var subscription = new Subscription(command.UserId, SubscriptionType.Topic, command.TopicId);
                 _dbContext.Subscriptions.Add(subscription);
             }
 

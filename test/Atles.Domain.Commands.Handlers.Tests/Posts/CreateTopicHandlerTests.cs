@@ -122,7 +122,7 @@ namespace Atles.Domain.Commands.Handlers.Tests.Posts
                 var subscription = await dbContext.Subscriptions
                     .FirstOrDefaultAsync(x => 
                         x.UserId == command.UserId && 
-                        x.TargetId == command.TopicId && 
+                        x.ItemId == command.TopicId && 
                         x.Type == SubscriptionType.Topic);
 
                 var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.TopicId);
@@ -176,7 +176,7 @@ namespace Atles.Domain.Commands.Handlers.Tests.Posts
                 var subscription = await dbContext.Subscriptions
                     .FirstOrDefaultAsync(x =>
                         x.UserId == command.UserId &&
-                        x.TargetId == command.TopicId &&
+                        x.ItemId == command.TopicId &&
                         x.Type == SubscriptionType.Topic);
 
                 Assert.Null(subscription);
