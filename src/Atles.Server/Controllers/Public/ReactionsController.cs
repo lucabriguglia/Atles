@@ -3,13 +3,16 @@ using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Domain.Commands.Posts;
 using Atles.Domain.Models;
+using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Server.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
 namespace Atles.Server.Controllers.Public
 {
+    [Authorize]
     [Route("api/public/reactions")]
     [ApiController]
     public class ReactionsController : SiteControllerBase
@@ -23,6 +26,31 @@ namespace Atles.Server.Controllers.Public
             _dispatcher = dispatcher;
             _securityService = securityService;
             _logger = logger;
+        }
+
+        [HttpGet("topic-reactions/{topicId}")]
+        public async Task<ActionResult<UserTopicReactionsModel>> TopicReactions(Guid topicId)
+        {
+            var site = await CurrentSite();
+            var user = await CurrentUser();
+
+            var query = new GetUserTopicReactions
+            {
+                SiteId = site.Id,
+                UserId = user.Id,
+                TopicId = topicId
+            };
+
+            var model = await _dispatcher.Get(query);
+
+            if (model != null)
+            {
+                return model;
+            }
+
+            _logger.LogWarning("User not found.");
+
+            return NotFound();
         }
 
         [HttpPost("add-reaction/{forumId}/{postId}")]

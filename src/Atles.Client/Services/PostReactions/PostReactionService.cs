@@ -64,7 +64,7 @@ public class PostReactionService : IPostReactionService
             return JsonSerializer.Deserialize<UserTopicReactionsModel>(localData);
         }
 
-        var serverData = await _apiService.GetFromJsonAsync<UserTopicReactionsModel>($"api/public/users/topic-reactions/{topicId}").ConfigureAwait(false);
+        var serverData = await _apiService.GetFromJsonAsync<UserTopicReactionsModel>($"api/public/reactions/topic-reactions/{topicId}").ConfigureAwait(false);
         var jsonData = JsonSerializer.Serialize(serverData);
 
         await _jSRuntime.InvokeVoidAsync("sessionStorage.setItem", $"Reactions|{topicId}", jsonData).ConfigureAwait(false);

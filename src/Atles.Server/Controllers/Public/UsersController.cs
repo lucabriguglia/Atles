@@ -6,7 +6,6 @@ using Atles.Domain.Models;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Server.Services;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
@@ -69,32 +68,6 @@ namespace Atles.Server.Controllers.Public
 
             var model = await _dispatcher.Get(new GetUserPage
                 {SiteId = site.Id, UserId = userId, AccessibleForumIds = accessibleForumIds});
-
-            if (model != null)
-            {
-                return model;
-            }
-
-            _logger.LogWarning("User not found.");
-
-            return NotFound();
-        }
-
-        [Authorize]
-        [HttpGet("topic-reactions/{topicId}")]
-        public async Task<ActionResult<UserTopicReactionsModel>> TopicReactions(Guid topicId)
-        {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
-            var query = new GetUserTopicReactions
-            {
-                SiteId = site.Id, 
-                UserId = user.Id, 
-                TopicId = topicId
-            };
-
-            var model = await _dispatcher.Get(query);
 
             if (model != null)
             {
