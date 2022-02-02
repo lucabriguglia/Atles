@@ -2,6 +2,7 @@
 using System.Net;
 using System.Net.Mail;
 using System.Threading.Tasks;
+using Atles.Core.Settings;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;

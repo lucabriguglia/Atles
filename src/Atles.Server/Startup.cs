@@ -1,13 +1,16 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Atles.Core;
+using Atles.Core.Settings;
 using Atles.Data;
 using Atles.Domain.Commands.Handlers.Categories;
 using Atles.Domain.Commands.Handlers.Categories.Validators;
+using Atles.Domain.Events.Handlers.ReplyCreatedHandlers;
 using Atles.Domain.Models;
 using Atles.Domain.Rules.Handlers.Categories;
 using Atles.Reporting.Handlers.Admin;
 using Atles.Reporting.Models.Admin.Categories;
+using Atles.Server.Extensions;
 using Atles.Server.Middlewares;
 using Atles.Server.Services;
 using Docs;
@@ -37,6 +40,11 @@ namespace Atles.Server
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
+            services.Configure<DatabaseSettings>(options => {
+                options.AtlesConnectionString = Configuration.GetConnectionString("AtlesConnection");
+                options.IdentityConnectionString = Configuration.GetConnectionString("IdentityConnection");
+            });
+
             services.Configure<MailSettings>(Configuration.GetSection("MailSettings"));
 
             services.AddDbContext<AtlesDbContext>(options =>
@@ -87,6 +95,7 @@ namespace Atles.Server
             //});
 
             services.AddDocs();
+            services.AddAutoMapper();
 
             services.Scan(s => s
                 .FromAssembliesOf(
@@ -97,7 +106,8 @@ namespace Atles.Server
                     typeof(IsCategoryNameUniqueHandler), 
                     typeof(IndexPageModel), 
                     typeof(GetCategoriesIndexHandler), 
-                    typeof(AtlesDbContext))
+                    typeof(AtlesDbContext),
+                    typeof(SubscriptionHandler))
                 .AddClasses()
                 .AsImplementedInterfaces());
         }
