@@ -2,7 +2,9 @@ using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Atles.Client.Services;
 using Atles.Client.Services.Api;
+using Atles.Client.Services.PostReactions;
 using Atles.Client.Services.Storage;
 using Atles.Reporting.Models.Public;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
@@ -53,6 +55,7 @@ namespace Atles.Client
 
             builder.Services.AddScoped(typeof(ILocalStorageService<>), typeof(LocalStorageService<>));
             builder.Services.AddScoped(typeof(ISessionStorageService<>), typeof(SessionStorageService<>));
+            builder.Services.AddScoped(typeof(IPostReactionService), typeof(PostReactionService));
 
             builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 

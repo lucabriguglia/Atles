@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atles.Client.Models;
 using Atles.Client.Services;
+using Atles.Client.Services.PostReactions;
 using Atles.Client.Shared;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Shared;
@@ -17,6 +18,8 @@ namespace Atles.Client.Components.Themes
     {
         [Parameter] public string ForumSlug { get; set; }
         [Parameter] public string TopicSlug { get; set; }
+
+        [Inject] public IPostReactionService PostReactionService { get; set; }
 
         protected TopicPageModel Model { get; set; }
         protected UserTopicReactionsModel UserTopicReactions { get; set; }
@@ -60,9 +63,7 @@ namespace Atles.Client.Components.Themes
                 DisplayPage = true;
 
                 var claimsPrincipal = await GetClaimsPrincipal();
-                UserTopicReactions = claimsPrincipal.Identity.IsAuthenticated
-                    ? await ApiService.GetFromJsonAsync<UserTopicReactionsModel>($"api/public/users/topic-reactions/{Model.Topic.Id}")
-                    : new UserTopicReactionsModel();
+                UserTopicReactions = await PostReactionService.GetReactions(Model.Topic.Id);
             }
             catch (Exception)
             {
@@ -215,7 +216,7 @@ namespace Atles.Client.Components.Themes
 
         protected async Task AddReactionAsync(ReactionCommandModel command)
         {
-            await ApiService.PostAsJsonAsync($"api/public/reactions/add-reaction/{Model.Forum.Id}/{command.PostId}", command.PostReactionType);
+            await PostReactionService.AddReaction(Model.Forum.Id, Model.Topic.Id, command);
 
             UserTopicReactions.PostReactions.Add(command.PostId, command.PostReactionType);
 
@@ -236,7 +237,7 @@ namespace Atles.Client.Components.Themes
 
         protected async Task RemoveReactionAsync(ReactionCommandModel command)
         {
-            await ApiService.PostAsJsonAsync($"api/public/reactions/remove-reaction/{Model.Forum.Id}/{command.PostId}", command.PostReactionType);
+            await PostReactionService.RemoveReaction(Model.Forum.Id, Model.Topic.Id, command);
 
             UserTopicReactions.PostReactions.Remove(command.PostId);
 
