@@ -40,7 +40,7 @@ namespace Atles.Domain.Events.Handlers.ReplyCreatedHandlers
                             .Where(x => x.ItemId == @event.TopicId)
                             .ToList();
 
-                        foreach (var subscription in subscriptions)
+                        foreach (var subscription in subscriptions.Where(x => x.UserId != @event.UserId))
                         {
                             _emailSender.SendEmailAsync(subscription.User.Email, "Reply", "Reply").ConfigureAwait(false);
                         }                        

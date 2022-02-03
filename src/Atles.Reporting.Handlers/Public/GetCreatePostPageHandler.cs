@@ -38,6 +38,10 @@ namespace Atles.Reporting.Handlers.Public
                     Id = forum.Id,
                     Name = forum.Name,
                     Slug = forum.Slug
+                },
+                Topic = new PostPageModel.TopicModel
+                {
+                    Subscribe = true
                 }
             };
 
