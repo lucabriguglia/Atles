@@ -213,6 +213,9 @@
   <data name="No topics found for this forum." xml:space="preserve">
     <value>Nessuna discussione trovata per questo forum.</value>
   </data>
+  <data name="Notify me of new replies" xml:space="preserve">
+    <value>Notifica per nuove risposte</value>
+  </data>
   <data name="Privacy" xml:space="preserve">
     <value>Privacy</value>
   </data>
