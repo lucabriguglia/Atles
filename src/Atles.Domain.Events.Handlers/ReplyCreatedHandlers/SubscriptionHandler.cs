@@ -26,8 +26,6 @@ namespace Atles.Domain.Events.Handlers.ReplyCreatedHandlers
         {
             Thread thread = new(delegate ()
             {
-                Thread.Sleep(10000);
-
                 try
                 {
                     var optionsBuilder = new DbContextOptionsBuilder<AtlesDbContext>();
