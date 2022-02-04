@@ -27,7 +27,7 @@ namespace Atles.Domain.Commands.Handlers.Tests.Users
             using (var dbContext = new AtlesDbContext(options))
             {
                 var command = Fixture.Build<ConfirmUser>()
-                    .With(x => x.ConfirmUserId, user.Id)
+                    .With(x => x.IdentityUserId, user.IdentityUserId)
                     .Create();
 
                 var sut = new ConfirmUserHandler(dbContext);

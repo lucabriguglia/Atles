@@ -1,20 +1,20 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Data;
 using Atles.Domain.Commands.Users;
-using Atles.Domain.Models;
 using Atles.Reporting.Models.Public.Queries;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Server.Services
 {
-    public class IntegrityService : IIntegrityService
+    public class IdentityIntegrityService : IIdentityIntegrityService
     {
         private readonly IDispatcher _dispatcher;
         private readonly AtlesDbContext _dbContext;
 
-        public IntegrityService(IDispatcher dispatcher, AtlesDbContext dbContext)
+        public IdentityIntegrityService(IDispatcher dispatcher, AtlesDbContext dbContext)
         {
             _dispatcher = dispatcher;
             _dbContext = dbContext;
@@ -38,20 +38,27 @@ namespace Atles.Server.Services
             }
         }
 
-        public async Task EnsureUserConfirmedAsync(IdentityUser identityUser)
+        public async Task ConfirmUserAsync(IdentityUser identityUser)
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == identityUser.Id);
+            var site = await _dispatcher.Get(new GetCurrentSite());
 
-            if (user != null && user.Status == UserStatusType.Pending)
+            await _dispatcher.Send(new ConfirmUser
             {
-                var site = await _dispatcher.Get(new GetCurrentSite());
+                IdentityUserId = identityUser.Id,
+                SiteId = site.Id
+            });
+        }
 
-                await _dispatcher.Send(new ConfirmUser
-                {
-                    ConfirmUserId = user.Id,
-                    SiteId = site.Id
-                });
-            }
+        public async Task UpdateEmailAsync(IdentityUser identityUser)
+        {
+            var site = await _dispatcher.Get(new GetCurrentSite());
+
+            await _dispatcher.Send(new ChangeEmail
+            {
+                IdentityUserId = identityUser.Id,
+                Email = identityUser.Email,
+                SiteId = site.Id
+            });
         }
     }
 }

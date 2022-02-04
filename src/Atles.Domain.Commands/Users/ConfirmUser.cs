@@ -10,6 +10,6 @@ namespace Atles.Domain.Commands.Users
     [DocRequest(typeof(User))]
     public class ConfirmUser : CommandBase
     {
-        public Guid ConfirmUserId { get; set; } = Guid.NewGuid();
+        public string IdentityUserId { get; set; }
     }
 }

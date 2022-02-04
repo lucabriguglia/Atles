@@ -9,28 +9,25 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Domain.Commands.Handlers.Users
 {
-    public class ConfirmUserHandler : ICommandHandler<ConfirmUser>
+    public class ChangeEmailHandler : ICommandHandler<ChangeEmail>
     {
         private readonly AtlesDbContext _dbContext;
 
-        public ConfirmUserHandler(AtlesDbContext dbContext)
+        public ChangeEmailHandler(AtlesDbContext dbContext)
         {
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(ConfirmUser command)
+        public async Task<IEnumerable<IEvent>> Handle(ChangeEmail command)
         {
-            var user = await _dbContext.Users
-                .FirstOrDefaultAsync(x =>
-                    x.IdentityUserId == command.IdentityUserId &&
-                    x.Status == UserStatusType.Pending);
+            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.IdentityUserId == command.IdentityUserId);
 
             if (user == null)
             {
-                throw new DataException($"User with Id {command.IdentityUserId} not found.");
+                throw new DataException($"User with IdentityUserId {command.IdentityUserId} not found.");
             }
 
-            user.Confirm();
+            user.UpdateEmail(command.Email);
 
             var @event = new UserConfirmed
             {

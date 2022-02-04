@@ -18,12 +18,12 @@ namespace Atles.Server.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
         private readonly ILogger<LoginModel> _logger;
-        private readonly IIntegrityService _integrityService;
+        private readonly IIdentityIntegrityService _integrityService;
 
         public LoginModel(SignInManager<IdentityUser> signInManager, 
             ILogger<LoginModel> logger,
             UserManager<IdentityUser> userManager, 
-            IIntegrityService integrityService)
+            IIdentityIntegrityService integrityService)
         {
             _userManager = userManager;
             _integrityService = integrityService;

@@ -131,12 +131,21 @@ namespace Atles.Domain.Models
         }
 
         /// <summary>
-        /// Updates user's details.
+        /// Updates details.
         /// </summary>
         /// <param name="displayName"></param>
         public void UpdateDetails(string displayName)
         {
             DisplayName = displayName;
+        }
+
+        /// <summary>
+        /// Updates email.
+        /// </summary>
+        /// <param name="email"></param>
+        public void UpdateEmail(string email)
+        {
+            Email = email;
         }
 
         /// <summary>

@@ -4,6 +4,7 @@
 
 using System.Text;
 using System.Threading.Tasks;
+using Atles.Server.Services;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
@@ -15,11 +16,13 @@ namespace Atles.Server.Areas.Identity.Pages.Account
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly SignInManager<IdentityUser> _signInManager;
+        private readonly IIdentityIntegrityService _identityIntegrityService;
 
-        public ConfirmEmailChangeModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager)
+        public ConfirmEmailChangeModel(UserManager<IdentityUser> userManager, SignInManager<IdentityUser> signInManager, IIdentityIntegrityService identityIntegrityService)
         {
             _userManager = userManager;
             _signInManager = signInManager;
+            _identityIntegrityService = identityIntegrityService;
         }
 
         /// <summary>
@@ -61,6 +64,9 @@ namespace Atles.Server.Areas.Identity.Pages.Account
 
             await _signInManager.RefreshSignInAsync(user);
             StatusMessage = "Thank you for confirming your email change.";
+
+            await _identityIntegrityService.UpdateEmailAsync(user);
+
             return Page();
         }
     }
