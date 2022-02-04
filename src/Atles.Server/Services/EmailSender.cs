@@ -9,9 +9,6 @@ using Microsoft.Extensions.Options;
 
 namespace Atles.Server.Services
 {
-    /// <summary>
-    /// Only used for ASP.NET Core Identity
-    /// </summary>
     public class EmailSender : IEmailSender
     {
         private readonly MailSettings _mailSettings;
@@ -49,9 +46,9 @@ namespace Atles.Server.Services
 
                 await smtp.SendMailAsync(message);
             }
-            catch (Exception e)
+            catch (Exception ex)
             {
-                _logger.LogError(e.Message);
+                _logger.LogError(ex.Message);
                 throw;
             }
         }
