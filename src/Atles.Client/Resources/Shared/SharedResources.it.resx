@@ -210,6 +210,9 @@
   <data name="Sorry, there's nothing at this address." xml:space="preserve">
     <value>Spiacenti, non c'e' nulla a questo indirizzo.</value>
   </data>
+  <data name="Subscribe" xml:space="preserve">
+    <value>Sottoscrivi</value>
+  </data>
   <data name="Text" xml:space="preserve">
     <value>Testo</value>
   </data>
@@ -218,6 +221,9 @@
   </data>
   <data name="Unpin" xml:space="preserve">
     <value>Stacca</value>
+  </data>
+  <data name="Unsubscribe" xml:space="preserve">
+    <value>Annulla Iscrizione</value>
   </data>
   <data name="You are not authorized to access this resource." xml:space="preserve">
     <value>Non siete autorizzati ad accedere a questa risorsa.</value>

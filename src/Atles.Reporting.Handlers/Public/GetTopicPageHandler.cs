@@ -42,6 +42,8 @@ namespace Atles.Reporting.Handlers.Public
                 return null;
             }
 
+            var subscription = await _dbContext.Subscriptions.FirstOrDefaultAsync(x => x.UserId == query.UserId && x.ItemId == topic.Id);
+
             var result = new TopicPageModel
             {
                 Forum = new TopicPageModel.ForumModel
@@ -64,6 +66,7 @@ namespace Atles.Reporting.Handlers.Public
                     Pinned = topic.Pinned,
                     Locked = topic.Locked,
                     HasAnswer = topic.HasAnswer,
+                    Subscribed = subscription != null,
                     Reactions = topic.PostReactionSummaries.Select(x => new TopicPageModel.ReactionModel { Type = x.Type, Count = x.Count }).ToList()
                 },
                 Replies = await _dispatcher.Get(new GetTopicPageReplies { TopicId = topic.Id, Options = query.Options })

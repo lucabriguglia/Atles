@@ -43,8 +43,9 @@ namespace Atles.Server.Controllers.Public
 
             var model = await _dispatcher.Get(new GetTopicPage 
             { 
-                SiteId = site.Id, 
-                ForumSlug = forumSlug, 
+                SiteId = site.Id,
+                UserId = user.Id,
+                ForumSlug = forumSlug,
                 TopicSlug = topicSlug, 
                 Options = new QueryOptions(page, search) 
             });
@@ -69,11 +70,11 @@ namespace Atles.Server.Controllers.Public
                 return Unauthorized();
             }
 
-            model.CanEdit = _securityService.HasPermission(PermissionType.Edit, permissions) && !user.IsSuspended;
-            model.CanReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !user.IsSuspended;
-            model.CanDelete = _securityService.HasPermission(PermissionType.Delete, permissions) && !user.IsSuspended;
-            model.CanModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !user.IsSuspended;
-            model.CanReact = _securityService.HasPermission(PermissionType.Reactions, permissions) && !user.IsSuspended;
+            model.Permissions.CanEdit = _securityService.HasPermission(PermissionType.Edit, permissions) && !user.IsSuspended;
+            model.Permissions.CanReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !user.IsSuspended;
+            model.Permissions.CanDelete = _securityService.HasPermission(PermissionType.Delete, permissions) && !user.IsSuspended;
+            model.Permissions.CanModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !user.IsSuspended;
+            model.Permissions.CanReact = _securityService.HasPermission(PermissionType.Reactions, permissions) && !user.IsSuspended;
 
             return model;
         }

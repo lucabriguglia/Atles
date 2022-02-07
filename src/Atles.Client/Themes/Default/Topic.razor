@@ -1,4 +1,5 @@
-﻿@inherits Atles.Client.Components.Themes.TopicComponent
+﻿@using Atles.Domain.Commands.Subscriptions
+@inherits Atles.Client.Components.Themes.TopicComponent
 
 @if (Model == null)
 {
@@ -52,10 +53,13 @@ else
                         <TopicMenu TopicId="@Model.Topic.Id"
                                    ForumId="@Model.Forum.Id"
                                    CanEdit="CanEditTopic()"
-                                   CanModerate="Model.CanModerate"
+                                   CanModerate="Model.Permissions.CanModerate"
                                    CanDelete="CanDeleteTopic()"
                                    PinCallback="@(async () => await PinAsync())"
                                    LockCallback="@(async () => await LockAsync())"
+                                   Subscribed="Model.Topic.Subscribed"
+                                   AddSubscriptionCallback="@(async () => await AddSubscriptionAsync())"
+                                   RemoveSubscriptionCallback="@(async () => await RemoveSubscriptionAsync())"
                                    Pinned="Model.Topic.Pinned"
                                    Locked="Model.Topic.Locked" />
                     </div>

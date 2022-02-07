@@ -14,12 +14,16 @@ namespace Atles.Reporting.Models.Public
         public ReplyModel Answer { get; set; } = new();
         public PaginatedData<ReplyModel> Replies { get; set; } = new();
         public PostModel Post { get; set; } = new();
+        public PermissionsModel Permissions { get; set; } = new();
 
-        public bool CanReply { get; set; }
-        public bool CanEdit { get; set; }
-        public bool CanDelete { get; set; }
-        public bool CanModerate { get; set; }
-        public bool CanReact { get; set; }
+        public class PermissionsModel
+        {
+            public bool CanReply { get; set; }
+            public bool CanEdit { get; set; }
+            public bool CanDelete { get; set; }
+            public bool CanModerate { get; set; }
+            public bool CanReact { get; set; }
+        }
 
         public class ForumModel
         {
@@ -42,6 +46,7 @@ namespace Atles.Reporting.Models.Public
             public bool Pinned { get; set; }
             public bool Locked { get; set; }
             public bool HasAnswer { get; set; }
+            public bool Subscribed { get; set; }
         }
 
         public class ReplyModel : PostReactionBase

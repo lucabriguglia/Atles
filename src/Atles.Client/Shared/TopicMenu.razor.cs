@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using Atles.Client.Components.Shared;
@@ -17,9 +18,13 @@ namespace Atles.Client.Shared
         [Parameter] public bool Pinned { get; set; }
         [Parameter] public bool Locked { get; set; }
 
+        [Parameter] public bool Subscribed { get; set; }
+
         [Parameter] public EventCallback<MouseEventArgs> EditCallback { get; set; }
         [Parameter] public EventCallback<MouseEventArgs> PinCallback { get; set; }
         [Parameter] public EventCallback<MouseEventArgs> LockCallback { get; set; }
+        [Parameter] public EventCallback<MouseEventArgs> AddSubscriptionCallback { get; set; }
+        [Parameter] public EventCallback<MouseEventArgs> RemoveSubscriptionCallback { get; set; }
 
         protected string PinButtonText => Pinned
             ? Loc["Unpin"]
@@ -31,9 +36,10 @@ namespace Atles.Client.Shared
 
         protected bool Display { get; set; }
 
-        protected override void OnInitialized()
+        protected override async Task OnInitializedAsync()
         {
-            Display = CanEdit || CanModerate || CanDelete;
+            var claimsPrincipal = await GetClaimsPrincipal();
+            Display = claimsPrincipal.Identity.IsAuthenticated;
         }
     }
 }

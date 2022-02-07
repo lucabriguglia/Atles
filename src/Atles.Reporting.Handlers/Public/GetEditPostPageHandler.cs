@@ -35,7 +35,6 @@ namespace Atles.Reporting.Handlers.Public
             }
 
             var subscription = await _dbContext.Subscriptions.FirstOrDefaultAsync(x => x.UserId == query.UserId && x.ItemId == query.TopicId);
-            var subscribe = subscription != null;
 
             var result = new PostPageModel
             {
@@ -53,7 +52,7 @@ namespace Atles.Reporting.Handlers.Public
                     Content = topic.Content,
                     UserId = topic.CreatedByUser.Id,
                     Locked = topic.Locked,
-                    Subscribe = subscribe
+                    Subscribe = subscription != null
                 }
             };
 

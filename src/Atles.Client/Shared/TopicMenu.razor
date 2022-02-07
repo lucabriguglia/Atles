@@ -9,6 +9,20 @@
                     &nbsp;
                 </a>
                 <div class="dropdown-menu" aria-labelledby="@(TopicId)-dropdown-menu">
+                    @if (Subscribed)
+                    {
+                        <a class="dropdown-item" href="#" @onclick:preventDefault="true" @onclick="@RemoveSubscriptionCallback">
+                            <i class="far fa-bell-slash"></i>
+                            @Loc["Unsubscribe"]
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="dropdown-item" href="#" @onclick:preventDefault="true" @onclick="@AddSubscriptionCallback">
+                            <i class="far fa-bell"></i>
+                            @Loc["Subscribe"]
+                        </a>
+                    }
                     @if (CanEdit)
                     {
                         <a class="dropdown-item" href="/forum/@ForumId/post/@TopicId/edit">
