@@ -31,6 +31,14 @@ else
                     <div class="form-group">
                         <div class="row">
                             <div class="col">
+                                <InputCheckbox @bind-Value="Model.Topic.Subscribe" />
+                                @Loc["Notify me of new replies"]
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col">
                                 <input type="submit" value="@ButtonText" class="btn btn-primary mb-1 @CssClassDisabled" />
                                 <button type="button" class="btn btn-secondary mb-1 @CssClassDisabled" @onclick="Cancel">@Loc["Cancel"]</button>
                             </div>

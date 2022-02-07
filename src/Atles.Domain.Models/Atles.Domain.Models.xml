@@ -988,9 +988,15 @@
         </member>
         <member name="M:Atles.Domain.Models.User.UpdateDetails(System.String)">
             <summary>
-            Updates user's details.
+            Updates details.
             </summary>
             <param name="displayName"></param>
+        </member>
+        <member name="M:Atles.Domain.Models.User.UpdateEmail(System.String)">
+            <summary>
+            Updates email.
+            </summary>
+            <param name="email"></param>
         </member>
         <member name="M:Atles.Domain.Models.User.IncreaseTopicsCount">
             <summary>

@@ -126,6 +126,18 @@ namespace Atles.Client.Components.Themes
             await JsRuntime.InvokeVoidAsync("atlas.interop.scrollToTarget", "reply");
         }
 
+        protected async Task AddSubscriptionAsync()
+        {
+            await ApiService.PostAsync($"api/public/subscriptions/add-subscription/{Model.Forum.Id}/{Model.Topic.Id}", null);
+            Model.Topic.Subscribed = !Model.Topic.Subscribed;
+        }
+
+        protected async Task RemoveSubscriptionAsync()
+        {
+            await ApiService.PostAsync($"api/public/subscriptions/remove-subscription/{Model.Forum.Id}/{Model.Topic.Id}", null);
+            Model.Topic.Subscribed = !Model.Topic.Subscribed;
+        }
+
         protected async Task PinAsync()
         {
             await ApiService.PostAsJsonAsync($"api/public/topics/pin-topic/{Model.Forum.Id}/{Model.Topic.Id}", !Model.Topic.Pinned);
@@ -272,32 +284,32 @@ namespace Atles.Client.Components.Themes
 
         protected bool CanEditTopic()
         {
-            return Model.CanEdit && Model.Topic.IdentityUserId == User.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.Permissions.CanEdit && Model.Topic.IdentityUserId == User.IdentityUserId && !Model.Topic.Locked || Model.Permissions.CanModerate;
         }
 
         protected bool CanDeleteTopic()
         {
-            return Model.CanDelete && Model.Topic.IdentityUserId == User.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.Permissions.CanDelete && Model.Topic.IdentityUserId == User.IdentityUserId && !Model.Topic.Locked || Model.Permissions.CanModerate;
         }
 
         protected bool CanCreateReply()
         {
-            return Model.CanReply && !Model.Topic.Locked || Model.CanModerate;
+            return Model.Permissions.CanReply && !Model.Topic.Locked || Model.Permissions.CanModerate;
         }
 
         protected bool CanEditReply(string replyUserId)
         {
-            return Model.CanEdit && replyUserId == User.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.Permissions.CanEdit && replyUserId == User.IdentityUserId && !Model.Topic.Locked || Model.Permissions.CanModerate;
         }
 
         protected bool CanDeleteReply(string replyUserId)
         {
-            return Model.CanDelete && replyUserId == User.IdentityUserId && !Model.Topic.Locked || Model.CanModerate;
+            return Model.Permissions.CanDelete && replyUserId == User.IdentityUserId && !Model.Topic.Locked || Model.Permissions.CanModerate;
         }
 
         protected bool CanReact()
         {
-            return Model.CanReact || Model.CanModerate;
+            return Model.Permissions.CanReact || Model.Permissions.CanModerate;
         }
     }
 }

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
     <PackageReference Include="FluentValidation" Version="10.3.3" />
     <PackageReference Include="LucaBriguglia.Docs" Version="1.2.0" />
     <PackageReference Include="Markdig" Version="0.26.0" />
@@ -28,6 +29,7 @@
     <ProjectReference Include="..\Atles.Client\Atles.Client.csproj" />
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
     <ProjectReference Include="..\Atles.Domain.Commands.Handlers\Atles.Domain.Commands.Handlers.csproj" />
+    <ProjectReference Include="..\Atles.Domain.Events.Handlers\Atles.Domain.Events.Handlers.csproj" />
     <ProjectReference Include="..\Atles.Domain.Models\Atles.Domain.Models.csproj" />
     <ProjectReference Include="..\Atles.Domain.Rules.Handlers\Atles.Domain.Rules.Handlers.csproj" />
     <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />

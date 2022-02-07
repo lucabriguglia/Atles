@@ -23,14 +23,14 @@ namespace Atles.Server.Areas.Identity.Pages.Account
         private readonly UserManager<IdentityUser> _userManager;
         private readonly ILogger<RegisterModel> _logger;
         private readonly IEmailSender _emailSender;
-        private readonly IIntegrityService _integrityService;
+        private readonly IIdentityIntegrityService _integrityService;
 
         public RegisterModel(
             UserManager<IdentityUser> userManager,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
             IEmailSender emailSender, 
-            IIntegrityService integrityService)
+            IIdentityIntegrityService integrityService)
         {
             _userManager = userManager;
             _signInManager = signInManager;

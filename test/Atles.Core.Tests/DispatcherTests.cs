@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Mapping;
 using Atles.Core.Queries;
 using Moq;
 using NUnit.Framework;
@@ -25,7 +26,10 @@ namespace Atles.Core.Tests
             var eventPublisher = new Mock<IEventPublisher>();
             eventPublisher.Setup(x => x.Publish(@event)).Returns(Task.CompletedTask);
 
-            var sut = new Dispatcher(commandSender.Object, queryProcessor.Object, eventPublisher.Object);
+            var objectFactory = new Mock<IObjectFactory>();
+            objectFactory.Setup(x => x.CreateConcreteObject(It.IsAny<object>())).Returns(new SampleEvent());
+
+            var sut = new Dispatcher(commandSender.Object, queryProcessor.Object, eventPublisher.Object, objectFactory.Object);
 
             await sut.Send(command);
 
@@ -45,7 +49,9 @@ namespace Atles.Core.Tests
 
             var eventPublisher = new Mock<IEventPublisher>();
 
-            var sut = new Dispatcher(commandSender.Object, queryProcessor.Object, eventPublisher.Object);
+            var objectFactory = new Mock<IObjectFactory>();
+
+            var sut = new Dispatcher(commandSender.Object, queryProcessor.Object, eventPublisher.Object, objectFactory.Object);
 
             var actual = await sut.Get(query);
 
@@ -65,7 +71,9 @@ namespace Atles.Core.Tests
             var eventPublisher = new Mock<IEventPublisher>();
             eventPublisher.Setup(x => x.Publish(@event)).Returns(Task.CompletedTask);
 
-            var sut = new Dispatcher(commandSender.Object, queryProcessor.Object, eventPublisher.Object);
+            var objectFactory = new Mock<IObjectFactory>();
+
+            var sut = new Dispatcher(commandSender.Object, queryProcessor.Object, eventPublisher.Object, objectFactory.Object);
 
             await sut.Publish(@event);
 

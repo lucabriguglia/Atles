@@ -7,5 +7,6 @@ namespace Atles.Reporting.Models.Public.Queries
     {
         public Guid ForumId { get; set; }
         public Guid TopicId { get; set; }
+        public Guid UserId { get; set; }
     }
 }

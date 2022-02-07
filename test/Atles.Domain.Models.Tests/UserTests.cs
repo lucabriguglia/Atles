@@ -52,6 +52,18 @@ namespace Atles.Domain.Models.Tests
         }
 
         [Test]
+        public void Should_update_email()
+        {
+            var sut = Fixture.Create<User>();
+
+            const string email = "new@email.com";
+
+            sut.UpdateEmail(email);
+
+            Assert.AreEqual(email, sut.Email, nameof(sut.Email));
+        }
+
+        [Test]
         public void Increase_topics_count()
         {
             var sut = Fixture.Create<User>();

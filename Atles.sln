@@ -79,11 +79,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Commands.Handl
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Rules.Handlers", "src\Atles.Domain.Rules.Handlers\Atles.Domain.Rules.Handlers.csproj", "{C0D1002B-715E-4843-8E0B-9C7484D0BBD4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Domain.Commands.Handlers.Tests", "test\Atles.Domain.Commands.Handlers.Tests\Atles.Domain.Commands.Handlers.Tests.csproj", "{8E92B329-F65A-455F-A086-44F66B0CA016}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Commands.Handlers.Tests", "test\Atles.Domain.Commands.Handlers.Tests\Atles.Domain.Commands.Handlers.Tests.csproj", "{8E92B329-F65A-455F-A086-44F66B0CA016}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Domain.Rules.Handlers.Tests", "test\Atles.Domain.Rules.Handlers.Tests\Atles.Domain.Rules.Handlers.Tests.csproj", "{699FF206-7D91-4B96-A886-7CE4446A544C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Rules.Handlers.Tests", "test\Atles.Domain.Rules.Handlers.Tests\Atles.Domain.Rules.Handlers.Tests.csproj", "{699FF206-7D91-4B96-A886-7CE4446A544C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Domain.Events.Handlers", "src\Atles.Domain.Events.Handlers\Atles.Domain.Events.Handlers.csproj", "{FE7970EF-6604-4EA8-879C-3C7A72D72C88}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Events.Handlers", "src\Atles.Domain.Events.Handlers\Atles.Domain.Events.Handlers.csproj", "{FE7970EF-6604-4EA8-879C-3C7A72D72C88}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TempWebApplicationForAspNetIdentityPages", "TempWebApplicationForAspNetIdentityPages\TempWebApplicationForAspNetIdentityPages.csproj", "{7B8E81DC-660B-4248-8507-FCD8D03DAC8C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,6 +161,10 @@ Global
 		{FE7970EF-6604-4EA8-879C-3C7A72D72C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE7970EF-6604-4EA8-879C-3C7A72D72C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE7970EF-6604-4EA8-879C-3C7A72D72C88}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7B8E81DC-660B-4248-8507-FCD8D03DAC8C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7B8E81DC-660B-4248-8507-FCD8D03DAC8C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7B8E81DC-660B-4248-8507-FCD8D03DAC8C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7B8E81DC-660B-4248-8507-FCD8D03DAC8C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -22,12 +22,12 @@ namespace Atles.Domain.Commands.Handlers.Users
         {
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
-                    x.Id == command.ConfirmUserId &&
+                    x.IdentityUserId == command.IdentityUserId &&
                     x.Status == UserStatusType.Pending);
 
             if (user == null)
             {
-                throw new DataException($"User with Id {command.ConfirmUserId} not found.");
+                throw new DataException($"User with Id {command.IdentityUserId} not found.");
             }
 
             user.Confirm();
@@ -37,7 +37,7 @@ namespace Atles.Domain.Commands.Handlers.Users
                 TargetId = user.Id,
                 TargetType = nameof(User),
                 SiteId = command.SiteId,
-                UserId = command.UserId
+                UserId = user.Id
             };
 
             _dbContext.Events.Add(@event.ToDbEntity());

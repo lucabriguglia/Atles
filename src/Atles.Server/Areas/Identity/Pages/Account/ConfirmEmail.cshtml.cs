@@ -13,9 +13,9 @@ namespace Atles.Server.Areas.Identity.Pages.Account
     public class ConfirmEmailModel : PageModel
     {
         private readonly UserManager<IdentityUser> _userManager;
-        private readonly IIntegrityService _integrityService;
+        private readonly IIdentityIntegrityService _integrityService;
 
-        public ConfirmEmailModel(UserManager<IdentityUser> userManager, IIntegrityService integrityService)
+        public ConfirmEmailModel(UserManager<IdentityUser> userManager, IIdentityIntegrityService integrityService)
         {
             _userManager = userManager;
             _integrityService = integrityService;
@@ -43,7 +43,7 @@ namespace Atles.Server.Areas.Identity.Pages.Account
 
             if (result.Succeeded)
             {
-                await _integrityService.EnsureUserConfirmedAsync(user);
+                await _integrityService.ConfirmUserAsync(user);
             }
             
             return Page();

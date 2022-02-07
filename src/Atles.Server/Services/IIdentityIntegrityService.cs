@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Identity;
 
 namespace Atles.Server.Services
 {
-    public interface IIntegrityService
+    public interface IIdentityIntegrityService
     {
         Task EnsureUserCreatedAsync(IdentityUser identityUser, bool confirm = false);
-        Task EnsureUserConfirmedAsync(IdentityUser identityUser);
+        Task ConfirmUserAsync(IdentityUser identityUser);
+        Task UpdateEmailAsync(IdentityUser identityUser);
     }
 }
