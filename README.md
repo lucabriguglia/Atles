@@ -28,7 +28,8 @@ A forum software built with ASP.NET Blazor WebAssembly and CQRS.
 
 ## Features
 
-- Post Likes
+- Post likes
+- Topic subscriptions
 - Themes
 - Multi language
 - Granular permissions
