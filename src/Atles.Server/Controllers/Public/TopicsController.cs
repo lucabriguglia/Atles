@@ -146,7 +146,13 @@ namespace Atles.Server.Controllers.Public
             var site = await CurrentSite();
             var user = await CurrentUser();
 
-            var model = await _dispatcher.Get(new GetEditPostPage { SiteId = site.Id, ForumId = forumId, TopicId = topicId });
+            var model = await _dispatcher.Get(new GetEditPostPage
+            {
+                SiteId = site.Id, 
+                ForumId = forumId, 
+                TopicId = topicId, 
+                UserId = user.Id
+            });
 
             if (model == null)
             {
@@ -230,7 +236,8 @@ namespace Atles.Server.Controllers.Public
                 Content = model.Topic.Content,
                 Status = PostStatusType.Published,
                 SiteId = site.Id,
-                UserId = user.Id
+                UserId = user.Id,
+                Subscribe = model.Topic.Subscribe
             };
 
             var topicInfo = await _dbContext.Posts

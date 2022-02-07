@@ -49,10 +49,19 @@ namespace Atles.Domain.Commands.Handlers.Posts
             }
 
             var title = Regex.Replace(command.Title, @"\s+", " "); // Remove multiple spaces from title
-
             var slug = title != topic.Title ? await _topicSlugGenerator.GenerateTopicSlug(topic.ForumId, title) : topic.Slug;
-
             topic.UpdateDetails(command.UserId, title, slug, command.Content, command.Status);
+
+            var subscription = await _dbContext.Subscriptions.FirstOrDefaultAsync(x => x.UserId == command.UserId && x.ItemId == command.TopicId);
+            switch (command.Subscribe)
+            {
+                case true when subscription == null:
+                    _dbContext.Subscriptions.Add(new Subscription(command.UserId, SubscriptionType.Topic, command.TopicId));
+                    break;
+                case false when subscription != null:
+                    _dbContext.Subscriptions.Remove(subscription);
+                    break;
+            }
 
             var @event = new TopicUpdated
             {
@@ -65,7 +74,6 @@ namespace Atles.Domain.Commands.Handlers.Posts
                 SiteId = command.SiteId,
                 UserId = command.UserId
             };
-
             _dbContext.Events.Add(@event.ToDbEntity());
 
             await _dbContext.SaveChangesAsync();
