@@ -33,8 +33,16 @@ namespace Atles.Domain.Commands.Handlers.Users
 
             user.Delete();
 
+            var existingSubscriptions = _dbContext.Subscriptions.Where(x => x.UserId == user.Id);
+
+            foreach (var subscription in existingSubscriptions)
+            {
+                _dbContext.Subscriptions.Remove(subscription);
+            }
+
             var @event = new UserDeleted
             {
+                RemovedSubscriptions = existingSubscriptions.Count(),
                 TargetId = user.Id,
                 TargetType = nameof(User),
                 SiteId = command.SiteId,

@@ -7,6 +7,6 @@ namespace Atles.Domain.Events.Users
     /// </summary>
     public class UserDeleted : EventBase
     {
-        public string IdentityUserId { get; set; }
+        public int RemovedSubscriptions { get; set; }
     }
 }

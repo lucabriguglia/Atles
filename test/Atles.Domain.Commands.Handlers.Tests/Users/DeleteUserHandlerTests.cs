@@ -22,10 +22,12 @@ namespace Atles.Domain.Commands.Handlers.Tests.Users
             var identityUserId = Guid.NewGuid();
 
             var user = new User(userId, identityUserId.ToString(), "me@email.com", "Display Name");
+            var subscription = new Subscription(userId, SubscriptionType.Forum, Guid.NewGuid());
 
             using (var dbContext = new AtlesDbContext(options))
             {
                 dbContext.Users.Add(user);
+                dbContext.Subscriptions.Add(subscription);
                 await dbContext.SaveChangesAsync();
             }
 
@@ -36,17 +38,16 @@ namespace Atles.Domain.Commands.Handlers.Tests.Users
                         .With(x => x.IdentityUserId, user.IdentityUserId)
                         .Create();
 
-                var createValidator = new Mock<IValidator<CreateUser>>();
-                var updateValidator = new Mock<IValidator<UpdateUser>>();
-
                 var sut = new DeleteUserHandler(dbContext);
 
                 await sut.Handle(command);
 
                 var userDeleted = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == user.Id);
+                var subscriptions = await dbContext.Subscriptions.Where(x => x.UserId == userId).ToListAsync();
                 var userEvent = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == user.Id);
 
                 Assert.AreEqual(UserStatusType.Deleted, userDeleted.Status);
+                Assert.Zero(subscriptions.Count);
                 Assert.NotNull(userEvent);
             }
         }
