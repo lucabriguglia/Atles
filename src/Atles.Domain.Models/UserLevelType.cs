@@ -3,25 +3,25 @@
 /// <summary>
 /// Type of user level
 /// </summary>
-public enum UserLevelCountType
+public enum UserLevelType
 {
+    /// <summary>
+    /// Number of total posts (topics and replies).
+    /// </summary>
+    Posts = 1,
+
     /// <summary>
     /// Number of topics.
     /// </summary>
-    Topics = 1,
+    Topics = 2,
 
     /// <summary>
     /// Number of replies.
     /// </summary>
-    Replies = 2,
+    Replies = 3,
 
     /// <summary>
     /// Number of accepted answers.
     /// </summary>
-    Answers = 3,
-
-    /// <summary>
-    /// Number of total posts (topics and replies).
-    /// </summary>
-    Posts = 4
+    Answers = 4
 }

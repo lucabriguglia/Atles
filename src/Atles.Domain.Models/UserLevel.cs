@@ -1,23 +1,18 @@
-﻿using System.Collections.Generic;
+﻿using System;
 
 namespace Atles.Domain.Models;
 
-/// <summary>
-/// User Level
-/// </summary>
 public class UserLevel
 {
-    public string Name { get; private set; }
-    public int Level { get; private set; }
+    public Guid UserRankId { get; private set; }
+    public UserLevelType Type { get; private set; }
+    public int Count { get; private set; }
     public string Badge { get; private set; }
 
-    public IReadOnlyCollection<UserLevelCount> UserLevelCounts => _userLevelCounts;
-    private readonly List<UserLevelCount> _userLevelCounts = new();
-
-    public UserLevel(string name, int level, string badge = null)
+    public UserLevel(UserLevelType type, int count, string badge = null)
     {
-        Name = name;
-        Level = level;
+        Type = type;
+        Count = count;
         Badge = badge;
     }
 }
