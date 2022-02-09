@@ -918,6 +918,11 @@
             The number of replies created by the user.
             </summary>
         </member>
+        <member name="P:Atles.Domain.Models.User.AnswersCount">
+            <summary>
+            The number of accepted answered posted by the user.
+            </summary>
+        </member>
         <member name="P:Atles.Domain.Models.User.Status">
             <summary>
             The status of the user.
@@ -1008,6 +1013,11 @@
             Increases the number of replies by 1.
             </summary>
         </member>
+        <member name="M:Atles.Domain.Models.User.IncreaseAnswersCount">
+            <summary>
+            Increases the number of replies by 1.
+            </summary>
+        </member>
         <member name="M:Atles.Domain.Models.User.DecreaseTopicsCount(System.Int32)">
             <summary>
             Decrease the number of topics by the given value.
@@ -1017,6 +1027,14 @@
             <param name="count"></param>
         </member>
         <member name="M:Atles.Domain.Models.User.DecreaseRepliesCount(System.Int32)">
+            <summary>
+            Decrease the number of replies by the given value.
+            If no value is given it will decrease by 1.
+            If the resulting number is less than zero, the value will be set to zero.
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="M:Atles.Domain.Models.User.DecreaseAnswersCount(System.Int32)">
             <summary>
             Decrease the number of replies by the given value.
             If no value is given it will decrease by 1.
@@ -1038,6 +1056,36 @@
         <member name="M:Atles.Domain.Models.User.Delete">
             <summary>
             Sets the status of the user as deleted.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.UserLevelType">
+            <summary>
+            Type of user level
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.UserLevelType.Posts">
+            <summary>
+            Number of total posts (topics and replies).
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.UserLevelType.Topics">
+            <summary>
+            Number of topics.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.UserLevelType.Replies">
+            <summary>
+            Number of replies.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.UserLevelType.Answers">
+            <summary>
+            Number of accepted answers.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.UserRank">
+            <summary>
+            User Rank
             </summary>
         </member>
     </members>

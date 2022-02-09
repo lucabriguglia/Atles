@@ -11,7 +11,7 @@ GO
 BEGIN TRANSACTION;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE TABLE [PermissionSet] (
         [Id] uniqueidentifier NOT NULL,
@@ -23,7 +23,7 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE TABLE [Site] (
         [Id] uniqueidentifier NOT NULL,
@@ -42,7 +42,7 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE TABLE [User] (
         [Id] uniqueidentifier NOT NULL,
@@ -51,6 +51,7 @@ BEGIN
         [DisplayName] nvarchar(max) NULL,
         [TopicsCount] int NOT NULL,
         [RepliesCount] int NOT NULL,
+        [AnswersCount] int NOT NULL,
         [Status] int NOT NULL,
         [TimeStamp] datetime2 NOT NULL,
         CONSTRAINT [PK_User] PRIMARY KEY ([Id])
@@ -58,7 +59,19 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
+BEGIN
+    CREATE TABLE [UserRank] (
+        [Id] uniqueidentifier NOT NULL,
+        [Name] nvarchar(max) NULL,
+        [Order] int NOT NULL,
+        [Badge] nvarchar(max) NULL,
+        CONSTRAINT [PK_UserRank] PRIMARY KEY ([Id])
+    );
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE TABLE [Permission] (
         [Type] int NOT NULL,
@@ -70,7 +83,7 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE TABLE [Category] (
         [Id] uniqueidentifier NOT NULL,
@@ -88,7 +101,7 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE TABLE [Event] (
         [Id] uniqueidentifier NOT NULL,
@@ -105,7 +118,7 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE TABLE [Subscription] (
         [UserId] uniqueidentifier NOT NULL,
@@ -117,7 +130,20 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
+BEGIN
+    CREATE TABLE [UserLevel] (
+        [UserRankId] uniqueidentifier NOT NULL,
+        [Type] int NOT NULL,
+        [Count] int NOT NULL,
+        [Badge] nvarchar(max) NULL,
+        CONSTRAINT [PK_UserLevel] PRIMARY KEY ([UserRankId], [Type]),
+        CONSTRAINT [FK_UserLevel_UserRank_UserRankId] FOREIGN KEY ([UserRankId]) REFERENCES [UserRank] ([Id]) ON DELETE CASCADE
+    );
+END;
+GO
+
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE TABLE [Forum] (
         [Id] uniqueidentifier NOT NULL,
@@ -138,7 +164,7 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE TABLE [Post] (
         [Id] uniqueidentifier NOT NULL,
@@ -168,7 +194,7 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE TABLE [PostReaction] (
         [PostId] uniqueidentifier NOT NULL,
@@ -182,7 +208,7 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE TABLE [PostReactionSummary] (
         [PostId] uniqueidentifier NOT NULL,
@@ -194,88 +220,88 @@ BEGIN
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_Category_PermissionSetId] ON [Category] ([PermissionSetId]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_Category_SiteId] ON [Category] ([SiteId]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_Event_UserId] ON [Event] ([UserId]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_Forum_CategoryId] ON [Forum] ([CategoryId]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_Forum_LastPostId] ON [Forum] ([LastPostId]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_Forum_PermissionSetId] ON [Forum] ([PermissionSetId]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_Post_CreatedBy] ON [Post] ([CreatedBy]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_Post_ForumId] ON [Post] ([ForumId]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_Post_LastReplyId] ON [Post] ([LastReplyId]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_Post_ModifiedBy] ON [Post] ([ModifiedBy]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_Post_TopicId] ON [Post] ([TopicId]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     CREATE INDEX [IX_PostReaction_UserId] ON [PostReaction] ([UserId]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     ALTER TABLE [Forum] ADD CONSTRAINT [FK_Forum_Post_LastPostId] FOREIGN KEY ([LastPostId]) REFERENCES [Post] ([Id]);
 END;
 GO
 
-IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220202143729_InitialCreate')
+IF NOT EXISTS(SELECT * FROM [__EFMigrationsHistory] WHERE [MigrationId] = N'20220209153725_InitialCreate')
 BEGIN
     INSERT INTO [__EFMigrationsHistory] ([MigrationId], [ProductVersion])
-    VALUES (N'20220202143729_InitialCreate', N'6.0.1');
+    VALUES (N'20220209153725_InitialCreate', N'6.0.1');
 END;
 GO
 

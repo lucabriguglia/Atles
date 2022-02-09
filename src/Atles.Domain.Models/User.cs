@@ -42,6 +42,11 @@ namespace Atles.Domain.Models
         public int RepliesCount { get; private set; }
 
         /// <summary>
+        /// The number of accepted answered posted by the user.
+        /// </summary>
+        public int AnswersCount { get; private set; }
+
+        /// <summary>
         /// The status of the user.
         /// <list type="bullet">
         /// <item>
@@ -165,6 +170,14 @@ namespace Atles.Domain.Models
         }
 
         /// <summary>
+        /// Increases the number of replies by 1.
+        /// </summary>
+        public void IncreaseAnswersCount()
+        {
+            AnswersCount += 1;
+        }
+
+        /// <summary>
         /// Decrease the number of topics by the given value.
         /// If no value is given it will decrease by 1.
         /// If the resulting number is less than zero, the value will be set to zero.
@@ -193,6 +206,22 @@ namespace Atles.Domain.Models
             if (RepliesCount < 0)
             {
                 RepliesCount = 0;
+            }
+        }
+
+        /// <summary>
+        /// Decrease the number of replies by the given value.
+        /// If no value is given it will decrease by 1.
+        /// If the resulting number is less than zero, the value will be set to zero.
+        /// </summary>
+        /// <param name="count"></param>
+        public void DecreaseAnswersCount(int count = 1)
+        {
+            AnswersCount -= count;
+
+            if (AnswersCount < 0)
+            {
+                AnswersCount = 0;
             }
         }
 

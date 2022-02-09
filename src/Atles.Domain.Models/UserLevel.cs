@@ -9,6 +9,8 @@ public class UserLevel
     public int Count { get; private set; }
     public string Badge { get; private set; }
 
+    public virtual UserRank UserRank { get; set; }
+
     public UserLevel(UserLevelType type, int count, string badge = null)
     {
         Type = type;
