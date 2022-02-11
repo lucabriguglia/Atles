@@ -1085,7 +1085,27 @@
         </member>
         <member name="T:Atles.Domain.Models.UserRank">
             <summary>
-            User Rank
+            UserRank
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.UserBadgeType.Posts">
+            <summary>
+            Number of total posts (topics and replies).
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.UserBadgeType.Topics">
+            <summary>
+            Number of topics.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.UserBadgeType.Replies">
+            <summary>
+            Number of replies.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.UserBadgeType.Answers">
+            <summary>
+            Number of accepted answers.
             </summary>
         </member>
     </members>
