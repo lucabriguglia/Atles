@@ -70,6 +70,14 @@ public class UserRank
     }
 
     /// <summary>
+    /// Remove all rules
+    /// </summary>
+    public void ClearRules()
+    {
+        _userRankRules.Clear();
+    }
+
+    /// <summary>
     /// Add rule
     /// </summary>
     /// <param name="type"></param>

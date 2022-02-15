@@ -60,10 +60,10 @@ public class UserRankRule
     /// <param name="badge"></param>
     public UserRankRule(Guid userRankId, UserRankRuleType type, string name, string description, int count, string badge)
     {
-        Name = name;
-        Description = description;
         UserRankId = userRankId;
         Type = type;
+        Name = name;
+        Description = description;
         Count = count;
         Badge = badge;
     }

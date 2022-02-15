@@ -51,7 +51,7 @@ namespace Atles.Domain.Models.Tests
         }
 
         [Test]
-        public void Move_up()
+        public void Should_move_up()
         {
             var sut = Fixture.Create<UserRank>();
 
@@ -63,15 +63,15 @@ namespace Atles.Domain.Models.Tests
         }
 
         [Test]
-        public void Move_up_throws_exception_when_sort_order_is_one()
+        public void Should_throws_exception_when_move_up_and_sort_order_is_one()
         {
-            var sut = Fixture.Build<UserRank>().Create();
+            var sut = new UserRank("Level 1", "Basic Level", 1, "basic", "Basic");
 
             Assert.Throws<ApplicationException>(() => sut.MoveUp());
         }
 
         [Test]
-        public void Move_down()
+        public void Should_move_down()
         {
             var sut = Fixture.Create<UserRank>();
 
@@ -80,6 +80,16 @@ namespace Atles.Domain.Models.Tests
             sut.MoveDown();
 
             Assert.AreEqual(currentSortOrder + 1, sut.SortOrder, nameof(sut.SortOrder));
+        }
+
+        [Test]
+        public void Should_remove_all_rules()
+        {
+            var sut = Fixture.Create<UserRank>();
+
+            sut.ClearRules();
+
+            Assert.Zero(sut.UserRankRules.Count);
         }
     }
 }

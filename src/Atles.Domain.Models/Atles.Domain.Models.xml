@@ -1113,6 +1113,11 @@
             <param name="badge"></param>
             <param name="role"></param>
         </member>
+        <member name="M:Atles.Domain.Models.UserRank.ClearRules">
+            <summary>
+            Remove all rules
+            </summary>
+        </member>
         <member name="M:Atles.Domain.Models.UserRank.AddRule(Atles.Domain.Models.UserRankRuleType,System.String,System.String,System.Int32,System.String)">
             <summary>
             Add rule
