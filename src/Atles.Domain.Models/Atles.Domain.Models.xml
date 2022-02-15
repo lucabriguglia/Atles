@@ -1058,54 +1058,157 @@
             Sets the status of the user as deleted.
             </summary>
         </member>
-        <member name="T:Atles.Domain.Models.UserLevelType">
-            <summary>
-            Type of user level
-            </summary>
-        </member>
-        <member name="F:Atles.Domain.Models.UserLevelType.Posts">
-            <summary>
-            Number of total posts (topics and replies).
-            </summary>
-        </member>
-        <member name="F:Atles.Domain.Models.UserLevelType.Topics">
-            <summary>
-            Number of topics.
-            </summary>
-        </member>
-        <member name="F:Atles.Domain.Models.UserLevelType.Replies">
-            <summary>
-            Number of replies.
-            </summary>
-        </member>
-        <member name="F:Atles.Domain.Models.UserLevelType.Answers">
-            <summary>
-            Number of accepted answers.
-            </summary>
-        </member>
         <member name="T:Atles.Domain.Models.UserRank">
             <summary>
-            UserRank
+            User Rank
             </summary>
         </member>
-        <member name="F:Atles.Domain.Models.UserBadgeType.Posts">
+        <member name="P:Atles.Domain.Models.UserRank.Id">
             <summary>
-            Number of total posts (topics and replies).
+            Unique identifier
             </summary>
         </member>
-        <member name="F:Atles.Domain.Models.UserBadgeType.Topics">
+        <member name="P:Atles.Domain.Models.UserRank.Name">
             <summary>
-            Number of topics.
+            The name of the user rank
             </summary>
         </member>
-        <member name="F:Atles.Domain.Models.UserBadgeType.Replies">
+        <member name="P:Atles.Domain.Models.UserRank.Description">
             <summary>
-            Number of replies.
+            The description of the user rank
             </summary>
         </member>
-        <member name="F:Atles.Domain.Models.UserBadgeType.Answers">
+        <member name="P:Atles.Domain.Models.UserRank.SortOrder">
             <summary>
-            Number of accepted answers.
+            The sort order of the user rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.UserRank.Badge">
+            <summary>
+            The badge of the user rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.UserRank.Role">
+            <summary>
+            The role automatically assigned when a user reaches the rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.UserRank.UserRankRules">
+            <summary>
+            The rules associated with the user rank
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Models.UserRank.#ctor">
+            <summary>
+            New empty instance
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Models.UserRank.#ctor(System.String,System.String,System.Int32,System.String,System.String)">
+            <summary>
+            New instance
+            </summary>
+            <param name="name"></param>
+            <param name="description"></param>
+            <param name="sortOrder"></param>
+            <param name="badge"></param>
+            <param name="role"></param>
+        </member>
+        <member name="M:Atles.Domain.Models.UserRank.AddRule(Atles.Domain.Models.UserRankRuleType,System.String,System.String,System.Int32,System.String)">
+            <summary>
+            Add rule
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <param name="description"></param>
+            <param name="count"></param>
+            <param name="badge"></param>
+        </member>
+        <member name="M:Atles.Domain.Models.UserRank.MoveUp">
+            <summary>
+            Change the sort order by moving up 1 position.
+            It generates an error if sort order is 1.
+            </summary>
+            <exception cref="T:System.ApplicationException"></exception>
+        </member>
+        <member name="M:Atles.Domain.Models.UserRank.MoveDown">
+            <summary>
+            Change the sort order by moving down 1 position.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Models.UserRankRule">
+            <summary>
+            User rank rule
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.UserRankRule.UserRankId">
+            <summary>
+            The unique identifier of the user rank the rule belongs to
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.UserRankRule.Type">
+            <summary>
+            The rule type
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.UserRankRule.Name">
+            <summary>
+            The name of the user rank rule
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.UserRankRule.Description">
+            <summary>
+            The description of the user rank rule
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.UserRankRule.Count">
+            <summary>
+            The count of the user rank rule
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.UserRankRule.Badge">
+            <summary>
+            The badge of the user rank rule
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.UserRankRule.UserRank">
+            <summary>
+            The user rank the rule belongs to
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Models.UserRankRule.#ctor">
+            <summary>
+            New empty instance
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Models.UserRankRule.#ctor(System.Guid,Atles.Domain.Models.UserRankRuleType,System.String,System.String,System.Int32,System.String)">
+            <summary>
+            New instance
+            </summary>
+            <param name="userRankId"></param>
+            <param name="type"></param>
+            <param name="name"></param>
+            <param name="description"></param>
+            <param name="count"></param>
+            <param name="badge"></param>
+        </member>
+        <member name="F:Atles.Domain.Models.UserRankRuleType.Posts">
+            <summary>
+            The number of total posts (topics and replies).
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.UserRankRuleType.Topics">
+            <summary>
+            The number of topics.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.UserRankRuleType.Replies">
+            <summary>
+            The number of replies.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.Models.UserRankRuleType.Answers">
+            <summary>
+            The number of accepted answers.
             </summary>
         </member>
     </members>

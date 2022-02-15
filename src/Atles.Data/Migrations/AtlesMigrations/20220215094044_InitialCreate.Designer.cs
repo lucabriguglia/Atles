@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atles.Data.Migrations.AtlesMigrations
 {
     [DbContext(typeof(AtlesDbContext))]
-    [Migration("20220209153725_InitialCreate")]
+    [Migration("20220215094044_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -368,10 +368,16 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.Property<string>("Badge")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Name")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Order")
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SortOrder")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
@@ -536,7 +542,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
             modelBuilder.Entity("Atles.Domain.Models.UserRank", b =>
                 {
-                    b.OwnsMany("Atles.Domain.Models.UserLevel", "UserLevels", b1 =>
+                    b.OwnsMany("Atles.Domain.Models.UserRankRule", "UserRankRules", b1 =>
                         {
                             b1.Property<Guid>("UserRankId")
                                 .HasColumnType("uniqueidentifier");
@@ -550,9 +556,15 @@ namespace Atles.Data.Migrations.AtlesMigrations
                             b1.Property<int>("Count")
                                 .HasColumnType("int");
 
+                            b1.Property<string>("Description")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Name")
+                                .HasColumnType("nvarchar(max)");
+
                             b1.HasKey("UserRankId", "Type");
 
-                            b1.ToTable("UserLevel", (string)null);
+                            b1.ToTable("UserRankRule", (string)null);
 
                             b1.WithOwner("UserRank")
                                 .HasForeignKey("UserRankId");
@@ -560,7 +572,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                             b1.Navigation("UserRank");
                         });
 
-                    b.Navigation("UserLevels");
+                    b.Navigation("UserRankRules");
                 });
 
             modelBuilder.Entity("Atles.Domain.Models.Category", b =>

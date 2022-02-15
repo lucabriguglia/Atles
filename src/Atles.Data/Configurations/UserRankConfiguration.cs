@@ -10,18 +10,20 @@ namespace Atles.Data.Configurations
         {
             builder.ToTable("UserRank");
 
-            builder.OwnsMany(s => s.UserLevels, b =>
+            builder.OwnsMany(s => s.UserRankRules, b =>
             {
-                b.ToTable("UserLevel")
+                b.ToTable("UserRankRule")
                     .HasKey("UserRankId", "Type");
 
+                b.Property(e => e.Name);
+                b.Property(e => e.Description);
                 b.Property(e => e.UserRankId);
                 b.Property(e => e.Type);
                 b.Property(e => e.Count);
                 b.Property(e => e.Badge);
             });
 
-            var navigation = builder.Metadata.FindNavigation(nameof(UserRank.UserLevels));
+            var navigation = builder.Metadata.FindNavigation(nameof(UserRank.UserRankRules));
             navigation.SetPropertyAccessMode(PropertyAccessMode.Field);
         }
     }

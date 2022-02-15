@@ -69,8 +69,10 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 {
                     Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Order = table.Column<int>(type: "int", nullable: false),
-                    Badge = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    Badge = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -166,19 +168,21 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "UserLevel",
+                name: "UserRankRule",
                 columns: table => new
                 {
                     UserRankId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
                     Type = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Count = table.Column<int>(type: "int", nullable: false),
                     Badge = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_UserLevel", x => new { x.UserRankId, x.Type });
+                    table.PrimaryKey("PK_UserRankRule", x => new { x.UserRankId, x.Type });
                     table.ForeignKey(
-                        name: "FK_UserLevel_UserRank_UserRankId",
+                        name: "FK_UserRankRule_UserRank_UserRankId",
                         column: x => x.UserRankId,
                         principalTable: "UserRank",
                         principalColumn: "Id",
@@ -420,7 +424,7 @@ namespace Atles.Data.Migrations.AtlesMigrations
                 name: "Subscription");
 
             migrationBuilder.DropTable(
-                name: "UserLevel");
+                name: "UserRankRule");
 
             migrationBuilder.DropTable(
                 name: "UserRank");

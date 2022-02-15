@@ -4,86 +4,104 @@ using System.Collections.Generic;
 namespace Atles.Domain.Models;
 
 /// <summary>
-/// UserRank
+/// User Rank
 /// </summary>
 public class UserRank
 {
+    /// <summary>
+    /// Unique identifier
+    /// </summary>
     public Guid Id { get; private set; }
+
+    /// <summary>
+    /// The name of the user rank
+    /// </summary>
     public string Name { get; private set; }
-    public int Order { get; private set; }
+
+    /// <summary>
+    /// The description of the user rank
+    /// </summary>
+    public string Description { get; private set; }
+
+    /// <summary>
+    /// The sort order of the user rank
+    /// </summary>
+    public int SortOrder { get; private set; }
+
+    /// <summary>
+    /// The badge of the user rank
+    /// </summary>
     public string Badge { get; private set; }
+
+    /// <summary>
+    /// The role automatically assigned when a user reaches the rank
+    /// </summary>
     public string Role { get; private set; }
 
-    public IReadOnlyCollection<UserLevel> UserLevels => _UserLevels;
-    private readonly List<UserLevel> _UserLevels = new();
+    /// <summary>
+    /// The rules associated with the user rank
+    /// </summary>
+    public IReadOnlyCollection<UserRankRule> UserRankRules => _userRankRules;
+    private readonly List<UserRankRule> _userRankRules = new();
 
-    public UserRank(string name, int order, string badge, string role)
+    /// <summary>
+    /// New empty instance
+    /// </summary>
+    public UserRank()
+    {
+    }
+
+    /// <summary>
+    /// New instance
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="description"></param>
+    /// <param name="sortOrder"></param>
+    /// <param name="badge"></param>
+    /// <param name="role"></param>
+    public UserRank(string name, string description, int sortOrder, string badge, string role)
     {
         Id = Guid.NewGuid();
         Name = name;
-        Order = order;
+        Description = description;
+        SortOrder = sortOrder;
         Badge = badge;
         Role = role;
     }
-}
 
-public class UserBadge
-{
-    public Guid Id { get; private set; }
-    public string Name { get; private set; }
-    public int SortOrder { get; private set; }
-    public string Image { get; private set; }
-    public string Role { get; private set; }
-
-    public IReadOnlyCollection<UserLevel> UserLevels => _UserLevels;
-    private readonly List<UserLevel> _UserLevels = new();
-
-    public UserBadge(string name, int sortOrder, string image, string role)
+    /// <summary>
+    /// Add rule
+    /// </summary>
+    /// <param name="type"></param>
+    /// <param name="name"></param>
+    /// <param name="description"></param>
+    /// <param name="count"></param>
+    /// <param name="badge"></param>
+    public void AddRule(UserRankRuleType type, string name, string description, int count, string badge)
     {
-        Id = Guid.NewGuid();
-        Name = name;
-        SortOrder = sortOrder;
-        Image = image;
-        Role = role;
+        _userRankRules.Add(new UserRankRule(Id, type, name, description, count, badge));
     }
-}
 
-public class UserBadge2
-{
-    public Guid UserBadgeId { get; private set; }
-    public UserBadgeType Type { get; private set; }
-    public int Count { get; private set; }
-    public string Image { get; private set; }
-
-    public virtual UserBadge UserBadge { get; set; }
-
-    public UserBadge2(UserBadgeType type, int count, string image = null)
+    /// <summary>
+    /// Change the sort order by moving up 1 position.
+    /// It generates an error if sort order is 1.
+    /// </summary>
+    /// <exception cref="ApplicationException"></exception>
+    public void MoveUp()
     {
-        Type = type;
-        Count = count;
-        Image = image;
+        if (SortOrder == 1)
+        {
+            throw new ApplicationException($"User Rank \"{Name}\" can't be moved up.");
+        }
+
+        SortOrder -= 1;
     }
-}
-
-public enum UserBadgeType
-{
-    /// <summary>
-    /// Number of total posts (topics and replies).
-    /// </summary>
-    Posts = 1,
 
     /// <summary>
-    /// Number of topics.
+    /// Change the sort order by moving down 1 position.
     /// </summary>
-    Topics = 2,
-
-    /// <summary>
-    /// Number of replies.
-    /// </summary>
-    Replies = 3,
-
-    /// <summary>
-    /// Number of accepted answers.
-    /// </summary>
-    Answers = 4
+    public void MoveDown()
+    {
+        SortOrder += 1;
+    }
 }
