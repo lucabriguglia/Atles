@@ -32,4 +32,9 @@ public class UserRankUpdated : EventBase
     /// The status of the user rank
     /// </summary>
     public UserRankStatusType Status { get; set; }
+
+    /// <summary>
+    /// The user rank rules
+    /// </summary>
+    public ICollection<UserRankRule> UserRankRules { get; set; } = new List<UserRankRule>();
 }

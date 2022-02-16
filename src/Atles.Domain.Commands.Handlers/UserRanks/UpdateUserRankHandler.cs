@@ -45,6 +45,7 @@ namespace Atles.Domain.Commands.Handlers.UserRanks
                 Badge = userRank.Badge,
                 Role = userRank.Role,
                 Status = userRank.Status,
+                UserRankRules = command.UserRankRules.ToDomainRules(),
                 TargetId = userRank.Id,
                 TargetType = nameof(UserRank),
                 SiteId = command.SiteId,
