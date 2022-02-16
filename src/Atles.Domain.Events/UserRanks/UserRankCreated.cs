@@ -1,14 +1,12 @@
-﻿using Atles.Core.Commands;
+﻿using Atles.Core.Events;
 using Atles.Domain.Models;
-using Docs.Attributes;
 
-namespace Atles.Domain.Commands.UserRanks
+namespace Atles.Domain.Events.UserRanks
 {
     /// <summary>
-    /// Request to create a new user rank.
+    /// Event published when a user rank is created.
     /// </summary>
-    [DocRequest(typeof(UserRank))]
-    public class CreateUserRank : CommandBase
+    public class UserRankCreated : EventBase
     {
         /// <summary>
         /// The name of the user rank
@@ -39,10 +37,5 @@ namespace Atles.Domain.Commands.UserRanks
         /// The status of the user rank
         /// </summary>
         public UserRankStatusType Status { get; set; }
-
-        /// <summary>
-        /// The rules of the new user rank.
-        /// </summary>
-        public ICollection<UserRankRuleCommand> UserRankRules { get; set; } = new List<UserRankRuleCommand>();
     }
 }

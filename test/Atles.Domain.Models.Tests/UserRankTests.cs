@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using AutoFixture;
 using NUnit.Framework;
@@ -11,43 +12,32 @@ namespace Atles.Domain.Models.Tests
         [Test]
         public void Should_create_a_new_user_rank()
         {
+            var siteId = Guid.NewGuid();
             const string name = "Level 4";
             const string description = "Advanced Level";
             const int sortOrder = 4;
             const string badge = "advanced";
             const string role = "Advanced";
+            const UserRankStatusType status = UserRankStatusType.Published;
+            var rules = new List<UserRankRule>
+            {
+                new UserRankRule(UserRankRuleType.Answers, "Name", "Description", 10, "badge")
+            };
 
-            var sut = new UserRank(name, description, sortOrder, badge, role);
+            var sut = new UserRank(siteId, name, description, sortOrder, badge, role, status, rules);
 
             Assert.AreNotEqual(Guid.Empty, sut.Id);
+            Assert.AreEqual(siteId, sut.SiteId);
             Assert.AreEqual(name, sut.Name);
             Assert.AreEqual(description, sut.Description);
             Assert.AreEqual(sortOrder, sut.SortOrder);
             Assert.AreEqual(badge, sut.Badge);
             Assert.AreEqual(role, sut.Role);
-        }
-
-        [Test]
-        public void Should_create_add_rule()
-        {
-            var sut = new UserRank("Level 4", "Advanced Level", 4, "advanced", "Advanced");
-
-            const UserRankRuleType type = UserRankRuleType.Topics; 
-            const string name = "50 Topics";
-            const string description = "Advanced Posters";
-            const int count = 50;
-            const string badge = "topic50";
-
-            sut.AddRule(type, name, description, count, badge);
-
-            var rule = sut.UserRankRules.FirstOrDefault();
-
-            Assert.NotNull(rule);
-            Assert.AreEqual(type, rule.Type);
-            Assert.AreEqual(name, rule.Name);
-            Assert.AreEqual(description, rule.Description);
-            Assert.AreEqual(count, rule.Count);
-            Assert.AreEqual(badge, rule.Badge);
+            Assert.AreEqual(status, sut.Status);
+            Assert.AreEqual(rules[0].Name, sut.UserRankRules.FirstOrDefault().Name);
+            Assert.AreEqual(rules[0].Description, sut.UserRankRules.FirstOrDefault().Description);
+            Assert.AreEqual(rules[0].Count, sut.UserRankRules.FirstOrDefault().Count);
+            Assert.AreEqual(rules[0].Badge, sut.UserRankRules.FirstOrDefault().Badge);
         }
 
         [Test]
@@ -65,7 +55,7 @@ namespace Atles.Domain.Models.Tests
         [Test]
         public void Should_throws_exception_when_move_up_and_sort_order_is_one()
         {
-            var sut = new UserRank("Level 1", "Basic Level", 1, "basic", "Basic");
+            var sut = new UserRank(Guid.NewGuid(), "Level 1", "Basic Level", 1, "basic", "Basic", UserRankStatusType.Published, new List<UserRankRule>());
 
             Assert.Throws<ApplicationException>(() => sut.MoveUp());
         }
@@ -83,13 +73,13 @@ namespace Atles.Domain.Models.Tests
         }
 
         [Test]
-        public void Should_remove_all_rules()
+        public void Delete()
         {
             var sut = Fixture.Create<UserRank>();
 
-            sut.ClearRules();
+            sut.Delete();
 
-            Assert.Zero(sut.UserRankRules.Count);
+            Assert.AreEqual(UserRankStatusType.Deleted, sut.Status);
         }
     }
 }

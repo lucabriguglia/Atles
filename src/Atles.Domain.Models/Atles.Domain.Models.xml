@@ -1068,6 +1068,11 @@
             Unique identifier
             </summary>
         </member>
+        <member name="P:Atles.Domain.Models.UserRank.SiteId">
+            <summary>
+            Unique identifier of the site
+            </summary>
+        </member>
         <member name="P:Atles.Domain.Models.UserRank.Name">
             <summary>
             The name of the user rank
@@ -1093,9 +1098,19 @@
             The role automatically assigned when a user reaches the rank
             </summary>
         </member>
+        <member name="P:Atles.Domain.Models.UserRank.Status">
+            <summary>
+            The status of the user rank
+            </summary>
+        </member>
         <member name="P:Atles.Domain.Models.UserRank.UserRankRules">
             <summary>
             The rules associated with the user rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Models.UserRank.Site">
+            <summary>
+            Reference to the Site the user rank belongs to.
             </summary>
         </member>
         <member name="M:Atles.Domain.Models.UserRank.#ctor">
@@ -1103,30 +1118,29 @@
             New empty instance
             </summary>
         </member>
-        <member name="M:Atles.Domain.Models.UserRank.#ctor(System.String,System.String,System.Int32,System.String,System.String)">
+        <member name="M:Atles.Domain.Models.UserRank.#ctor(System.Guid,System.String,System.String,System.Int32,System.String,System.String,Atles.Domain.Models.UserRankStatusType,System.Collections.Generic.IEnumerable{Atles.Domain.Models.UserRankRule})">
             <summary>
             New instance
             </summary>
+            <param name="siteId"></param>
             <param name="name"></param>
             <param name="description"></param>
             <param name="sortOrder"></param>
             <param name="badge"></param>
             <param name="role"></param>
+            <param name="status"></param>
+            <param name="rules"></param>
         </member>
-        <member name="M:Atles.Domain.Models.UserRank.ClearRules">
+        <member name="M:Atles.Domain.Models.UserRank.UpdateDetails(System.String,System.String,System.String,System.String,Atles.Domain.Models.UserRankStatusType,System.Collections.Generic.IEnumerable{Atles.Domain.Models.UserRankRule})">
             <summary>
-            Remove all rules
+            Update user rank details
             </summary>
-        </member>
-        <member name="M:Atles.Domain.Models.UserRank.AddRule(Atles.Domain.Models.UserRankRuleType,System.String,System.String,System.Int32,System.String)">
-            <summary>
-            Add rule
-            </summary>
-            <param name="type"></param>
             <param name="name"></param>
             <param name="description"></param>
-            <param name="count"></param>
             <param name="badge"></param>
+            <param name="role"></param>
+            <param name="status"></param>
+            <param name="rules"></param>
         </member>
         <member name="M:Atles.Domain.Models.UserRank.MoveUp">
             <summary>
@@ -1140,14 +1154,14 @@
             Change the sort order by moving down 1 position.
             </summary>
         </member>
+        <member name="M:Atles.Domain.Models.UserRank.Delete">
+            <summary>
+            Set the status as deleted.
+            </summary>
+        </member>
         <member name="T:Atles.Domain.Models.UserRankRule">
             <summary>
             User rank rule
-            </summary>
-        </member>
-        <member name="P:Atles.Domain.Models.UserRankRule.UserRankId">
-            <summary>
-            The unique identifier of the user rank the rule belongs to
             </summary>
         </member>
         <member name="P:Atles.Domain.Models.UserRankRule.Type">
@@ -1175,21 +1189,15 @@
             The badge of the user rank rule
             </summary>
         </member>
-        <member name="P:Atles.Domain.Models.UserRankRule.UserRank">
-            <summary>
-            The user rank the rule belongs to
-            </summary>
-        </member>
         <member name="M:Atles.Domain.Models.UserRankRule.#ctor">
             <summary>
             New empty instance
             </summary>
         </member>
-        <member name="M:Atles.Domain.Models.UserRankRule.#ctor(System.Guid,Atles.Domain.Models.UserRankRuleType,System.String,System.String,System.Int32,System.String)">
+        <member name="M:Atles.Domain.Models.UserRankRule.#ctor(Atles.Domain.Models.UserRankRuleType,System.String,System.String,System.Int32,System.String)">
             <summary>
             New instance
             </summary>
-            <param name="userRankId"></param>
             <param name="type"></param>
             <param name="name"></param>
             <param name="description"></param>

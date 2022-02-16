@@ -8,11 +8,6 @@ namespace Atles.Domain.Models;
 public class UserRankRule
 {
     /// <summary>
-    /// The unique identifier of the user rank the rule belongs to
-    /// </summary>
-    public Guid UserRankId { get; private set; }
-
-    /// <summary>
     /// The rule type
     /// </summary>
     public UserRankRuleType Type { get; private set; }
@@ -38,11 +33,6 @@ public class UserRankRule
     public string Badge { get; private set; }
 
     /// <summary>
-    /// The user rank the rule belongs to
-    /// </summary>
-    public virtual UserRank UserRank { get; set; }
-
-    /// <summary>
     /// New empty instance
     /// </summary>
     public UserRankRule()
@@ -52,15 +42,13 @@ public class UserRankRule
     /// <summary>
     /// New instance
     /// </summary>
-    /// <param name="userRankId"></param>
     /// <param name="type"></param>
     /// <param name="name"></param>
     /// <param name="description"></param>
     /// <param name="count"></param>
     /// <param name="badge"></param>
-    public UserRankRule(Guid userRankId, UserRankRuleType type, string name, string description, int count, string badge)
+    public UserRankRule(UserRankRuleType type, string name, string description, int count, string badge)
     {
-        UserRankId = userRankId;
         Type = type;
         Name = name;
         Description = description;

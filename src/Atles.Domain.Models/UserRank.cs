@@ -14,6 +14,11 @@ public class UserRank
     public Guid Id { get; private set; }
 
     /// <summary>
+    /// Unique identifier of the site
+    /// </summary>
+    public Guid SiteId { get; private set; }
+
+    /// <summary>
     /// The name of the user rank
     /// </summary>
     public string Name { get; private set; }
@@ -39,10 +44,20 @@ public class UserRank
     public string Role { get; private set; }
 
     /// <summary>
+    /// The status of the user rank
+    /// </summary>
+    public UserRankStatusType Status { get; private set; }
+
+    /// <summary>
     /// The rules associated with the user rank
     /// </summary>
     public IReadOnlyCollection<UserRankRule> UserRankRules => _userRankRules;
     private readonly List<UserRankRule> _userRankRules = new();
+
+    /// <summary>
+    /// Reference to the Site the user rank belongs to.
+    /// </summary>
+    public virtual Site Site { get; set; }
 
     /// <summary>
     /// New empty instance
@@ -54,40 +69,51 @@ public class UserRank
     /// <summary>
     /// New instance
     /// </summary>
+    /// <param name="siteId"></param>
     /// <param name="name"></param>
     /// <param name="description"></param>
     /// <param name="sortOrder"></param>
     /// <param name="badge"></param>
     /// <param name="role"></param>
-    public UserRank(string name, string description, int sortOrder, string badge, string role)
+    /// <param name="status"></param>
+    /// <param name="rules"></param>
+    public UserRank(Guid siteId, string name, string description, int sortOrder, string badge, string role, UserRankStatusType status, IEnumerable<UserRankRule> rules)
     {
         Id = Guid.NewGuid();
+        SiteId = siteId;
+
+        UpdateInternal(name, description, sortOrder, badge, role, status, rules);
+    }
+
+    /// <summary>
+    /// Update user rank details
+    /// </summary>
+    /// <param name="name"></param>
+    /// <param name="description"></param>
+    /// <param name="badge"></param>
+    /// <param name="role"></param>
+    /// <param name="status"></param>
+    /// <param name="rules"></param>
+    public void UpdateDetails(string name, string description, string badge, string role, UserRankStatusType status, IEnumerable<UserRankRule> rules)
+    {
+        UpdateInternal(name, description, SortOrder, badge, role, status, rules);
+    }
+
+    private void UpdateInternal(string name, string description, int sortOrder, string badge, string role, UserRankStatusType status, IEnumerable<UserRankRule> rules)
+    {
         Name = name;
         Description = description;
         SortOrder = sortOrder;
         Badge = badge;
         Role = role;
-    }
+        Status = status;
 
-    /// <summary>
-    /// Remove all rules
-    /// </summary>
-    public void ClearRules()
-    {
         _userRankRules.Clear();
-    }
 
-    /// <summary>
-    /// Add rule
-    /// </summary>
-    /// <param name="type"></param>
-    /// <param name="name"></param>
-    /// <param name="description"></param>
-    /// <param name="count"></param>
-    /// <param name="badge"></param>
-    public void AddRule(UserRankRuleType type, string name, string description, int count, string badge)
-    {
-        _userRankRules.Add(new UserRankRule(Id, type, name, description, count, badge));
+        foreach (var rule in rules)
+        {
+            _userRankRules.Add(new UserRankRule(rule.Type, rule.Name, rule.Description, rule.Count, rule.Badge));
+        }
     }
 
     /// <summary>
@@ -111,5 +137,13 @@ public class UserRank
     public void MoveDown()
     {
         SortOrder += 1;
+    }
+
+    /// <summary>
+    /// Set the status as deleted.
+    /// </summary>
+    public void Delete()
+    {
+        Status = UserRankStatusType.Deleted;
     }
 }

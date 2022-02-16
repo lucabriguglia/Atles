@@ -5,11 +5,16 @@ using Docs.Attributes;
 namespace Atles.Domain.Commands.UserRanks
 {
     /// <summary>
-    /// Request to create a new user rank.
+    /// Request to update a user rank.
     /// </summary>
     [DocRequest(typeof(UserRank))]
-    public class CreateUserRank : CommandBase
+    public class UpdateUserRank : CommandBase
     {
+        /// <summary>
+        /// The id of the user rank
+        /// </summary>
+        public Guid Id { get; set; }
+
         /// <summary>
         /// The name of the user rank
         /// </summary>
@@ -19,11 +24,6 @@ namespace Atles.Domain.Commands.UserRanks
         /// The description of the user rank
         /// </summary>
         public string Description { get; set; }
-
-        /// <summary>
-        /// The sort order of the user rank
-        /// </summary>
-        public int SortOrder { get; set; }
 
         /// <summary>
         /// The badge of the user rank
@@ -41,7 +41,7 @@ namespace Atles.Domain.Commands.UserRanks
         public UserRankStatusType Status { get; set; }
 
         /// <summary>
-        /// The rules of the new user rank.
+        /// The rules of the user rank.
         /// </summary>
         public ICollection<UserRankRuleCommand> UserRankRules { get; set; } = new List<UserRankRuleCommand>();
     }
