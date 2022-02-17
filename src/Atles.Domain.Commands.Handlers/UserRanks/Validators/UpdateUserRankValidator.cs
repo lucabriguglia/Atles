@@ -1,12 +1,15 @@
-﻿using Atles.Domain.Commands.UserRanks;
+﻿using Atles.Core;
+using Atles.Domain.Commands.UserRanks;
 using FluentValidation;
 
 namespace Atles.Domain.Commands.Handlers.UserRanks.Validators;
 
 public class UpdateUserRankValidator : AbstractValidator<UpdateUserRank>
 {
-    public UpdateUserRankValidator()
-    {
+    private readonly IDispatcher _dispatcher;
 
+    public UpdateUserRankValidator(IDispatcher dispatcher)
+    {
+        _dispatcher = dispatcher;
     }
 }

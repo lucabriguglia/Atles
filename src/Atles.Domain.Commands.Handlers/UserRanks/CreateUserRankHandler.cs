@@ -1,6 +1,7 @@
 ﻿using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
+using Atles.Data.Caching;
 using Atles.Domain.Commands.UserRanks;
 using Atles.Domain.Events.UserRanks;
 using Atles.Domain.Models;
@@ -13,11 +14,13 @@ namespace Atles.Domain.Commands.Handlers.UserRanks
     {
         private readonly AtlesDbContext _dbContext;
         private readonly IValidator<CreateUserRank> _validator;
+        private readonly ICacheManager _cacheManager;
 
-        public CreateUserRankHandler(AtlesDbContext dbContext, IValidator<CreateUserRank> validator)
+        public CreateUserRankHandler(AtlesDbContext dbContext, IValidator<CreateUserRank> validator, ICacheManager cacheManager)
         {
             _dbContext = dbContext;
             _validator = validator;
+            _cacheManager = cacheManager;
         }
 
         public async Task<IEnumerable<IEvent>> Handle(CreateUserRank command)
@@ -32,7 +35,15 @@ namespace Atles.Domain.Commands.Handlers.UserRanks
 
             var sortOrder = count + 1;
 
-            var userRank = new UserRank(command.SiteId, command.Name, command.Description, sortOrder, command.Badge, command.Role, command.Status, command.UserRankRules.ToDomainRules());
+            var userRank = new UserRank(
+                command.SiteId, 
+                command.Name, 
+                command.Description, 
+                sortOrder, 
+                command.Badge, 
+                command.Role, 
+                command.Status, 
+                command.UserRankRules.ToDomainRules());
 
             _dbContext.UserRanks.Add(userRank);
 

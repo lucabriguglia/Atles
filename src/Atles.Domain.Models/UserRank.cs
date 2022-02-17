@@ -77,7 +77,15 @@ public class UserRank
     /// <param name="role"></param>
     /// <param name="status"></param>
     /// <param name="rules"></param>
-    public UserRank(Guid siteId, string name, string description, int sortOrder, string badge, string role, UserRankStatusType status, IEnumerable<UserRankRule> rules)
+    public UserRank(
+        Guid siteId,
+        string name,
+        string description,
+        int sortOrder,
+        string badge,
+        string role,
+        UserRankStatusType status,
+        IEnumerable<UserRankRule> rules)
     {
         Id = Guid.NewGuid();
         SiteId = siteId;
@@ -94,12 +102,25 @@ public class UserRank
     /// <param name="role"></param>
     /// <param name="status"></param>
     /// <param name="rules"></param>
-    public void UpdateDetails(string name, string description, string badge, string role, UserRankStatusType status, IEnumerable<UserRankRule> rules)
+    public void UpdateDetails(
+        string name,
+        string description,
+        string badge,
+        string role,
+        UserRankStatusType status,
+        IEnumerable<UserRankRule> rules)
     {
         UpdateInternal(name, description, SortOrder, badge, role, status, rules);
     }
 
-    private void UpdateInternal(string name, string description, int sortOrder, string badge, string role, UserRankStatusType status, IEnumerable<UserRankRule> rules)
+    private void UpdateInternal(
+        string name,
+        string description,
+        int sortOrder,
+        string badge,
+        string role,
+        UserRankStatusType status,
+        IEnumerable<UserRankRule> rules)
     {
         Name = name;
         Description = description;

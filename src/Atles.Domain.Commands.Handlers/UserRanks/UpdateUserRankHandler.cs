@@ -2,6 +2,7 @@
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
+using Atles.Data.Caching;
 using Atles.Domain.Commands.UserRanks;
 using Atles.Domain.Events.UserRanks;
 using Atles.Domain.Models;
@@ -14,11 +15,13 @@ namespace Atles.Domain.Commands.Handlers.UserRanks
     {
         private readonly AtlesDbContext _dbContext;
         private readonly IValidator<UpdateUserRank> _validator;
+        private readonly ICacheManager _cacheManager;
 
-        public UpdateUserRankHandler(AtlesDbContext dbContext, IValidator<UpdateUserRank> validator)
+        public UpdateUserRankHandler(AtlesDbContext dbContext, IValidator<UpdateUserRank> validator, ICacheManager cacheManager)
         {
             _dbContext = dbContext;
             _validator = validator;
+            _cacheManager = cacheManager;
         }
 
         public async Task<IEnumerable<IEvent>> Handle(UpdateUserRank command)
@@ -36,7 +39,13 @@ namespace Atles.Domain.Commands.Handlers.UserRanks
                 throw new DataException($"User rank with Id {command.Id} not found.");
             }
 
-            userRank.UpdateDetails(command.Name, command.Description, command.Badge, command.Role, command.Status, command.UserRankRules.ToDomainRules());
+            userRank.UpdateDetails(
+                command.Name,
+                command.Description,
+                command.Badge,
+                command.Role,
+                command.Status,
+                command.UserRankRules.ToDomainRules());
 
             var @event = new UserRankUpdated
             {
