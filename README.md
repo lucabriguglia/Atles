@@ -30,7 +30,7 @@ A forum software built with ASP.NET Blazor WebAssembly and CQRS.
 
 - Post likes
 - Topic subscriptions
-- User Ranks _(work in progress)_
+- User Ranks and Badges _(work in progress)_
 - Themes
 - Multi language
 - Granular permissions
