@@ -65,6 +65,8 @@ namespace Atles.Domain.Commands.Handlers.UserRanks
 
             await _dbContext.SaveChangesAsync();
 
+            _cacheManager.Remove(CacheKeys.UserRanks(command.SiteId));
+
             return new IEvent[] { @event };
         }
     }
