@@ -1,10 +1,10 @@
 ﻿using Atles.Data;
-using Atles.Domain.Commands.Handlers.Tests;
+using Atles.Domain;
 using Atles.Domain.Rules.Categories;
 using Atles.Domain.Rules.Handlers.Categories;
 using NUnit.Framework;
 
-namespace Atles.Domain.Rules.Handlers.Tests.Categories
+namespace Atles.Tests.Unit.Rules
 {
     [TestFixture]
     public class IsCategoryNameUniqueHandlerTests : TestFixtureBase

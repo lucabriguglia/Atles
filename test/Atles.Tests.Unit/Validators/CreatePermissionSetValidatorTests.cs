@@ -8,7 +8,7 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Domain.Commands.Handlers.Tests.PermissionSets.Validators
+namespace Atles.Tests.Unit.Validators
 {
     [TestFixture]
     public class CreatePermissionSetValidatorTests : TestFixtureBase

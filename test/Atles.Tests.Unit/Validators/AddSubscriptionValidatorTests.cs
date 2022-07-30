@@ -1,6 +1,7 @@
 ﻿using Atles.Commands.Handlers.Subscriptions.Validators;
 using Atles.Commands.Subscriptions;
 using Atles.Core;
+using Atles.Domain;
 using Atles.Domain.Rules.Categories;
 using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.Posts;
@@ -9,7 +10,7 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Domain.Commands.Handlers.Tests.Subscriptions.Validators
+namespace Atles.Tests.Unit.Validators
 {
     [TestFixture]
     public class AddSubscriptionValidatorTests : TestFixtureBase

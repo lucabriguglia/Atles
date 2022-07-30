@@ -1,10 +1,10 @@
 ﻿using Atles.Data;
-using Atles.Domain.Commands.Handlers.Tests;
+using Atles.Domain;
 using Atles.Domain.Rules.Handlers.Users;
 using Atles.Domain.Rules.Users;
 using NUnit.Framework;
 
-namespace Atles.Domain.Rules.Handlers.Tests.Users
+namespace Atles.Tests.Unit.Rules
 {
     [TestFixture]
     public class IsUserDisplayNameUniqueTests : TestFixtureBase

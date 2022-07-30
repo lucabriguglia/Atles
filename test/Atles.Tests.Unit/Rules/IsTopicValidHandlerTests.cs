@@ -1,10 +1,10 @@
 ﻿using Atles.Data;
-using Atles.Domain.Commands.Handlers.Tests;
+using Atles.Domain;
 using Atles.Domain.Rules.Handlers.Posts;
 using Atles.Domain.Rules.Posts;
 using NUnit.Framework;
 
-namespace Atles.Domain.Rules.Handlers.Tests.Posts
+namespace Atles.Tests.Unit.Rules
 {
     [TestFixture]
     public class IsTopicValidHandlerTests : TestFixtureBase

@@ -1,10 +1,10 @@
 ﻿using Atles.Data;
-using Atles.Domain.Commands.Handlers.Tests;
+using Atles.Domain;
 using Atles.Domain.Rules.Handlers.PermissionSets;
 using Atles.Domain.Rules.PermissionSets;
 using NUnit.Framework;
 
-namespace Atles.Domain.Rules.Handlers.Tests.PermissionSets
+namespace Atles.Tests.Unit.Rules
 {
     [TestFixture]
     public class IsPermissionSetValidHandlerTests : TestFixtureBase

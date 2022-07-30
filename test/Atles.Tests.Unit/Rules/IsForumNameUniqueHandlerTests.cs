@@ -1,10 +1,10 @@
 ﻿using Atles.Data;
-using Atles.Domain.Commands.Handlers.Tests;
+using Atles.Domain;
 using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.Handlers.Forums;
 using NUnit.Framework;
 
-namespace Atles.Domain.Rules.Handlers.Tests.Forums
+namespace Atles.Tests.Unit.Rules
 {
     [TestFixture]
     public class IsForumNameUniqueHandlerTests : TestFixtureBase

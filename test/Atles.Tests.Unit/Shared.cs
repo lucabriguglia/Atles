@@ -1,7 +1,7 @@
 ﻿using Atles.Data;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Commands.Handlers.Tests
+namespace Atles.Tests.Unit
 {
     public static class Shared
     {

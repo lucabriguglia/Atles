@@ -7,7 +7,7 @@ using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Domain.Commands.Handlers.Tests.UserRanks.Validators
+namespace Atles.Tests.Unit.Validators
 {
     [Ignore("WIP")]
     [TestFixture]
