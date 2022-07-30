@@ -2,9 +2,9 @@ name: .NET 6
 
 on:
   push:
-    branches: [ master ]
+    branches: [ main ]
   pull_request:
-    branches: [ master ]
+    branches: [ main ]
 
 env:
   DOTNET_VERSION: '6.0.100'
