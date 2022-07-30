@@ -6,4 +6,15 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="FluentValidation" Version="10.3.3" />
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Atles.Commands\Atles.Commands.csproj" />
+    <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
+    <ProjectReference Include="..\Atles.Domain.Models\Atles.Domain.csproj" />
+    <ProjectReference Include="..\Atles.Domain.Rules\Atles.Domain.Rules.csproj" />
+  </ItemGroup>
+
 </Project>
