@@ -2,7 +2,6 @@
 using Atles.Commands.Posts;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;

@@ -3,8 +3,8 @@ using Atles.Commands.Users;
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
+using Atles.Domain;
 using Atles.Domain.Events.Users;
-using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Commands.Handlers.Users

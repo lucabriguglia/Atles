@@ -1,5 +1,5 @@
 ﻿using Atles.Core.Commands;
-using Atles.Domain.Models;
+using Atles.Domain;
 using Docs.Attributes;
 
 namespace Atles.Commands.Users;

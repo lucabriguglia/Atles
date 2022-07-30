@@ -1,5 +1,5 @@
 ﻿using System.Collections.Generic;
-using Atles.Domain.Models;
+using Atles.Domain;
 
 namespace Atles.Reporting.Models.Public
 {

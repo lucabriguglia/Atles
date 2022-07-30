@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Atles.Domain.Models
+namespace Atles.Domain
 {
     public class Event
     {

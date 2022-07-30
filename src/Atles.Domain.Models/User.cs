@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using Docs.Attributes;
 
-namespace Atles.Domain.Models
+namespace Atles.Domain
 {
     /// <summary>
     /// User

@@ -1,7 +1,7 @@
 ﻿using System;
 using Atles.Reporting.Models.Shared;
 using System.Collections.Generic;
-using Atles.Domain.Models;
+using Atles.Domain;
 
 namespace Atles.Reporting.Models.Public
 {

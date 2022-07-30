@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using Atles.Domain.Models;
+using Atles.Domain;
 
 namespace Atles.Reporting.Models.Admin.PermissionSets
 {

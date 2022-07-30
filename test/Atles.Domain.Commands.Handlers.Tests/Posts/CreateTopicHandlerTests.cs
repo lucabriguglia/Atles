@@ -3,7 +3,6 @@ using Atles.Commands.Handlers.Posts.Services;
 using Atles.Commands.Posts;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Models;
 using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;

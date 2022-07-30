@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Atles.Commands.Posts;
 using Atles.Core;
-using Atles.Domain.Models;
+using Atles.Domain;
 using Atles.Reporting.Models.Public;
 using Atles.Reporting.Models.Public.Queries;
 using Atles.Server.Services;

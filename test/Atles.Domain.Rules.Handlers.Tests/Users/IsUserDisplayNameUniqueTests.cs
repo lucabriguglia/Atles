@@ -1,5 +1,4 @@
 ﻿using Atles.Data;
-using Atles.Domain.Models;
 using Atles.Domain.Rules.Handlers.Users;
 using Atles.Domain.Rules.Users;
 using NUnit.Framework;

@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Atles.Domain.Models\Atles.Domain.Models.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Domain.Models\Atles.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>

@@ -1,4 +1,4 @@
-﻿namespace Atles.Domain.Models;
+﻿namespace Atles.Domain;
 
 /// <summary>
 /// Type of subscription

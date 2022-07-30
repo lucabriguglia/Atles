@@ -4,7 +4,7 @@ using System.Threading.Tasks;
 using Atles.Core.Queries;
 using Atles.Data;
 using Atles.Data.Extensions;
-using Atles.Domain.Models;
+using Atles.Domain;
 using Atles.Reporting.Models.Admin.Users;
 using Atles.Reporting.Models.Admin.Users.Queries;
 using Atles.Reporting.Models.Shared;

@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Atles.Domain.Models;
+﻿namespace Atles.Domain;
 
 /// <summary>
 /// User rank rule

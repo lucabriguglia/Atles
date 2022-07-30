@@ -1,5 +1,4 @@
 ﻿using Atles.Data;
-using Atles.Domain.Models;
 using Atles.Domain.Rules.Categories;
 using Atles.Domain.Rules.Handlers.Categories;
 using NUnit.Framework;

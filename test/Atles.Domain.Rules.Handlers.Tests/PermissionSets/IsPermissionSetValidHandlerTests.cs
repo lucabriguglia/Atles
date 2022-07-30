@@ -1,5 +1,4 @@
 ﻿using Atles.Data;
-using Atles.Domain.Models;
 using Atles.Domain.Rules.Handlers.PermissionSets;
 using Atles.Domain.Rules.PermissionSets;
 using NUnit.Framework;

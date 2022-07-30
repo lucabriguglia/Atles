@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Atles.Domain.Models;
+namespace Atles.Domain;
 
 /// <summary>
 /// User Rank

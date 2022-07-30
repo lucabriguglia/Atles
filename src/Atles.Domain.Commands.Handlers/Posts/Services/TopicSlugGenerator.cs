@@ -1,6 +1,6 @@
 ﻿using Atles.Core.Extensions;
 using Atles.Data;
-using Atles.Domain.Models;
+using Atles.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Commands.Handlers.Posts.Services

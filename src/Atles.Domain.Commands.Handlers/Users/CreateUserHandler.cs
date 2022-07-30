@@ -2,8 +2,8 @@
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
+using Atles.Domain;
 using Atles.Domain.Events.Users;
-using Atles.Domain.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 

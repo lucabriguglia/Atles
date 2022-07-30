@@ -1,4 +1,4 @@
-﻿namespace Atles.Domain.Models
+﻿namespace Atles.Domain
 {
     public enum PostStatusType
     {

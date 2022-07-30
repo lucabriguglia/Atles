@@ -1,4 +1,4 @@
-﻿using Atles.Domain.Models;
+﻿using Atles.Domain;
 
 namespace Atles.Commands.UserRanks;
 

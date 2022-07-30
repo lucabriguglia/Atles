@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using Docs.Attributes;
 
-namespace Atles.Domain.Models
+namespace Atles.Domain
 {
     /// <summary>
     /// A forum post is a message created in a forum.

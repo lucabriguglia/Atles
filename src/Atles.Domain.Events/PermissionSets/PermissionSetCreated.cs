@@ -1,5 +1,4 @@
 ﻿using Atles.Core.Events;
-using Atles.Domain.Models;
 
 namespace Atles.Domain.Events.PermissionSets
 {

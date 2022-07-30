@@ -2,7 +2,6 @@
 using Atles.Commands.Handlers.Categories;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 using Moq;

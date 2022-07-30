@@ -4,9 +4,9 @@ using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
 using Atles.Data.Caching;
+using Atles.Domain;
 using Atles.Domain.Events.Categories;
 using Atles.Domain.Events.Forums;
-using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Commands.Handlers.Categories

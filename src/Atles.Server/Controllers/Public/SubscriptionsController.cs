@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Atles.Commands.Subscriptions;
 using Atles.Core;
-using Atles.Domain.Models;
+using Atles.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

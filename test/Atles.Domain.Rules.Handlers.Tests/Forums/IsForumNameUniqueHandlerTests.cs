@@ -1,5 +1,4 @@
 ﻿using Atles.Data;
-using Atles.Domain.Models;
 using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.Handlers.Forums;
 using NUnit.Framework;

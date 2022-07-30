@@ -1,5 +1,5 @@
 ﻿using System.Reflection;
-using Atles.Domain.Models;
+using Atles.Domain;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Data

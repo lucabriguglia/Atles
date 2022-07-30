@@ -1,7 +1,7 @@
 ﻿using System;
 using Docs.Attributes;
 
-namespace Atles.Domain.Models
+namespace Atles.Domain
 {
     /// <summary>
     /// Subscription

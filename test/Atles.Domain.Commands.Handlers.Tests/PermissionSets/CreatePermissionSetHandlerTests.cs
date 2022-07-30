@@ -2,7 +2,6 @@
 using Atles.Commands.PermissionSets;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Models;
 using FluentValidation;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;

@@ -3,7 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
 using Atles.Data;
-using Atles.Domain.Models;
+using Atles.Domain;
 using Atles.Reporting.Models.Admin.Categories;
 using Atles.Reporting.Models.Admin.Categories.Queries;
 using Microsoft.EntityFrameworkCore;

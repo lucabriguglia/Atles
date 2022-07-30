@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using Docs.Attributes;
 
-namespace Atles.Domain.Models
+namespace Atles.Domain
 {
     /// <summary>
     /// A forum is a board where users can hold conversations.

@@ -1,5 +1,5 @@
 ﻿using System;
-using Atles.Domain.Models;
+using Atles.Domain;
 using Atles.Reporting.Models.Shared;
 
 namespace Atles.Reporting.Models.Admin.Users

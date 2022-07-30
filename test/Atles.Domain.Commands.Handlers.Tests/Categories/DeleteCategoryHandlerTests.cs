@@ -3,7 +3,6 @@ using Atles.Commands.Categories;
 using Atles.Commands.Handlers.Categories;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Models;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;
 using Moq;

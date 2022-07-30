@@ -1,6 +1,5 @@
 ﻿using Atles.Core.Queries;
 using Atles.Data;
-using Atles.Domain.Models;
 using Atles.Domain.Rules.Users;
 using Microsoft.EntityFrameworkCore;
 
