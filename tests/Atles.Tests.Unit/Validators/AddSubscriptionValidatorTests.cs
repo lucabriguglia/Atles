@@ -1,10 +1,10 @@
-﻿using Atles.Commands.Handlers.Subscriptions.Validators;
-using Atles.Commands.Subscriptions;
+﻿using Atles.Commands.Subscriptions;
 using Atles.Core;
 using Atles.Domain;
 using Atles.Domain.Rules.Categories;
 using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.Posts;
+using Atles.Validators.Subscriptions;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;

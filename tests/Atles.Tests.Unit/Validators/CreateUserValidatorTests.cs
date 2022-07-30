@@ -1,5 +1,5 @@
-﻿using Atles.Commands.Handlers.Users.Validators;
-using Atles.Commands.Users;
+﻿using Atles.Commands.Users;
+using Atles.Validators.Users;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using NUnit.Framework;

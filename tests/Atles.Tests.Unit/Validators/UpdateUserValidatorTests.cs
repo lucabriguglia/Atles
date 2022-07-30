@@ -1,7 +1,7 @@
-﻿using Atles.Commands.Handlers.Users.Validators;
-using Atles.Commands.Users;
+﻿using Atles.Commands.Users;
 using Atles.Core;
 using Atles.Domain.Rules.Users;
+using Atles.Validators.Users;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;

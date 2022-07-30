@@ -1,8 +1,8 @@
-﻿using Atles.Commands.Handlers.PermissionSets.Validators;
-using Atles.Commands.PermissionSets;
+﻿using Atles.Commands.PermissionSets;
 using Atles.Core;
 using Atles.Core.Queries;
 using Atles.Domain.Rules.PermissionSets;
+using Atles.Validators.PermissionSets;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
