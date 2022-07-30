@@ -9,7 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace Atles.Domain.Events.Handlers.ReplyCreatedHandlers
+namespace Atles.Events.Handlers.ReplyCreatedHandlers
 {
     public class SubscriptionHandler : IEventHandler<ReplyCreated>
     {
