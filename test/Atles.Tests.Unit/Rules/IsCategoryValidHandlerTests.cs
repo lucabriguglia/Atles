@@ -1,4 +1,5 @@
 ﻿using Atles.Data;
+using Atles.Domain.Commands.Handlers.Tests;
 using Atles.Domain.Rules.Categories;
 using Atles.Domain.Rules.Handlers.Categories;
 using AutoFixture;

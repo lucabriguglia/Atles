@@ -77,8 +77,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Rules.Handlers
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Commands.Handlers.Tests", "test\Atles.Domain.Commands.Handlers.Tests\Atles.Domain.Commands.Handlers.Tests.csproj", "{8E92B329-F65A-455F-A086-44F66B0CA016}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Rules.Handlers.Tests", "test\Atles.Domain.Rules.Handlers.Tests\Atles.Domain.Rules.Handlers.Tests.csproj", "{699FF206-7D91-4B96-A886-7CE4446A544C}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Events.Handlers", "src\Atles.Domain.Events.Handlers\Atles.Events.Handlers.csproj", "{FE7970EF-6604-4EA8-879C-3C7A72D72C88}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TempWebApplicationForAspNetIdentityPages", "TempWebApplicationForAspNetIdentityPages\TempWebApplicationForAspNetIdentityPages.csproj", "{7B8E81DC-660B-4248-8507-FCD8D03DAC8C}"
@@ -95,11 +93,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SRC", "SRC", "{E58C8DA9-FFF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TESTS", "TESTS", "{2187FFEC-1955-425A-A47B-F70E742B65A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Queries", "src\Atles.Queries\Atles.Queries.csproj", "{13692144-95CA-4813-B7DE-1A03DA502884}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Queries", "src\Atles.Queries\Atles.Queries.csproj", "{13692144-95CA-4813-B7DE-1A03DA502884}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Models", "src\Atles.Models\Atles.Models.csproj", "{A9E3943B-8B09-40CE-9A85-5C9B8072EA24}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Models", "src\Atles.Models\Atles.Models.csproj", "{A9E3943B-8B09-40CE-9A85-5C9B8072EA24}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Validators", "src\Atles.Validators\Atles.Validators.csproj", "{558685B8-2B05-486E-9987-7FF6829B0A14}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Validators", "src\Atles.Validators\Atles.Validators.csproj", "{558685B8-2B05-486E-9987-7FF6829B0A14}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -159,10 +157,6 @@ Global
 		{8E92B329-F65A-455F-A086-44F66B0CA016}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8E92B329-F65A-455F-A086-44F66B0CA016}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8E92B329-F65A-455F-A086-44F66B0CA016}.Release|Any CPU.Build.0 = Release|Any CPU
-		{699FF206-7D91-4B96-A886-7CE4446A544C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{699FF206-7D91-4B96-A886-7CE4446A544C}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{699FF206-7D91-4B96-A886-7CE4446A544C}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{699FF206-7D91-4B96-A886-7CE4446A544C}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FE7970EF-6604-4EA8-879C-3C7A72D72C88}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FE7970EF-6604-4EA8-879C-3C7A72D72C88}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE7970EF-6604-4EA8-879C-3C7A72D72C88}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -216,7 +210,6 @@ Global
 		{89C67853-19F0-4139-A971-9B28219F1C49} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
 		{C0D1002B-715E-4843-8E0B-9C7484D0BBD4} = {E58C8DA9-FFF2-4C39-9E35-1FD19C8FDDFB}
 		{8E92B329-F65A-455F-A086-44F66B0CA016} = {2187FFEC-1955-425A-A47B-F70E742B65A4}
-		{699FF206-7D91-4B96-A886-7CE4446A544C} = {2187FFEC-1955-425A-A47B-F70E742B65A4}
 		{FE7970EF-6604-4EA8-879C-3C7A72D72C88} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
 		{7B8E81DC-660B-4248-8507-FCD8D03DAC8C} = {9BD6AD23-1CE9-43B1-BE95-70310300D57F}
 		{13857790-84DC-4649-B4E7-7F8A7DCB146C} = {71898E1F-3251-4DE9-AAFE-7D99540F2379}
