@@ -2,6 +2,7 @@
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 
 namespace Atles.Core;
 

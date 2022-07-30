@@ -1,7 +1,6 @@
-﻿using Atles.Core.Results;
-using OneOf;
+﻿using OneOf;
 
-namespace Atles.Core.Commands;
+namespace Atles.Core.Results;
 
 public class CommandResult : OneOfBase<Success, Failure>
 {
