@@ -6,5 +6,5 @@ namespace Atles.Core.Commands;
 
 public interface ICommandSender
 {
-    Task<IEnumerable<IEvent>> Send<TCommand>(TCommand command) where TCommand : ICommand;
+    Task<CommandResult> Send<TCommand>(TCommand command) where TCommand : ICommand;
 }

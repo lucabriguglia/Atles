@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Core.Mapping;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 
 namespace Atles.Core;
 
@@ -22,20 +24,44 @@ public class Dispatcher : IDispatcher
         _objectFactory = objectFactory;
     }
 
-    public async Task Send<TCommand>(TCommand command) where TCommand : ICommand
+    public async Task<CommandResult> Send<TCommand>(TCommand command) where TCommand : ICommand
     {
-        var events = await _commandSender.Send(command);
+        var commandResult = await _commandSender.Send(command);
 
-        var tasks = new List<Task>();
+        return await commandResult.Match(
+            async success => await HandleSuccess(success),
+            async failure => await HandleFailure(failure)
+        );
 
-        foreach (var @event in events)
+        async Task<CommandResult> HandleSuccess(Success success)
         {
-            var concreteEvent = _objectFactory.CreateConcreteObject(@event);
-            var task = _eventPublisher.Publish(concreteEvent);
-            tasks.Add(task);
+            var events = success.Events.ToList();
+
+            if (!events.Any())
+            {
+                return success;
+            }
+
+            var tasks = new List<Task>();
+
+            foreach (var @event in events)
+            {
+                var concreteEvent = _objectFactory.CreateConcreteObject(@event);
+                var task = _eventPublisher.Publish(concreteEvent);
+                tasks.Add(task);
+            }
+
+            await Task.WhenAll(tasks);
+
+            return success;
         }
 
-        await Task.WhenAll(tasks);
+        async Task<CommandResult> HandleFailure(Failure failure)
+        {
+            // TODO: Log failure
+
+            return await Task.FromResult(failure);
+        }
     }
 
     public async Task<TResult> Get<TResult>(IQuery<TResult> query)

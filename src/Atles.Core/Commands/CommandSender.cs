@@ -15,7 +15,7 @@ public class CommandSender : ICommandSender
         _serviceProvider = serviceProvider;
     }
 
-    public async Task<IEnumerable<IEvent>> Send<TCommand>(TCommand command) where TCommand : ICommand
+    public async Task<CommandResult> Send<TCommand>(TCommand command) where TCommand : ICommand
     {
         if (command == null)
         {
