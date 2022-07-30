@@ -24,6 +24,7 @@
 	  <ProjectReference Include="..\..\src\Atles.Data\Atles.Data.csproj" />
 	  <ProjectReference Include="..\..\src\Atles.Domain.Commands.Handlers\Atles.Commands.Handlers.csproj" />
 	  <ProjectReference Include="..\..\src\Atles.Domain.Rules\Atles.Domain.Rules.csproj" />
+	  <ProjectReference Include="..\..\src\Atles.Validators\Atles.Validators.csproj" />
 	</ItemGroup>
 
 </Project>

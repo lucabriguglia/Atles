@@ -37,6 +37,7 @@
     <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
     <ProjectReference Include="..\Atles.Queries\Atles.Queries.csproj" />
     <ProjectReference Include="..\Atles.Reporting.Handlers\Atles.Queries.Handlers.csproj" />
+    <ProjectReference Include="..\Atles.Validators\Atles.Validators.csproj" />
   </ItemGroup>
 
   <ItemGroup>
