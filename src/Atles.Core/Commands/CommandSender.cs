@@ -4,32 +4,31 @@ using System.Threading.Tasks;
 using Atles.Core.Events;
 using Atles.Core.Services;
 
-namespace Atles.Core.Commands
+namespace Atles.Core.Commands;
+
+public class CommandSender : ICommandSender
 {
-    public class CommandSender : ICommandSender
+    private readonly IServiceProviderWrapper _serviceProvider;
+
+    public CommandSender(IServiceProviderWrapper serviceProvider)
     {
-        private readonly IServiceProviderWrapper _serviceProvider;
+        _serviceProvider = serviceProvider;
+    }
 
-        public CommandSender(IServiceProviderWrapper serviceProvider)
+    public async Task<IEnumerable<IEvent>> Send<TCommand>(TCommand command) where TCommand : ICommand
+    {
+        if (command == null)
         {
-            _serviceProvider = serviceProvider;
+            throw new ArgumentNullException(nameof(command));
         }
 
-        public async Task<IEnumerable<IEvent>> Send<TCommand>(TCommand command) where TCommand : ICommand
+        var handler = _serviceProvider.GetService<ICommandHandler<TCommand>>();
+
+        if (handler == null)
         {
-            if (command == null)
-            {
-                throw new ArgumentNullException(nameof(command));
-            }
-
-            var handler = _serviceProvider.GetService<ICommandHandler<TCommand>>();
-
-            if (handler == null)
-            {
-                throw new Exception($"Handler not found for command of type {typeof(TCommand)}");
-            }
-
-            return await handler.Handle(command);
+            throw new Exception($"Handler not found for command of type {typeof(TCommand)}");
         }
+
+        return await handler.Handle(command);
     }
 }

@@ -3,32 +3,31 @@ using System.Collections.Concurrent;
 using System.Threading.Tasks;
 using Atles.Core.Services;
 
-namespace Atles.Core.Queries
+namespace Atles.Core.Queries;
+
+public class QueryProcessor : IQueryProcessor
 {
-    public class QueryProcessor : IQueryProcessor
+    private readonly IServiceProviderWrapper _serviceProvider;
+
+    private static readonly ConcurrentDictionary<Type, object> QueryHandlerWrappers = new();
+
+    public QueryProcessor(IServiceProviderWrapper serviceProvider)
     {
-        private readonly IServiceProviderWrapper _serviceProvider;
+        _serviceProvider = serviceProvider;
+    }
 
-        private static readonly ConcurrentDictionary<Type, object> QueryHandlerWrappers = new();
-
-        public QueryProcessor(IServiceProviderWrapper serviceProvider)
+    public async Task<TResult> Process<TResult>(IQuery<TResult> query)
+    {
+        if (query == null)
         {
-            _serviceProvider = serviceProvider;
+            throw new ArgumentNullException(nameof(query));
         }
 
-        public async Task<TResult> Process<TResult>(IQuery<TResult> query)
-        {
-            if (query == null)
-            {
-                throw new ArgumentNullException(nameof(query));
-            }
+        var queryType = query.GetType();
 
-            var queryType = query.GetType();
+        var handler = (QueryHandlerWrapperBase<TResult>)QueryHandlerWrappers.GetOrAdd(queryType,
+            t => Activator.CreateInstance(typeof(QueryHandlerWrapper<,>).MakeGenericType(queryType, typeof(TResult))));
 
-            var handler = (QueryHandlerWrapperBase<TResult>)QueryHandlerWrappers.GetOrAdd(queryType,
-                t => Activator.CreateInstance(typeof(QueryHandlerWrapper<,>).MakeGenericType(queryType, typeof(TResult))));
-
-            return await handler.Handle(query, _serviceProvider);
-        }
+        return await handler.Handle(query, _serviceProvider);
     }
 }

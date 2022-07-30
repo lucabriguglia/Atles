@@ -2,10 +2,9 @@
 using System.Threading.Tasks;
 using Atles.Core.Events;
 
-namespace Atles.Core.Commands
+namespace Atles.Core.Commands;
+
+public interface ICommandSender
 {
-    public interface ICommandSender
-    {
-        Task<IEnumerable<IEvent>> Send<TCommand>(TCommand command) where TCommand : ICommand;
-    }
+    Task<IEnumerable<IEvent>> Send<TCommand>(TCommand command) where TCommand : ICommand;
 }

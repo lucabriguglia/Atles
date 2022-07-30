@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Atles.Core.Events
+namespace Atles.Core.Events;
+
+public interface IEventHandler<in TEvent> where TEvent : IEvent
 {
-    public interface IEventHandler<in TEvent> where TEvent : IEvent
-    {
-        Task Handle(TEvent @event);
-    }
+    Task Handle(TEvent @event);
 }

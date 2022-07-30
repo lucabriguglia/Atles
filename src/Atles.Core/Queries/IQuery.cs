@@ -1,6 +1,5 @@
-﻿namespace Atles.Core.Queries
+﻿namespace Atles.Core.Queries;
+
+public interface IQuery<TResult>
 {
-    public interface IQuery<TResult>
-    {
-    }
 }

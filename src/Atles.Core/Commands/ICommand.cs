@@ -1,10 +1,9 @@
 ﻿using System;
 
-namespace Atles.Core.Commands
+namespace Atles.Core.Commands;
+
+public interface ICommand
 {
-    public interface ICommand
-    {
-        Guid SiteId { get; set; }
-        Guid UserId { get; set; }
-    }
+    Guid SiteId { get; set; }
+    Guid UserId { get; set; }
 }

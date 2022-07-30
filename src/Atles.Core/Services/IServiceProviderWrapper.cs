@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
 
-namespace Atles.Core.Services
+namespace Atles.Core.Services;
+
+public interface IServiceProviderWrapper
 {
-    public interface IServiceProviderWrapper
-    {
-        T GetService<T>();
-        IEnumerable<T> GetServices<T>();
-    }
+    T GetService<T>();
+    IEnumerable<T> GetServices<T>();
 }

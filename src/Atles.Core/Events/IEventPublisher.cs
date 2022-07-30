@@ -1,9 +1,8 @@
 ﻿using System.Threading.Tasks;
 
-namespace Atles.Core.Events
+namespace Atles.Core.Events;
+
+public interface IEventPublisher
 {
-    public interface IEventPublisher
-    {
-        Task Publish<TEvent>(TEvent @event) where TEvent : IEvent;
-    }
+    Task Publish<TEvent>(TEvent @event) where TEvent : IEvent;
 }

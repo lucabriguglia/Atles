@@ -1,9 +1,8 @@
 ﻿using System;
 
-namespace Atles.Core.Queries
+namespace Atles.Core.Queries;
+
+public abstract class QueryBase<TResult> : IQuery<TResult>
 {
-    public abstract class QueryBase<TResult> : IQuery<TResult>
-    {
-        public Guid SiteId { get; set; }
-    }
+    public Guid SiteId { get; set; }
 }

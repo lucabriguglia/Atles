@@ -1,39 +1,38 @@
 ﻿using System.Text;
 
-namespace Atles.Core.Extensions
+namespace Atles.Core.Extensions;
+
+/// <summary>
+/// String Extensions
+/// </summary>
+public static class StringExtensions
 {
     /// <summary>
-    /// String Extensions
+    /// Insert Space Before Upper Case
     /// </summary>
-    public static class StringExtensions
+    /// <param name="text"></param>
+    /// <returns></returns>
+    public static string InsertSpaceBeforeUpperCase(this string text)
     {
-        /// <summary>
-        /// Insert Space Before Upper Case
-        /// </summary>
-        /// <param name="text"></param>
-        /// <returns></returns>
-        public static string InsertSpaceBeforeUpperCase(this string text)
+        var sb = new StringBuilder();
+
+        var previousChar = char.MinValue;
+
+        foreach (var c in text)
         {
-            var sb = new StringBuilder();
-
-            var previousChar = char.MinValue;
-
-            foreach (var c in text)
+            if (char.IsUpper(c))
             {
-                if (char.IsUpper(c))
+                if (sb.Length != 0 && previousChar != ' ')
                 {
-                    if (sb.Length != 0 && previousChar != ' ')
-                    {
-                        sb.Append(' ');
-                    }
+                    sb.Append(' ');
                 }
-
-                sb.Append(c);
-
-                previousChar = c;
             }
 
-            return sb.ToString();
+            sb.Append(c);
+
+            previousChar = c;
         }
+
+        return sb.ToString();
     }
 }

@@ -1,8 +1,7 @@
-﻿namespace Atles.Core.Settings
+﻿namespace Atles.Core.Settings;
+
+public class DatabaseSettings
 {
-    public class DatabaseSettings
-    {
-        public string AtlesConnectionString { get; set; }
-        public string IdentityConnectionString { get; set; }
-    }
+    public string AtlesConnectionString { get; set; }
+    public string IdentityConnectionString { get; set; }
 }
