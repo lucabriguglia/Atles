@@ -4,7 +4,7 @@ using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.PermissionSets;
 using FluentValidation;
 
-namespace Atles.Domain.Commands.Handlers.Forums.Validators
+namespace Atles.Commands.Handlers.Forums.Validators
 {
     public class UpdateForumValidator : AbstractValidator<UpdateForum>
     {

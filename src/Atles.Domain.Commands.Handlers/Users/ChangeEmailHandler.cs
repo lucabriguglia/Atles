@@ -7,7 +7,7 @@ using Atles.Domain.Events.Users;
 using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Commands.Handlers.Users
+namespace Atles.Commands.Handlers.Users
 {
     public class ChangeEmailHandler : ICommandHandler<ChangeEmail>
     {

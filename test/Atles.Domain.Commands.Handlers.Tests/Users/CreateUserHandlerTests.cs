@@ -1,6 +1,6 @@
-﻿using Atles.Commands.Users;
+﻿using Atles.Commands.Handlers.Users;
+using Atles.Commands.Users;
 using Atles.Data;
-using Atles.Domain.Commands.Handlers.Users;
 using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;

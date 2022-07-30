@@ -9,7 +9,7 @@ using Atles.Domain.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Commands.Handlers.PermissionSets
+namespace Atles.Commands.Handlers.PermissionSets
 {
     public class UpdatePermissionSetHandler : ICommandHandler<UpdatePermissionSet>
     {

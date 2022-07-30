@@ -1,6 +1,6 @@
-﻿using Atles.Commands.Posts;
+﻿using Atles.Commands.Handlers.Posts.Validators;
+using Atles.Commands.Posts;
 using Atles.Core;
-using Atles.Domain.Commands.Handlers.Posts.Validators;
 using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.Posts;
 using AutoFixture;

@@ -8,7 +8,7 @@ using Atles.Domain.Events.Posts;
 using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Commands.Handlers.Posts
+namespace Atles.Commands.Handlers.Posts
 {
     public class PinTopicHandler : ICommandHandler<PinTopic>
     {

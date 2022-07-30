@@ -2,7 +2,7 @@
 using Atles.Domain.Models;
 using Newtonsoft.Json;
 
-namespace Atles.Domain.Commands.Handlers
+namespace Atles.Commands.Handlers
 {
     /// <summary>
     /// Extensions for IEvent

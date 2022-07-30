@@ -1,7 +1,7 @@
-﻿using Atles.Commands.PermissionSets;
+﻿using Atles.Commands.Handlers.PermissionSets;
+using Atles.Commands.PermissionSets;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Commands.Handlers.PermissionSets;
 using Atles.Domain.Models;
 using FluentValidation;
 using FluentValidation.Results;

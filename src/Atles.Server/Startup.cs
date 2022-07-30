@@ -1,10 +1,10 @@
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
+using Atles.Commands.Handlers.Categories;
+using Atles.Commands.Handlers.Categories.Validators;
 using Atles.Core;
 using Atles.Core.Settings;
 using Atles.Data;
-using Atles.Domain.Commands.Handlers.Categories;
-using Atles.Domain.Commands.Handlers.Categories.Validators;
 using Atles.Domain.Events.Handlers.ReplyCreatedHandlers;
 using Atles.Domain.Models;
 using Atles.Domain.Rules.Handlers.Categories;

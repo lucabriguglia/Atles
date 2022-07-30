@@ -1,7 +1,7 @@
 ﻿using FluentValidation;
 using FluentValidation.Results;
 
-namespace Atles.Domain.Commands.Handlers
+namespace Atles.Commands.Handlers
 {
     /// <summary>
     /// Validator Extensions

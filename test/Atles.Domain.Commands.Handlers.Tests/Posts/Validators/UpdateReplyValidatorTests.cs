@@ -1,5 +1,5 @@
-﻿using Atles.Commands.Posts;
-using Atles.Domain.Commands.Handlers.Posts.Validators;
+﻿using Atles.Commands.Handlers.Posts.Validators;
+using Atles.Commands.Posts;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using NUnit.Framework;

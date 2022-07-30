@@ -4,7 +4,7 @@ using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.Posts;
 using FluentValidation;
 
-namespace Atles.Domain.Commands.Handlers.Posts.Validators
+namespace Atles.Commands.Handlers.Posts.Validators
 {
     public class CreateReplyValidator : AbstractValidator<CreateReply>
     {

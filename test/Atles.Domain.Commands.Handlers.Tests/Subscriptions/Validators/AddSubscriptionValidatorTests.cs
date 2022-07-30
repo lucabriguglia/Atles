@@ -1,6 +1,6 @@
-﻿using Atles.Commands.Subscriptions;
+﻿using Atles.Commands.Handlers.Subscriptions.Validators;
+using Atles.Commands.Subscriptions;
 using Atles.Core;
-using Atles.Domain.Commands.Handlers.Subscriptions.Validators;
 using Atles.Domain.Models;
 using Atles.Domain.Rules.Categories;
 using Atles.Domain.Rules.Forums;

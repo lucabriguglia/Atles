@@ -1,7 +1,7 @@
-﻿using Atles.Commands.Posts;
+﻿using Atles.Commands.Handlers.Posts;
+using Atles.Commands.Posts;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Commands.Handlers.Posts;
 using Atles.Domain.Models;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;

@@ -9,7 +9,7 @@ using Atles.Domain.Events.Forums;
 using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Commands.Handlers.Categories
+namespace Atles.Commands.Handlers.Categories
 {
     public class DeleteCategoryHandler : ICommandHandler<DeleteCategory>
     {

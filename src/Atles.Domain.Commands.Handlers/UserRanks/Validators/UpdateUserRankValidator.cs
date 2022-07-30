@@ -2,7 +2,7 @@
 using Atles.Core;
 using FluentValidation;
 
-namespace Atles.Domain.Commands.Handlers.UserRanks.Validators;
+namespace Atles.Commands.Handlers.UserRanks.Validators;
 
 public class UpdateUserRankValidator : AbstractValidator<UpdateUserRank>
 {

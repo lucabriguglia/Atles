@@ -6,7 +6,7 @@ using Atles.Domain.Events;
 using Atles.Domain.Models;
 using FluentValidation;
 
-namespace Atles.Domain.Commands.Handlers.Subscriptions
+namespace Atles.Commands.Handlers.Subscriptions
 {
     public class AddSubscriptionHandler : ICommandHandler<AddSubscription>
     {

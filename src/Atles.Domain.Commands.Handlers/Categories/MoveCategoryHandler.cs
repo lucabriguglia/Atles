@@ -8,7 +8,7 @@ using Atles.Domain.Events.Categories;
 using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Commands.Handlers.Categories
+namespace Atles.Commands.Handlers.Categories
 {
     public class MoveCategoryHandler : ICommandHandler<MoveCategory>
     {

@@ -6,7 +6,7 @@ using Atles.Domain.Events.PermissionSets;
 using Atles.Domain.Models;
 using FluentValidation;
 
-namespace Atles.Domain.Commands.Handlers.PermissionSets
+namespace Atles.Commands.Handlers.PermissionSets
 {
     public class CreatePermissionSetHandler : ICommandHandler<CreatePermissionSet>
     {

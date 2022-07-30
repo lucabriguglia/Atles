@@ -1,7 +1,7 @@
 ﻿using Atles.Commands.Categories;
+using Atles.Commands.Handlers.Categories.Validators;
 using Atles.Core;
 using Atles.Core.Queries;
-using Atles.Domain.Commands.Handlers.Categories.Validators;
 using Atles.Domain.Rules.Categories;
 using Atles.Domain.Rules.PermissionSets;
 using AutoFixture;

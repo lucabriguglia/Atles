@@ -1,4 +1,4 @@
-﻿namespace Atles.Domain.Commands.Handlers.Posts.Services
+﻿namespace Atles.Commands.Handlers.Posts.Services
 {
     public interface ITopicSlugGenerator
     {

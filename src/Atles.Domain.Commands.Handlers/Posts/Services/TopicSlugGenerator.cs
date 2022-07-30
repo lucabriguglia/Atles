@@ -3,7 +3,7 @@ using Atles.Data;
 using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Commands.Handlers.Posts.Services
+namespace Atles.Commands.Handlers.Posts.Services
 {
     public class TopicSlugGenerator : ITopicSlugGenerator
     {

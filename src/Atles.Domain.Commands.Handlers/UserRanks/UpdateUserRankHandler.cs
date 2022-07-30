@@ -9,7 +9,7 @@ using Atles.Domain.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Commands.Handlers.UserRanks
+namespace Atles.Commands.Handlers.UserRanks
 {
     public class UpdateUserRankHandler : ICommandHandler<UpdateUserRank>
     {

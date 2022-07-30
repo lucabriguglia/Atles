@@ -9,7 +9,7 @@ using Atles.Domain.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Commands.Handlers.Forums
+namespace Atles.Commands.Handlers.Forums
 {
     public class UpdateForumHandler : ICommandHandler<UpdateForum>
     {

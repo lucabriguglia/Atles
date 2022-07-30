@@ -22,7 +22,7 @@
 	<ItemGroup>
 	  <ProjectReference Include="..\..\src\Atles.Core\Atles.Core.csproj" />
 	  <ProjectReference Include="..\..\src\Atles.Data\Atles.Data.csproj" />
-	  <ProjectReference Include="..\..\src\Atles.Domain.Commands.Handlers\Atles.Domain.Commands.Handlers.csproj" />
+	  <ProjectReference Include="..\..\src\Atles.Domain.Commands.Handlers\Atles.Commands.Handlers.csproj" />
 	  <ProjectReference Include="..\..\src\Atles.Domain.Rules\Atles.Domain.Rules.csproj" />
 	</ItemGroup>
 

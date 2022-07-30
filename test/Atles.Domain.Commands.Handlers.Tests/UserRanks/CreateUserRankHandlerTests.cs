@@ -1,7 +1,7 @@
-﻿using Atles.Commands.UserRanks;
+﻿using Atles.Commands.Handlers.UserRanks;
+using Atles.Commands.UserRanks;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Commands.Handlers.UserRanks;
 using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;

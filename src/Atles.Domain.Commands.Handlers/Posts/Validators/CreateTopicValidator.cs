@@ -3,7 +3,7 @@ using Atles.Core;
 using Atles.Domain.Rules.Forums;
 using FluentValidation;
 
-namespace Atles.Domain.Commands.Handlers.Posts.Validators
+namespace Atles.Commands.Handlers.Posts.Validators
 {
     public class CreateTopicValidator : AbstractValidator<CreateTopic>
     {

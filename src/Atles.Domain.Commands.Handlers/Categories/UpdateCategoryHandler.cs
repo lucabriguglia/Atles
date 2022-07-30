@@ -9,7 +9,7 @@ using Atles.Domain.Models;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Commands.Handlers.Categories
+namespace Atles.Commands.Handlers.Categories
 {
     public class UpdateCategoryHandler : ICommandHandler<UpdateCategory>
     {

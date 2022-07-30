@@ -1,6 +1,6 @@
-﻿using Atles.Commands.Subscriptions;
+﻿using Atles.Commands.Handlers.Subscriptions;
+using Atles.Commands.Subscriptions;
 using Atles.Data;
-using Atles.Domain.Commands.Handlers.Subscriptions;
 using AutoFixture;
 using FluentValidation;
 using FluentValidation.Results;

@@ -1,7 +1,7 @@
 ﻿using Atles.Commands.Forums;
+using Atles.Commands.Handlers.Forums;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Commands.Handlers.Forums;
 using Atles.Domain.Models;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;

@@ -1,6 +1,6 @@
-﻿using Atles.Commands.UserRanks;
+﻿using Atles.Commands.Handlers.UserRanks.Validators;
+using Atles.Commands.UserRanks;
 using Atles.Core;
-using Atles.Domain.Commands.Handlers.UserRanks.Validators;
 using Atles.Domain.Rules.UserRanks;
 using AutoFixture;
 using FluentValidation.TestHelper;

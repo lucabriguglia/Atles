@@ -7,7 +7,7 @@ using Atles.Domain.Events;
 using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Domain.Commands.Handlers.Subscriptions
+namespace Atles.Commands.Handlers.Subscriptions
 {
     public class RemoveSubscriptionHandler : ICommandHandler<RemoveSubscription>
     {
