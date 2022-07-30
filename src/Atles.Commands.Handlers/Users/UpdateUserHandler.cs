@@ -2,6 +2,7 @@
 using Atles.Commands.Users;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Events.Users;
@@ -21,7 +22,7 @@ namespace Atles.Commands.Handlers.Users
             _validator = validator;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(UpdateUser command)
+        public async Task<CommandResult> Handle(UpdateUser command)
         {
             await _validator.ValidateCommand(command);
 
@@ -50,7 +51,7 @@ namespace Atles.Commands.Handlers.Users
 
             await _dbContext.SaveChangesAsync();
 
-            return new IEvent[] { @event };
+            return new Success(new IEvent[] { @event });
         }
     }
 }

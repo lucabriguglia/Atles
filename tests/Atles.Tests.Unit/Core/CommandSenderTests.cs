@@ -1,5 +1,6 @@
 ﻿using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Core.Services;
 using Moq;
 using NUnit.Framework;
@@ -30,7 +31,7 @@ namespace Atles.Tests.Unit.Core
             var command = new SampleCommand();
 
             var handler = new Mock<ICommandHandler<SampleCommand>>();
-            handler.Setup(x => x.Handle(command)).ReturnsAsync(new List<IEvent>());
+            handler.Setup(x => x.Handle(command)).ReturnsAsync(new Success(new List<IEvent>()));
 
             var serviceProvider = new Mock<IServiceProviderWrapper>();
             serviceProvider.Setup(x => x.GetService<ICommandHandler<SampleCommand>>()).Returns(handler.Object);

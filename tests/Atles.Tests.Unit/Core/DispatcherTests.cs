@@ -3,6 +3,7 @@ using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Core.Mapping;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Moq;
 using NUnit.Framework;
 
@@ -18,7 +19,7 @@ namespace Atles.Tests.Unit.Core
             var events = new List<IEvent>{@event};
 
             var commandSender = new Mock<ICommandSender>();
-            commandSender.Setup(x => x.Send(command)).ReturnsAsync(events);
+            commandSender.Setup(x => x.Send(command)).ReturnsAsync(new Success(events));
 
             var queryProcessor = new Mock<IQueryProcessor>();
 

@@ -2,6 +2,7 @@
 using Atles.Commands.Posts;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Events.Posts;
@@ -18,7 +19,7 @@ namespace Atles.Commands.Handlers.Posts
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(AddPostReaction command)
+        public async Task<CommandResult> Handle(AddPostReaction command)
         {
             var post = await _dbContext.Posts
                 .Include(x => x.PostReactionSummaries)
@@ -52,7 +53,7 @@ namespace Atles.Commands.Handlers.Posts
 
             await _dbContext.SaveChangesAsync();
 
-            return new IEvent[] { @event };
+            return new Success(new IEvent[] { @event });
         }
     }
 }

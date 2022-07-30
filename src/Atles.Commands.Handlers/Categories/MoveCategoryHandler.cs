@@ -2,6 +2,7 @@
 using Atles.Commands.Categories;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
@@ -21,7 +22,7 @@ namespace Atles.Commands.Handlers.Categories
             _cacheManager = cacheManager;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(MoveCategory command)
+        public async Task<CommandResult> Handle(MoveCategory command)
         {
             var category = await _dbContext.Categories
                 .FirstOrDefaultAsync(x =>
@@ -86,7 +87,7 @@ namespace Atles.Commands.Handlers.Categories
 
             _cacheManager.Remove(CacheKeys.Categories(command.SiteId));
 
-            return new IEvent[] { categoryMoved, adjacentCategoryMoved };
+            return new Success(new IEvent[] { categoryMoved, adjacentCategoryMoved  });
         }
     }
 }

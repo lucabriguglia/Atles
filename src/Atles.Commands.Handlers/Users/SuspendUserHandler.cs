@@ -2,6 +2,7 @@
 using Atles.Commands.Users;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Events.Users;
@@ -18,7 +19,7 @@ namespace Atles.Commands.Handlers.Users
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(SuspendUser command)
+        public async Task<CommandResult> Handle(SuspendUser command)
         {
             var user = await _dbContext.Users
                 .FirstOrDefaultAsync(x =>
@@ -44,7 +45,7 @@ namespace Atles.Commands.Handlers.Users
 
             await _dbContext.SaveChangesAsync();
 
-            return new IEvent[] { @event };
+            return new Success(new IEvent[] { @event });
         }
     }
 }

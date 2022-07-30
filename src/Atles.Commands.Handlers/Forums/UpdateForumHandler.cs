@@ -2,6 +2,7 @@
 using Atles.Commands.Forums;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
@@ -26,7 +27,7 @@ namespace Atles.Commands.Handlers.Forums
             _validator = validator;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(UpdateForum command)
+        public async Task<CommandResult> Handle(UpdateForum command)
         {
             await _validator.ValidateCommand(command);
 
@@ -85,7 +86,7 @@ namespace Atles.Commands.Handlers.Forums
             _cacheManager.Remove(CacheKeys.Forum(command.ForumId));
             _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
 
-            return new IEvent[] { @event };
+            return new Success(new IEvent[] { @event });
         }
 
         private async Task ReorderForumsInCategory(Guid categoryId, Guid forumIdToExclude, Guid siteId, Guid userId)

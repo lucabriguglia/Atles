@@ -1,6 +1,7 @@
 ﻿using Atles.Commands.PermissionSets;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Events.PermissionSets;
@@ -20,7 +21,7 @@ namespace Atles.Commands.Handlers.PermissionSets
             _validator = validator;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(CreatePermissionSet command)
+        public async Task<CommandResult> Handle(CreatePermissionSet command)
         {
             await _validator.ValidateCommand(command);
 
@@ -45,7 +46,7 @@ namespace Atles.Commands.Handlers.PermissionSets
 
             await _dbContext.SaveChangesAsync();
 
-            return new IEvent[] { @event };
+            return new Success(new IEvent[] { @event });
         }
     }
 }

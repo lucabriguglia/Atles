@@ -2,6 +2,7 @@
 using Atles.Commands.Subscriptions;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Events;
@@ -18,7 +19,7 @@ namespace Atles.Commands.Handlers.Subscriptions
             _dbContext = dbContext;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(RemoveSubscription command)
+        public async Task<CommandResult> Handle(RemoveSubscription command)
         {
             var subscription = await _dbContext.Subscriptions
                 .FirstOrDefaultAsync(x =>
@@ -46,7 +47,7 @@ namespace Atles.Commands.Handlers.Subscriptions
 
             await _dbContext.SaveChangesAsync();
 
-            return new IEvent[] { @event };
+            return new Success(new IEvent[] { @event });
         }
     }
 }

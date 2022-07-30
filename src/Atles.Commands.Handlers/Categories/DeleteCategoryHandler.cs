@@ -2,6 +2,7 @@
 using Atles.Commands.Categories;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
@@ -22,7 +23,7 @@ namespace Atles.Commands.Handlers.Categories
             _cacheManager = cacheManager;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(DeleteCategory command)
+        public async Task<CommandResult> Handle(DeleteCategory command)
         {
             var category = await _dbContext.Categories
                 .Include(x => x.Forums)
@@ -91,7 +92,7 @@ namespace Atles.Commands.Handlers.Categories
             _cacheManager.Remove(CacheKeys.Categories(command.SiteId));
             _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
 
-            return new IEvent[] { categoryDeleted };
+            return new Success(new IEvent[] { categoryDeleted });
         }
     }
 }

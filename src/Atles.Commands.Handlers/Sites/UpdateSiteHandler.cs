@@ -2,6 +2,7 @@
 using Atles.Commands.Sites;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
@@ -24,7 +25,7 @@ namespace Atles.Commands.Handlers.Sites
             _cacheManager = cacheManager;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(UpdateSite command)
+        public async Task<CommandResult> Handle(UpdateSite command)
         {
             await _validator.ValidateCommand(command);
 
@@ -66,7 +67,7 @@ namespace Atles.Commands.Handlers.Sites
 
             _cacheManager.Remove(CacheKeys.CurrentSite(site.Name));
 
-            return new IEvent[] { @event };
+            return new Success(new IEvent[] { @event });
         }
     }
 }

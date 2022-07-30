@@ -2,6 +2,7 @@
 using Atles.Commands.Forums;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
@@ -21,7 +22,7 @@ namespace Atles.Commands.Handlers.Forums
             _cacheManager = cacheManager;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(DeleteForum command)
+        public async Task<CommandResult> Handle(DeleteForum command)
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
@@ -54,7 +55,7 @@ namespace Atles.Commands.Handlers.Forums
             _cacheManager.Remove(CacheKeys.Categories(command.SiteId));
             _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
 
-            return new IEvent[] { @event };
+            return new Success(new IEvent[] { @event });
         }
 
         private async Task ReorderForumsInCategory(Guid categoryId, Guid forumIdToExclude, Guid siteId, Guid userId)

@@ -3,6 +3,7 @@ using Atles.Commands.Handlers.Posts.Services;
 using Atles.Commands.Posts;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
@@ -30,7 +31,7 @@ namespace Atles.Commands.Handlers.Posts
             _topicSlugGenerator = topicSlugGenerator;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(CreateTopic command)
+        public async Task<CommandResult> Handle(CreateTopic command)
         {
             await _validator.ValidateCommand(command);
 
@@ -81,7 +82,7 @@ namespace Atles.Commands.Handlers.Posts
 
             _cacheManager.Remove(CacheKeys.Forum(forum.Id));
 
-            return new IEvent[] { @event };
+            return new Success(new IEvent[] { @event });
         }
     }
 }

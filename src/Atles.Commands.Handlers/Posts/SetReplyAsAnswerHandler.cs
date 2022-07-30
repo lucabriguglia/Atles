@@ -2,6 +2,7 @@
 using Atles.Commands.Posts;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
@@ -21,7 +22,7 @@ namespace Atles.Commands.Handlers.Posts
             _cacheManager = cacheManager;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(SetReplyAsAnswer command)
+        public async Task<CommandResult> Handle(SetReplyAsAnswer command)
         {
             var reply = await _dbContext.Posts
                 .Include(x => x.Topic)
@@ -65,7 +66,7 @@ namespace Atles.Commands.Handlers.Posts
 
             _cacheManager.Remove(CacheKeys.Forum(reply.Topic.ForumId));
 
-            return new IEvent[] { @event };
+            return new Success(new IEvent[] { @event });
         }
     }
 }

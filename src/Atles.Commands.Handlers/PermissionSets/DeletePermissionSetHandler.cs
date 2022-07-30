@@ -2,6 +2,7 @@
 using Atles.Commands.PermissionSets;
 using Atles.Core.Commands;
 using Atles.Core.Events;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
@@ -22,7 +23,7 @@ namespace Atles.Commands.Handlers.PermissionSets
             _cacheManager = cacheManager;
         }
 
-        public async Task<IEnumerable<IEvent>> Handle(DeletePermissionSet command)
+        public async Task<CommandResult> Handle(DeletePermissionSet command)
         {
             var permissionSet = await _dbContext.PermissionSets
                 .Include(x => x.Categories)
@@ -58,7 +59,7 @@ namespace Atles.Commands.Handlers.PermissionSets
 
             _cacheManager.Remove(CacheKeys.PermissionSet(command.PermissionSetId));
 
-            return new IEvent[] { @event };
+            return new Success(new IEvent[] { @event });
         }
     }
 }
