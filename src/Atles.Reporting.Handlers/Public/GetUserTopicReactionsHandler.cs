@@ -3,8 +3,8 @@ using Atles.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
-using Atles.Reporting.Models.Public;
-using Atles.Reporting.Models.Public.Queries;
+using Atles.Models.Public;
+using Atles.Queries.Public;
 
 namespace Atles.Reporting.Handlers.Public
 {

@@ -3,9 +3,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
 using Atles.Data;
-using Atles.Reporting.Models.Admin.Users;
-using Atles.Reporting.Models.Admin.Users.Queries;
-using Atles.Reporting.Models.Shared;
+using Atles.Models;
+using Atles.Models.Admin.Users;
+using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 

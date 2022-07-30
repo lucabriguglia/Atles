@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Atles.Reporting.Models.Admin.Categories
+﻿namespace Atles.Models.Admin.Categories
 {
     public class IndexPageModel
     {

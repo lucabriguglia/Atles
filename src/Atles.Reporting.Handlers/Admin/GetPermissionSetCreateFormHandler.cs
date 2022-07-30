@@ -3,9 +3,8 @@ using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Queries;
 using Atles.Domain;
-using Atles.Reporting.Models.Admin.PermissionSets;
-using Atles.Reporting.Models.Admin.PermissionSets.Queries;
-using Atles.Reporting.Models.Admin.Roles.Queries;
+using Atles.Models.Admin.PermissionSets;
+using Atles.Queries.Admin;
 
 namespace Atles.Reporting.Handlers.Admin
 {

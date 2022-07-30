@@ -3,8 +3,8 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
 using Atles.Data;
-using Atles.Reporting.Models.Admin.Events;
-using Atles.Reporting.Models.Admin.Events.Queries;
+using Atles.Models.Admin.Events;
+using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Client.Shared;
-using Atles.Reporting.Models.Public;
+using Atles.Models.Public;
 using Microsoft.AspNetCore.Components.Web;
 using Microsoft.JSInterop;
 

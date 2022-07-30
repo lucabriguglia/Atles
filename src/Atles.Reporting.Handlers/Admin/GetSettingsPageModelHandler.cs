@@ -2,8 +2,8 @@
 using System.Threading.Tasks;
 using Atles.Core.Queries;
 using Atles.Data;
-using Atles.Reporting.Models.Admin.Sites;
-using Atles.Reporting.Models.Admin.Sites.Queries;
+using Atles.Models.Admin.Sites;
+using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 

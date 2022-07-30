@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Atles.Reporting.Models.Shared
+﻿namespace Atles.Models
 {
     public class PaginatedData<T> where T : class
     {

@@ -1,6 +1,7 @@
 ﻿using Atles.Core.Queries;
+using Atles.Models.Admin.Users;
 
-namespace Atles.Reporting.Models.Admin.Users.Queries
+namespace Atles.Queries.Admin
 {
     public class GetUserCreateForm : QueryBase<CreatePageModel>
     {

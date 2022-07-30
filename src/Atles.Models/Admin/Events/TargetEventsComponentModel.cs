@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Atles.Reporting.Models.Admin.Events
+﻿namespace Atles.Models.Admin.Events
 {
     public class TargetEventsComponentModel
     {

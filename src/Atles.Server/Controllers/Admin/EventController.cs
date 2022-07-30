@@ -1,8 +1,8 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Core;
-using Atles.Reporting.Models.Admin.Events;
-using Atles.Reporting.Models.Admin.Events.Queries;
+using Atles.Models.Admin.Events;
+using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin

@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 using Atles.Core.Queries;
 using Atles.Data;
 using Atles.Domain;
-using Atles.Reporting.Models.Admin.Categories;
-using Atles.Reporting.Models.Admin.Categories.Queries;
+using Atles.Models.Admin.Categories;
+using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Reporting.Handlers.Admin

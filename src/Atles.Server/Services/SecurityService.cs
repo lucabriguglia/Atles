@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using Atles.Domain;
-using Atles.Reporting.Models.Public;
+using Atles.Models.Public;
 using Microsoft.AspNetCore.Http;
 
 namespace Atles.Server.Services

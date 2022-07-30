@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atles.Core.Queries;
-using Atles.Reporting.Models.Admin.Roles;
-using Atles.Reporting.Models.Admin.Roles.Queries;
+using Atles.Models.Admin.Roles;
+using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

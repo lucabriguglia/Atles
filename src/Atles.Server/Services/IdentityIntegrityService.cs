@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Atles.Commands.Users;
 using Atles.Core;
 using Atles.Data;
-using Atles.Reporting.Models.Public.Queries;
+using Atles.Queries.Public;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

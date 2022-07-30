@@ -1,8 +1,6 @@
-﻿using System;
-using Atles.Domain;
-using Atles.Reporting.Models.Shared;
+﻿using Atles.Domain;
 
-namespace Atles.Reporting.Models.Admin.Users
+namespace Atles.Models.Admin.Users
 {
     public class IndexPageModel
     {

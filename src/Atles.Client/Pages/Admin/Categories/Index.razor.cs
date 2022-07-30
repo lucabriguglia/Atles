@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Reporting.Models.Admin.Categories;
+using Atles.Models.Admin.Categories;
 using Microsoft.AspNetCore.Components.Web;
 
 namespace Atles.Client.Pages.Admin.Categories

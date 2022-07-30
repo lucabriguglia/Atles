@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Atles.Reporting.Models.Shared;
-
-namespace Atles.Reporting.Models.Admin.Users
+﻿namespace Atles.Models.Admin.Users
 {
     public class ActivityPageModel
     {

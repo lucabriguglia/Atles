@@ -2,8 +2,8 @@
 using Atles.Core.Queries;
 using Atles.Data;
 using Atles.Domain;
-using Atles.Reporting.Models.Admin.Users;
-using Atles.Reporting.Models.Admin.Users.Queries;
+using Atles.Models.Admin.Users;
+using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 

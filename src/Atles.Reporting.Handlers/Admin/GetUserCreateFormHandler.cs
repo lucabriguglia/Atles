@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atles.Core.Queries;
-using Atles.Reporting.Models.Admin.Users;
-using Atles.Reporting.Models.Admin.Users.Queries;
+using Atles.Models.Admin.Users;
+using Atles.Queries.Admin;
 
 namespace Atles.Reporting.Handlers.Admin
 {

@@ -1,8 +1,8 @@
-﻿using System;
-using Atles.Core.Queries;
-using Atles.Reporting.Models.Shared;
+﻿using Atles.Core.Queries;
+using Atles.Models;
+using Atles.Models.Admin.Users;
 
-namespace Atles.Reporting.Models.Admin.Users.Queries
+namespace Atles.Queries.Admin
 {
     public class GetUserActivity : QueryBase<ActivityPageModel>
     {

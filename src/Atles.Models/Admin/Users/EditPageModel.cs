@@ -1,9 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using Atles.Domain;
 
-namespace Atles.Reporting.Models.Admin.Users
+namespace Atles.Models.Admin.Users
 {
     public class EditPageModel
     {

@@ -1,7 +1,8 @@
 ﻿using Atles.Core.Queries;
-using Atles.Reporting.Models.Shared;
+using Atles.Models;
+using Atles.Models.Admin.Users;
 
-namespace Atles.Reporting.Models.Admin.Users.Queries
+namespace Atles.Queries.Admin
 {
     public class GetUsersIndex : QueryBase<IndexPageModel>
     {

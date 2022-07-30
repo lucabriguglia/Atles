@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
+﻿using System.ComponentModel.DataAnnotations;
 using Atles.Domain;
-using Atles.Reporting.Models.Shared;
 
-namespace Atles.Reporting.Models.Public
+namespace Atles.Models.Public
 {
     public class TopicPageModel
     {

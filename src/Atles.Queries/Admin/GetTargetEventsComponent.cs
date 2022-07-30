@@ -1,7 +1,7 @@
-﻿using System;
-using Atles.Core.Queries;
+﻿using Atles.Core.Queries;
+using Atles.Models.Admin.Events;
 
-namespace Atles.Reporting.Models.Admin.Events.Queries
+namespace Atles.Queries.Admin
 {
     public class GetTargetEventsComponent : QueryBase<TargetEventsComponentModel>
     {

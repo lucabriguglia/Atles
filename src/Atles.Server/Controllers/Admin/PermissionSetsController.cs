@@ -3,8 +3,8 @@ using System.Threading.Tasks;
 using Atles.Commands.PermissionSets;
 using Atles.Core;
 using Atles.Domain.Rules.PermissionSets;
-using Atles.Reporting.Models.Admin.PermissionSets;
-using Atles.Reporting.Models.Admin.PermissionSets.Queries;
+using Atles.Models.Admin.PermissionSets;
+using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin

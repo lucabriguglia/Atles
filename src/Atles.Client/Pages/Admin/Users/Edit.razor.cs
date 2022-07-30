@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Reporting.Models.Admin.Users;
+using Atles.Models.Admin.Users;
 using Microsoft.AspNetCore.Components;
 
 namespace Atles.Client.Pages.Admin.Users

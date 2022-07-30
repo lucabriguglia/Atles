@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Atles.Domain;
+﻿using Atles.Domain;
 
-namespace Atles.Reporting.Models.Public;
+namespace Atles.Models.Public;
 
 public class UserTopicReactionsModel
 {

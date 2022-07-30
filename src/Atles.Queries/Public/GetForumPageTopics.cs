@@ -1,8 +1,8 @@
-﻿using System;
-using Atles.Core.Queries;
-using Atles.Reporting.Models.Shared;
+﻿using Atles.Core.Queries;
+using Atles.Models;
+using Atles.Models.Public;
 
-namespace Atles.Reporting.Models.Public.Queries
+namespace Atles.Queries.Public
 {
     public class GetForumPageTopics : QueryBase<PaginatedData<ForumPageModel.TopicModel>>
     {

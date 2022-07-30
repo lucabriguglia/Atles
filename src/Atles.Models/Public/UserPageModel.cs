@@ -1,8 +1,6 @@
-﻿using System;
-using Atles.Domain;
-using Atles.Reporting.Models.Shared;
+﻿using Atles.Domain;
 
-namespace Atles.Reporting.Models.Public
+namespace Atles.Models.Public
 {
     public class UserPageModel
     {

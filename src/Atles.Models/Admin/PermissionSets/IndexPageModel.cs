@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Atles.Reporting.Models.Admin.PermissionSets
+﻿namespace Atles.Models.Admin.PermissionSets
 {
     public class IndexPageModel
     {

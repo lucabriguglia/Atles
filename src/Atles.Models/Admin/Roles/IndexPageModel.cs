@@ -1,7 +1,6 @@
-﻿using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Atles.Reporting.Models.Admin.Roles
+namespace Atles.Models.Admin.Roles
 {
     public class IndexPageModel
     {

@@ -1,6 +1,7 @@
 ﻿using Atles.Core.Queries;
+using Atles.Models.Admin.Categories;
 
-namespace Atles.Reporting.Models.Admin.Categories.Queries
+namespace Atles.Queries.Admin
 {
     public class GetCategoriesIndex : QueryBase<IndexPageModel>
     {

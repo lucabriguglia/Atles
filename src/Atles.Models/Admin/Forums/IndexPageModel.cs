@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace Atles.Reporting.Models.Admin.Forums
+﻿namespace Atles.Models.Admin.Forums
 {
     public class IndexPageModel
     {

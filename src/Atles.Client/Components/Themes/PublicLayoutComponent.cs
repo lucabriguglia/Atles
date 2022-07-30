@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Client.Pages;
-using Atles.Reporting.Models.Public;
+using Atles.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;

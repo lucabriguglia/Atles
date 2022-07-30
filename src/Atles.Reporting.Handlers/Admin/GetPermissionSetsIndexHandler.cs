@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Atles.Core.Queries;
 using Atles.Data;
 using Atles.Domain;
-using Atles.Reporting.Models.Admin.PermissionSets.Queries;
+using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
-using IndexPageModel = Atles.Reporting.Models.Admin.PermissionSets.IndexPageModel;
+using IndexPageModel = Atles.Models.Admin.PermissionSets.IndexPageModel;
 
 namespace Atles.Reporting.Handlers.Admin
 {

@@ -1,6 +1,7 @@
 ﻿using Atles.Core.Queries;
+using Atles.Models.Admin.Sites;
 
-namespace Atles.Reporting.Models.Admin.Sites.Queries
+namespace Atles.Queries.Admin
 {
     public class GetSettingsPageModel : QueryBase<SettingsPageModel>
     {

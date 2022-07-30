@@ -1,7 +1,7 @@
-﻿using System;
-using Atles.Core.Queries;
+﻿using Atles.Core.Queries;
+using Atles.Models.Public;
 
-namespace Atles.Reporting.Models.Public.Queries
+namespace Atles.Queries.Public
 {
     public class GetEditPostPage : QueryBase<PostPageModel>
     {

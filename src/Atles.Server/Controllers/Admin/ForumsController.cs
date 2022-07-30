@@ -4,8 +4,8 @@ using Atles.Commands.Forums;
 using Atles.Core;
 using Atles.Domain;
 using Atles.Domain.Rules.Forums;
-using Atles.Reporting.Models.Admin.Forums;
-using Atles.Reporting.Models.Admin.Forums.Queries;
+using Atles.Models.Admin.Forums;
+using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin

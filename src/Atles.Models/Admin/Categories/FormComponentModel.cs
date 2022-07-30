@@ -1,8 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
-namespace Atles.Reporting.Models.Admin.Categories
+namespace Atles.Models.Admin.Categories
 {
     public class FormComponentModel
     {

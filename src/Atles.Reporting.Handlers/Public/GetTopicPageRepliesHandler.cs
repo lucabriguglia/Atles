@@ -6,9 +6,9 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
 using Atles.Domain;
-using Atles.Reporting.Models.Public;
-using Atles.Reporting.Models.Public.Queries;
-using Atles.Reporting.Models.Shared;
+using Atles.Models;
+using Atles.Models.Public;
+using Atles.Queries.Public;
 
 namespace Atles.Reporting.Handlers.Public
 {
