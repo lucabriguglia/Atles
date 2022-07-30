@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Atles.Data.Migrations.AtlesMigrations
 {
     [DbContext(typeof(AtlesDbContext))]
-    [Migration("20220202143729_InitialCreate")]
+    [Migration("20220215094044_InitialCreate")]
     partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -330,6 +330,9 @@ namespace Atles.Data.Migrations.AtlesMigrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("uniqueidentifier");
 
+                    b.Property<int>("AnswersCount")
+                        .HasColumnType("int");
+
                     b.Property<string>("DisplayName")
                         .HasColumnType("nvarchar(max)");
 
@@ -354,6 +357,32 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     b.HasKey("Id");
 
                     b.ToTable("User", (string)null);
+                });
+
+            modelBuilder.Entity("Atles.Domain.Models.UserRank", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Badge")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Description")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Role")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("SortOrder")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("UserRank", (string)null);
                 });
 
             modelBuilder.Entity("Atles.Domain.Models.Category", b =>
@@ -509,6 +538,41 @@ namespace Atles.Data.Migrations.AtlesMigrations
                         .IsRequired();
 
                     b.Navigation("User");
+                });
+
+            modelBuilder.Entity("Atles.Domain.Models.UserRank", b =>
+                {
+                    b.OwnsMany("Atles.Domain.Models.UserRankRule", "UserRankRules", b1 =>
+                        {
+                            b1.Property<Guid>("UserRankId")
+                                .HasColumnType("uniqueidentifier");
+
+                            b1.Property<int>("Type")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Badge")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<int>("Count")
+                                .HasColumnType("int");
+
+                            b1.Property<string>("Description")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.Property<string>("Name")
+                                .HasColumnType("nvarchar(max)");
+
+                            b1.HasKey("UserRankId", "Type");
+
+                            b1.ToTable("UserRankRule", (string)null);
+
+                            b1.WithOwner("UserRank")
+                                .HasForeignKey("UserRankId");
+
+                            b1.Navigation("UserRank");
+                        });
+
+                    b.Navigation("UserRankRules");
                 });
 
             modelBuilder.Entity("Atles.Domain.Models.Category", b =>

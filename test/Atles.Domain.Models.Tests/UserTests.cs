@@ -134,6 +134,41 @@ namespace Atles.Domain.Models.Tests
         }
 
         [Test]
+        public void Increase_answers_count()
+        {
+            var sut = Fixture.Create<User>();
+
+            var currentCount = sut.AnswersCount;
+
+            sut.IncreaseAnswersCount();
+
+            Assert.AreEqual(currentCount + 1, sut.AnswersCount, nameof(sut.AnswersCount));
+        }
+
+        [Test]
+        public void Decrease_answers_count()
+        {
+            var sut = Fixture.Create<User>();
+            sut.IncreaseAnswersCount();
+
+            var currentCount = sut.AnswersCount;
+
+            sut.DecreaseAnswersCount();
+
+            Assert.AreEqual(currentCount - 1, sut.AnswersCount, nameof(sut.AnswersCount));
+        }
+
+        [Test]
+        public void Decrease_answers_count_less_than_zero()
+        {
+            var sut = Fixture.Create<User>();
+
+            sut.DecreaseAnswersCount();
+
+            Assert.AreEqual(0, sut.AnswersCount, nameof(sut.AnswersCount));
+        }
+
+        [Test]
         public void Delete()
         {
             var sut = Fixture.Create<User>();

@@ -54,12 +54,29 @@ namespace Atles.Data.Migrations.AtlesMigrations
                     DisplayName = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     TopicsCount = table.Column<int>(type: "int", nullable: false),
                     RepliesCount = table.Column<int>(type: "int", nullable: false),
+                    AnswersCount = table.Column<int>(type: "int", nullable: false),
                     Status = table.Column<int>(type: "int", nullable: false),
                     TimeStamp = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_User", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRank",
+                columns: table => new
+                {
+                    Id = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    SortOrder = table.Column<int>(type: "int", nullable: false),
+                    Badge = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Role = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRank", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -148,6 +165,28 @@ namespace Atles.Data.Migrations.AtlesMigrations
                         column: x => x.UserId,
                         principalTable: "User",
                         principalColumn: "Id");
+                });
+
+            migrationBuilder.CreateTable(
+                name: "UserRankRule",
+                columns: table => new
+                {
+                    UserRankId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Type = table.Column<int>(type: "int", nullable: false),
+                    Name = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Description = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Count = table.Column<int>(type: "int", nullable: false),
+                    Badge = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_UserRankRule", x => new { x.UserRankId, x.Type });
+                    table.ForeignKey(
+                        name: "FK_UserRankRule_UserRank_UserRankId",
+                        column: x => x.UserRankId,
+                        principalTable: "UserRank",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -383,6 +422,12 @@ namespace Atles.Data.Migrations.AtlesMigrations
 
             migrationBuilder.DropTable(
                 name: "Subscription");
+
+            migrationBuilder.DropTable(
+                name: "UserRankRule");
+
+            migrationBuilder.DropTable(
+                name: "UserRank");
 
             migrationBuilder.DropTable(
                 name: "Site");

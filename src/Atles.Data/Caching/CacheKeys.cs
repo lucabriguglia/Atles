@@ -9,5 +9,6 @@ namespace Atles.Data.Caching
         public static string Categories(Guid siteId) => $"Categories | SiteId: {siteId}";
         public static string Forum(Guid forumId) => $"Forum | ForumId: {forumId}";
         public static string PermissionSet(Guid permissionSetId) => $"PermissionSet | PermissionSetId: {permissionSetId}";
+        public static string UserRanks(Guid siteId) => $"UserRanks | SiteId: {siteId}";
     }
 }

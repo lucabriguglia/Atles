@@ -25,6 +25,7 @@ namespace Atles.Domain.Commands.Handlers.Posts
         {
             var reply = await _dbContext.Posts
                 .Include(x => x.Topic)
+                .Include(x => x.CreatedByUser)
                 .FirstOrDefaultAsync(x =>
                     x.Id == command.ReplyId &&
                     x.TopicId == command.TopicId &&
@@ -38,7 +39,17 @@ namespace Atles.Domain.Commands.Handlers.Posts
             }
 
             reply.SetAsAnswer(command.IsAnswer);
+            reply.Topic.SetAsAnswered(command.IsAnswer);
 
+            if (command.IsAnswer)
+            {
+                reply.CreatedByUser.IncreaseAnswersCount();
+            }
+            else
+            {
+                reply.CreatedByUser.DecreaseAnswersCount();
+            }
+            
             var @event = new ReplySetAsAnswer
             {
                 IsAnswer = reply.IsAnswer,
@@ -49,8 +60,6 @@ namespace Atles.Domain.Commands.Handlers.Posts
             };
 
             _dbContext.Events.Add(@event.ToDbEntity());
-
-            reply.Topic.SetAsAnswered(command.IsAnswer);
 
             await _dbContext.SaveChangesAsync();
 
