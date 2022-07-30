@@ -1,4 +1,4 @@
-﻿namespace Atles.Core.Tests
+﻿namespace Atles.Tests.Unit.Core
 {
     public class SampleResult
     {

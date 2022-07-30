@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
-using Atles.Core.Events;
+﻿using Atles.Core.Events;
 using Atles.Core.Services;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Core.Tests
+namespace Atles.Tests.Unit.Core
 {
     [TestFixture]
     public class EventPublisherTests

@@ -1,6 +1,6 @@
 ﻿using Atles.Core.Events;
 
-namespace Atles.Core.Tests
+namespace Atles.Tests.Unit.Core
 {
     public class SampleEvent : EventBase
     {

@@ -1,11 +1,9 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Core.Queries;
+﻿using Atles.Core.Queries;
 using Atles.Core.Services;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Core.Tests
+namespace Atles.Tests.Unit.Core
 {
     public class QueryProcessorTests
     {

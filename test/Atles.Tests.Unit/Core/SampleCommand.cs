@@ -1,6 +1,6 @@
 ﻿using Atles.Core.Commands;
 
-namespace Atles.Core.Tests
+namespace Atles.Tests.Unit.Core
 {
     public class SampleCommand : CommandBase
     {

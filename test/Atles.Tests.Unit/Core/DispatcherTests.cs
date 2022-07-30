@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using Atles.Core;
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Core.Mapping;
@@ -7,7 +6,7 @@ using Atles.Core.Queries;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Core.Tests
+namespace Atles.Tests.Unit.Core
 {
     public class DispatcherTests
     {
