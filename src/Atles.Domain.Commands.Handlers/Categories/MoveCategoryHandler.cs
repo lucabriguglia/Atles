@@ -5,7 +5,7 @@ using Atles.Core.Events;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
-using Atles.Domain.Events.Categories;
+using Atles.Events.Categories;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Commands.Handlers.Categories

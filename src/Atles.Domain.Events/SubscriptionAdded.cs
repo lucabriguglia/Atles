@@ -1,6 +1,7 @@
 ﻿using Atles.Core.Events;
+using Atles.Domain;
 
-namespace Atles.Domain.Events
+namespace Atles.Events
 {
     /// <summary>
     /// Event published when a new subscription is added.

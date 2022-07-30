@@ -1,6 +1,7 @@
 ﻿using Atles.Core.Events;
+using Atles.Domain;
 
-namespace Atles.Domain.Events.PermissionSets
+namespace Atles.Events.PermissionSets
 {
     /// <summary>
     /// Event published when a new permission set is created.

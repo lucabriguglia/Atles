@@ -2,7 +2,7 @@
 using System.Linq;
 using System.Reflection;
 using Atles.Core.Events;
-using Atles.Domain.Events.Sites;
+using Atles.Events.Sites;
 using AutoMapper;
 using Microsoft.Extensions.DependencyInjection;
 

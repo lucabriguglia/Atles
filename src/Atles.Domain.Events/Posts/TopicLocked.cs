@@ -1,6 +1,6 @@
 ﻿using Atles.Core.Events;
 
-namespace Atles.Domain.Events.Posts
+namespace Atles.Events.Posts
 {
     /// <summary>
     /// Event published when a topic is locked.

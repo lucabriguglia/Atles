@@ -1,6 +1,6 @@
 ﻿using Atles.Core.Events;
 
-namespace Atles.Domain.Events.Categories
+namespace Atles.Events.Categories
 {
     /// <summary>
     /// Event published when a category is deleted

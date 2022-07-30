@@ -1,6 +1,6 @@
 ﻿using Atles.Core.Events;
 
-namespace Atles.Domain.Events.Users
+namespace Atles.Events.Users
 {
     /// <summary>
     /// Event published when a user is reinstated.

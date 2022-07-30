@@ -3,7 +3,7 @@ using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
 using Atles.Domain;
-using Atles.Domain.Events.PermissionSets;
+using Atles.Events.PermissionSets;
 using FluentValidation;
 
 namespace Atles.Commands.Handlers.PermissionSets

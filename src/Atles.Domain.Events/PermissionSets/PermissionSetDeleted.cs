@@ -1,6 +1,6 @@
 ﻿using Atles.Core.Events;
 
-namespace Atles.Domain.Events.PermissionSets
+namespace Atles.Events.PermissionSets
 {
     /// <summary>
     /// Event published when a permission set is deleted.

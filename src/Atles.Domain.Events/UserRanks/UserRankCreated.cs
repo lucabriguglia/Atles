@@ -1,6 +1,7 @@
 ﻿using Atles.Core.Events;
+using Atles.Domain;
 
-namespace Atles.Domain.Events.UserRanks
+namespace Atles.Events.UserRanks
 {
     /// <summary>
     /// Event published when a user rank is created.

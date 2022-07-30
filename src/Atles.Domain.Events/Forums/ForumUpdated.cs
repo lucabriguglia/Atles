@@ -1,6 +1,6 @@
 ﻿using Atles.Core.Events;
 
-namespace Atles.Domain.Events.Forums
+namespace Atles.Events.Forums
 {
     /// <summary>
     /// Event published when a forum is updated

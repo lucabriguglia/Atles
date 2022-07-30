@@ -4,7 +4,7 @@ using Atles.Core.Events;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
-using Atles.Domain.Events.Forums;
+using Atles.Events.Forums;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 

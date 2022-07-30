@@ -1,6 +1,6 @@
 ﻿using Atles.Core.Events;
 
-namespace Atles.Domain.Events.UserRanks;
+namespace Atles.Events.UserRanks;
 
 /// <summary>
 /// Event published when a user rank is deleted.

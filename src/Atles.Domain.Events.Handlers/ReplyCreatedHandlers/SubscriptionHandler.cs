@@ -2,7 +2,7 @@
 using Atles.Core.Events;
 using Atles.Core.Settings;
 using Atles.Data;
-using Atles.Domain.Events.Posts;
+using Atles.Events.Posts;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;

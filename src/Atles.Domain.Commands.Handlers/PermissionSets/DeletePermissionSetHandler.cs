@@ -5,7 +5,7 @@ using Atles.Core.Events;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
-using Atles.Domain.Events.PermissionSets;
+using Atles.Events.PermissionSets;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Commands.Handlers.PermissionSets

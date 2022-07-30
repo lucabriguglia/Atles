@@ -1,6 +1,7 @@
 ﻿using Atles.Core.Events;
+using Atles.Domain;
 
-namespace Atles.Domain.Events.Users
+namespace Atles.Events.Users
 {
     /// <summary>
     /// Event published when a user is created.

@@ -1,6 +1,7 @@
 ﻿using Atles.Core.Events;
+using Atles.Domain;
 
-namespace Atles.Domain.Events.Posts
+namespace Atles.Events.Posts
 {
     /// <summary>
     /// Event published when a topic is updated.

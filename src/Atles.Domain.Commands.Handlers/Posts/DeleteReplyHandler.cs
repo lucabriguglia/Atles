@@ -5,7 +5,7 @@ using Atles.Core.Events;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
-using Atles.Domain.Events.Posts;
+using Atles.Events.Posts;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Commands.Handlers.Posts

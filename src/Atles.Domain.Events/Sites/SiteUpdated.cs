@@ -1,6 +1,6 @@
 ﻿using Atles.Core.Events;
 
-namespace Atles.Domain.Events.Sites
+namespace Atles.Events.Sites
 {
     /// <summary>
     /// Event published when a site is updated.
