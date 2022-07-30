@@ -1,7 +1,7 @@
-﻿using Atles.Data;
+﻿using Atles.Commands.Posts;
+using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain.Commands.Handlers.Posts;
-using Atles.Domain.Commands.Posts;
 using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;
 using Moq;

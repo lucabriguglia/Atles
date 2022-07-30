@@ -1,7 +1,7 @@
-﻿using Atles.Core.Commands;
+﻿using Atles.Commands.PermissionSets;
+using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
-using Atles.Domain.Commands.PermissionSets;
 using Atles.Domain.Events.PermissionSets;
 using Atles.Domain.Models;
 using FluentValidation;

@@ -1,7 +1,7 @@
 ﻿using System.Data;
+using Atles.Commands.Subscriptions;
 using Atles.Data;
 using Atles.Domain.Commands.Handlers.Subscriptions;
-using Atles.Domain.Commands.Subscriptions;
 using Atles.Domain.Models;
 using AutoFixture;
 using Microsoft.EntityFrameworkCore;

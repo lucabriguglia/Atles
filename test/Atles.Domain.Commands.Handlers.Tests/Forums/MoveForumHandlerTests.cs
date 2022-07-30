@@ -1,6 +1,6 @@
-﻿using Atles.Data;
+﻿using Atles.Commands.Forums;
+using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Commands.Forums;
 using Atles.Domain.Commands.Handlers.Forums;
 using Atles.Domain.Models;
 using FluentValidation;

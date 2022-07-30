@@ -1,4 +1,4 @@
-﻿using Atles.Domain.Commands.Sites;
+﻿using Atles.Commands.Sites;
 using FluentValidation;
 
 namespace Atles.Domain.Commands.Handlers.Sites.Validators

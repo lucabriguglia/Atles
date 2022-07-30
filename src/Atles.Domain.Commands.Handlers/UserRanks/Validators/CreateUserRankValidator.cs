@@ -1,5 +1,5 @@
-﻿using Atles.Core;
-using Atles.Domain.Commands.UserRanks;
+﻿using Atles.Commands.UserRanks;
+using Atles.Core;
 using FluentValidation;
 
 namespace Atles.Domain.Commands.Handlers.UserRanks.Validators

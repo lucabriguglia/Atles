@@ -1,5 +1,5 @@
-﻿using Atles.Core;
-using Atles.Domain.Commands.Subscriptions;
+﻿using Atles.Commands.Subscriptions;
+using Atles.Core;
 using Atles.Domain.Models;
 using Atles.Domain.Rules.Categories;
 using Atles.Domain.Rules.Forums;

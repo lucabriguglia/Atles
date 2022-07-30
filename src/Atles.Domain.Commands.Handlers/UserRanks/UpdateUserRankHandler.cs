@@ -1,9 +1,9 @@
 ﻿using System.Data;
+using Atles.Commands.UserRanks;
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Commands.UserRanks;
 using Atles.Domain.Events.UserRanks;
 using Atles.Domain.Models;
 using FluentValidation;

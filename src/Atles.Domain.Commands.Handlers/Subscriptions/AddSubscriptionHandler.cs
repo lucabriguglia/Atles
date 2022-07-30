@@ -1,7 +1,7 @@
-﻿using Atles.Core.Commands;
+﻿using Atles.Commands.Subscriptions;
+using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
-using Atles.Domain.Commands.Subscriptions;
 using Atles.Domain.Events;
 using Atles.Domain.Models;
 using FluentValidation;

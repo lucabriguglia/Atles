@@ -1,8 +1,8 @@
-﻿using Atles.Data;
+﻿using Atles.Commands.Posts;
+using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain.Commands.Handlers.Posts;
 using Atles.Domain.Commands.Handlers.Posts.Services;
-using Atles.Domain.Commands.Posts;
 using Atles.Domain.Models;
 using AutoFixture;
 using FluentValidation;

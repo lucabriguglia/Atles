@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Atles.Client\Atles.Client.csproj" />
+    <ProjectReference Include="..\Atles.Commands\Atles.Commands.csproj" />
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
     <ProjectReference Include="..\Atles.Domain.Commands.Handlers\Atles.Domain.Commands.Handlers.csproj" />
     <ProjectReference Include="..\Atles.Domain.Events.Handlers\Atles.Domain.Events.Handlers.csproj" />

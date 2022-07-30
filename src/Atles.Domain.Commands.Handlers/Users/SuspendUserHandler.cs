@@ -1,8 +1,8 @@
 ﻿using System.Data;
+using Atles.Commands.Users;
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
-using Atles.Domain.Commands.Users;
 using Atles.Domain.Events.Users;
 using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;

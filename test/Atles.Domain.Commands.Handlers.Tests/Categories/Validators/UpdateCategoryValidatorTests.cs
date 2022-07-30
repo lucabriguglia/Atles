@@ -1,6 +1,6 @@
-﻿using Atles.Core;
+﻿using Atles.Commands.Categories;
+using Atles.Core;
 using Atles.Core.Queries;
-using Atles.Domain.Commands.Categories;
 using Atles.Domain.Commands.Handlers.Categories.Validators;
 using Atles.Domain.Rules.Categories;
 using Atles.Domain.Rules.PermissionSets;

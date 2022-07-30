@@ -1,6 +1,6 @@
-﻿using Atles.Data;
+﻿using Atles.Commands.Categories;
+using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Commands.Categories;
 using Atles.Domain.Commands.Handlers.Categories;
 using AutoFixture;
 using FluentValidation;

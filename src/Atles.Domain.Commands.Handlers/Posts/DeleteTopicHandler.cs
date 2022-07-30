@@ -1,9 +1,9 @@
 ﻿using System.Data;
+using Atles.Commands.Posts;
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Commands.Posts;
 using Atles.Domain.Events.Posts;
 using Atles.Domain.Models;
 using Microsoft.EntityFrameworkCore;

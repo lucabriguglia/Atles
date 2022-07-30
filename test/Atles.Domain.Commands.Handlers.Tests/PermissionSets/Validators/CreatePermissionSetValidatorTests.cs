@@ -1,7 +1,7 @@
-﻿using Atles.Core;
+﻿using Atles.Commands.PermissionSets;
+using Atles.Core;
 using Atles.Core.Queries;
 using Atles.Domain.Commands.Handlers.PermissionSets.Validators;
-using Atles.Domain.Commands.PermissionSets;
 using Atles.Domain.Rules.PermissionSets;
 using AutoFixture;
 using FluentValidation.TestHelper;

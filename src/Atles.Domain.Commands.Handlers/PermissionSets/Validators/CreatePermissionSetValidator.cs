@@ -1,5 +1,5 @@
-﻿using Atles.Core;
-using Atles.Domain.Commands.PermissionSets;
+﻿using Atles.Commands.PermissionSets;
+using Atles.Core;
 using Atles.Domain.Rules.PermissionSets;
 using FluentValidation;
 

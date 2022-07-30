@@ -1,10 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using Atles.Commands.PermissionSets;
 using Atles.Core.Extensions;
 using Atles.Data;
 using Atles.Domain.Commands.Handlers;
-using Atles.Domain.Commands.PermissionSets;
 using Atles.Domain.Events.Categories;
 using Atles.Domain.Events.Forums;
 using Atles.Domain.Events.PermissionSets;

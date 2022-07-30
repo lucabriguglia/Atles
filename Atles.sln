@@ -69,8 +69,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Core", "src\Atles.Cor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Core.Tests", "test\Atles.Core.Tests\Atles.Core.Tests.csproj", "{660CB9AE-00AD-49D3-9D47-0E270405B66C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Commands", "src\Atles.Domain.Commands\Atles.Domain.Commands.csproj", "{0222E5BC-64A2-49D3-9009-4C478D3F8675}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Events", "src\Atles.Domain.Events\Atles.Domain.Events.csproj", "{FD0C509A-807F-4A3E-B3FE-D6EA0D96AFED}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Rules", "src\Atles.Domain.Rules\Atles.Domain.Rules.csproj", "{956D8A8B-EABC-450B-BE5E-31B0D9B9DC9F}"
@@ -87,19 +85,19 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain.Events.Handler
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TempWebApplicationForAspNetIdentityPages", "TempWebApplicationForAspNetIdentityPages\TempWebApplicationForAspNetIdentityPages.csproj", "{7B8E81DC-660B-4248-8507-FCD8D03DAC8C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Tests.Component", "test\Atles.Tests.Component\Atles.Tests.Component\Atles.Tests.Component.csproj", "{13857790-84DC-4649-B4E7-7F8A7DCB146C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Tests.Component", "test\Atles.Tests.Component\Atles.Tests.Component\Atles.Tests.Component.csproj", "{13857790-84DC-4649-B4E7-7F8A7DCB146C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Tests.Unit", "test\Atles.Tests.Unit\Atles.Tests.Unit.csproj", "{42E05A99-A65C-4BB6-A3AB-88B1A7CF59B3}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Tests.Unit", "test\Atles.Tests.Unit\Atles.Tests.Unit.csproj", "{42E05A99-A65C-4BB6-A3AB-88B1A7CF59B3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Queries", "src\Atles.Queries\Atles.Queries.csproj", "{8D5EE089-9E58-413D-B023-AAD28B4AD738}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Queries", "src\Atles.Queries\Atles.Queries.csproj", "{8D5EE089-9E58-413D-B023-AAD28B4AD738}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Queries.Handlers", "src\Atles.Queries.Handlers\Atles.Queries.Handlers.csproj", "{7DE79ECC-615F-4DE7-8531-8758915B3469}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Queries.Handlers", "src\Atles.Queries.Handlers\Atles.Queries.Handlers.csproj", "{7DE79ECC-615F-4DE7-8531-8758915B3469}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Models", "src\Atles.Models\Atles.Models.csproj", "{268AD5A8-C667-4C31-BB03-4F65834834C6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Models", "src\Atles.Models\Atles.Models.csproj", "{268AD5A8-C667-4C31-BB03-4F65834834C6}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Commands", "src\Atles.Commands\Atles.Commands.csproj", "{EDB3556D-84DF-40E6-9226-3C202BCF2477}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Commands", "src\Atles.Commands\Atles.Commands.csproj", "{EDB3556D-84DF-40E6-9226-3C202BCF2477}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Commands.Handlers", "src\Atles.Commands.Handlers\Atles.Commands.Handlers.csproj", "{92087BB9-1B29-4863-B522-6D5AA0315C80}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Commands.Handlers", "src\Atles.Commands.Handlers\Atles.Commands.Handlers.csproj", "{92087BB9-1B29-4863-B522-6D5AA0315C80}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "_PROJECTS_TO_BE_REMOVED", "_PROJECTS_TO_BE_REMOVED", "{9BD6AD23-1CE9-43B1-BE95-70310300D57F}"
 EndProject
@@ -107,9 +105,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "SRC", "SRC", "{E58C8DA9-FFF
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "TESTS", "TESTS", "{2187FFEC-1955-425A-A47B-F70E742B65A4}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Domain", "SRC\Atles.Domain\Atles.Domain.csproj", "{7E0DA723-5AE3-434C-BCF8-F170D0AF4B58}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Domain", "SRC\Atles.Domain\Atles.Domain.csproj", "{7E0DA723-5AE3-434C-BCF8-F170D0AF4B58}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Events", "src\Atles.Events\Atles.Events.csproj", "{64BEA454-C6CD-4D83-8297-DD23800D0142}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Events", "src\Atles.Events\Atles.Events.csproj", "{64BEA454-C6CD-4D83-8297-DD23800D0142}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -153,10 +151,6 @@ Global
 		{660CB9AE-00AD-49D3-9D47-0E270405B66C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{660CB9AE-00AD-49D3-9D47-0E270405B66C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{660CB9AE-00AD-49D3-9D47-0E270405B66C}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0222E5BC-64A2-49D3-9009-4C478D3F8675}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0222E5BC-64A2-49D3-9009-4C478D3F8675}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0222E5BC-64A2-49D3-9009-4C478D3F8675}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0222E5BC-64A2-49D3-9009-4C478D3F8675}.Release|Any CPU.Build.0 = Release|Any CPU
 		{FD0C509A-807F-4A3E-B3FE-D6EA0D96AFED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FD0C509A-807F-4A3E-B3FE-D6EA0D96AFED}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FD0C509A-807F-4A3E-B3FE-D6EA0D96AFED}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -242,7 +236,6 @@ Global
 		{2FF5949C-F428-48BF-9253-255BACA5C9C6} = {E58C8DA9-FFF2-4C39-9E35-1FD19C8FDDFB}
 		{24866719-3065-47E9-B96B-3839E6C595BF} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
 		{660CB9AE-00AD-49D3-9D47-0E270405B66C} = {2187FFEC-1955-425A-A47B-F70E742B65A4}
-		{0222E5BC-64A2-49D3-9009-4C478D3F8675} = {E58C8DA9-FFF2-4C39-9E35-1FD19C8FDDFB}
 		{FD0C509A-807F-4A3E-B3FE-D6EA0D96AFED} = {E58C8DA9-FFF2-4C39-9E35-1FD19C8FDDFB}
 		{956D8A8B-EABC-450B-BE5E-31B0D9B9DC9F} = {E58C8DA9-FFF2-4C39-9E35-1FD19C8FDDFB}
 		{89C67853-19F0-4139-A971-9B28219F1C49} = {E58C8DA9-FFF2-4C39-9E35-1FD19C8FDDFB}

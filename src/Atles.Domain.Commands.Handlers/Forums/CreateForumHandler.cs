@@ -1,8 +1,8 @@
-﻿using Atles.Core.Commands;
+﻿using Atles.Commands.Forums;
+using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Data;
 using Atles.Data.Caching;
-using Atles.Domain.Commands.Forums;
 using Atles.Domain.Events.Forums;
 using Atles.Domain.Models;
 using FluentValidation;
