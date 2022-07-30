@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
-using Atles.Core.Events;
 using Atles.Core.Services;
 
 namespace Atles.Core.Commands;

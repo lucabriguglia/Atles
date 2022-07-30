@@ -2,7 +2,6 @@
 using Atles.Core;
 using Atles.Core.Commands;
 using Atles.Core.Queries;
-using Atles.Queries.Public;
 using Atles.Server.Extensions;
 using Atles.Server.Mapping;
 using FluentValidation;

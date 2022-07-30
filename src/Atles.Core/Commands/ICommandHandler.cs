@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Atles.Core.Events;
+﻿using System.Threading.Tasks;
 
 namespace Atles.Core.Commands;
 

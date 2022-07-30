@@ -1,5 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Atles.Commands.Users;
 using Atles.Core;
 using Atles.Data;

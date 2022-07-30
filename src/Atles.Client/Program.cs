@@ -2,7 +2,6 @@ using System;
 using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
-using Atles.Client.Services;
 using Atles.Client.Services.Api;
 using Atles.Client.Services.PostReactions;
 using Atles.Client.Services.Storage;
