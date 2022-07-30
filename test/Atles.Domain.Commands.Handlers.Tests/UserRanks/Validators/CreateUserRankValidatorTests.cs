@@ -9,6 +9,7 @@ using NUnit.Framework;
 
 namespace Atles.Domain.Commands.Handlers.Tests.UserRanks.Validators
 {
+    [Ignore("WIP")]
     [TestFixture]
     public class CreateUserRankValidatorTests : TestFixtureBase
     {
