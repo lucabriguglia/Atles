@@ -99,6 +99,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Queries", "src\Atles.
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Models", "src\Atles.Models\Atles.Models.csproj", "{A9E3943B-8B09-40CE-9A85-5C9B8072EA24}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Validators", "src\Atles.Validators\Atles.Validators.csproj", "{558685B8-2B05-486E-9987-7FF6829B0A14}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -189,6 +191,10 @@ Global
 		{A9E3943B-8B09-40CE-9A85-5C9B8072EA24}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{A9E3943B-8B09-40CE-9A85-5C9B8072EA24}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{A9E3943B-8B09-40CE-9A85-5C9B8072EA24}.Release|Any CPU.Build.0 = Release|Any CPU
+		{558685B8-2B05-486E-9987-7FF6829B0A14}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{558685B8-2B05-486E-9987-7FF6829B0A14}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{558685B8-2B05-486E-9987-7FF6829B0A14}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{558685B8-2B05-486E-9987-7FF6829B0A14}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -220,6 +226,7 @@ Global
 		{2187FFEC-1955-425A-A47B-F70E742B65A4} = {9BD6AD23-1CE9-43B1-BE95-70310300D57F}
 		{13692144-95CA-4813-B7DE-1A03DA502884} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
 		{A9E3943B-8B09-40CE-9A85-5C9B8072EA24} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
+		{558685B8-2B05-486E-9987-7FF6829B0A14} = {4DBC2831-6FA8-488A-89AB-7D445EFAB278}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {2747CCE7-65F1-47E8-8F5F-4598AAA8A5B9}
