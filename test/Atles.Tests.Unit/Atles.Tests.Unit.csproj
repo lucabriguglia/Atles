@@ -6,4 +6,26 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+	<ItemGroup>
+		<PackageReference Include="AutoFixture" Version="4.17.0" />
+		<PackageReference Include="AutoMapper" Version="10.1.1" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.InMemory" Version="6.0.1" />
+		<PackageReference Include="Microsoft.NET.Test.Sdk" Version="17.0.0" />
+		<PackageReference Include="Moq" Version="4.16.1" />
+		<PackageReference Include="NUnit" Version="3.13.2" />
+		<PackageReference Include="NUnit3TestAdapter" Version="4.0.0">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+	</ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Atles.Commands\Atles.Commands.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Core\Atles.Core.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Data\Atles.Data.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Domain.Models\Atles.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Domain.Rules\Atles.Domain.Rules.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Validators\Atles.Validators.csproj" />
+  </ItemGroup>
+
 </Project>
