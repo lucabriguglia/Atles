@@ -1,4 +1,4 @@
-﻿namespace Atles.Reporting.Handlers.Services
+﻿namespace Atles.Queries.Handlers.Services
 {
     public interface IGravatarService
     {

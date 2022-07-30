@@ -5,7 +5,7 @@ using Atles.Models.Admin.Roles;
 using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Identity;
 
-namespace Atles.Reporting.Handlers.Admin
+namespace Atles.Queries.Handlers.Admin
 {
     public class GetUsersInRoleHandler : IQueryHandler<GetUsersInRole, IList<IndexPageModel.UserModel>>
     {

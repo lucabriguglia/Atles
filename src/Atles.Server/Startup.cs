@@ -9,7 +9,7 @@ using Atles.Domain;
 using Atles.Domain.Events.Handlers.ReplyCreatedHandlers;
 using Atles.Domain.Rules.Handlers.Categories;
 using Atles.Models.Admin.Categories;
-using Atles.Reporting.Handlers.Admin;
+using Atles.Queries.Handlers.Admin;
 using Atles.Server.Extensions;
 using Atles.Server.Middlewares;
 using Atles.Server.Services;

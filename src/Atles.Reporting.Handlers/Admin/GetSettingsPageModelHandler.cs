@@ -7,7 +7,7 @@ using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 
-namespace Atles.Reporting.Handlers.Admin
+namespace Atles.Queries.Handlers.Admin
 {
     public class GetSettingsPageModelHandler : IQueryHandler<GetSettingsPageModel, SettingsPageModel>
     {

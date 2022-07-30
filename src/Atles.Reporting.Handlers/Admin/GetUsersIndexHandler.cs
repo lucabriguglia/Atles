@@ -10,7 +10,7 @@ using Atles.Models.Admin.Users;
 using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Reporting.Handlers.Admin
+namespace Atles.Queries.Handlers.Admin
 {
     public class GetUsersIndexHandler : IQueryHandler<GetUsersIndex, IndexPageModel>
     {

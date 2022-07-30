@@ -7,7 +7,7 @@ using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 using IndexPageModel = Atles.Models.Admin.PermissionSets.IndexPageModel;
 
-namespace Atles.Reporting.Handlers.Admin
+namespace Atles.Queries.Handlers.Admin
 {
     public class GetPermissionSetsIndexHandler : IQueryHandler<GetPermissionSetsIndex, IndexPageModel>
     {

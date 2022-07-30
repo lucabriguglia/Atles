@@ -7,7 +7,7 @@ using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Reporting.Handlers.Admin
+namespace Atles.Queries.Handlers.Admin
 {
     public class GetUserEditFormHandler : IQueryHandler<GetUserEditForm, EditPageModel>
     {

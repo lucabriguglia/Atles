@@ -1,13 +1,13 @@
-﻿using Atles.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Queries;
+using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Public;
 using Atles.Queries.Public;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Reporting.Handlers.Public
+namespace Atles.Queries.Handlers.Public
 {
     public class GetForumPageHandler : IQueryHandler<GetForumPage, ForumPageModel>
     {

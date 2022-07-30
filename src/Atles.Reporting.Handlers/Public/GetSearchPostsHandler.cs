@@ -1,16 +1,16 @@
-﻿using Atles.Data;
-using Atles.Data.Extensions;
-using Markdig;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Data;
+using Atles.Data.Extensions;
 using Atles.Domain;
 using Atles.Models;
 using Atles.Models.Public;
 using Atles.Queries.Public;
+using Markdig;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Reporting.Handlers.Public
+namespace Atles.Queries.Handlers.Public
 {
     public class GetSearchPostsHandler : IQueryHandler<GetSearchPosts, PaginatedData<SearchPostModel>>
     {

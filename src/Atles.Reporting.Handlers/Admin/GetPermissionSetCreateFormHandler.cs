@@ -6,7 +6,7 @@ using Atles.Domain;
 using Atles.Models.Admin.PermissionSets;
 using Atles.Queries.Admin;
 
-namespace Atles.Reporting.Handlers.Admin
+namespace Atles.Queries.Handlers.Admin
 {
     public class GetPermissionSetCreateFormHandler : IQueryHandler<GetPermissionSetCreateForm, FormComponentModel>
     {

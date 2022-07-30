@@ -4,7 +4,7 @@ using Atles.Core.Queries;
 using Atles.Models.Public;
 using Atles.Queries.Public;
 
-namespace Atles.Reporting.Handlers.Public
+namespace Atles.Queries.Handlers.Public
 {
     public class GetSearchPageHandler : IQueryHandler<GetSearchPage, SearchPageModel>
     {

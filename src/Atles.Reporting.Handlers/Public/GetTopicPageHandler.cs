@@ -1,16 +1,16 @@
-﻿using Atles.Data;
-using Atles.Reporting.Handlers.Services;
-using Markdig;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Queries;
+using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Public;
+using Atles.Queries.Handlers.Services;
 using Atles.Queries.Public;
+using Markdig;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Reporting.Handlers.Public
+namespace Atles.Queries.Handlers.Public
 {
     public class GetTopicPageHandler : IQueryHandler<GetTopicPage, TopicPageModel>
     {

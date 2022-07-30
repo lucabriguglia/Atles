@@ -8,7 +8,7 @@ using Atles.Models.Admin.Forums;
 using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Reporting.Handlers.Admin
+namespace Atles.Queries.Handlers.Admin
 {
     public class GetForumEditFormHandler : IQueryHandler<GetForumEditForm, FormComponentModel>
     {

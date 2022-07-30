@@ -1,12 +1,12 @@
 ﻿using System.Linq;
-using Atles.Data;
-using Microsoft.EntityFrameworkCore;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Data;
 using Atles.Models.Public;
 using Atles.Queries.Public;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Reporting.Handlers.Public
+namespace Atles.Queries.Handlers.Public
 {
     public class GetUserTopicReactionsHandler : IQueryHandler<GetUserTopicReactions, UserTopicReactionsModel>
     {

@@ -1,15 +1,15 @@
-﻿using Atles.Data;
-using Atles.Reporting.Handlers.Services;
-using Microsoft.EntityFrameworkCore;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Data;
 using Atles.Domain;
 using Atles.Models;
 using Atles.Models.Public;
+using Atles.Queries.Handlers.Services;
 using Atles.Queries.Public;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Reporting.Handlers.Public
+namespace Atles.Queries.Handlers.Public
 {
     public class GetForumPageTopicsHandler : IQueryHandler<GetForumPageTopics, PaginatedData<ForumPageModel.TopicModel>>
     {

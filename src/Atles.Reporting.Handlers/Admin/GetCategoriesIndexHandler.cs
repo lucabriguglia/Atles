@@ -7,7 +7,7 @@ using Atles.Models.Admin.Categories;
 using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Reporting.Handlers.Admin
+namespace Atles.Queries.Handlers.Admin
 {
     public class GetCategoriesIndexHandler : IQueryHandler<GetCategoriesIndex, IndexPageModel>
     {

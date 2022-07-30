@@ -9,7 +9,7 @@ using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 
-namespace Atles.Reporting.Handlers.Admin
+namespace Atles.Queries.Handlers.Admin
 {
     public class GetUserActivityHandler : IQueryHandler<GetUserActivity, ActivityPageModel>
     {

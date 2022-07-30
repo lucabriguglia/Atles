@@ -1,15 +1,15 @@
-﻿using Atles.Data;
-using Atles.Data.Caching;
-using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Data;
+using Atles.Data.Caching;
 using Atles.Domain;
 using Atles.Models.Public;
 using Atles.Queries.Public;
+using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Reporting.Handlers.Public
+namespace Atles.Queries.Handlers.Public
 {
     public class GetIndexPageHandler : IQueryHandler<GetIndexPage, IndexPageModel>
     {

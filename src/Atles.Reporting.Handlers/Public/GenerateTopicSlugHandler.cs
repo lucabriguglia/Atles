@@ -4,7 +4,7 @@ using Atles.Data;
 using Atles.Queries.Public;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Reporting.Handlers.Public
+namespace Atles.Queries.Handlers.Public
 {
     public class GetTopicSlugHandler : IQueryHandler<GetTopicSlug, string>
     {
