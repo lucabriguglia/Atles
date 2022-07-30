@@ -6,4 +6,10 @@
     <Nullable>enable</Nullable>
   </PropertyGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Atles.Commands\Atles.Commands.csproj" />
+    <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
+    <ProjectReference Include="..\Atles.Domain.Models\Atles.Domain.csproj" />
+  </ItemGroup>
+
 </Project>

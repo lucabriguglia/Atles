@@ -11,7 +11,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
     <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
-    <ProjectReference Include="..\Atles.Reporting.Models\Atles.Reporting.Models.csproj" />
+    <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
+    <ProjectReference Include="..\Atles.Queries\Atles.Queries.csproj" />
   </ItemGroup>
 
 </Project>
