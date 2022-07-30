@@ -4,7 +4,7 @@ using Atles.Domain.Rules.Categories;
 using Atles.Domain.Rules.PermissionSets;
 using FluentValidation;
 
-namespace Atles.Commands.Handlers.Categories.Validators
+namespace Atles.Validators.Categories
 {
     public class CreateCategoryValidator : AbstractValidator<CreateCategory>
     {

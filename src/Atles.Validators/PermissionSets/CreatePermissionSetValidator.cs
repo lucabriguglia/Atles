@@ -3,7 +3,7 @@ using Atles.Core;
 using Atles.Domain.Rules.PermissionSets;
 using FluentValidation;
 
-namespace Atles.Commands.Handlers.PermissionSets.Validators
+namespace Atles.Validators.PermissionSets
 {
     public class CreatePermissionSetValidator : AbstractValidator<CreatePermissionSet>
     {

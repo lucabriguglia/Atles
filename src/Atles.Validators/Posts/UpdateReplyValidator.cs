@@ -1,7 +1,7 @@
 ﻿using Atles.Commands.Posts;
 using FluentValidation;
 
-namespace Atles.Commands.Handlers.Posts.Validators
+namespace Atles.Validators.Posts
 {
     public class UpdateReplyValidator : AbstractValidator<UpdateReply>
     {

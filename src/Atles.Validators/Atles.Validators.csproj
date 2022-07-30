@@ -13,7 +13,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Atles.Commands\Atles.Commands.csproj" />
     <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
-    <ProjectReference Include="..\Atles.Domain.Models\Atles.Domain.csproj" />
+    <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
     <ProjectReference Include="..\Atles.Domain.Rules\Atles.Domain.Rules.csproj" />
   </ItemGroup>
 

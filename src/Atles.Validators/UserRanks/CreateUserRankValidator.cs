@@ -2,7 +2,7 @@
 using Atles.Core;
 using FluentValidation;
 
-namespace Atles.Commands.Handlers.UserRanks.Validators
+namespace Atles.Validators.UserRanks
 {
     public class CreateUserRankValidator : AbstractValidator<CreateUserRank>
     {

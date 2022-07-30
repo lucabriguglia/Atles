@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>net6.0</TargetFramework>
@@ -19,12 +19,14 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup>
-	  <ProjectReference Include="..\..\src\Atles.Core\Atles.Core.csproj" />
-	  <ProjectReference Include="..\..\src\Atles.Data\Atles.Data.csproj" />
-	  <ProjectReference Include="..\..\src\Atles.Domain.Commands.Handlers\Atles.Commands.Handlers.csproj" />
-	  <ProjectReference Include="..\..\src\Atles.Domain.Rules\Atles.Domain.Rules.csproj" />
-	  <ProjectReference Include="..\..\src\Atles.Validators\Atles.Validators.csproj" />
-	</ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Atles.Commands\Atles.Commands.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Core\Atles.Core.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Data\Atles.Data.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Domain\Atles.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Domain.Rules.Handlers\Atles.Domain.Rules.Handlers.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Domain.Rules\Atles.Domain.Rules.csproj" />
+    <ProjectReference Include="..\..\src\Atles.Validators\Atles.Validators.csproj" />
+  </ItemGroup>
 
 </Project>

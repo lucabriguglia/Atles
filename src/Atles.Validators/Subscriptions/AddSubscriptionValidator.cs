@@ -6,7 +6,7 @@ using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.Posts;
 using FluentValidation;
 
-namespace Atles.Commands.Handlers.Subscriptions.Validators
+namespace Atles.Validators.Subscriptions
 {
     public class AddSubscriptionValidator : AbstractValidator<AddSubscription>
     {

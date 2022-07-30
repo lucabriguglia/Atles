@@ -1,7 +1,7 @@
 ﻿using Atles.Commands.Users;
 using FluentValidation;
 
-namespace Atles.Commands.Handlers.Users.Validators
+namespace Atles.Validators.Users
 {
     public class CreateUserValidator : AbstractValidator<CreateUser>
     {

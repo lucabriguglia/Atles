@@ -3,7 +3,7 @@ using Atles.Core;
 using Atles.Domain.Rules.Users;
 using FluentValidation;
 
-namespace Atles.Commands.Handlers.Users.Validators
+namespace Atles.Validators.Users
 {
     public class UpdateUserValidator : AbstractValidator<UpdateUser>
     {

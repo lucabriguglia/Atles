@@ -14,8 +14,8 @@
     <ProjectReference Include="..\Atles.Commands\Atles.Commands.csproj" />
     <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
-    <ProjectReference Include="..\Atles.Domain.Events\Atles.Events.csproj" />
-    <ProjectReference Include="..\Atles.Domain.Models\Atles.Domain.csproj" />
+    <ProjectReference Include="..\Atles.Events\Atles.Events.csproj" />
+    <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
     <ProjectReference Include="..\Atles.Domain.Rules\Atles.Domain.Rules.csproj" />
   </ItemGroup>
 
