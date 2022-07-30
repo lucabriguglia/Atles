@@ -1,5 +1,5 @@
 ﻿using System;
-using Atles.Domain.Models;
+using Atles.Domain;
 
 namespace Atles.Client.Models
 {

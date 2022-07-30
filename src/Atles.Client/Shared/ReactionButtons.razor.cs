@@ -3,7 +3,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Components;
 using Atles.Client.Components.Shared;
 using Atles.Client.Models;
-using Atles.Domain.Models;
+using Atles.Domain;
 
 namespace Atles.Client.Shared
 {

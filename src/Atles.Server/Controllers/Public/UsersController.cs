@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atles.Core;
-using Atles.Domain.Models;
-using Atles.Reporting.Models.Public;
-using Atles.Reporting.Models.Public.Queries;
+using Atles.Domain;
+using Atles.Models.Public;
+using Atles.Queries.Public;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

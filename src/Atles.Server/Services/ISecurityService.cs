@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
-using Atles.Domain.Models;
-using Atles.Reporting.Models.Public;
+using Atles.Domain;
+using Atles.Models.Public;
 
 namespace Atles.Server.Services
 {

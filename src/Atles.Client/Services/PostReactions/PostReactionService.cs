@@ -3,7 +3,7 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Atles.Client.Models;
 using Atles.Client.Services.Api;
-using Atles.Reporting.Models.Public;
+using Atles.Models.Public;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.JSInterop;
 

@@ -1,0 +1,20 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AutoMapper" Version="10.1.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
+    <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
+    <ProjectReference Include="..\Atles.Events\Atles.Events.csproj" />
+    <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

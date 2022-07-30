@@ -1,0 +1,1228 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Atles.Domain</name>
+    </assembly>
+    <members>
+        <member name="T:Atles.Domain.Category">
+            <summary>
+            A forum category acts as a container to group logically different forums.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Category.Id">
+            <summary>
+            The unique identifier of the Forum Category.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Category.SiteId">
+            <summary>
+            The unique identifier of the Site which the Forum Category belongs to.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Category.Name">
+            <summary>
+            The name of the Forum Category which is displayed in the index page.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Category.SortOrder">
+            <summary>
+            The sort order which is used to display the Forum Categories in the index page.  
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Category.TopicsCount">
+            <summary>
+            The number of topics of all forums within the forum category.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Category.RepliesCount">
+            <summary>
+            The number of replies of all forums within the forum category.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Category.Status">
+            <summary>
+            The status of the forum category.
+            Can be either published or deleted.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Category.PermissionSetId">
+            <summary>
+            The unique identifier of the Permission Set used as default for all Forums within the Forum Category which do not specify a Permission Set.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Category.Site">
+            <summary>
+            Reference to the Site the Forum Category belongs to.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Category.PermissionSet">
+            <summary>
+            Reference to Permission Set used for the Forum Category.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Category.Forums">
+            <summary>
+            List of Forums that belong to the Forum Category.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Category.#ctor">
+            <summary>
+            Creates an empty forum category.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Category.#ctor(System.Guid,System.Guid,System.String,System.Int32,System.Guid)">
+            <summary>
+            Creates a new forum category with the given values including a unique identifier.
+            The default status is published.
+            </summary>
+            <param name="id"></param>
+            <param name="siteId"></param>
+            <param name="name"></param>
+            <param name="sortOrder"></param>
+            <param name="permissionSetId"></param>
+        </member>
+        <member name="M:Atles.Domain.Category.#ctor(System.Guid,System.String,System.Int32,System.Guid)">
+            <summary>
+            Creates a new forum category with the given values.
+            The unique identifier is automatically assigned.
+            The default status is published.
+            </summary>
+            <param name="siteId"></param>
+            <param name="name"></param>
+            <param name="sortOrder"></param>
+            <param name="permissionSetId"></param>
+        </member>
+        <member name="M:Atles.Domain.Category.UpdateDetails(System.String,System.Guid)">
+            <summary>
+            Updates the details of the forum category.
+            The values that can be changed are name and permission set.
+            </summary>
+            <param name="name"></param>
+            <param name="permissionSetId"></param>
+        </member>
+        <member name="M:Atles.Domain.Category.MoveUp">
+            <summary>
+            Change the sort order by moving up 1 position.
+            It generates an error if sort order is 1.
+            </summary>
+            <exception cref="T:System.ApplicationException"></exception>
+        </member>
+        <member name="M:Atles.Domain.Category.MoveDown">
+            <summary>
+            Change the sort order by moving down 1 position.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Category.Reorder(System.Int32)">
+            <summary>
+            Replace the sort order with the given value.
+            </summary>
+            <param name="sortOrder"></param>
+        </member>
+        <member name="M:Atles.Domain.Category.IncreaseTopicsCount(System.Int32)">
+            <summary>
+            Increase the number of topics by the given value.
+            If no value is given it will increase by 1.
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="M:Atles.Domain.Category.IncreaseRepliesCount(System.Int32)">
+            <summary>
+            Increase the number of replies by the given value.
+            If no value is given it will increase by 1.
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="M:Atles.Domain.Category.DecreaseTopicsCount(System.Int32)">
+            <summary>
+            Decrease the number of topics by the given value.
+            If no value is given it will decrease by 1.
+            If the resulting number is less than zero, the value will be set to zero.
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="M:Atles.Domain.Category.DecreaseRepliesCount(System.Int32)">
+            <summary>
+            Decrease the number of replies by the given value.
+            If no value is given it will decrease by 1.
+            If the resulting number is less than zero, the value will be set to zero.
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="M:Atles.Domain.Category.Delete">
+            <summary>
+            Set the status as deleted.
+            Forums, topics and replies within the forum category will no longer be visible.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Category.PermissionSetName">
+            <summary>
+            Returns the name of permission set used.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Atles.Domain.Forum">
+            <summary>
+            A forum is a board where users can hold conversations.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.Id">
+            <summary>
+            The unique identifier of the Forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.CategoryId">
+            <summary>
+            The unique identifier of the Forum Category which the Forum belongs to.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.Name">
+            <summary>
+            The name of the Forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.Slug">
+            <summary>
+            The Slug of the Forum.
+            This value is added to the URL in order to identify the Forum.
+            If the Slug is "my-forum-slug", the URL will be something similar to "www.mysite.com/forum/my-forum-slug".
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.Description">
+            <summary>
+            The description of the Forum.
+            This value will be displayed in the index and forum pages if included in the theme.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.SortOrder">
+            <summary>
+            The sort order which is used to display the forums in the index page.  
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.TopicsCount">
+            <summary>
+            The number of topics published.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.RepliesCount">
+            <summary>
+            The number of replies published.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.Status">
+            <summary>
+            The status of the forum.
+            Can be either published or deleted.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.PermissionSetId">
+            <summary>
+            The unique identifier of the permission set used.
+            If it's not assigned, the forum will inherit the permission set fom the forum category.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.LastPostId">
+            <summary>
+            The unique identifier of the last post published.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.Category">
+            <summary>
+            Reference to the forum category.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.PermissionSet">
+            <summary>
+            Reference to the permission set if assigned.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.LastPost">
+            <summary>
+            Reference to the last post published if any.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Forum.Posts">
+            <summary>
+            List of published posts.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Forum.#ctor">
+            <summary>
+            Create an empty forum.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Forum.#ctor(System.Guid,System.Guid,System.String,System.String,System.String,System.Int32,System.Nullable{System.Guid})">
+            <summary>
+            Create a new forum with the given values including a unique identifier.
+            The default status is published.
+            </summary>
+            <param name="id"></param>
+            <param name="categoryId"></param>
+            <param name="name"></param>
+            <param name="slug"></param>
+            <param name="description"></param>
+            <param name="sortOrder"></param>
+            <param name="permissionSetId"></param>
+        </member>
+        <member name="M:Atles.Domain.Forum.#ctor(System.Guid,System.String,System.String,System.String,System.Int32,System.Nullable{System.Guid})">
+            <summary>
+            Creates a new forum with the given values.
+            The unique identifier is automatically assigned.
+            The default status is published.
+            </summary>
+            <param name="categoryId"></param>
+            <param name="name"></param>
+            <param name="slug"></param>
+            <param name="description"></param>
+            <param name="sortOrder"></param>
+            <param name="permissionSetId"></param>
+        </member>
+        <member name="M:Atles.Domain.Forum.UpdateDetails(System.Guid,System.String,System.String,System.String,System.Nullable{System.Guid})">
+            <summary>
+            Updates the details of the forum.
+            The values that can be changed are forum category, name, slug, description and permission set.
+            </summary>
+            <param name="categoryId"></param>
+            <param name="name"></param>
+            <param name="slug"></param>
+            <param name="description"></param>
+            <param name="permissionSetId"></param>
+        </member>
+        <member name="M:Atles.Domain.Forum.UpdateLastPost(System.Nullable{System.Guid})">
+            <summary>
+            Updates the unique identifier of the last published post.
+            </summary>
+            <param name="lastPostId"></param>
+        </member>
+        <member name="M:Atles.Domain.Forum.MoveUp">
+            <summary>
+            Change the sort order by moving up 1 position.
+            It generates an error if sort order is 1.
+            </summary>
+            <exception cref="T:System.ApplicationException"></exception>
+        </member>
+        <member name="M:Atles.Domain.Forum.MoveDown">
+            <summary>
+            Change the sort order by moving down 1 position.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Forum.Reorder(System.Int32)">
+            <summary>
+            Replace the sort order with the given value.
+            </summary>
+            <param name="sortOrder"></param>
+        </member>
+        <member name="M:Atles.Domain.Forum.IncreaseTopicsCount">
+            <summary>
+            Increase the number of topics by 1.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Forum.DecreaseTopicsCount(System.Int32)">
+            <summary>
+            Decrease the number of topics by the given value.
+            If no value is given it will decrease by 1.
+            If the resulting number is less than zero, the value will be set to zero.
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="M:Atles.Domain.Forum.IncreaseRepliesCount">
+            <summary>
+            Increase the number of replies by 1.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Forum.DecreaseRepliesCount(System.Int32)">
+            <summary>
+            Decrease the number of replies by the given value.
+            If no value is given it will decrease by 1.
+            If the resulting number is less than zero, the value will be set to zero.
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="M:Atles.Domain.Forum.Delete">
+            <summary>
+            Set the status as deleted.
+            Topics and replies within the forum will no longer be visible.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Forum.PermissionSetName">
+            <summary>
+            Returns the name of permission set if assigned.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Forum.HasPermissionSet">
+            <summary>
+            Indicates if a permission set is assigned.
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="T:Atles.Domain.PermissionSet">
+            <summary>
+            A permission set contains the permissions to read, create or edit forum posts.
+            Each permission type such as view forum, read topics or create new posts is assigned to one or more user roles.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.PermissionSet.Id">
+            <summary>
+            The unique identifier of the permission set.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.PermissionSet.SiteId">
+            <summary>
+            The unique identifier of the site which the permission set belongs to.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.PermissionSet.Name">
+            <summary>
+            The name of the permission set.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.PermissionSet.Status">
+            <summary>
+            The status of the permission set.
+            It could be either published or deleted.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.PermissionSet.Permissions">
+            <summary>
+            List of permissions.
+            Each permission is a combination of a user role and a permission type.
+            For example, role Subscriber and type Read which means that only users in the role Subscriber can read the discussions.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.PermissionSet.Categories">
+            <summary>
+            List of forum categories that use the permission set.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.PermissionSet.Forums">
+            <summary>
+            List of forums that use the permission set.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.PermissionSet.#ctor">
+            <summary>
+            Creates an empty permission set.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.PermissionSet.#ctor(System.Guid,System.String,System.Collections.Generic.IEnumerable{Atles.Domain.Permission})">
+            <summary>
+            Creates a new permission set  with the given values.
+            The unique identifier is automatically assigned.
+            The default status is published.
+            </summary>
+            <param name="siteId"></param>
+            <param name="name"></param>
+            <param name="permissions"></param>
+        </member>
+        <member name="M:Atles.Domain.PermissionSet.#ctor(System.Guid,System.Guid,System.String,System.Collections.Generic.IEnumerable{Atles.Domain.Permission})">
+            <summary>
+            Creates a new permission set with the given values including a unique identifier.
+            The default status is published.
+            </summary>
+            <param name="id"></param>
+            <param name="siteId"></param>
+            <param name="name"></param>
+            <param name="permissions"></param>
+        </member>
+        <member name="M:Atles.Domain.PermissionSet.UpdateDetails(System.String,System.Collections.Generic.ICollection{Atles.Domain.Permission})">
+            <summary>
+            Updates the details of the permission set.
+            The values that can be changed are name and permissions.
+            </summary>
+            <param name="name"></param>
+            <param name="permissions"></param>
+        </member>
+        <member name="M:Atles.Domain.PermissionSet.Delete">
+            <summary>
+            Set the status as deleted.
+            The permission set can no longer be used in forum categories and forums.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Post">
+            <summary>
+            A forum post is a message created in a forum.
+            It can be either the start of a discussion (topic) or a reply to another message. 
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.Id">
+            <summary>
+            The unique identifier of the forum post.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.ForumId">
+            <summary>
+            The unique identifier of the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.Title">
+            <summary>
+            The title of the post.
+            It is only used if the post is the initial message (topic).
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.Slug">
+            <summary>
+            The slug of the post.
+            It is only used if the post is the initial message (topic).
+            This value is added to the URL in order to identify the topic within the forum.
+            If the slug is "my-topic-slug", the URL will be something similar to "www.mysite.com/forum/my-forum/my-topic-slug".
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.Content">
+            <summary>
+            The content of the post.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.RepliesCount">
+            <summary>
+            The number of replies to the initial message.
+            It is only used if the post is the initial message (topic).
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.Status">
+            <summary>
+            The status of the post.
+            It can be either published or deleted.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.CreatedBy">
+            <summary>
+            The unique identifier of the user who created the post.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.CreatedOn">
+            <summary>
+            The time stamp of when the post has been created.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.ModifiedBy">
+            <summary>
+            The unique identifier of the user who last updated the post.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.ModifiedOn">
+            <summary>
+            The time stamp of when the post has been last updated.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.Pinned">
+            <summary>
+            Value indicating whether the post is pinned or not.
+            It is only used if the post is the initial message (topic).
+            If pinned, the topic is always shown at the top of the forum page.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.Locked">
+            <summary>
+            Value indicating whether the post is locked or not.
+            It is only used if the post is the initial message (topic).
+            If locked, only users that can moderate a forum will be able to reply to the initial message.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.IsAnswer">
+            <summary>
+            Value indicating whether the post is marked as answer or not.
+            It is only used if the post is a reply to the initial message.
+            If it is an answer, the post is shown at the top of the topic page and marked as the accepted answer.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.HasAnswer">
+            <summary>
+            Value indicating whether the post has an answer or not.
+            It is only used if the post is the initial message (topic).
+            If it has an answer, the topic is marked as answered in the forum page.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.TopicId">
+            <summary>
+            The unique identifier of the topic.
+            It is only used if the post is a reply to the initial message.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.LastReplyId">
+            <summary>
+            The unique identifier of the last reply.
+            It is only used if the post is the initial message (topic).
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.Topic">
+            <summary>
+            Reference to the topic.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.LastReply">
+            <summary>
+            Reference to the last reply.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.Forum">
+            <summary>
+            Reference to the forum.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.CreatedByUser">
+            <summary>
+            Reference to the user who created the post.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.ModifiedByUser">
+            <summary>
+            Reference to the user who last updated the post.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.PostReactions">
+            <summary>
+            Reference to post reactions.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Post.PostReactionSummaries">
+            <summary>
+            Reference to post reaction summaries.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Post.#ctor">
+            <summary>
+            Creates an empty forum post.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Post.CreateTopic(System.Guid,System.Guid,System.String,System.String,System.String,Atles.Domain.PostStatusType)">
+            <summary>
+            Creates a new topic with the given values.
+            </summary>
+            <param name="forumId"></param>
+            <param name="userId"></param>
+            <param name="title"></param>
+            <param name="slug"></param>
+            <param name="content"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Post.CreateTopic(System.Guid,System.Guid,System.Guid,System.String,System.String,System.String,Atles.Domain.PostStatusType)">
+            <summary>
+            Creates a new topic with the given values including the unique identifier.
+            </summary>
+            <param name="id"></param>
+            <param name="forumId"></param>
+            <param name="userId"></param>
+            <param name="title"></param>
+            <param name="slug"></param>
+            <param name="content"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Post.CreateReply(System.Guid,System.Guid,System.Guid,System.String,Atles.Domain.PostStatusType)">
+            <summary>
+            Creates a new reply with the given values.
+            </summary>
+            <param name="topicId"></param>
+            <param name="forumId"></param>
+            <param name="userId"></param>
+            <param name="content"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Post.CreateReply(System.Guid,System.Guid,System.Guid,System.Guid,System.String,Atles.Domain.PostStatusType)">
+            <summary>
+            Creates a new reply with the given values including the unique identifier.
+            </summary>
+            <param name="id"></param>
+            <param name="topicId"></param>
+            <param name="forumId"></param>
+            <param name="userId"></param>
+            <param name="content"></param>
+            <param name="status"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.Post.UpdateDetails(System.Guid,System.String,System.String,System.String,Atles.Domain.PostStatusType)">
+            <summary>
+            Updates the details of the topic.
+            </summary>
+            <param name="userId"></param>
+            <param name="title"></param>
+            <param name="slug"></param>
+            <param name="content"></param>
+            <param name="status"></param>
+        </member>
+        <member name="M:Atles.Domain.Post.UpdateDetails(System.Guid,System.String,Atles.Domain.PostStatusType)">
+            <summary>
+            Updates the details of the reply.
+            </summary>
+            <param name="userId"></param>
+            <param name="content"></param>
+            <param name="status"></param>
+        </member>
+        <member name="M:Atles.Domain.Post.UpdateLastReply(System.Guid)">
+            <summary>
+            Updates the last reply unique identifier if the post is the initial message.
+            </summary>
+            <param name="lastReplyId"></param>
+        </member>
+        <member name="M:Atles.Domain.Post.IncreaseRepliesCount">
+            <summary>
+            Increases the number of replies of the topic by 1.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Post.DecreaseRepliesCount">
+            <summary>
+            Decreases the number of replies of the topic by 1.
+            If the resulting number is less than zero, the value is set to zero.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Post.AddReactionToSummary(Atles.Domain.PostReactionType)">
+            <summary>
+            Increases count for the specified reaction type.
+            </summary>
+            <param name="type">The post reaction type.</param>
+        </member>
+        <member name="M:Atles.Domain.Post.RemoveReactionFromSummary(Atles.Domain.PostReactionType)">
+            <summary>
+            Decreases count for the specified reaction type.
+            </summary>
+            <param name="type">The post reaction type.</param>
+        </member>
+        <member name="M:Atles.Domain.Post.Pin(System.Boolean)">
+            <summary>
+            Pin and unpin the topic based of the passed value.
+            </summary>
+            <param name="pinned"></param>
+        </member>
+        <member name="M:Atles.Domain.Post.Lock(System.Boolean)">
+            <summary>
+            Lock and unlock the topic based of the passed value.
+            </summary>
+            <param name="locked"></param>
+        </member>
+        <member name="M:Atles.Domain.Post.SetAsAnswer(System.Boolean)">
+            <summary>
+            Set the reply as answer.
+            </summary>
+            <param name="isAnswer"></param>
+        </member>
+        <member name="M:Atles.Domain.Post.SetAsAnswered(System.Boolean)">
+            <summary>
+            Set the topic as answered.
+            </summary>
+            <param name="hasAnswer"></param>
+        </member>
+        <member name="M:Atles.Domain.Post.Delete">
+            <summary>
+            Set the status as deleted.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Post.IsTopic">
+            <summary>
+            Indicates if the post is an initial message (topic).
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Atles.Domain.PostReactionSummary.IncreaseCount">
+            <summary>
+            Increases count by 1.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.PostReactionSummary.DecreaseCount">
+            <summary>
+            Decreases count by 1.
+            If the resulting number is less than zero, the value is set to zero.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.Site">
+            <summary>
+            Site
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.Id">
+            <summary>
+            The unique identifier of the site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.Name">
+            <summary>
+            The name of the site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.Title">
+            <summary>
+            The title of the site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.PublicTheme">
+            <summary>
+            The name of the theme to use in the public site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.PublicCss">
+            <summary>
+            The Cascading Style Sheet to use in the public site.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.AdminTheme">
+            <summary>
+            The name of the theme to use in the admin area.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.AdminCss">
+            <summary>
+            The Cascading Style Sheet to use in the admin area.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.Language">
+            <summary>
+            The ISO code for the language of the site (e.g. en or en-GB).
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.Privacy">
+            <summary>
+            The content of the privacy page.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.Terms">
+            <summary>
+            The content of the terms page.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.HeadScript">
+            <summary>
+            Optional script to be added at the beginning of the head section of the HTML document.
+            It could be used for example to add the Google Analytics script.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Site.Categories">
+            <summary>
+            The list of forum categories.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Site.#ctor">
+            <summary>
+            Creates an empty site.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Site.#ctor(System.String,System.String)">
+            <summary>
+            Creates a new site with the given values.
+            </summary>
+            <param name="name"></param>
+            <param name="title"></param>
+        </member>
+        <member name="M:Atles.Domain.Site.#ctor(System.Guid,System.String,System.String)">
+            <summary>
+            Creates a new site with the given values including the unique identifier.
+            </summary>
+            <param name="id"></param>
+            <param name="name"></param>
+            <param name="title"></param>
+        </member>
+        <member name="M:Atles.Domain.Site.UpdateDetails(System.String,System.String,System.String,System.String,System.String,System.String,System.String)">
+            <summary>
+            Updates the details of the site.
+            </summary>
+            <param name="title"></param>
+            <param name="theme"></param>
+            <param name="css"></param>
+            <param name="language"></param>
+            <param name="privacy"></param>
+            <param name="terms"></param>
+            <param name="headScript"></param>
+        </member>
+        <member name="T:Atles.Domain.Subscription">
+            <summary>
+            Subscription
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Subscription.UserId">
+            <summary>
+            UserId
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Subscription.Type">
+            <summary>
+            Type of subscription
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Subscription.ItemId">
+            <summary>
+            TargetId
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.Subscription.User">
+            <summary>
+            Reference to the user who added the subscription.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Subscription.#ctor">
+            <summary>
+            Subscription
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.Subscription.#ctor(System.Guid,Atles.Domain.SubscriptionType,System.Guid)">
+            <summary>
+            Subscription
+            </summary>
+            <param name="userId"></param>
+            <param name="type"></param>
+            <param name="itemId"></param>
+        </member>
+        <member name="T:Atles.Domain.SubscriptionType">
+            <summary>
+            Type of subscription
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.SubscriptionType.Category">
+            <summary>
+            User will be notified for every post in the category.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.SubscriptionType.Forum">
+            <summary>
+            User will be notified for every post in the forum.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.SubscriptionType.Topic">
+            <summary>
+            User will be notified for every reply in the topic.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.User">
+            <summary>
+            User
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.Id">
+            <summary>
+            The unique identifier of the user.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.IdentityUserId">
+            <summary>
+            The unique identifier of the user in the membership database.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.Email">
+            <summary>
+            The email of the user in the membership database.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.DisplayName">
+            <summary>
+            The display name of the user.
+            It is used as the public name of the user.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.TopicsCount">
+            <summary>
+            The number of the topics published by the user.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.RepliesCount">
+            <summary>
+            The number of replies created by the user.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.AnswersCount">
+            <summary>
+            The number of accepted answered posted by the user.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.Status">
+            <summary>
+            The status of the user.
+            <list type="bullet">
+            <item>
+            <description>Pending: User is registered but the email is not confirmed.</description>
+            </item>
+            <item>
+            <description>Active: User is registered and the email is confirmed.</description>
+            </item>
+            <item>
+            <description>Suspended: User cannot create new posts (topics or replies).</description>
+            </item>
+            </list>
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.TimeStamp">
+            <summary>
+            The time stamp of when the user has been created.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.Posts">
+            <summary>
+            The list of posts created by the user.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.PostReactions">
+            <summary>
+            Reference to post likes.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.Subscriptions">
+            <summary>
+            Reference to post likes.
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.User.Events">
+            <summary>
+            The list of events generated by the user.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.User.#ctor">
+            <summary>
+            Creates an empty user.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.User.#ctor(System.Guid,System.String,System.String,System.String)">
+            <summary>
+            Creates a new user with the given values.
+            </summary>
+            <param name="id"></param>
+            <param name="identityUserId"></param>
+            <param name="email"></param>
+            <param name="displayName"></param>
+        </member>
+        <member name="M:Atles.Domain.User.#ctor(System.String,System.String,System.String)">
+            <summary>
+            Creates a new user with the given values including the unique identifier.
+            </summary>
+            <param name="identityUserId"></param>
+            <param name="email"></param>
+            <param name="displayName"></param>
+        </member>
+        <member name="M:Atles.Domain.User.Confirm">
+            <summary>
+            Set the status to active when the user confirms the email address.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.User.UpdateDetails(System.String)">
+            <summary>
+            Updates details.
+            </summary>
+            <param name="displayName"></param>
+        </member>
+        <member name="M:Atles.Domain.User.UpdateEmail(System.String)">
+            <summary>
+            Updates email.
+            </summary>
+            <param name="email"></param>
+        </member>
+        <member name="M:Atles.Domain.User.IncreaseTopicsCount">
+            <summary>
+            Increases the number of topics by 1.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.User.IncreaseRepliesCount">
+            <summary>
+            Increases the number of replies by 1.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.User.IncreaseAnswersCount">
+            <summary>
+            Increases the number of replies by 1.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.User.DecreaseTopicsCount(System.Int32)">
+            <summary>
+            Decrease the number of topics by the given value.
+            If no value is given it will decrease by 1.
+            If the resulting number is less than zero, the value will be set to zero.
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="M:Atles.Domain.User.DecreaseRepliesCount(System.Int32)">
+            <summary>
+            Decrease the number of replies by the given value.
+            If no value is given it will decrease by 1.
+            If the resulting number is less than zero, the value will be set to zero.
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="M:Atles.Domain.User.DecreaseAnswersCount(System.Int32)">
+            <summary>
+            Decrease the number of replies by the given value.
+            If no value is given it will decrease by 1.
+            If the resulting number is less than zero, the value will be set to zero.
+            </summary>
+            <param name="count"></param>
+        </member>
+        <member name="M:Atles.Domain.User.Suspend">
+            <summary>
+            Sets the status of the user as suspended.
+            The user will no longer be able to write new posts.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.User.Reinstate">
+            <summary>
+            Re-activates the user if suspended.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.User.Delete">
+            <summary>
+            Sets the status of the user as deleted.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.UserRank">
+            <summary>
+            User Rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRank.Id">
+            <summary>
+            Unique identifier
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRank.SiteId">
+            <summary>
+            Unique identifier of the site
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRank.Name">
+            <summary>
+            The name of the user rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRank.Description">
+            <summary>
+            The description of the user rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRank.SortOrder">
+            <summary>
+            The sort order of the user rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRank.Badge">
+            <summary>
+            The badge of the user rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRank.Role">
+            <summary>
+            The role automatically assigned when a user reaches the rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRank.Status">
+            <summary>
+            The status of the user rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRank.UserRankRules">
+            <summary>
+            The rules associated with the user rank
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRank.Site">
+            <summary>
+            Reference to the Site the user rank belongs to.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.UserRank.#ctor">
+            <summary>
+            New empty instance
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.UserRank.#ctor(System.Guid,System.String,System.String,System.Int32,System.String,System.String,Atles.Domain.UserRankStatusType,System.Collections.Generic.IEnumerable{Atles.Domain.UserRankRule})">
+            <summary>
+            New instance
+            </summary>
+            <param name="siteId"></param>
+            <param name="name"></param>
+            <param name="description"></param>
+            <param name="sortOrder"></param>
+            <param name="badge"></param>
+            <param name="role"></param>
+            <param name="status"></param>
+            <param name="rules"></param>
+        </member>
+        <member name="M:Atles.Domain.UserRank.UpdateDetails(System.String,System.String,System.String,System.String,Atles.Domain.UserRankStatusType,System.Collections.Generic.IEnumerable{Atles.Domain.UserRankRule})">
+            <summary>
+            Update user rank details
+            </summary>
+            <param name="name"></param>
+            <param name="description"></param>
+            <param name="badge"></param>
+            <param name="role"></param>
+            <param name="status"></param>
+            <param name="rules"></param>
+        </member>
+        <member name="M:Atles.Domain.UserRank.MoveUp">
+            <summary>
+            Change the sort order by moving up 1 position.
+            It generates an error if sort order is 1.
+            </summary>
+            <exception cref="T:System.ApplicationException"></exception>
+        </member>
+        <member name="M:Atles.Domain.UserRank.MoveDown">
+            <summary>
+            Change the sort order by moving down 1 position.
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.UserRank.Delete">
+            <summary>
+            Set the status as deleted.
+            </summary>
+        </member>
+        <member name="T:Atles.Domain.UserRankRule">
+            <summary>
+            User rank rule
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRankRule.Type">
+            <summary>
+            The rule type
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRankRule.Name">
+            <summary>
+            The name of the user rank rule
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRankRule.Description">
+            <summary>
+            The description of the user rank rule
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRankRule.Count">
+            <summary>
+            The count of the user rank rule
+            </summary>
+        </member>
+        <member name="P:Atles.Domain.UserRankRule.Badge">
+            <summary>
+            The badge of the user rank rule
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.UserRankRule.#ctor">
+            <summary>
+            New empty instance
+            </summary>
+        </member>
+        <member name="M:Atles.Domain.UserRankRule.#ctor(Atles.Domain.UserRankRuleType,System.String,System.String,System.Int32,System.String)">
+            <summary>
+            New instance
+            </summary>
+            <param name="type"></param>
+            <param name="name"></param>
+            <param name="description"></param>
+            <param name="count"></param>
+            <param name="badge"></param>
+        </member>
+        <member name="F:Atles.Domain.UserRankRuleType.Posts">
+            <summary>
+            The number of total posts (topics and replies).
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.UserRankRuleType.Topics">
+            <summary>
+            The number of topics.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.UserRankRuleType.Replies">
+            <summary>
+            The number of replies.
+            </summary>
+        </member>
+        <member name="F:Atles.Domain.UserRankRuleType.Answers">
+            <summary>
+            The number of accepted answers.
+            </summary>
+        </member>
+    </members>
+</doc>

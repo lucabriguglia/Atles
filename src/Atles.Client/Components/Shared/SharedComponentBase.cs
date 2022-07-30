@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Atles.Client.Services.Api;
 using Atles.Client.Shared;
-using Atles.Reporting.Models.Public;
+using Atles.Models.Public;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Authorization;
 using Microsoft.Extensions.Localization;

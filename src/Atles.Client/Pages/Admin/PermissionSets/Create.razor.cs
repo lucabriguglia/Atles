@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Reporting.Models.Admin.PermissionSets;
+using Atles.Models.Admin.PermissionSets;
 
 namespace Atles.Client.Pages.Admin.PermissionSets
 {

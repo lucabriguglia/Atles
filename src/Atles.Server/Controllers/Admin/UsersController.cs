@@ -1,12 +1,12 @@
 ﻿using System;
 using System.Linq;
 using System.Threading.Tasks;
+using Atles.Commands.Users;
 using Atles.Core;
-using Atles.Domain.Commands.Users;
 using Atles.Domain.Rules.Users;
-using Atles.Reporting.Models.Admin.Users;
-using Atles.Reporting.Models.Admin.Users.Queries;
-using Atles.Reporting.Models.Shared;
+using Atles.Models;
+using Atles.Models.Admin.Users;
+using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

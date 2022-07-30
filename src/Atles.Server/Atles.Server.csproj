@@ -27,14 +27,17 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Atles.Client\Atles.Client.csproj" />
+    <ProjectReference Include="..\Atles.Commands\Atles.Commands.csproj" />
     <ProjectReference Include="..\Atles.Data\Atles.Data.csproj" />
-    <ProjectReference Include="..\Atles.Domain.Commands.Handlers\Atles.Domain.Commands.Handlers.csproj" />
-    <ProjectReference Include="..\Atles.Domain.Events.Handlers\Atles.Domain.Events.Handlers.csproj" />
-    <ProjectReference Include="..\Atles.Domain.Models\Atles.Domain.Models.csproj" />
+    <ProjectReference Include="..\Atles.Commands.Handlers\Atles.Commands.Handlers.csproj" />
+    <ProjectReference Include="..\Atles.Events.Handlers\Atles.Events.Handlers.csproj" />
+    <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
     <ProjectReference Include="..\Atles.Domain.Rules.Handlers\Atles.Domain.Rules.Handlers.csproj" />
     <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
-    <ProjectReference Include="..\Atles.Reporting.Models\Atles.Reporting.Models.csproj" />
-    <ProjectReference Include="..\Atles.Reporting.Handlers\Atles.Reporting.Handlers.csproj" />
+    <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
+    <ProjectReference Include="..\Atles.Queries\Atles.Queries.csproj" />
+    <ProjectReference Include="..\Atles.Queries.Handlers\Atles.Queries.Handlers.csproj" />
+    <ProjectReference Include="..\Atles.Validators\Atles.Validators.csproj" />
   </ItemGroup>
 
   <ItemGroup>

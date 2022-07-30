@@ -1,11 +1,11 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Commands.Categories;
 using Atles.Core;
-using Atles.Domain.Commands.Categories;
-using Atles.Domain.Models;
+using Atles.Domain;
 using Atles.Domain.Rules.Categories;
-using Atles.Reporting.Models.Admin.Categories;
-using Atles.Reporting.Models.Admin.Categories.Queries;
+using Atles.Models.Admin.Categories;
+using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin

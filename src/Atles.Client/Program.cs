@@ -6,7 +6,7 @@ using Atles.Client.Services;
 using Atles.Client.Services.Api;
 using Atles.Client.Services.PostReactions;
 using Atles.Client.Services.Storage;
-using Atles.Reporting.Models.Public;
+using Atles.Models.Public;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;

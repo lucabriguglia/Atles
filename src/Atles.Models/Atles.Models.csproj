@@ -1,0 +1,15 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Atles.Commands\Atles.Commands.csproj" />
+    <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
+    <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
+  </ItemGroup>
+
+</Project>

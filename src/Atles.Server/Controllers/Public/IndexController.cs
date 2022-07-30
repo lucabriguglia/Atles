@@ -2,10 +2,10 @@
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atles.Core;
-using Atles.Domain.Models;
-using Atles.Reporting.Models.Public;
-using Atles.Reporting.Models.Public.Queries;
-using Atles.Reporting.Models.Shared;
+using Atles.Domain;
+using Atles.Models;
+using Atles.Models.Public;
+using Atles.Queries.Public;
 using Atles.Server.Services;
 using Markdig;
 using Microsoft.AspNetCore.Authorization;

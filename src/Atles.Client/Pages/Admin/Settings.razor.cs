@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Reporting.Models.Admin.Sites;
+using Atles.Models.Admin.Sites;
 
 namespace Atles.Client.Pages.Admin
 {

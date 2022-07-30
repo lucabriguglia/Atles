@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Reporting.Models.Admin.Forums;
+using Atles.Models.Admin.Forums;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
