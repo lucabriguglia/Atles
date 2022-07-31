@@ -8,6 +8,7 @@ using Atles.Core.Settings;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Domain.Rules.Handlers.Categories;
+using Atles.Domain.Rules.Handlers.Users;
 using Atles.Events.Handlers.ReplyCreatedHandlers;
 using Atles.Models.Admin.Categories;
 using Atles.Queries.Handlers.Admin;
@@ -105,7 +106,7 @@ namespace Atles.Server
                     typeof(Dispatcher), 
                     typeof(CreateCategoryHandler), 
                     typeof(CreateCategoryValidator), 
-                    typeof(IsCategoryNameUniqueHandler), 
+                    typeof(IsUserDisplayNameUniqueHandler), 
                     typeof(IndexPageModel), 
                     typeof(GetCategoriesIndexHandler), 
                     typeof(AtlesDbContext),

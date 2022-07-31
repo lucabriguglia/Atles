@@ -1,81 +1,75 @@
 ﻿using Atles.Commands.Categories;
-using Atles.Core;
-using Atles.Core.Queries;
-using Atles.Domain.Rules.Categories;
-using Atles.Domain.Rules.PermissionSets;
 using Atles.Validators.Categories;
+using Atles.Validators.PermissionSets;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Validators
+namespace Atles.Tests.Unit.Validators;
+
+[TestFixture]
+public class CreateCategoryValidatorTests : TestFixtureBase
 {
-    [Ignore("Refactoring needed")]
-    [TestFixture]
-    public class CreateCategoryValidatorTests : TestFixtureBase
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_empty()
     {
-        [Test]
-        public void Should_have_validation_error_when_name_is_empty()
-        {
-            var command = Fixture.Build<CreateCategory>().With(x => x.Name, string.Empty).Create();
+        var model = Fixture.Build<CreateCategory>().With(x => x.Name, string.Empty).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var categoryValidationRules = new Mock<ICategoryValidationRules>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new CreateCategoryValidator(dispatcher.Object);
+        var validator = new CreateCategoryValidator(categoryValidationRules.Object, permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_name_is_too_long()
-        {
-            var command = Fixture.Build<CreateCategory>().With(x => x.Name, new string('*', 51)).Create();
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_too_long()
+    {
+        var model = Fixture.Build<CreateCategory>().With(x => x.Name, new string('*', 51)).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var categoryValidationRules = new Mock<ICategoryValidationRules>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new CreateCategoryValidator(dispatcher.Object);
+        var validator = new CreateCategoryValidator(categoryValidationRules.Object, permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_name_is_not_unique()
-        {
-            var command = Fixture.Create<CreateCategory>();
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_not_unique()
+    {
+        var model = Fixture.Create<CreateCategory>();
 
-            var dispatcher = new Mock<IDispatcher>();
-            dispatcher.Setup(x => x.Get(It.IsAny<IsCategoryNameUnique>())).ReturnsAsync(false);
+        var categoryValidationRules = new Mock<ICategoryValidationRules>();
+        categoryValidationRules
+            .Setup(rules => rules.IsCategoryNameUnique(model.SiteId, model.Name, null))
+            .ReturnsAsync(false);
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new CreateCategoryValidator(dispatcher.Object);
+        var validator = new CreateCategoryValidator(categoryValidationRules.Object, permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_permission_set_is_not_valid()
-        {
-            var command = Fixture.Create<CreateCategory>();
+    [Test]
+    public async Task Should_have_validation_error_when_permission_set_is_not_valid()
+    {
+        var model = Fixture.Create<CreateCategory>();
 
-            var querySiteId = Guid.NewGuid();
-            var queryPermissionSetId = Guid.NewGuid();
+        var categoryValidationRules = new Mock<ICategoryValidationRules>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
+        permissionSetValidationRules
+            .Setup(rules => rules.IsPermissionSetValid(model.SiteId, model.PermissionSetId))
+            .ReturnsAsync(false);
 
-            var dispatcher = new Mock<IDispatcher>();
-            dispatcher
-                .Setup(x => x.Get(It.IsAny<IsPermissionSetValid>()))
-                .Callback<IQuery<bool>>(q =>
-                {
-                    var query = q as IsPermissionSetValid;
-                    querySiteId = query.SiteId;
-                    queryPermissionSetId = query.Id;
-                })
-                .ReturnsAsync(false);
+        var validator = new CreateCategoryValidator(categoryValidationRules.Object, permissionSetValidationRules.Object);
 
-            var sut = new CreateCategoryValidator(dispatcher.Object);
-
-            sut.ShouldHaveValidationErrorFor(x => x.PermissionSetId, command);
-            Assert.AreEqual(command.SiteId, querySiteId);
-            Assert.AreEqual(command.PermissionSetId, queryPermissionSetId);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.PermissionSetId);
     }
 }

@@ -70,15 +70,18 @@ public abstract class SiteControllerBase : ControllerBase
 
     protected async Task<ActionResult> ProcessPost<TModel, TCommand>(
         TModel model,
-        IValidator<TModel> validator,
-        IMapper<TModel, TCommand> mapper)
+        IMapper<TModel, TCommand> mapper,
+        IValidator<TModel> validator = null)
         where TModel : class
         where TCommand : ICommand
     {
-        var validationResult = await validator.ValidateAsync(model);
-        if (!validationResult.IsValid)
+        if (validator is not null)
         {
-            return validationResult.ToActionResult();
+            var validationResult = await validator.ValidateAsync(model);
+            if (!validationResult.IsValid)
+            {
+                return validationResult.ToActionResult();
+            }
         }
 
         var command = mapper.Map(model, CurrentUser.Id);

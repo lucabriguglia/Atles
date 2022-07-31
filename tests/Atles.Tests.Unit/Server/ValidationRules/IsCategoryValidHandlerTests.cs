@@ -5,7 +5,7 @@ using Atles.Domain.Rules.Handlers.Categories;
 using AutoFixture;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Rules
+namespace Atles.Tests.Unit.Server.ValidationRules
 {
     [TestFixture]
     public class IsCategoryValidHandlerTests : TestFixtureBase

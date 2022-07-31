@@ -4,7 +4,7 @@ using Atles.Domain.Rules.Handlers.Users;
 using Atles.Domain.Rules.Users;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Rules
+namespace Atles.Tests.Unit.Server.ValidationRules
 {
     [TestFixture]
     public class IsUserDisplayNameUniqueTests : TestFixtureBase

@@ -4,7 +4,7 @@ using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.Handlers.Forums;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Rules
+namespace Atles.Tests.Unit.Server.ValidationRules
 {
     [TestFixture]
     public class IsForumNameUniqueHandlerTests : TestFixtureBase
