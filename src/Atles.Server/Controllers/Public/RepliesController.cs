@@ -38,11 +38,10 @@ namespace Atles.Server.Controllers.Public
         [HttpPost("create-reply")]
         public async Task<ActionResult> CreateReply(TopicPageModel model)
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            // TODO: Refactoring
 
-            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
-            var canReply = _securityService.HasPermission(PermissionType.Reply, permissions) && !user.IsSuspended;
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = CurrentSite.Id, ForumId = model.Forum.Id });
+            var canReply = _securityService.HasPermission(PermissionType.Reply, permissions.AsT0) && !CurrentUser.IsSuspended;
 
             if (!canReply)
             {
@@ -56,8 +55,8 @@ namespace Atles.Server.Controllers.Public
                 TopicId = model.Topic.Id,
                 Content = model.Post.Content,
                 Status = PostStatusType.Published,
-                SiteId = site.Id,
-                UserId = user.Id
+                SiteId = CurrentSite.Id,
+                UserId = CurrentUser.Id
             };
 
             await _dispatcher.Send(command);
@@ -68,8 +67,7 @@ namespace Atles.Server.Controllers.Public
         [HttpPost("update-reply")]
         public async Task<ActionResult> UpdateReply(TopicPageModel model)
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            // TODO: Refactoring
 
             var command = new UpdateReply
             {
@@ -78,8 +76,8 @@ namespace Atles.Server.Controllers.Public
                 TopicId = model.Topic.Id,
                 Content = model.Post.Content,
                 Status = PostStatusType.Published,
-                SiteId = site.Id,
-                UserId = user.Id
+                SiteId = CurrentSite.Id,
+                UserId = CurrentUser.Id
             };
 
             var replyUserId = await _dbContext.Posts
@@ -92,10 +90,10 @@ namespace Atles.Server.Controllers.Public
                 .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 
-            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = model.Forum.Id });
-            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
-            var authorized = (canEdit && replyUserId == user.Id || canModerate) && !user.IsSuspended;
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = CurrentSite.Id, ForumId = model.Forum.Id });
+            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions.AsT0);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions.AsT0);
+            var authorized = (canEdit && replyUserId == CurrentUser.Id || canModerate) && !CurrentUser.IsSuspended;
 
             if (!authorized)
             {
@@ -111,16 +109,15 @@ namespace Atles.Server.Controllers.Public
         [HttpPost("set-reply-as-answer/{forumId}/{topicId}/{replyId}")]
         public async Task<ActionResult> SetReplyAsAnswer(Guid forumId, Guid topicId, Guid replyId, [FromBody] bool isAnswer)
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            // TODO: Refactoring
 
             var command = new SetReplyAsAnswer
             {
                 ReplyId = replyId,
                 TopicId = topicId,
                 ForumId = forumId,
-                SiteId = site.Id,
-                UserId = user.Id,
+                SiteId = CurrentSite.Id,
+                UserId = CurrentUser.Id,
                 IsAnswer = isAnswer
             };
 
@@ -134,10 +131,10 @@ namespace Atles.Server.Controllers.Public
                 .Select(x => x.Topic.CreatedBy)
                 .FirstOrDefaultAsync();
 
-            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = forumId });
-            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions);
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
-            var authorized = (canEdit && topicUserId == user.Id || canModerate) && !user.IsSuspended;
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = CurrentSite.Id, ForumId = forumId });
+            var canEdit = _securityService.HasPermission(PermissionType.Edit, permissions.AsT0);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions.AsT0);
+            var authorized = (canEdit && topicUserId == CurrentUser.Id || canModerate) && !CurrentUser.IsSuspended;
 
             if (!authorized)
             {
@@ -153,16 +150,15 @@ namespace Atles.Server.Controllers.Public
         [HttpDelete("delete-reply/{forumId}/{topicId}/{replyId}")]
         public async Task<ActionResult> DeleteReply(Guid forumId, Guid topicId, Guid replyId)
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            // TODO: Refactoring
 
             var command = new DeleteReply
             {
                 ReplyId = replyId,
                 TopicId = topicId,
                 ForumId = forumId,
-                SiteId = site.Id,
-                UserId = user.Id
+                SiteId = CurrentSite.Id,
+                UserId = CurrentUser.Id
             };
 
             var replyUserId = await _dbContext.Posts
@@ -175,10 +171,10 @@ namespace Atles.Server.Controllers.Public
                 .Select(x => x.CreatedBy)
                 .FirstOrDefaultAsync();
 
-            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = forumId });
-            var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions);
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions);
-            var authorized = (canDelete && replyUserId == user.Id || canModerate) && !user.IsSuspended;
+            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = CurrentSite.Id, ForumId = forumId });
+            var canDelete = _securityService.HasPermission(PermissionType.Delete, permissions.AsT0);
+            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions.AsT0);
+            var authorized = (canDelete && replyUserId == CurrentUser.Id || canModerate) && !CurrentUser.IsSuspended;
 
             if (!authorized)
             {

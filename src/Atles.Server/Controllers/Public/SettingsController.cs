@@ -8,62 +8,59 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Atles.Server.Controllers.Public
+namespace Atles.Server.Controllers.Public;
+
+[Authorize]
+[Route("api/public/settings")]
+public class SettingsController : SiteControllerBase
 {
-    [Authorize]
-    [Route("api/public/settings")]
-    public class SettingsController : SiteControllerBase
+    private readonly IDispatcher _dispatcher;
+    private readonly ILogger<SettingsController> _logger;
+
+    public SettingsController(IDispatcher dispatcher, ILogger<SettingsController> logger) : base(dispatcher)
     {
-        private readonly IDispatcher _dispatcher;
-        private readonly ILogger<SettingsController> _logger;
+        _dispatcher = dispatcher;
+        _logger = logger;
+    }
 
-        public SettingsController(IDispatcher dispatcher, ILogger<SettingsController> logger) : base(dispatcher)
+    [HttpGet("edit")]
+    public async Task<ActionResult<SettingsPageModel>> Edit()
+    {
+        return await ProcessGet(new GetSettingsPage 
+        { 
+            SiteId = CurrentSite.Id, 
+            UserId = CurrentUser.Id
+        });
+    }
+
+    [HttpPost("update")]
+    public async Task<ActionResult> Update(SettingsPageModel model)
+    {
+        if (model.User.Id != CurrentUser.Id || CurrentUser.IsSuspended)
         {
-            _dispatcher = dispatcher;
-            _logger = logger;
+            _logger.LogWarning("Unauthorized access to update settings.");
+            return Unauthorized();
         }
 
-        [HttpGet("edit")]
-        public async Task<ActionResult<SettingsPageModel>> Edit()
+        var command = new UpdateUser
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            UpdateUserId = CurrentUser.Id,
+            DisplayName = model.User.DisplayName,
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id
+        };
 
-            var model = await _dispatcher.Get(new GetSettingsPage { SiteId = site.Id, UserId = user.Id });
+        await _dispatcher.Send(command);
 
-            return model;
-        }
+        return Ok();
+    }
 
-        [HttpPost("update")]
-        public async Task<ActionResult> Update(SettingsPageModel model)
+    [HttpGet("is-display-name-unique/{name}")]
+    public async Task<IActionResult> IsDisplayNameUnique(string name)
+    {
+        return await ProcessGet(new IsUserDisplayNameUnique
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
-            if (model.User.Id != user.Id || user.IsSuspended)
-            {
-                _logger.LogWarning("Unauthorized access to update settings.");
-                return Unauthorized();
-            }
-
-            var command = new UpdateUser
-            {
-                UpdateUserId = user.Id,
-                DisplayName = model.User.DisplayName,
-                SiteId = site.Id,
-                UserId = user.Id
-            };
-
-            await _dispatcher.Send(command);
-
-            return Ok();
-        }
-
-        [HttpGet("is-display-name-unique/{name}")]
-        public async Task<IActionResult> IsDisplayNameUnique(string name)
-        {
-            var isNameUnique = await _dispatcher.Get(new IsUserDisplayNameUnique { DisplayName = name });
-            return Ok(isNameUnique);
-        }
+            DisplayName = name
+        });
     }
 }

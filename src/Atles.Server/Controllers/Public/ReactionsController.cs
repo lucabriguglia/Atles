@@ -3,113 +3,93 @@ using System.Threading.Tasks;
 using Atles.Commands.Posts;
 using Atles.Core;
 using Atles.Domain;
-using Atles.Models.Public;
 using Atles.Queries.Public;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Atles.Server.Controllers.Public
+namespace Atles.Server.Controllers.Public;
+
+[Authorize]
+[Route("api/public/reactions")]
+[ApiController]
+public class ReactionsController : SiteControllerBase
 {
-    [Authorize]
-    [Route("api/public/reactions")]
-    [ApiController]
-    public class ReactionsController : SiteControllerBase
+    private readonly IDispatcher _dispatcher;
+    private readonly ISecurityService _securityService;
+    private readonly ILogger<ReactionsController> _logger;
+
+    public ReactionsController(IDispatcher dispatcher, ISecurityService securityService, ILogger<ReactionsController> logger) : base(dispatcher)
     {
-        private readonly IDispatcher _dispatcher;
-        private readonly ISecurityService _securityService;
-        private readonly ILogger<ReactionsController> _logger;
+        _dispatcher = dispatcher;
+        _securityService = securityService;
+        _logger = logger;
+    }
 
-        public ReactionsController(IDispatcher dispatcher, ISecurityService securityService, ILogger<ReactionsController> logger) : base(dispatcher)
+    [HttpGet("topic-reactions/{topicId}")]
+    public async Task<ActionResult> TopicReactions(Guid topicId)
+    {
+        return await ProcessGet(new GetUserTopicReactions
         {
-            _dispatcher = dispatcher;
-            _securityService = securityService;
-            _logger = logger;
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id,
+            TopicId = topicId
+        });
+    }
+
+    [HttpPost("add-reaction/{forumId}/{postId}")]
+    public async Task<ActionResult> AddReaction(Guid forumId, Guid postId, [FromBody] PostReactionType postReactionType)
+    {
+        var permissions = await _dispatcher.Get(new GetPermissions { SiteId = CurrentSite.Id, ForumId = forumId });
+        var canReact = _securityService.HasPermission(PermissionType.Reactions, permissions.AsT0) && !CurrentUser.IsSuspended; // TODO: Refactoring
+        var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions.AsT0) && !CurrentUser.IsSuspended; // TODO: Refactoring
+
+        if (!canReact && !canModerate)
+        {
+            _logger.LogWarning("Unauthorized access to add reaction.");
+            return Unauthorized();
         }
 
-        [HttpGet("topic-reactions/{topicId}")]
-        public async Task<ActionResult<UserTopicReactionsModel>> TopicReactions(Guid topicId)
+        var command = new AddPostReaction
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            PostId = postId,
+            ForumId = forumId,
+            Type = postReactionType,
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id
+        };
 
-            var query = new GetUserTopicReactions
-            {
-                SiteId = site.Id,
-                UserId = user.Id,
-                TopicId = topicId
-            };
+        await _dispatcher.Send(command);
 
-            var model = await _dispatcher.Get(query);
+        return Ok();
+    }
 
-            if (model != null)
-            {
-                return model;
-            }
+    [HttpPost("remove-reaction/{forumId}/{postId}")]
+    public async Task<ActionResult> RemoveReaction(Guid forumId, Guid postId)
+    {
+        // TODO: Refactoring
 
-            _logger.LogWarning("User not found.");
+        var permissions = await _dispatcher.Get(new GetPermissions { SiteId = CurrentSite.Id, ForumId = forumId });
+        var canReact = _securityService.HasPermission(PermissionType.Reactions, permissions.AsT0) && !CurrentUser.IsSuspended;
+        var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions.AsT0) && !CurrentUser.IsSuspended;
 
-            return NotFound();
+        if (!canReact && !canModerate)
+        {
+            _logger.LogWarning("Unauthorized access to remove reaction.");
+            return Unauthorized();
         }
 
-        [HttpPost("add-reaction/{forumId}/{postId}")]
-        public async Task<ActionResult> AddReaction(Guid forumId, Guid postId, [FromBody] PostReactionType postReactionType)
+        var command = new RemovePostReaction
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            PostId = postId,
+            ForumId = forumId,
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id
+        };
 
-            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = forumId });
-            var canReact = _securityService.HasPermission(PermissionType.Reactions, permissions) && !user.IsSuspended;
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !user.IsSuspended;
+        await _dispatcher.Send(command);
 
-            if (!canReact && !canModerate)
-            {
-                _logger.LogWarning("Unauthorized access to add reaction.");
-                return Unauthorized();
-            }
-
-            var command = new AddPostReaction
-            {
-                PostId = postId,
-                ForumId = forumId,
-                Type = postReactionType,
-                SiteId = site.Id,
-                UserId = user.Id
-            };
-
-            await _dispatcher.Send(command);
-
-            return Ok();
-        }
-
-        [HttpPost("remove-reaction/{forumId}/{postId}")]
-        public async Task<ActionResult> RemoveReaction(Guid forumId, Guid postId)
-        {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
-            var permissions = await _dispatcher.Get(new GetPermissions { SiteId = site.Id, ForumId = forumId });
-            var canReact = _securityService.HasPermission(PermissionType.Reactions, permissions) && !user.IsSuspended;
-            var canModerate = _securityService.HasPermission(PermissionType.Moderate, permissions) && !user.IsSuspended;
-
-            if (!canReact && !canModerate)
-            {
-                _logger.LogWarning("Unauthorized access to remove reaction.");
-                return Unauthorized();
-            }
-
-            var command = new RemovePostReaction
-            {
-                PostId = postId,
-                ForumId = forumId,
-                SiteId = site.Id,
-                UserId = user.Id
-            };
-
-            await _dispatcher.Send(command);
-
-            return Ok();
-        }
+        return Ok();
     }
 }

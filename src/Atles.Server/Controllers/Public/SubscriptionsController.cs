@@ -7,57 +7,50 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Atles.Server.Controllers.Public
+namespace Atles.Server.Controllers.Public;
+
+[Authorize]
+[Route("api/public/subscriptions")]
+public class SubscriptionsController : SiteControllerBase
 {
-    [Authorize]
-    [Route("api/public/subscriptions")]
-    public class SubscriptionsController : SiteControllerBase
+    private readonly IDispatcher _dispatcher;
+    private readonly ILogger<SubscriptionsController> _logger;
+
+    public SubscriptionsController(IDispatcher dispatcher, ILogger<SubscriptionsController> logger) : base(dispatcher)
     {
-        private readonly IDispatcher _dispatcher;
-        private readonly ILogger<SubscriptionsController> _logger;
+        _dispatcher = dispatcher;
+        _logger = logger;
+    }
 
-        public SubscriptionsController(IDispatcher dispatcher, ILogger<SubscriptionsController> logger) : base(dispatcher)
+    [HttpPost("add-subscription/{forumId}/{itemId}")]
+    public async Task<ActionResult> AddSubscription(Guid forumId, Guid itemId)
+    {
+        var command = new AddSubscription
         {
-            _dispatcher = dispatcher;
-            _logger = logger;
-        }
+            Type = SubscriptionType.Topic,
+            ItemId = itemId,
+            ForumId = forumId,
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id
+        };
 
-        [HttpPost("add-subscription/{forumId}/{itemId}")]
-        public async Task<ActionResult> AddSubscription(Guid forumId, Guid itemId)
+        await _dispatcher.Send(command);
+
+        return Ok();
+    }
+
+    [HttpPost("remove-subscription/{forumId}/{itemId}")]
+    public async Task<ActionResult> RemoveSubscription(Guid forumId, Guid itemId)
+    {
+        var command = new RemoveSubscription
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            ItemId = itemId,
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id
+        };
 
-            var command = new AddSubscription
-            {
-                Type = SubscriptionType.Topic,
-                ItemId = itemId,
-                ForumId = forumId,
-                SiteId = site.Id,
-                UserId = user.Id
-            };
+        await _dispatcher.Send(command);
 
-            await _dispatcher.Send(command);
-
-            return Ok();
-        }
-
-        [HttpPost("remove-subscription/{forumId}/{itemId}")]
-        public async Task<ActionResult> RemoveSubscription(Guid forumId, Guid itemId)
-        {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
-            var command = new RemoveSubscription
-            {
-                ItemId = itemId,
-                SiteId = site.Id,
-                UserId = user.Id
-            };
-
-            await _dispatcher.Send(command);
-
-            return Ok();
-        }
+        return Ok();
     }
 }

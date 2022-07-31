@@ -9,74 +9,71 @@ using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 
-namespace Atles.Server.Controllers.Public
+namespace Atles.Server.Controllers.Public;
+
+[Route("api/public/users")]
+public class UsersController : SiteControllerBase
 {
-    [Route("api/public/users")]
-    public class UsersController : SiteControllerBase
+    private readonly ISecurityService _securityService;
+    private readonly ILogger<UsersController> _logger;
+    private readonly IDispatcher _dispatcher;
+
+    public UsersController(ISecurityService securityService,
+        ILogger<UsersController> logger,
+        IDispatcher dispatcher) : base(dispatcher)
     {
-        private readonly ISecurityService _securityService;
-        private readonly ILogger<UsersController> _logger;
-        private readonly IDispatcher _dispatcher;
+        _securityService = securityService;
+        _logger = logger;
+        _dispatcher = dispatcher;
+    }
 
-        public UsersController(ISecurityService securityService,
-            ILogger<UsersController> logger,
-            IDispatcher dispatcher) : base(dispatcher)
+    [HttpGet]
+    [Route("")]
+    [Route("{id}")]
+    public async Task<ActionResult<UserPageModel>> Index(Guid? id = null)
+    {
+        var userId = Guid.Empty;
+
+        if (id == null)
         {
-            _securityService = securityService;
-            _logger = logger;
-            _dispatcher = dispatcher;
+            if (CurrentUser != null)
+            {
+                userId = CurrentUser.Id;
+            }
+        }
+        else
+        {
+            userId = id.Value;
         }
 
-        [HttpGet]
-        [Route("")]
-        [Route("{id}")]
-        public async Task<ActionResult<UserPageModel>> Index(Guid? id = null)
+        var accessibleForumIds = new List<Guid>();
+
+        foreach (var forum in CurrentForums)
         {
-            var site = await CurrentSite();
-
-            var userId = Guid.Empty;
-
-            if (id == null)
+            var permissions = await _dispatcher.Get(new GetPermissions {SiteId = CurrentSite.Id, PermissionSetId = forum.PermissionSetId});
+            var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions.AsT0);
+            var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions.AsT0);
+            var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions.AsT0);
+            if (canViewForum && canViewTopics && canViewRead)
             {
-                var user = await CurrentUser();
-
-                if (user != null)
-                {
-                    userId = user.Id;
-                }
+                accessibleForumIds.Add(forum.Id);
             }
-            else
-            {
-                userId = id.Value;
-            }
-
-            var currentForums = await CurrentForums();
-
-            var accessibleForumIds = new List<Guid>();
-
-            foreach (var forum in currentForums)
-            {
-                var permissions = await _dispatcher.Get(new GetPermissions {SiteId = site.Id, PermissionSetId = forum.PermissionSetId});
-                var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
-                var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
-                var canViewRead = _securityService.HasPermission(PermissionType.Read, permissions);
-                if (canViewForum && canViewTopics && canViewRead)
-                {
-                    accessibleForumIds.Add(forum.Id);
-                }
-            }
-
-            var model = await _dispatcher.Get(new GetUserPage
-                {SiteId = site.Id, UserId = userId, AccessibleForumIds = accessibleForumIds});
-
-            if (model != null)
-            {
-                return model;
-            }
-
-            _logger.LogWarning("User not found.");
-
-            return NotFound();
         }
+
+        var model = await _dispatcher.Get(new GetUserPage
+        {
+            SiteId = CurrentSite.Id, 
+            UserId = userId, 
+            AccessibleForumIds = accessibleForumIds
+        });
+
+        if (model.AsT0 != null)
+        {
+            return model.AsT0;
+        }
+
+        _logger.LogWarning("User not found.");
+
+        return NotFound();
     }
 }
