@@ -1,4 +1,5 @@
 ﻿using Atles.Core.Queries;
+using Atles.Core.Results.Types;
 using Atles.Core.Services;
 using Moq;
 using NUnit.Framework;
@@ -8,19 +9,21 @@ namespace Atles.Tests.Unit.Core
     public class QueryProcessorTests
     {
         [Test]
-        public void Should_throw_argument_null_exception_when_sending_null_query()
+        public async Task Should_throw_argument_null_exception_when_sending_null_query()
         {
             var serviceProvider = new Mock<IServiceProviderWrapper>();
             var sut = new QueryProcessor(serviceProvider.Object);
-            Assert.ThrowsAsync<ArgumentNullException>(async () => await sut.Process<SampleQuery>(null));
+            var actual = await sut.Process<SampleQuery>(null);
+            Assert.AreEqual(typeof(Failure), actual.AsT1.GetType());
         }
 
         [Test]
-        public void Should_throw_exception_when_handler_not_found()
+        public async Task Should_throw_exception_when_handler_not_found()
         {
             var serviceProvider = new Mock<IServiceProviderWrapper>();
             var sut = new QueryProcessor(serviceProvider.Object);
-            Assert.ThrowsAsync<Exception>(async () => await sut.Process(new SampleQuery()));
+            var actual = await sut.Process<SampleQuery>(null);
+            Assert.AreEqual(typeof(Failure), actual.AsT1.GetType());
         }
 
         [Test]
@@ -39,7 +42,7 @@ namespace Atles.Tests.Unit.Core
 
             var actual = await sut.Process(query);
 
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(result, actual.AsT0);
         }
     }
 }
