@@ -6,6 +6,7 @@ using Atles.Core.Events;
 using Atles.Core.Mapping;
 using Atles.Core.Queries;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 
 namespace Atles.Core;
 
@@ -64,7 +65,7 @@ public class Dispatcher : IDispatcher
         }
     }
 
-    public async Task<TResult> Get<TResult>(IQuery<TResult> query)
+    public async Task<QueryResult<TResult>> Get<TResult>(IQuery<TResult> query)
     {
         return await _queryProcessor.Process(query);
     }

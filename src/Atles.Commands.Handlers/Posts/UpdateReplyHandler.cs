@@ -3,6 +3,7 @@ using Atles.Commands.Posts;
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;

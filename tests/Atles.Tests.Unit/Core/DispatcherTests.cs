@@ -4,6 +4,7 @@ using Atles.Core.Events;
 using Atles.Core.Mapping;
 using Atles.Core.Queries;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Moq;
 using NUnit.Framework;
 

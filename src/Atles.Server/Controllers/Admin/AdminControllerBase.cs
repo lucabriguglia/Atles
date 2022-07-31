@@ -6,7 +6,7 @@ namespace Atles.Server.Controllers.Admin
     [Authorize(Policy = "Admin")]
     public abstract class AdminControllerBase : SiteControllerBase
     {
-        public AdminControllerBase(IDispatcher dispatcher) : base(dispatcher)
+        protected AdminControllerBase(IDispatcher dispatcher) : base(dispatcher)
         {
         }
     }

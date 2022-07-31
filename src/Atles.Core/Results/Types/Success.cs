@@ -1,6 +1,6 @@
 ﻿using System.Collections.Generic;
 using Atles.Core.Events;
 
-namespace Atles.Core.Results;
+namespace Atles.Core.Results.Types;
 
 public record Success(IEnumerable<IEvent> Events);

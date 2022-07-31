@@ -3,6 +3,7 @@ using Atles.Commands.Users;
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Events.Users;

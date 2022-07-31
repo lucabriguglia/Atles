@@ -1,4 +1,5 @@
-﻿using OneOf;
+﻿using Atles.Core.Results.Types;
+using OneOf;
 
 namespace Atles.Core.Results;
 

@@ -1,6 +1,7 @@
 ﻿using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Atles.Core.Services;
 using Moq;
 using NUnit.Framework;

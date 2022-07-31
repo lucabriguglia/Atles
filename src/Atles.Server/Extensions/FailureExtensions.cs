@@ -1,4 +1,5 @@
 ﻿using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Extensions;

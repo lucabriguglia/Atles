@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Concurrent;
 using System.Threading.Tasks;
+using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Atles.Core.Services;
 
 namespace Atles.Core.Queries;
@@ -16,11 +18,11 @@ public class QueryProcessor : IQueryProcessor
         _serviceProvider = serviceProvider;
     }
 
-    public async Task<TResult> Process<TResult>(IQuery<TResult> query)
+    public async Task<QueryResult<TResult>> Process<TResult>(IQuery<TResult> query)
     {
         if (query == null)
         {
-            throw new ArgumentNullException(nameof(query));
+            return new Failure(FailureType.NullArgument, "Query", $"Query of type {typeof(IQuery<TResult>)} is null.");
         }
 
         var queryType = query.GetType();

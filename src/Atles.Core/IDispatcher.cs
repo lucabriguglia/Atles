@@ -9,6 +9,6 @@ namespace Atles.Core;
 public interface IDispatcher
 {
     Task<CommandResult> Send<TCommand>(TCommand command) where TCommand : ICommand;
-    Task<TResult> Get<TResult>(IQuery<TResult> query);
+    Task<QueryResult<TResult>> Get<TResult>(IQuery<TResult> query);
     Task Publish<TEvent>(TEvent @event) where TEvent : IEvent;
 }

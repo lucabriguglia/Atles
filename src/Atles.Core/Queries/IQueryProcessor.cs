@@ -1,8 +1,9 @@
 ﻿using System.Threading.Tasks;
+using Atles.Core.Results;
 
 namespace Atles.Core.Queries;
 
 public interface IQueryProcessor
 {
-    Task<TResult> Process<TResult>(IQuery<TResult> query);
+    Task<QueryResult<TResult>> Process<TResult>(IQuery<TResult> query);
 }

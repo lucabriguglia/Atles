@@ -1,4 +1,5 @@
 ﻿using System.Threading.Tasks;
+using Atles.Core.Results;
 using Atles.Core.Services;
 
 namespace Atles.Core.Queries;
@@ -10,5 +11,5 @@ internal abstract class QueryHandlerWrapperBase<TResult>
         return serviceProvider.GetService<THandler>();
     }
 
-    public abstract Task<TResult> Handle(IQuery<TResult> query, IServiceProviderWrapper serviceProvider);
+    public abstract Task<QueryResult<TResult>> Handle(IQuery<TResult> query, IServiceProviderWrapper serviceProvider);
 }
