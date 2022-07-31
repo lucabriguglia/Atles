@@ -221,7 +221,7 @@ public class TopicsController : SiteControllerBase
             TopicId = command.TopicId
         });
 
-        return Ok(slug);
+        return Ok(slug.AsT0);
     }
 
     [Authorize]
@@ -275,7 +275,7 @@ public class TopicsController : SiteControllerBase
             TopicId = command.TopicId
         });
 
-        return Ok(slug);
+        return Ok(slug.AsT0);
     }
 
     [Authorize]

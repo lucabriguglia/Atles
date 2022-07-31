@@ -67,7 +67,7 @@ public class UsersController : SiteControllerBase
             AccessibleForumIds = accessibleForumIds
         });
 
-        if (model.AsT0 != null)
+        if (model?.AsT0 != null)
         {
             return model.AsT0;
         }
