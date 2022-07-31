@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
@@ -26,7 +27,7 @@ namespace Atles.Queries.Handlers.Public
             _roleManager = roleManager;
         }
 
-        public async Task<IList<PermissionModel>> Handle(GetPermissions query)
+        public async Task<QueryResult<IList<PermissionModel>>> Handle(GetPermissions query)
         {
             if (query.ForumId != null)
             {
@@ -50,7 +51,7 @@ namespace Atles.Queries.Handlers.Public
             return new List<PermissionModel>();
         }
 
-        private async Task<IList<PermissionModel>> BuildPermissionModels(Guid siteId, Guid permissionSetId)
+        private async Task<QueryResult<IList<PermissionModel>>> BuildPermissionModels(Guid siteId, Guid permissionSetId)
         {
             return await _cacheManager.GetOrSetAsync(CacheKeys.PermissionSet(permissionSetId), async () =>
             {

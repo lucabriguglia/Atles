@@ -26,7 +26,7 @@ namespace Atles.Tests.Unit.Rules
                 var sut = new IsUserDisplayNameUniqueHandler(dbContext);
                 var actual = await sut.Handle(new IsUserDisplayNameUnique { DisplayName = "Blah blah" });
 
-                Assert.IsTrue(actual);
+                Assert.IsTrue(actual.AsT0);
             }
         }
 
@@ -49,7 +49,7 @@ namespace Atles.Tests.Unit.Rules
                 var sut = new IsUserDisplayNameUniqueHandler(dbContext);
                 var actual = await sut.Handle(new IsUserDisplayNameUnique { DisplayName = "User 3", Id = Guid.NewGuid() });
 
-                Assert.IsTrue(actual);
+                Assert.IsTrue(actual.AsT0);
             }
         }
 
@@ -71,7 +71,7 @@ namespace Atles.Tests.Unit.Rules
                 var sut = new IsUserDisplayNameUniqueHandler(dbContext);
                 var actual = await sut.Handle(new IsUserDisplayNameUnique { DisplayName = displayName });
 
-                Assert.IsFalse(actual);
+                Assert.IsFalse(actual.AsT0);
             }
         }
 
@@ -95,7 +95,7 @@ namespace Atles.Tests.Unit.Rules
                 var sut = new IsUserDisplayNameUniqueHandler(dbContext);
                 var actual = await sut.Handle(new IsUserDisplayNameUnique { DisplayName = "User 1", Id = userId });
 
-                Assert.IsFalse(actual);
+                Assert.IsFalse(actual.AsT0);
             }
         }
     }

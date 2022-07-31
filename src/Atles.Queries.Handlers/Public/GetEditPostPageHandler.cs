@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Public;
@@ -17,7 +18,7 @@ namespace Atles.Queries.Handlers.Public
             _dbContext = dbContext;
         }
 
-        public async Task<PostPageModel> Handle(GetEditPostPage query)
+        public async Task<QueryResult<PostPageModel>> Handle(GetEditPostPage query)
         {
             var topic = await _dbContext.Posts
                 .Include(x => x.Forum).ThenInclude(x => x.Category)

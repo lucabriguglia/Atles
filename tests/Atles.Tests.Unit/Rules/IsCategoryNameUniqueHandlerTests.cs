@@ -18,7 +18,7 @@ namespace Atles.Tests.Unit.Rules
                 var query = new IsCategoryNameUnique { SiteId = Guid.NewGuid(), Name = "My Category" };
                 var actual = await sut.Handle(query);
 
-                Assert.IsTrue(actual);
+                Assert.IsTrue(actual.AsT0);
             }
         }
 
@@ -31,7 +31,7 @@ namespace Atles.Tests.Unit.Rules
                 var query = new IsCategoryNameUnique { SiteId = Guid.NewGuid(), Name = "My Category", Id = Guid.NewGuid() };
                 var actual = await sut.Handle(query);
 
-                Assert.IsTrue(actual);
+                Assert.IsTrue(actual.AsT0);
             }
         }
 
@@ -55,7 +55,7 @@ namespace Atles.Tests.Unit.Rules
                 var query = new IsCategoryNameUnique { SiteId = siteId, Name = categoryName };
                 var actual = await sut.Handle(query);
 
-                Assert.IsFalse(actual);
+                Assert.IsFalse(actual.AsT0);
             }
         }
 
@@ -81,7 +81,7 @@ namespace Atles.Tests.Unit.Rules
                 var query = new IsCategoryNameUnique { SiteId = siteId, Name = "Category 1", Id = categoryId };
                 var actual = await sut.Handle(query);
 
-                Assert.IsFalse(actual);
+                Assert.IsFalse(actual.AsT0);
             }
         }
     }

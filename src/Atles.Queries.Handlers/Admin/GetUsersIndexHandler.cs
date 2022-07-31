@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Extensions;
 using Atles.Domain;
@@ -21,7 +22,7 @@ namespace Atles.Queries.Handlers.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<IndexPageModel> Handle(GetUsersIndex request)
+        public async Task<QueryResult<IndexPageModel>> Handle(GetUsersIndex request)
         {
             var result = new IndexPageModel();
 

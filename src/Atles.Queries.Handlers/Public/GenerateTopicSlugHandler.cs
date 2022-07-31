@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Queries.Public;
 using Microsoft.EntityFrameworkCore;
@@ -15,7 +16,7 @@ namespace Atles.Queries.Handlers.Public
             _dbContext = dbContext;
         }
 
-        public async Task<string> Handle(GetTopicSlug query)
+        public async Task<QueryResult<string>> Handle(GetTopicSlug query)
         {
             var topic = await _dbContext.Posts.FirstOrDefaultAsync(x => x.Id == query.TopicId);
 

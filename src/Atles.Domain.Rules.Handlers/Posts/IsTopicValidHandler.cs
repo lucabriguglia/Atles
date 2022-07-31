@@ -1,4 +1,5 @@
 ﻿using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain.Rules.Posts;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ namespace Atles.Domain.Rules.Handlers.Posts
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(IsTopicValid query)
+        public async Task<QueryResult<bool>> Handle(IsTopicValid query)
         {
             return await _dbContext.Posts
                 .AnyAsync(x => 

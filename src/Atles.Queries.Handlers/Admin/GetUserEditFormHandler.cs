@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Admin.Users;
@@ -24,7 +25,7 @@ namespace Atles.Queries.Handlers.Admin
             _userManager = userManager;
         }
 
-        public async Task<EditPageModel> Handle(GetUserEditForm request)
+        public async Task<QueryResult<EditPageModel>> Handle(GetUserEditForm request)
         {
             User user;
 

@@ -1,4 +1,5 @@
 ﻿using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain.Rules.PermissionSets;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ namespace Atles.Domain.Rules.Handlers.PermissionSets
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(IsPermissionSetValid query)
+        public async Task<QueryResult<bool>> Handle(IsPermissionSetValid query)
         {
             var any = await _dbContext.PermissionSets
                 .AnyAsync(x => x.SiteId == query.SiteId &&

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Models.Admin.Sites;
 using Atles.Queries.Admin;
@@ -20,7 +21,7 @@ namespace Atles.Queries.Handlers.Admin
             _configuration = configuration;
         }
 
-        public async Task<SettingsPageModel> Handle(GetSettingsPageModel query)
+        public async Task<QueryResult<SettingsPageModel>> Handle(GetSettingsPageModel query)
         {
             var site = await _dbContext.Sites.FirstOrDefaultAsync(x => x.Id == query.SiteId);
 

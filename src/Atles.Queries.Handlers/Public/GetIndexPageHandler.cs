@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
@@ -22,7 +23,7 @@ namespace Atles.Queries.Handlers.Public
             _cacheManager = cacheManager;
         }
 
-        public async Task<IndexPageModel> Handle(GetIndexPage query)
+        public async Task<QueryResult<IndexPageModel>> Handle(GetIndexPage query)
         {
             var model = new IndexPageModel
             {

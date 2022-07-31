@@ -2,6 +2,7 @@
 using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Public;
@@ -24,7 +25,7 @@ namespace Atles.Queries.Handlers.Public
             _gravatarService = gravatarService;
         }
 
-        public async Task<TopicPageModel> Handle(GetTopicPage query)
+        public async Task<QueryResult<TopicPageModel>> Handle(GetTopicPage query)
         {
             var topic = await _dbContext.Posts
                 .Include(x => x.PostReactionSummaries)
@@ -43,6 +44,10 @@ namespace Atles.Queries.Handlers.Public
             }
 
             var subscription = await _dbContext.Subscriptions.FirstOrDefaultAsync(x => x.UserId == query.UserId && x.ItemId == topic.Id);
+
+            // TODO: To be moved to a service
+            var queryResult = await _dispatcher.Get(new GetTopicPageReplies { TopicId = topic.Id, Options = query.Options });
+            var replies = queryResult.AsT0;
 
             var result = new TopicPageModel
             {
@@ -69,7 +74,7 @@ namespace Atles.Queries.Handlers.Public
                     Subscribed = subscription != null,
                     Reactions = topic.PostReactionSummaries.Select(x => new TopicPageModel.ReactionModel { Type = x.Type, Count = x.Count }).ToList()
                 },
-                Replies = await _dispatcher.Get(new GetTopicPageReplies { TopicId = topic.Id, Options = query.Options })
+                Replies = replies
             };
 
             if (topic.HasAnswer)

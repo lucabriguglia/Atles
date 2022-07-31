@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Queries.Admin;
@@ -18,7 +19,7 @@ namespace Atles.Queries.Handlers.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<IndexPageModel> Handle(GetPermissionSetsIndex query)
+        public async Task<QueryResult<IndexPageModel>> Handle(GetPermissionSetsIndex query)
         {
             var result = new IndexPageModel();
 

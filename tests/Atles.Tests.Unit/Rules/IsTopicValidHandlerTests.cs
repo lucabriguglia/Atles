@@ -31,7 +31,7 @@ namespace Atles.Tests.Unit.Rules
                 var query = new IsTopicValid { SiteId = category.SiteId, ForumId = forum.Id, Id = topic.Id };
                 var actual = await sut.Handle(query);
 
-                Assert.IsTrue(actual);
+                Assert.IsTrue(actual.AsT0);
             }
         }
 
@@ -44,7 +44,7 @@ namespace Atles.Tests.Unit.Rules
                 var query = new IsTopicValid { SiteId = Guid.NewGuid(), ForumId = Guid.NewGuid(), Id = Guid.NewGuid() };
                 var actual = await sut.Handle(query);
 
-                Assert.IsFalse(actual);
+                Assert.IsFalse(actual.AsT0);
             }
         }
     }

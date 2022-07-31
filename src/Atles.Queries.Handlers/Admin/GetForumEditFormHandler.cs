@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Admin.Forums;
@@ -19,7 +20,7 @@ namespace Atles.Queries.Handlers.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<FormComponentModel> Handle(GetForumEditForm query)
+        public async Task<QueryResult<FormComponentModel>> Handle(GetForumEditForm query)
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>

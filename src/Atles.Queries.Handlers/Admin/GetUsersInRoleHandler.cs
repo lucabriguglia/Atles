@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Models.Admin.Roles;
 using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +17,7 @@ namespace Atles.Queries.Handlers.Admin
             _userManager = userManager;
         }
 
-        public async Task<IList<IndexPageModel.UserModel>> Handle(GetUsersInRole query)
+        public async Task<QueryResult<IList<IndexPageModel.UserModel>>> Handle(GetUsersInRole query)
         {
             var result = new List<IndexPageModel.UserModel>();
 

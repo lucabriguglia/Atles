@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Public;
@@ -31,7 +32,7 @@ namespace Atles.Queries.Handlers.Public
             _gravatarService = gravatarService;
         }
 
-        public async Task<CurrentUserModel> Handle(GetCurrentUser query)
+        public async Task<QueryResult<CurrentUserModel>> Handle(GetCurrentUser query)
         {
             var result = new CurrentUserModel();
 

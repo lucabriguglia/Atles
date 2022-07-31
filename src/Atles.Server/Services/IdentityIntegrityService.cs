@@ -25,7 +25,9 @@ namespace Atles.Server.Services
 
             if (user == null)
             {
-                var site = await _dispatcher.Get(new GetCurrentSite());
+                // TODO: To be moved to a service
+                var getCurrentSiteResult = await _dispatcher.Get(new GetCurrentSite());
+                var site = getCurrentSiteResult.AsT0;
 
                 await _dispatcher.Send(new CreateUser
                 {
@@ -39,7 +41,9 @@ namespace Atles.Server.Services
 
         public async Task ConfirmUserAsync(IdentityUser identityUser)
         {
-            var site = await _dispatcher.Get(new GetCurrentSite());
+            // TODO: To be moved to a service
+            var getCurrentSiteResult = await _dispatcher.Get(new GetCurrentSite());
+            var site = getCurrentSiteResult.AsT0;
 
             await _dispatcher.Send(new ConfirmUser
             {
@@ -50,7 +54,9 @@ namespace Atles.Server.Services
 
         public async Task UpdateEmailAsync(IdentityUser identityUser)
         {
-            var site = await _dispatcher.Get(new GetCurrentSite());
+            // TODO: To be moved to a service
+            var getCurrentSiteResult = await _dispatcher.Get(new GetCurrentSite());
+            var site = getCurrentSiteResult.AsT0;
 
             await _dispatcher.Send(new ChangeEmail
             {

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Extensions;
 using Atles.Domain;
@@ -21,7 +22,7 @@ namespace Atles.Queries.Handlers.Public
             _dbContext = dbContext;
         }
 
-        public async Task<PaginatedData<SearchPostModel>> Handle(GetSearchPosts query)
+        public async Task<QueryResult<PaginatedData<SearchPostModel>>> Handle(GetSearchPosts query)
         {
             var postsQuery = _dbContext.Posts
                 .Where(x =>

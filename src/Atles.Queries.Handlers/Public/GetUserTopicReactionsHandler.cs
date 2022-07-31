@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Models.Public;
 using Atles.Queries.Public;
@@ -17,7 +18,7 @@ namespace Atles.Queries.Handlers.Public
             _dbContext = dbContext;
         }
 
-        public async Task<UserTopicReactionsModel> Handle(GetUserTopicReactions query)
+        public async Task<QueryResult<UserTopicReactionsModel>> Handle(GetUserTopicReactions query)
         {
             var user = await _dbContext.Users
                 .Include(x => x.PostReactions.Where(y => y.Post.Id == query.TopicId || y.Post.TopicId == query.TopicId))

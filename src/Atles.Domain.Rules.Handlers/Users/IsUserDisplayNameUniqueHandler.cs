@@ -1,4 +1,5 @@
 ﻿using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain.Rules.Users;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ namespace Atles.Domain.Rules.Handlers.Users
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(IsUserDisplayNameUnique query)
+        public async Task<QueryResult<bool>> Handle(IsUserDisplayNameUnique query)
         {
             bool any;
 

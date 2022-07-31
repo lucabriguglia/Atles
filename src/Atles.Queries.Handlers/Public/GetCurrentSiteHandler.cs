@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Models.Public;
@@ -20,7 +21,7 @@ namespace Atles.Queries.Handlers.Public
             _cacheManager = cacheManager;
         }
 
-        public async Task<CurrentSiteModel> Handle(GetCurrentSite query)
+        public async Task<QueryResult<CurrentSiteModel>> Handle(GetCurrentSite query)
         {
             var currentSite = await _cacheManager.GetOrSetAsync(CacheKeys.CurrentSite("Default"), () =>
                 _dbContext.Sites.FirstOrDefaultAsync(x => x.Name == "Default"));

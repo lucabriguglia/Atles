@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Models.Admin.Roles;
 using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Identity;
@@ -16,7 +17,7 @@ namespace Atles.Queries.Handlers.Admin
             _roleManager = roleManager;
         }
 
-        public async Task<IndexPageModel> Handle(GetRolesIndex query)
+        public async Task<QueryResult<IndexPageModel>> Handle(GetRolesIndex query)
         {
             var result = new IndexPageModel();
 

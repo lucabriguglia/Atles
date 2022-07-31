@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Public;
@@ -22,7 +23,7 @@ namespace Atles.Queries.Handlers.Public
             _gravatarService = gravatarService;
         }
 
-        public async Task<SettingsPageModel> Handle(GetSettingsPage query)
+        public async Task<QueryResult<SettingsPageModel>> Handle(GetSettingsPage query)
         {
             var result = new SettingsPageModel();
 

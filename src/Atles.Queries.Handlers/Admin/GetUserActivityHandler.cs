@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Models;
 using Atles.Models.Admin.Users;
@@ -20,7 +21,7 @@ namespace Atles.Queries.Handlers.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<ActivityPageModel> Handle(GetUserActivity request)
+        public async Task<QueryResult<ActivityPageModel>> Handle(GetUserActivity request)
         {
             var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == request.UserId);
 

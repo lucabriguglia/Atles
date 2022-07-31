@@ -33,7 +33,7 @@ namespace Atles.Tests.Unit.Rules
                 };
                 var actual = await sut.Handle(query);
 
-                Assert.IsTrue(actual);
+                Assert.IsTrue(actual.AsT0);
             }
         }
 
@@ -50,7 +50,7 @@ namespace Atles.Tests.Unit.Rules
                 };
                 var actual = await sut.Handle(query);
 
-                Assert.IsFalse(actual);
+                Assert.IsFalse(actual.AsT0);
             }
         }
     }

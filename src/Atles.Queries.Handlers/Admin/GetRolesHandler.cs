@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Domain;
 using Atles.Models.Admin.Roles;
 using Atles.Queries.Admin;
@@ -19,7 +20,7 @@ namespace Atles.Queries.Handlers.Admin
             _roleManager = roleManager;
         }
 
-        public async Task<IList<RoleModel>> Handle(GetRoles query)
+        public async Task<QueryResult<IList<RoleModel>>> Handle(GetRoles query)
         {
             var result = new List<RoleModel>
             {

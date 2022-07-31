@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Models;
 using Atles.Models.Public;
@@ -23,7 +24,7 @@ namespace Atles.Queries.Handlers.Public
             _gravatarService = gravatarService;
         }
 
-        public async Task<UserPageModel> Handle(GetUserPage query)
+        public async Task<QueryResult<UserPageModel>> Handle(GetUserPage query)
         {
             var result = new UserPageModel();
 
@@ -46,12 +47,16 @@ namespace Atles.Queries.Handlers.Public
                 Status = user.Status
             };
 
-            result.Posts = await _dispatcher.Get(new GetSearchPosts 
-            { 
-                AccessibleForumIds = query.AccessibleForumIds, 
-                Options = new QueryOptions(), 
-                UserId = query.UserId 
+            // TODO: To be moved to a service
+            var queryResult = await _dispatcher.Get(new GetSearchPosts
+            {
+                AccessibleForumIds = query.AccessibleForumIds,
+                Options = new QueryOptions(),
+                UserId = query.UserId
             });
+            var posts = queryResult.AsT0;
+
+            result.Posts = posts;
 
             return result;
         }

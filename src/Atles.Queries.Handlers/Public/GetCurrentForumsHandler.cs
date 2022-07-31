@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
@@ -24,9 +25,11 @@ namespace Atles.Queries.Handlers.Public
             _dispatcher = sender;
         }
 
-        public async Task<IList<CurrentForumModel>> Handle(GetCurrentForums query)
+        public async Task<QueryResult<IList<CurrentForumModel>>> Handle(GetCurrentForums query)
         {
-            var site = await _dispatcher.Get(new GetCurrentSite());
+            // TODO: To be moved to a service
+            var getCurrentSiteResult = await _dispatcher.Get(new GetCurrentSite());
+            var site = getCurrentSiteResult.AsT0;
 
             return await _cacheManager.GetOrSetAsync(CacheKeys.CurrentForums(site.Id), async () =>
             {

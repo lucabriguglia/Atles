@@ -1,4 +1,5 @@
 ﻿using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain.Rules.Categories;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ namespace Atles.Domain.Rules.Handlers.Categories
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(IsCategoryValid query)
+        public async Task<QueryResult<bool>> Handle(IsCategoryValid query)
         {
             return await _dbContext.Categories
                 .AnyAsync(x => 

@@ -1,6 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Public;
@@ -20,7 +21,7 @@ namespace Atles.Queries.Handlers.Public
             _dispatcher = sender;
         }
 
-        public async Task<ForumPageModel> Handle(GetForumPage query)
+        public async Task<QueryResult<ForumPageModel>> Handle(GetForumPage query)
         {
             var forum = await _dbContext.Forums
                 .Include(x => x.Category)
@@ -34,6 +35,14 @@ namespace Atles.Queries.Handlers.Public
                 return null;
             }
 
+            // TODO: To be moved to a service
+            var queryResult = await _dispatcher.Get(new GetForumPageTopics 
+            { 
+                ForumId = forum.Id, 
+                Options = query.Options
+            });
+            var topics = queryResult.AsT0;
+
             var result = new ForumPageModel
             {
                 Forum = new ForumPageModel.ForumModel
@@ -43,7 +52,7 @@ namespace Atles.Queries.Handlers.Public
                     Description = forum.Description,
                     Slug = forum.Slug
                 },
-                Topics = await _dispatcher.Get(new GetForumPageTopics { ForumId = forum.Id, Options = query.Options })
+                Topics = topics
             };
 
             return result;

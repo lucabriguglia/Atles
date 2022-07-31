@@ -1,4 +1,5 @@
 ﻿using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain.Rules.Forums;
 using Microsoft.EntityFrameworkCore;
@@ -14,7 +15,7 @@ namespace Atles.Domain.Rules.Handlers.Forums
             _dbContext = dbContext;
         }
 
-        public async Task<bool> Handle(IsForumSlugUnique query)
+        public async Task<QueryResult<bool>> Handle(IsForumSlugUnique query)
         {
             bool any;
 

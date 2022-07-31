@@ -3,6 +3,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Admin.PermissionSets;
@@ -22,7 +23,7 @@ namespace Atles.Queries.Handlers.Admin
             _dispatcher = sender;
         }
 
-        public async Task<FormComponentModel> Handle(GetPermissionSetEditForm query)
+        public async Task<QueryResult<FormComponentModel>> Handle(GetPermissionSetEditForm query)
         {
             var result = new FormComponentModel();
 
@@ -44,7 +45,11 @@ namespace Atles.Queries.Handlers.Admin
                 Name = permissionSet.Name
             };
 
-            foreach (var roleModel in await _dispatcher.Get(new GetRoles()))
+            // TODO: To be moved to a service
+            var queryResult = await _dispatcher.Get(new GetRoles());
+            var roles = queryResult.AsT0;
+
+            foreach (var roleModel in roles)
             {
                 var permissionModel = new FormComponentModel.PermissionModel
                 {

@@ -1,6 +1,7 @@
 ﻿using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models;
@@ -23,7 +24,7 @@ namespace Atles.Queries.Handlers.Public
             _gravatarService = gravatarService;
         }
 
-        public async Task<PaginatedData<TopicPageModel.ReplyModel>> Handle(GetTopicPageReplies query)
+        public async Task<QueryResult<PaginatedData<TopicPageModel.ReplyModel>>> Handle(GetTopicPageReplies query)
         {
             var repliesQuery = _dbContext.Posts
                 .Include(x => x.PostReactionSummaries)

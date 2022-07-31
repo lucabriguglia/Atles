@@ -2,6 +2,7 @@
 using System.Linq;
 using System.Threading.Tasks;
 using Atles.Core.Queries;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Models.Admin.Events;
 using Atles.Queries.Admin;
@@ -19,7 +20,7 @@ namespace Atles.Queries.Handlers.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<TargetEventsComponentModel> Handle(GetTargetEventsComponent query)
+        public async Task<QueryResult<TargetEventsComponentModel>> Handle(GetTargetEventsComponent query)
         {
             var events = await _dbContext.Events
                 .Include(x => x.User)
