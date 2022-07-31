@@ -8,102 +8,102 @@ using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Server.Controllers.Admin
+namespace Atles.Server.Controllers.Admin;
+
+[Route("api/admin/roles")]
+public class RolesController : AdminControllerBase
 {
-    [Route("api/admin/roles")]
-    public class RolesController : AdminControllerBase
+    private readonly RoleManager<IdentityRole> _roleManager;
+    private readonly UserManager<IdentityUser> _userManager;
+
+    public RolesController(
+        RoleManager<IdentityRole> roleManager, 
+        UserManager<IdentityUser> userManager,
+        IDispatcher dispatcher) : base(dispatcher)
     {
-        private readonly RoleManager<IdentityRole> _roleManager;
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IDispatcher _dispatcher;
+        _roleManager = roleManager;
+        _userManager = userManager;
+    }
 
-        public RolesController(
-            RoleManager<IdentityRole> roleManager, 
-            UserManager<IdentityUser> userManager,
-            IDispatcher dispatcher) : base(dispatcher)
+    [HttpGet("list")]
+    public async Task<ActionResult> List()
+    {
+        return await ProcessGet(new GetRolesIndex());
+    }
+
+    [HttpGet("users-in-role/{roleName}")]
+    public async Task<ActionResult> UsersInRole(string roleName)
+    {
+        return await ProcessGet(new GetUsersInRole
         {
-            _roleManager = roleManager;
-            _userManager = userManager;
-            _dispatcher = dispatcher;
+            RoleName = roleName
+        });
+    }
+
+    [HttpPost("create")]
+    public async Task<ActionResult> Create(IndexPageModel.EditRoleModel model)
+    {
+        var identityRole = new IdentityRole(model.Name);
+
+        await _roleManager.CreateAsync(identityRole);
+
+        return Ok();
+    }
+
+    [HttpPost("update")]
+    public async Task<ActionResult> Update(IndexPageModel.EditRoleModel model)
+    {
+        var identityRole = await _roleManager.Roles.FirstOrDefaultAsync(x => x.Id == model.Id);
+
+        if (identityRole == null)
+        {
+            return NotFound();
         }
 
-        [HttpGet("list")]
-        public async Task<IndexPageModel> List()
+        if (identityRole.Name == Consts.RoleNameAdmin)
         {
-            return await _dispatcher.Get(new GetRolesIndex());
+            return BadRequest();
         }
 
-        [HttpGet("users-in-role/{roleName}")]
-        public async Task<IList<IndexPageModel.UserModel>> UsersInRole(string roleName)
+        identityRole.Name = model.Name;
+
+        await _roleManager.UpdateAsync(identityRole);
+
+        return Ok();
+    }
+
+    [HttpDelete("delete/{id}")]
+    public async Task<ActionResult> Delete(string id)
+    {
+        var identityRole = await _roleManager.Roles.FirstOrDefaultAsync(x => x.Id == id);
+
+        if (identityRole == null)
         {
-            return await _dispatcher.Get(new GetUsersInRole { RoleName = roleName });
+            return NotFound();
         }
 
-        [HttpPost("create")]
-        public async Task<ActionResult> Create(IndexPageModel.EditRoleModel model)
+        if (identityRole.Name == Consts.RoleNameAdmin)
         {
-            var identityRole = new IdentityRole(model.Name);
-
-            await _roleManager.CreateAsync(identityRole);
-
-            return Ok();
+            return BadRequest();
         }
 
-        [HttpPost("update")]
-        public async Task<ActionResult> Update(IndexPageModel.EditRoleModel model)
+        await _roleManager.DeleteAsync(identityRole);
+
+        return Ok();
+    }
+
+    [HttpDelete("remove-user-from-role/{userId}/{roleName}")]
+    public async Task<ActionResult> RemoveUserFromRole(string userId, string roleName)
+    {
+        var user = await _userManager.FindByIdAsync(userId);
+
+        if (user == null)
         {
-            var identityRole = await _roleManager.Roles.FirstOrDefaultAsync(x => x.Id == model.Id);
-
-            if (identityRole == null)
-            {
-                return NotFound();
-            }
-
-            if (identityRole.Name == Consts.RoleNameAdmin)
-            {
-                return BadRequest();
-            }
-
-            identityRole.Name = model.Name;
-
-            await _roleManager.UpdateAsync(identityRole);
-
-            return Ok();
+            return NotFound();
         }
 
-        [HttpDelete("delete/{id}")]
-        public async Task<ActionResult> Delete(string id)
-        {
-            var identityRole = await _roleManager.Roles.FirstOrDefaultAsync(x => x.Id == id);
+        await _userManager.RemoveFromRoleAsync(user, roleName);
 
-            if (identityRole == null)
-            {
-                return NotFound();
-            }
-
-            if (identityRole.Name == Consts.RoleNameAdmin)
-            {
-                return BadRequest();
-            }
-
-            await _roleManager.DeleteAsync(identityRole);
-
-            return Ok();
-        }
-
-        [HttpDelete("remove-user-from-role/{userId}/{roleName}")]
-        public async Task<ActionResult> RemoveUserFromRole(string userId, string roleName)
-        {
-            var user = await _userManager.FindByIdAsync(userId);
-
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            await _userManager.RemoveFromRoleAsync(user, roleName);
-
-            return Ok();
-        }
+        return Ok();
     }
 }

@@ -21,43 +21,46 @@ namespace Atles.Server.Controllers.Admin
         }
 
         [HttpGet("index-model")]
-        public async Task<IndexPageModel> Index()
+        public async Task<ActionResult> Index()
         {
-            var site = await CurrentSite();
-
-            return await _dispatcher.Get(new GetForumsIndex { SiteId = site.Id });
+            return await ProcessGet(new GetForumsIndex
+            {
+                SiteId = CurrentSite.Id
+            });
         }
 
         [HttpGet("index-model/{categoryId}")]
-        public async Task<IndexPageModel> Index(Guid categoryId)
+        public async Task<ActionResult> Index(Guid categoryId)
         {
-            var site = await CurrentSite();
-
-            return await _dispatcher.Get(new GetForumsIndex { SiteId = site.Id, CategoryId = categoryId });
+            return await ProcessGet(new GetForumsIndex
+            {
+                SiteId = CurrentSite.Id,
+                CategoryId = categoryId
+            });
         }
 
         [HttpGet("create")]
-        public async Task<FormComponentModel> Create()
+        public async Task<ActionResult> Create()
         {
-            var site = await CurrentSite();
-
-            return await _dispatcher.Get(new GetForumCreateForm { SiteId = site.Id });
+            return await ProcessGet(new GetForumCreateForm
+            {
+                SiteId = CurrentSite.Id
+            });
         }
 
         [HttpGet("create/{categoryId}")]
-        public async Task<FormComponentModel> Create(Guid categoryId)
+        public async Task<ActionResult> Create(Guid categoryId)
         {
-            var site = await CurrentSite();
-
-            return await _dispatcher.Get(new GetForumCreateForm { SiteId = site.Id, CategoryId = categoryId });
+            return await ProcessGet(new GetForumCreateForm
+            {
+                SiteId = CurrentSite.Id, 
+                CategoryId = categoryId
+            });
         }
 
         [HttpPost("save")]
         public async Task<ActionResult> Save(FormComponentModel.ForumModel model)
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
             var command = new CreateForum
             {
                 CategoryId = model.CategoryId,
@@ -65,8 +68,8 @@ namespace Atles.Server.Controllers.Admin
                 Slug = model.Slug,
                 Description = model.Description,
                 PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
-                SiteId = site.Id,
-                UserId = user.Id
+                SiteId = CurrentSite.Id,
+                UserId = CurrentUser.Id
             };
 
             await _dispatcher.Send(command);
@@ -77,24 +80,15 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("edit/{id}")]
         public async Task<ActionResult<FormComponentModel>> Edit(Guid id)
         {
-            var site = await CurrentSite();
-
-            var result = await _dispatcher.Get(new GetForumEditForm { SiteId = site.Id, Id = id });
-
-            if (result == null)
+            return await ProcessGet(new GetForumEditForm
             {
-                return NotFound();
-            }
-
-            return result;
+                SiteId = CurrentSite.Id, Id = id
+            });
         }
 
         [HttpPost("update")]
         public async Task<ActionResult> Update(FormComponentModel.ForumModel model)
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
             var command = new UpdateForum
             {
                 ForumId = model.Id,
@@ -103,8 +97,8 @@ namespace Atles.Server.Controllers.Admin
                 Slug = model.Slug,
                 Description = model.Description,
                 PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
-                SiteId = site.Id,
-                UserId = user.Id
+                SiteId = CurrentSite.Id,
+                UserId = CurrentUser.Id
             };
 
             await _dispatcher.Send(command);
@@ -115,15 +109,12 @@ namespace Atles.Server.Controllers.Admin
         [HttpPost("move-up")]
         public async Task<ActionResult> MoveUp([FromBody] Guid id)
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
             var command = new MoveForum
             {
                 ForumId = id,
-                SiteId = site.Id,
-                UserId = user.Id,
-                Direction = DirectionType.Up
+                Direction = DirectionType.Up,
+                SiteId = CurrentSite.Id,
+                UserId = CurrentUser.Id
             };
 
             await _dispatcher.Send(command);
@@ -134,15 +125,12 @@ namespace Atles.Server.Controllers.Admin
         [HttpPost("move-down")]
         public async Task<ActionResult> MoveDown([FromBody] Guid id)
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
             var command = new MoveForum
             {
                 ForumId = id,
-                SiteId = site.Id,
-                UserId = user.Id,
-                Direction = DirectionType.Down
+                Direction = DirectionType.Down,
+                SiteId = CurrentSite.Id,
+                UserId = CurrentUser.Id
             };
 
             await _dispatcher.Send(command);
@@ -153,14 +141,11 @@ namespace Atles.Server.Controllers.Admin
         [HttpDelete("delete/{id}")]
         public async Task<ActionResult> Delete(Guid id)
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
             var command = new DeleteForum
             {
                 ForumId = id,
-                SiteId = site.Id,
-                UserId = user.Id
+                SiteId = CurrentSite.Id,
+                UserId = CurrentUser.Id
             };
 
             await _dispatcher.Send(command);
@@ -171,33 +156,45 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("is-name-unique/{categoryId}/{name}")]
         public async Task<IActionResult> IsNameUnique(Guid categoryId, string name)
         {
-            var site = await CurrentSite();
-            var isNameUnique = await _dispatcher.Get(new IsForumNameUnique { SiteId = site.Id, CategoryId = categoryId, Name = name });
-            return Ok(isNameUnique);
+            return await ProcessGet(new IsForumNameUnique
+            {
+                SiteId = CurrentSite.Id, 
+                CategoryId = categoryId, 
+                Name = name
+            });
         }
 
         [HttpGet("is-name-unique/{categoryId}/{name}/{id}")]
         public async Task<IActionResult> IsNameUnique(Guid categoryId, string name, Guid id)
         {
-            var site = await CurrentSite();
-            var isNameUnique = await _dispatcher.Get(new IsForumNameUnique { SiteId = site.Id, CategoryId = categoryId, Name = name, Id = id });
-            return Ok(isNameUnique);
+            return await ProcessGet(new IsForumNameUnique
+            {
+                SiteId = CurrentSite.Id, 
+                CategoryId = categoryId, 
+                Name = name, 
+                Id = id
+            });
         }
 
         [HttpGet("is-slug-unique/{slug}")]
         public async Task<IActionResult> IsNameUnique(string slug)
         {
-            var site = await CurrentSite();
-            var isSlugUnique = await _dispatcher.Get(new IsForumSlugUnique { SiteId = site.Id, Slug = slug });
-            return Ok(isSlugUnique);
+            return await ProcessGet(new IsForumSlugUnique 
+            { 
+                SiteId = CurrentSite.Id, 
+                Slug = slug
+            });
         }
 
         [HttpGet("is-slug-unique/{slug}/{id}")]
         public async Task<IActionResult> IsNameUnique(string slug, Guid id)
         {
-            var site = await CurrentSite();
-            var isSlugUnique = await _dispatcher.Get(new IsForumSlugUnique { SiteId = site.Id, Slug = slug, Id = id });
-            return Ok(isSlugUnique);
+            return await ProcessGet(new IsForumSlugUnique
+            {
+                SiteId = CurrentSite.Id, 
+                Slug = slug, 
+                Id = id
+            });
         }
     }
 }

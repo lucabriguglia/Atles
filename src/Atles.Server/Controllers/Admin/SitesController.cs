@@ -5,55 +5,45 @@ using Atles.Models.Admin.Sites;
 using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atles.Server.Controllers.Admin
+namespace Atles.Server.Controllers.Admin;
+
+[Route("api/admin/sites")]
+public class SitesController : AdminControllerBase
 {
-    [Route("api/admin/sites")]
-    public class SitesController : AdminControllerBase
+    private readonly IDispatcher _dispatcher;
+
+    public SitesController(IDispatcher dispatcher) : base(dispatcher)
     {
-        private readonly IDispatcher _dispatcher;
+        _dispatcher = dispatcher;
+    }
 
-        public SitesController(IDispatcher dispatcher) : base(dispatcher)
+    [HttpGet("settings")]
+    public async Task<ActionResult<SettingsPageModel>> Settings()
+    {
+        return await ProcessGet(new GetSettingsPageModel
         {
-            _dispatcher = dispatcher;
-        }
+            SiteId = CurrentSite.Id
+        });
+    }
 
-        [HttpGet("settings")]
-        public async Task<ActionResult<SettingsPageModel>> Settings()
+    [HttpPost("update")]
+    public async Task<ActionResult> Update(SettingsPageModel model)
+    {
+        var command = new UpdateSite
         {
-            var site = await CurrentSite();
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id,
+            Title = model.Site.Title,
+            Theme = model.Site.Theme,
+            Css = model.Site.Css,
+            Language = model.Site.Language,
+            Privacy = model.Site.Privacy,
+            Terms = model.Site.Terms,
+            HeadScript = model.Site.HeadScript
+        };
 
-            var result = await _dispatcher.Get(new GetSettingsPageModel { SiteId = site.Id });
+        await _dispatcher.Send(command);
 
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return result;
-        }
-
-        [HttpPost("update")]
-        public async Task<ActionResult> Update(SettingsPageModel model)
-        {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
-            var command = new UpdateSite
-            {
-                SiteId = site.Id,
-                UserId = user.Id,
-                Title = model.Site.Title,
-                Theme = model.Site.Theme,
-                Css = model.Site.Css,
-                Language = model.Site.Language,
-                Privacy = model.Site.Privacy,
-                Terms = model.Site.Terms,
-                HeadScript = model.Site.HeadScript
-            };
-
-            await _dispatcher.Send(command);
-
-            return Ok();
-        }
+        return Ok();
     }
 }

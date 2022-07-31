@@ -10,228 +10,206 @@ using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atles.Server.Controllers.Admin
+namespace Atles.Server.Controllers.Admin;
+
+[Route("api/admin/users")]
+public class UsersController : AdminControllerBase
 {
-    [Route("api/admin/users")]
-    public class UsersController : AdminControllerBase
+    private readonly UserManager<IdentityUser> _userManager;
+    private readonly IDispatcher _dispatcher;
+
+    public UsersController(UserManager<IdentityUser> userManager,
+        IDispatcher dispatcher) : base(dispatcher)
     {
-        private readonly UserManager<IdentityUser> _userManager;
-        private readonly IDispatcher _dispatcher;
+        _userManager = userManager;
+        _dispatcher = dispatcher;
+    }
 
-        public UsersController(UserManager<IdentityUser> userManager,
-            IDispatcher dispatcher) : base(dispatcher)
+    [HttpGet("index-model")]
+    public async Task<ActionResult> List(
+        [FromQuery] int? page = 1, 
+        [FromQuery] string search = null, 
+        [FromQuery] string status = null,
+        [FromQuery] string sortByField = null,
+        [FromQuery] string sortByDirection = null)
+    {
+        return await ProcessGet(new GetUsersIndex
         {
-            _userManager = userManager;
-            _dispatcher = dispatcher;
-        }
+            Options = new QueryOptions(page, search, sortByField, sortByDirection), 
+            Status = status
+        });
+    }
 
-        [HttpGet("index-model")]
-        public async Task<IndexPageModel> List(
-            [FromQuery] int? page = 1, 
-            [FromQuery] string search = null, 
-            [FromQuery] string status = null,
-            [FromQuery] string sortByField = null,
-            [FromQuery] string sortByDirection = null)
+    [HttpGet("create")]
+    public async Task<ActionResult> Create()
+    {
+        return await ProcessGet(new GetUserCreateForm());
+    }
+
+    [HttpPost("save")]
+    public async Task<ActionResult> Save(CreatePageModel.UserModel model)
+    {
+        if (!ModelState.IsValid) return BadRequest();
+
+        var identityUser = new IdentityUser { UserName = model.Email, Email = model.Email };
+        var createResult = await _userManager.CreateAsync(identityUser, model.Password);
+
+        if (!createResult.Succeeded) return BadRequest();
+
+        var code = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
+        var confirmResult = await _userManager.ConfirmEmailAsync(identityUser, code);
+
+        var command = new CreateUser
         {
-            var query = new GetUsersIndex { Options = new QueryOptions(page, search, sortByField, sortByDirection), Status = status };
-            return await _dispatcher.Get(query);
-        }
+            IdentityUserId = identityUser.Id,
+            Email = identityUser.Email,
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id,
+            Confirm = true
+        };
 
-        [HttpGet("create")]
-        public async Task<CreatePageModel> Create()
+        await _dispatcher.Send(command);
+
+        return Ok(command.CreateUserId);
+    }
+
+    [HttpGet("edit/{id}")]
+    public async Task<ActionResult<EditPageModel>> Edit(Guid id)
+    {
+        return await ProcessGet(new GetUserEditForm
         {
-            return await _dispatcher.Get(new GetUserCreateForm());
-        }
+            Id = id
+        });
+    }
 
-        [HttpPost("save")]
-        public async Task<ActionResult> Save(CreatePageModel.UserModel model)
+    [HttpGet("edit-by-identity-user-id/{identityUserId}")]
+    public async Task<ActionResult<EditPageModel>> EditByIdentityUserId(string identityUserId)
+    {
+        return await ProcessGet(new GetUserEditForm
         {
-            if (!ModelState.IsValid) return BadRequest();
+            IdentityUserId = identityUserId 
+        });
+    }
 
-            var identityUser = new IdentityUser { UserName = model.Email, Email = model.Email };
-            var createResult = await _userManager.CreateAsync(identityUser, model.Password);
+    [HttpPost("update")]
+    public async Task<ActionResult> Update(EditPageModel model)
+    {
+        var identityUser = await _userManager.FindByIdAsync(model.Info.UserId);
 
-            if (!createResult.Succeeded) return BadRequest();
-
-            var code = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
-            var confirmResult = await _userManager.ConfirmEmailAsync(identityUser, code);
-
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
-            var command = new CreateUser
+        if (identityUser != null && model.Roles.Count > 0)
+        {
+            foreach (var role in model.Roles)
             {
-                IdentityUserId = identityUser.Id,
-                Email = identityUser.Email,
-                SiteId = site.Id,
-                UserId = user.Id,
-                Confirm = true
-            };
-
-            await _dispatcher.Send(command);
-
-            return Ok(command.CreateUserId);
-        }
-
-        [HttpGet("edit/{id}")]
-        public async Task<ActionResult<EditPageModel>> Edit(Guid id)
-        {
-            var result = await _dispatcher.Get(new GetUserEditForm { Id = id });
-
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return result;
-        }
-
-        [HttpGet("edit-by-identity-user-id/{identityUserId}")]
-        public async Task<ActionResult<EditPageModel>> EditByIdentityUserId(string identityUserId)
-        {
-            var result = await _dispatcher.Get(new GetUserEditForm { IdentityUserId = identityUserId });
-
-            if (result == null)
-            {
-                return NotFound();
-            }
-
-            return result;
-        }
-
-        [HttpPost("update")]
-        public async Task<ActionResult> Update(EditPageModel model)
-        {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
-            var identityUser = await _userManager.FindByIdAsync(model.Info.UserId);
-
-            if (identityUser != null && model.Roles.Count > 0)
-            {
-                foreach (var role in model.Roles)
+                if (role.Selected)
                 {
-                    if (role.Selected)
+                    if (!await _userManager.IsInRoleAsync(identityUser, role.Name))
                     {
-                        if (!await _userManager.IsInRoleAsync(identityUser, role.Name))
-                        {
-                            await _userManager.AddToRoleAsync(identityUser, role.Name);
-                        }
+                        await _userManager.AddToRoleAsync(identityUser, role.Name);
                     }
-                    else
+                }
+                else
+                {
+                    if (await _userManager.IsInRoleAsync(identityUser, role.Name))
                     {
-                        if (await _userManager.IsInRoleAsync(identityUser, role.Name))
-                        {
-                            await _userManager.RemoveFromRoleAsync(identityUser, role.Name);
-                        }
+                        await _userManager.RemoveFromRoleAsync(identityUser, role.Name);
                     }
                 }
             }
-
-            var command = new UpdateUser
-            {
-                UpdateUserId = model.User.Id,
-                DisplayName = model.User.DisplayName,
-                SiteId = site.Id,
-                UserId = user.Id,
-                Roles = model.Roles.Where(x => x.Selected).Select(x => x.Name).ToList()
-            };
-
-            await _dispatcher.Send(command);
-
-            return Ok();
         }
 
-        [HttpGet("activity/{id}")]
-        public async Task<ActionResult<ActivityPageModel>> Activity(Guid id, [FromQuery] int? page = 1, [FromQuery] string search = null)
+        var command = new UpdateUser
         {
-            var site = await CurrentSite();
+            UpdateUserId = model.User.Id,
+            DisplayName = model.User.DisplayName,
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id,
+            Roles = model.Roles.Where(x => x.Selected).Select(x => x.Name).ToList()
+        };
 
-            var query = new GetUserActivity { Options = new QueryOptions(page, search), SiteId = site.Id, UserId = id  };
-            var result = await _dispatcher.Get(query);
+        await _dispatcher.Send(command);
 
-            if (result == null)
-            {
-                return NotFound();
-            }
+        return Ok();
+    }
 
-            return result;
-        }
-
-        [HttpPost("suspend")]
-        public async Task<ActionResult> Suspend([FromBody] Guid id)
+    [HttpGet("activity/{id}")]
+    public async Task<ActionResult> Activity(Guid id, [FromQuery] int? page = 1, [FromQuery] string search = null)
+    {
+        return await ProcessGet(new GetUserActivity
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            Options = new QueryOptions(page, search), 
+            SiteId = CurrentSite.Id, 
+            UserId = id
+        });
+    }
 
-            var command = new SuspendUser
-            {
-                SuspendUserId = id,
-                SiteId = site.Id,
-                UserId = user.Id
-            };
-
-            await _dispatcher.Send(command);
-
-            return Ok();
-        }
-
-        [HttpPost("reinstate")]
-        public async Task<ActionResult> Reinstate([FromBody] Guid id)
+    [HttpPost("suspend")]
+    public async Task<ActionResult> Suspend([FromBody] Guid id)
+    {
+        var command = new SuspendUser
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            SuspendUserId = id,
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id
+        };
 
-            var command = new ReinstateUser
-            {
-                ReinstateUserId = id,
-                SiteId = site.Id,
-                UserId = user.Id
-            };
+        await _dispatcher.Send(command);
 
-            await _dispatcher.Send(command);
+        return Ok();
+    }
 
-            return Ok();
-        }
-
-        [HttpDelete("delete/{id}/{identityUserId}")]
-        public async Task<ActionResult> Delete(Guid id, string identityUserId)
+    [HttpPost("reinstate")]
+    public async Task<ActionResult> Reinstate([FromBody] Guid id)
+    {
+        var command = new ReinstateUser
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            ReinstateUserId = id,
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id
+        };
 
-            var command = new DeleteUser
-            {
-                DeleteUserId = id,
-                IdentityUserId = identityUserId,
-                SiteId = site.Id,
-                UserId = user.Id
-            };
+        await _dispatcher.Send(command);
 
-            await _dispatcher.Send(command);
+        return Ok();
+    }
 
-            var identityUser = await _userManager.FindByIdAsync(identityUserId);
-
-            if (identityUser != null)
-            {
-                await _userManager.DeleteAsync(identityUser);
-            }
-
-            return Ok();
-        }
-
-        [HttpGet("is-display-name-unique/{name}")]
-        public async Task<IActionResult> IsDisplayNameUnique(string name)
+    [HttpDelete("delete/{id}/{identityUserId}")]
+    public async Task<ActionResult> Delete(Guid id, string identityUserId)
+    {
+        var command = new DeleteUser
         {
-            var isNameUnique = await _dispatcher.Get(new IsUserDisplayNameUnique { DisplayName = name });
-            return Ok(isNameUnique);
+            DeleteUserId = id,
+            IdentityUserId = identityUserId,
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id
+        };
+
+        await _dispatcher.Send(command);
+
+        var identityUser = await _userManager.FindByIdAsync(identityUserId);
+
+        if (identityUser != null)
+        {
+            await _userManager.DeleteAsync(identityUser);
         }
 
-        [HttpGet("is-display-name-unique/{name}/{id}")]
-        public async Task<IActionResult> IsNameUnique(string name, Guid id)
+        return Ok();
+    }
+
+    [HttpGet("is-display-name-unique/{name}")]
+    public async Task<IActionResult> IsDisplayNameUnique(string name)
+    {
+        return await ProcessGet(new IsUserDisplayNameUnique
         {
-            var isNameUnique = await _dispatcher.Get(new IsUserDisplayNameUnique { DisplayName = name, Id = id });
-            return Ok(isNameUnique);
-        }
+            DisplayName = name
+        });
+    }
+
+    [HttpGet("is-display-name-unique/{name}/{id}")]
+    public async Task<IActionResult> IsNameUnique(string name, Guid id)
+    {
+        return await ProcessGet(new IsUserDisplayNameUnique
+        {
+            DisplayName = name, Id = id
+        });
     }
 }

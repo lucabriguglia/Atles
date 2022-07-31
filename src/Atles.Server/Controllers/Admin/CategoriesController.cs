@@ -21,10 +21,22 @@ public class CategoriesController : AdminControllerBase
     }
 
     [HttpGet("list")]
-    public async Task<ActionResult> List() => await ProcessGet(new GetCategoriesIndex { SiteId = CurrentSite.Id });
+    public async Task<ActionResult> List()
+    {
+        return await ProcessGet(new GetCategoriesIndex
+        {
+            SiteId = CurrentSite.Id
+        });
+    }
 
     [HttpGet("create")]
-    public async Task<ActionResult> Create() => await ProcessGet(new GetCategoryForm { SiteId = CurrentSite.Id });
+    public async Task<ActionResult> Create()
+    {
+        return await ProcessGet(new GetCategoryForm
+        {
+            SiteId = CurrentSite.Id
+        });
+    }
 
     [HttpPost("save")]
     public async Task<ActionResult> Save(FormComponentModel.CategoryModel model)
@@ -43,7 +55,14 @@ public class CategoriesController : AdminControllerBase
     }
 
     [HttpGet("edit/{id}")]
-    public async Task<ActionResult> Edit(Guid id) => await ProcessGet(new GetCategoryForm { SiteId = CurrentSite.Id, Id = id });
+    public async Task<ActionResult> Edit(Guid id)
+    {
+        return await ProcessGet(new GetCategoryForm
+        {
+            SiteId = CurrentSite.Id, 
+            Id = id
+        });
+    }
 
     [HttpPost("update")]
     public async Task<ActionResult> Update(FormComponentModel.CategoryModel model)
@@ -110,19 +129,23 @@ public class CategoriesController : AdminControllerBase
     }
 
     [HttpGet("is-name-unique/{name}")]
-    public async Task<ActionResult> IsNameUnique(string name) =>
-        await ProcessGet(new IsCategoryNameUnique
+    public async Task<ActionResult> IsNameUnique(string name)
+    {
+        return await ProcessGet(new IsCategoryNameUnique
         {
             SiteId = CurrentSite.Id,
             Name = name
         });
+    }
 
     [HttpGet("is-name-unique/{name}/{id}")]
-    public async Task<ActionResult> IsNameUnique(string name, Guid id) =>
-        await ProcessGet(new IsCategoryNameUnique
+    public async Task<ActionResult> IsNameUnique(string name, Guid id)
+    {
+        return await ProcessGet(new IsCategoryNameUnique
         {
             SiteId = CurrentSite.Id,
             Name = name,
             Id = id
         });
+    }
 }

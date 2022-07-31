@@ -7,122 +7,112 @@ using Atles.Models.Admin.PermissionSets;
 using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Mvc;
 
-namespace Atles.Server.Controllers.Admin
+namespace Atles.Server.Controllers.Admin;
+
+[Route("api/admin/permission-sets")]
+public class PermissionSetsController : AdminControllerBase
 {
-    [Route("api/admin/permission-sets")]
-    public class PermissionSetsController : AdminControllerBase
+    private readonly IDispatcher _dispatcher;
+
+    public PermissionSetsController(IDispatcher dispatcher) : base(dispatcher)
     {
-        private readonly IDispatcher _dispatcher;
+        _dispatcher = dispatcher;
+    }
 
-        public PermissionSetsController(IDispatcher dispatcher) : base(dispatcher)
+    [HttpGet("list")]
+    public async Task<ActionResult> List()
+    {
+        return await ProcessGet(new GetPermissionSetsIndex
         {
-            _dispatcher = dispatcher;
-        }
+            SiteId = CurrentSite.Id
+        });
+    }
 
-        [HttpGet("list")]
-        public async Task<IndexPageModel> List()
+    [HttpGet("create")]
+    public async Task<ActionResult> Create()
+    {
+        return await ProcessGet(new GetPermissionSetCreateForm
         {
-            var site = await CurrentSite();
+            SiteId = CurrentSite.Id
+        });
+    }
 
-            return await _dispatcher.Get(new GetPermissionSetsIndex { SiteId = site.Id });
-        }
-
-        [HttpGet("create")]
-        public async Task<FormComponentModel> Create()
+    [HttpPost("save")]
+    public async Task<ActionResult> Save(FormComponentModel.PermissionSetModel model)
+    {
+        var command = new CreatePermissionSet
         {
-            var site = await CurrentSite();
+            Name = model.Name,
+            Permissions = model.Permissions.ToPermissionCommands(),
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id
+        };
 
-            return await _dispatcher.Get(new GetPermissionSetCreateForm { SiteId = site.Id });
-        }
+        await _dispatcher.Send(command);
 
-        [HttpPost("save")]
-        public async Task<ActionResult> Save(FormComponentModel.PermissionSetModel model)
+        return Ok();
+    }
+
+    [HttpGet("edit/{id}")]
+    public async Task<ActionResult<FormComponentModel>> Edit(Guid id)
+    {
+        return await ProcessGet(new GetPermissionSetEditForm
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            SiteId = CurrentSite.Id, 
+            Id = id
+        });
+    }
 
-            var command = new CreatePermissionSet
-            {
-                Name = model.Name,
-                Permissions = model.Permissions.ToPermissionCommands(),
-                SiteId = site.Id,
-                UserId = user.Id
-            };
-
-            await _dispatcher.Send(command);
-
-            return Ok();
-        }
-
-        [HttpGet("edit/{id}")]
-        public async Task<ActionResult<FormComponentModel>> Edit(Guid id)
+    [HttpPost("update")]
+    public async Task<ActionResult> Update(FormComponentModel.PermissionSetModel model)
+    {
+        var command = new UpdatePermissionSet
         {
-            var site = await CurrentSite();
+            PermissionSetId = model.Id,
+            Name = model.Name,
+            Permissions = model.Permissions.ToPermissionCommands(),
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id
+        };
 
-            var result = await _dispatcher.Get(new GetPermissionSetEditForm { SiteId = site.Id, Id = id });
+        await _dispatcher.Send(command);
 
-            if (result == null)
-            {
-                return NotFound();
-            }
+        return Ok();
+    }
 
-            return result;
-        }
-
-        [HttpPost("update")]
-        public async Task<ActionResult> Update(FormComponentModel.PermissionSetModel model)
+    [HttpDelete("delete/{id}")]
+    public async Task<ActionResult> Delete(Guid id)
+    {
+        var command = new DeletePermissionSet
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
+            PermissionSetId = id,
+            SiteId = CurrentSite.Id,
+            UserId = CurrentUser.Id
+        };
 
-            var command = new UpdatePermissionSet
-            {
-                PermissionSetId = model.Id,
-                Name = model.Name,
-                Permissions = model.Permissions.ToPermissionCommands(),
-                SiteId = site.Id,
-                UserId = user.Id
-            };
+        await _dispatcher.Send(command);
 
-            await _dispatcher.Send(command);
+        return Ok();
+    }
 
-            return Ok();
-        }
+    [HttpGet("is-name-unique/{name}")]
+    public async Task<ActionResult> IsNameUnique(string name)
+    {
+        return await ProcessGet(new IsPermissionSetNameUnique 
+        { 
+            SiteId = CurrentSite.Id, 
+            Name = name
+        });
+    }
 
-        [HttpDelete("delete/{id}")]
-        public async Task<ActionResult> Delete(Guid id)
+    [HttpGet("is-name-unique/{name}/{id}")]
+    public async Task<ActionResult> IsNameUnique(string name, Guid id)
+    {
+        return await ProcessGet(new IsPermissionSetNameUnique
         {
-            var site = await CurrentSite();
-            var user = await CurrentUser();
-
-            var command = new DeletePermissionSet
-            {
-                PermissionSetId = id,
-                SiteId = site.Id,
-                UserId = user.Id
-            };
-
-            await _dispatcher.Send(command);
-
-            return Ok();
-        }
-
-        [HttpGet("is-name-unique/{name}")]
-        public async Task<IActionResult> IsNameUnique(string name)
-        {
-            var site = await CurrentSite();
-            var query = new IsPermissionSetNameUnique { SiteId = site.Id, Name = name };
-            var isNameUnique = await _dispatcher.Get(query);
-            return Ok(isNameUnique);
-        }
-
-        [HttpGet("is-name-unique/{name}/{id}")]
-        public async Task<IActionResult> IsNameUnique(string name, Guid id)
-        {
-            var site = await CurrentSite();
-            var query = new IsPermissionSetNameUnique { SiteId = site.Id, Name = name, Id = id };
-            var isNameUnique = await _dispatcher.Get(query);
-            return Ok(isNameUnique);
-        }
+            SiteId = CurrentSite.Id,
+            Name = name, 
+            Id = id 
+        });
     }
 }
