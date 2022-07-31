@@ -59,8 +59,6 @@ public class Dispatcher : IDispatcher
 
         async Task<CommandResult> HandleFailure(Failure failure)
         {
-            // TODO: Log failure
-
             return await Task.FromResult(failure);
         }
     }
