@@ -57,7 +57,7 @@ namespace Atles.Tests.Unit.Core
             var actual = await sut.Get(query);
 
             queryProcessor.Verify(x => x.Process(query), Times.Once);
-            Assert.AreEqual(result, actual);
+            Assert.AreEqual(result, actual.AsT0);
         }
 
         [Test]
