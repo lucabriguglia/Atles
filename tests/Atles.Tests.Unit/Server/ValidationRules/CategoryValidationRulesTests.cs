@@ -1,6 +1,7 @@
 ﻿using Atles.Data;
 using Atles.Domain;
 using Atles.Server.ValidationRules;
+using AutoFixture;
 using NUnit.Framework;
 
 namespace Atles.Tests.Unit.Server.ValidationRules;
@@ -73,6 +74,39 @@ public class CategoryValidationRulesTests : TestFixtureBase
             var actual = await sut.IsCategoryNameUnique(siteId, "Category 1", categoryId);
 
             Assert.IsFalse(actual);
+        }
+    }
+
+    [Test]
+    public async Task Should_return_false_when_category_is_not_valid()
+    {
+        await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
+        var sut = new CategoryValidationRules(dbContext);
+        var actual = await sut.IsCategoryValid(Guid.NewGuid(), Guid.NewGuid());
+
+        Assert.IsFalse(actual);
+    }
+
+    [Test]
+    public async Task Should_return_true_when_category_is_valid()
+    {
+        var options = Shared.CreateContextOptions();
+
+        var siteId = Guid.NewGuid();
+        var category = new Category(siteId, "Category Name", 1, Guid.NewGuid());
+
+        await using (var dbContext = new AtlesDbContext(options))
+        {
+            dbContext.Categories.Add(category);
+            await dbContext.SaveChangesAsync();
+        }
+
+        await using (var dbContext = new AtlesDbContext(options))
+        {
+            var sut = new CategoryValidationRules(dbContext);
+            var actual = await sut.IsCategoryValid(siteId, category.Id);
+
+            Assert.IsTrue(actual);
         }
     }
 }

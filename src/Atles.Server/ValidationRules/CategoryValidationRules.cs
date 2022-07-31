@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
+using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Validators.Categories;
@@ -37,5 +38,14 @@ public class CategoryValidationRules : ICategoryValidationRules
         }
 
         return !any;
+    }
+
+    public async Task<bool> IsCategoryValid(Guid siteId, Guid id)
+    {
+        return await _dbContext.Categories
+            .AnyAsync(x =>
+                x.SiteId == siteId &&
+                x.Id == id &&
+                x.Status != CategoryStatusType.Deleted);
     }
 }

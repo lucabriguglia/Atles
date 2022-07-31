@@ -7,7 +7,6 @@ using Atles.Core.Results;
 using Atles.Core.Settings;
 using Atles.Data;
 using Atles.Domain;
-using Atles.Domain.Rules.Handlers.Categories;
 using Atles.Domain.Rules.Handlers.Users;
 using Atles.Events.Handlers.ReplyCreatedHandlers;
 using Atles.Models.Admin.Categories;
