@@ -17,7 +17,7 @@ public class CreateForumValidator : AbstractValidator<CreateForum>
         RuleFor(c => c.Slug)
             .NotEmpty().WithMessage("Forum slug is required.")
             .Length(1, 50).WithMessage("Forum slug must be at least 1 and at max 50 characters long.")
-            .MustAsync(async (model, slug, cancellation) => await forumValidationRules.IsForumSlugUnique(model.SiteId, model.CategoryId, slug))
+            .MustAsync(async (model, slug, cancellation) => await forumValidationRules.IsForumSlugUnique(model.SiteId, slug))
             .WithMessage(c => $"A forum with slug {c.Slug} already exists.");
 
         RuleFor(c => c.Description)

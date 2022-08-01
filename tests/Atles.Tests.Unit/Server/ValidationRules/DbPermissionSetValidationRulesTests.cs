@@ -6,7 +6,7 @@ using NUnit.Framework;
 namespace Atles.Tests.Unit.Server.ValidationRules;
 
 [TestFixture]
-public class PermissionSetValidationRulesTests : TestFixtureBase
+public class DbPermissionSetValidationRulesTests : TestFixtureBase
 {
     [Test]
     public async Task Should_return_true_when_permission_set_is_valid()

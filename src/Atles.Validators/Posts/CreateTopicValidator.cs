@@ -1,13 +1,13 @@
 ﻿using Atles.Commands.Posts;
 using Atles.Core;
-using Atles.Domain.Rules.Forums;
+using Atles.Validators.Forums;
 using FluentValidation;
 
 namespace Atles.Validators.Posts
 {
     public class CreateTopicValidator : AbstractValidator<CreateTopic>
     {
-        public CreateTopicValidator(IDispatcher dispatcher)
+        public CreateTopicValidator(IDispatcher dispatcher, IForumValidationRules forumValidationRules)
         {
             RuleFor(c => c.Title)
                 .NotEmpty().WithMessage("Topic title is required.")
@@ -17,12 +17,7 @@ namespace Atles.Validators.Posts
                 .NotEmpty().WithMessage("Topic content is required.");
 
             RuleFor(c => c.ForumId)
-                .MustAsync(async (c, p, cancellation) =>
-                {
-                    // TODO: To be moved to a service
-                    var result = await dispatcher.Get(new IsForumValid {SiteId = c.SiteId, Id = p});
-                    return result.AsT0;
-                })
+                .MustAsync(async (model, forumId, cancellation) => await forumValidationRules.IsForumValid(model.SiteId, forumId))
                     .WithMessage(c => $"Forum with id {c.ForumId} does not exist.");
         }
     }

@@ -3,9 +3,9 @@ using System.Threading.Tasks;
 using Atles.Commands.Forums;
 using Atles.Core;
 using Atles.Domain;
-using Atles.Domain.Rules.Forums;
 using Atles.Models.Admin.Forums;
 using Atles.Queries.Admin;
+using Atles.Validators.Forums;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin
@@ -14,10 +14,12 @@ namespace Atles.Server.Controllers.Admin
     public class ForumsController : AdminControllerBase
     {
         private readonly IDispatcher _dispatcher;
+        private readonly IForumValidationRules _forumValidationRules;
 
-        public ForumsController(IDispatcher dispatcher) : base(dispatcher)
+        public ForumsController(IDispatcher dispatcher, IForumValidationRules forumValidationRules) : base(dispatcher)
         {
             _dispatcher = dispatcher;
+            _forumValidationRules = forumValidationRules;
         }
 
         [HttpGet("index-model")]
@@ -156,45 +158,29 @@ namespace Atles.Server.Controllers.Admin
         [HttpGet("is-name-unique/{categoryId}/{name}")]
         public async Task<IActionResult> IsNameUnique(Guid categoryId, string name)
         {
-            return await ProcessGet(new IsForumNameUnique
-            {
-                SiteId = CurrentSite.Id, 
-                CategoryId = categoryId, 
-                Name = name
-            });
+            var isNameUnique = await _forumValidationRules.IsForumNameUnique(CurrentSite.Id, categoryId, name);
+            return Ok(isNameUnique);
         }
 
         [HttpGet("is-name-unique/{categoryId}/{name}/{id}")]
         public async Task<IActionResult> IsNameUnique(Guid categoryId, string name, Guid id)
         {
-            return await ProcessGet(new IsForumNameUnique
-            {
-                SiteId = CurrentSite.Id, 
-                CategoryId = categoryId, 
-                Name = name, 
-                Id = id
-            });
+            var isNameUnique = await _forumValidationRules.IsForumNameUnique(CurrentSite.Id, categoryId, name, id);
+            return Ok(isNameUnique);
         }
 
         [HttpGet("is-slug-unique/{slug}")]
-        public async Task<IActionResult> IsNameUnique(string slug)
+        public async Task<IActionResult> IsSlugUnique(string slug)
         {
-            return await ProcessGet(new IsForumSlugUnique 
-            { 
-                SiteId = CurrentSite.Id, 
-                Slug = slug
-            });
+            var isSlugUnique = await _forumValidationRules.IsForumSlugUnique(CurrentSite.Id, slug);
+            return Ok(isSlugUnique);
         }
 
         [HttpGet("is-slug-unique/{slug}/{id}")]
-        public async Task<IActionResult> IsNameUnique(string slug, Guid id)
+        public async Task<IActionResult> IsSlugUnique(string slug, Guid id)
         {
-            return await ProcessGet(new IsForumSlugUnique
-            {
-                SiteId = CurrentSite.Id, 
-                Slug = slug, 
-                Id = id
-            });
+            var isSlugUnique = await _forumValidationRules.IsForumSlugUnique(CurrentSite.Id, slug, id);
+            return Ok(isSlugUnique);
         }
     }
 }

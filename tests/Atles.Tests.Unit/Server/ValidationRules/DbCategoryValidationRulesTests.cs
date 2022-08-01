@@ -7,7 +7,7 @@ using NUnit.Framework;
 namespace Atles.Tests.Unit.Server.ValidationRules;
 
 [TestFixture]
-public class CategoryValidationRulesTests : TestFixtureBase
+public class DbCategoryValidationRulesTests : TestFixtureBase
 {
     [Test]
     public async Task Should_return_true_when_name_is_unique()

@@ -1,9 +1,9 @@
 ﻿using Atles.Commands.Subscriptions;
 using Atles.Core;
 using Atles.Domain;
-using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.Posts;
 using Atles.Validators.Categories;
+using Atles.Validators.Forums;
 using Atles.Validators.Subscriptions;
 using AutoFixture;
 using FluentValidation.TestHelper;
@@ -22,8 +22,9 @@ namespace Atles.Tests.Unit.Validators
 
             var dispatcher = new Mock<IDispatcher>();
             var categoryValidationRules = new Mock<ICategoryValidationRules>();
+            var forumValidationRules = new Mock<IForumValidationRules>();
 
-            var sut = new AddSubscriptionValidator(dispatcher.Object, categoryValidationRules.Object);
+            var sut = new AddSubscriptionValidator(dispatcher.Object, categoryValidationRules.Object, forumValidationRules.Object);
 
             var result = await sut.TestValidateAsync(command);
             result.ShouldHaveValidationErrorFor(x => x.ItemId);
@@ -39,8 +40,9 @@ namespace Atles.Tests.Unit.Validators
             categoryValidationRules
                 .Setup(x => x.IsCategoryValid(command.SiteId, command.ItemId))
                 .ReturnsAsync(false);
+            var forumValidationRules = new Mock<IForumValidationRules>();
 
-            var sut = new AddSubscriptionValidator(dispatcher.Object, categoryValidationRules.Object);
+            var sut = new AddSubscriptionValidator(dispatcher.Object, categoryValidationRules.Object, forumValidationRules.Object);
 
             var result = await sut.TestValidateAsync(command);
             result.ShouldHaveValidationErrorFor(x => x.ItemId);
@@ -53,13 +55,14 @@ namespace Atles.Tests.Unit.Validators
             var command = Fixture.Build<AddSubscription>().With(x => x.Type, SubscriptionType.Forum).Create();
 
             var dispatcher = new Mock<IDispatcher>();
-            dispatcher
-                .Setup(x => x.Get(new IsForumValid { SiteId = command.SiteId, Id = command.ItemId }))
-                .ReturnsAsync(false);
             var categoryValidationRules = new Mock<ICategoryValidationRules>();
+            var forumValidationRules = new Mock<IForumValidationRules>();
+            forumValidationRules
+                .Setup(x => x.IsForumValid(command.SiteId, command.ItemId))
+                .ReturnsAsync(false);
 
-            var sut = new AddSubscriptionValidator(dispatcher.Object, categoryValidationRules.Object);
-            
+            var sut = new AddSubscriptionValidator(dispatcher.Object, categoryValidationRules.Object, forumValidationRules.Object);
+
             var result = await sut.TestValidateAsync(command);
             result.ShouldHaveValidationErrorFor(x => x.ItemId);
         }
@@ -73,8 +76,9 @@ namespace Atles.Tests.Unit.Validators
             var dispatcher = new Mock<IDispatcher>();
             dispatcher.Setup(x => x.Get(new IsTopicValid { SiteId = command.SiteId, ForumId = command.ForumId, Id = command.ItemId })).ReturnsAsync(false);
             var categoryValidationRules = new Mock<ICategoryValidationRules>();
+            var forumValidationRules = new Mock<IForumValidationRules>();
 
-            var sut = new AddSubscriptionValidator(dispatcher.Object, categoryValidationRules.Object);
+            var sut = new AddSubscriptionValidator(dispatcher.Object, categoryValidationRules.Object, forumValidationRules.Object);
 
             var result = await sut.TestValidateAsync(command);
             result.ShouldHaveValidationErrorFor(x => x.ItemId);

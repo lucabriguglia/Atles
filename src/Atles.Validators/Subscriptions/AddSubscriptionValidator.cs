@@ -1,16 +1,16 @@
 ﻿using Atles.Commands.Subscriptions;
 using Atles.Core;
 using Atles.Domain;
-using Atles.Domain.Rules.Forums;
 using Atles.Domain.Rules.Posts;
 using Atles.Validators.Categories;
+using Atles.Validators.Forums;
 using FluentValidation;
 
 namespace Atles.Validators.Subscriptions
 {
     public class AddSubscriptionValidator : AbstractValidator<AddSubscription>
     {
-        public AddSubscriptionValidator(IDispatcher dispatcher, ICategoryValidationRules categoryValidationRules)
+        public AddSubscriptionValidator(IDispatcher dispatcher, ICategoryValidationRules categoryValidationRules, IForumValidationRules forumValidationRules)
         {
             RuleFor(c => c.ItemId)
                 .NotEmpty()
@@ -22,12 +22,7 @@ namespace Atles.Validators.Subscriptions
                 .WithMessage(c => $"Category with id {c.ItemId} does not exist.");
 
             RuleFor(c => c.ItemId)
-                .MustAsync(async (c, p, cancellation) =>
-                {
-                    // TODO: To be moved to a service
-                    var result = await dispatcher.Get(new IsForumValid {SiteId = c.SiteId, Id = p});
-                    return result.AsT0;
-                })
+                .MustAsync(async (model, itemId, cancellation) => await forumValidationRules.IsForumValid(model.SiteId, itemId))
                 .When(c => c.Type == SubscriptionType.Forum)
                 .WithMessage(c => $"Forum with id {c.ItemId} does not exist.");
 

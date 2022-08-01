@@ -1,65 +1,73 @@
 ﻿using Atles.Commands.Posts;
 using Atles.Core;
-using Atles.Domain.Rules.Forums;
+using Atles.Validators.Forums;
 using Atles.Validators.Posts;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Validators
+namespace Atles.Tests.Unit.Validators;
+
+[TestFixture]
+public class CreateTopicValidatorTests : TestFixtureBase
 {
-    [Ignore("Refactoring needed")]
-    [TestFixture]
-    public class CreateTopicValidatorTests : TestFixtureBase
+    [Test]
+    public async Task Should_have_validation_error_when_title_is_empty()
     {
-        [Test]
-        public void Should_have_validation_error_when_title_is_empty()
-        {
-            var command = Fixture.Build<CreateTopic>().With(x => x.Title, string.Empty).Create();
+        var model = Fixture.Build<CreateTopic>().With(x => x.Title, string.Empty).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var dispatcher = new Mock<IDispatcher>();
+        var forumValidationRules = new Mock<IForumValidationRules>();
 
-            var sut = new CreateTopicValidator(dispatcher.Object);
+        var sut = new CreateTopicValidator(dispatcher.Object, forumValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Title, command);
-        }
+        var result = await sut.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Title);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_title_is_too_long()
-        {
-            var command = Fixture.Build<CreateTopic>().With(x => x.Title, new string('*', 101)).Create();
+    [Test]
+    public async Task Should_have_validation_error_when_title_is_too_long()
+    {
+        var model = Fixture.Build<CreateTopic>().With(x => x.Title, new string('*', 101)).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var dispatcher = new Mock<IDispatcher>();
+        var forumValidationRules = new Mock<IForumValidationRules>();
 
-            var sut = new CreateTopicValidator(dispatcher.Object);
+        var sut = new CreateTopicValidator(dispatcher.Object, forumValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Title, command);
-        }
+        var result = await sut.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Title);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_content_is_empty()
-        {
-            var command = Fixture.Build<CreateTopic>().With(x => x.Content, string.Empty).Create();
+    [Test]
+    public async Task Should_have_validation_error_when_content_is_empty()
+    {
+        var model = Fixture.Build<CreateTopic>().With(x => x.Content, string.Empty).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var dispatcher = new Mock<IDispatcher>();
+        var forumValidationRules = new Mock<IForumValidationRules>();
 
-            var sut = new CreateTopicValidator(dispatcher.Object);
+        var sut = new CreateTopicValidator(dispatcher.Object, forumValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Content, command);
-        }
+        var result = await sut.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Content);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_forum_is_not_valid()
-        {
-            var command = Fixture.Create<CreateTopic>();
+    [Test]
+    public async Task Should_have_validation_error_when_forum_is_not_valid()
+    {
+        var model = Fixture.Create<CreateTopic>();
 
-            var dispatcher = new Mock<IDispatcher>();
-            dispatcher.Setup(x => x.Get(new IsForumValid { SiteId = command.SiteId, Id = command.ForumId })).ReturnsAsync(false);
+        var dispatcher = new Mock<IDispatcher>();
+        var forumValidationRules = new Mock<IForumValidationRules>();
+        forumValidationRules
+            .Setup(rules => rules.IsForumValid(model.SiteId, model.ForumId))
+            .ReturnsAsync(false);
 
-            var sut = new CreateTopicValidator(dispatcher.Object);
+        var sut = new CreateTopicValidator(dispatcher.Object, forumValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.ForumId, command);
-        }
+        var result = await sut.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.ForumId);
     }
 }

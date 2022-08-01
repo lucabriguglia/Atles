@@ -91,7 +91,7 @@ public class UpdateForumValidatorTests : TestFixtureBase
 
         var forumValidationRules = new Mock<IForumValidationRules>();
         forumValidationRules
-            .Setup(rules => rules.IsForumSlugUnique(model.SiteId, model.CategoryId, model.Slug, model.ForumId))
+            .Setup(rules => rules.IsForumSlugUnique(model.SiteId, model.Slug, model.ForumId))
             .ReturnsAsync(false);
         var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
