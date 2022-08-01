@@ -133,17 +133,25 @@ public class CategoriesController : AdminControllerBase
         return Ok();
     }
 
-    [HttpGet("is-name-unique/{name}")]
-    public async Task<ActionResult> IsNameUnique(string name)
+    [HttpGet("is-name-unique/{siteId}/{name}")]
+    public async Task<ActionResult> IsNameUnique(Guid siteId, string name)
     {
-        var isNameUnique = await _categoryValidationRules.IsCategoryNameUnique(CurrentSite.Id, name);
+        if (siteId != CurrentSite.Id)
+        {
+            return BadRequest();
+        }
+        var isNameUnique = await _categoryValidationRules.IsCategoryNameUnique(siteId, name);
         return Ok(isNameUnique);
     }
 
-    [HttpGet("is-name-unique/{name}/{id}")]
-    public async Task<ActionResult> IsNameUnique(string name, Guid id)
+    [HttpGet("is-name-unique/{siteId}/{name}/{id}")]
+    public async Task<ActionResult> IsNameUnique(Guid siteId, string name, Guid id)
     {
-        var isNameUnique = await _categoryValidationRules.IsCategoryNameUnique(CurrentSite.Id, name, id);
+        if (siteId != CurrentSite.Id)
+        {
+            return BadRequest();
+        }
+        var isNameUnique = await _categoryValidationRules.IsCategoryNameUnique(siteId, name, id);
         return Ok(isNameUnique);
     }
 }

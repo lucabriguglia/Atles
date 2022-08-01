@@ -1,130 +1,134 @@
 ﻿using Atles.Commands.Forums;
-using Atles.Core;
-using Atles.Core.Queries;
-using Atles.Domain.Rules.Forums;
-using Atles.Domain.Rules.PermissionSets;
 using Atles.Validators.Forums;
+using Atles.Validators.PermissionSets;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Validators
+namespace Atles.Tests.Unit.Validators;
+
+[TestFixture]
+public class UpdateForumValidatorTests : TestFixtureBase
 {
-    [Ignore("Refactoring needed")]
-    [TestFixture]
-    public class UpdateForumValidatorTests : TestFixtureBase
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_empty()
     {
-        [Test]
-        public void Should_have_validation_error_when_name_is_empty()
-        {
-            var command = Fixture.Build<UpdateForum>().With(x => x.Name, string.Empty).Create();
+        var model = Fixture.Build<UpdateForum>().With(x => x.Name, string.Empty).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var forumValidationRules = new Mock<IForumValidationRules>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new UpdateForumValidator(dispatcher.Object);
+        var validator = new UpdateForumValidator(forumValidationRules.Object, permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_name_is_too_long()
-        {
-            var command = Fixture.Build<UpdateForum>().With(x => x.Name, new string('*', 51)).Create();
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_too_long()
+    {
+        var model = Fixture.Build<UpdateForum>().With(x => x.Name, new string('*', 51)).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var forumValidationRules = new Mock<IForumValidationRules>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new UpdateForumValidator(dispatcher.Object);
+        var validator = new UpdateForumValidator(forumValidationRules.Object, permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_name_is_not_unique()
-        {
-            var command = Fixture.Create<UpdateForum>();
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_not_unique()
+    {
+        var model = Fixture.Create<UpdateForum>();
 
-            var dispatcher = new Mock<IDispatcher>();
-            dispatcher.Setup(x => x.Get(new IsForumNameUnique { SiteId = command.SiteId, CategoryId = command.CategoryId, Name = command.Name, Id = command.ForumId })).ReturnsAsync(false);
+        var forumValidationRules = new Mock<IForumValidationRules>();
+        forumValidationRules
+            .Setup(rules => rules.IsForumNameUnique(model.SiteId, model.CategoryId, model.Name, model.ForumId))
+            .ReturnsAsync(false);
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new UpdateForumValidator(dispatcher.Object);
+        var validator = new UpdateForumValidator(forumValidationRules.Object, permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_slug_is_empty()
-        {
-            var command = Fixture.Build<UpdateForum>().With(x => x.Slug, string.Empty).Create();
+    [Test]
+    public async Task Should_have_validation_error_when_slug_is_empty()
+    {
+        var model = Fixture.Build<UpdateForum>().With(x => x.Slug, string.Empty).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var forumValidationRules = new Mock<IForumValidationRules>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new UpdateForumValidator(dispatcher.Object);
+        var validator = new UpdateForumValidator(forumValidationRules.Object, permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Slug);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_slug_is_too_long()
-        {
-            var command = Fixture.Build<UpdateForum>().With(x => x.Slug, new string('*', 51)).Create();
+    [Test]
+    public async Task Should_have_validation_error_when_slug_is_too_long()
+    {
+        var model = Fixture.Build<UpdateForum>().With(x => x.Slug, new string('*', 51)).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var forumValidationRules = new Mock<IForumValidationRules>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new UpdateForumValidator(dispatcher.Object);
+        var validator = new UpdateForumValidator(forumValidationRules.Object, permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Slug);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_slug_is_not_unique()
-        {
-            var command = Fixture.Create<UpdateForum>();
+    [Test]
+    public async Task Should_have_validation_error_when_slug_is_not_unique()
+    {
+        var model = Fixture.Create<UpdateForum>();
 
-            var dispatcher = new Mock<IDispatcher>();
-            dispatcher.Setup(x => x.Get(new IsForumSlugUnique { SiteId = command.SiteId, Slug = command.Slug, Id = command.ForumId })).ReturnsAsync(false);
+        var forumValidationRules = new Mock<IForumValidationRules>();
+        forumValidationRules
+            .Setup(rules => rules.IsForumSlugUnique(model.SiteId, model.CategoryId, model.Slug, model.ForumId))
+            .ReturnsAsync(false);
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new UpdateForumValidator(dispatcher.Object);
+        var validator = new UpdateForumValidator(forumValidationRules.Object, permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Slug, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Slug);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_description_is_too_long()
-        {
-            var command = Fixture.Build<UpdateForum>().With(x => x.Description, new string('*', 201)).Create();
+    [Test]
+    public async Task Should_have_validation_error_when_description_is_too_long()
+    {
+        var model = Fixture.Build<UpdateForum>().With(x => x.Description, new string('*', 201)).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var forumValidationRules = new Mock<IForumValidationRules>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new UpdateForumValidator(dispatcher.Object);
+        var validator = new UpdateForumValidator(forumValidationRules.Object, permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Description, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Description);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_permission_set_is_not_valid()
-        {
-            var command = Fixture.Create<UpdateForum>();
+    [Test]
+    public async Task Should_have_validation_error_when_permission_set_is_not_valid()
+    {
+        var model = Fixture.Create<UpdateForum>();
 
-            var querySiteId = Guid.NewGuid();
-            var queryPermissionSetId = Guid.NewGuid();
+        var forumValidationRules = new Mock<IForumValidationRules>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
+        permissionSetValidationRules
+            .Setup(rules => rules.IsPermissionSetValid(model.SiteId, model.PermissionSetId.Value))
+            .ReturnsAsync(false);
 
-            var dispatcher = new Mock<IDispatcher>();
-            dispatcher
-                .Setup(x => x.Get(It.IsAny<IsPermissionSetValid>()))
-                .Callback<IQuery<bool>>(q =>
-                {
-                    var query = q as IsPermissionSetValid;
-                    querySiteId = query.SiteId;
-                    queryPermissionSetId = query.Id;
-                })
-                .ReturnsAsync(false);
+        var validator = new UpdateForumValidator(forumValidationRules.Object, permissionSetValidationRules.Object);
 
-            var sut = new UpdateForumValidator(dispatcher.Object);
-
-            sut.ShouldHaveValidationErrorFor(x => x.PermissionSetId, command);
-            Assert.AreEqual(command.SiteId, querySiteId);
-            Assert.AreEqual(command.PermissionSetId.Value, queryPermissionSetId);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.PermissionSetId);
     }
 }

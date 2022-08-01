@@ -1,36 +1,23 @@
 ﻿using Atles.Commands.Forums;
-using Atles.Core;
-using Atles.Domain.Rules.Forums;
-using Atles.Domain.Rules.PermissionSets;
+using Atles.Validators.PermissionSets;
 using FluentValidation;
 
 namespace Atles.Validators.Forums
 {
     public class UpdateForumValidator : AbstractValidator<UpdateForum>
     {
-        public UpdateForumValidator(IDispatcher dispatcher)
+        public UpdateForumValidator(IForumValidationRules forumValidationRules, IPermissionSetValidationRules permissionSetValidationRules)
         {
             RuleFor(c => c.Name)
                 .NotEmpty().WithMessage("Forum name is required.")
                 .Length(1, 50).WithMessage("Forum name must be at least 1 and at max 50 characters long.")
-                .MustAsync(async (c, p, cancellation) =>
-                {
-                    // TODO: To be moved to a service
-                    var result = await dispatcher.Get(new IsForumNameUnique
-                    { SiteId = c.SiteId, CategoryId = c.CategoryId, Name = p, Id = c.ForumId });
-                    return result.AsT0;
-                })
+                .MustAsync(async (model, name, cancellation) => await forumValidationRules.IsForumNameUnique(model.SiteId, model.CategoryId, name, model.ForumId))
                 .WithMessage(c => $"A forum with name {c.Name} already exists.");
 
             RuleFor(c => c.Slug)
                 .NotEmpty().WithMessage("Forum slug is required.")
                 .Length(1, 50).WithMessage("Forum slug must be at least 1 and at max 50 characters long.")
-                .MustAsync(async (c, p, cancellation) =>
-                {
-                    // TODO: To be moved to a service
-                    var result = await dispatcher.Get(new IsForumSlugUnique { SiteId = c.SiteId, Slug = p, Id = c.ForumId });
-                    return result.AsT0;
-                })
+                .MustAsync(async (model, slug, cancellation) => await forumValidationRules.IsForumSlugUnique(model.SiteId, model.CategoryId, slug, model.ForumId))
                 .WithMessage(c => $"A forum with slug {c.Slug} already exists.");
 
             RuleFor(c => c.Description)
@@ -38,14 +25,9 @@ namespace Atles.Validators.Forums
                 .When(c => !string.IsNullOrWhiteSpace(c.Description));
 
             RuleFor(c => c.PermissionSetId)
-                .MustAsync(async (c, p, cancellation) =>
-                {
-                    // TODO: To be moved to a service
-                    var result = await dispatcher.Get(new IsPermissionSetValid { SiteId = c.SiteId, Id = p.Value });
-                    return result.AsT0;
-                })
-                .WithMessage(c => $"Permission set with id {c.PermissionSetId} does not exist.")
-                .When(c => c.PermissionSetId != null);
+                .MustAsync(async (model, permissionSetId, cancellation) => await permissionSetValidationRules.IsPermissionSetValid(model.SiteId, permissionSetId.Value))
+                .WithMessage(model => $"Permission set with id {model.PermissionSetId} does not exist.")
+                .When(model => model.PermissionSetId != null);
         }
     }
 }

@@ -16,6 +16,6 @@
 
 //    public async Task<bool> IsPermissionSetValid(Guid siteId, Guid id)
 //    {
-//        return await _apiService.GetFromJsonAsync<bool>($"api/admin/permission-sets/is-valid/{id}");
+//        return await _apiService.GetFromJsonAsync<bool>($"api/admin/permission-sets/is-valid//{siteId}{id}");
 //    }
 //}

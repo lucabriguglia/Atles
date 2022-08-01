@@ -17,14 +17,14 @@
 //    {
 //        if (id != null)
 //        {
-//            return await _apiService.GetFromJsonAsync<bool>($"api/admin/categories/is-name-unique/{name}/{id}");
+//            return await _apiService.GetFromJsonAsync<bool>($"api/admin/categories/is-name-unique/{siteId}/{name}/{id}");
 //        }
 
-//        return await _apiService.GetFromJsonAsync<bool>($"api/admin/categories/is-name-unique/{name}");
+//        return await _apiService.GetFromJsonAsync<bool>($"api/admin/categories/is-name-unique/{siteId}/{name}");
 //    }
 
 //    public async Task<bool> IsCategoryValid(Guid siteId, Guid id)
 //    {
-//        return await _apiService.GetFromJsonAsync<bool>($"api/admin/categories/is-valid/{id}");
+//        return await _apiService.GetFromJsonAsync<bool>($"api/admin/categories/is-valid//{siteId}{id}");
 //    }
 //}
