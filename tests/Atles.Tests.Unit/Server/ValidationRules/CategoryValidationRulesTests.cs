@@ -13,7 +13,7 @@ public class CategoryValidationRulesTests : TestFixtureBase
     public async Task Should_return_true_when_name_is_unique()
     {
         await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
-        var sut = new CategoryValidationRules(dbContext);
+        var sut = new DbCategoryValidationRules(dbContext);
         var actual = await sut.IsCategoryNameUnique(Guid.NewGuid(), "My Category");
 
         Assert.IsTrue(actual);
@@ -23,7 +23,7 @@ public class CategoryValidationRulesTests : TestFixtureBase
     public async Task Should_return_true_when_name_is_unique_for_existing_category()
     {
         await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
-        var sut = new CategoryValidationRules(dbContext);
+        var sut = new DbCategoryValidationRules(dbContext);
         var actual = await sut.IsCategoryNameUnique(Guid.NewGuid(), "My Category", Guid.NewGuid());
 
         Assert.IsTrue(actual);
@@ -45,7 +45,7 @@ public class CategoryValidationRulesTests : TestFixtureBase
 
         await using (var dbContext = new AtlesDbContext(options))
         {
-            var sut = new CategoryValidationRules(dbContext);
+            var sut = new DbCategoryValidationRules(dbContext);
             var actual = await sut.IsCategoryNameUnique(siteId, categoryName);
 
             Assert.IsFalse(actual);
@@ -70,7 +70,7 @@ public class CategoryValidationRulesTests : TestFixtureBase
 
         await using (var dbContext = new AtlesDbContext(options))
         {
-            var sut = new CategoryValidationRules(dbContext);
+            var sut = new DbCategoryValidationRules(dbContext);
             var actual = await sut.IsCategoryNameUnique(siteId, "Category 1", categoryId);
 
             Assert.IsFalse(actual);
@@ -81,7 +81,7 @@ public class CategoryValidationRulesTests : TestFixtureBase
     public async Task Should_return_false_when_category_is_not_valid()
     {
         await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
-        var sut = new CategoryValidationRules(dbContext);
+        var sut = new DbCategoryValidationRules(dbContext);
         var actual = await sut.IsCategoryValid(Guid.NewGuid(), Guid.NewGuid());
 
         Assert.IsFalse(actual);
@@ -103,7 +103,7 @@ public class CategoryValidationRulesTests : TestFixtureBase
 
         await using (var dbContext = new AtlesDbContext(options))
         {
-            var sut = new CategoryValidationRules(dbContext);
+            var sut = new DbCategoryValidationRules(dbContext);
             var actual = await sut.IsCategoryValid(siteId, category.Id);
 
             Assert.IsTrue(actual);

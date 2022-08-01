@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Validators.Categories;
@@ -8,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Server.ValidationRules;
 
-public class CategoryValidationRules : ICategoryValidationRules
+public class DbCategoryValidationRules : ICategoryValidationRules
 {
     private readonly AtlesDbContext _dbContext;
 
-    public CategoryValidationRules(AtlesDbContext dbContext)
+    public DbCategoryValidationRules(AtlesDbContext dbContext)
     {
         _dbContext = dbContext;
     }

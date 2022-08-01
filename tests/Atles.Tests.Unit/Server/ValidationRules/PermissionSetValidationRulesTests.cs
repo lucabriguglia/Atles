@@ -24,7 +24,7 @@ public class PermissionSetValidationRulesTests : TestFixtureBase
 
         await using (var dbContext = new AtlesDbContext(Shared.CreateContextOptions()))
         {
-            var sut = new PermissionSetValidationRules(dbContext);
+            var sut = new DbPermissionSetValidationRules(dbContext);
             var actual = await sut.IsPermissionSetValid(site.Id, permissionSet.Id);
 
             Assert.IsTrue(actual);
@@ -35,7 +35,7 @@ public class PermissionSetValidationRulesTests : TestFixtureBase
     public async Task Should_return_false_when_permission_set_is_not_valid()
     {
         await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
-        var sut = new PermissionSetValidationRules(dbContext);
+        var sut = new DbPermissionSetValidationRules(dbContext);
         var actual = await sut.IsPermissionSetValid(Guid.NewGuid(), Guid.NewGuid());
 
         Assert.IsFalse(actual);

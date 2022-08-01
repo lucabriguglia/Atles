@@ -7,11 +7,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Server.ValidationRules;
 
-public class PermissionSetValidationRules : IPermissionSetValidationRules
+public class DbPermissionSetValidationRules : IPermissionSetValidationRules
 {
     private readonly AtlesDbContext _dbContext;
 
-    public PermissionSetValidationRules(AtlesDbContext dbContext)
+    public DbPermissionSetValidationRules(AtlesDbContext dbContext)
     {
         _dbContext = dbContext;
     }
