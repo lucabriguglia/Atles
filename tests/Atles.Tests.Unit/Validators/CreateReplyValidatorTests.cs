@@ -18,12 +18,10 @@ public class CreateReplyValidatorTests : TestFixtureBase
     {
         var model = Fixture.Build<CreateReply>().With(x => x.Content, string.Empty).Create();
 
-        var dispatcher = new Mock<IDispatcher>();
-        dispatcher.Setup(x => x.Get(new IsTopicValid { SiteId = model.SiteId, ForumId = model.ForumId, Id = model.TopicId })).ReturnsAsync(true);
-
         var forumValidationRules = new Mock<IForumValidationRules>();
+        var topicValidationRules = new Mock<ITopicValidationRules>();
 
-        var sut = new CreateReplyValidator(dispatcher.Object, forumValidationRules.Object);
+        var sut = new CreateReplyValidator(forumValidationRules.Object, topicValidationRules.Object);
 
         var result = await sut.TestValidateAsync(model);
         result.ShouldHaveValidationErrorFor(x => x.Content);
@@ -34,15 +32,13 @@ public class CreateReplyValidatorTests : TestFixtureBase
     {
         var model = Fixture.Create<CreateReply>();
 
-        var dispatcher = new Mock<IDispatcher>();
-        dispatcher.Setup(x => x.Get(new IsTopicValid { SiteId = model.SiteId, ForumId = model.ForumId, Id = model.TopicId })).ReturnsAsync(true);
-
         var forumValidationRules = new Mock<IForumValidationRules>();
         forumValidationRules
             .Setup(rules => rules.IsForumValid(model.SiteId, model.ForumId))
             .ReturnsAsync(false);
+        var topicValidationRules = new Mock<ITopicValidationRules>();
 
-        var sut = new CreateReplyValidator(dispatcher.Object, forumValidationRules.Object);
+        var sut = new CreateReplyValidator(forumValidationRules.Object, topicValidationRules.Object);
 
         var result = await sut.TestValidateAsync(model);
         result.ShouldHaveValidationErrorFor(x => x.ForumId);
@@ -53,12 +49,13 @@ public class CreateReplyValidatorTests : TestFixtureBase
     {
         var model = Fixture.Create<CreateReply>();
 
-        var dispatcher = new Mock<IDispatcher>();
-        dispatcher.Setup(x => x.Get(new IsTopicValid { SiteId = model.SiteId, ForumId = model.ForumId, Id = model.TopicId })).ReturnsAsync(false);
-        
         var forumValidationRules = new Mock<IForumValidationRules>();
+        var topicValidationRules = new Mock<ITopicValidationRules>();
+        topicValidationRules
+            .Setup(rules => rules.IsTopicValid(model.SiteId, model.ForumId, model.TopicId))
+            .ReturnsAsync(false);
 
-        var sut = new CreateReplyValidator(dispatcher.Object, forumValidationRules.Object);
+        var sut = new CreateReplyValidator(forumValidationRules.Object, topicValidationRules.Object);
 
         var result = await sut.TestValidateAsync(model);
         result.ShouldHaveValidationErrorFor(x => x.TopicId);

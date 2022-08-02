@@ -1,6 +1,4 @@
 ﻿using Atles.Commands.Posts;
-using Atles.Core;
-using Atles.Domain.Rules.Posts;
 using Atles.Validators.Forums;
 using FluentValidation;
 
@@ -8,7 +6,7 @@ namespace Atles.Validators.Posts;
 
 public class CreateReplyValidator : AbstractValidator<CreateReply>
 {
-    public CreateReplyValidator(IDispatcher dispatcher, IForumValidationRules forumValidationRules)
+    public CreateReplyValidator(IForumValidationRules forumValidationRules, ITopicValidationRules topicValidationRules)
     {
         RuleFor(c => c.Content)
             .NotEmpty().WithMessage("Reply content is required.");
@@ -18,12 +16,7 @@ public class CreateReplyValidator : AbstractValidator<CreateReply>
             .WithMessage(c => $"Forum with id {c.ForumId} does not exist.");
 
         RuleFor(c => c.TopicId)
-            .MustAsync(async (c, p, cancellation) =>
-            {
-                // TODO: To be moved to a service
-                var result = await dispatcher.Get(new IsTopicValid {SiteId = c.SiteId, ForumId = c.ForumId, Id = p});
-                return result.AsT0;
-            })
+            .MustAsync(async (model, topicId, cancellation) => await topicValidationRules.IsTopicValid(model.SiteId, model.ForumId, topicId))
             .WithMessage(c => $"Topic with id {c.ForumId} does not exist.");
     }
 }
