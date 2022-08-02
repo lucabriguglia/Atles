@@ -1,9 +1,9 @@
 ﻿using System.Threading.Tasks;
 using Atles.Commands.Users;
 using Atles.Core;
-using Atles.Domain.Rules.Users;
 using Atles.Models.Public;
 using Atles.Queries.Public;
+using Atles.Validators.Users;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
@@ -16,11 +16,17 @@ public class SettingsController : SiteControllerBase
 {
     private readonly IDispatcher _dispatcher;
     private readonly ILogger<SettingsController> _logger;
+    private readonly IUserValidationRules _userValidationRules;
 
-    public SettingsController(IDispatcher dispatcher, ILogger<SettingsController> logger) : base(dispatcher)
+    public SettingsController(
+        IDispatcher dispatcher, 
+        ILogger<SettingsController> logger, 
+        IUserValidationRules userValidationRules) 
+        : base(dispatcher)
     {
         _dispatcher = dispatcher;
         _logger = logger;
+        _userValidationRules = userValidationRules;
     }
 
     [HttpGet("edit")]
@@ -58,9 +64,7 @@ public class SettingsController : SiteControllerBase
     [HttpGet("is-display-name-unique/{name}")]
     public async Task<IActionResult> IsDisplayNameUnique(string name)
     {
-        return await ProcessGet(new IsUserDisplayNameUnique
-        {
-            DisplayName = name
-        });
+        var isDisplayNameUnique = await _userValidationRules.IsUserDisplayNameUnique(name);
+        return Ok(isDisplayNameUnique);
     }
 }

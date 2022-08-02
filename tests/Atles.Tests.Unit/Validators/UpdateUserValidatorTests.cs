@@ -1,53 +1,51 @@
 ﻿using Atles.Commands.Users;
-using Atles.Core;
-using Atles.Domain.Rules.Users;
 using Atles.Validators.Users;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Validators
+namespace Atles.Tests.Unit.Validators;
+
+[TestFixture]
+public class UpdateUserValidatorTests : TestFixtureBase
 {
-    [Ignore("Refactoring needed")]
-    [TestFixture]
-    public class UpdateUserValidatorTests : TestFixtureBase
+    [Test]
+    public async Task Should_have_validation_error_when_display_name_is_empty()
     {
-        [Test]
-        public void Should_have_validation_error_when_display_name_is_empty()
-        {
-            var command = Fixture.Build<UpdateUser>().With(x => x.DisplayName, string.Empty).Create();
+        var model = Fixture.Build<UpdateUser>().With(x => x.DisplayName, string.Empty).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var userValidationRules = new Mock<IUserValidationRules>();
 
-            var sut = new UpdateUserValidator(dispatcher.Object);
+        var validator = new UpdateUserValidator(userValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.DisplayName);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_display_name_is_too_long()
-        {
-            var command = Fixture.Build<UpdateUser>().With(x => x.DisplayName, new string('*', 51)).Create();
+    [Test]
+    public async Task Should_have_validation_error_when_display_name_is_too_long()
+    {
+        var model = Fixture.Build<UpdateUser>().With(x => x.DisplayName, new string('*', 51)).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var userValidationRules = new Mock<IUserValidationRules>();
 
-            var sut = new UpdateUserValidator(dispatcher.Object);
+        var validator = new UpdateUserValidator(userValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.DisplayName);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_display_name_is_not_unique()
-        {
-            var command = Fixture.Create<UpdateUser>();
+    [Test]
+    public async Task Should_have_validation_error_when_display_name_is_not_unique()
+    {
+        var model = Fixture.Create<UpdateUser>();
 
-            var dispatcher = new Mock<IDispatcher>();
-            dispatcher.Setup(x => x.Get(new IsUserDisplayNameUnique { DisplayName = command.DisplayName, Id = command.UpdateUserId })).ReturnsAsync(false);
+        var userValidationRules = new Mock<IUserValidationRules>();
 
-            var sut = new UpdateUserValidator(dispatcher.Object);
+        var validator = new UpdateUserValidator(userValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.DisplayName, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.DisplayName);
     }
 }

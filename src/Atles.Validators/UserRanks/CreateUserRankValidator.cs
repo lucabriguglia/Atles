@@ -1,16 +1,8 @@
 ﻿using Atles.Commands.UserRanks;
-using Atles.Core;
 using FluentValidation;
 
-namespace Atles.Validators.UserRanks
-{
-    public class CreateUserRankValidator : AbstractValidator<CreateUserRank>
-    {
-        private readonly IDispatcher _dispatcher;
+namespace Atles.Validators.UserRanks;
 
-        public CreateUserRankValidator(IDispatcher dispatcher)
-        {
-            _dispatcher = dispatcher;
-        }
-    }
+public class CreateUserRankValidator : AbstractValidator<CreateUserRank>
+{
 }

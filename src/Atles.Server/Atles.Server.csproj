@@ -32,7 +32,6 @@
     <ProjectReference Include="..\Atles.Commands.Handlers\Atles.Commands.Handlers.csproj" />
     <ProjectReference Include="..\Atles.Events.Handlers\Atles.Events.Handlers.csproj" />
     <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
-    <ProjectReference Include="..\Atles.Domain.Rules.Handlers\Atles.Domain.Rules.Handlers.csproj" />
     <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
     <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
     <ProjectReference Include="..\Atles.Queries\Atles.Queries.csproj" />

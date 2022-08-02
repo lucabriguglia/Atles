@@ -47,7 +47,6 @@ namespace Atles.Tests.Unit.Validators
             result.ShouldHaveValidationErrorFor(x => x.ItemId);
         }
 
-        [Ignore("Refactoring needed")]
         [Test]
         public async Task Should_have_validation_error_when_forum_is_not_valid()
         {
@@ -66,7 +65,6 @@ namespace Atles.Tests.Unit.Validators
             result.ShouldHaveValidationErrorFor(x => x.ItemId);
         }
 
-        [Ignore("Refactoring needed")]
         [Test]
         public async Task Should_have_validation_error_when_topic_is_not_valid()
         {

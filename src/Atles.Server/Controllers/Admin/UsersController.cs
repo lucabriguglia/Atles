@@ -3,10 +3,10 @@ using System.Linq;
 using System.Threading.Tasks;
 using Atles.Commands.Users;
 using Atles.Core;
-using Atles.Domain.Rules.Users;
 using Atles.Models;
 using Atles.Models.Admin.Users;
 using Atles.Queries.Admin;
+using Atles.Validators.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -17,12 +17,17 @@ public class UsersController : AdminControllerBase
 {
     private readonly UserManager<IdentityUser> _userManager;
     private readonly IDispatcher _dispatcher;
+    private readonly IUserValidationRules _userValidationRules;
 
-    public UsersController(UserManager<IdentityUser> userManager,
-        IDispatcher dispatcher) : base(dispatcher)
+    public UsersController(
+        UserManager<IdentityUser> userManager,
+        IDispatcher dispatcher, 
+        IUserValidationRules userValidationRules) 
+        : base(dispatcher)
     {
         _userManager = userManager;
         _dispatcher = dispatcher;
+        _userValidationRules = userValidationRules;
     }
 
     [HttpGet("index-model")]
@@ -196,20 +201,16 @@ public class UsersController : AdminControllerBase
     }
 
     [HttpGet("is-display-name-unique/{name}")]
-    public async Task<IActionResult> IsDisplayNameUnique(string name)
+    public async Task<ActionResult> IsDisplayNameUnique(string name)
     {
-        return await ProcessGet(new IsUserDisplayNameUnique
-        {
-            DisplayName = name
-        });
+        var isDisplayNameUnique = await _userValidationRules.IsUserDisplayNameUnique(name);
+        return Ok(isDisplayNameUnique);
     }
 
     [HttpGet("is-display-name-unique/{name}/{id}")]
-    public async Task<IActionResult> IsNameUnique(string name, Guid id)
+    public async Task<ActionResult> IsNameUnique(string name, Guid id)
     {
-        return await ProcessGet(new IsUserDisplayNameUnique
-        {
-            DisplayName = name, Id = id
-        });
+        var isDisplayNameUnique = await _userValidationRules.IsUserDisplayNameUnique(name, id);
+        return Ok(isDisplayNameUnique);
     }
 }
