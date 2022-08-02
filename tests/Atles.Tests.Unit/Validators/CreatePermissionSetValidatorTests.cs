@@ -1,67 +1,54 @@
 ﻿using Atles.Commands.PermissionSets;
-using Atles.Core;
-using Atles.Core.Queries;
-using Atles.Domain.Rules.PermissionSets;
 using Atles.Validators.PermissionSets;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Validators
+namespace Atles.Tests.Unit.Validators;
+
+[TestFixture]
+public class CreatePermissionSetValidatorTests : TestFixtureBase
 {
-    [Ignore("Refactoring needed")]
-    [TestFixture]
-    public class CreatePermissionSetValidatorTests : TestFixtureBase
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_empty()
     {
-        [Test]
-        public void Should_have_validation_error_when_name_is_empty()
-        {
-            var command = Fixture.Build<CreatePermissionSet>().With(x => x.Name, string.Empty).Create();
+        var model = Fixture.Build<CreatePermissionSet>().With(x => x.Name, string.Empty).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new CreatePermissionSetValidator(dispatcher.Object);
+        var validator = new CreatePermissionSetValidator(permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_name_is_too_long()
-        {
-            var command = Fixture.Build<CreatePermissionSet>().With(x => x.Name, new string('*', 51)).Create();
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_too_long()
+    {
+        var model = Fixture.Build<CreatePermissionSet>().With(x => x.Name, new string('*', 51)).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new CreatePermissionSetValidator(dispatcher.Object);
+        var validator = new CreatePermissionSetValidator(permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_name_is_not_unique()
-        {
-            var command = Fixture.Create<CreatePermissionSet>();
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_not_unique()
+    {
+        var model = Fixture.Create<CreatePermissionSet>();
 
-            var querySiteId = Guid.NewGuid();
-            var queryName = string.Empty;
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
+        permissionSetValidationRules
+            .Setup(rules => rules.IsPermissionSetNameUnique(model.SiteId, model.Name, null))
+            .ReturnsAsync(false);
 
-            var dispatcher = new Mock<IDispatcher>();
-            dispatcher
-                .Setup(x => x.Get(It.IsAny<IsPermissionSetNameUnique>()))
-                .Callback<IQuery<bool>>(q =>
-                {
-                    var query = q as IsPermissionSetNameUnique;
-                    querySiteId = query.SiteId;
-                    queryName = query.Name;
-                })
-                .ReturnsAsync(false);
+        var validator = new CreatePermissionSetValidator(permissionSetValidationRules.Object);
 
-            var sut = new CreatePermissionSetValidator(dispatcher.Object);
-
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-            Assert.AreEqual(command.SiteId, querySiteId);
-            Assert.AreEqual(command.Name, queryName);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
     }
 }

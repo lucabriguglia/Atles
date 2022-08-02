@@ -16,6 +16,29 @@ public class DbPermissionSetValidationRules : IPermissionSetValidationRules
         _dbContext = dbContext;
     }
 
+    public async Task<bool> IsPermissionSetNameUnique(Guid siteId, string name, Guid? id = null)
+    {
+        bool any;
+
+        if (id != null)
+        {
+            any = await _dbContext.PermissionSets
+                .AnyAsync(x => x.SiteId == siteId &&
+                               x.Name == name &&
+                               x.Status != PermissionSetStatusType.Deleted &&
+                               x.Id != id);
+        }
+        else
+        {
+            any = await _dbContext.PermissionSets
+                .AnyAsync(x => x.SiteId == siteId &&
+                               x.Name == name &&
+                               x.Status != PermissionSetStatusType.Deleted);
+        }
+
+        return !any;
+    }
+
     public async Task<bool> IsPermissionSetValid(Guid siteId, Guid id)
     {
         var any = await _dbContext.PermissionSets

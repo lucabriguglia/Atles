@@ -1,70 +1,54 @@
 ﻿using Atles.Commands.PermissionSets;
-using Atles.Core;
-using Atles.Core.Queries;
-using Atles.Domain.Rules.PermissionSets;
 using Atles.Validators.PermissionSets;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Validators
+namespace Atles.Tests.Unit.Validators;
+
+[TestFixture]
+public class UpdatePermissionSetValidatorTests : TestFixtureBase
 {
-    [Ignore("Refactoring needed")]
-    [TestFixture]
-    public class UpdatePermissionSetValidatorTests : TestFixtureBase
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_empty()
     {
-        [Test]
-        public void Should_have_validation_error_when_name_is_empty()
-        {
-            var command = Fixture.Build<UpdatePermissionSet>().With(x => x.Name, string.Empty).Create();
+        var model = Fixture.Build<UpdatePermissionSet>().With(x => x.Name, string.Empty).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new UpdatePermissionSetValidator(dispatcher.Object);
+        var validator = new UpdatePermissionSetValidator(permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_name_is_too_long()
-        {
-            var command = Fixture.Build<UpdatePermissionSet>().With(x => x.Name, new string('*', 51)).Create();
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_too_long()
+    {
+        var model = Fixture.Build<UpdatePermissionSet>().With(x => x.Name, new string('*', 51)).Create();
 
-            var dispatcher = new Mock<IDispatcher>();
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
 
-            var sut = new UpdatePermissionSetValidator(dispatcher.Object);
+        var validator = new UpdatePermissionSetValidator(permissionSetValidationRules.Object);
 
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_name_is_not_unique()
-        {
-            var command = Fixture.Create<UpdatePermissionSet>();
+    [Test]
+    public async Task Should_have_validation_error_when_name_is_not_unique()
+    {
+        var model = Fixture.Create<UpdatePermissionSet>();
 
-            var querySiteId = Guid.NewGuid();
-            var queryName = string.Empty;
-            Guid? queryId = null;
+        var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
+        permissionSetValidationRules
+            .Setup(rules => rules.IsPermissionSetNameUnique(model.SiteId, model.Name, model.PermissionSetId))
+            .ReturnsAsync(false);
 
-            var dispatcher = new Mock<IDispatcher>();
-            dispatcher
-                .Setup(x => x.Get(It.IsAny<IsPermissionSetNameUnique>()))
-                .Callback<IQuery<bool>>(q => 
-                {
-                    var query = q as IsPermissionSetNameUnique;
-                    querySiteId = query.SiteId;
-                    queryName = query.Name;
-                    queryId = query.Id;
-                })
-                .ReturnsAsync(false);
+        var validator = new UpdatePermissionSetValidator(permissionSetValidationRules.Object);
 
-            var sut = new UpdatePermissionSetValidator(dispatcher.Object);
-
-            sut.ShouldHaveValidationErrorFor(x => x.Name, command);
-            Assert.AreEqual(command.SiteId, querySiteId);
-            Assert.AreEqual(command.Name, queryName);
-            Assert.AreEqual(command.PermissionSetId, queryId);
-        }
+        var result = await validator.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Name);
     }
 }

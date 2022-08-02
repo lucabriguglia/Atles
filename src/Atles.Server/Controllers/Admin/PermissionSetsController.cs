@@ -2,9 +2,9 @@
 using System.Threading.Tasks;
 using Atles.Commands.PermissionSets;
 using Atles.Core;
-using Atles.Domain.Rules.PermissionSets;
 using Atles.Models.Admin.PermissionSets;
 using Atles.Queries.Admin;
+using Atles.Validators.PermissionSets;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin;
@@ -13,10 +13,12 @@ namespace Atles.Server.Controllers.Admin;
 public class PermissionSetsController : AdminControllerBase
 {
     private readonly IDispatcher _dispatcher;
+    private readonly IPermissionSetValidationRules _permissionSetValidationRules;
 
-    public PermissionSetsController(IDispatcher dispatcher) : base(dispatcher)
+    public PermissionSetsController(IDispatcher dispatcher, IPermissionSetValidationRules permissionSetValidationRules) : base(dispatcher)
     {
         _dispatcher = dispatcher;
+        _permissionSetValidationRules = permissionSetValidationRules;
     }
 
     [HttpGet("list")]
@@ -98,21 +100,14 @@ public class PermissionSetsController : AdminControllerBase
     [HttpGet("is-name-unique/{name}")]
     public async Task<ActionResult> IsNameUnique(string name)
     {
-        return await ProcessGet(new IsPermissionSetNameUnique 
-        { 
-            SiteId = CurrentSite.Id, 
-            Name = name
-        });
+        var isNameUnique = await _permissionSetValidationRules.IsPermissionSetNameUnique(CurrentSite.Id, name);
+        return Ok(isNameUnique);
     }
 
     [HttpGet("is-name-unique/{name}/{id}")]
     public async Task<ActionResult> IsNameUnique(string name, Guid id)
     {
-        return await ProcessGet(new IsPermissionSetNameUnique
-        {
-            SiteId = CurrentSite.Id,
-            Name = name, 
-            Id = id 
-        });
+        var isNameUnique = await _permissionSetValidationRules.IsPermissionSetNameUnique(CurrentSite.Id, name, id);
+        return Ok(isNameUnique);
     }
 }
