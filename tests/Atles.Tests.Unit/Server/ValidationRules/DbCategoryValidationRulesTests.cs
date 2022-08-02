@@ -1,7 +1,6 @@
 ﻿using Atles.Data;
 using Atles.Domain;
 using Atles.Server.ValidationRules;
-using AutoFixture;
 using NUnit.Framework;
 
 namespace Atles.Tests.Unit.Server.ValidationRules;

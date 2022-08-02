@@ -1,6 +1,4 @@
-﻿using Atles.Domain.Rules.Posts;
-
-namespace Atles.Validators.Posts;
+﻿namespace Atles.Validators.Posts;
 
 public interface ITopicValidationRules
 {

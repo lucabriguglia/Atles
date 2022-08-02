@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Domain;
 using Atles.Models.Admin.Roles;

@@ -2,7 +2,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using Atles.Commands.Handlers.Categories;
 using Atles.Core;
-using Atles.Core.Commands;
 using Atles.Core.Results;
 using Atles.Core.Settings;
 using Atles.Data;
