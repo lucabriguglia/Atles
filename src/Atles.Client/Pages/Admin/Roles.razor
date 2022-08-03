@@ -11,17 +11,17 @@ else
 {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Loc["Roles"]</li>
+            <li class="breadcrumb-item"><a href="/admin/dashboard">@Localizer["Home"]</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Localizer["Roles"]</li>
         </ol>
     </nav>
 
     <div class="row">
         <div class="col">
-            <h3 class="mb-3">@Loc["Roles"]</h3>
+            <h3 class="mb-3">@Localizer["Roles"]</h3>
         </div>
         <div class="col text-right mb-3">
-            <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewAsync())" class="btn btn-primary" role="button">@Loc["Create New"]</a>
+            <a href="#" @onclick:preventDefault="true" @onclick="@(async () => await NewAsync())" class="btn btn-primary" role="button">@Localizer["Create New"]</a>
         </div>
     </div>
 
@@ -34,7 +34,7 @@ else
         <table class="table table-bordered table-hover">
             <thead>
                 <tr>
-                    <th scope="col">@Loc["Name"]</th>
+                    <th scope="col">@Localizer["Name"]</th>
                     <th scope="col">&nbsp;</th>
                 </tr>
             </thead>
@@ -46,15 +46,15 @@ else
                         <td>
                             @if (item.Name != Consts.RoleNameAdmin)
                             {
-                                <button type="button" class="btn btn-secondary mb-1" role="button" @onclick="@(async () => await  EditAsync(item.Id, item.Name))">@Loc["Edit"]</button>
-                                <button type="button" class="btn btn-secondary mb-1" role="button" @onclick="@(async () => await  LoadUsersInRole(item.Name))">@Loc["Users"]</button>
-                                <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
+                                <button type="button" class="btn btn-secondary mb-1" role="button" @onclick="@(async () => await  EditAsync(item.Id, item.Name))">@Localizer["Edit"]</button>
+                                <button type="button" class="btn btn-secondary mb-1" role="button" @onclick="@(async () => await  LoadUsersInRole(item.Name))">@Localizer["Users"]</button>
+                                <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Localizer["Delete"]</button>
                             }
                             else
                             {
-                                <button type="button" class="btn btn-secondary mb-1 disabled" role="button">@Loc["Edit"]</button>
-                                <button type="button" class="btn btn-secondary mb-1" role="button" @onclick="@(async () => await  LoadUsersInRole(item.Name))">@Loc["Users"]</button>
-                                <button type="button" class="btn btn-danger mb-1 disabled">@Loc["Delete"]</button>
+                                <button type="button" class="btn btn-secondary mb-1 disabled" role="button">@Localizer["Edit"]</button>
+                                <button type="button" class="btn btn-secondary mb-1" role="button" @onclick="@(async () => await  LoadUsersInRole(item.Name))">@Localizer["Users"]</button>
+                                <button type="button" class="btn btn-danger mb-1 disabled">@Localizer["Delete"]</button>
                             }
                         </td>
                     </tr>
@@ -62,9 +62,9 @@ else
             </tbody>
         </table>
 
-        <ConfirmModal Title="@Loc["Delete"]"
-                      Body="@Loc["Are you sure you want to delete this role?"]"
-                      Button="@Loc["Delete"]"
+        <ConfirmModal Title="@Localizer["Delete"]"
+                      Body="@Localizer["Are you sure you want to delete this role?"]"
+                      Button="@Localizer["Delete"]"
                       OnClickCallback="@DeleteAsync" />
     }
 
@@ -77,13 +77,13 @@ else
                 <EditForm Model="Model.EditRole" OnValidSubmit="@(async () => await SaveAsync())">
                     <DataAnnotationsValidator />
                     <div class="form-group">
-                        <label for="name" class="control-label">@Loc["Name"]</label>
+                        <label for="name" class="control-label">@Localizer["Name"]</label>
                         <InputText id="name" @bind-Value="Model.EditRole.Name" Class="form-control" />
                         <ValidationMessage For="@(() => Model.EditRole.Name)" />
                     </div>
                     <div class="form-group">
                         <input type="submit" value="@EditButton" class="btn btn-primary mb-1" />
-                        <button type="button" class="btn btn-secondary mb-1" @onclick="Cancel">@Loc["Cancel"]</button>
+                        <button type="button" class="btn btn-secondary mb-1" @onclick="Cancel">@Localizer["Cancel"]</button>
                     </div>
                 </EditForm>
             </div>
@@ -101,15 +101,15 @@ else
         {
             if (Model.UsersInRole.Count == 0)
             {
-                <NoRecords Text="@Loc["No users found in this role"]" />
+                <NoRecords Text="@Localizer["No users found in this role"]" />
             }
             else
             {
-                <h3 class="mb-3">@string.Format(Loc["Users in role {0}"], RoleForUsers)</h3>
+                <h3 class="mb-3">@string.Format(Localizer["Users in role {0}"], RoleForUsers)</h3>
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
-                            <th scope="col">@Loc["Email"]</th>
+                            <th scope="col">@Localizer["Email"]</th>
                             <th scope="col">&nbsp;</th>
                         </tr>
                     </thead>
@@ -119,14 +119,14 @@ else
                             <tr>
                                 <td>@item.Email</td>
                                 <td>
-                                    <a href="/admin/users/edit-by-identity-user-id/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Edit"]</a>
+                                    <a href="/admin/users/edit-by-identity-user-id/@item.Id" class="btn btn-secondary mb-1" role="button">@Localizer["Edit"]</a>
                                     @if (RoleForUsers != Consts.RoleNameAdmin)
                                     {
-                                        <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#remove-user-from-role-confirm-modal" data-id="@item.Id" @onclick="() => SetUseIdToRemove(item.Id)">@Loc["Remove"]</button>
+                                        <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#remove-user-from-role-confirm-modal" data-id="@item.Id" @onclick="() => SetUseIdToRemove(item.Id)">@Localizer["Remove"]</button>
                                     }
                                     else
                                     {
-                                        <button type="button" class="btn btn-danger mb-1 disabled">@Loc["Delete"]</button>
+                                        <button type="button" class="btn btn-danger mb-1 disabled">@Localizer["Delete"]</button>
                                     }
                                 </td>
                             </tr>
@@ -135,9 +135,9 @@ else
                 </table>
 
                 <ConfirmModal Id="remove-user-from-role-confirm-modal"
-                              Title="@Loc["Remove"]"
-                              Body="@Loc["Are you sure you want to remove the user from the role?"]"
-                              Button="@Loc["Remove"]"
+                              Title="@Localizer["Remove"]"
+                              Body="@Localizer["Are you sure you want to remove the user from the role?"]"
+                              Button="@Localizer["Remove"]"
                               OnClickCallback="@RemoveUserFromRoleAsync" />
             }
         }

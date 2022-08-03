@@ -9,24 +9,24 @@ else
 {
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
-            <li class="breadcrumb-item"><a href="/admin/users">@Loc["Users"]</a></li>
-            <li class="breadcrumb-item active" aria-current="page">@Loc["Activity"]</li>
+            <li class="breadcrumb-item"><a href="/admin/dashboard">@Localizer["Home"]</a></li>
+            <li class="breadcrumb-item"><a href="/admin/users">@Localizer["Users"]</a></li>
+            <li class="breadcrumb-item active" aria-current="page">@Localizer["Activity"]</li>
         </ol>
     </nav>
 
     <div class="row">
         <div class="col">
-            <h3 class="mb-3">@string.Format(Loc["{0}'s Activity"], Model.User.DisplayName)</h3>
+            <h3 class="mb-3">@string.Format(Localizer["{0}'s Activity"], Model.User.DisplayName)</h3>
         </div>
         <div class="col text-right mb-3">
-            <a href="/admin/users/edit/@Id" class="btn btn-primary" role="button">@Loc["Edit User"]</a>
+            <a href="/admin/users/edit/@Id" class="btn btn-primary" role="button">@Localizer["Edit User"]</a>
         </div>
     </div>
 
     <div class="row">
         <div class="col-md-6 input-group mb-3">
-            <input type="text" class="form-control" placeholder="@Loc["Search activity"]" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
+            <input type="text" class="form-control" placeholder="@Localizer["Search activity"]" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
             <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
                 <i class="fa fa-times"></i>
             </button>
@@ -55,9 +55,9 @@ else
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">@Loc["Date"]</th>
-                        <th scope="col">@Loc["Activity"]</th>
-                        <th scope="col">@Loc["Data"]</th>
+                        <th scope="col">@Localizer["Date"]</th>
+                        <th scope="col">@Localizer["Activity"]</th>
+                        <th scope="col">@Localizer["Data"]</th>
                     </tr>
                 </thead>
                 <tbody>

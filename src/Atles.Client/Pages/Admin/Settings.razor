@@ -4,12 +4,12 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Loc["Settings"]</li>
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Localizer["Home"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Localizer["Settings"]</li>
     </ol>
 </nav>
 
-<h3 class="mb-3">@Loc["Settings"]</h3>
+<h3 class="mb-3">@Localizer["Settings"]</h3>
 
 @if (Model == null)
 {
@@ -23,27 +23,27 @@ else
                 <DataAnnotationsValidator />
                 <ul class="nav nav-tabs" id="tabLinks" role="tablist">
                     <li class="nav-item">
-                        <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general-content" role="tab" aria-controls="general-content" aria-selected="true">@Loc["General"]</a>
+                        <a class="nav-link active" id="general-tab" data-toggle="tab" href="#general-content" role="tab" aria-controls="general-content" aria-selected="true">@Localizer["General"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="privacy-tab" data-toggle="tab" href="#privacy-content" role="tab" aria-controls="privacy-content" aria-selected="false">@Loc["Privacy"]</a>
+                        <a class="nav-link" id="privacy-tab" data-toggle="tab" href="#privacy-content" role="tab" aria-controls="privacy-content" aria-selected="false">@Localizer["Privacy"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="terms-tab" data-toggle="tab" href="#terms-content" role="tab" aria-controls="terms-content" aria-selected="false">@Loc["Terms"]</a>
+                        <a class="nav-link" id="terms-tab" data-toggle="tab" href="#terms-content" role="tab" aria-controls="terms-content" aria-selected="false">@Localizer["Terms"]</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="advanced-tab" data-toggle="tab" href="#advanced-content" role="tab" aria-controls="advanced-content" aria-selected="false">@Loc["Advanced"]</a>
+                        <a class="nav-link" id="advanced-tab" data-toggle="tab" href="#advanced-content" role="tab" aria-controls="advanced-content" aria-selected="false">@Localizer["Advanced"]</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="tabContent">
                     <div class="tab-pane fade px-3 show active" id="general-content" role="tabpanel" aria-labelledby="general-tab">
                         <div class="form-group">
-                            <label for="title" class="control-label">@Loc["Title"]</label>
+                            <label for="title" class="control-label">@Localizer["Title"]</label>
                             <InputText id="title" @bind-Value="Model.Site.Title" Class="form-control" />
                             <ValidationMessage For="@(() => Model.Site.Title)" />
                         </div>
                         <div class="form-group">
-                            <label for="theme" class="control-label">@Loc["Theme"]</label>
+                            <label for="theme" class="control-label">@Localizer["Theme"]</label>
                             <select id="theme" @bind="Model.Site.Theme" class="form-control">
                                 @foreach (var item in Model.Themes)
                                 {
@@ -52,7 +52,7 @@ else
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="css" class="control-label">@Loc["CSS"]</label>
+                            <label for="css" class="control-label">@Localizer["CSS"]</label>
                             <select id="css" @bind="Model.Site.Css" class="form-control">
                                 @foreach (var item in Model.Css)
                                 {
@@ -61,7 +61,7 @@ else
                             </select>
                         </div>
                         <div class="form-group">
-                            <label for="language" class="control-label">@Loc["Language"]</label>
+                            <label for="language" class="control-label">@Localizer["Language"]</label>
                             <select id="language" @bind="Model.Site.Language" class="form-control">
                                 @foreach (var item in Model.Languages)
                                 {
@@ -78,13 +78,13 @@ else
                     </div>
                     <div class="tab-pane fade" id="advanced-content" role="tabpanel" aria-labelledby="advanced-tab">
                         <div class="form-group">
-                            <label for="headScript" class="control-label">@Loc["Head Script"]</label>
+                            <label for="headScript" class="control-label">@Localizer["Head Script"]</label>
                             <InputTextArea id="headScript" @bind-Value="Model.Site.HeadScript" Class="form-control" Rows="20" />
                         </div>
                     </div>
                 </div>
                 <div class="form-group mt-3">
-                    <input type="submit" value="@Loc["Update"]" class="btn btn-primary" />
+                    <input type="submit" value="@Localizer["Update"]" class="btn btn-primary" />
                 </div>
                 <ValidationSummary />
             </EditForm>

@@ -49,7 +49,7 @@ namespace Atles.Client.Pages.Admin.Forums
                     {
                         var fieldIdentifier = new FieldIdentifier(EditContext.Model, "Name");
                         _validationMessageStore.Clear(fieldIdentifier);
-                        _validationMessageStore.Add(fieldIdentifier, Loc["A forum with the same name already exists."]);
+                        _validationMessageStore.Add(fieldIdentifier, Localizer["A forum with the same name already exists."]);
                         EditContext.NotifyValidationStateChanged();
                     }
 
@@ -57,7 +57,7 @@ namespace Atles.Client.Pages.Admin.Forums
                     {
                         var fieldIdentifier = new FieldIdentifier(EditContext.Model, "Slug");
                         _validationMessageStore.Clear(fieldIdentifier);
-                        _validationMessageStore.Add(fieldIdentifier, Loc["A forum with the same slug already exists."]);
+                        _validationMessageStore.Add(fieldIdentifier, Localizer["A forum with the same slug already exists."]);
                         EditContext.NotifyValidationStateChanged();
                     }
                 }

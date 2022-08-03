@@ -4,17 +4,17 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Loc["Users"]</li>
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Localizer["Home"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Localizer["Users"]</li>
     </ol>
 </nav>
 
 <div class="row">
     <div class="col">
-        <h3 class="mb-3">@Loc["Users"]</h3>
+        <h3 class="mb-3">@Localizer["Users"]</h3>
     </div>
     <div class="col text-right mb-3">
-        <a href="/admin/users/create" class="btn btn-primary" role="button">@Loc["Create New"]</a>
+        <a href="/admin/users/create" class="btn btn-primary" role="button">@Localizer["Create New"]</a>
     </div>
 </div>
 
@@ -27,13 +27,13 @@ else
 <div class="row">
     <div class="col-md-4 input-group mb-3">
         <div class="input-group-prepend">
-            <label class="input-group-text" for="memberStatus">@Loc["Status"]</label>
+            <label class="input-group-text" for="memberStatus">@Localizer["Status"]</label>
         </div>
         <select class="custom-select" id="memberStatus" @onchange="StatusChangedAsync">
-            <option>@Loc["All"]</option>
+            <option>@Localizer["All"]</option>
             @foreach (var option in Model.Status)
             {
-                <option value=@option>@Loc[$"{option}"]</option>
+                <option value=@option>@Localizer[$"{option}"]</option>
             }
         </select>
     </div>
@@ -44,12 +44,12 @@ else
         <select class="custom-select" id="sortBy" @onchange="SortByChangedAsync">
             @foreach (var option in Model.SortBy)
             {
-                <option value=@option>@Loc[$"{option}"]</option>
+                <option value=@option>@Localizer[$"{option}"]</option>
             }
         </select>
     </div>
     <div class="col-md-4 input-group mb-3">
-        <input type="text" class="form-control" placeholder="@Loc["Search users"]" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
+        <input type="text" class="form-control" placeholder="@Localizer["Search users"]" @bind-value="Search" @bind-value:event="oninput" @onkeyup="MyKeyUpAsync">
         <button class="btn bg-transparent text-secondary" style="margin-left: -40px; z-index: 100;" @onclick="@(async () => await ClearSearchAsync())">
             <i class="fa fa-times"></i>
         </button>
@@ -78,12 +78,12 @@ else
             <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th scope="col">@Loc["Display Name"]</th>
-                        <th scope="col">@Loc["Email"]</th>
-                        <th scope="col" class="text-center">@Loc["Topics"]</th>
-                        <th scope="col" class="text-center">@Loc["Replies"]</th>
-                        <th scope="col" class="text-center">@Loc["Status"]</th>
-                        <th scope="col" class="text-center">@Loc["Date"]</th>
+                        <th scope="col">@Localizer["Display Name"]</th>
+                        <th scope="col">@Localizer["Email"]</th>
+                        <th scope="col" class="text-center">@Localizer["Topics"]</th>
+                        <th scope="col" class="text-center">@Localizer["Replies"]</th>
+                        <th scope="col" class="text-center">@Localizer["Status"]</th>
+                        <th scope="col" class="text-center">@Localizer["Date"]</th>
                         <th scope="col">&nbsp;</th>
                     </tr>
                 </thead>
@@ -98,28 +98,28 @@ else
                             <td class="text-center">@item.Status</td>
                             <td class="text-center">@item.TimeStamp.ToAppLocalDate()</td>
                             <td>
-                                <a href="/admin/users/edit/@item.Id" class="btn btn-secondary mb-1" role="button">@Loc["Edit"]</a>
-                                <a href="/admin/users/activity/@item.Id" class="btn btn-secondary mb-1 mr-1" role="button">@Loc["Activity"]</a>
+                                <a href="/admin/users/edit/@item.Id" class="btn btn-secondary mb-1" role="button">@Localizer["Edit"]</a>
+                                <a href="/admin/users/activity/@item.Id" class="btn btn-secondary mb-1 mr-1" role="button">@Localizer["Activity"]</a>
                                 @if (item.Status == UserStatusType.Active)
                                 {
-                                    <button type="button" class="btn btn-warning mb-1 mr-1" data-toggle="modal" data-target="#confirm-modal-suspend" @onclick="() => SetSuspendId(item.Id)">@Loc["Suspend"]</button>
+                                    <button type="button" class="btn btn-warning mb-1 mr-1" data-toggle="modal" data-target="#confirm-modal-suspend" @onclick="() => SetSuspendId(item.Id)">@Localizer["Suspend"]</button>
                                 }
                                 else if (item.Status == UserStatusType.Suspended)
                                 {
-                                    <button type="button" class="btn btn-warning mb-1 mr-1" @onclick="@(async () => await ReinstateAsync(item.Id))">@Loc["Reinstate"]</button>
+                                    <button type="button" class="btn btn-warning mb-1 mr-1" @onclick="@(async () => await ReinstateAsync(item.Id))">@Localizer["Reinstate"]</button>
                                 }
                                 else
                                 {
-                                    <button type="button" class="btn btn-warning mb-1 disabled">@Loc["Suspend"]</button>
+                                    <button type="button" class="btn btn-warning mb-1 disabled">@Localizer["Suspend"]</button>
                                 }
                                 @if (item.Status != UserStatusType.Deleted)
                                 {
-                                    <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#confirm-modal" @onclick="() => SetDeleteIds(item.Id, item.IdentityUserId)">@Loc["Delete"]</button>
+                                    <button type="button" class="btn btn-danger mb-1" data-toggle="modal" data-target="#confirm-modal" @onclick="() => SetDeleteIds(item.Id, item.IdentityUserId)">@Localizer["Delete"]</button>
                                 }
                                 else
                                 {
 
-                                    <button type="button" class="btn btn-danger mb-1 disabled">@Loc["Delete"]</button>
+                                    <button type="button" class="btn btn-danger mb-1 disabled">@Localizer["Delete"]</button>
                                 }
                             </td>
                         </tr>
@@ -128,15 +128,15 @@ else
             </table>
 
             <ConfirmModal Id="confirm-modal-suspend"
-                          Title="@Loc["Suspend"]"
-                          Body="@Loc["Are you sure you want to suspend this user?"]"
-                          Button="@Loc["Suspend"]"
+                          Title="@Localizer["Suspend"]"
+                          Body="@Localizer["Are you sure you want to suspend this user?"]"
+                          Button="@Localizer["Suspend"]"
                           CssClass="warning"
                           OnClickCallback="@SuspendAsync" />
 
-            <ConfirmModal Title="@Loc["Delete"]"
-                          Body="@Loc["Are you sure you want to delete this user?"]"
-                          Button="@Loc["Delete"]"
+            <ConfirmModal Title="@Localizer["Delete"]"
+                          Body="@Localizer["Are you sure you want to delete this user?"]"
+                          Button="@Localizer["Delete"]"
                           OnClickCallback="@DeleteAsync" />
         }
     }

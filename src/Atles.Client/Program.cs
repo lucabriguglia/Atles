@@ -5,69 +5,80 @@ using System.Threading.Tasks;
 using Atles.Client.Services.Api;
 using Atles.Client.Services.PostReactions;
 using Atles.Client.Services.Storage;
+using Atles.Client.ValidationRules;
+using Atles.Commands.Categories;
+using Atles.Models.Admin;
 using Atles.Models.Public;
+using Atles.Validators.Categories;
+using Atles.Validators.ValidationRules;
+using FluentValidation;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Tewr.Blazor.FileReader;
 
-namespace Atles.Client
+namespace Atles.Client;
+
+public class Program
 {
-    public class Program
+    public static async Task Main(string[] args)
     {
-        public static async Task Main(string[] args)
+        var builder = WebAssemblyHostBuilder.CreateDefault(args);
+        builder.RootComponents.Add<App>("#app");
+
+        builder.Services.AddHttpClient("Atles.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
+            .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+
+        builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Atles.ServerAPI"));
+
+        builder.Services.AddHttpClient<ApiServiceAnonymous>(client => 
+        { 
+            client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); 
+        });
+
+        builder.Services.AddHttpClient<ApiServiceAuthenticated>(client =>
         {
-            var builder = WebAssemblyHostBuilder.CreateDefault(args);
-            builder.RootComponents.Add<App>("#app");
+            client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
+        }).AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
 
-            builder.Services.AddHttpClient("Atles.ServerAPI", client => client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress))
-                .AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+        builder.Services.AddScoped<ApiService>();
 
-            builder.Services.AddScoped(sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("Atles.ServerAPI"));
+        builder.Services.AddApiAuthorization();
 
-            builder.Services.AddHttpClient<ApiServiceAnonymous>(client => 
-            { 
-                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress); 
-            });
+        builder.Services.AddOptions();
 
-            builder.Services.AddHttpClient<ApiServiceAuthenticated>(client =>
-            {
-                client.BaseAddress = new Uri(builder.HostEnvironment.BaseAddress);
-            }).AddHttpMessageHandler<BaseAddressAuthorizationMessageHandler>();
+        builder.Services.AddAuthorizationCore(options =>
+        {
+            options.AddPolicy("Admin", policy => policy.RequireRole("Admin"));
+        });
 
-            builder.Services.AddScoped<ApiService>();
+        builder.Services.AddLocalization(options =>
+        {
+            options.ResourcesPath = "Resources";
+        });
 
-            builder.Services.AddApiAuthorization();
+        builder.Services.AddScoped(typeof(ILocalStorageService<>), typeof(LocalStorageService<>));
+        builder.Services.AddScoped(typeof(ISessionStorageService<>), typeof(SessionStorageService<>));
+        builder.Services.AddScoped(typeof(IPostReactionService), typeof(PostReactionService));
 
-            builder.Services.AddOptions();
+        builder.Services.AddTransient<ICategoryValidationRules, ApiCategoryValidationRules>();
+        builder.Services.AddTransient<IForumValidationRules, ApiForumValidationRules>();
+        builder.Services.AddTransient<IPermissionSetValidationRules, ApiPermissionSetValidationRules>();
+        builder.Services.AddTransient<ITopicValidationRules, ApiTopicValidationRules>();
 
-            builder.Services.AddAuthorizationCore(options =>
-            {
-                options.AddPolicy("Admin", policy =>
-                    policy.RequireRole("Admin"));
-            });
+        builder.Services.AddTransient<IValidator<CategoryFormModel.CategoryModel>, CreateCategoryValidator>();
 
-            builder.Services.AddLocalization(options =>
-            {
-                options.ResourcesPath = "Resources";
-            });
+        builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 
-            builder.Services.AddScoped(typeof(ILocalStorageService<>), typeof(LocalStorageService<>));
-            builder.Services.AddScoped(typeof(ISessionStorageService<>), typeof(SessionStorageService<>));
-            builder.Services.AddScoped(typeof(IPostReactionService), typeof(PostReactionService));
+        var host = builder.Build();
 
-            builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
+        var apiService = host.Services.GetRequiredService<ApiService>();
+        var site = await apiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
+        var cultureName = site.Language ?? "en";
+        var culture = new CultureInfo(cultureName);
+        CultureInfo.DefaultThreadCurrentCulture = culture;
+        CultureInfo.DefaultThreadCurrentUICulture = culture;
 
-            var host = builder.Build();
-
-            var apiService = host.Services.GetRequiredService<ApiService>();
-            var site = await apiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
-            var cultureName = site.Language ?? "en";
-            var culture = new CultureInfo(cultureName);
-            CultureInfo.DefaultThreadCurrentCulture = culture;
-            CultureInfo.DefaultThreadCurrentUICulture = culture;
-
-            await host.RunAsync();
-        }
+        await host.RunAsync();
     }
 }

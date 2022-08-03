@@ -41,7 +41,7 @@ namespace Atles.Client.Pages.Admin.Users
                 {
                     var fieldIdentifier = new FieldIdentifier(EditContext.Model, "DisplayName");
                     _validationMessageStore.Clear(fieldIdentifier);
-                    _validationMessageStore.Add(fieldIdentifier, Loc["A user with the same display name already exists."]);
+                    _validationMessageStore.Add(fieldIdentifier, Localizer["A user with the same display name already exists."]);
                     EditContext.NotifyValidationStateChanged();
                 }
             }

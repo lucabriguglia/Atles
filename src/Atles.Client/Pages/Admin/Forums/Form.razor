@@ -5,7 +5,7 @@
         <EditForm EditContext="@EditContext" OnSubmit="OnSubmitAsync">
             <DataAnnotationsValidator />
             <div class="form-group">
-                <label for="categoryId" class="control-label">@Loc["Category"]</label>
+                <label for="categoryId" class="control-label">@Localizer["Category"]</label>
                 <select id="categoryId" @bind="Model.Forum.CategoryId" class="form-control">
                     @foreach (var item in Model.Categories)
                     {
@@ -14,24 +14,24 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="name" class="control-label">@Loc["Name"]</label>
+                <label for="name" class="control-label">@Localizer["Name"]</label>
                 <InputText id="name" @bind-Value="Model.Forum.Name" Class="form-control" />
                 <ValidationMessage For="@(() => Model.Forum.Name)" />
             </div>
             <div class="form-group">
-                <label for="slug" class="control-label">@Loc["Slug"]</label>
+                <label for="slug" class="control-label">@Localizer["Slug"]</label>
                 <InputText id="slug" @bind-Value="Model.Forum.Slug" Class="form-control" />
                 <ValidationMessage For="@(() => Model.Forum.Slug)" />
             </div>
             <div class="form-group">
-                <label for="description" class="control-label">@Loc["Description"]</label>
+                <label for="description" class="control-label">@Localizer["Description"]</label>
                 <InputTextArea id="description" @bind-Value="Model.Forum.Description" Class="form-control" Rows="5" />
                 <ValidationMessage For="@(() => Model.Forum.Description)" />
             </div>
             <div class="form-group">
-                <label for="permissionSetId" class="control-label">@Loc["Permission Set"]</label>
+                <label for="permissionSetId" class="control-label">@Localizer["Permission Set"]</label>
                 <select id="permissionSetId" @bind="Model.Forum.PermissionSetId" class="form-control">
-                    <option value="@Guid.Empty">&lt;@Loc["Inherit from Category"]&gt;</option>
+                    <option value="@Guid.Empty">&lt;@Localizer["Inherit from Category"]&gt;</option>
                     @foreach (var item in Model.PermissionSets)
                     {
                         <option value="@item.Id">@item.Name</option>
@@ -40,7 +40,7 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="@Button" class="btn btn-primary mb-1" />
-                <button type="button" class="btn btn-secondary mb-1" @onclick="Cancel">@Loc["Cancel"]</button>
+                <button type="button" class="btn btn-secondary mb-1" @onclick="Cancel">@Localizer["Cancel"]</button>
             </div>
             <ValidationSummary />
         </EditForm>

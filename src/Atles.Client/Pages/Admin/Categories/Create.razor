@@ -4,13 +4,13 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
-        <li class="breadcrumb-item"><a href="/admin/categories">@Loc["Categories"]</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Loc["Create New Category"]</li>
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Localizer["Home"]</a></li>
+        <li class="breadcrumb-item"><a href="/admin/categories">@Localizer["Categories"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Localizer["Create New Category"]</li>
     </ol>
 </nav>
 
-<h3 class="mb-3">@Loc["Create New Category"]</h3>
+<h3 class="mb-3">@Localizer["Create New Category"]</h3>
 
 @if (Model == null)
 {
@@ -18,5 +18,6 @@
 }
 else
 {
-    <Form Model="Model" Button="@Loc["Save"]" OnValidSubmit="@SaveAsync"></Form>
+    <Form Model="Model" SubmitButtonText="@Localizer["Save"]" OnValidSubmit="@SaveAsync" OnCancel="Cancel"></Form>
+    <label @bind="ErrorMessage"></label>
 }

@@ -41,7 +41,7 @@ namespace Atles.Client.Pages.Admin.PermissionSets
                 {
                     var fieldIdentifier = new FieldIdentifier(EditContext.Model, "Name");
                     _validationMessageStore.Clear(fieldIdentifier);
-                    _validationMessageStore.Add(fieldIdentifier, Loc["A permission set with the same name already exists."]);
+                    _validationMessageStore.Add(fieldIdentifier, Localizer["A permission set with the same name already exists."]);
                     EditContext.NotifyValidationStateChanged();
                 }
             }
