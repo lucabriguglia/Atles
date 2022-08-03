@@ -5,6 +5,7 @@ using Atles.Core;
 using Atles.Domain;
 using Atles.Models.Admin;
 using Atles.Queries.Admin;
+using Atles.Server.Mapping;
 using Atles.Validators.ValidationRules;
 using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
@@ -16,17 +17,20 @@ public class CategoriesController : AdminControllerBase
 {
     private readonly IDispatcher _dispatcher;
     private readonly ICategoryValidationRules _categoryValidationRules;
-    private readonly IValidator<CategoryFormModel> _createValidator;
-
+    private readonly IMapper<CategoryFormModel.CategoryModel, CreateCategory> _createCategoryMapper;
+    private readonly IValidator<CategoryFormModel.CategoryModel> _createCategoryValidator;
+    
     public CategoriesController(
         IDispatcher dispatcher,
-        ICategoryValidationRules categoryValidationRules, 
-        IValidator<CategoryFormModel> createValidator) 
+        ICategoryValidationRules categoryValidationRules,
+        IMapper<CategoryFormModel.CategoryModel, CreateCategory> createCategoryMapper,
+        IValidator<CategoryFormModel.CategoryModel> createCategoryValidator) 
         : base(dispatcher)
     {
         _dispatcher = dispatcher;
         _categoryValidationRules = categoryValidationRules;
-        _createValidator = createValidator;
+        _createCategoryValidator = createCategoryValidator;
+        _createCategoryMapper = createCategoryMapper;
     }
 
     [HttpGet("list")]
@@ -50,17 +54,7 @@ public class CategoriesController : AdminControllerBase
     [HttpPost("save")]
     public async Task<ActionResult> Save(CategoryFormModel.CategoryModel model)
     {
-        var command = new CreateCategory
-        {
-            Name = model.Name,
-            PermissionSetId = model.PermissionSetId,
-            SiteId = CurrentSite.Id,
-            UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
+        return await ProcessPost(model, _createCategoryMapper, _createCategoryValidator);
     }
 
     [HttpGet("edit/{id}")]

@@ -5,6 +5,7 @@ using Atles.Core;
 using Atles.Core.Commands;
 using Atles.Core.Queries;
 using Atles.Core.Utilities;
+using Atles.Models.Admin;
 using Atles.Models.Public;
 using Atles.Queries.Public;
 using Atles.Server.Extensions;
@@ -75,9 +76,11 @@ public abstract class SiteControllerBase : ControllerBase
         TModel model,
         IMapper<TModel, TCommand> mapper,
         IValidator<TModel> validator = null)
-        where TModel : class
+        where TModel : ISiteFormModel
         where TCommand : ICommand
     {
+        model.SiteId = CurrentSite.Id;
+
         if (validator is not null)
         {
             var validationResult = await validator.ValidateAsync(model);
