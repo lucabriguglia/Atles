@@ -1,6 +1,6 @@
 ﻿using Atles.Commands.Posts;
 using Atles.Core;
-using Atles.Validators.Forums;
+using Atles.Validators.ValidationRules;
 using FluentValidation;
 
 namespace Atles.Validators.Posts

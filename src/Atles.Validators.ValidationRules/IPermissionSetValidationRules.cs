@@ -1,4 +1,4 @@
-﻿namespace Atles.Validators.PermissionSets;
+﻿namespace Atles.Validators.ValidationRules;
 
 public interface IPermissionSetValidationRules
 {

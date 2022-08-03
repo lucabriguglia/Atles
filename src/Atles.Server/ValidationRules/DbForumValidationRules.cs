@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Atles.Data;
 using Atles.Domain;
-using Atles.Validators.Forums;
+using Atles.Validators.ValidationRules;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Server.ValidationRules;

@@ -1,4 +1,4 @@
-﻿namespace Atles.Validators.Categories;
+﻿namespace Atles.Validators.ValidationRules;
 
 public interface ICategoryValidationRules
 {

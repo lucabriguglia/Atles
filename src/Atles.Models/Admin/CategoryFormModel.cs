@@ -1,8 +1,8 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Atles.Models.Admin.Categories;
+namespace Atles.Models.Admin;
 
-public class FormComponentModel
+public class CategoryFormModel
 {
     public CategoryModel Category { get; set; } = new();
     public IList<PermissionSetModel> PermissionSets { get; set; } = new List<PermissionSetModel>();

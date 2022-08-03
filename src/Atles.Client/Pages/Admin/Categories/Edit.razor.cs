@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Models.Admin.Categories;
+using Atles.Models.Admin;
 using Microsoft.AspNetCore.Components;
 
 namespace Atles.Client.Pages.Admin.Categories
@@ -10,11 +10,11 @@ namespace Atles.Client.Pages.Admin.Categories
     {
         [Parameter] public Guid Id { get; set; }
 
-        protected FormComponentModel Model { get; set; }
+        protected CategoryFormModel Model { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
-            Model = await ApiService.GetFromJsonAsync<FormComponentModel>($"api/admin/categories/edit/{Id}");
+            Model = await ApiService.GetFromJsonAsync<CategoryFormModel>($"api/admin/categories/edit/{Id}");
         }
 
         protected async Task UpdateAsync()

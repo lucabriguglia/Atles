@@ -1,8 +1,6 @@
 ﻿using Atles.Commands.Subscriptions;
 using Atles.Domain;
-using Atles.Validators.Categories;
-using Atles.Validators.Forums;
-using Atles.Validators.Posts;
+using Atles.Validators.ValidationRules;
 using FluentValidation;
 
 namespace Atles.Validators.Subscriptions;

@@ -30,6 +30,7 @@
   <ItemGroup>
     <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
     <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
+    <ProjectReference Include="..\Atles.Validators.ValidationRules\Atles.Validators.ValidationRules.csproj" />
   </ItemGroup>
 
   <ItemGroup>

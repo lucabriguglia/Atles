@@ -1,5 +1,5 @@
 ﻿using Atles.Commands.Forums;
-using Atles.Validators.PermissionSets;
+using Atles.Validators.ValidationRules;
 using FluentValidation;
 
 namespace Atles.Validators.Forums

@@ -5,7 +5,7 @@ using Atles.Core;
 using Atles.Domain;
 using Atles.Models.Admin.Forums;
 using Atles.Queries.Admin;
-using Atles.Validators.Forums;
+using Atles.Validators.ValidationRules;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin;

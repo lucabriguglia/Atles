@@ -1,16 +1,16 @@
 ﻿using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Models.Admin.Categories;
+using Atles.Models.Admin;
 
 namespace Atles.Client.Pages.Admin.Categories
 {
     public abstract class CreatePage : AdminPageBase
     {
-        protected FormComponentModel Model { get; set; }
+        protected CategoryFormModel Model { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Model = await ApiService.GetFromJsonAsync<FormComponentModel>("api/admin/categories/create");
+            Model = await ApiService.GetFromJsonAsync<CategoryFormModel>("api/admin/categories/create");
         }
 
         protected async Task SaveAsync()

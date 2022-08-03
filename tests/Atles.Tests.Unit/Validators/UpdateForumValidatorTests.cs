@@ -1,6 +1,7 @@
 ﻿using Atles.Commands.Forums;
 using Atles.Validators.Forums;
 using Atles.Validators.PermissionSets;
+using Atles.Validators.ValidationRules;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;

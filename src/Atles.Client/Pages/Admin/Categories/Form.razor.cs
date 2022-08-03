@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Models.Admin.Categories;
+using Atles.Models.Admin;
 using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Forms;
 
@@ -8,7 +8,7 @@ namespace Atles.Client.Pages.Admin.Categories
 {
     public abstract class FormComponent : AdminComponentBase
     {
-        [Parameter] public FormComponentModel Model { get; set; }
+        [Parameter] public CategoryFormModel Model { get; set; }
         [Parameter] public string Button { get; set; }
         [Parameter] public EventCallback OnValidSubmit { get; set; }
 

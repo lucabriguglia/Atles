@@ -14,6 +14,7 @@
     <ProjectReference Include="..\Atles.Commands\Atles.Commands.csproj" />
     <ProjectReference Include="..\Atles.Core\Atles.Core.csproj" />
     <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
+    <ProjectReference Include="..\Atles.Validators.ValidationRules\Atles.Validators.ValidationRules.csproj" />
   </ItemGroup>
 
 </Project>

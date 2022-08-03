@@ -4,7 +4,7 @@ using Atles.Commands.PermissionSets;
 using Atles.Core;
 using Atles.Models.Admin.PermissionSets;
 using Atles.Queries.Admin;
-using Atles.Validators.PermissionSets;
+using Atles.Validators.ValidationRules;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin;

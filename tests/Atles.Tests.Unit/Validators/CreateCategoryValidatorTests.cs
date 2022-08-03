@@ -1,6 +1,7 @@
 ﻿using Atles.Commands.Categories;
 using Atles.Validators.Categories;
 using Atles.Validators.PermissionSets;
+using Atles.Validators.ValidationRules;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using Moq;

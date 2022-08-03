@@ -1,4 +1,4 @@
-﻿namespace Atles.Validators.Posts;
+﻿namespace Atles.Validators.ValidationRules;
 
 public interface ITopicValidationRules
 {

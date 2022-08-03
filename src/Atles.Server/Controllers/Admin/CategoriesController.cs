@@ -3,9 +3,10 @@ using System.Threading.Tasks;
 using Atles.Commands.Categories;
 using Atles.Core;
 using Atles.Domain;
-using Atles.Models.Admin.Categories;
+using Atles.Models.Admin;
 using Atles.Queries.Admin;
-using Atles.Validators.Categories;
+using Atles.Validators.ValidationRules;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin;
@@ -15,14 +16,17 @@ public class CategoriesController : AdminControllerBase
 {
     private readonly IDispatcher _dispatcher;
     private readonly ICategoryValidationRules _categoryValidationRules;
+    private readonly IValidator<CategoryFormModel> _createValidator;
 
     public CategoriesController(
         IDispatcher dispatcher,
-        ICategoryValidationRules categoryValidationRules) 
+        ICategoryValidationRules categoryValidationRules, 
+        IValidator<CategoryFormModel> createValidator) 
         : base(dispatcher)
     {
         _dispatcher = dispatcher;
         _categoryValidationRules = categoryValidationRules;
+        _createValidator = createValidator;
     }
 
     [HttpGet("list")]
@@ -44,7 +48,7 @@ public class CategoriesController : AdminControllerBase
     }
 
     [HttpPost("save")]
-    public async Task<ActionResult> Save(FormComponentModel.CategoryModel model)
+    public async Task<ActionResult> Save(CategoryFormModel.CategoryModel model)
     {
         var command = new CreateCategory
         {
@@ -70,7 +74,7 @@ public class CategoriesController : AdminControllerBase
     }
 
     [HttpPost("update")]
-    public async Task<ActionResult> Update(FormComponentModel.CategoryModel model)
+    public async Task<ActionResult> Update(CategoryFormModel.CategoryModel model)
     {
         var command = new UpdateCategory
         {

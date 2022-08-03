@@ -30,6 +30,7 @@ public abstract class SiteControllerBase : ControllerBase
         {
             if (_currentUser == null)
             {
+                // TODO: Move to a service
                 var queryResult = AsyncUtil.RunSync(() => _dispatcher.Get(new GetCurrentUser()));
                 _currentUser = queryResult.AsT0;
             }
@@ -45,6 +46,7 @@ public abstract class SiteControllerBase : ControllerBase
         {
             if (_currentSite == null)
             {
+                // TODO: Move to a service
                 var queryResult = AsyncUtil.RunSync(() => _dispatcher.Get(new GetCurrentSite()));
                 _currentSite = queryResult.AsT0;
             }
@@ -60,6 +62,7 @@ public abstract class SiteControllerBase : ControllerBase
         {
             if (_currentForums == null)
             {
+                // TODO: Move to a service
                 var queryResult = AsyncUtil.RunSync(() => _dispatcher.Get(new GetCurrentForums()));
                 _currentForums = queryResult.AsT0;
             }

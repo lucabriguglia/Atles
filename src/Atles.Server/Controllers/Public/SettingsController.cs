@@ -3,7 +3,7 @@ using Atles.Commands.Users;
 using Atles.Core;
 using Atles.Models.Public;
 using Atles.Queries.Public;
-using Atles.Validators.Users;
+using Atles.Validators.ValidationRules;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;

@@ -5,67 +5,66 @@ using Atles.Core.Queries;
 using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
-using Atles.Models.Admin.Categories;
+using Atles.Models.Admin;
 using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Queries.Handlers.Admin
+namespace Atles.Queries.Handlers.Admin;
+
+public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, CategoryFormModel>
 {
-    public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, FormComponentModel>
+    private readonly AtlesDbContext _dbContext;
+
+    public GetCategoryFormHandler(AtlesDbContext dbContext)
     {
-        private readonly AtlesDbContext _dbContext;
+        _dbContext = dbContext;
+    }
 
-        public GetCategoryFormHandler(AtlesDbContext dbContext)
+    public async Task<QueryResult<CategoryFormModel>> Handle(GetCategoryForm query)
+    {
+        var result = new CategoryFormModel();
+
+        var permissionSets = await _dbContext.PermissionSets
+            .Where(x => x.SiteId == query.SiteId && x.Status == PermissionSetStatusType.Published)
+            .ToListAsync();
+
+        if (query.Id != null)
         {
-            _dbContext = dbContext;
+            var category = await _dbContext.Categories
+                .FirstOrDefaultAsync(x =>
+                    x.SiteId == query.SiteId &&
+                    x.Id == query.Id &&
+                    x.Status != CategoryStatusType.Deleted);
+
+            if (category == null)
+            {
+                return null;
+            }
+
+            result.Category = new CategoryFormModel.CategoryModel
+            {
+                Id = category.Id,
+                Name = category.Name,
+                PermissionSetId = category.PermissionSetId
+            };
+        }
+        else
+        {
+            result.Category = new CategoryFormModel.CategoryModel
+            {
+                PermissionSetId = permissionSets.FirstOrDefault()?.Id ?? Guid.Empty
+            };
         }
 
-        public async Task<QueryResult<FormComponentModel>> Handle(GetCategoryForm query)
+        foreach (var permissionSet in permissionSets)
         {
-            var result = new FormComponentModel();
-
-            var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == query.SiteId && x.Status == PermissionSetStatusType.Published)
-                .ToListAsync();
-
-            if (query.Id != null)
+            result.PermissionSets.Add(new CategoryFormModel.PermissionSetModel
             {
-                var category = await _dbContext.Categories
-                    .FirstOrDefaultAsync(x =>
-                        x.SiteId == query.SiteId &&
-                        x.Id == query.Id &&
-                        x.Status != CategoryStatusType.Deleted);
-
-                if (category == null)
-                {
-                    return null;
-                }
-
-                result.Category = new FormComponentModel.CategoryModel
-                {
-                    Id = category.Id,
-                    Name = category.Name,
-                    PermissionSetId = category.PermissionSetId
-                };
-            }
-            else
-            {
-                result.Category = new FormComponentModel.CategoryModel
-                {
-                    PermissionSetId = permissionSets.FirstOrDefault()?.Id ?? Guid.Empty
-                };
-            }
-
-            foreach (var permissionSet in permissionSets)
-            {
-                result.PermissionSets.Add(new FormComponentModel.PermissionSetModel
-                {
-                    Id = permissionSet.Id,
-                    Name = permissionSet.Name
-                });
-            }
-
-            return result;
+                Id = permissionSet.Id,
+                Name = permissionSet.Name
+            });
         }
+
+        return result;
     }
 }

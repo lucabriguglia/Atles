@@ -1,4 +1,4 @@
-﻿namespace Atles.Validators.Forums;
+﻿namespace Atles.Validators.ValidationRules;
 
 public interface IForumValidationRules
 {
