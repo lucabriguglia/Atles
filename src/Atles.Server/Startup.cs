@@ -10,7 +10,7 @@ using Atles.Events.Handlers.ReplyCreatedHandlers;
 using Atles.Models.Admin.Categories;
 using Atles.Queries.Handlers.Admin;
 using Atles.Server.Extensions;
-using Atles.Server.Middlewares;
+using Atles.Server.Middleware;
 using Atles.Server.Services;
 using Atles.Validators.Categories;
 using Docs;

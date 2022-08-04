@@ -6,7 +6,7 @@
             <FluentValidationValidator />
             <div class="form-group">
                 <label for="name" class="control-label">@Localizer["Name"]</label>
-                <InputText id="name" @bind-Value="Model.Category.Name" Class="form-control" />
+                <input type="text" id="name" @bind="Model.Category.Name" class="form-control" />
                 <ValidationMessage For="@(() => Model.Category.Name)" />
             </div>
             <div class="form-group">
