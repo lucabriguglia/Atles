@@ -41,7 +41,7 @@ public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, CreateCateg
                 return null;
             }
 
-            result.Category = new CategoryFormModelBase.CategoryModel
+            result.Category = new CreateCategoryFormModel.CategoryModel
             {
                 Id = category.Id,
                 Name = category.Name,
@@ -50,7 +50,7 @@ public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, CreateCateg
         }
         else
         {
-            result.Category = new CategoryFormModelBase.CategoryModel
+            result.Category = new CreateCategoryFormModel.CategoryModel
             {
                 PermissionSetId = permissionSets.FirstOrDefault()?.Id ?? Guid.Empty
             };
@@ -58,7 +58,7 @@ public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, CreateCateg
 
         foreach (var permissionSet in permissionSets)
         {
-            result.PermissionSets.Add(new CategoryFormModelBase.PermissionSetModel
+            result.PermissionSets.Add(new CreateCategoryFormModel.PermissionSetModel
             {
                 Id = permissionSet.Id,
                 Name = permissionSet.Name

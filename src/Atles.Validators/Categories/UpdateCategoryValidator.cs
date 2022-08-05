@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Atles.Validators.Categories;
 
-public class UpdateCategoryValidator : AbstractValidator<CategoryFormModelBase.CategoryModel>
+public class UpdateCategoryValidator : AbstractValidator<UpdateCategoryFormModel.CategoryModel>
 {
     public UpdateCategoryValidator(ICategoryValidationRules categoryValidationRules, IPermissionSetValidationRules permissionSetValidationRules)
     {
@@ -19,10 +19,10 @@ public class UpdateCategoryValidator : AbstractValidator<CategoryFormModelBase.C
         RuleFor(model => model.PermissionSetId)
             .MustAsync(PermissionSetBeValid).WithMessage(model => $"Permission set with id {model.PermissionSetId} is not valid.");
 
-        async Task<bool> CategoryNameBeUnique(CategoryFormModelBase.CategoryModel model, string name, CancellationToken cancellation) =>
+        async Task<bool> CategoryNameBeUnique(UpdateCategoryFormModel.CategoryModel model, string name, CancellationToken cancellation) =>
             await categoryValidationRules.IsCategoryNameUnique(model.SiteId, name, model.Id);
 
-        async Task<bool> PermissionSetBeValid(CategoryFormModelBase.CategoryModel model, Guid permissionSetId, CancellationToken cancellation) =>
+        async Task<bool> PermissionSetBeValid(UpdateCategoryFormModel.CategoryModel model, Guid permissionSetId, CancellationToken cancellation) =>
             await permissionSetValidationRules.IsPermissionSetValid(model.SiteId, permissionSetId);
     }
 }

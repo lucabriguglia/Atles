@@ -4,9 +4,9 @@ using Atles.Models.Admin;
 
 namespace Atles.Server.Mapping;
 
-public class UpdateCategoryMapper : IMapper<CategoryFormModelBase.CategoryModel, UpdateCategory>
+public class UpdateCategoryMapper : IMapper<UpdateCategoryFormModel.CategoryModel, UpdateCategory>
 {
-    public UpdateCategory Map(CategoryFormModelBase.CategoryModel model, Guid userId)
+    public UpdateCategory Map(UpdateCategoryFormModel.CategoryModel model, Guid userId)
     {
         return new UpdateCategory
         {

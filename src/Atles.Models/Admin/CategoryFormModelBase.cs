@@ -1,6 +1,6 @@
 ﻿namespace Atles.Models.Admin;
 
-public abstract class CategoryFormModelBase
+public class CreateCategoryFormModel
 {
     public CategoryModel Category { get; set; } = new();
     public IList<PermissionSetModel> PermissionSets { get; set; } = new List<PermissionSetModel>();

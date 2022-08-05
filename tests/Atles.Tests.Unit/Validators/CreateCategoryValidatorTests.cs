@@ -15,7 +15,7 @@ public class CreateCategoryValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_name_is_empty()
     {
-        var model = Fixture.Build<CategoryFormModelBase.CategoryModel>().With(x => x.Name, string.Empty).Create();
+        var model = Fixture.Build<CreateCategoryFormModel.CategoryModel>().With(x => x.Name, string.Empty).Create();
 
         var categoryValidationRules = new Mock<ICategoryValidationRules>();
         var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
@@ -29,7 +29,7 @@ public class CreateCategoryValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_name_is_too_long()
     {
-        var model = Fixture.Build<CategoryFormModelBase.CategoryModel>().With(x => x.Name, new string('*', 51)).Create();
+        var model = Fixture.Build<CreateCategoryFormModel.CategoryModel>().With(x => x.Name, new string('*', 51)).Create();
 
         var categoryValidationRules = new Mock<ICategoryValidationRules>();
         var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
@@ -43,7 +43,7 @@ public class CreateCategoryValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_name_is_not_unique()
     {
-        var model = Fixture.Create<CategoryFormModelBase.CategoryModel>();
+        var model = Fixture.Create<CreateCategoryFormModel.CategoryModel>();
 
         var categoryValidationRules = new Mock<ICategoryValidationRules>();
         categoryValidationRules
@@ -60,7 +60,7 @@ public class CreateCategoryValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_permission_set_is_not_valid()
     {
-        var model = Fixture.Create<CategoryFormModelBase.CategoryModel>();
+        var model = Fixture.Create<CreateCategoryFormModel.CategoryModel>();
 
         var categoryValidationRules = new Mock<ICategoryValidationRules>();
         var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();

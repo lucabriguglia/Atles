@@ -4,9 +4,9 @@ using Atles.Models.Admin;
 
 namespace Atles.Server.Mapping;
 
-public class CreateCategoryMapper : IMapper<CategoryFormModelBase.CategoryModel, CreateCategory>
+public class CreateCategoryMapper : IMapper<CreateCategoryFormModel.CategoryModel, CreateCategory>
 {
-    public CreateCategory Map(CategoryFormModelBase.CategoryModel model, Guid userId)
+    public CreateCategory Map(CreateCategoryFormModel.CategoryModel model, Guid userId)
     {
         return new CreateCategory
         {
