@@ -110,11 +110,4 @@ public class PermissionSetsController : AdminControllerBase
         var isNameUnique = await _permissionSetValidationRules.IsPermissionSetNameUnique(CurrentSite.Id, name, id);
         return Ok(isNameUnique);
     }
-
-    [HttpGet("is-valid/{id}")]
-    public async Task<ActionResult> IsValid(Guid id)
-    {
-        var isValid = await _permissionSetValidationRules.IsPermissionSetValid(CurrentSite.Id, id);
-        return Ok(isValid);
-    }
 }
