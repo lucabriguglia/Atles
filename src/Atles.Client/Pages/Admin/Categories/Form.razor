@@ -11,12 +11,12 @@
             </div>
             <div class="form-group">
                 <label for="permissionSetId" class="control-label">@Localizer["Permission Set"]</label>
-                <select id="permissionSetId" @bind="Model.Category.PermissionSetId" class="form-control">
+                <InputSelect id="permissionSetId" @bind-Value="Model.Category.PermissionSetId" class="form-control">
                     @foreach (var item in Model.PermissionSets)
                     {
                         <option value="@item.Id">@item.Name</option>
                     }
-                </select>
+                </InputSelect>
             </div>
             <div class="form-group">
                 <input type="submit" value="@SubmitButtonText" class="btn btn-primary mb-1" />

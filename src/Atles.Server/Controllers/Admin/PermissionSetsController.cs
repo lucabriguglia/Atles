@@ -114,7 +114,7 @@ public class PermissionSetsController : AdminControllerBase
     [HttpGet("is-valid/{id}")]
     public async Task<ActionResult> IsValid(Guid id)
     {
-        var isNameUnique = await _permissionSetValidationRules.IsPermissionSetValid(CurrentSite.Id, id);
-        return Ok(isNameUnique);
+        var isValid = await _permissionSetValidationRules.IsPermissionSetValid(CurrentSite.Id, id);
+        return Ok(isValid);
     }
 }
