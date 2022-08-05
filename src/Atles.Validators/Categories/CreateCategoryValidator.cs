@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Atles.Validators.Categories;
 
-public class CreateCategoryValidator : AbstractValidator<CategoryFormModel.CategoryModel>
+public class CreateCategoryValidator : AbstractValidator<CategoryFormModelBase.CategoryModel>
 {
     public CreateCategoryValidator(ICategoryValidationRules categoryValidationRules, IPermissionSetValidationRules permissionSetValidationRules)
     {
@@ -13,16 +13,16 @@ public class CreateCategoryValidator : AbstractValidator<CategoryFormModel.Categ
             .Length(1, 50).WithMessage("Category name must be at least 1 and at max 50 characters long.");
 
         RuleFor(model => model.Name)
-            .MustAsync(NameBeUnique).WithMessage(model => $"A category with name {model.Name} already exists.")
+            .MustAsync(CategoryNameBeUnique).WithMessage(model => $"A category with name {model.Name} already exists.")
             .When(model => !string.IsNullOrEmpty(model.Name) && model.Name.Length <= 50);
 
         RuleFor(model => model.PermissionSetId)
-            .MustAsync(PermissionSetBeValid).WithMessage(model => $"Permission set with id {model.PermissionSetId} does not exist.");
+            .MustAsync(PermissionSetBeValid).WithMessage(model => $"Permission set with id {model.PermissionSetId} is not valid.");
 
-        async Task<bool> NameBeUnique(CategoryFormModel.CategoryModel model, string name, CancellationToken cancellation) => 
+        async Task<bool> CategoryNameBeUnique(CategoryFormModelBase.CategoryModel model, string name, CancellationToken cancellation) => 
             await categoryValidationRules.IsCategoryNameUnique(model.SiteId, name);
 
-        async Task<bool> PermissionSetBeValid(CategoryFormModel.CategoryModel model, Guid permissionSetId, CancellationToken cancellation) => 
+        async Task<bool> PermissionSetBeValid(CategoryFormModelBase.CategoryModel model, Guid permissionSetId, CancellationToken cancellation) => 
             await permissionSetValidationRules.IsPermissionSetValid(model.SiteId, permissionSetId);
     }
 }

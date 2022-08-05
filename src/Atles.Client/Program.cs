@@ -6,7 +6,6 @@ using Atles.Client.Services.Api;
 using Atles.Client.Services.PostReactions;
 using Atles.Client.Services.Storage;
 using Atles.Client.ValidationRules;
-using Atles.Commands.Categories;
 using Atles.Models.Admin;
 using Atles.Models.Public;
 using Atles.Validators.Categories;
@@ -66,7 +65,8 @@ public class Program
         builder.Services.AddTransient<IPermissionSetValidationRules, ApiPermissionSetValidationRules>();
         builder.Services.AddTransient<ITopicValidationRules, ApiTopicValidationRules>();
 
-        builder.Services.AddTransient<IValidator<CategoryFormModel.CategoryModel>, CreateCategoryValidator>();
+        builder.Services.AddTransient<IValidator<CreateCategoryFormModel.CategoryModel>, CreateCategoryValidator>();
+        builder.Services.AddTransient<IValidator<UpdateCategoryFormModel.CategoryModel>, UpdateCategoryValidator>();
 
         builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 

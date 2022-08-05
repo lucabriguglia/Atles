@@ -79,6 +79,7 @@ public abstract class SiteControllerBase : ControllerBase
         where TModel : ISiteFormModel
         where TCommand : ICommand
     {
+        // TODO: Populate site id in model and validate request
         model.SiteId = CurrentSite.Id;
 
         if (validator is not null)

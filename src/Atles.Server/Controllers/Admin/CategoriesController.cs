@@ -17,19 +17,25 @@ public class CategoriesController : AdminControllerBase
 {
     private readonly IDispatcher _dispatcher;
     private readonly ICategoryValidationRules _categoryValidationRules;
-    private readonly IMapper<CategoryFormModel.CategoryModel, CreateCategory> _createCategoryMapper;
-    private readonly IValidator<CategoryFormModel.CategoryModel> _createCategoryValidator;
-    
+    private readonly IMapper<CategoryFormModelBase.CategoryModel, CreateCategory> _createCategoryMapper;
+    private readonly IValidator<CategoryFormModelBase.CategoryModel> _createCategoryValidator;
+    private readonly IMapper<CategoryFormModelBase.CategoryModel, UpdateCategory> _updateCategoryMapper;
+    private readonly IValidator<CategoryFormModelBase.CategoryModel> _updateCategoryValidator;
+
     public CategoriesController(
         IDispatcher dispatcher,
         ICategoryValidationRules categoryValidationRules,
-        IMapper<CategoryFormModel.CategoryModel, CreateCategory> createCategoryMapper,
-        IValidator<CategoryFormModel.CategoryModel> createCategoryValidator) 
+        IMapper<CategoryFormModelBase.CategoryModel, CreateCategory> createCategoryMapper,
+        IValidator<CategoryFormModelBase.CategoryModel> createCategoryValidator, 
+        IMapper<CategoryFormModelBase.CategoryModel, UpdateCategory> updateCategoryMapper, 
+        IValidator<CategoryFormModelBase.CategoryModel> updateCategoryValidator) 
         : base(dispatcher)
     {
         _dispatcher = dispatcher;
         _categoryValidationRules = categoryValidationRules;
         _createCategoryValidator = createCategoryValidator;
+        _updateCategoryMapper = updateCategoryMapper;
+        _updateCategoryValidator = updateCategoryValidator;
         _createCategoryMapper = createCategoryMapper;
     }
 
@@ -52,7 +58,7 @@ public class CategoriesController : AdminControllerBase
     }
 
     [HttpPost("save")]
-    public async Task<ActionResult> Save(CategoryFormModel.CategoryModel model)
+    public async Task<ActionResult> Save(CategoryFormModelBase.CategoryModel model)
     {
         return await ProcessPost(model, _createCategoryMapper, _createCategoryValidator);
     }
@@ -68,20 +74,9 @@ public class CategoriesController : AdminControllerBase
     }
 
     [HttpPost("update")]
-    public async Task<ActionResult> Update(CategoryFormModel.CategoryModel model)
+    public async Task<ActionResult> Update(CategoryFormModelBase.CategoryModel model)
     {
-        var command = new UpdateCategory
-        {
-            CategoryId = model.Id,
-            Name = model.Name,
-            PermissionSetId = model.PermissionSetId,
-            SiteId = CurrentSite.Id,
-            UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
+        return await ProcessPost(model, _updateCategoryMapper, _updateCategoryValidator);
     }
 
     [HttpPost("move-up")]

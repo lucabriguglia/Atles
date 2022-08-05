@@ -7,12 +7,12 @@ namespace Atles.Client.Pages.Admin.Categories;
 
 public abstract class CreatePage : AdminPageBase
 {
-    protected CategoryFormModel Model { get; set; }
+    protected CreateCategoryFormModel Model { get; set; }
     protected string ErrorMessage { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await ApiService.GetFromJsonAsync<CategoryFormModel>("api/admin/categories/create");
+        Model = await ApiService.GetFromJsonAsync<CreateCategoryFormModel>("api/admin/categories/create");
     }
 
     protected async Task SaveAsync()

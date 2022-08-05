@@ -10,11 +10,11 @@ public abstract class EditPage : AdminPageBase
 {
     [Parameter] public Guid Id { get; set; }
 
-    protected CategoryFormModel Model { get; set; }
+    protected CreateCategoryFormModel Model { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        Model = await ApiService.GetFromJsonAsync<CategoryFormModel>($"api/admin/categories/edit/{Id}");
+        Model = await ApiService.GetFromJsonAsync<CreateCategoryFormModel>($"api/admin/categories/edit/{Id}");
     }
 
     protected async Task UpdateAsync()
