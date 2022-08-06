@@ -13,7 +13,6 @@ namespace Atles.Server.Controllers.Admin;
 [Route("api/admin/categories")]
 public class CategoriesController : AdminControllerBase
 {
-    private readonly IDispatcher _dispatcher;
     private readonly ICategoryValidationRules _categoryValidationRules;
     private readonly IMapper<CreateCategoryFormModel.CategoryModel, CreateCategory> _createCategoryMapper;
     private readonly IValidator<CreateCategoryFormModel.CategoryModel> _createCategoryValidator;
@@ -29,7 +28,6 @@ public class CategoriesController : AdminControllerBase
         IValidator<UpdateCategoryFormModel.CategoryModel> updateCategoryValidator) 
         : base(dispatcher)
     {
-        _dispatcher = dispatcher;
         _categoryValidationRules = categoryValidationRules;
         _createCategoryValidator = createCategoryValidator;
         _updateCategoryMapper = updateCategoryMapper;

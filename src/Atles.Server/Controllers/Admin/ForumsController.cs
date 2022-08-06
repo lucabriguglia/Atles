@@ -13,7 +13,6 @@ namespace Atles.Server.Controllers.Admin;
 [Route("api/admin/forums")]
 public class ForumsController : AdminControllerBase
 {
-    private readonly IDispatcher _dispatcher;
     private readonly IForumValidationRules _forumValidationRules;
     private readonly IMapper<ForumFormModelBase.ForumModel, CreateForum> _createForumMapper;
     private readonly IValidator<ForumFormModelBase.ForumModel> _createForumValidator;
@@ -29,7 +28,6 @@ public class ForumsController : AdminControllerBase
         IValidator<ForumFormModelBase.ForumModel> updateForumValidator) 
         : base(dispatcher)
     {
-        _dispatcher = dispatcher;
         _forumValidationRules = forumValidationRules;
         _createForumMapper = createForumMapper;
         _createForumValidator = createForumValidator;
@@ -66,51 +64,33 @@ public class ForumsController : AdminControllerBase
         await ProcessPost(model, _updateForumMapper, _updateForumValidator);
 
     [HttpPost("move-up")]
-    public async Task<ActionResult> MoveUp([FromBody] Guid id)
-    {
-        var command = new MoveForum
+    public async Task<ActionResult> MoveUp([FromBody] Guid id) =>
+        await ProcessPost(new MoveForum
         {
             ForumId = id,
             Direction = DirectionType.Up,
             SiteId = CurrentSite.Id,
             UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+        });
 
     [HttpPost("move-down")]
-    public async Task<ActionResult> MoveDown([FromBody] Guid id)
-    {
-        var command = new MoveForum
+    public async Task<ActionResult> MoveDown([FromBody] Guid id) =>
+        await ProcessPost(new MoveForum
         {
             ForumId = id,
             Direction = DirectionType.Down,
             SiteId = CurrentSite.Id,
             UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+        });
 
     [HttpDelete("delete/{id}")]
-    public async Task<ActionResult> Delete(Guid id)
-    {
-        var command = new DeleteForum
+    public async Task<ActionResult> Delete(Guid id) =>
+        await ProcessPost(new DeleteForum
         {
             ForumId = id,
             SiteId = CurrentSite.Id,
             UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+        });
 
     [HttpGet("is-name-unique/{categoryId}/{name}")]
     public async Task<IActionResult> IsNameUnique(Guid categoryId, string name) => 
