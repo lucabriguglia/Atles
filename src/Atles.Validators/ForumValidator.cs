@@ -2,7 +2,7 @@
 using Atles.Validators.ValidationRules;
 using FluentValidation;
 
-namespace Atles.Validators.Forums;
+namespace Atles.Validators;
 
 public class ForumValidator : AbstractValidator<ForumFormModel.ForumModel>
 {

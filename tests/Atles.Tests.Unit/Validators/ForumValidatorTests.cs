@@ -1,5 +1,5 @@
 ﻿using Atles.Models.Admin.Forums;
-using Atles.Validators.Forums;
+using Atles.Validators;
 using Atles.Validators.ValidationRules;
 using AutoFixture;
 using FluentValidation.TestHelper;
