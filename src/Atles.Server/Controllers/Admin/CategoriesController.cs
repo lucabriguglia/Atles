@@ -37,11 +37,11 @@ public class CategoriesController : AdminControllerBase
 
     [HttpGet("list")]
     public async Task<ActionResult> List() => 
-        await ProcessGet(new GetCategoriesIndex { SiteId = CurrentSite.Id });
+        await ProcessGet(new GetCategoriesIndex(CurrentSite.Id));
 
     [HttpGet("create")]
     public async Task<ActionResult> Create() => 
-        await ProcessGet(new GetCategoryForm { SiteId = CurrentSite.Id });
+        await ProcessGet(new GetCategoryForm(CurrentSite.Id));
 
     [HttpPost("save")]
     public async Task<ActionResult> Save(CreateCategoryFormModel.CategoryModel model) => 
@@ -49,7 +49,7 @@ public class CategoriesController : AdminControllerBase
 
     [HttpGet("edit/{id}")]
     public async Task<ActionResult> Edit(Guid id) => 
-        await ProcessGet(new GetCategoryForm { SiteId = CurrentSite.Id, Id = id });
+        await ProcessGet(new GetCategoryForm(CurrentSite.Id, id));
 
     [HttpPost("update")]
     public async Task<ActionResult> Update(UpdateCategoryFormModel.CategoryModel model) => 

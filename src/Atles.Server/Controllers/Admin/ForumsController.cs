@@ -37,19 +37,19 @@ public class ForumsController : AdminControllerBase
 
     [HttpGet("index-model")]
     public async Task<ActionResult> Index() =>
-        await ProcessGet(new GetForumsIndex { SiteId = CurrentSite.Id });
+        await ProcessGet(new GetForumsIndex(CurrentSite.Id));
 
     [HttpGet("index-model/{categoryId}")]
     public async Task<ActionResult> Index(Guid categoryId) =>
-        await ProcessGet(new GetForumsIndex { SiteId = CurrentSite.Id, CategoryId = categoryId });
+        await ProcessGet(new GetForumsIndex(CurrentSite.Id, categoryId));
 
     [HttpGet("create")]
     public async Task<ActionResult> Create() =>
-        await ProcessGet(new GetForumCreateForm { SiteId = CurrentSite.Id });
+        await ProcessGet(new GetForumCreateForm(CurrentSite.Id));
 
     [HttpGet("create/{categoryId}")]
     public async Task<ActionResult> Create(Guid categoryId) =>
-        await ProcessGet(new GetForumCreateForm { SiteId = CurrentSite.Id, CategoryId = categoryId });
+        await ProcessGet(new GetForumCreateForm(CurrentSite.Id, categoryId));
 
     [HttpPost("save")]
     public async Task<ActionResult> Save(ForumFormModelBase.ForumModel model) => 
