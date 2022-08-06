@@ -3,7 +3,6 @@ using System.Threading.Tasks;
 using Atles.Commands.Categories;
 using Atles.Core;
 using Atles.Domain;
-using Atles.Models.Admin;
 using Atles.Models.Admin.Categories;
 using Atles.Queries.Admin;
 using Atles.Server.Mapping;
@@ -41,44 +40,24 @@ public class CategoriesController : AdminControllerBase
     }
 
     [HttpGet("list")]
-    public async Task<ActionResult> List()
-    {
-        return await ProcessGet(new GetCategoriesIndex
-        {
-            SiteId = CurrentSite.Id
-        });
-    }
+    public async Task<ActionResult> List() => 
+        await ProcessGet(new GetCategoriesIndex { SiteId = CurrentSite.Id });
 
     [HttpGet("create")]
-    public async Task<ActionResult> Create()
-    {
-        return await ProcessGet(new GetCategoryForm
-        {
-            SiteId = CurrentSite.Id
-        });
-    }
+    public async Task<ActionResult> Create() => 
+        await ProcessGet(new GetCategoryForm { SiteId = CurrentSite.Id });
 
     [HttpPost("save")]
-    public async Task<ActionResult> Save(CreateCategoryFormModel.CategoryModel model)
-    {
-        return await ProcessPost(model, _createCategoryMapper, _createCategoryValidator);
-    }
+    public async Task<ActionResult> Save(CreateCategoryFormModel.CategoryModel model) => 
+        await ProcessPost(model, _createCategoryMapper, _createCategoryValidator);
 
     [HttpGet("edit/{id}")]
-    public async Task<ActionResult> Edit(Guid id)
-    {
-        return await ProcessGet(new GetCategoryForm
-        {
-            SiteId = CurrentSite.Id, 
-            Id = id
-        });
-    }
+    public async Task<ActionResult> Edit(Guid id) => 
+        await ProcessGet(new GetCategoryForm { SiteId = CurrentSite.Id, Id = id });
 
     [HttpPost("update")]
-    public async Task<ActionResult> Update(UpdateCategoryFormModel.CategoryModel model)
-    {
-        return await ProcessPost(model, _updateCategoryMapper, _updateCategoryValidator);
-    }
+    public async Task<ActionResult> Update(UpdateCategoryFormModel.CategoryModel model) => 
+        await ProcessPost(model, _updateCategoryMapper, _updateCategoryValidator);
 
     [HttpPost("move-up")]
     public async Task<ActionResult> MoveUp([FromBody] Guid id)
@@ -128,16 +107,10 @@ public class CategoriesController : AdminControllerBase
     }
 
     [HttpGet("is-name-unique/{name}")]
-    public async Task<ActionResult> IsNameUnique(string name)
-    {
-        var isNameUnique = await _categoryValidationRules.IsCategoryNameUnique(CurrentSite.Id, name);
-        return Ok(isNameUnique);
-    }
+    public async Task<ActionResult> IsNameUnique(string name) => 
+        Ok(await _categoryValidationRules.IsCategoryNameUnique(CurrentSite.Id, name));
 
     [HttpGet("is-name-unique/{name}/{id}")]
-    public async Task<ActionResult> IsNameUnique(string name, Guid id)
-    {
-        var isNameUnique = await _categoryValidationRules.IsCategoryNameUnique(CurrentSite.Id, name, id);
-        return Ok(isNameUnique);
-    }
+    public async Task<ActionResult> IsNameUnique(string name, Guid id) => 
+        Ok(await _categoryValidationRules.IsCategoryNameUnique(CurrentSite.Id, name, id));
 }
