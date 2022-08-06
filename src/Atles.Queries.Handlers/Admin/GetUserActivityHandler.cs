@@ -1,5 +1,6 @@
 ﻿using Atles.Core.Queries;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Models;
 using Atles.Models.Admin.Users;
@@ -7,99 +8,98 @@ using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 
-namespace Atles.Queries.Handlers.Admin
-{
-    public class GetUserActivityHandler : IQueryHandler<GetUserActivity, ActivityPageModel>
-    {
-        private readonly AtlesDbContext _dbContext;
+namespace Atles.Queries.Handlers.Admin;
 
-        public GetUserActivityHandler(AtlesDbContext dbContext)
+public class GetUserActivityHandler : IQueryHandler<GetUserActivity, ActivityPageModel>
+{
+    private readonly AtlesDbContext _dbContext;
+
+    public GetUserActivityHandler(AtlesDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public async Task<QueryResult<ActivityPageModel>> Handle(GetUserActivity request)
+    {
+        var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == request.UserId);
+
+        if (user == null)
         {
-            _dbContext = dbContext;
+            return new Failure(FailureType.NotFound, "User", $"User with id {request.UserId} not found.");
         }
 
-        public async Task<QueryResult<ActivityPageModel>> Handle(GetUserActivity request)
+        var result = new ActivityPageModel
         {
-            var user = await _dbContext.Users.FirstOrDefaultAsync(x => x.Id == request.UserId);
-
-            if (user == null)
+            User = new ActivityPageModel.UserModel
             {
-                return null;
+                Id = user.Id,
+                DisplayName = user.DisplayName
             }
+        };
 
-            var result = new ActivityPageModel
+        var query = _dbContext.Events.Where(x => x.SiteId == request.SiteId && x.UserId == request.UserId);
+
+        if (!string.IsNullOrWhiteSpace(request.Options.Search))
+        {
+            query = query.Where(x => x.Type.Contains(request.Options.Search) ||
+                                     x.TargetType.Contains(request.Options.Search) ||
+                                     x.Data.Contains(request.Options.Search));
+        }
+
+        var events = await query
+            .OrderByDescending(x => x.TimeStamp)
+            .Skip(request.Options.Skip)
+            .Take(request.Options.PageSize)
+            .ToListAsync();
+
+        var items = new List<ActivityPageModel.EventModel>();
+
+        foreach (var @event in events)
+        {
+            var model = new ActivityPageModel.EventModel
             {
-                User = new ActivityPageModel.UserModel
-                {
-                    Id = user.Id,
-                    DisplayName = user.DisplayName
-                }
+                Id = @event.Id,
+                Type = @event.Type,
+                TargetId = @event.TargetId,
+                TargetType = @event.TargetType,
+                TimeStamp = @event.TimeStamp
             };
 
-            var query = _dbContext.Events.Where(x => x.SiteId == request.SiteId && x.UserId == request.UserId);
-
-            if (!string.IsNullOrWhiteSpace(request.Options.Search))
+            var data = new Dictionary<string, string>
             {
-                query = query.Where(x => x.Type.Contains(request.Options.Search) ||
-                                         x.TargetType.Contains(request.Options.Search) ||
-                                         x.Data.Contains(request.Options.Search));
-            }
+                {nameof(@event.TargetId), @event.TargetId.ToString()}
+            };
 
-            var events = await query
-                .OrderByDescending(x => x.TimeStamp)
-                .Skip(request.Options.Skip)
-                .Take(request.Options.PageSize)
-                .ToListAsync();
-
-            var items = new List<ActivityPageModel.EventModel>();
-
-            foreach (var @event in events)
+            if (!string.IsNullOrWhiteSpace(@event.Data) && @event.Data != "null")
             {
-                var model = new ActivityPageModel.EventModel
+                var parsedData = JObject.Parse(@event.Data);
+
+                foreach (var x in parsedData)
                 {
-                    Id = @event.Id,
-                    Type = @event.Type,
-                    TargetId = @event.TargetId,
-                    TargetType = @event.TargetType,
-                    TimeStamp = @event.TimeStamp
-                };
+                    if (x.Key == nameof(@event.Id) ||
+                        x.Key == nameof(@event.TargetId) ||
+                        x.Key == nameof(@event.TargetType) ||
+                        x.Key == nameof(@event.SiteId) ||
+                        x.Key == nameof(@event.UserId))
+                        continue;
 
-                var data = new Dictionary<string, string>
-                {
-                    {nameof(@event.TargetId), @event.TargetId.ToString()}
-                };
+                    var value = !string.IsNullOrWhiteSpace(x.Value.ToString())
+                        ? x.Value.ToString()
+                        : "<null>";
 
-                if (!string.IsNullOrWhiteSpace(@event.Data) && @event.Data != "null")
-                {
-                    var parsedData = JObject.Parse(@event.Data);
-
-                    foreach (var x in parsedData)
-                    {
-                        if (x.Key == nameof(@event.Id) ||
-                            x.Key == nameof(@event.TargetId) ||
-                            x.Key == nameof(@event.TargetType) ||
-                            x.Key == nameof(@event.SiteId) ||
-                            x.Key == nameof(@event.UserId))
-                            continue;
-
-                        var value = !string.IsNullOrWhiteSpace(x.Value.ToString())
-                            ? x.Value.ToString()
-                            : "<null>";
-
-                        data.Add(x.Key, value);
-                    }
+                    data.Add(x.Key, value);
                 }
-
-                model.Data = data;
-
-                items.Add(model);
             }
 
-            var totalRecords = await query.CountAsync();
+            model.Data = data;
 
-            result.Events = new PaginatedData<ActivityPageModel.EventModel>(items, totalRecords, request.Options.PageSize);
-
-            return result;
+            items.Add(model);
         }
+
+        var totalRecords = await query.CountAsync();
+
+        result.Events = new PaginatedData<ActivityPageModel.EventModel>(items, totalRecords, request.Options.PageSize);
+
+        return result;
     }
 }

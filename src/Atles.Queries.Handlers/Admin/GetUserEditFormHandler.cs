@@ -1,5 +1,6 @@
 ﻿using Atles.Core.Queries;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Admin.Users;
@@ -39,7 +40,7 @@ namespace Atles.Queries.Handlers.Admin
 
             if (user == null)
             {
-                return null;
+                return new Failure(FailureType.NotFound, "User", $"User with id {request.Id} not found.");
             }
 
             var result = new EditPageModel

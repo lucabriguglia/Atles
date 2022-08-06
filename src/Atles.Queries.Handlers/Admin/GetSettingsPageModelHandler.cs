@@ -1,5 +1,6 @@
 ﻿using Atles.Core.Queries;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Models.Admin.Sites;
 using Atles.Queries.Admin;
@@ -25,7 +26,7 @@ namespace Atles.Queries.Handlers.Admin
 
             if (site == null)
             {
-                return null;
+                return new Failure(FailureType.NotFound, "Site", $"Site with id {query.SiteId} not found.");
             }
 
             var themes = _configuration["Themes"].Split(',');

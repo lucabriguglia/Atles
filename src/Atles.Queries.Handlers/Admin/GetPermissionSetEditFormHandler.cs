@@ -1,6 +1,7 @@
 ﻿using Atles.Core;
 using Atles.Core.Queries;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Admin.PermissionSets;
@@ -33,7 +34,7 @@ public class GetPermissionSetEditFormHandler : IQueryHandler<GetPermissionSetEdi
 
         if (permissionSet == null)
         {
-            return null;
+            return new Failure(FailureType.NotFound, "Permission Set", $"Permission set with id {query.Id} not found.");
         }
 
         result.PermissionSet = new PermissionSetFormModel.PermissionSetModel

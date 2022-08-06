@@ -1,5 +1,6 @@
 ﻿using Atles.Core.Queries;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Admin.Forums;
@@ -27,7 +28,7 @@ public class GetForumEditFormHandler : IQueryHandler<GetForumEditForm, ForumForm
 
         if (forum == null)
         {
-            return null;
+            return new Failure(FailureType.NotFound, "Forum", $"Forum with id {query.Id} not found.");
         }
 
         var result = new ForumFormModel

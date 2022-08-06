@@ -6,78 +6,77 @@ using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json.Linq;
 
-namespace Atles.Queries.Handlers.Admin
-{
-    public class GetTargetEventsComponentHandler : IQueryHandler<GetTargetEventsComponent, TargetEventsComponentModel>
-    {
-        private readonly AtlesDbContext _dbContext;
+namespace Atles.Queries.Handlers.Admin;
 
-        public GetTargetEventsComponentHandler(AtlesDbContext dbContext)
+public class GetTargetEventsComponentHandler : IQueryHandler<GetTargetEventsComponent, TargetEventsComponentModel>
+{
+    private readonly AtlesDbContext _dbContext;
+
+    public GetTargetEventsComponentHandler(AtlesDbContext dbContext)
+    {
+        _dbContext = dbContext;
+    }
+
+    public async Task<QueryResult<TargetEventsComponentModel>> Handle(GetTargetEventsComponent query)
+    {
+        var events = await _dbContext.Events
+            .Include(x => x.User)
+            .Where(x => x.SiteId == query.SiteId && x.TargetId == query.Id)
+            .OrderByDescending(x => x.TimeStamp)
+            .ToListAsync();
+
+        if (events.Count == 0)
         {
-            _dbContext = dbContext;
+            return new TargetEventsComponentModel();
         }
 
-        public async Task<QueryResult<TargetEventsComponentModel>> Handle(GetTargetEventsComponent query)
+        var result = new TargetEventsComponentModel
         {
-            var events = await _dbContext.Events
-                .Include(x => x.User)
-                .Where(x => x.SiteId == query.SiteId && x.TargetId == query.Id)
-                .OrderByDescending(x => x.TimeStamp)
-                .ToListAsync();
+            Id = events[0].TargetId,
+            Type = events[0].TargetType
+        };
 
-            if (events.Count == 0)
+        foreach (var @event in events)
+        {
+            var model = new TargetEventsComponentModel.EventModel
             {
-                return new TargetEventsComponentModel();
-            }
-
-            var result = new TargetEventsComponentModel
-            {
-                Id = events[0].TargetId,
-                Type = events[0].TargetType
+                Id = @event.Id,
+                Type = @event.Type,
+                TimeStamp = @event.TimeStamp,
+                UserId = @event.UserId,
+                UserName = @event.User?.DisplayName ?? "<system>"
             };
 
-            foreach (var @event in events)
+            if (!string.IsNullOrWhiteSpace(@event.Data) && @event.Data != "null")
             {
-                var model = new TargetEventsComponentModel.EventModel
+                var parsedData = JObject.Parse(@event.Data);
+
+                var data = new Dictionary<string, string>();
+
+                foreach (var x in parsedData)
                 {
-                    Id = @event.Id,
-                    Type = @event.Type,
-                    TimeStamp = @event.TimeStamp,
-                    UserId = @event.UserId,
-                    UserName = @event.User?.DisplayName ?? "<system>"
-                };
-
-                if (!string.IsNullOrWhiteSpace(@event.Data) && @event.Data != "null")
-                {
-                    var parsedData = JObject.Parse(@event.Data);
-
-                    var data = new Dictionary<string, string>();
-
-                    foreach (var x in parsedData)
+                    if (x.Key != nameof(@event.Id) &&
+                        x.Key != nameof(@event.TimeStamp) &&
+                        x.Key != nameof(@event.Type) &&
+                        x.Key != nameof(@event.TargetId) &&
+                        x.Key != nameof(@event.TargetType) &&
+                        x.Key != nameof(@event.SiteId) &&
+                        x.Key != nameof(@event.UserId))
                     {
-                        if (x.Key != nameof(@event.Id) &&
-                            x.Key != nameof(@event.TimeStamp) &&
-                            x.Key != nameof(@event.Type) &&
-                            x.Key != nameof(@event.TargetId) &&
-                            x.Key != nameof(@event.TargetType) &&
-                            x.Key != nameof(@event.SiteId) &&
-                            x.Key != nameof(@event.UserId))
-                        {
-                            var value = !string.IsNullOrWhiteSpace(x.Value.ToString())
-                                ? x.Value.ToString()
-                                : "<null>";
+                        var value = !string.IsNullOrWhiteSpace(x.Value.ToString())
+                            ? x.Value.ToString()
+                            : "<null>";
 
-                            data.Add(x.Key, value);
-                        }
+                        data.Add(x.Key, value);
                     }
-
-                    model.Data = data;
                 }
 
-                result.Events.Add(model);
+                model.Data = data;
             }
 
-            return result;
+            result.Events.Add(model);
         }
+
+        return result;
     }
 }

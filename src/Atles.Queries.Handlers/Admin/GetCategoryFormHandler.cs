@@ -1,5 +1,6 @@
 ﻿using Atles.Core.Queries;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Admin.Categories;
@@ -35,7 +36,7 @@ public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, CategoryFor
 
             if (category == null)
             {
-                return null;
+                return new Failure(FailureType.NotFound, "Category", $"Category with id {query.Id} not found.");
             }
 
             result.Category = new CategoryFormModel.CategoryModel
