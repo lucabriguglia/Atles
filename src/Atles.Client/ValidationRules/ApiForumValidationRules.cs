@@ -26,10 +26,10 @@ public class ApiForumValidationRules : IForumValidationRules
     {
         if (id != null)
         {
-            return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{slug}/{id}");
+            return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-slug-unique/{slug}/{id}");
         }
 
-        return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{slug}");
+        return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-slug-unique/{slug}");
     }
 
     public async Task<bool> IsForumValid(Guid siteId, Guid id)

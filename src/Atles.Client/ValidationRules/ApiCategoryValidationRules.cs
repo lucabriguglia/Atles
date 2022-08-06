@@ -24,6 +24,6 @@ public class ApiCategoryValidationRules : ICategoryValidationRules
 
     public async Task<bool> IsCategoryValid(Guid siteId, Guid id)
     {
-        return await _apiService.GetFromJsonAsync<bool>($"api/admin/categories/is-valid/{id}");
+        return await Task.FromResult(true);
     }
 }

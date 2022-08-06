@@ -13,7 +13,8 @@ public class CreateForumMapper : IMapper<CreateForumFormModel.ForumModel, Create
             Name = model.Name,
             Slug = model.Slug,
             Description = model.Description,
-            PermissionSetId = model.PermissionSetId,
+            PermissionSetId = model.PermissionSetId != Guid.Empty ? model.PermissionSetId : null,
+            CategoryId = model.CategoryId,
             SiteId = model.SiteId,
             UserId = userId
         };

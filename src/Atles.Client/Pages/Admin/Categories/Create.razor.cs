@@ -1,7 +1,5 @@
 ﻿using System.Net;
-using System.Threading.Tasks;
 using Atles.Client.Components.Admin;
-using Atles.Models.Admin;
 using Atles.Models.Admin.Categories;
 
 namespace Atles.Client.Pages.Admin.Categories;
