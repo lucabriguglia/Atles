@@ -39,7 +39,7 @@ namespace Atles.Queries.Handlers.Admin
                 Languages = languages.ToList(),
                 Site = new SettingsPageModel.SiteModel
                 {
-                    Id = site.Id,
+                    SiteId = site.Id,
                     Title = site.Title,
                     Theme = site.PublicTheme,
                     Css = site.PublicCss,

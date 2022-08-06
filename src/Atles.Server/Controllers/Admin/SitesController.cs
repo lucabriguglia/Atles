@@ -2,6 +2,8 @@
 using Atles.Core;
 using Atles.Models.Admin.Sites;
 using Atles.Queries.Admin;
+using Atles.Server.Mapping;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin;
@@ -9,11 +11,16 @@ namespace Atles.Server.Controllers.Admin;
 [Route("api/admin/sites")]
 public class SitesController : AdminControllerBase
 {
-    private readonly IDispatcher _dispatcher;
+    private readonly IMapper<SettingsPageModel.SiteModel, UpdateSite> _updateSiteMapper;
+    private readonly IValidator<SettingsPageModel.SiteModel> _siteValidator;
 
-    public SitesController(IDispatcher dispatcher) : base(dispatcher)
+    public SitesController(
+        IDispatcher dispatcher,
+        IMapper<SettingsPageModel.SiteModel, UpdateSite> updateSiteMapper,
+        IValidator<SettingsPageModel.SiteModel> siteValidator) : base(dispatcher)
     {
-        _dispatcher = dispatcher;
+        _updateSiteMapper = updateSiteMapper;
+        _siteValidator = siteValidator;
     }
 
     [HttpGet("settings")]
@@ -21,23 +28,6 @@ public class SitesController : AdminControllerBase
         await ProcessGet(new GetSettingsPageModel(CurrentSite.Id));
 
     [HttpPost("update")]
-    public async Task<ActionResult> Update(SettingsPageModel model)
-    {
-        var command = new UpdateSite
-        {
-            SiteId = CurrentSite.Id,
-            UserId = CurrentUser.Id,
-            Title = model.Site.Title,
-            Theme = model.Site.Theme,
-            Css = model.Site.Css,
-            Language = model.Site.Language,
-            Privacy = model.Site.Privacy,
-            Terms = model.Site.Terms,
-            HeadScript = model.Site.HeadScript
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+    public async Task<ActionResult> Update(SettingsPageModel model) => 
+        await ProcessPost(model.Site, _updateSiteMapper, _siteValidator);
 }

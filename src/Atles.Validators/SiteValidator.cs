@@ -1,11 +1,11 @@
-﻿using Atles.Commands.Sites;
+﻿using Atles.Models.Admin.Sites;
 using FluentValidation;
 
-namespace Atles.Validators.Sites;
+namespace Atles.Validators;
 
-public class UpdateSiteValidator : AbstractValidator<UpdateSite>
+public class SiteValidator : AbstractValidator<SettingsPageModel.SiteModel>
 {
-    public UpdateSiteValidator()
+    public SiteValidator()
     {
         RuleFor(c => c.Title)
             .NotEmpty().WithMessage("Site title is required.")

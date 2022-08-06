@@ -1,33 +1,30 @@
-﻿using System.Threading.Tasks;
-using Atles.Client.Components.Admin;
+﻿using Atles.Client.Components.Admin;
 using Atles.Models.Admin.Sites;
 
-namespace Atles.Client.Pages.Admin
+namespace Atles.Client.Pages.Admin;
+
+public abstract class SettingsPage : AdminPageBase
 {
-    public abstract class SettingsPage : AdminPageBase
+    protected SettingsPageModel Model { get; set; }
+
+    private string CurrentLanguage { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        protected SettingsPageModel Model { get; set; }
+        Model = await ApiService.GetFromJsonAsync<SettingsPageModel>("api/admin/sites/settings");
+        CurrentLanguage = Model.Site.Language;
+    }
+    protected async Task UpdateAsync()
+    {
+        await ApiService.PostAsJsonAsync("api/admin/sites/update", Model);
 
-        private string CurrentLanguage { get; set; }
+        var forceLoad = CurrentLanguage != Model.Site.Language;
 
-        protected override async Task OnInitializedAsync()
-        {
-            Model = await ApiService.GetFromJsonAsync<SettingsPageModel>("api/admin/sites/settings");
-            CurrentLanguage = Model.Site.Language;
-        }
-        protected async Task UpdateAsync()
-        {
-            await ApiService.PostAsJsonAsync("api/admin/sites/update", Model);
+        NavigationManager.NavigateTo("/admin/dashboard", forceLoad);
+    }
 
-            var forceLoad = false;
-
-            if (CurrentLanguage != Model.Site.Language)
-            {
-                //await JsRuntime.InvokeVoidAsync("blazorCulture.set", Model.Site.Language);
-                forceLoad = true;
-            }
-
-            NavigationManager.NavigateTo("/admin/dashboard", forceLoad);
-        }
+    protected void Cancel()
+    {
+        NavigationManager.NavigateTo("/admin/dashboard");
     }
 }

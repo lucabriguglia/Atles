@@ -4,55 +4,44 @@ using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
 using AutoFixture;
-using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Commands.Sites
+namespace Atles.Tests.Unit.Commands.Sites;
+
+[TestFixture]
+public class UpdateSiteHandlerTests : TestFixtureBase
 {
-    [TestFixture]
-    public class UpdateSiteHandlerTests : TestFixtureBase
+    [Test]
+    public async Task Should_update_site_and_add_event()
     {
-        [Test]
-        public async Task Should_update_site_and_add_event()
+        var options = Shared.CreateContextOptions();
+        var site = new Site(Guid.NewGuid(), "Name", "Title");
+
+        await using (var dbContext = new AtlesDbContext(options))
         {
-            var options = Shared.CreateContextOptions();
-            var site = new Site(Guid.NewGuid(), "Name", "Title");
+            dbContext.Sites.Add(site);
+            await dbContext.SaveChangesAsync();
+        }
 
-            using (var dbContext = new AtlesDbContext(options))
-            {
-                dbContext.Sites.Add(site);
-                await dbContext.SaveChangesAsync();
-            }
+        await using (var dbContext = new AtlesDbContext(options))
+        {
+            var command = Fixture.Build<UpdateSite>()
+                .With(x => x.SiteId, site.Id)
+                .Create();
 
-            using (var dbContext = new AtlesDbContext(options))
-            {
-                var command = Fixture.Build<UpdateSite>()
-                        .With(x => x.SiteId, site.Id)
-                        .Create();
+            var cacheManager = new Mock<ICacheManager>();
 
-                var validator = new Mock<IValidator<UpdateSite>>();
-                validator
-                    .Setup(x => x.ValidateAsync(command, new CancellationToken()))
-                    .ReturnsAsync(new ValidationResult());
+            var sut = new UpdateSiteHandler(dbContext, cacheManager.Object);
 
-                var cacheManager = new Mock<ICacheManager>();
+            await sut.Handle(command);
 
-                var sut = new UpdateSiteHandler(dbContext,
-                    validator.Object,
-                    cacheManager.Object);
+            var updatedSite = await dbContext.Sites.FirstOrDefaultAsync(x => x.Id == command.SiteId);
+            var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.SiteId);
 
-                await sut.Handle(command);
-
-                var updatedSite = await dbContext.Sites.FirstOrDefaultAsync(x => x.Id == command.SiteId);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.SiteId);
-
-                validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
-                Assert.AreEqual(command.Title, updatedSite.Title);
-                Assert.NotNull(@event);
-            }
+            Assert.AreEqual(command.Title, updatedSite.Title);
+            Assert.NotNull(@event);
         }
     }
 }
