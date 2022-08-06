@@ -7,7 +7,6 @@ using Atles.Models.Admin.Categories;
 using Atles.Models.Admin.Forums;
 using Atles.Models.Public;
 using Atles.Validators;
-using Atles.Validators.Categories;
 using Atles.Validators.ValidationRules;
 using FluentValidation;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
@@ -63,8 +62,7 @@ public class Program
         builder.Services.AddTransient<IPermissionSetValidationRules, ApiPermissionSetValidationRules>();
         builder.Services.AddTransient<ITopicValidationRules, ApiTopicValidationRules>();
 
-        builder.Services.AddTransient<IValidator<CreateCategoryFormModel.CategoryModel>, CreateCategoryValidator>();
-        builder.Services.AddTransient<IValidator<UpdateCategoryFormModel.CategoryModel>, UpdateCategoryValidator>();
+        builder.Services.AddTransient<IValidator<CategoryFormModel.CategoryModel>, CategoryValidator>();
         builder.Services.AddTransient<IValidator<ForumFormModel.ForumModel>, ForumValidator>();
 
         builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);

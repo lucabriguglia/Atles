@@ -18,8 +18,4 @@
     <ProjectReference Include="..\Atles.Validators.ValidationRules\Atles.Validators.ValidationRules.csproj" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Forums\" />
-  </ItemGroup>
-
 </Project>

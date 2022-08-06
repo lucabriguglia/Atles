@@ -20,7 +20,7 @@ public abstract class EditPage : AdminPageBase
     {
         var response = await ApiService.PostAsJsonAsync("api/admin/forums/update", Model.Forum);
         
-        if (response.StatusCode is HttpStatusCode.OK)
+        if (response.IsSuccessStatusCode)
         {
             NavigationManager.NavigateTo($"/admin/forums/{Model.Forum.CategoryId}");
         }

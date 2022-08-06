@@ -6,6 +6,6 @@ namespace Atles.Client.Pages.Admin.Categories;
 
 public abstract class FormComponent : AdminFormBase
 {
-    [Parameter] public CreateCategoryFormModel Model { get; set; }
+    [Parameter] public CategoryFormModel Model { get; set; }
     [Parameter] public string SubmitButtonText { get; set; }
 }

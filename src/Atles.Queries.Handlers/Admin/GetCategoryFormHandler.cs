@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Queries.Handlers.Admin;
 
-public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, CreateCategoryFormModel>
+public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, CategoryFormModel>
 {
     private readonly AtlesDbContext _dbContext;
 
@@ -21,9 +21,9 @@ public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, CreateCateg
         _dbContext = dbContext;
     }
 
-    public async Task<QueryResult<CreateCategoryFormModel>> Handle(GetCategoryForm query)
+    public async Task<QueryResult<CategoryFormModel>> Handle(GetCategoryForm query)
     {
-        var result = new CreateCategoryFormModel();
+        var result = new CategoryFormModel();
 
         var permissionSets = await _dbContext.PermissionSets
             .Where(x => x.SiteId == query.SiteId && x.Status == PermissionSetStatusType.Published)
@@ -42,7 +42,7 @@ public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, CreateCateg
                 return null;
             }
 
-            result.Category = new CreateCategoryFormModel.CategoryModel
+            result.Category = new CategoryFormModel.CategoryModel
             {
                 Id = category.Id,
                 Name = category.Name,
@@ -51,7 +51,7 @@ public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, CreateCateg
         }
         else
         {
-            result.Category = new CreateCategoryFormModel.CategoryModel
+            result.Category = new CategoryFormModel.CategoryModel
             {
                 PermissionSetId = permissionSets.FirstOrDefault()?.Id ?? Guid.Empty
             };
@@ -59,7 +59,7 @@ public class GetCategoryFormHandler : IQueryHandler<GetCategoryForm, CreateCateg
 
         foreach (var permissionSet in permissionSets)
         {
-            result.PermissionSets.Add(new CreateCategoryFormModel.PermissionSetModel
+            result.PermissionSets.Add(new CategoryFormModel.PermissionSetModel
             {
                 Id = permissionSet.Id,
                 Name = permissionSet.Name

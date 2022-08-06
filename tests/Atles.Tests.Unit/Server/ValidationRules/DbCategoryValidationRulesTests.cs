@@ -13,17 +13,7 @@ public class DbCategoryValidationRulesTests : TestFixtureBase
     {
         await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
         var sut = new DbCategoryValidationRules(dbContext);
-        var actual = await sut.IsCategoryNameUnique(Guid.NewGuid(), "My Category");
-
-        Assert.IsTrue(actual);
-    }
-
-    [Test]
-    public async Task Should_return_true_when_name_is_unique_for_existing_category()
-    {
-        await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
-        var sut = new DbCategoryValidationRules(dbContext);
-        var actual = await sut.IsCategoryNameUnique(Guid.NewGuid(), "My Category", Guid.NewGuid());
+        var actual = await sut.IsCategoryNameUnique(Guid.NewGuid(), Guid.NewGuid(), "My Category");
 
         Assert.IsTrue(actual);
     }
@@ -45,7 +35,7 @@ public class DbCategoryValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbCategoryValidationRules(dbContext);
-            var actual = await sut.IsCategoryNameUnique(siteId, categoryName);
+            var actual = await sut.IsCategoryNameUnique(siteId, Guid.NewGuid(), categoryName);
 
             Assert.IsFalse(actual);
         }
@@ -70,7 +60,7 @@ public class DbCategoryValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbCategoryValidationRules(dbContext);
-            var actual = await sut.IsCategoryNameUnique(siteId, "Category 1", categoryId);
+            var actual = await sut.IsCategoryNameUnique(siteId, categoryId, "Category 1");
 
             Assert.IsFalse(actual);
         }

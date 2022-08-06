@@ -11,7 +11,7 @@ using Atles.Queries.Handlers.Admin;
 using Atles.Server.Extensions;
 using Atles.Server.Middleware;
 using Atles.Server.Services;
-using Atles.Validators.Categories;
+using Atles.Validators;
 using Docs;
 using Docs.Extensions;
 using Microsoft.AspNetCore.Authentication;
@@ -96,7 +96,7 @@ public class Startup
                 typeof(Startup), 
                 typeof(Dispatcher), 
                 typeof(CreateCategoryHandler), 
-                typeof(CreateCategoryValidator),
+                typeof(CategoryValidator),
                 typeof(CategoriesPageModel), 
                 typeof(GetCategoriesIndexHandler), 
                 typeof(AtlesDbContext),

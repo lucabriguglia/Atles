@@ -2,11 +2,11 @@
 using Atles.Validators.ValidationRules;
 using FluentValidation;
 
-namespace Atles.Validators.Categories;
+namespace Atles.Validators;
 
-public class UpdateCategoryValidator : AbstractValidator<UpdateCategoryFormModel.CategoryModel>
+public class CategoryValidator : AbstractValidator<CategoryFormModel.CategoryModel>
 {
-    public UpdateCategoryValidator(ICategoryValidationRules categoryValidationRules, IPermissionSetValidationRules permissionSetValidationRules)
+    public CategoryValidator(ICategoryValidationRules categoryValidationRules, IPermissionSetValidationRules permissionSetValidationRules)
     {
         RuleFor(model => model.Name)
             .NotEmpty().WithMessage("Category name is required.")
@@ -19,10 +19,10 @@ public class UpdateCategoryValidator : AbstractValidator<UpdateCategoryFormModel
         RuleFor(model => model.PermissionSetId)
             .MustAsync(PermissionSetBeValid).WithMessage(model => $"Permission set with id {model.PermissionSetId} is not valid.");
 
-        async Task<bool> CategoryNameBeUnique(UpdateCategoryFormModel.CategoryModel model, string name, CancellationToken cancellation) =>
-            await categoryValidationRules.IsCategoryNameUnique(model.SiteId, name, model.Id);
+        async Task<bool> CategoryNameBeUnique(CategoryFormModel.CategoryModel model, string name, CancellationToken cancellation) =>
+            await categoryValidationRules.IsCategoryNameUnique(model.SiteId, model.Id, name);
 
-        async Task<bool> PermissionSetBeValid(UpdateCategoryFormModel.CategoryModel model, Guid permissionSetId, CancellationToken cancellation) =>
+        async Task<bool> PermissionSetBeValid(CategoryFormModel.CategoryModel model, Guid permissionSetId, CancellationToken cancellation) =>
             await permissionSetValidationRules.IsPermissionSetValid(model.SiteId, permissionSetId);
     }
 }

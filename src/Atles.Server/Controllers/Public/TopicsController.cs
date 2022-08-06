@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Atles.Commands.Posts;
+﻿using Atles.Commands.Posts;
 using Atles.Core;
 using Atles.Data;
 using Atles.Domain;
@@ -12,7 +9,6 @@ using Atles.Server.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Logging;
 
 namespace Atles.Server.Controllers.Public;
 

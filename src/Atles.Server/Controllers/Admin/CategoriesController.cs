@@ -14,24 +14,21 @@ namespace Atles.Server.Controllers.Admin;
 public class CategoriesController : AdminControllerBase
 {
     private readonly ICategoryValidationRules _categoryValidationRules;
-    private readonly IMapper<CreateCategoryFormModel.CategoryModel, CreateCategory> _createCategoryMapper;
-    private readonly IValidator<CreateCategoryFormModel.CategoryModel> _createCategoryValidator;
-    private readonly IMapper<UpdateCategoryFormModel.CategoryModel, UpdateCategory> _updateCategoryMapper;
-    private readonly IValidator<UpdateCategoryFormModel.CategoryModel> _updateCategoryValidator;
+    private readonly IMapper<CategoryFormModel.CategoryModel, CreateCategory> _createCategoryMapper;
+    private readonly IMapper<CategoryFormModel.CategoryModel, UpdateCategory> _updateCategoryMapper;
+    private readonly IValidator<CategoryFormModel.CategoryModel> _categoryValidator;
 
     public CategoriesController(
         IDispatcher dispatcher,
         ICategoryValidationRules categoryValidationRules,
-        IMapper<CreateCategoryFormModel.CategoryModel, CreateCategory> createCategoryMapper,
-        IValidator<CreateCategoryFormModel.CategoryModel> createCategoryValidator, 
-        IMapper<UpdateCategoryFormModel.CategoryModel, UpdateCategory> updateCategoryMapper, 
-        IValidator<UpdateCategoryFormModel.CategoryModel> updateCategoryValidator) 
+        IMapper<CategoryFormModel.CategoryModel, CreateCategory> createCategoryMapper,
+        IMapper<CategoryFormModel.CategoryModel, UpdateCategory> updateCategoryMapper, 
+        IValidator<CategoryFormModel.CategoryModel> categoryValidator) 
         : base(dispatcher)
     {
         _categoryValidationRules = categoryValidationRules;
-        _createCategoryValidator = createCategoryValidator;
         _updateCategoryMapper = updateCategoryMapper;
-        _updateCategoryValidator = updateCategoryValidator;
+        _categoryValidator = categoryValidator;
         _createCategoryMapper = createCategoryMapper;
     }
 
@@ -44,16 +41,16 @@ public class CategoriesController : AdminControllerBase
         await ProcessGet(new GetCategoryForm(CurrentSite.Id));
 
     [HttpPost("save")]
-    public async Task<ActionResult> Save(CreateCategoryFormModel.CategoryModel model) => 
-        await ProcessPost(model, _createCategoryMapper, _createCategoryValidator);
+    public async Task<ActionResult> Save(CategoryFormModel.CategoryModel model) => 
+        await ProcessPost(model, _createCategoryMapper, _categoryValidator);
 
     [HttpGet("edit/{id}")]
     public async Task<ActionResult> Edit(Guid id) => 
         await ProcessGet(new GetCategoryForm(CurrentSite.Id, id));
 
     [HttpPost("update")]
-    public async Task<ActionResult> Update(UpdateCategoryFormModel.CategoryModel model) => 
-        await ProcessPost(model, _updateCategoryMapper, _updateCategoryValidator);
+    public async Task<ActionResult> Update(CategoryFormModel.CategoryModel model) => 
+        await ProcessPost(model, _updateCategoryMapper, _categoryValidator);
 
     [HttpPost("move-up")]
     public async Task<ActionResult> MoveUp([FromBody] Guid id) =>
@@ -84,11 +81,7 @@ public class CategoriesController : AdminControllerBase
             UserId = CurrentUser.Id
         });
 
-    [HttpGet("is-name-unique/{name}")]
-    public async Task<ActionResult> IsNameUnique(string name) => 
-        Ok(await _categoryValidationRules.IsCategoryNameUnique(CurrentSite.Id, name));
-
-    [HttpGet("is-name-unique/{name}/{id}")]
+    [HttpGet("is-name-unique/{id}/{name}")]
     public async Task<ActionResult> IsNameUnique(string name, Guid id) => 
-        Ok(await _categoryValidationRules.IsCategoryNameUnique(CurrentSite.Id, name, id));
+        Ok(await _categoryValidationRules.IsCategoryNameUnique(CurrentSite.Id, id, name));
 }

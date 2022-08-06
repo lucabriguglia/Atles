@@ -14,11 +14,11 @@ public class DbCategoryValidationRules : ICategoryValidationRules
         _dbContext = dbContext;
     }
 
-    public async Task<bool> IsCategoryNameUnique(Guid siteId, string name, Guid? id = null)
+    public async Task<bool> IsCategoryNameUnique(Guid siteId, Guid id, string name)
     {
         bool any;
 
-        if (id != null && id != Guid.Empty)
+        if (id != Guid.Empty)
         {
             any = await _dbContext.Categories
                 .AnyAsync(x => x.SiteId == siteId &&

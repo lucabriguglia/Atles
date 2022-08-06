@@ -12,14 +12,9 @@ public class ApiCategoryValidationRules : ICategoryValidationRules
         _apiService = apiService;
     }
 
-    public async Task<bool> IsCategoryNameUnique(Guid siteId, string name, Guid? id = null)
+    public async Task<bool> IsCategoryNameUnique(Guid siteId, Guid id, string name)
     {
-        if (id != null)
-        {
-            return await _apiService.GetFromJsonAsync<bool>($"api/admin/categories/is-name-unique/{name}/{id}");
-        }
-
-        return await _apiService.GetFromJsonAsync<bool>($"api/admin/categories/is-name-unique/{name}");
+        return await _apiService.GetFromJsonAsync<bool>($"api/admin/categories/is-name-unique/{id}/{name}");
     }
 
     public async Task<bool> IsCategoryValid(Guid siteId, Guid id)

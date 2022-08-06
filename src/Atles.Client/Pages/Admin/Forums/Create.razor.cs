@@ -24,7 +24,7 @@ public abstract class CreatePage : AdminPageBase
     {
         var response = await ApiService.PostAsJsonAsync("api/admin/forums/save", Model.Forum);
 
-        if (response.StatusCode is HttpStatusCode.OK)
+        if (response.IsSuccessStatusCode)
         {
             NavigationManager.NavigateTo($"/admin/forums/{Model.Forum.CategoryId}");
         }

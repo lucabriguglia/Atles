@@ -1,6 +1,4 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Commands;
 using Atles.Core.Queries;
