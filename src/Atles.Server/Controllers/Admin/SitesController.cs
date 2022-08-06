@@ -17,13 +17,8 @@ public class SitesController : AdminControllerBase
     }
 
     [HttpGet("settings")]
-    public async Task<ActionResult<SettingsPageModel>> Settings()
-    {
-        return await ProcessGet(new GetSettingsPageModel
-        {
-            SiteId = CurrentSite.Id
-        });
-    }
+    public async Task<ActionResult<SettingsPageModel>> Settings() => 
+        await ProcessGet(new GetSettingsPageModel(CurrentSite.Id));
 
     [HttpPost("update")]
     public async Task<ActionResult> Update(SettingsPageModel model)

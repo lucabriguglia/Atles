@@ -1,10 +1,9 @@
 ﻿using Atles.Core.Queries;
 using Atles.Models.Admin.Roles;
 
-namespace Atles.Queries.Admin
+namespace Atles.Queries.Admin;
+
+public class GetUsersInRole : QueryBase<IList<IndexPageModel.UserModel>>
 {
-    public class GetUsersInRole : QueryBase<IList<IndexPageModel.UserModel>>
-    {
-        public string RoleName { get; set; }
-    }
+    public string RoleName { get; set; }
 }
