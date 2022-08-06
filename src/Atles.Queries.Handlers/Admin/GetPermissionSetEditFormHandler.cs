@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Atles.Core;
+﻿using Atles.Core;
 using Atles.Core.Queries;
 using Atles.Core.Results;
 using Atles.Data;
@@ -10,80 +7,79 @@ using Atles.Models.Admin.PermissionSets;
 using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Queries.Handlers.Admin
-{
-    public class GetPermissionSetEditFormHandler : IQueryHandler<GetPermissionSetEditForm, FormComponentModel>
-    {
-        private readonly AtlesDbContext _dbContext;
-        private readonly IDispatcher _dispatcher;
+namespace Atles.Queries.Handlers.Admin;
 
-        public GetPermissionSetEditFormHandler(AtlesDbContext dbContext, IDispatcher sender)
+public class GetPermissionSetEditFormHandler : IQueryHandler<GetPermissionSetEditForm, PermissionSetFormModel>
+{
+    private readonly AtlesDbContext _dbContext;
+    private readonly IDispatcher _dispatcher;
+
+    public GetPermissionSetEditFormHandler(AtlesDbContext dbContext, IDispatcher sender)
+    {
+        _dbContext = dbContext;
+        _dispatcher = sender;
+    }
+
+    public async Task<QueryResult<PermissionSetFormModel>> Handle(GetPermissionSetEditForm query)
+    {
+        var result = new PermissionSetFormModel();
+
+        var permissionSet = await _dbContext.PermissionSets
+            .Include(x => x.Permissions)
+            .FirstOrDefaultAsync(x =>
+                x.SiteId == query.SiteId &&
+                x.Id == query.Id &&
+                x.Status != PermissionSetStatusType.Deleted);
+
+        if (permissionSet == null)
         {
-            _dbContext = dbContext;
-            _dispatcher = sender;
+            return null;
         }
 
-        public async Task<QueryResult<FormComponentModel>> Handle(GetPermissionSetEditForm query)
+        result.PermissionSet = new PermissionSetFormModel.PermissionSetModel
         {
-            var result = new FormComponentModel();
+            Id = permissionSet.Id,
+            Name = permissionSet.Name
+        };
 
-            var permissionSet = await _dbContext.PermissionSets
-                .Include(x => x.Permissions)
-                .FirstOrDefaultAsync(x =>
-                    x.SiteId == query.SiteId &&
-                    x.Id == query.Id &&
-                    x.Status != PermissionSetStatusType.Deleted);
+        // TODO: To be moved to a service
+        var queryResult = await _dispatcher.Get(new GetRoles());
+        var roles = queryResult.AsT0;
 
-            if (permissionSet == null)
+        foreach (var roleModel in roles)
+        {
+            var permissionModel = new PermissionSetFormModel.PermissionModel
             {
-                return null;
-            }
-
-            result.PermissionSet = new FormComponentModel.PermissionSetModel
-            {
-                Id = permissionSet.Id,
-                Name = permissionSet.Name
+                RoleId = roleModel.Id,
+                RoleName = roleModel.Name
             };
 
-            // TODO: To be moved to a service
-            var queryResult = await _dispatcher.Get(new GetRoles());
-            var roles = queryResult.AsT0;
-
-            foreach (var roleModel in roles)
+            foreach (PermissionType permissionType in Enum.GetValues(typeof(PermissionType)))
             {
-                var permissionModel = new FormComponentModel.PermissionModel
+                var selected = permissionSet.Permissions
+                                   .FirstOrDefault(x => x.Type == permissionType &&
+                                                        x.RoleId == roleModel.Id) != null
+                               || roleModel.Name == Consts.RoleNameAdmin;
+
+                var disabled = roleModel.Name == Consts.RoleNameAdmin ||
+                               roleModel.Id == Consts.RoleIdAll && !IsReadingPermissionType(permissionType);
+
+                permissionModel.PermissionTypes.Add(new PermissionSetFormModel.PermissionTypeModel
                 {
-                    RoleId = roleModel.Id,
-                    RoleName = roleModel.Name
-                };
-
-                foreach (PermissionType permissionType in Enum.GetValues(typeof(PermissionType)))
-                {
-                    var selected = permissionSet.Permissions
-                                       .FirstOrDefault(x => x.Type == permissionType &&
-                                                            x.RoleId == roleModel.Id) != null
-                                   || roleModel.Name == Consts.RoleNameAdmin;
-
-                    var disabled = roleModel.Name == Consts.RoleNameAdmin ||
-                                   roleModel.Id == Consts.RoleIdAll && !IsReadingPermissionType(permissionType);
-
-                    permissionModel.PermissionTypes.Add(new FormComponentModel.PermissionTypeModel
-                    {
-                        Type = permissionType,
-                        Selected = selected,
-                        Disabled = disabled
-                    });
-                }
-
-                result.PermissionSet.Permissions.Add(permissionModel);
+                    Type = permissionType,
+                    Selected = selected,
+                    Disabled = disabled
+                });
             }
 
-            return result;
+            result.PermissionSet.Permissions.Add(permissionModel);
         }
 
-        private static bool IsReadingPermissionType(PermissionType permissionType) =>
-            permissionType == PermissionType.ViewForum ||
-            permissionType == PermissionType.ViewTopics ||
-            permissionType == PermissionType.Read;
+        return result;
     }
+
+    private static bool IsReadingPermissionType(PermissionType permissionType) =>
+        permissionType == PermissionType.ViewForum ||
+        permissionType == PermissionType.ViewTopics ||
+        permissionType == PermissionType.Read;
 }

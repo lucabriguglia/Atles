@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Data;
+﻿using Atles.Data;
 using Atles.Domain;
-using Atles.Validators.PermissionSets;
+using Atles.Validators.ValidationRules;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Server.ValidationRules;
@@ -16,11 +14,11 @@ public class DbPermissionSetValidationRules : IPermissionSetValidationRules
         _dbContext = dbContext;
     }
 
-    public async Task<bool> IsPermissionSetNameUnique(Guid siteId, string name, Guid? id = null)
+    public async Task<bool> IsPermissionSetNameUnique(Guid siteId, Guid id, string name)
     {
         bool any;
 
-        if (id != null)
+        if (id != Guid.Empty)
         {
             any = await _dbContext.PermissionSets
                 .AnyAsync(x => x.SiteId == siteId &&

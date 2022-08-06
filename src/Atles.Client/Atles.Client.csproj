@@ -1,11 +1,13 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.BlazorWebAssembly">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<ServiceWorkerAssetsManifest>service-worker-assets.js</ServiceWorkerAssetsManifest>
+	</PropertyGroup>
 
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+	<PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <DebugType>full</DebugType>
     <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
@@ -15,6 +17,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.FluentValidation" Version="2.0.3" />
     <PackageReference Include="FluentValidation" Version="10.3.3" />
     <PackageReference Include="Markdig" Version="0.26.0" />
     <PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly" Version="6.0.1" />
@@ -30,6 +33,8 @@
   <ItemGroup>
     <ProjectReference Include="..\Atles.Domain\Atles.Domain.csproj" />
     <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
+    <ProjectReference Include="..\Atles.Validators.ValidationRules\Atles.Validators.ValidationRules.csproj" />
+    <ProjectReference Include="..\Atles.Validators\Atles.Validators.csproj" />
   </ItemGroup>
 
   <ItemGroup>

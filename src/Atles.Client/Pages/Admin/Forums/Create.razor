@@ -5,13 +5,13 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
-        <li class="breadcrumb-item"><a href="/admin/forums">@Loc["Forums"]</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Loc["Create New Forum"]</li>
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Localizer["Home"]</a></li>
+        <li class="breadcrumb-item"><a href="/admin/forums">@Localizer["Forums"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Localizer["Create New Forum"]</li>
     </ol>
 </nav>
 
-<h3 class="mb-3">@Loc["Create New Forum"]</h3>
+<h3 class="mb-3">@Localizer["Create New Forum"]</h3>
 
 @if (Model == null)
 {
@@ -19,5 +19,5 @@
 }
 else
 {
-    <Form Model="Model" Button="@Loc["Save"]" OnValidSubmit="@SaveAsync"></Form>
+    <Form Model="Model" SubmitButtonText="@Localizer["Save"]" OnSubmit="@SaveAsync" OnCancel="@Cancel"></Form>
 }

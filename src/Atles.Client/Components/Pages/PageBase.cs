@@ -9,49 +9,48 @@ using Microsoft.AspNetCore.Components;
 using Microsoft.Extensions.Localization;
 using Microsoft.JSInterop;
 
-namespace Atles.Client.Components.Pages
+namespace Atles.Client.Components.Pages;
+
+public abstract class PageBase : ComponentBase
 {
-    public abstract class PageBase : ComponentBase
+    [CascadingParameter] protected CurrentUserModel User { get; set; }
+    [CascadingParameter] protected CurrentSiteModel Site { get; set; }
+
+    [Inject] public IJSRuntime JsRuntime { get; set; }
+    [Inject] public ApiService ApiService { get; set; }
+    [Inject] public IStringLocalizer<PublicResources> Loc { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        [CascadingParameter] protected CurrentUserModel User { get; set; }
-        [CascadingParameter] protected CurrentSiteModel Site { get; set; }
-
-        [Inject] public IJSRuntime JsRuntime { get; set; }
-        [Inject] public ApiService ApiService { get; set; }
-        [Inject] public IStringLocalizer<PublicResources> Loc { get; set; }
-
-        protected override async Task OnInitializedAsync()
+        if (Site == null)
         {
-            if (Site == null)
-            {
-                Site = await ApiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
-                await JsRuntime.InvokeVoidAsync("atlas.interop.changePageTitle", Site.Title);
-            }
+            Site = await ApiService.GetFromJsonAsync<CurrentSiteModel>("api/public/current-site");
+            await JsRuntime.InvokeVoidAsync("atlas.interop.changePageTitle", Site.Title);
+        }
+    }
+
+    protected RenderFragment AddComponent(string name, Dictionary<string, object> models = null) => builder =>
+    {
+        var type = GetType(Site.Theme, name);
+
+        if (type == null)
+        {
+            type = GetType("Default", name);
         }
 
-        protected RenderFragment AddComponent(string name, Dictionary<string, object> models = null) => builder =>
+        builder.OpenComponent(0, type);
+
+        if (models != null)
         {
-            var type = GetType(Site.Theme, name);
-
-            if (type == null)
+            for (var i = 0; i < models.Count; i++)
             {
-                type = GetType("Default", name);
+                var (key, value) = models.ElementAt(i);
+                builder.AddAttribute(i + 1, key, value);
             }
-
-            builder.OpenComponent(0, type);
-
-            if (models != null)
-            {
-                for (var i = 0; i < models.Count; i++)
-                {
-                    var (key, value) = models.ElementAt(i);
-                    builder.AddAttribute(i + 1, key, value);
-                }
-            }
+        }
             
-            builder.CloseComponent();
-        };
+        builder.CloseComponent();
+    };
 
-        private static Type GetType(string theme, string name) => Type.GetType($"Atles.Client.Themes.{theme}.{name}, {typeof(Program).Assembly.FullName}");
-    }
+    private static Type GetType(string theme, string name) => Type.GetType($"Atles.Client.Themes.{theme}.{name}, {typeof(Program).Assembly.FullName}");
 }

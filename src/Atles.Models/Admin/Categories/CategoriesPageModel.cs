@@ -1,6 +1,6 @@
 ﻿namespace Atles.Models.Admin.Categories;
 
-public class IndexPageModel
+public class CategoriesPageModel
 {
     public IList<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
 

@@ -1,11 +1,8 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Commands.Subscriptions;
+﻿using Atles.Commands.Subscriptions;
 using Atles.Core;
 using Atles.Domain;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Atles.Server.Controllers.Public;
 

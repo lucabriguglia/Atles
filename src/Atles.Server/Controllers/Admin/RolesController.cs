@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Atles.Core;
+﻿using Atles.Core;
 using Atles.Domain;
 using Atles.Models.Admin.Roles;
 using Atles.Queries.Admin;
@@ -25,19 +24,12 @@ public class RolesController : AdminControllerBase
     }
 
     [HttpGet("list")]
-    public async Task<ActionResult> List()
-    {
-        return await ProcessGet(new GetRolesIndex());
-    }
+    public async Task<ActionResult> List() => 
+        await ProcessGet(new GetRolesIndex());
 
     [HttpGet("users-in-role/{roleName}")]
-    public async Task<ActionResult> UsersInRole(string roleName)
-    {
-        return await ProcessGet(new GetUsersInRole
-        {
-            RoleName = roleName
-        });
-    }
+    public async Task<ActionResult> UsersInRole(string roleName) => 
+        await ProcessGet(new GetUsersInRole { RoleName = roleName });
 
     [HttpPost("create")]
     public async Task<ActionResult> Create(IndexPageModel.EditRoleModel model)

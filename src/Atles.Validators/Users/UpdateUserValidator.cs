@@ -1,4 +1,5 @@
 ﻿using Atles.Commands.Users;
+using Atles.Validators.ValidationRules;
 using FluentValidation;
 
 namespace Atles.Validators.Users;

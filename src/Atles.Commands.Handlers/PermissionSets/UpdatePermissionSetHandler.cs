@@ -8,61 +8,53 @@ using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
 using Atles.Events.PermissionSets;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Commands.Handlers.PermissionSets
+namespace Atles.Commands.Handlers.PermissionSets;
+
+public class UpdatePermissionSetHandler : ICommandHandler<UpdatePermissionSet>
 {
-    public class UpdatePermissionSetHandler : ICommandHandler<UpdatePermissionSet>
+    private readonly AtlesDbContext _dbContext;
+    private readonly ICacheManager _cacheManager;
+
+    public UpdatePermissionSetHandler(AtlesDbContext dbContext, ICacheManager cacheManager)
     {
-        private readonly AtlesDbContext _dbContext;
-        private readonly IValidator<UpdatePermissionSet> _validator;
-        private readonly ICacheManager _cacheManager;
+        _dbContext = dbContext;
+        _cacheManager = cacheManager;
+    }
 
-        public UpdatePermissionSetHandler(AtlesDbContext dbContext,
-            IValidator<UpdatePermissionSet> validator,
-            ICacheManager cacheManager)
+    public async Task<CommandResult> Handle(UpdatePermissionSet command)
+    {
+        var permissionSet = await _dbContext.PermissionSets
+            .Include(x => x.Permissions)
+            .FirstOrDefaultAsync(x =>
+                x.SiteId == command.SiteId &&
+                x.Id == command.PermissionSetId &&
+                x.Status != PermissionSetStatusType.Deleted);
+
+        if (permissionSet == null)
         {
-            _dbContext = dbContext;
-            _validator = validator;
-            _cacheManager = cacheManager;
+            throw new DataException($"Permission Set with Id {command.PermissionSetId} not found.");
         }
 
-        public async Task<CommandResult> Handle(UpdatePermissionSet command)
+        permissionSet.UpdateDetails(command.Name, command.Permissions.ToDomainPermissions());
+
+        var @event = new PermissionSetUpdated
         {
-            await _validator.ValidateCommand(command);
+            Name = permissionSet.Name,
+            Permissions = command.Permissions.ToDomainPermissions(),
+            TargetId = permissionSet.Id,
+            TargetType = nameof(PermissionSet),
+            SiteId = command.SiteId,
+            UserId = command.UserId
+        };
 
-            var permissionSet = await _dbContext.PermissionSets
-                .Include(x => x.Permissions)
-                .FirstOrDefaultAsync(x =>
-                    x.SiteId == command.SiteId &&
-                    x.Id == command.PermissionSetId &&
-                    x.Status != PermissionSetStatusType.Deleted);
+        _dbContext.Events.Add(@event.ToDbEntity());
 
-            if (permissionSet == null)
-            {
-                throw new DataException($"Permission Set with Id {command.PermissionSetId} not found.");
-            }
+        await _dbContext.SaveChangesAsync();
 
-            permissionSet.UpdateDetails(command.Name, command.Permissions.ToDomainPermissions());
+        _cacheManager.Remove(CacheKeys.PermissionSet(command.PermissionSetId));
 
-            var @event = new PermissionSetUpdated
-            {
-                Name = permissionSet.Name,
-                Permissions = command.Permissions.ToDomainPermissions(),
-                TargetId = permissionSet.Id,
-                TargetType = nameof(PermissionSet),
-                SiteId = command.SiteId,
-                UserId = command.UserId
-            };
-
-            _dbContext.Events.Add(@event.ToDbEntity());
-
-            await _dbContext.SaveChangesAsync();
-
-            _cacheManager.Remove(CacheKeys.PermissionSet(command.PermissionSetId));
-
-            return new Success(new IEvent[] { @event });
-        }
+        return new Success(new IEvent[] { @event });
     }
 }

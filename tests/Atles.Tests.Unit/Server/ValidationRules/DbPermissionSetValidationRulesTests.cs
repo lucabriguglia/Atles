@@ -13,17 +13,7 @@ public class DbPermissionSetValidationRulesTests : TestFixtureBase
     {
         await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
         var sut = new DbPermissionSetValidationRules(dbContext);
-        var actual = await sut.IsPermissionSetNameUnique(Guid.NewGuid(), "My Permission Set");
-
-        Assert.IsTrue(actual);
-    }
-
-    [Test]
-    public async Task Should_return_true_when_name_is_unique_for_existing_permissionSet()
-    {
-        await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
-        var sut = new DbPermissionSetValidationRules(dbContext);
-        var actual = await sut.IsPermissionSetNameUnique(Guid.NewGuid(), "My Permission Set", Guid.NewGuid());
+        var actual = await sut.IsPermissionSetNameUnique(Guid.NewGuid(), Guid.NewGuid(), "My Permission Set");
 
         Assert.IsTrue(actual);
     }
@@ -46,14 +36,14 @@ public class DbPermissionSetValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbPermissionSetValidationRules(dbContext);
-            var actual = await sut.IsPermissionSetNameUnique(siteId, permissionSetName);
+            var actual = await sut.IsPermissionSetNameUnique(siteId, Guid.NewGuid(), permissionSetName);
 
             Assert.IsFalse(actual);
         }
     }
 
     [Test]
-    public async Task Should_return_false_when_name_is_not_unique_for_existing_permissionSet()
+    public async Task Should_return_false_when_name_is_not_unique_for_existing_permission_set()
     {
         var options = Shared.CreateContextOptions();
 
@@ -73,7 +63,7 @@ public class DbPermissionSetValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbPermissionSetValidationRules(dbContext);
-            var actual = await sut.IsPermissionSetNameUnique(siteId, "Permission Set 1", permissionSetId);
+            var actual = await sut.IsPermissionSetNameUnique(siteId, permissionSetId, "Permission Set 1");
 
             Assert.IsFalse(actual);
         }

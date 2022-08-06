@@ -4,13 +4,13 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
-        <li class="breadcrumb-item"><a href="/admin/permission-sets">@Loc["Permission Sets"]</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Loc["Edit Permission Set"]</li>
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Localizer["Home"]</a></li>
+        <li class="breadcrumb-item"><a href="/admin/permission-sets">@Localizer["Permission Sets"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Localizer["Edit Permission Set"]</li>
     </ol>
 </nav>
 
-<h3 class="mb-3">@Loc["Edit Permission Set"]</h3>
+<h3 class="mb-3">@Localizer["Edit Permission Set"]</h3>
 
 @if (Model == null)
 {
@@ -18,6 +18,6 @@
 }
 else
 {
-    <Form Model="Model" Button="@Loc["Update"]" OnValidSubmit="@UpdateAsync"></Form>
+    <Form Model="Model" SubmitButtonText="@Localizer["Update"]" OnSubmit="@UpdateAsync" OnCancel="@Cancel"></Form>
     <TargetEvents Id="Id"></TargetEvents>
 }

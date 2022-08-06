@@ -1,5 +1,4 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using Atles.Commands.Handlers.Categories;
 using Atles.Core;
 using Atles.Core.Results;
@@ -10,20 +9,15 @@ using Atles.Events.Handlers.ReplyCreatedHandlers;
 using Atles.Models.Admin.Categories;
 using Atles.Queries.Handlers.Admin;
 using Atles.Server.Extensions;
-using Atles.Server.Middlewares;
+using Atles.Server.Middleware;
 using Atles.Server.Services;
-using Atles.Validators.Categories;
+using Atles.Validators;
 using Docs;
 using Docs.Extensions;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Atles.Server;
 
@@ -102,8 +96,8 @@ public class Startup
                 typeof(Startup), 
                 typeof(Dispatcher), 
                 typeof(CreateCategoryHandler), 
-                typeof(CreateCategoryValidator),
-                typeof(IndexPageModel), 
+                typeof(CategoryValidator),
+                typeof(CategoriesPageModel), 
                 typeof(GetCategoriesIndexHandler), 
                 typeof(AtlesDbContext),
                 typeof(SubscriptionHandler))

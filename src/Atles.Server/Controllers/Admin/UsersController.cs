@@ -1,12 +1,9 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Atles.Commands.Users;
+﻿using Atles.Commands.Users;
 using Atles.Core;
 using Atles.Models;
 using Atles.Models.Admin.Users;
 using Atles.Queries.Admin;
-using Atles.Validators.Users;
+using Atles.Validators.ValidationRules;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 

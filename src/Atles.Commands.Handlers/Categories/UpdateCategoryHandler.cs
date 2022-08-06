@@ -8,6 +8,7 @@ using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
 using Atles.Events.Categories;
+using Atles.Models.Admin;
 using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,20 +17,16 @@ namespace Atles.Commands.Handlers.Categories
     public class UpdateCategoryHandler : ICommandHandler<UpdateCategory>
     {
         private readonly AtlesDbContext _dbContext;
-        private readonly IValidator<UpdateCategory> _validator;
         private readonly ICacheManager _cacheManager;
 
-        public UpdateCategoryHandler(AtlesDbContext dbContext, IValidator<UpdateCategory> validator, ICacheManager cacheManager)
+        public UpdateCategoryHandler(AtlesDbContext dbContext, ICacheManager cacheManager)
         {
             _dbContext = dbContext;
-            _validator = validator;
             _cacheManager = cacheManager;
         }
 
         public async Task<CommandResult> Handle(UpdateCategory command)
         {
-            await _validator.ValidateCommand(command);
-
             var category = await _dbContext.Categories
                 .FirstOrDefaultAsync(x =>
                     x.SiteId == command.SiteId &&

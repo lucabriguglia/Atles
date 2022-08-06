@@ -7,57 +7,51 @@ using Atles.Data;
 using Atles.Data.Caching;
 using Atles.Domain;
 using Atles.Events.Categories;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Commands.Handlers.Categories
+namespace Atles.Commands.Handlers.Categories;
+
+public class CreateCategoryHandler : ICommandHandler<CreateCategory>
 {
-    public class CreateCategoryHandler : ICommandHandler<CreateCategory>
+    private readonly AtlesDbContext _dbContext;
+    private readonly ICacheManager _cacheManager;
+
+    public CreateCategoryHandler(AtlesDbContext dbContext, ICacheManager cacheManager)
     {
-        private readonly AtlesDbContext _dbContext;
-        private readonly IValidator<CreateCategory> _validator;
-        private readonly ICacheManager _cacheManager;
+        _dbContext = dbContext;
+        _cacheManager = cacheManager;
+    }
 
-        public CreateCategoryHandler(AtlesDbContext dbContext, IValidator<CreateCategory> validator, ICacheManager cacheManager)
+    public async Task<CommandResult> Handle(CreateCategory command)
+    {
+        var categoriesCount = await _dbContext.Categories
+            .Where(x => x.SiteId == command.SiteId && x.Status != CategoryStatusType.Deleted)
+            .CountAsync();
+
+        var sortOrder = categoriesCount + 1;
+
+        var category = new Category(command.CategoryId, command.SiteId, command.Name, sortOrder, command.PermissionSetId);
+
+        _dbContext.Categories.Add(category);
+
+        var @event = new CategoryCreated
         {
-            _dbContext = dbContext;
-            _validator = validator;
-            _cacheManager = cacheManager;
-        }
+            Name = category.Name,
+            PermissionSetId = category.PermissionSetId,
+            SortOrder = category.SortOrder,
+            TargetId = category.Id,
+            TargetType = nameof(Category),
+            SiteId = command.SiteId,
+            UserId = command.UserId
+        };
 
-        public async Task<CommandResult> Handle(CreateCategory command)
-        {
-            await _validator.ValidateCommand(command);
+        _dbContext.Events.Add(@event.ToDbEntity());
 
-            var categoriesCount = await _dbContext.Categories
-                .Where(x => x.SiteId == command.SiteId && x.Status != CategoryStatusType.Deleted)
-                .CountAsync();
+        await _dbContext.SaveChangesAsync();
 
-            var sortOrder = categoriesCount + 1;
+        _cacheManager.Remove(CacheKeys.Categories(command.SiteId));
+        _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
 
-            var category = new Category(command.CategoryId, command.SiteId, command.Name, sortOrder, command.PermissionSetId);
-
-            _dbContext.Categories.Add(category);
-
-            var @event = new CategoryCreated
-            {
-                Name = category.Name,
-                PermissionSetId = category.PermissionSetId,
-                SortOrder = category.SortOrder,
-                TargetId = category.Id,
-                TargetType = nameof(Category),
-                SiteId = command.SiteId,
-                UserId = command.UserId
-            };
-
-            _dbContext.Events.Add(@event.ToDbEntity());
-
-            await _dbContext.SaveChangesAsync();
-
-            _cacheManager.Remove(CacheKeys.Categories(command.SiteId));
-            _cacheManager.Remove(CacheKeys.CurrentForums(command.SiteId));
-
-            return new Success(new IEvent[] { @event });
-        }
+        return new Success(new IEvent[] { @event });
     }
 }

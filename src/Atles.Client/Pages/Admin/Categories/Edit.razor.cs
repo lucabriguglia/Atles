@@ -1,26 +1,36 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Client.Components.Admin;
+﻿using Atles.Client.Components.Admin;
 using Atles.Models.Admin.Categories;
 using Microsoft.AspNetCore.Components;
 
-namespace Atles.Client.Pages.Admin.Categories
+namespace Atles.Client.Pages.Admin.Categories;
+
+public abstract class EditPage : AdminPageBase
 {
-    public abstract class EditPage : AdminPageBase
+    [Parameter] public Guid Id { get; set; }
+
+    protected CategoryFormModel Model { get; set; }
+
+    protected override async Task OnParametersSetAsync()
     {
-        [Parameter] public Guid Id { get; set; }
+        Model = await ApiService.GetFromJsonAsync<CategoryFormModel>($"api/admin/categories/edit/{Id}");
+    }
 
-        protected FormComponentModel Model { get; set; }
+    protected async Task UpdateAsync()
+    {
+        var response = await ApiService.PostAsJsonAsync("api/admin/categories/update", Model.Category);
 
-        protected override async Task OnParametersSetAsync()
+        if (response.IsSuccessStatusCode)
         {
-            Model = await ApiService.GetFromJsonAsync<FormComponentModel>($"api/admin/categories/edit/{Id}");
-        }
-
-        protected async Task UpdateAsync()
-        {
-            await ApiService.PostAsJsonAsync("api/admin/categories/update", Model.Category);
             NavigationManager.NavigateTo("/admin/categories");
         }
+        else
+        {
+            // TODO: Display error message
+        }
+    }
+
+    protected void Cancel()
+    {
+        NavigationManager.NavigateTo("/admin/categories");
     }
 }

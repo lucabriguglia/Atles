@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Atles.Core.Queries;
+﻿using Atles.Core.Queries;
 using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
@@ -11,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Queries.Handlers.Admin
 {
-    public class GetForumsIndexHandler : IQueryHandler<GetForumsIndex, IndexPageModel>
+    public class GetForumsIndexHandler : IQueryHandler<GetForumsIndex, ForumsPageModel>
     {
         private readonly AtlesDbContext _dbContext;
 
@@ -20,7 +17,7 @@ namespace Atles.Queries.Handlers.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<QueryResult<IndexPageModel>> Handle(GetForumsIndex query)
+        public async Task<QueryResult<ForumsPageModel>> Handle(GetForumsIndex query)
         {
             var categories = await _dbContext.Categories
                 .Include(x => x.PermissionSet)
@@ -48,11 +45,11 @@ namespace Atles.Queries.Handlers.Admin
                 .OrderBy(x => x.SortOrder)
                 .ToListAsync();
 
-            var result = new IndexPageModel();
+            var result = new ForumsPageModel();
 
             foreach (var category in categories)
             {
-                result.Categories.Add(new IndexPageModel.CategoryModel
+                result.Categories.Add(new ForumsPageModel.CategoryModel
                 {
                     Id = category.Id,
                     Name = category.Name
@@ -65,7 +62,7 @@ namespace Atles.Queries.Handlers.Admin
                     ? $"{currentCategory.PermissionSetName()} (from Category)"
                     : forum.PermissionSetName();
 
-                result.Forums.Add(new IndexPageModel.ForumModel
+                result.Forums.Add(new ForumsPageModel.ForumModel
                 {
                     Id = forum.Id,
                     Name = forum.Name,

@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Core;
+﻿using Atles.Core;
 using Atles.Queries.Admin;
 using Microsoft.AspNetCore.Mvc;
 

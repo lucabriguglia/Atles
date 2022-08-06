@@ -1,4 +1,4 @@
-﻿namespace Atles.Validators.Users;
+﻿namespace Atles.Validators.ValidationRules;
 
 public interface IUserValidationRules
 {

@@ -4,41 +4,40 @@ using System.Text.Json;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
-namespace Atles.Server.Middlewares
+namespace Atles.Server.Middleware;
+
+public class ExceptionHandlerMiddleware
 {
-    public class ExceptionHandlerMiddleware
+    private readonly RequestDelegate _next;
+
+    public ExceptionHandlerMiddleware(RequestDelegate next)
     {
-        private readonly RequestDelegate _next;
+        _next = next;
+    }
 
-        public ExceptionHandlerMiddleware(RequestDelegate next)
+    public async Task Invoke(HttpContext context)
+    {
+        try
         {
-            _next = next;
+            await _next.Invoke(context);
         }
+        catch (Exception ex)
+        {
+            await HandleExceptionMessageAsync(context, ex).ConfigureAwait(false);
+        }
+    }
 
-        public async Task Invoke(HttpContext context)
+    private static Task HandleExceptionMessageAsync(HttpContext context, Exception exception)
+    {
+        context.Response.ContentType = "application/json";
+        const int statusCode = (int)HttpStatusCode.InternalServerError;
+        var result = JsonSerializer.Serialize(new
         {
-            try
-            {
-                await _next.Invoke(context);
-            }
-            catch (Exception ex)
-            {
-                await HandleExceptionMessageAsync(context, ex).ConfigureAwait(false);
-            }
-        }
-
-        private static Task HandleExceptionMessageAsync(HttpContext context, Exception exception)
-        {
-            context.Response.ContentType = "application/json";
-            const int statusCode = (int)HttpStatusCode.InternalServerError;
-            var result = JsonSerializer.Serialize(new
-            {
-                StatusCode = statusCode,
-                ErrorMessage = exception.Message
-            });
-            context.Response.ContentType = "application/json";
-            context.Response.StatusCode = statusCode;
-            return context.Response.WriteAsync(result);
-        }
+            StatusCode = statusCode,
+            ErrorMessage = exception.Message
+        });
+        context.Response.ContentType = "application/json";
+        context.Response.StatusCode = statusCode;
+        return context.Response.WriteAsync(result);
     }
 }

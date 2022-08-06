@@ -11,7 +11,7 @@ namespace Atles.Client.Pages.Admin.Forums
     {
         [Parameter] public Guid? CategoryId { get; set; }
 
-        protected IndexPageModel Model { get; set; }
+        protected ForumsPageModel Model { get; set; }
         protected Guid DeleteId { get; set; }
 
         protected override async Task OnInitializedAsync()
@@ -20,13 +20,13 @@ namespace Atles.Client.Pages.Admin.Forums
                 ? "api/admin/forums/index-model"
                 : $"api/admin/forums/index-model/{CategoryId}";
 
-            Model = await ApiService.GetFromJsonAsync<IndexPageModel>(requestUri);
+            Model = await ApiService.GetFromJsonAsync<ForumsPageModel>(requestUri);
         }
 
         protected async Task CategoryChangedAsync(ChangeEventArgs args)
         {
             CategoryId = new Guid(args.Value.ToString());
-            Model = await ApiService.GetFromJsonAsync<IndexPageModel>($"api/admin/forums/index-model/{CategoryId}");
+            Model = await ApiService.GetFromJsonAsync<ForumsPageModel>($"api/admin/forums/index-model/{CategoryId}");
             StateHasChanged();
         }
 

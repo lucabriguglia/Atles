@@ -11,8 +11,8 @@ namespace Atles.Client.Pages.Admin
     {
         protected IndexPageModel Model { get; set; }
 
-        protected string EditTitle => IsEdit ? Loc["Edit Role"] : Loc["Create New Role"];
-        protected string EditButton => IsEdit ? Loc["Update"] : Loc["Save"];
+        protected string EditTitle => IsEdit ? Localizer["Edit Role"] : Localizer["Create New Role"];
+        protected string EditButton => IsEdit ? Localizer["Update"] : Localizer["Save"];
 
         protected bool DisplayForm { get; set; }
         protected bool DisplayUsers { get; set; }

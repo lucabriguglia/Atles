@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace Atles.Server.Mapping;
+﻿namespace Atles.Server.Mapping;
 
 public interface IMapper<in TFrom, out TO>
 {

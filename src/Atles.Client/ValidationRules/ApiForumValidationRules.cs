@@ -1,40 +1,23 @@
-﻿//using System;
-//using System.Threading.Tasks;
-//using Atles.Client.Services.Api;
+﻿using Atles.Client.Services.Api;
+using Atles.Validators.ValidationRules;
 
-//namespace Atles.Client.ValidationRules;
+namespace Atles.Client.ValidationRules;
 
-//public class ApiForumValidationRules : IForumValidationRules
-//{
-//    private readonly ApiService _apiService;
+public class ApiForumValidationRules : IForumValidationRules
+{
+    private readonly ApiService _apiService;
 
-//    public ApiForumValidationRules(ApiService apiService)
-//    {
-//        _apiService = apiService;
-//    }
+    public ApiForumValidationRules(ApiService apiService)
+    {
+        _apiService = apiService;
+    }
 
-//    public async Task<bool> IsForumNameUnique(Guid siteId, Guid categoryId, string name, Guid? id = null)
-//    {
-//        if (id != null)
-//        {
-//            return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{categoryId}/{name}/{id}");
-//        }
+    public async Task<bool> IsForumNameUnique(Guid siteId, Guid categoryId, Guid id, string name) => 
+        await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{categoryId}/{id}/{name}");
 
-//        return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{categoryId}/{name}");
-//    }
+    public async Task<bool> IsForumSlugUnique(Guid siteId, Guid id, string slug) => 
+        await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-slug-unique/{id}/{slug}");
 
-//    public async Task<bool> IsForumSlugUnique(Guid siteId, string slug, Guid? id = null)
-//    {
-//        if (id != null)
-//        {
-//            return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{slug}/{id}");
-//        }
-
-//        return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{slug}");
-//    }
-
-//    public async Task<bool> IsForumValid(Guid siteId, Guid id)
-//    {
-//        return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-forum-valid/{id}");
-//    }
-//}
+    public async Task<bool> IsForumValid(Guid siteId, Guid id) => 
+        await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-forum-valid/{id}");
+}

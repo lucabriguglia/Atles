@@ -1,22 +1,34 @@
-﻿using System.Threading.Tasks;
+﻿using System.Net;
 using Atles.Client.Components.Admin;
 using Atles.Models.Admin.Categories;
 
-namespace Atles.Client.Pages.Admin.Categories
+namespace Atles.Client.Pages.Admin.Categories;
+
+public abstract class CreatePage : AdminPageBase
 {
-    public abstract class CreatePage : AdminPageBase
+    protected CategoryFormModel Model { get; set; }
+
+    protected override async Task OnInitializedAsync()
     {
-        protected FormComponentModel Model { get; set; }
+        Model = await ApiService.GetFromJsonAsync<CategoryFormModel>("api/admin/categories/create");
+    }
 
-        protected override async Task OnInitializedAsync()
-        {
-            Model = await ApiService.GetFromJsonAsync<FormComponentModel>("api/admin/categories/create");
-        }
+    protected async Task SaveAsync()
+    {
+        var response = await ApiService.PostAsJsonAsync("api/admin/categories/save", Model.Category);
 
-        protected async Task SaveAsync()
+        if (response.IsSuccessStatusCode)
         {
-            await ApiService.PostAsJsonAsync("api/admin/categories/save", Model.Category);
-            NavigationManager.NavigateTo("/admin/categories");
+            NavigationManager.NavigateTo("admin/categories");
         }
+        else
+        {
+            // TODO: Display error message
+        }
+    }
+
+    protected void Cancel()
+    {
+        NavigationManager.NavigateTo("/admin/categories");
     }
 }

@@ -1,10 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using System.Collections.Generic;
-using System.Threading.Tasks;
 using Atles.Core;
 using Atles.Core.Commands;
 using Atles.Core.Queries;
 using Atles.Core.Utilities;
+using Atles.Models.Admin;
 using Atles.Models.Public;
 using Atles.Queries.Public;
 using Atles.Server.Extensions;
@@ -30,6 +29,7 @@ public abstract class SiteControllerBase : ControllerBase
         {
             if (_currentUser == null)
             {
+                // TODO: Move to a service
                 var queryResult = AsyncUtil.RunSync(() => _dispatcher.Get(new GetCurrentUser()));
                 _currentUser = queryResult.AsT0;
             }
@@ -45,6 +45,7 @@ public abstract class SiteControllerBase : ControllerBase
         {
             if (_currentSite == null)
             {
+                // TODO: Move to a service
                 var queryResult = AsyncUtil.RunSync(() => _dispatcher.Get(new GetCurrentSite()));
                 _currentSite = queryResult.AsT0;
             }
@@ -60,6 +61,7 @@ public abstract class SiteControllerBase : ControllerBase
         {
             if (_currentForums == null)
             {
+                // TODO: Move to a service
                 var queryResult = AsyncUtil.RunSync(() => _dispatcher.Get(new GetCurrentForums()));
                 _currentForums = queryResult.AsT0;
             }
@@ -68,13 +70,26 @@ public abstract class SiteControllerBase : ControllerBase
         }
     }
 
+    protected async Task<ActionResult> ProcessPost<TCommand>(TCommand command) where TCommand : ICommand
+    {
+        var commandResult = await _dispatcher.Send(command);
+
+        return commandResult.Match(
+            success => Ok(),
+            failure => failure.ToActionResult()
+        );
+    }
+
     protected async Task<ActionResult> ProcessPost<TModel, TCommand>(
         TModel model,
         IMapper<TModel, TCommand> mapper,
         IValidator<TModel> validator = null)
-        where TModel : class
+        where TModel : ISiteFormModel
         where TCommand : ICommand
     {
+        // TODO: Populate site id in model and validate request
+        model.SiteId = CurrentSite.Id;
+
         if (validator is not null)
         {
             var validationResult = await validator.ValidateAsync(model);

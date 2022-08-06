@@ -1,8 +1,6 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Data;
+﻿using Atles.Data;
 using Atles.Domain;
-using Atles.Validators.Categories;
+using Atles.Validators.ValidationRules;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Server.ValidationRules;
@@ -16,11 +14,11 @@ public class DbCategoryValidationRules : ICategoryValidationRules
         _dbContext = dbContext;
     }
 
-    public async Task<bool> IsCategoryNameUnique(Guid siteId, string name, Guid? id = null)
+    public async Task<bool> IsCategoryNameUnique(Guid siteId, Guid id, string name)
     {
         bool any;
 
-        if (id != null)
+        if (id != Guid.Empty)
         {
             any = await _dbContext.Categories
                 .AnyAsync(x => x.SiteId == siteId &&

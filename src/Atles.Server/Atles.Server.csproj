@@ -6,6 +6,8 @@
     <AspNetCoreHostingModel>OutOfProcess</AspNetCoreHostingModel>
     <AspNetCoreModuleName>AspNetCoreModule</AspNetCoreModuleName>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	  <ImplicitUsings>enable</ImplicitUsings>
+	  <Nullable>disable</Nullable>
   </PropertyGroup>
 
   <ItemGroup>
@@ -36,6 +38,7 @@
     <ProjectReference Include="..\Atles.Models\Atles.Models.csproj" />
     <ProjectReference Include="..\Atles.Queries\Atles.Queries.csproj" />
     <ProjectReference Include="..\Atles.Queries.Handlers\Atles.Queries.Handlers.csproj" />
+    <ProjectReference Include="..\Atles.Validators.ValidationRules\Atles.Validators.ValidationRules.csproj" />
     <ProjectReference Include="..\Atles.Validators\Atles.Validators.csproj" />
   </ItemGroup>
 

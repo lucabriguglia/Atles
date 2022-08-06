@@ -1,13 +1,10 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Core;
+﻿using Atles.Core;
 using Atles.Domain;
 using Atles.Models;
 using Atles.Models.Public;
 using Atles.Queries.Public;
 using Atles.Server.Services;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
 
 namespace Atles.Server.Controllers.Public;
 

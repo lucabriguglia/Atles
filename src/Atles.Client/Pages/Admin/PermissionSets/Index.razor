@@ -4,17 +4,17 @@
 
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="/admin/dashboard">@Loc["Home"]</a></li>
-        <li class="breadcrumb-item active" aria-current="page">@Loc["Permission Sets"]</li>
+        <li class="breadcrumb-item"><a href="/admin/dashboard">@Localizer["Home"]</a></li>
+        <li class="breadcrumb-item active" aria-current="page">@Localizer["Permission Sets"]</li>
     </ol>
 </nav>
 
 <div class="row">
     <div class="col">
-        <h3 class="mb-3">@Loc["Permission Sets"]</h3>
+        <h3 class="mb-3">@Localizer["Permission Sets"]</h3>
     </div>
     <div class="col text-right mb-3">
-        <a href="/admin/permission-sets/create" class="btn btn-primary" role="button">@Loc["Create New"]</a>
+        <a href="/admin/permission-sets/create" class="btn btn-primary" role="button">@Localizer["Create New"]</a>
     </div>
 </div>
 
@@ -31,7 +31,7 @@ else
     <table class="table table-bordered table-hover">
         <thead>
             <tr>
-                <th scope="col">@Loc["Name"]</th>
+                <th scope="col">@Localizer["Name"]</th>
                 <th scope="col">&nbsp;</th>
             </tr>
         </thead>
@@ -41,14 +41,14 @@ else
                 <tr>
                     <td>@item.Name</td>
                     <td>
-                        <a href="/admin/permission-sets/edit/@item.Id" class="btn btn-secondary mb-1 mr-1" role="button">@Loc["Edit"]</a>
+                        <a href="/admin/permission-sets/edit/@item.Id" class="btn btn-secondary mb-1 mr-1" role="button">@Localizer["Edit"]</a>
                         @if (!item.IsInUse)
                         {
-                            <button type="button" class="btn btn-danger mb-1 mr-1" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Loc["Delete"]</button>
+                            <button type="button" class="btn btn-danger mb-1 mr-1" data-toggle="modal" data-target="#confirm-modal" data-id="@item.Id" @onclick="() => SetDeleteId(item.Id)">@Localizer["Delete"]</button>
                         }
                         else
                         {
-                            <button type="button" class="btn btn-danger mb-1 mr-1 disabled">@Loc["Delete"]</button>
+                            <button type="button" class="btn btn-danger mb-1 mr-1 disabled">@Localizer["Delete"]</button>
                         }
                     </td>
                 </tr>
@@ -56,8 +56,8 @@ else
         </tbody>
     </table>
 
-    <ConfirmModal Title="@Loc["Delete"]"
-                  Body="@Loc["Are you sure you want to delete this permission set?"]"
-                  Button="@Loc["Delete"]"
+    <ConfirmModal Title="@Localizer["Delete"]"
+                  Body="@Localizer["Are you sure you want to delete this permission set?"]"
+                  Button="@Localizer["Delete"]"
                   OnClickCallback="@DeleteAsync" />
 }

@@ -13,7 +13,7 @@ public class DbForumValidationRulesTests : TestFixtureBase
     {
         await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
         var sut = new DbForumValidationRules(dbContext);
-        var actual = await sut.IsForumNameUnique(Guid.NewGuid(), Guid.NewGuid(), "My Forum");
+        var actual = await sut.IsForumNameUnique(Guid.NewGuid(), Guid.NewGuid(), Guid.Empty, "My Forum");
             
         Assert.IsTrue(actual);
     }
@@ -23,7 +23,7 @@ public class DbForumValidationRulesTests : TestFixtureBase
     {
         await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
         var sut = new DbForumValidationRules(dbContext);
-        var actual = await sut.IsForumNameUnique(Guid.NewGuid(), Guid.NewGuid(), "My Forum", Guid.NewGuid());
+        var actual = await sut.IsForumNameUnique(Guid.NewGuid(), Guid.NewGuid(), Guid.NewGuid(), "My Forum");
 
         Assert.IsTrue(actual);
     }
@@ -49,7 +49,7 @@ public class DbForumValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbForumValidationRules(dbContext);
-            var actual = await sut.IsForumNameUnique(siteId, categoryId, "My Forum");
+            var actual = await sut.IsForumNameUnique(siteId, categoryId, Guid.NewGuid(), "My Forum");
 
             Assert.IsFalse(actual);
         }
@@ -78,7 +78,7 @@ public class DbForumValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbForumValidationRules(dbContext);
-            var actual = await sut.IsForumNameUnique(siteId, categoryId, "Forum 1", forumId);
+            var actual = await sut.IsForumNameUnique(siteId, categoryId, forumId, "Forum 1");
 
             Assert.IsFalse(actual);
         }
@@ -89,7 +89,7 @@ public class DbForumValidationRulesTests : TestFixtureBase
     {
         await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
         var sut = new DbForumValidationRules(dbContext);
-        var actual = await sut.IsForumSlugUnique(Guid.NewGuid(), "my-forum");
+        var actual = await sut.IsForumSlugUnique(Guid.NewGuid(), Guid.Empty, "my-forum");
 
         Assert.IsTrue(actual);
     }
@@ -99,7 +99,7 @@ public class DbForumValidationRulesTests : TestFixtureBase
     {
         await using var dbContext = new AtlesDbContext(Shared.CreateContextOptions());
         var sut = new DbForumValidationRules(dbContext);
-        var actual = await sut.IsForumSlugUnique(Guid.NewGuid(), "my-forum", Guid.NewGuid());
+        var actual = await sut.IsForumSlugUnique(Guid.NewGuid(), Guid.NewGuid(), "my-forum");
 
         Assert.IsTrue(actual);
     }
@@ -125,7 +125,7 @@ public class DbForumValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbForumValidationRules(dbContext);
-            var actual = await sut.IsForumSlugUnique(siteId, "My Forum");
+            var actual = await sut.IsForumSlugUnique(siteId, Guid.NewGuid(), "My Forum");
 
             Assert.IsFalse(actual);
         }
@@ -154,7 +154,7 @@ public class DbForumValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbForumValidationRules(dbContext);
-            var actual = await sut.IsForumSlugUnique(siteId, "my-forum", forumId);
+            var actual = await sut.IsForumSlugUnique(siteId, forumId, "my-forum");
 
             Assert.IsFalse(actual);
         }
