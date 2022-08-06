@@ -10,11 +10,11 @@ namespace Atles.Client.Pages.Admin.Forums
     {
         [Parameter] public Guid Id { get; set; }
 
-        protected FormComponentModel Model { get; set; }
+        protected CreateForumFormModel Model { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
-            Model = await ApiService.GetFromJsonAsync<FormComponentModel>($"api/admin/forums/edit/{Id}");
+            Model = await ApiService.GetFromJsonAsync<CreateForumFormModel>($"api/admin/forums/edit/{Id}");
         }
 
         protected async Task UpdateAsync()

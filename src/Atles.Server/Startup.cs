@@ -103,7 +103,7 @@ public class Startup
                 typeof(Dispatcher), 
                 typeof(CreateCategoryHandler), 
                 typeof(CreateCategoryValidator),
-                typeof(IndexPageModel), 
+                typeof(CategoriesPageModel), 
                 typeof(GetCategoriesIndexHandler), 
                 typeof(AtlesDbContext),
                 typeof(SubscriptionHandler))

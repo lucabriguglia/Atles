@@ -8,7 +8,7 @@ namespace Atles.Client.Pages.Admin.Forums
 {
     public abstract class FormComponent : AdminComponentBase
     {
-        [Parameter] public FormComponentModel Model { get; set; }
+        [Parameter] public CreateForumFormModel Model { get; set; }
         [Parameter] public string Button { get; set; }
         [Parameter] public EventCallback OnValidSubmit { get; set; }
 

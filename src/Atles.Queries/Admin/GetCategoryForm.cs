@@ -1,5 +1,6 @@
 ﻿using Atles.Core.Queries;
 using Atles.Models.Admin;
+using Atles.Models.Admin.Categories;
 
 namespace Atles.Queries.Admin
 {

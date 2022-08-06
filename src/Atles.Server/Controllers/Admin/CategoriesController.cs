@@ -4,6 +4,7 @@ using Atles.Commands.Categories;
 using Atles.Core;
 using Atles.Domain;
 using Atles.Models.Admin;
+using Atles.Models.Admin.Categories;
 using Atles.Queries.Admin;
 using Atles.Server.Mapping;
 using Atles.Validators.ValidationRules;

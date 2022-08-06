@@ -1,5 +1,6 @@
 ﻿using Atles.Commands.Categories;
 using Atles.Models.Admin;
+using Atles.Models.Admin.Categories;
 using Atles.Validators.Categories;
 using Atles.Validators.PermissionSets;
 using Atles.Validators.ValidationRules;

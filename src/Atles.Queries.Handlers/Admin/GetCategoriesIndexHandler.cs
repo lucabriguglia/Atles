@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Queries.Handlers.Admin
 {
-    public class GetCategoriesIndexHandler : IQueryHandler<GetCategoriesIndex, IndexPageModel>
+    public class GetCategoriesIndexHandler : IQueryHandler<GetCategoriesIndex, CategoriesPageModel>
     {
         private readonly AtlesDbContext _dbContext;
 
@@ -19,9 +19,9 @@ namespace Atles.Queries.Handlers.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<QueryResult<IndexPageModel>> Handle(GetCategoriesIndex query)
+        public async Task<QueryResult<CategoriesPageModel>> Handle(GetCategoriesIndex query)
         {
-            var result = new IndexPageModel();
+            var result = new CategoriesPageModel();
 
             var categories = await _dbContext.Categories
                 .Include(x => x.PermissionSet)
@@ -37,7 +37,7 @@ namespace Atles.Queries.Handlers.Admin
                         x.Status != ForumStatusType.Deleted)
                     .CountAsync();
 
-                result.Categories.Add(new IndexPageModel.CategoryModel
+                result.Categories.Add(new CategoriesPageModel.CategoryModel
                 {
                     Id = category.Id,
                     Name = category.Name,

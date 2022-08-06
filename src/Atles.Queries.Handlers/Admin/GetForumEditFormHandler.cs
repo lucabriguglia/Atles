@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Queries.Handlers.Admin
 {
-    public class GetForumEditFormHandler : IQueryHandler<GetForumEditForm, FormComponentModel>
+    public class GetForumEditFormHandler : IQueryHandler<GetForumEditForm, CreateForumFormModel>
     {
         private readonly AtlesDbContext _dbContext;
 
@@ -20,7 +20,7 @@ namespace Atles.Queries.Handlers.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<QueryResult<FormComponentModel>> Handle(GetForumEditForm query)
+        public async Task<QueryResult<CreateForumFormModel>> Handle(GetForumEditForm query)
         {
             var forum = await _dbContext.Forums
                 .FirstOrDefaultAsync(x =>
@@ -33,9 +33,9 @@ namespace Atles.Queries.Handlers.Admin
                 return null;
             }
 
-            var result = new FormComponentModel
+            var result = new CreateForumFormModel
             {
-                Forum = new FormComponentModel.ForumModel
+                Forum = new CreateForumFormModel.ForumModel
                 {
                     Id = forum.Id,
                     CategoryId = forum.CategoryId,
@@ -53,7 +53,7 @@ namespace Atles.Queries.Handlers.Admin
 
             foreach (var category in categories)
             {
-                result.Categories.Add(new FormComponentModel.CategoryModel
+                result.Categories.Add(new CreateForumFormModel.CategoryModel
                 {
                     Id = category.Id,
                     Name = category.Name
@@ -66,7 +66,7 @@ namespace Atles.Queries.Handlers.Admin
 
             foreach (var permissionSet in permissionSets)
             {
-                result.PermissionSets.Add(new FormComponentModel.PermissionSetModel
+                result.PermissionSets.Add(new CreateForumFormModel.PermissionSetModel
                 {
                     Id = permissionSet.Id,
                     Name = permissionSet.Name

@@ -3,7 +3,7 @@ using Atles.Models.Admin.Forums;
 
 namespace Atles.Queries.Admin
 {
-    public class GetForumEditForm : QueryBase<FormComponentModel>
+    public class GetForumEditForm : QueryBase<CreateForumFormModel>
     {
         public Guid Id { get; set; }
     }

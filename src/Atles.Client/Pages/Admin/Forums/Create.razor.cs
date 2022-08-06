@@ -10,7 +10,7 @@ namespace Atles.Client.Pages.Admin.Forums
     {
         [Parameter] public Guid? CategoryId { get; set; }
 
-        protected FormComponentModel Model { get; set; }
+        protected CreateForumFormModel Model { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
@@ -18,7 +18,7 @@ namespace Atles.Client.Pages.Admin.Forums
                 ? "api/admin/forums/create"
                 : $"api/admin/forums/create/{CategoryId}";
 
-            Model = await ApiService.GetFromJsonAsync<FormComponentModel>(requestUri);
+            Model = await ApiService.GetFromJsonAsync<CreateForumFormModel>(requestUri);
         }
 
         protected async Task SaveAsync()

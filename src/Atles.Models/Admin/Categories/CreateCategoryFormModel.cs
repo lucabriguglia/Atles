@@ -1,6 +1,6 @@
-﻿namespace Atles.Models.Admin;
+﻿namespace Atles.Models.Admin.Categories;
 
-public class UpdateCategoryFormModel
+public class CreateCategoryFormModel
 {
     public CategoryModel Category { get; set; } = new();
     public IList<PermissionSetModel> PermissionSets { get; set; } = new List<PermissionSetModel>();

@@ -8,12 +8,12 @@ namespace Atles.Client.Pages.Admin.Categories
 {
     public abstract class IndexPage : AdminPageBase
     {
-        protected IndexPageModel Model { get; set; }
+        protected CategoriesPageModel Model { get; set; }
         protected Guid DeleteId { get; set; }
 
         protected override async Task OnInitializedAsync()
         {
-            Model = await ApiService.GetFromJsonAsync<IndexPageModel>("api/admin/categories/list");
+            Model = await ApiService.GetFromJsonAsync<CategoriesPageModel>("api/admin/categories/list");
         }
 
         protected async Task MoveUpAsync(Guid id)

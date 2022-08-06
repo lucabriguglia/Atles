@@ -6,6 +6,7 @@ using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Admin;
+using Atles.Models.Admin.Categories;
 using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 

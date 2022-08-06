@@ -1,4 +1,5 @@
 ﻿using Atles.Models.Admin;
+using Atles.Models.Admin.Categories;
 using Atles.Validators.ValidationRules;
 using FluentValidation;
 
