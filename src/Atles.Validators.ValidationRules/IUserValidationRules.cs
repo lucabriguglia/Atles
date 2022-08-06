@@ -2,5 +2,5 @@
 
 public interface IUserValidationRules
 {
-    Task<bool> IsUserDisplayNameUnique(string displayName, Guid? id = null);
+    Task<bool> IsUserDisplayNameUnique(Guid id, string displayName);
 }

@@ -7,52 +7,46 @@ using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Events.Users;
-using FluentValidation;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Commands.Handlers.Users
+namespace Atles.Commands.Handlers.Users;
+
+public class UpdateUserHandler : ICommandHandler<UpdateUser>
 {
-    public class UpdateUserHandler : ICommandHandler<UpdateUser>
+    private readonly AtlesDbContext _dbContext;
+
+    public UpdateUserHandler(AtlesDbContext dbContext)
     {
-        private readonly AtlesDbContext _dbContext;
-        private readonly IValidator<UpdateUser> _validator;
+        _dbContext = dbContext;
+    }
 
-        public UpdateUserHandler(AtlesDbContext dbContext, IValidator<UpdateUser> validator)
+    public async Task<CommandResult> Handle(UpdateUser command)
+    {
+        var user = await _dbContext.Users
+            .FirstOrDefaultAsync(x =>
+                x.Id == command.UpdateUserId);
+
+        if (user == null)
         {
-            _dbContext = dbContext;
-            _validator = validator;
+            throw new DataException($"User with Id {command.UpdateUserId} not found.");
         }
 
-        public async Task<CommandResult> Handle(UpdateUser command)
+        user.UpdateDetails(command.DisplayName);
+
+        var @event = new UserUpdated
         {
-            await _validator.ValidateCommand(command);
+            DisplayName = user.DisplayName,
+            Roles = command.Roles is { Count: > 0 } ? string.Join(", ", command.Roles) : string.Empty,
+            TargetId = user.Id,
+            TargetType = nameof(User),
+            SiteId = command.SiteId,
+            UserId = command.UserId
+        };
 
-            var user = await _dbContext.Users
-                .FirstOrDefaultAsync(x =>
-                    x.Id == command.UpdateUserId);
+        _dbContext.Events.Add(@event.ToDbEntity());
 
-            if (user == null)
-            {
-                throw new DataException($"User with Id {command.UpdateUserId} not found.");
-            }
+        await _dbContext.SaveChangesAsync();
 
-            user.UpdateDetails(command.DisplayName);
-
-            var @event = new UserUpdated
-            {
-                DisplayName = user.DisplayName,
-                Roles = command.Roles is { Count: > 0 } ? string.Join(", ", command.Roles) : string.Empty,
-                TargetId = user.Id,
-                TargetType = nameof(User),
-                SiteId = command.SiteId,
-                UserId = command.UserId
-            };
-
-            _dbContext.Events.Add(@event.ToDbEntity());
-
-            await _dbContext.SaveChangesAsync();
-
-            return new Success(new IEvent[] { @event });
-        }
+        return new Success(new IEvent[] { @event });
     }
 }

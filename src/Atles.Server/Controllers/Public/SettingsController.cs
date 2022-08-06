@@ -59,10 +59,7 @@ public class SettingsController : SiteControllerBase
         return Ok();
     }
 
-    [HttpGet("is-display-name-unique/{name}")]
-    public async Task<IActionResult> IsDisplayNameUnique(string name)
-    {
-        var isDisplayNameUnique = await _userValidationRules.IsUserDisplayNameUnique(name);
-        return Ok(isDisplayNameUnique);
-    }
+    [HttpGet("is-display-name-unique/{displayName}")]
+    public async Task<IActionResult> IsDisplayNameUnique(string displayName) => 
+        Ok(await _userValidationRules.IsUserDisplayNameUnique(CurrentUser.Id, displayName));
 }

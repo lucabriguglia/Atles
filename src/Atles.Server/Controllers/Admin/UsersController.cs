@@ -76,22 +76,12 @@ public class UsersController : AdminControllerBase
     }
 
     [HttpGet("edit/{id}")]
-    public async Task<ActionResult<EditPageModel>> Edit(Guid id)
-    {
-        return await ProcessGet(new GetUserEditForm
-        {
-            Id = id
-        });
-    }
+    public async Task<ActionResult<EditPageModel>> Edit(Guid id) => 
+        await ProcessGet(new GetUserEditForm{ Id = id });
 
     [HttpGet("edit-by-identity-user-id/{identityUserId}")]
-    public async Task<ActionResult<EditPageModel>> EditByIdentityUserId(string identityUserId)
-    {
-        return await ProcessGet(new GetUserEditForm
-        {
-            IdentityUserId = identityUserId 
-        });
-    }
+    public async Task<ActionResult<EditPageModel>> EditByIdentityUserId(string identityUserId) => 
+        await ProcessGet(new GetUserEditForm { IdentityUserId = identityUserId });
 
     [HttpPost("update")]
     public async Task<ActionResult> Update(EditPageModel model)
@@ -145,34 +135,22 @@ public class UsersController : AdminControllerBase
     }
 
     [HttpPost("suspend")]
-    public async Task<ActionResult> Suspend([FromBody] Guid id)
-    {
-        var command = new SuspendUser
+    public async Task<ActionResult> Suspend([FromBody] Guid id) =>
+        await ProcessPost(new SuspendUser
         {
             SuspendUserId = id,
             SiteId = CurrentSite.Id,
             UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+        });
 
     [HttpPost("reinstate")]
-    public async Task<ActionResult> Reinstate([FromBody] Guid id)
-    {
-        var command = new ReinstateUser
+    public async Task<ActionResult> Reinstate([FromBody] Guid id) =>
+        await ProcessPost(new ReinstateUser
         {
             ReinstateUserId = id,
             SiteId = CurrentSite.Id,
             UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+        });
 
     [HttpDelete("delete/{id}/{identityUserId}")]
     public async Task<ActionResult> Delete(Guid id, string identityUserId)
@@ -197,17 +175,7 @@ public class UsersController : AdminControllerBase
         return Ok();
     }
 
-    [HttpGet("is-display-name-unique/{name}")]
-    public async Task<ActionResult> IsDisplayNameUnique(string name)
-    {
-        var isDisplayNameUnique = await _userValidationRules.IsUserDisplayNameUnique(name);
-        return Ok(isDisplayNameUnique);
-    }
-
-    [HttpGet("is-display-name-unique/{name}/{id}")]
-    public async Task<ActionResult> IsNameUnique(string name, Guid id)
-    {
-        var isDisplayNameUnique = await _userValidationRules.IsUserDisplayNameUnique(name, id);
-        return Ok(isDisplayNameUnique);
-    }
+    [HttpGet("is-display-name-unique/{id}/{displayName}")]
+    public async Task<ActionResult> IsNameUnique(Guid id, string displayName) => 
+        Ok(await _userValidationRules.IsUserDisplayNameUnique(id, displayName));
 }

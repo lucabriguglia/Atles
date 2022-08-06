@@ -1,4 +1,4 @@
-﻿using Atles.Commands.Users;
+﻿using Atles.Models.Admin.Users;
 using Atles.Validators.Users;
 using Atles.Validators.ValidationRules;
 using AutoFixture;
@@ -14,7 +14,7 @@ public class UpdateUserValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_display_name_is_empty()
     {
-        var model = Fixture.Build<UpdateUser>().With(x => x.DisplayName, string.Empty).Create();
+        var model = Fixture.Build<EditPageModel.UserModel>().With(x => x.DisplayName, string.Empty).Create();
 
         var userValidationRules = new Mock<IUserValidationRules>();
 
@@ -27,7 +27,7 @@ public class UpdateUserValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_display_name_is_too_long()
     {
-        var model = Fixture.Build<UpdateUser>().With(x => x.DisplayName, new string('*', 51)).Create();
+        var model = Fixture.Build<EditPageModel.UserModel>().With(x => x.DisplayName, new string('*', 51)).Create();
 
         var userValidationRules = new Mock<IUserValidationRules>();
 
@@ -40,7 +40,7 @@ public class UpdateUserValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_display_name_is_not_unique()
     {
-        var model = Fixture.Create<UpdateUser>();
+        var model = Fixture.Create<EditPageModel.UserModel>();
 
         var userValidationRules = new Mock<IUserValidationRules>();
 

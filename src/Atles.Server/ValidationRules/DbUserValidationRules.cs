@@ -14,11 +14,11 @@ public class DbUserValidationRules : IUserValidationRules
         _dbContext = dbContext;
     }
 
-    public async Task<bool> IsUserDisplayNameUnique(string displayName, Guid? id = null)
+    public async Task<bool> IsUserDisplayNameUnique(Guid id, string displayName)
     {
         bool any;
 
-        if (id != null && id != Guid.Empty)
+        if (id != Guid.Empty)
         {
             any = await _dbContext.Users
                 .AnyAsync(x => x.DisplayName == displayName &&

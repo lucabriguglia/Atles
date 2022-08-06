@@ -3,51 +3,41 @@ using Atles.Commands.Users;
 using Atles.Data;
 using Atles.Domain;
 using AutoFixture;
-using FluentValidation;
-using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
-using Moq;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Commands.Users
+namespace Atles.Tests.Unit.Commands.Users;
+
+[TestFixture]
+public class UpdateUserHandlerTests : TestFixtureBase
 {
-    [TestFixture]
-    public class UpdateUserHandlerTests : TestFixtureBase
+    [Test]
+    public async Task Should_update_user_and_add_event()
     {
-        [Test]
-        public async Task Should_update_user_and_add_event()
+        var options = Shared.CreateContextOptions();
+        var user = new User(Guid.NewGuid(), Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+
+        await using (var dbContext = new AtlesDbContext(options))
         {
-            var options = Shared.CreateContextOptions();
-            var user = new User(Guid.NewGuid(), Guid.NewGuid().ToString(), "me@email.com", "Display Name");
+            dbContext.Users.Add(user);
+            await dbContext.SaveChangesAsync();
+        }
 
-            using (var dbContext = new AtlesDbContext(options))
-            {
-                dbContext.Users.Add(user);
-                await dbContext.SaveChangesAsync();
-            }
+        await using (var dbContext = new AtlesDbContext(options))
+        {
+            var command = Fixture.Build<UpdateUser>()
+                .With(x => x.UpdateUserId, user.Id)
+                .Create();
 
-            using (var dbContext = new AtlesDbContext(options))
-            {
-                var command = Fixture.Build<UpdateUser>()
-                        .With(x => x.UpdateUserId, user.Id)
-                        .Create();
+            var sut = new UpdateUserHandler(dbContext);
 
-                var validator = new Mock<IValidator<UpdateUser>>();
-                validator
-                    .Setup(x => x.ValidateAsync(command, new CancellationToken()))
-                    .ReturnsAsync(new ValidationResult());
+            await sut.Handle(command);
 
-                var sut = new UpdateUserHandler(dbContext, validator.Object);
+            var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == command.UpdateUserId);
+            var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.UpdateUserId);
 
-                await sut.Handle(command);
-
-                var updatedUser = await dbContext.Users.FirstOrDefaultAsync(x => x.Id == command.UpdateUserId);
-                var @event = await dbContext.Events.FirstOrDefaultAsync(x => x.TargetId == command.UpdateUserId);
-
-                validator.Verify(x => x.ValidateAsync(command, new CancellationToken()));
-                Assert.AreEqual(command.DisplayName, updatedUser.DisplayName);
-                Assert.NotNull(@event);
-            }
+            Assert.AreEqual(command.DisplayName, updatedUser.DisplayName);
+            Assert.NotNull(@event);
         }
     }
 }
