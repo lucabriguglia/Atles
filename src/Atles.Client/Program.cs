@@ -5,6 +5,7 @@ using Atles.Client.Services.Storage;
 using Atles.Client.ValidationRules;
 using Atles.Models.Admin.Categories;
 using Atles.Models.Admin.Forums;
+using Atles.Models.Admin.PermissionSets;
 using Atles.Models.Public;
 using Atles.Validators;
 using Atles.Validators.ValidationRules;
@@ -64,6 +65,7 @@ public class Program
 
         builder.Services.AddTransient<IValidator<CategoryFormModel.CategoryModel>, CategoryValidator>();
         builder.Services.AddTransient<IValidator<ForumFormModel.ForumModel>, ForumValidator>();
+        builder.Services.AddTransient<IValidator<PermissionSetFormModel.PermissionSetModel>, PermissionSetValidator>();
 
         builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 

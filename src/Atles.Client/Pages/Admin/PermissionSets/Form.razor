@@ -3,8 +3,8 @@
 
 <div class="row">
     <div class="col-md-8">
-        <EditForm EditContext="@EditContext" OnSubmit="@(async () => await OnSubmitAsync())">
-            <DataAnnotationsValidator />
+        <EditForm Model="Model.PermissionSet" OnValidSubmit="OnSubmit">
+            <FluentValidationValidator />
             <div class="form-group">
                 <label for="name" class="control-label">@Localizer["Name"]</label>
                 <InputText id="name" @bind-Value="Model.PermissionSet.Name" Class="form-control" />
@@ -47,8 +47,8 @@
                 </table>
             </div>
             <div class="form-group">
-                <input type="submit" value="@Button" class="btn btn-primary mb-1" />
-                <button type="button" class="btn btn-secondary mb-1" @onclick="Cancel">@Localizer["Cancel"]</button>
+                <input type="submit" value="@SubmitButtonText" class="btn btn-primary mb-1" />
+                <button type="button" class="btn btn-secondary mb-1" @onclick="OnCancel">@Localizer["Cancel"]</button>
             </div>
             <ValidationSummary />
         </EditForm>

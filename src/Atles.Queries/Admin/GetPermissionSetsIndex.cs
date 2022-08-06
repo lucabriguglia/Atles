@@ -3,7 +3,7 @@ using Atles.Models.Admin.PermissionSets;
 
 namespace Atles.Queries.Admin
 {
-    public class GetPermissionSetsIndex : QueryBase<IndexPageModel>
+    public class GetPermissionSetsIndex : QueryBase<PermissionSetsPageModel>
     {
     }
 }

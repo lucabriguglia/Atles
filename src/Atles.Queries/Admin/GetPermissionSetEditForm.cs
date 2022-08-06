@@ -3,7 +3,7 @@ using Atles.Models.Admin.PermissionSets;
 
 namespace Atles.Queries.Admin
 {
-    public class GetPermissionSetEditForm : QueryBase<FormComponentModel>
+    public class GetPermissionSetEditForm : QueryBase<PermissionSetFormModel>
     {
         public Guid Id { get; set; }
     }

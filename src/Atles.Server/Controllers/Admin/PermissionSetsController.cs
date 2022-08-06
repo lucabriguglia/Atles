@@ -2,7 +2,9 @@
 using Atles.Core;
 using Atles.Models.Admin.PermissionSets;
 using Atles.Queries.Admin;
+using Atles.Server.Mapping;
 using Atles.Validators.ValidationRules;
+using FluentValidation;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin;
@@ -10,102 +12,55 @@ namespace Atles.Server.Controllers.Admin;
 [Route("api/admin/permission-sets")]
 public class PermissionSetsController : AdminControllerBase
 {
-    private readonly IDispatcher _dispatcher;
     private readonly IPermissionSetValidationRules _permissionSetValidationRules;
+    private readonly IMapper<PermissionSetFormModel.PermissionSetModel, CreatePermissionSet> _createPermissionSetMapper;
+    private readonly IMapper<PermissionSetFormModel.PermissionSetModel, UpdatePermissionSet> _updatePermissionSetMapper;
+    private readonly IValidator<PermissionSetFormModel.PermissionSetModel> _permissionSetValidator;
 
-    public PermissionSetsController(IDispatcher dispatcher, IPermissionSetValidationRules permissionSetValidationRules) : base(dispatcher)
+    public PermissionSetsController(
+        IDispatcher dispatcher,
+        IPermissionSetValidationRules permissionSetValidationRules,
+        IMapper<PermissionSetFormModel.PermissionSetModel, CreatePermissionSet> createPermissionSetMapper,
+        IMapper<PermissionSetFormModel.PermissionSetModel, UpdatePermissionSet> updatePermissionSetMapper,
+        IValidator<PermissionSetFormModel.PermissionSetModel> permissionSetValidator) 
+        : base(dispatcher)
     {
-        _dispatcher = dispatcher;
         _permissionSetValidationRules = permissionSetValidationRules;
+        _createPermissionSetMapper = createPermissionSetMapper;
+        _updatePermissionSetMapper = updatePermissionSetMapper;
+        _permissionSetValidator = permissionSetValidator;
     }
 
     [HttpGet("list")]
-    public async Task<ActionResult> List()
-    {
-        return await ProcessGet(new GetPermissionSetsIndex
-        {
-            SiteId = CurrentSite.Id
-        });
-    }
+    public async Task<ActionResult> List() => 
+        await ProcessGet(new GetPermissionSetsIndex { SiteId = CurrentSite.Id });
 
     [HttpGet("create")]
-    public async Task<ActionResult> Create()
-    {
-        return await ProcessGet(new GetPermissionSetCreateForm
-        {
-            SiteId = CurrentSite.Id
-        });
-    }
+    public async Task<ActionResult> Create() => 
+        await ProcessGet(new GetPermissionSetCreateForm { SiteId = CurrentSite.Id });
 
     [HttpPost("save")]
-    public async Task<ActionResult> Save(FormComponentModel.PermissionSetModel model)
-    {
-        var command = new CreatePermissionSet
-        {
-            Name = model.Name,
-            Permissions = model.Permissions.ToPermissionCommands(),
-            SiteId = CurrentSite.Id,
-            UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+    public async Task<ActionResult> Save(PermissionSetFormModel.PermissionSetModel model) => 
+        await ProcessPost(model, _createPermissionSetMapper, _permissionSetValidator);
 
     [HttpGet("edit/{id}")]
-    public async Task<ActionResult<FormComponentModel>> Edit(Guid id)
-    {
-        return await ProcessGet(new GetPermissionSetEditForm
-        {
-            SiteId = CurrentSite.Id, 
-            Id = id
-        });
-    }
+    public async Task<ActionResult<PermissionSetFormModel>> Edit(Guid id) => 
+        await ProcessGet(new GetPermissionSetEditForm { SiteId = CurrentSite.Id,  Id = id });
 
     [HttpPost("update")]
-    public async Task<ActionResult> Update(FormComponentModel.PermissionSetModel model)
-    {
-        var command = new UpdatePermissionSet
-        {
-            PermissionSetId = model.Id,
-            Name = model.Name,
-            Permissions = model.Permissions.ToPermissionCommands(),
-            SiteId = CurrentSite.Id,
-            UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+    public async Task<ActionResult> Update(PermissionSetFormModel.PermissionSetModel model) => 
+        await ProcessPost(model, _updatePermissionSetMapper, _permissionSetValidator);
 
     [HttpDelete("delete/{id}")]
-    public async Task<ActionResult> Delete(Guid id)
-    {
-        var command = new DeletePermissionSet
+    public async Task<ActionResult> Delete(Guid id) =>
+        await ProcessPost(new DeletePermissionSet
         {
             PermissionSetId = id,
             SiteId = CurrentSite.Id,
             UserId = CurrentUser.Id
-        };
+        });
 
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
-
-    [HttpGet("is-name-unique/{name}")]
-    public async Task<ActionResult> IsNameUnique(string name)
-    {
-        var isNameUnique = await _permissionSetValidationRules.IsPermissionSetNameUnique(CurrentSite.Id, name);
-        return Ok(isNameUnique);
-    }
-
-    [HttpGet("is-name-unique/{name}/{id}")]
-    public async Task<ActionResult> IsNameUnique(string name, Guid id)
-    {
-        var isNameUnique = await _permissionSetValidationRules.IsPermissionSetNameUnique(CurrentSite.Id, name, id);
-        return Ok(isNameUnique);
-    }
+    [HttpGet("is-name-unique/{id}/{name}")]
+    public async Task<ActionResult> IsNameUnique(string name, Guid id) => 
+        Ok(await _permissionSetValidationRules.IsPermissionSetNameUnique(CurrentSite.Id, id, name));
 }

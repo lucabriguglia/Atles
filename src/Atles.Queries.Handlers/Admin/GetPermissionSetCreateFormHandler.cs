@@ -9,7 +9,7 @@ using Atles.Queries.Admin;
 
 namespace Atles.Queries.Handlers.Admin
 {
-    public class GetPermissionSetCreateFormHandler : IQueryHandler<GetPermissionSetCreateForm, FormComponentModel>
+    public class GetPermissionSetCreateFormHandler : IQueryHandler<GetPermissionSetCreateForm, PermissionSetFormModel>
     {
         private readonly IDispatcher _dispatcher;
 
@@ -18,9 +18,9 @@ namespace Atles.Queries.Handlers.Admin
             _dispatcher = sender;
         }
 
-        public async Task<QueryResult<FormComponentModel>> Handle(GetPermissionSetCreateForm query)
+        public async Task<QueryResult<PermissionSetFormModel>> Handle(GetPermissionSetCreateForm query)
         {
-            var result = new FormComponentModel();
+            var result = new PermissionSetFormModel();
 
             // TODO: To be moved to a service
             var queryResult = await _dispatcher.Get(new GetRoles());
@@ -28,7 +28,7 @@ namespace Atles.Queries.Handlers.Admin
 
             foreach (var roleModel in roles)
             {
-                var permissionModel = new FormComponentModel.PermissionModel
+                var permissionModel = new PermissionSetFormModel.PermissionModel
                 {
                     RoleId = roleModel.Id,
                     RoleName = roleModel.Name
@@ -39,7 +39,7 @@ namespace Atles.Queries.Handlers.Admin
                     var disabled = roleModel.Name == Consts.RoleNameAdmin ||
                                    roleModel.Id == Consts.RoleIdAll && !IsReadingPermissionType(permissionType);
 
-                    permissionModel.PermissionTypes.Add(new FormComponentModel.PermissionTypeModel
+                    permissionModel.PermissionTypes.Add(new PermissionSetFormModel.PermissionTypeModel
                     {
                         Type = permissionType,
                         Selected = roleModel.Name == Consts.RoleNameAdmin,

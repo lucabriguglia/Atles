@@ -1,15 +1,14 @@
-﻿namespace Atles.Domain
+﻿namespace Atles.Domain;
+
+public enum PermissionType
 {
-    public enum PermissionType
-    {
-        ViewForum = 0,
-        ViewTopics = 1,
-        Read = 2,
-        Start = 3,
-        Reply = 4,
-        Edit = 5,
-        Delete = 6,
-        Moderate = 9,
-        Reactions = 10
-    }
+    ViewForum = 1,
+    ViewTopics = 2,
+    Read = 3,
+    Start = 4,
+    Reply = 5,
+    Edit = 6,
+    Delete = 7,
+    Moderate = 8,
+    Reactions = 9
 }

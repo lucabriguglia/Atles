@@ -2,6 +2,6 @@
 
 public interface IPermissionSetValidationRules
 {
-    Task<bool> IsPermissionSetNameUnique(Guid siteId, string name, Guid? id = null);
+    Task<bool> IsPermissionSetNameUnique(Guid siteId, Guid id, string name);
     Task<bool> IsPermissionSetValid(Guid siteId, Guid id);
 }

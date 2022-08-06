@@ -12,18 +12,9 @@ public class ApiPermissionSetValidationRules : IPermissionSetValidationRules
         _apiService = apiService;
     }
 
-    public async Task<bool> IsPermissionSetNameUnique(Guid siteId, string name, Guid? id = null)
-    {
-        if (id != null)
-        {
-            return await _apiService.GetFromJsonAsync<bool>($"api/admin/permission-sets/is-name-unique/{name}/{id}");
-        }
+    public async Task<bool> IsPermissionSetNameUnique(Guid siteId, Guid id, string name) => 
+        await _apiService.GetFromJsonAsync<bool>($"api/admin/permission-sets/is-name-unique/{id}/{name}");
 
-        return await _apiService.GetFromJsonAsync<bool>($"api/admin/permission-sets/is-name-unique/{name}");
-    }
-
-    public async Task<bool> IsPermissionSetValid(Guid siteId, Guid id)
-    {
-        return await Task.FromResult(true);
-    }
+    public async Task<bool> IsPermissionSetValid(Guid siteId, Guid id) => 
+        await Task.FromResult(true);
 }

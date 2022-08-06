@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Queries.Handlers.Admin
 {
-    public class GetPermissionSetEditFormHandler : IQueryHandler<GetPermissionSetEditForm, FormComponentModel>
+    public class GetPermissionSetEditFormHandler : IQueryHandler<GetPermissionSetEditForm, PermissionSetFormModel>
     {
         private readonly AtlesDbContext _dbContext;
         private readonly IDispatcher _dispatcher;
@@ -23,9 +23,9 @@ namespace Atles.Queries.Handlers.Admin
             _dispatcher = sender;
         }
 
-        public async Task<QueryResult<FormComponentModel>> Handle(GetPermissionSetEditForm query)
+        public async Task<QueryResult<PermissionSetFormModel>> Handle(GetPermissionSetEditForm query)
         {
-            var result = new FormComponentModel();
+            var result = new PermissionSetFormModel();
 
             var permissionSet = await _dbContext.PermissionSets
                 .Include(x => x.Permissions)
@@ -39,7 +39,7 @@ namespace Atles.Queries.Handlers.Admin
                 return null;
             }
 
-            result.PermissionSet = new FormComponentModel.PermissionSetModel
+            result.PermissionSet = new PermissionSetFormModel.PermissionSetModel
             {
                 Id = permissionSet.Id,
                 Name = permissionSet.Name
@@ -51,7 +51,7 @@ namespace Atles.Queries.Handlers.Admin
 
             foreach (var roleModel in roles)
             {
-                var permissionModel = new FormComponentModel.PermissionModel
+                var permissionModel = new PermissionSetFormModel.PermissionModel
                 {
                     RoleId = roleModel.Id,
                     RoleName = roleModel.Name
@@ -67,7 +67,7 @@ namespace Atles.Queries.Handlers.Admin
                     var disabled = roleModel.Name == Consts.RoleNameAdmin ||
                                    roleModel.Id == Consts.RoleIdAll && !IsReadingPermissionType(permissionType);
 
-                    permissionModel.PermissionTypes.Add(new FormComponentModel.PermissionTypeModel
+                    permissionModel.PermissionTypes.Add(new PermissionSetFormModel.PermissionTypeModel
                     {
                         Type = permissionType,
                         Selected = selected,

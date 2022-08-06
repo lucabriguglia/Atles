@@ -4,13 +4,13 @@ using Atles.Core.Queries;
 using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
+using Atles.Models.Admin.PermissionSets;
 using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
-using IndexPageModel = Atles.Models.Admin.PermissionSets.IndexPageModel;
 
 namespace Atles.Queries.Handlers.Admin
 {
-    public class GetPermissionSetsIndexHandler : IQueryHandler<GetPermissionSetsIndex, IndexPageModel>
+    public class GetPermissionSetsIndexHandler : IQueryHandler<GetPermissionSetsIndex, PermissionSetsPageModel>
     {
         private readonly AtlesDbContext _dbContext;
 
@@ -19,9 +19,9 @@ namespace Atles.Queries.Handlers.Admin
             _dbContext = dbContext;
         }
 
-        public async Task<QueryResult<IndexPageModel>> Handle(GetPermissionSetsIndex query)
+        public async Task<QueryResult<PermissionSetsPageModel>> Handle(GetPermissionSetsIndex query)
         {
-            var result = new IndexPageModel();
+            var result = new PermissionSetsPageModel();
 
             var permissionSets = await _dbContext.PermissionSets
                 .Include(x => x.Categories)
@@ -31,7 +31,7 @@ namespace Atles.Queries.Handlers.Admin
 
             foreach (var permissionSet in permissionSets)
             {
-                result.PermissionSets.Add(new IndexPageModel.PermissionSetModel
+                result.PermissionSets.Add(new PermissionSetsPageModel.PermissionSetModel
                 {
                     Id = permissionSet.Id,
                     Name = permissionSet.Name,

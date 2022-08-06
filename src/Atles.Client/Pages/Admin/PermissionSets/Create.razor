@@ -18,5 +18,5 @@
 }
 else
 {
-    <Form Model="Model" Button="@Localizer["Save"]" OnValidSubmit="@SaveAsync"></Form>
+    <Form Model="Model" SubmitButtonText="@Localizer["Save"]" OnSubmit="@SaveAsync" OnCancel="@Cancel"></Form>
 }

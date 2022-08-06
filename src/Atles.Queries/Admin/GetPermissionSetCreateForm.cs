@@ -3,7 +3,7 @@ using Atles.Models.Admin.PermissionSets;
 
 namespace Atles.Queries.Admin
 {
-    public class GetPermissionSetCreateForm : QueryBase<FormComponentModel>
+    public class GetPermissionSetCreateForm : QueryBase<PermissionSetFormModel>
     {
     }
 }
