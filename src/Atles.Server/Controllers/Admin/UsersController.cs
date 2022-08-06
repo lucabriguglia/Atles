@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Atles.Commands.Users;
+﻿using Atles.Commands.Users;
 using Atles.Core;
 using Atles.Models;
 using Atles.Models.Admin.Users;

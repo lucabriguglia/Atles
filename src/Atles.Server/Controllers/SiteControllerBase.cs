@@ -72,6 +72,16 @@ public abstract class SiteControllerBase : ControllerBase
         }
     }
 
+    protected async Task<ActionResult> ProcessPost<TCommand>(TCommand command) where TCommand : ICommand
+    {
+        var commandResult = await _dispatcher.Send(command);
+
+        return commandResult.Match(
+            success => Ok(),
+            failure => failure.ToActionResult()
+        );
+    }
+
     protected async Task<ActionResult> ProcessPost<TModel, TCommand>(
         TModel model,
         IMapper<TModel, TCommand> mapper,

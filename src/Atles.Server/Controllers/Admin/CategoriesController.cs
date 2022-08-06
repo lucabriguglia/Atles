@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Commands.Categories;
+﻿using Atles.Commands.Categories;
 using Atles.Core;
 using Atles.Domain;
 using Atles.Models.Admin.Categories;
@@ -60,51 +58,33 @@ public class CategoriesController : AdminControllerBase
         await ProcessPost(model, _updateCategoryMapper, _updateCategoryValidator);
 
     [HttpPost("move-up")]
-    public async Task<ActionResult> MoveUp([FromBody] Guid id)
-    {
-        var command = new MoveCategory
+    public async Task<ActionResult> MoveUp([FromBody] Guid id) =>
+        await ProcessPost(new MoveCategory
         {
             CategoryId = id,
             SiteId = CurrentSite.Id,
             UserId = CurrentUser.Id,
             Direction = DirectionType.Up
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+        });
 
     [HttpPost("move-down")]
-    public async Task<ActionResult> MoveDown([FromBody] Guid id)
-    {
-        var command = new MoveCategory
+    public async Task<ActionResult> MoveDown([FromBody] Guid id) =>
+        await ProcessPost(new MoveCategory
         {
             CategoryId = id,
             SiteId = CurrentSite.Id,
             UserId = CurrentUser.Id,
             Direction = DirectionType.Down
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+        });
 
     [HttpDelete("delete/{id}")]
-    public async Task<ActionResult> Delete(Guid id)
-    {
-        var command = new DeleteCategory
+    public async Task<ActionResult> Delete(Guid id) =>
+        await ProcessPost(new DeleteCategory
         {
             CategoryId = id,
             SiteId = CurrentSite.Id,
             UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+        });
 
     [HttpGet("is-name-unique/{name}")]
     public async Task<ActionResult> IsNameUnique(string name) => 
