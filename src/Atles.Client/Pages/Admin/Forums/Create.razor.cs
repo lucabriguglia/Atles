@@ -9,15 +9,15 @@ public abstract class CreatePage : AdminPageBase
 {
     [Parameter] public Guid? CategoryId { get; set; }
 
-    protected CreateForumFormModel Model { get; set; }
-    protected string ErrorMessage { get; set; }
+    protected ForumFormModel Model { get; set; }
+
     protected override async Task OnInitializedAsync()
     {
         var requestUri = CategoryId == null
             ? "api/admin/forums/create"
             : $"api/admin/forums/create/{CategoryId}";
 
-        Model = await ApiService.GetFromJsonAsync<CreateForumFormModel>(requestUri);
+        Model = await ApiService.GetFromJsonAsync<ForumFormModel>(requestUri);
     }
 
     protected async Task SaveAsync()
@@ -30,7 +30,7 @@ public abstract class CreatePage : AdminPageBase
         }
         else
         {
-            ErrorMessage = response.StatusCode.ToString();
+            // TODO: Display error message
         }
     }
 

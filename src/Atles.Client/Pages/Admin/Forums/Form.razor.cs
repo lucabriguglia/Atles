@@ -6,6 +6,6 @@ namespace Atles.Client.Pages.Admin.Forums;
 
 public abstract class FormComponent : AdminFormBase
 {
-    [Parameter] public CreateForumFormModel Model { get; set; }
+    [Parameter] public ForumFormModel Model { get; set; }
     [Parameter] public string SubmitButtonText { get; set; }
 }

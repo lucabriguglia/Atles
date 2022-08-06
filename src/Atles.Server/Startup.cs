@@ -1,5 +1,4 @@
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using Atles.Commands.Handlers.Categories;
 using Atles.Core;
 using Atles.Core.Results;
@@ -16,14 +15,9 @@ using Atles.Validators.Categories;
 using Docs;
 using Docs.Extensions;
 using Microsoft.AspNetCore.Authentication;
-using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.Hosting;
 
 namespace Atles.Server;
 

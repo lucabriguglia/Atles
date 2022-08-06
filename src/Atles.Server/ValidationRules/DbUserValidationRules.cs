@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Data;
+﻿using Atles.Data;
 using Atles.Domain;
 using Atles.Validators.ValidationRules;
 using Microsoft.EntityFrameworkCore;
@@ -20,7 +18,7 @@ public class DbUserValidationRules : IUserValidationRules
     {
         bool any;
 
-        if (id != null)
+        if (id != null && id != Guid.Empty)
         {
             any = await _dbContext.Users
                 .AnyAsync(x => x.DisplayName == displayName &&

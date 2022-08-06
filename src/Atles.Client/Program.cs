@@ -65,8 +65,7 @@ public class Program
 
         builder.Services.AddTransient<IValidator<CreateCategoryFormModel.CategoryModel>, CreateCategoryValidator>();
         builder.Services.AddTransient<IValidator<UpdateCategoryFormModel.CategoryModel>, UpdateCategoryValidator>();
-        builder.Services.AddTransient<IValidator<ForumFormModelBase.ForumModel>, CreateForumValidator>();
-        builder.Services.AddTransient<IValidator<ForumFormModelBase.ForumModel>, UpdateForumValidator>();
+        builder.Services.AddTransient<IValidator<ForumFormModel.ForumModel>, ForumValidator>();
 
         builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 

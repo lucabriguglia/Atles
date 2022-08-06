@@ -1,12 +1,11 @@
-﻿using System;
-using Atles.Commands.Forums;
+﻿using Atles.Commands.Forums;
 using Atles.Models.Admin.Forums;
 
 namespace Atles.Server.Mapping;
 
-public class UpdateForumMapper : IMapper<ForumFormModelBase.ForumModel, UpdateForum>
+public class UpdateForumMapper : IMapper<ForumFormModel.ForumModel, UpdateForum>
 {
-    public UpdateForum Map(ForumFormModelBase.ForumModel model, Guid userId)
+    public UpdateForum Map(ForumFormModel.ForumModel model, Guid userId)
     {
         return new UpdateForum
         {

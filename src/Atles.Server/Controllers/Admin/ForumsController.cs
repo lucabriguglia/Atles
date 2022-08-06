@@ -14,25 +14,22 @@ namespace Atles.Server.Controllers.Admin;
 public class ForumsController : AdminControllerBase
 {
     private readonly IForumValidationRules _forumValidationRules;
-    private readonly IMapper<ForumFormModelBase.ForumModel, CreateForum> _createForumMapper;
-    private readonly IValidator<ForumFormModelBase.ForumModel> _createForumValidator;
-    private readonly IMapper<ForumFormModelBase.ForumModel, UpdateForum> _updateForumMapper;
-    private readonly IValidator<ForumFormModelBase.ForumModel> _updateForumValidator;
+    private readonly IMapper<ForumFormModel.ForumModel, CreateForum> _createForumMapper;
+    private readonly IMapper<ForumFormModel.ForumModel, UpdateForum> _updateForumMapper;
+    private readonly IValidator<ForumFormModel.ForumModel> _forumValidator;
 
     public ForumsController(
         IDispatcher dispatcher,
         IForumValidationRules forumValidationRules,
-        IMapper<ForumFormModelBase.ForumModel, CreateForum> createForumMapper,
-        IValidator<ForumFormModelBase.ForumModel> createForumValidator, 
-        IMapper<ForumFormModelBase.ForumModel, UpdateForum> updateForumMapper, 
-        IValidator<ForumFormModelBase.ForumModel> updateForumValidator) 
+        IMapper<ForumFormModel.ForumModel, CreateForum> createForumMapper,
+        IMapper<ForumFormModel.ForumModel, UpdateForum> updateForumMapper, 
+        IValidator<ForumFormModel.ForumModel> forumValidator) 
         : base(dispatcher)
     {
         _forumValidationRules = forumValidationRules;
         _createForumMapper = createForumMapper;
-        _createForumValidator = createForumValidator;
         _updateForumMapper = updateForumMapper;
-        _updateForumValidator = updateForumValidator;
+        _forumValidator = forumValidator;
     }
 
     [HttpGet("index-model")]
@@ -52,16 +49,16 @@ public class ForumsController : AdminControllerBase
         await ProcessGet(new GetForumCreateForm(CurrentSite.Id, categoryId));
 
     [HttpPost("save")]
-    public async Task<ActionResult> Save(ForumFormModelBase.ForumModel model) => 
-        await ProcessPost(model, _createForumMapper, _createForumValidator);
+    public async Task<ActionResult> Save(ForumFormModel.ForumModel model) => 
+        await ProcessPost(model, _createForumMapper, _forumValidator);
 
     [HttpGet("edit/{id}")]
-    public async Task<ActionResult<CreateForumFormModel>> Edit(Guid id) =>
-        await ProcessGet(new GetForumEditForm { SiteId = CurrentSite.Id, Id = id });
+    public async Task<ActionResult<ForumFormModel>> Edit(Guid id) =>
+        await ProcessGet(new GetForumEditForm(CurrentSite.Id, id));
 
     [HttpPost("update")]
-    public async Task<ActionResult> Update(ForumFormModelBase.ForumModel model) => 
-        await ProcessPost(model, _updateForumMapper, _updateForumValidator);
+    public async Task<ActionResult> Update(ForumFormModel.ForumModel model) => 
+        await ProcessPost(model, _updateForumMapper, _forumValidator);
 
     [HttpPost("move-up")]
     public async Task<ActionResult> MoveUp([FromBody] Guid id) =>
@@ -92,21 +89,13 @@ public class ForumsController : AdminControllerBase
             UserId = CurrentUser.Id
         });
 
-    [HttpGet("is-name-unique/{categoryId}/{name}")]
-    public async Task<IActionResult> IsNameUnique(Guid categoryId, string name) => 
-        Ok(await _forumValidationRules.IsForumNameUnique(CurrentSite.Id, categoryId, name));
-
-    [HttpGet("is-name-unique/{categoryId}/{name}/{id}")]
+    [HttpGet("is-name-unique/{categoryId}/{id}/{name}")]
     public async Task<IActionResult> IsNameUnique(Guid categoryId, string name, Guid id) => 
-        Ok(await _forumValidationRules.IsForumNameUnique(CurrentSite.Id, categoryId, name, id));
+        Ok(await _forumValidationRules.IsForumNameUnique(CurrentSite.Id, categoryId, id, name));
 
-    [HttpGet("is-slug-unique/{slug}")]
-    public async Task<IActionResult> IsSlugUnique(string slug) => 
-        Ok(await _forumValidationRules.IsForumSlugUnique(CurrentSite.Id, slug));
-
-    [HttpGet("is-slug-unique/{slug}/{id}")]
+    [HttpGet("is-slug-unique/{id}/{slug}")]
     public async Task<IActionResult> IsSlugUnique(string slug, Guid id) => 
-        Ok(await _forumValidationRules.IsForumSlugUnique(CurrentSite.Id, slug, id));
+        Ok(await _forumValidationRules.IsForumSlugUnique(CurrentSite.Id, id, slug));
 
     [HttpGet("is-forum-valid/{id}")]
     public async Task<IActionResult> IsForumValid(Guid id) => 

@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Atles.Core.Queries;
+﻿using Atles.Core.Queries;
 using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
@@ -9,71 +6,70 @@ using Atles.Models.Admin.Forums;
 using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Queries.Handlers.Admin
+namespace Atles.Queries.Handlers.Admin;
+
+public class GetForumEditFormHandler : IQueryHandler<GetForumEditForm, ForumFormModel>
 {
-    public class GetForumEditFormHandler : IQueryHandler<GetForumEditForm, CreateForumFormModel>
+    private readonly AtlesDbContext _dbContext;
+
+    public GetForumEditFormHandler(AtlesDbContext dbContext)
     {
-        private readonly AtlesDbContext _dbContext;
+        _dbContext = dbContext;
+    }
 
-        public GetForumEditFormHandler(AtlesDbContext dbContext)
+    public async Task<QueryResult<ForumFormModel>> Handle(GetForumEditForm query)
+    {
+        var forum = await _dbContext.Forums
+            .FirstOrDefaultAsync(x =>
+                x.Category.SiteId == query.SiteId &&
+                x.Id == query.Id &&
+                x.Status != ForumStatusType.Deleted);
+
+        if (forum == null)
         {
-            _dbContext = dbContext;
+            return null;
         }
 
-        public async Task<QueryResult<CreateForumFormModel>> Handle(GetForumEditForm query)
+        var result = new ForumFormModel
         {
-            var forum = await _dbContext.Forums
-                .FirstOrDefaultAsync(x =>
-                    x.Category.SiteId == query.SiteId &&
-                    x.Id == query.Id &&
-                    x.Status != ForumStatusType.Deleted);
-
-            if (forum == null)
+            Forum = new ForumFormModel.ForumModel
             {
-                return null;
+                Id = forum.Id,
+                CategoryId = forum.CategoryId,
+                Name = forum.Name,
+                Slug = forum.Slug,
+                Description = forum.Description,
+                PermissionSetId = forum.PermissionSetId ?? Guid.Empty
             }
+        };
 
-            var result = new CreateForumFormModel
+        var categories = await _dbContext.Categories
+            .Where(x => x.SiteId == query.SiteId && x.Status != CategoryStatusType.Deleted)
+            .OrderBy(x => x.SortOrder)
+            .ToListAsync();
+
+        foreach (var category in categories)
+        {
+            result.Categories.Add(new ForumFormModel.CategoryModel
             {
-                Forum = new CreateForumFormModel.ForumModel
-                {
-                    Id = forum.Id,
-                    CategoryId = forum.CategoryId,
-                    Name = forum.Name,
-                    Slug = forum.Slug,
-                    Description = forum.Description,
-                    PermissionSetId = forum.PermissionSetId ?? Guid.Empty
-                }
-            };
-
-            var categories = await _dbContext.Categories
-                .Where(x => x.SiteId == query.SiteId && x.Status != CategoryStatusType.Deleted)
-                .OrderBy(x => x.SortOrder)
-                .ToListAsync();
-
-            foreach (var category in categories)
-            {
-                result.Categories.Add(new CreateForumFormModel.CategoryModel
-                {
-                    Id = category.Id,
-                    Name = category.Name
-                });
-            }
-
-            var permissionSets = await _dbContext.PermissionSets
-                .Where(x => x.SiteId == query.SiteId && x.Status == PermissionSetStatusType.Published)
-                .ToListAsync();
-
-            foreach (var permissionSet in permissionSets)
-            {
-                result.PermissionSets.Add(new CreateForumFormModel.PermissionSetModel
-                {
-                    Id = permissionSet.Id,
-                    Name = permissionSet.Name
-                });
-            }
-
-            return result;
+                Id = category.Id,
+                Name = category.Name
+            });
         }
+
+        var permissionSets = await _dbContext.PermissionSets
+            .Where(x => x.SiteId == query.SiteId && x.Status == PermissionSetStatusType.Published)
+            .ToListAsync();
+
+        foreach (var permissionSet in permissionSets)
+        {
+            result.PermissionSets.Add(new ForumFormModel.PermissionSetModel
+            {
+                Id = permissionSet.Id,
+                Name = permissionSet.Name
+            });
+        }
+
+        return result;
     }
 }

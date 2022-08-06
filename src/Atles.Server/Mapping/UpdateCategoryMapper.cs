@@ -1,6 +1,4 @@
-﻿using System;
-using Atles.Commands.Categories;
-using Atles.Models.Admin;
+﻿using Atles.Commands.Categories;
 using Atles.Models.Admin.Categories;
 
 namespace Atles.Server.Mapping;

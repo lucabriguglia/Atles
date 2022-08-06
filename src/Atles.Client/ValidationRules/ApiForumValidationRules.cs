@@ -12,24 +12,14 @@ public class ApiForumValidationRules : IForumValidationRules
         _apiService = apiService;
     }
 
-    public async Task<bool> IsForumNameUnique(Guid siteId, Guid categoryId, string name, Guid? id = null)
+    public async Task<bool> IsForumNameUnique(Guid siteId, Guid categoryId, Guid id, string name)
     {
-        if (id != null)
-        {
-            return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{categoryId}/{name}/{id}");
-        }
-
-        return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{categoryId}/{name}");
+        return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-name-unique/{categoryId}/{id}/{name}");
     }
 
-    public async Task<bool> IsForumSlugUnique(Guid siteId, string slug, Guid? id = null)
+    public async Task<bool> IsForumSlugUnique(Guid siteId, Guid id, string slug)
     {
-        if (id != null)
-        {
-            return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-slug-unique/{slug}/{id}");
-        }
-
-        return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-slug-unique/{slug}");
+        return await _apiService.GetFromJsonAsync<bool>($"api/admin/forums/is-slug-unique/{id}/{slug}");
     }
 
     public async Task<bool> IsForumValid(Guid siteId, Guid id)

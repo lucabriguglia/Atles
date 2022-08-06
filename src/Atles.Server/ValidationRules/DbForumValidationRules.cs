@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Data;
+﻿using Atles.Data;
 using Atles.Domain;
 using Atles.Validators.ValidationRules;
 using Microsoft.EntityFrameworkCore;
@@ -16,11 +14,11 @@ public class DbForumValidationRules : IForumValidationRules
         _dbContext = dbContext;
     }
 
-    public async Task<bool> IsForumNameUnique(Guid siteId, Guid categoryId, string name, Guid? id = null)
+    public async Task<bool> IsForumNameUnique(Guid siteId, Guid categoryId, Guid id, string name)
     {
         bool any;
 
-        if (id != null)
+        if (id != Guid.Empty)
         {
             any = await _dbContext.Forums
                 .AnyAsync(x => x.Category.SiteId == siteId &&
@@ -41,11 +39,11 @@ public class DbForumValidationRules : IForumValidationRules
         return !any;
     }
 
-    public async Task<bool> IsForumSlugUnique(Guid siteId, string slug, Guid? id = null)
+    public async Task<bool> IsForumSlugUnique(Guid siteId, Guid id, string slug)
     {
         bool any;
 
-        if (id != null)
+        if (id != Guid.Empty)
         {
             any = await _dbContext.Forums
                 .AnyAsync(x => x.Category.SiteId == siteId &&

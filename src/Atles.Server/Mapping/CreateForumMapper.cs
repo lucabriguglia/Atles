@@ -1,12 +1,11 @@
-﻿using System;
-using Atles.Commands.Forums;
+﻿using Atles.Commands.Forums;
 using Atles.Models.Admin.Forums;
 
 namespace Atles.Server.Mapping;
 
-public class CreateForumMapper : IMapper<ForumFormModelBase.ForumModel, CreateForum>
+public class CreateForumMapper : IMapper<ForumFormModel.ForumModel, CreateForum>
 {
-    public CreateForum Map(ForumFormModelBase.ForumModel model, Guid userId)
+    public CreateForum Map(ForumFormModel.ForumModel model, Guid userId)
     {
         return new CreateForum
         {

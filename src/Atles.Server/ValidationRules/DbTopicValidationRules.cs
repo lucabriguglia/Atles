@@ -1,6 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Data;
+﻿using Atles.Data;
 using Atles.Domain;
 using Atles.Validators.ValidationRules;
 using Microsoft.EntityFrameworkCore;

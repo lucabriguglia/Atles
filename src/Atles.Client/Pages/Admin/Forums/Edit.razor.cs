@@ -1,4 +1,5 @@
-﻿using Atles.Client.Components.Admin;
+﻿using System.Net;
+using Atles.Client.Components.Admin;
 using Atles.Models.Admin.Forums;
 using Microsoft.AspNetCore.Components;
 
@@ -8,17 +9,25 @@ public abstract class EditPage : AdminPageBase
 {
     [Parameter] public Guid Id { get; set; }
 
-    protected CreateForumFormModel Model { get; set; }
+    protected ForumFormModel Model { get; set; }
 
     protected override async Task OnParametersSetAsync()
     {
-        Model = await ApiService.GetFromJsonAsync<CreateForumFormModel>($"api/admin/forums/edit/{Id}");
+        Model = await ApiService.GetFromJsonAsync<ForumFormModel>($"api/admin/forums/edit/{Id}");
     }
 
     protected async Task UpdateAsync()
     {
-        await ApiService.PostAsJsonAsync($"api/admin/forums/update", Model.Forum);
-        NavigationManager.NavigateTo($"/admin/forums/{Model.Forum.CategoryId}");
+        var response = await ApiService.PostAsJsonAsync("api/admin/forums/update", Model.Forum);
+        
+        if (response.StatusCode is HttpStatusCode.OK)
+        {
+            NavigationManager.NavigateTo($"/admin/forums/{Model.Forum.CategoryId}");
+        }
+        else
+        {
+            // TODO: Display error message
+        }
     }
 
     protected void Cancel()
