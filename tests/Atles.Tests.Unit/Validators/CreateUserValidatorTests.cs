@@ -1,42 +1,33 @@
-﻿using Atles.Commands.Users;
+﻿using Atles.Models.Admin.Users;
 using Atles.Validators.Users;
 using AutoFixture;
 using FluentValidation.TestHelper;
 using NUnit.Framework;
 
-namespace Atles.Tests.Unit.Validators
+namespace Atles.Tests.Unit.Validators;
+
+[TestFixture]
+public class CreateUserValidatorTests : TestFixtureBase
 {
-    [TestFixture]
-    public class CreateUserValidatorTests : TestFixtureBase
+    [Test]
+    public async Task Should_have_validation_error_when_email_is_empty()
     {
-        [Test]
-        public void Should_have_validation_error_when_user_id_is_empty()
-        {
-            var command = Fixture.Build<CreateUser>().With(x => x.IdentityUserId, string.Empty).Create();
+        var model = Fixture.Build<CreatePageModel.UserModel>().With(x => x.Email, string.Empty).Create();
 
-            var sut = new CreateUserValidator();
+        var sut = new CreateUserValidator();
 
-            sut.ShouldHaveValidationErrorFor(x => x.IdentityUserId, command);
-        }
+        var result = await sut.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Email);
+    }
 
-        [Test]
-        public void Should_have_validation_error_when_email_is_empty()
-        {
-            var command = Fixture.Build<CreateUser>().With(x => x.Email, string.Empty).Create();
+    [Test]
+    public async Task Should_have_validation_error_when_email_is_not_valid()
+    {
+        var model = Fixture.Build<CreatePageModel.UserModel>().With(x => x.Email, "email").Create();
 
-            var sut = new CreateUserValidator();
+        var sut = new CreateUserValidator();
 
-            sut.ShouldHaveValidationErrorFor(x => x.Email, command);
-        }
-
-        [Test]
-        public void Should_have_validation_error_when_email_is_not_valid()
-        {
-            var command = Fixture.Build<CreateUser>().With(x => x.Email, "email").Create();
-
-            var sut = new CreateUserValidator();
-
-            sut.ShouldHaveValidationErrorFor(x => x.Email, command);
-        }
+        var result = await sut.TestValidateAsync(model);
+        result.ShouldHaveValidationErrorFor(x => x.Email);
     }
 }

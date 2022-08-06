@@ -43,23 +43,22 @@ public class UsersController : AdminControllerBase
     }
 
     [HttpGet("create")]
-    public async Task<ActionResult> Create()
-    {
-        return await ProcessGet(new GetUserCreateForm());
-    }
+    public async Task<ActionResult> Create() => 
+        await ProcessGet(new GetUserCreateForm());
 
     [HttpPost("save")]
     public async Task<ActionResult> Save(CreatePageModel.UserModel model)
     {
-        if (!ModelState.IsValid) return BadRequest();
-
         var identityUser = new IdentityUser { UserName = model.Email, Email = model.Email };
         var createResult = await _userManager.CreateAsync(identityUser, model.Password);
 
-        if (!createResult.Succeeded) return BadRequest();
+        if (!createResult.Succeeded)
+        {
+            return BadRequest();
+        }
 
-        var code = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
-        var confirmResult = await _userManager.ConfirmEmailAsync(identityUser, code);
+        var token = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
+        var confirmResult = await _userManager.ConfirmEmailAsync(identityUser, token);
 
         var command = new CreateUser
         {
