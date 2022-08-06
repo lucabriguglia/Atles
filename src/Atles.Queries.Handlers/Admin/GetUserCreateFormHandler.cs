@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using Atles.Core.Queries;
+﻿using Atles.Core.Queries;
 using Atles.Core.Results;
 using Atles.Models.Admin.Users;
 using Atles.Queries.Admin;

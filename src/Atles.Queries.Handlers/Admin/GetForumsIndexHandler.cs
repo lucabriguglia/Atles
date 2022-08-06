@@ -1,7 +1,4 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Atles.Core.Queries;
+﻿using Atles.Core.Queries;
 using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;

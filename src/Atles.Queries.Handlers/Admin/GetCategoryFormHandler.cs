@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
-using System.Threading.Tasks;
-using Atles.Core.Queries;
+﻿using Atles.Core.Queries;
 using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
-using Atles.Models.Admin;
 using Atles.Models.Admin.Categories;
 using Atles.Queries.Admin;
 using Microsoft.EntityFrameworkCore;

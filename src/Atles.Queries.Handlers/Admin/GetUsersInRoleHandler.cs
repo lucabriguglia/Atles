@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Threading.Tasks;
-using Atles.Core.Queries;
+﻿using Atles.Core.Queries;
 using Atles.Core.Results;
 using Atles.Models.Admin.Roles;
 using Atles.Queries.Admin;

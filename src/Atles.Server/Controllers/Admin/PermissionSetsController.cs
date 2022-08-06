@@ -33,11 +33,11 @@ public class PermissionSetsController : AdminControllerBase
 
     [HttpGet("list")]
     public async Task<ActionResult> List() => 
-        await ProcessGet(new GetPermissionSetsIndex { SiteId = CurrentSite.Id });
+        await ProcessGet(new GetPermissionSetsIndex(CurrentSite.Id));
 
     [HttpGet("create")]
     public async Task<ActionResult> Create() => 
-        await ProcessGet(new GetPermissionSetCreateForm { SiteId = CurrentSite.Id });
+        await ProcessGet(new GetPermissionSetCreateForm(CurrentSite.Id));
 
     [HttpPost("save")]
     public async Task<ActionResult> Save(PermissionSetFormModel.PermissionSetModel model) => 
@@ -45,7 +45,7 @@ public class PermissionSetsController : AdminControllerBase
 
     [HttpGet("edit/{id}")]
     public async Task<ActionResult<PermissionSetFormModel>> Edit(Guid id) => 
-        await ProcessGet(new GetPermissionSetEditForm { SiteId = CurrentSite.Id,  Id = id });
+        await ProcessGet(new GetPermissionSetEditForm(CurrentSite.Id, id));
 
     [HttpPost("update")]
     public async Task<ActionResult> Update(PermissionSetFormModel.PermissionSetModel model) => 
