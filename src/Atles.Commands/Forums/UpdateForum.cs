@@ -27,7 +27,7 @@ namespace Atles.Commands.Forums
         /// <summary>
         /// The new description of the forum.
         /// </summary>
-        public string Description { get; set; }
+        public string? Description { get; set; }
 
         /// <summary>
         /// The unique identifier of the new permission set for the forum.

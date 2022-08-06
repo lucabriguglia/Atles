@@ -14,7 +14,7 @@ public class CreateForumValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_name_is_empty()
     {
-        var model = Fixture.Build<CreateForumFormModel.ForumModel>().With(x => x.Name, string.Empty).Create();
+        var model = Fixture.Build<ForumFormModelBase.ForumModel>().With(x => x.Name, string.Empty).Create();
 
         var forumValidationRules = new Mock<IForumValidationRules>();
         var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
@@ -28,7 +28,7 @@ public class CreateForumValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_name_is_too_long()
     {
-        var model = Fixture.Build<CreateForumFormModel.ForumModel>().With(x => x.Name, new string('*', 51)).Create();
+        var model = Fixture.Build<ForumFormModelBase.ForumModel>().With(x => x.Name, new string('*', 51)).Create();
 
         var forumValidationRules = new Mock<IForumValidationRules>();
         var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
@@ -42,7 +42,7 @@ public class CreateForumValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_name_is_not_unique()
     {
-        var model = Fixture.Create<CreateForumFormModel.ForumModel>();
+        var model = Fixture.Create<ForumFormModelBase.ForumModel>();
 
         var forumValidationRules = new Mock<IForumValidationRules>();
         forumValidationRules
@@ -59,7 +59,7 @@ public class CreateForumValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_slug_is_empty()
     {
-        var model = Fixture.Build<CreateForumFormModel.ForumModel>().With(x => x.Slug, string.Empty).Create();
+        var model = Fixture.Build<ForumFormModelBase.ForumModel>().With(x => x.Slug, string.Empty).Create();
 
         var forumValidationRules = new Mock<IForumValidationRules>();
         var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
@@ -73,7 +73,7 @@ public class CreateForumValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_slug_is_too_long()
     {
-        var model = Fixture.Build<CreateForumFormModel.ForumModel>().With(x => x.Slug, new string('*', 51)).Create();
+        var model = Fixture.Build<ForumFormModelBase.ForumModel>().With(x => x.Slug, new string('*', 51)).Create();
 
         var forumValidationRules = new Mock<IForumValidationRules>();
         var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
@@ -87,7 +87,7 @@ public class CreateForumValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_slug_is_not_unique()
     {
-        var model = Fixture.Create<CreateForumFormModel.ForumModel>();
+        var model = Fixture.Create<ForumFormModelBase.ForumModel>();
 
         var forumValidationRules = new Mock<IForumValidationRules>();
         forumValidationRules
@@ -104,7 +104,7 @@ public class CreateForumValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_description_is_too_long()
     {
-        var model = Fixture.Build<CreateForumFormModel.ForumModel>().With(x => x.Description, new string('*', 201)).Create();
+        var model = Fixture.Build<ForumFormModelBase.ForumModel>().With(x => x.Description, new string('*', 201)).Create();
 
         var forumValidationRules = new Mock<IForumValidationRules>();
         var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
@@ -118,12 +118,12 @@ public class CreateForumValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_permission_set_is_not_valid()
     {
-        var model = Fixture.Create<CreateForumFormModel.ForumModel>();
+        var model = Fixture.Create<ForumFormModelBase.ForumModel>();
 
         var forumValidationRules = new Mock<IForumValidationRules>();
         var permissionSetValidationRules = new Mock<IPermissionSetValidationRules>();
         permissionSetValidationRules
-            .Setup(rules => rules.IsPermissionSetValid(model.SiteId, model.PermissionSetId.Value))
+            .Setup(rules => rules.IsPermissionSetValid(model.SiteId, model.PermissionSetId))
             .ReturnsAsync(false);
 
         var validator = new CreateForumValidator(forumValidationRules.Object, permissionSetValidationRules.Object);

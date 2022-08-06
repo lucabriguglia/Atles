@@ -1,7 +1,4 @@
-﻿using System;
-using System.Threading.Tasks;
-using Atles.Client.Components.Admin;
-using Atles.Models.Admin;
+﻿using Atles.Client.Components.Admin;
 using Atles.Models.Admin.Categories;
 using Microsoft.AspNetCore.Components;
 

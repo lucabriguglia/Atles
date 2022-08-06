@@ -1,6 +1,6 @@
 ﻿namespace Atles.Models.Admin.Forums;
 
-public class CreateForumFormModel
+public abstract class ForumFormModelBase
 {
     public ForumModel Forum { get; set; } = new ForumModel();
     public IList<CategoryModel> Categories { get; set; } = new List<CategoryModel>();
@@ -28,4 +28,12 @@ public class CreateForumFormModel
         public Guid Id { get; set; }
         public string Name { get; set; }
     }
+}
+
+public class CreateForumFormModel : ForumFormModelBase
+{
+}
+
+public class UpdateForumFormModel : ForumFormModelBase
+{
 }

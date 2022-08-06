@@ -4,12 +4,13 @@ using Atles.Models.Admin.Forums;
 
 namespace Atles.Server.Mapping;
 
-public class CreateForumMapper : IMapper<ForumFormModelBase.ForumModel, CreateForum>
+public class UpdateForumMapper : IMapper<ForumFormModelBase.ForumModel, UpdateForum>
 {
-    public CreateForum Map(ForumFormModelBase.ForumModel model, Guid userId)
+    public UpdateForum Map(ForumFormModelBase.ForumModel model, Guid userId)
     {
-        return new CreateForum
+        return new UpdateForum
         {
+            ForumId = model.Id,
             Name = model.Name,
             Slug = model.Slug,
             Description = model.Description,

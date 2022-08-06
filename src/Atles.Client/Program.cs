@@ -1,12 +1,8 @@
-using System;
 using System.Globalization;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Atles.Client.Services.Api;
 using Atles.Client.Services.PostReactions;
 using Atles.Client.Services.Storage;
 using Atles.Client.ValidationRules;
-using Atles.Models.Admin;
 using Atles.Models.Admin.Categories;
 using Atles.Models.Admin.Forums;
 using Atles.Models.Public;
@@ -16,7 +12,6 @@ using Atles.Validators.ValidationRules;
 using FluentValidation;
 using Microsoft.AspNetCore.Components.WebAssembly.Authentication;
 using Microsoft.AspNetCore.Components.WebAssembly.Hosting;
-using Microsoft.Extensions.DependencyInjection;
 using Tewr.Blazor.FileReader;
 
 namespace Atles.Client;
@@ -70,7 +65,8 @@ public class Program
 
         builder.Services.AddTransient<IValidator<CreateCategoryFormModel.CategoryModel>, CreateCategoryValidator>();
         builder.Services.AddTransient<IValidator<UpdateCategoryFormModel.CategoryModel>, UpdateCategoryValidator>();
-        builder.Services.AddTransient<IValidator<CreateForumFormModel.ForumModel>, CreateForumValidator>();
+        builder.Services.AddTransient<IValidator<ForumFormModelBase.ForumModel>, CreateForumValidator>();
+        builder.Services.AddTransient<IValidator<ForumFormModelBase.ForumModel>, UpdateForumValidator>();
 
         builder.Services.AddFileReaderService(o => o.UseWasmSharedBuffer = true);
 

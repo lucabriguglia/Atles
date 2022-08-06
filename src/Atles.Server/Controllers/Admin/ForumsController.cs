@@ -17,20 +17,26 @@ public class ForumsController : AdminControllerBase
 {
     private readonly IDispatcher _dispatcher;
     private readonly IForumValidationRules _forumValidationRules;
-    private readonly IMapper<CreateForumFormModel.ForumModel, CreateForum> _createForumMapper;
-    private readonly IValidator<CreateForumFormModel.ForumModel> _createForumValidator;
+    private readonly IMapper<ForumFormModelBase.ForumModel, CreateForum> _createForumMapper;
+    private readonly IValidator<ForumFormModelBase.ForumModel> _createForumValidator;
+    private readonly IMapper<ForumFormModelBase.ForumModel, UpdateForum> _updateForumMapper;
+    private readonly IValidator<ForumFormModelBase.ForumModel> _updateForumValidator;
 
     public ForumsController(
         IDispatcher dispatcher,
         IForumValidationRules forumValidationRules,
-        IMapper<CreateForumFormModel.ForumModel, CreateForum> createForumMapper,
-        IValidator<CreateForumFormModel.ForumModel> createForumValidator) 
+        IMapper<ForumFormModelBase.ForumModel, CreateForum> createForumMapper,
+        IValidator<ForumFormModelBase.ForumModel> createForumValidator, 
+        IMapper<ForumFormModelBase.ForumModel, UpdateForum> updateForumMapper, 
+        IValidator<ForumFormModelBase.ForumModel> updateForumValidator) 
         : base(dispatcher)
     {
         _dispatcher = dispatcher;
         _forumValidationRules = forumValidationRules;
         _createForumMapper = createForumMapper;
         _createForumValidator = createForumValidator;
+        _updateForumMapper = updateForumMapper;
+        _updateForumValidator = updateForumValidator;
     }
 
     [HttpGet("index-model")]
@@ -50,7 +56,7 @@ public class ForumsController : AdminControllerBase
         await ProcessGet(new GetForumCreateForm { SiteId = CurrentSite.Id, CategoryId = categoryId });
 
     [HttpPost("save")]
-    public async Task<ActionResult> Save(CreateForumFormModel.ForumModel model) => 
+    public async Task<ActionResult> Save(ForumFormModelBase.ForumModel model) => 
         await ProcessPost(model, _createForumMapper, _createForumValidator);
 
     [HttpGet("edit/{id}")]
@@ -58,24 +64,8 @@ public class ForumsController : AdminControllerBase
         await ProcessGet(new GetForumEditForm { SiteId = CurrentSite.Id, Id = id });
 
     [HttpPost("update")]
-    public async Task<ActionResult> Update(CreateForumFormModel.ForumModel model)
-    {
-        var command = new UpdateForum
-        {
-            ForumId = model.Id,
-            CategoryId = model.CategoryId,
-            Name = model.Name,
-            Slug = model.Slug,
-            Description = model.Description,
-            PermissionSetId = model.PermissionSetId == Guid.Empty ? (Guid?)null : model.PermissionSetId,
-            SiteId = CurrentSite.Id,
-            UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+    public async Task<ActionResult> Update(ForumFormModelBase.ForumModel model) => 
+        await ProcessPost(model, _updateForumMapper, _updateForumValidator);
 
     [HttpPost("move-up")]
     public async Task<ActionResult> MoveUp([FromBody] Guid id)
