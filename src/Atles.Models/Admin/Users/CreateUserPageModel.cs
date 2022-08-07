@@ -1,6 +1,6 @@
 ﻿namespace Atles.Models.Admin.Users;
 
-public class CreatePageModel
+public class CreateUserPageModel
 {
     public UserModel User { get; set; } = new();
 

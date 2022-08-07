@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Atles.Validators.Users;
 
-public class UpdateUserValidator : AbstractValidator<EditPageModel.UserModel>
+public class UpdateUserValidator : AbstractValidator<EditUserPageModel.UserModel>
 {
     public UpdateUserValidator(IUserValidationRules userValidationRules)
     {
@@ -16,7 +16,7 @@ public class UpdateUserValidator : AbstractValidator<EditPageModel.UserModel>
             .MustAsync(UserDisplayNameBeUnique).WithMessage(c => $"A user with display name {c.DisplayName} already exists.")
             .When(model => !string.IsNullOrEmpty(model.DisplayName) && model.DisplayName.Length < 50);
 
-        async Task<bool> UserDisplayNameBeUnique(EditPageModel.UserModel model, string displayName, CancellationToken cancellation) =>
+        async Task<bool> UserDisplayNameBeUnique(EditUserPageModel.UserModel model, string displayName, CancellationToken cancellation) =>
             await userValidationRules.IsUserDisplayNameUnique(model.Id, displayName);
     }
 }

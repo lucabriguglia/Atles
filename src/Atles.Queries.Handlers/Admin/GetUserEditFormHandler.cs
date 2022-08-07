@@ -10,7 +10,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Queries.Handlers.Admin
 {
-    public class GetUserEditFormHandler : IQueryHandler<GetUserEditForm, EditPageModel>
+    public class GetUserEditFormHandler : IQueryHandler<GetUserEditForm, EditUserPageModel>
     {
         private readonly AtlesDbContext _dbContext;
         private readonly RoleManager<IdentityRole> _roleManager;
@@ -25,7 +25,7 @@ namespace Atles.Queries.Handlers.Admin
             _userManager = userManager;
         }
 
-        public async Task<QueryResult<EditPageModel>> Handle(GetUserEditForm request)
+        public async Task<QueryResult<EditUserPageModel>> Handle(GetUserEditForm request)
         {
             User user;
 
@@ -43,14 +43,14 @@ namespace Atles.Queries.Handlers.Admin
                 return new Failure(FailureType.NotFound, "User", $"User with id {request.Id} not found.");
             }
 
-            var result = new EditPageModel
+            var result = new EditUserPageModel
             {
-                User = new EditPageModel.UserModel
+                User = new EditUserPageModel.UserModel
                 {
                     Id = user.Id,
                     DisplayName = user.DisplayName
                 },
-                Info = new EditPageModel.InfoModel
+                Info = new EditUserPageModel.InfoModel
                 {
                     UserId = user.IdentityUserId,
                     Email = user.Email,
@@ -66,7 +66,7 @@ namespace Atles.Queries.Handlers.Admin
                 {
                     var selected = await _userManager.IsInRoleAsync(identityUser, role.Name);
 
-                    result.Roles.Add(new EditPageModel.RoleModel
+                    result.User.Roles.Add(new EditUserPageModel.RoleModel
                     {
                         Name = role.Name,
                         Selected = selected

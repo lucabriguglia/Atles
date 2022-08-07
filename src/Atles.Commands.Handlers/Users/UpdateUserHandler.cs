@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Atles.Commands.Users;
+﻿using Atles.Commands.Users;
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Core.Results;
@@ -7,6 +6,7 @@ using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Events.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Commands.Handlers.Users;
@@ -14,29 +14,58 @@ namespace Atles.Commands.Handlers.Users;
 public class UpdateUserHandler : ICommandHandler<UpdateUser>
 {
     private readonly AtlesDbContext _dbContext;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public UpdateUserHandler(AtlesDbContext dbContext)
+    public UpdateUserHandler(AtlesDbContext dbContext, UserManager<IdentityUser> userManager)
     {
         _dbContext = dbContext;
+        _userManager = userManager;
     }
 
     public async Task<CommandResult> Handle(UpdateUser command)
     {
         var user = await _dbContext.Users
             .FirstOrDefaultAsync(x =>
-                x.Id == command.UpdateUserId);
+                x.Id == command.Id);
 
         if (user == null)
         {
-            throw new DataException($"User with Id {command.UpdateUserId} not found.");
+            return new Failure(FailureType.NotFound, "User", $"User with Id {command.Id} not found.");
+        }
+
+        var identityUser = await _userManager.FindByIdAsync(command.IdentityUserId);
+
+        if (identityUser is not null && command.Roles.Any())
+        {
+            foreach (var (name, selected) in command.Roles)
+            {
+                if (selected)
+                {
+                    if (!await _userManager.IsInRoleAsync(identityUser, name))
+                    {
+                        await _userManager.AddToRoleAsync(identityUser, name);
+                    }
+                }
+                else
+                {
+                    if (await _userManager.IsInRoleAsync(identityUser, name))
+                    {
+                        await _userManager.RemoveFromRoleAsync(identityUser, name);
+                    }
+                }
+            }
         }
 
         user.UpdateDetails(command.DisplayName);
 
+        var roles = command.Roles.Where(role => role.Selected).ToList() is {Count: > 0}
+            ? string.Join(", ", command.Roles)
+            : string.Empty;
+
         var @event = new UserUpdated
         {
             DisplayName = user.DisplayName,
-            Roles = command.Roles is { Count: > 0 } ? string.Join(", ", command.Roles) : string.Empty,
+            Roles = roles,
             TargetId = user.Id,
             TargetType = nameof(User),
             SiteId = command.SiteId,

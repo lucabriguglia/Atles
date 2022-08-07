@@ -11,7 +11,7 @@ namespace Atles.Client.Pages.Admin.Users
         [Parameter] public Guid Id { get; set; }
         [Parameter] public string IdentityUserId { get; set; }
 
-        protected EditPageModel Model { get; set; }
+        protected EditUserPageModel Model { get; set; }
 
         protected override async Task OnParametersSetAsync()
         {
@@ -19,12 +19,17 @@ namespace Atles.Client.Pages.Admin.Users
                 ? $"api/admin/users/edit/{Id}"
                 : $"api/admin/users/edit-by-identity-user-id/{IdentityUserId}";
 
-            Model = await ApiService.GetFromJsonAsync<EditPageModel>(requestUri);
+            Model = await ApiService.GetFromJsonAsync<EditUserPageModel>(requestUri);
         }
 
         protected async Task UpdateAsync()
         {
             await ApiService.PostAsJsonAsync("api/admin/users/update", Model);
+            NavigationManager.NavigateTo("/admin/users");
+        }
+
+        protected void Cancel()
+        {
             NavigationManager.NavigateTo("/admin/users");
         }
     }

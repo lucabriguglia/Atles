@@ -1,21 +1,17 @@
-﻿using System.ComponentModel.DataAnnotations;
-using Atles.Domain;
+﻿using Atles.Domain;
 
 namespace Atles.Models.Admin.Users;
 
-public class EditPageModel
+public class EditUserPageModel
 {
     public UserModel User { get; set; } = new();
     public InfoModel Info { get; set; } = new();
-    public IList<RoleModel> Roles { get; set; } = new List<RoleModel>();
-
-    public class UserModel
+    
+    public class UserModel : SiteFormModel
     {
         public Guid Id { get; set; }
-
-        [Required]
-        [StringLength(50)]
         public string DisplayName { get; set; }
+        public IList<RoleModel> Roles { get; set; } = new List<RoleModel>();
     }
 
     public class InfoModel

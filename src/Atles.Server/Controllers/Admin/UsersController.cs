@@ -17,22 +17,28 @@ public class UsersController : AdminControllerBase
     private readonly UserManager<IdentityUser> _userManager;
     private readonly IDispatcher _dispatcher;
     private readonly IUserValidationRules _userValidationRules;
-    private readonly IValidator<CreatePageModel.UserModel> _createValidator;
-    private readonly IMapper<CreatePageModel.UserModel, CreateUser> _createMapper;
+    private readonly IValidator<CreateUserPageModel.UserModel> _createUserValidator;
+    private readonly IMapper<CreateUserPageModel.UserModel, CreateUser> _createUserMapper;
+    private readonly IValidator<EditUserPageModel.UserModel> _updateUserValidator;
+    private readonly IMapper<EditUserPageModel.UserModel, CreateUser> _updateUserMapper;
 
     public UsersController(
         UserManager<IdentityUser> userManager,
         IDispatcher dispatcher, 
         IUserValidationRules userValidationRules, 
-        IValidator<CreatePageModel.UserModel> createValidator, 
-        IMapper<CreatePageModel.UserModel, CreateUser> createMapper) 
+        IValidator<CreateUserPageModel.UserModel> createUserValidator, 
+        IMapper<CreateUserPageModel.UserModel, CreateUser> createUserMapper, 
+        IValidator<EditUserPageModel.UserModel> updateUserValidator, 
+        IMapper<EditUserPageModel.UserModel, CreateUser> updateUserMapper) 
         : base(dispatcher)
     {
         _userManager = userManager;
         _dispatcher = dispatcher;
         _userValidationRules = userValidationRules;
-        _createValidator = createValidator;
-        _createMapper = createMapper;
+        _createUserValidator = createUserValidator;
+        _createUserMapper = createUserMapper;
+        _updateUserValidator = updateUserValidator;
+        _updateUserMapper = updateUserMapper;
     }
 
     [HttpGet("index-model")]
@@ -55,56 +61,20 @@ public class UsersController : AdminControllerBase
         await ProcessGet(new GetUserCreateForm());
 
     [HttpPost("save")]
-    public async Task<ActionResult> Save(CreatePageModel.UserModel model) => 
-        await ProcessPost(model, _createMapper, _createValidator);
+    public async Task<ActionResult> Save(CreateUserPageModel.UserModel model) => 
+        await ProcessPost(model, _createUserMapper, _createUserValidator);
 
     [HttpGet("edit/{id}")]
-    public async Task<ActionResult<EditPageModel>> Edit(Guid id) => 
+    public async Task<ActionResult<EditUserPageModel>> Edit(Guid id) => 
         await ProcessGet(new GetUserEditForm{ Id = id });
 
     [HttpGet("edit-by-identity-user-id/{identityUserId}")]
-    public async Task<ActionResult<EditPageModel>> EditByIdentityUserId(string identityUserId) => 
+    public async Task<ActionResult<EditUserPageModel>> EditByIdentityUserId(string identityUserId) => 
         await ProcessGet(new GetUserEditForm { IdentityUserId = identityUserId });
 
     [HttpPost("update")]
-    public async Task<ActionResult> Update(EditPageModel model)
-    {
-        var identityUser = await _userManager.FindByIdAsync(model.Info.UserId);
-
-        if (identityUser != null && model.Roles.Count > 0)
-        {
-            foreach (var role in model.Roles)
-            {
-                if (role.Selected)
-                {
-                    if (!await _userManager.IsInRoleAsync(identityUser, role.Name))
-                    {
-                        await _userManager.AddToRoleAsync(identityUser, role.Name);
-                    }
-                }
-                else
-                {
-                    if (await _userManager.IsInRoleAsync(identityUser, role.Name))
-                    {
-                        await _userManager.RemoveFromRoleAsync(identityUser, role.Name);
-                    }
-                }
-            }
-        }
-
-        var command = new UpdateUser
-        {
-            UpdateUserId = model.User.Id,
-            DisplayName = model.User.DisplayName,
-            SiteId = CurrentSite.Id,
-            UserId = CurrentUser.Id,
-            Roles = model.Roles.Where(x => x.Selected).Select(x => x.Name).ToList()
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok();
-    }
+    public async Task<ActionResult> Update(EditUserPageModel.UserModel model) => 
+        await ProcessPost(model, _updateUserMapper, _updateUserValidator);
 
     [HttpGet("activity/{id}")]
     public async Task<ActionResult> Activity(Guid id, [FromQuery] int? page = 1, [FromQuery] string search = null)

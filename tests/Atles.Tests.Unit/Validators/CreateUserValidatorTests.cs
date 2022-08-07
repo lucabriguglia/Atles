@@ -14,7 +14,7 @@ public class CreateUserValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_email_is_empty()
     {
-        var model = Fixture.Build<CreatePageModel.UserModel>().With(x => x.Email, string.Empty).Create();
+        var model = Fixture.Build<CreateUserPageModel.UserModel>().With(x => x.Email, string.Empty).Create();
 
         var userValidationRules = new Mock<IUserValidationRules>();
 
@@ -27,7 +27,7 @@ public class CreateUserValidatorTests : TestFixtureBase
     [Test]
     public async Task Should_have_validation_error_when_email_is_not_valid()
     {
-        var model = Fixture.Build<CreatePageModel.UserModel>().With(x => x.Email, "email").Create();
+        var model = Fixture.Build<CreateUserPageModel.UserModel>().With(x => x.Email, "email").Create();
 
         var userValidationRules = new Mock<IUserValidationRules>();
 

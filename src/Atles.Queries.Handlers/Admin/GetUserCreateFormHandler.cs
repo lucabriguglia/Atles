@@ -5,13 +5,13 @@ using Atles.Queries.Admin;
 
 namespace Atles.Queries.Handlers.Admin;
 
-public class GetUserCreateFormHandler : IQueryHandler<GetUserCreateForm, CreatePageModel>
+public class GetUserCreateFormHandler : IQueryHandler<GetUserCreateForm, CreateUserPageModel>
 {
-    public async Task<QueryResult<CreatePageModel>> Handle(GetUserCreateForm request)
+    public async Task<QueryResult<CreateUserPageModel>> Handle(GetUserCreateForm request)
     {
         await Task.CompletedTask;
 
-        var result = new CreatePageModel();
+        var result = new CreateUserPageModel();
 
         return result;
     }

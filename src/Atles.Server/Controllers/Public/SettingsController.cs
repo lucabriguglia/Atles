@@ -48,7 +48,7 @@ public class SettingsController : SiteControllerBase
 
         var command = new UpdateUser
         {
-            UpdateUserId = CurrentUser.Id,
+            Id = CurrentUser.Id,
             DisplayName = model.User.DisplayName,
             SiteId = CurrentSite.Id,
             UserId = CurrentUser.Id

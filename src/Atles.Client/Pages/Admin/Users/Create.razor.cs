@@ -8,13 +8,13 @@ namespace Atles.Client.Pages.Admin.Users;
 
 public abstract class CreatePage : AdminPageBase
 {
-    protected CreatePageModel Model { get; set; }
+    protected CreateUserPageModel Model { get; set; }
     protected bool HasError { get; set; }
     protected string Error { get; set; }
 
     protected override async Task OnInitializedAsync()
     {
-        Model = await ApiService.GetFromJsonAsync<CreatePageModel>("api/admin/users/create");
+        Model = await ApiService.GetFromJsonAsync<CreateUserPageModel>("api/admin/users/create");
     }
 
     protected async Task SaveAsync()

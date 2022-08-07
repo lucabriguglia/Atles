@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace Atles.Validators.Users;
 
-public class CreateUserValidator : AbstractValidator<CreatePageModel.UserModel>
+public class CreateUserValidator : AbstractValidator<CreateUserPageModel.UserModel>
 {
     private readonly string[] _blackListedWords = { "Password" };
 
@@ -32,7 +32,7 @@ public class CreateUserValidator : AbstractValidator<CreatePageModel.UserModel>
             .NotEmpty().WithMessage("Confirm password is required.")
             .Equal(model => model.Password).WithMessage("Confirm password does not match password.");
 
-        async Task<bool> UserEmailBeUnique(CreatePageModel.UserModel model, string email, CancellationToken cancellation) =>
+        async Task<bool> UserEmailBeUnique(CreateUserPageModel.UserModel model, string email, CancellationToken cancellation) =>
             await userValidationRules.IsUserEmailUnique(Guid.Empty, email);
     }
 }
