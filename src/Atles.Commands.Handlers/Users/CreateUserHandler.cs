@@ -29,11 +29,13 @@ public class CreateUserHandler : ICommandHandler<CreateUser>
         if (string.IsNullOrEmpty(identityUserId))
         {
             var identityUser = new IdentityUser { UserName = command.Email, Email = command.Email };
+            identityUserId = identityUser.Id;
+
             var createResult = await _userManager.CreateAsync(identityUser, command.Password);
 
             if (!createResult.Succeeded)
             {
-                return new Failure(FailureType.Error, "Identity User", $"Creation failed for identity user with email {command.Email}.");
+                return new Failure(FailureType.Error, "Error creating identity user", createResult.ToString());
             }
 
             var token = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);

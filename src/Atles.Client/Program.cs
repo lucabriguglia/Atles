@@ -62,6 +62,7 @@ public class Program
         builder.Services.AddTransient<IForumValidationRules, ApiForumValidationRules>();
         builder.Services.AddTransient<IPermissionSetValidationRules, ApiPermissionSetValidationRules>();
         builder.Services.AddTransient<ITopicValidationRules, ApiTopicValidationRules>();
+        builder.Services.AddTransient<IUserValidationRules, ApiUserValidationRules>();
 
         builder.Services.AddTransient<IValidator<CategoryFormModel.CategoryModel>, CategoryValidator>();
         builder.Services.AddTransient<IValidator<ForumFormModel.ForumModel>, ForumValidator>();
