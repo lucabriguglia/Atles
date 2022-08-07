@@ -6,6 +6,8 @@ namespace Atles.Validators.Users;
 
 public class CreateUserValidator : AbstractValidator<CreatePageModel.UserModel>
 {
+    private readonly string[] _blackListedWords = { "Atles" };
+
     public CreateUserValidator(IUserValidationRules userValidationRules)
     {
         RuleFor(model => model.Email)
@@ -15,9 +17,16 @@ public class CreateUserValidator : AbstractValidator<CreatePageModel.UserModel>
         RuleFor(model => model.Email)
             .MustAsync(UserEmailBeUnique).WithMessage(model => $"Email {model.Email} is already in use.");
 
+        // https://stackoverflow.com/questions/64205825/regex-with-fluent-validation-in-c-sharp-how-to-not-allow-spaces-and-certain-sp
         RuleFor(model => model.Password)
             .NotEmpty().WithMessage("Password is required.")
-            .Length(6, 100).WithMessage("Password must be at least 6 and at max 100 characters long.");
+            .Length(6, 100).WithMessage("Password must be at least 6 and at max 100 characters long.")
+            .Matches("[A-Z]").WithMessage("Password must contain one or more capital letters.")
+            .Matches("[a-z]").WithMessage("Password must contain one or more lowercase letters.")
+            .Matches(@"\d").WithMessage("Password must contain one or more digits.")
+            .Matches(@"[][""!@$%^&*(){}:;<>,.?/+_=|'~\\-]").WithMessage("Password must contain one or more special characters.")
+            //.Matches("^[^£# “”]*$").WithMessage("Password must not contain the following characters £ # “” or spaces.")
+            .Must(password => !_blackListedWords.Any(word => password.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)).WithMessage("Password contains a word that is not allowed.");
 
         RuleFor(model => model.ConfirmPassword)
             .NotEmpty().WithMessage("Confirm password is required.")
