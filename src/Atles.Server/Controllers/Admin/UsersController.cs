@@ -3,7 +3,9 @@ using Atles.Core;
 using Atles.Models;
 using Atles.Models.Admin.Users;
 using Atles.Queries.Admin;
+using Atles.Server.Mapping;
 using Atles.Validators.ValidationRules;
+using FluentValidation;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
@@ -15,16 +17,22 @@ public class UsersController : AdminControllerBase
     private readonly UserManager<IdentityUser> _userManager;
     private readonly IDispatcher _dispatcher;
     private readonly IUserValidationRules _userValidationRules;
+    private readonly IValidator<CreatePageModel.UserModel> _createValidator;
+    private readonly IMapper<CreatePageModel.UserModel, CreateUser> _createMapper;
 
     public UsersController(
         UserManager<IdentityUser> userManager,
         IDispatcher dispatcher, 
-        IUserValidationRules userValidationRules) 
+        IUserValidationRules userValidationRules, 
+        IValidator<CreatePageModel.UserModel> createValidator, 
+        IMapper<CreatePageModel.UserModel, CreateUser> createMapper) 
         : base(dispatcher)
     {
         _userManager = userManager;
         _dispatcher = dispatcher;
         _userValidationRules = userValidationRules;
+        _createValidator = createValidator;
+        _createMapper = createMapper;
     }
 
     [HttpGet("index-model")]
@@ -47,32 +55,8 @@ public class UsersController : AdminControllerBase
         await ProcessGet(new GetUserCreateForm());
 
     [HttpPost("save")]
-    public async Task<ActionResult> Save(CreatePageModel.UserModel model)
-    {
-        var identityUser = new IdentityUser { UserName = model.Email, Email = model.Email };
-        var createResult = await _userManager.CreateAsync(identityUser, model.Password);
-
-        if (!createResult.Succeeded)
-        {
-            return BadRequest();
-        }
-
-        var token = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
-        var confirmResult = await _userManager.ConfirmEmailAsync(identityUser, token);
-
-        var command = new CreateUser
-        {
-            IdentityUserId = identityUser.Id,
-            Email = identityUser.Email,
-            SiteId = CurrentSite.Id,
-            UserId = CurrentUser.Id,
-            Confirm = true
-        };
-
-        await _dispatcher.Send(command);
-
-        return Ok(command.CreateUserId);
-    }
+    public async Task<ActionResult> Save(CreatePageModel.UserModel model) => 
+        await ProcessPost(model, _createMapper, _createValidator);
 
     [HttpGet("edit/{id}")]
     public async Task<ActionResult<EditPageModel>> Edit(Guid id) => 

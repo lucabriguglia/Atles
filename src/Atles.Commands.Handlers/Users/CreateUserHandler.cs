@@ -6,7 +6,7 @@ using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Events.Users;
-using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
 namespace Atles.Commands.Handlers.Users;
@@ -14,24 +14,36 @@ namespace Atles.Commands.Handlers.Users;
 public class CreateUserHandler : ICommandHandler<CreateUser>
 {
     private readonly AtlesDbContext _dbContext;
-    private readonly IValidator<CreateUser> _validator;
+    private readonly UserManager<IdentityUser> _userManager;
 
-    public CreateUserHandler(AtlesDbContext dbContext, IValidator<CreateUser> validator)
+    public CreateUserHandler(AtlesDbContext dbContext, UserManager<IdentityUser> userManager)
     {
         _dbContext = dbContext;
-        _validator = validator;
+        _userManager = userManager;
     }
 
     public async Task<CommandResult> Handle(CreateUser command)
     {
-        await _validator.ValidateCommand(command);
+        var identityUserId = command.IdentityUserId;
+
+        if (string.IsNullOrEmpty(identityUserId))
+        {
+            var identityUser = new IdentityUser { UserName = command.Email, Email = command.Email };
+            var createResult = await _userManager.CreateAsync(identityUser, command.Password);
+
+            if (!createResult.Succeeded)
+            {
+                return new Failure(FailureType.Error, "Identity User", $"Creation failed for identity user with email {command.Email}.");
+            }
+
+            var token = await _userManager.GenerateEmailConfirmationTokenAsync(identityUser);
+            var confirmResult = await _userManager.ConfirmEmailAsync(identityUser, token);
+            // TODO: Handle confirmResult not succeeded
+        }
 
         var displayName = await GenerateDisplayNameAsync();
 
-        var user = new User(command.CreateUserId,
-            command.IdentityUserId,
-            command.Email,
-            displayName);
+        var user = new User(identityUserId, command.Email, displayName);
 
         if (command.Confirm)
         {
@@ -56,7 +68,7 @@ public class CreateUserHandler : ICommandHandler<CreateUser>
 
         await _dbContext.SaveChangesAsync();
 
-        return new Success(new IEvent[] { @event });
+        return new Success(new IEvent[] { @event }, user.Id);
     }
 
     private async Task<string> GenerateDisplayNameAsync()
