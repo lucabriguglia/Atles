@@ -6,6 +6,6 @@ namespace Atles.Client.Pages.Admin.Users;
 
 public abstract class FormComponent : AdminFormBase
 {
-    [Parameter] public EditUserPageModel Model { get; set; }
+    [Parameter] public EditUserPageModel.UserModel Model { get; set; }
     [Parameter] public string SubmitButtonText { get; set; }
 }

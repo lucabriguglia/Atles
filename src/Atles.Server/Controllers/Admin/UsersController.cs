@@ -29,7 +29,7 @@ public class UsersController : AdminControllerBase
         IValidator<CreateUserPageModel.UserModel> createUserValidator, 
         IMapper<CreateUserPageModel.UserModel, CreateUser> createUserMapper, 
         IValidator<EditUserPageModel.UserModel> updateUserValidator, 
-        IMapper<EditUserPageModel.UserModel, CreateUser> updateUserMapper) 
+        IMapper<EditUserPageModel.UserModel, UpdateUser> updateUserMapper) 
         : base(dispatcher)
     {
         _userManager = userManager;
