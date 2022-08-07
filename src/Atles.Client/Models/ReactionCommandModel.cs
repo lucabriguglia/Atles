@@ -1,11 +1,9 @@
-﻿using System;
-using Atles.Domain;
+﻿using Atles.Domain;
 
-namespace Atles.Client.Models
+namespace Atles.Client.Models;
+
+public class ReactionCommandModel
 {
-    public class ReactionCommandModel
-    {
-        public PostReactionType PostReactionType { get; set; }
-        public Guid PostId { get; set; }
-    }
+    public PostReactionType PostReactionType { get; set; }
+    public Guid PostId { get; set; }
 }

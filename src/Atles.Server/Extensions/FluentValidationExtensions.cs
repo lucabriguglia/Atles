@@ -1,6 +1,4 @@
-﻿using System.Collections.Generic;
-using System.Linq;
-using FluentValidation.Results;
+﻿using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Extensions;
@@ -9,7 +7,7 @@ public static class FluentValidationExtensions
 {
     public static ActionResult ToActionResult(this ValidationResult validationResult)
     {
-        return new BadRequestObjectResult(new ProblemDetails
+        return new BadRequestObjectResult(new Models.ProblemDetails
         {
             Title = "Request validation failed",
             Detail = validationResult.Errors.ToErrorMessage(),

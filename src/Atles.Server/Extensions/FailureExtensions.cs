@@ -9,7 +9,7 @@ public static class FailureExtensions
     {
         var (failureType, title, message) = failure;
 
-        var problemDetails = new ProblemDetails
+        var problemDetails = new Models.ProblemDetails
         {
             Title = title ?? failureType.ToString(),
             Detail = message ?? failureType.ToString(),

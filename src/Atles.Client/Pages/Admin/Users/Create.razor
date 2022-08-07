@@ -47,7 +47,7 @@ else
     </div>
 }
 
-@if (Error)
+@if (HasError)
 {
-    <SomethingWrong />
+    <SomethingWrong Error="@Error" />
 }
