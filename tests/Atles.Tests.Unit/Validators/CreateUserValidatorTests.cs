@@ -1,7 +1,9 @@
 ﻿using Atles.Models.Admin.Users;
 using Atles.Validators.Users;
+using Atles.Validators.ValidationRules;
 using AutoFixture;
 using FluentValidation.TestHelper;
+using Moq;
 using NUnit.Framework;
 
 namespace Atles.Tests.Unit.Validators;
@@ -14,7 +16,9 @@ public class CreateUserValidatorTests : TestFixtureBase
     {
         var model = Fixture.Build<CreatePageModel.UserModel>().With(x => x.Email, string.Empty).Create();
 
-        var sut = new CreateUserValidator();
+        var userValidationRules = new Mock<IUserValidationRules>();
+
+        var sut = new CreateUserValidator(userValidationRules.Object);
 
         var result = await sut.TestValidateAsync(model);
         result.ShouldHaveValidationErrorFor(x => x.Email);
@@ -25,7 +29,9 @@ public class CreateUserValidatorTests : TestFixtureBase
     {
         var model = Fixture.Build<CreatePageModel.UserModel>().With(x => x.Email, "email").Create();
 
-        var sut = new CreateUserValidator();
+        var userValidationRules = new Mock<IUserValidationRules>();
+
+        var sut = new CreateUserValidator(userValidationRules.Object);
 
         var result = await sut.TestValidateAsync(model);
         result.ShouldHaveValidationErrorFor(x => x.Email);
