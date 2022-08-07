@@ -20,7 +20,7 @@ public class UsersController : AdminControllerBase
     private readonly IValidator<CreateUserPageModel.UserModel> _createUserValidator;
     private readonly IMapper<CreateUserPageModel.UserModel, CreateUser> _createUserMapper;
     private readonly IValidator<EditUserPageModel.UserModel> _updateUserValidator;
-    private readonly IMapper<EditUserPageModel.UserModel, CreateUser> _updateUserMapper;
+    private readonly IMapper<EditUserPageModel.UserModel, UpdateUser> _updateUserMapper;
 
     public UsersController(
         UserManager<IdentityUser> userManager,
