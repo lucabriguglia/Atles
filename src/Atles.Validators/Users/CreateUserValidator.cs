@@ -6,7 +6,7 @@ namespace Atles.Validators.Users;
 
 public class CreateUserValidator : AbstractValidator<CreatePageModel.UserModel>
 {
-    private readonly string[] _blackListedWords = { "Atles" };
+    private readonly string[] _blackListedWords = { "Password" };
 
     public CreateUserValidator(IUserValidationRules userValidationRules)
     {
@@ -24,9 +24,9 @@ public class CreateUserValidator : AbstractValidator<CreatePageModel.UserModel>
             .Matches("[A-Z]").WithMessage("Password must contain one or more capital letters.")
             .Matches("[a-z]").WithMessage("Password must contain one or more lowercase letters.")
             .Matches(@"\d").WithMessage("Password must contain one or more digits.")
-            .Matches(@"[][""!@$%^&*(){}:;<>,.?/+_=|'~\\-]").WithMessage("Password must contain one or more special characters.")
-            //.Matches("^[^£# “”]*$").WithMessage("Password must not contain the following characters £ # “” or spaces.")
-            .Must(password => !_blackListedWords.Any(word => password.IndexOf(word, StringComparison.OrdinalIgnoreCase) >= 0)).WithMessage("Password contains a word that is not allowed.");
+            .Matches(@"[][""!@$%^&*#£(){}:;<>,.?/+_=|'~\\-]").WithMessage("Password must contain one or more special characters.")
+            .Matches("^[^ “”]*$").WithMessage("Password must not contain the characters “” or spaces.")
+            .Must(password => !_blackListedWords.Any(word => password.Contains(word, StringComparison.OrdinalIgnoreCase))).WithMessage("Password contains a word that is not allowed.");
 
         RuleFor(model => model.ConfirmPassword)
             .NotEmpty().WithMessage("Confirm password is required.")
