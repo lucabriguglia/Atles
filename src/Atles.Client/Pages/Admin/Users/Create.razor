@@ -21,7 +21,7 @@ else
     <div class="row">
         <div class="col-md-4">
             <EditForm Model="Model.User" OnValidSubmit="@(async () => await SaveAsync())">
-                <DataAnnotationsValidator />
+                <FluentValidationValidator />
                 <div class="form-group">
                     <label for="email" class="control-label">@Localizer["Email"]</label>
                     <InputText id="email" @bind-Value="Model.User.Email" Class="form-control" />

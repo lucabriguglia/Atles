@@ -18,5 +18,8 @@ public class CreateUserValidator : AbstractValidator<CreatePageModel.UserModel>
         RuleFor(model => model.ConfirmPassword)
             .NotEmpty().WithMessage("Confirm password is required.")
             .Equal(model => model.Password).WithMessage("Confirm password does not match password.");
+
+        async Task<bool> CategoryNameBeUnique(CreatePageModel.UserModel model, string name, CancellationToken cancellation) =>
+            await categoryValidationRules.IsCategoryNameUnique(model.SiteId, model.Id, name);
     }
 }

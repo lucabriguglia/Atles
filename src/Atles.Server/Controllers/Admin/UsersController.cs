@@ -158,7 +158,11 @@ public class UsersController : AdminControllerBase
         return Ok();
     }
 
+    [HttpGet("is-email-unique/{id}/{email}")]
+    public async Task<ActionResult> IsEmailUnique(Guid id, string email) =>
+        Ok(await _userValidationRules.IsUserEmailUnique(id, email));
+
     [HttpGet("is-display-name-unique/{id}/{displayName}")]
-    public async Task<ActionResult> IsNameUnique(Guid id, string displayName) => 
+    public async Task<ActionResult> IsDisplayNameUnique(Guid id, string displayName) => 
         Ok(await _userValidationRules.IsUserDisplayNameUnique(id, displayName));
 }

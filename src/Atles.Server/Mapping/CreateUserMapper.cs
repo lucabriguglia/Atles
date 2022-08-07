@@ -10,6 +10,7 @@ public class CreateUserMapper : IMapper<CreatePageModel.UserModel, CreateUser>
         return new CreateUser
         {
             Email = model.Email,
+            Password = model.Password,
             SiteId = model.SiteId,
             UserId = userId,
             Confirm = true
