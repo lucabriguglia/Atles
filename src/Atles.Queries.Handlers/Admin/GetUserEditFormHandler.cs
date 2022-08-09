@@ -48,6 +48,7 @@ namespace Atles.Queries.Handlers.Admin
                 User = new EditUserPageModel.UserModel
                 {
                     Id = user.Id,
+                    IdentityUserId = user.IdentityUserId,
                     DisplayName = user.DisplayName
                 },
                 Info = new EditUserPageModel.InfoModel

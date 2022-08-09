@@ -10,6 +10,7 @@ public class EditUserPageModel
     public class UserModel : SiteFormModel
     {
         public Guid Id { get; set; }
+        public string IdentityUserId { get; set; }
         public string DisplayName { get; set; }
         public IList<RoleModel> Roles { get; set; } = new List<RoleModel>();
     }

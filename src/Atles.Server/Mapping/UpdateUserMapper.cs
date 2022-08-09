@@ -10,6 +10,7 @@ public class UpdateUserMapper : IMapper<EditUserPageModel.UserModel, UpdateUser>
         return new UpdateUser
         {
             Id = model.Id,
+            IdentityUserId = model.IdentityUserId,
             DisplayName = model.DisplayName,
             Roles = model.Roles.Select(role => new Role(role.Name, role.Selected)).ToList(),
             SiteId = model.SiteId,
