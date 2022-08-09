@@ -34,38 +34,21 @@ public class UpdateUserHandler : ICommandHandler<UpdateUser>
         }
 
         var identityUser = await _userManager.FindByIdAsync(command.IdentityUserId);
-
         if (identityUser is not null && command.Roles.Any())
         {
-            foreach (var (name, selected) in command.Roles)
-            {
-                if (selected)
-                {
-                    if (!await _userManager.IsInRoleAsync(identityUser, name))
-                    {
-                        await _userManager.AddToRoleAsync(identityUser, name);
-                    }
-                }
-                else
-                {
-                    if (await _userManager.IsInRoleAsync(identityUser, name))
-                    {
-                        await _userManager.RemoveFromRoleAsync(identityUser, name);
-                    }
-                }
-            }
+            await ProcessRoles(command, identityUser);
         }
 
         user.UpdateDetails(command.DisplayName);
 
-        var roles = command.Roles.Where(role => role.Selected).ToList() is {Count: > 0}
+        var selectedRoles = command.Roles.Where(role => role.Selected).ToList() is {Count: > 0}
             ? string.Join(", ", command.Roles)
             : string.Empty;
 
         var @event = new UserUpdated
         {
             DisplayName = user.DisplayName,
-            Roles = roles,
+            Roles = selectedRoles,
             TargetId = user.Id,
             TargetType = nameof(User),
             SiteId = command.SiteId,
@@ -77,5 +60,26 @@ public class UpdateUserHandler : ICommandHandler<UpdateUser>
         await _dbContext.SaveChangesAsync();
 
         return new Success(new IEvent[] { @event });
+    }
+
+    private async Task ProcessRoles(UpdateUser command, IdentityUser identityUser)
+    {
+        foreach (var (name, selected) in command.Roles)
+        {
+            if (selected)
+            {
+                if (!await _userManager.IsInRoleAsync(identityUser, name))
+                {
+                    await _userManager.AddToRoleAsync(identityUser, name);
+                }
+            }
+            else
+            {
+                if (await _userManager.IsInRoleAsync(identityUser, name))
+                {
+                    await _userManager.RemoveFromRoleAsync(identityUser, name);
+                }
+            }
+        }
     }
 }
