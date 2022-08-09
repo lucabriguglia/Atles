@@ -47,14 +47,12 @@ public class UsersController : AdminControllerBase
         [FromQuery] string search = null, 
         [FromQuery] string status = null,
         [FromQuery] string sortByField = null,
-        [FromQuery] string sortByDirection = null)
-    {
-        return await ProcessGet(new GetUsersIndex
+        [FromQuery] string sortByDirection = null) =>
+        await ProcessGet(new GetUsersIndex
         {
             Options = new QueryOptions(page, search, sortByField, sortByDirection), 
             Status = status
         });
-    }
 
     [HttpGet("create")]
     public async Task<ActionResult> Create() => 
@@ -77,15 +75,16 @@ public class UsersController : AdminControllerBase
         await ProcessPost(model, _updateUserMapper, _updateUserValidator);
 
     [HttpGet("activity/{id}")]
-    public async Task<ActionResult> Activity(Guid id, [FromQuery] int? page = 1, [FromQuery] string search = null)
-    {
-        return await ProcessGet(new GetUserActivity
+    public async Task<ActionResult> Activity(
+        Guid id, 
+        [FromQuery] int? page = 1, 
+        [FromQuery] string search = null) =>
+        await ProcessGet(new GetUserActivity
         {
             Options = new QueryOptions(page, search), 
             SiteId = CurrentSite.Id, 
             UserId = id
         });
-    }
 
     [HttpPost("suspend")]
     public async Task<ActionResult> Suspend([FromBody] Guid id) =>
@@ -106,27 +105,14 @@ public class UsersController : AdminControllerBase
         });
 
     [HttpDelete("delete/{id}/{identityUserId}")]
-    public async Task<ActionResult> Delete(Guid id, string identityUserId)
-    {
-        var command = new DeleteUser
+    public async Task<ActionResult> Delete(Guid id, string identityUserId) =>
+        await ProcessPost(new DeleteUser
         {
             DeleteUserId = id,
             IdentityUserId = identityUserId,
             SiteId = CurrentSite.Id,
             UserId = CurrentUser.Id
-        };
-
-        await _dispatcher.Send(command);
-
-        var identityUser = await _userManager.FindByIdAsync(identityUserId);
-
-        if (identityUser != null)
-        {
-            await _userManager.DeleteAsync(identityUser);
-        }
-
-        return Ok();
-    }
+        });
 
     [HttpGet("is-email-unique/{id}/{email}")]
     public async Task<ActionResult> IsEmailUnique(Guid id, string email) =>
