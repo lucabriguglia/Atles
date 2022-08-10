@@ -1,52 +1,45 @@
-﻿using System.Threading.Tasks;
-using Atles.Core;
+﻿using Atles.Core.Extensions;
 using Atles.Core.Queries;
 using Atles.Core.Results;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Public;
-using Atles.Queries.Handlers.Services;
 using Atles.Queries.Public;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Queries.Handlers.Public
+namespace Atles.Queries.Handlers.Public;
+
+public class GetSettingsPageHandler : IQueryHandler<GetSettingsPage, SettingsPageModel>
 {
-    public class GetSettingsPageHandler : IQueryHandler<GetSettingsPage, SettingsPageModel>
+    private readonly AtlesDbContext _dbContext;
+    public GetSettingsPageHandler(AtlesDbContext dbContext)
     {
-        private readonly AtlesDbContext _dbContext;
-        private readonly IDispatcher _dispatcher;
-        private readonly IGravatarService _gravatarService;
-        public GetSettingsPageHandler(AtlesDbContext dbContext, IDispatcher sender, IGravatarService gravatarService)
+        _dbContext = dbContext;
+    }
+
+    public async Task<QueryResult<SettingsPageModel>> Handle(GetSettingsPage query)
+    {
+        var result = new SettingsPageModel();
+
+        var user = await _dbContext.Users
+            .FirstOrDefaultAsync(x =>
+                x.Id == query.UserId &&
+                x.Status != UserStatusType.Deleted);
+
+        if (user == null)
         {
-            _dbContext = dbContext;
-            _dispatcher = sender;
-            _gravatarService = gravatarService;
+            return null;
         }
 
-        public async Task<QueryResult<SettingsPageModel>> Handle(GetSettingsPage query)
+        result.User = new SettingsPageModel.UserModel
         {
-            var result = new SettingsPageModel();
+            Id = user.Id,
+            Email = user.Email,
+            DisplayName = user.DisplayName,
+            GravatarHash = user.Email.ToGravatarEmailHash(),
+            IsSuspended = user.Status == UserStatusType.Suspended
+        };
 
-            var user = await _dbContext.Users
-                .FirstOrDefaultAsync(x =>
-                    x.Id == query.UserId &&
-                    x.Status != UserStatusType.Deleted);
-
-            if (user == null)
-            {
-                return null;
-            }
-
-            result.User = new SettingsPageModel.UserModel
-            {
-                Id = user.Id,
-                Email = user.Email,
-                DisplayName = user.DisplayName,
-                GravatarHash = _gravatarService.GenerateEmailHash(user.Email),
-                IsSuspended = user.Status == UserStatusType.Suspended
-            };
-
-            return result;
-        }
+        return result;
     }
 }

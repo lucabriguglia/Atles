@@ -1,7 +1,6 @@
-﻿using System.Linq;
-using System.Security.Claims;
+﻿using System.Security.Claims;
 
-namespace Atles.Core.Utilities;
+namespace Atles.Core.Extensions;
 
 public static class ClaimsPrincipalExtensions
 {
