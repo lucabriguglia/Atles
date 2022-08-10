@@ -6,7 +6,6 @@ using Atles.Queries.Admin;
 using Atles.Server.Mapping;
 using Atles.Validators.ValidationRules;
 using FluentValidation;
-using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Atles.Server.Controllers.Admin;
