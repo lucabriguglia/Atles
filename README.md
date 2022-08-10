@@ -24,8 +24,8 @@ A forum software built with ASP.NET Blazor WebAssembly and CQRS.
 
 - Blazor WebAssembly 6.0.1
 - Entity Framework Core 6.0.1
-- SQL Server (more providers to come)
-- Fluent Validation (shared between client and server)
+- SQL Server _(more providers to come)_
+- Fluent Validation _(shared between client and server)_
 - OneOf
 
 ## Features
