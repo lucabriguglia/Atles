@@ -14,8 +14,6 @@ namespace Atles.Server.Controllers.Admin;
 [Route("api/admin/users")]
 public class UsersController : AdminControllerBase
 {
-    private readonly UserManager<IdentityUser> _userManager;
-    private readonly IDispatcher _dispatcher;
     private readonly IUserValidationRules _userValidationRules;
     private readonly IValidator<CreateUserPageModel.UserModel> _createUserValidator;
     private readonly IMapper<CreateUserPageModel.UserModel, CreateUser> _createUserMapper;
@@ -23,7 +21,6 @@ public class UsersController : AdminControllerBase
     private readonly IMapper<EditUserPageModel.UserModel, UpdateUser> _updateUserMapper;
 
     public UsersController(
-        UserManager<IdentityUser> userManager,
         IDispatcher dispatcher, 
         IUserValidationRules userValidationRules, 
         IValidator<CreateUserPageModel.UserModel> createUserValidator, 
@@ -32,8 +29,6 @@ public class UsersController : AdminControllerBase
         IMapper<EditUserPageModel.UserModel, UpdateUser> updateUserMapper) 
         : base(dispatcher)
     {
-        _userManager = userManager;
-        _dispatcher = dispatcher;
         _userValidationRules = userValidationRules;
         _createUserValidator = createUserValidator;
         _createUserMapper = createUserMapper;
