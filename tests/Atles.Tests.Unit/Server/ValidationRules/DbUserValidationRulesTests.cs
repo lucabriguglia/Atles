@@ -23,7 +23,7 @@ public class DbUserValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbUserValidationRules(dbContext);
-            var actual = await sut.IsUserDisplayNameUnique("Blah blah");
+            var actual = await sut.IsUserDisplayNameUnique(Guid.Empty, "Blah blah");
 
             Assert.IsTrue(actual);
         }
@@ -46,7 +46,7 @@ public class DbUserValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbUserValidationRules(dbContext);
-            var actual = await sut.IsUserDisplayNameUnique("User 3", Guid.NewGuid());
+            var actual = await sut.IsUserDisplayNameUnique(Guid.NewGuid(), "User 3");
 
             Assert.IsTrue(actual);
         }
@@ -56,11 +56,12 @@ public class DbUserValidationRulesTests : TestFixtureBase
     public async Task Should_return_false_when_display_name_is_not_unique()
     {
         var options = Shared.CreateContextOptions();
+        var userId = Guid.NewGuid();
         var displayName = "Display Name";
 
         await using (var dbContext = new AtlesDbContext(options))
         {
-            var user = new User(Guid.NewGuid().ToString(), "me@email.com", displayName);
+            var user = new User(userId, Guid.NewGuid().ToString(), "me@email.com", displayName);
             dbContext.Users.Add(user);
             await dbContext.SaveChangesAsync();
         }
@@ -68,7 +69,7 @@ public class DbUserValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbUserValidationRules(dbContext);
-            var actual = await sut.IsUserDisplayNameUnique(displayName);
+            var actual = await sut.IsUserDisplayNameUnique(userId, displayName);
 
             Assert.IsFalse(actual);
         }
@@ -92,7 +93,7 @@ public class DbUserValidationRulesTests : TestFixtureBase
         await using (var dbContext = new AtlesDbContext(options))
         {
             var sut = new DbUserValidationRules(dbContext);
-            var actual = await sut.IsUserDisplayNameUnique("User 1", userId);
+            var actual = await sut.IsUserDisplayNameUnique(userId, "User 1");
 
             Assert.IsFalse(actual);
         }

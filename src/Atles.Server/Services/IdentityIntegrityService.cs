@@ -31,7 +31,6 @@ namespace Atles.Server.Services
 
                 await _dispatcher.Send(new CreateUser
                 {
-                    IdentityUserId = identityUser.Id,
                     Email = identityUser.Email,
                     SiteId = site.Id,
                     Confirm = confirm

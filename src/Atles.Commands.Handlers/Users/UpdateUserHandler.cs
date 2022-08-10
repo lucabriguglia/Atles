@@ -1,5 +1,4 @@
-﻿using System.Data;
-using Atles.Commands.Users;
+﻿using Atles.Commands.Users;
 using Atles.Core.Commands;
 using Atles.Core.Events;
 using Atles.Core.Results;
@@ -7,52 +6,80 @@ using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Events.Users;
-using FluentValidation;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Commands.Handlers.Users
-{
-    public class UpdateUserHandler : ICommandHandler<UpdateUser>
-    {
-        private readonly AtlesDbContext _dbContext;
-        private readonly IValidator<UpdateUser> _validator;
+namespace Atles.Commands.Handlers.Users;
 
-        public UpdateUserHandler(AtlesDbContext dbContext, IValidator<UpdateUser> validator)
+public class UpdateUserHandler : ICommandHandler<UpdateUser>
+{
+    private readonly AtlesDbContext _dbContext;
+    private readonly UserManager<IdentityUser> _userManager;
+
+    public UpdateUserHandler(AtlesDbContext dbContext, UserManager<IdentityUser> userManager)
+    {
+        _dbContext = dbContext;
+        _userManager = userManager;
+    }
+
+    public async Task<CommandResult> Handle(UpdateUser command)
+    {
+        var user = await _dbContext.Users
+            .FirstOrDefaultAsync(x =>
+                x.Id == command.Id);
+
+        if (user == null)
         {
-            _dbContext = dbContext;
-            _validator = validator;
+            return new Failure(FailureType.NotFound, "User", $"User with Id {command.Id} not found.");
         }
 
-        public async Task<CommandResult> Handle(UpdateUser command)
+        var identityUser = await _userManager.FindByIdAsync(command.IdentityUserId);
+        if (identityUser is not null && command.Roles.Any())
         {
-            await _validator.ValidateCommand(command);
+            await ProcessRoles(command, identityUser);
+        }
 
-            var user = await _dbContext.Users
-                .FirstOrDefaultAsync(x =>
-                    x.Id == command.UpdateUserId);
+        user.UpdateDetails(command.DisplayName);
 
-            if (user == null)
+        var selectedRoles = command.Roles.Where(role => role.Selected).ToList() is {Count: > 0}
+            ? string.Join(", ", command.Roles)
+            : string.Empty;
+
+        var @event = new UserUpdated
+        {
+            DisplayName = user.DisplayName,
+            Roles = selectedRoles,
+            TargetId = user.Id,
+            TargetType = nameof(User),
+            SiteId = command.SiteId,
+            UserId = command.UserId
+        };
+
+        _dbContext.Events.Add(@event.ToDbEntity());
+
+        await _dbContext.SaveChangesAsync();
+
+        return new Success(new IEvent[] { @event });
+    }
+
+    private async Task ProcessRoles(UpdateUser command, IdentityUser identityUser)
+    {
+        foreach (var (name, selected) in command.Roles)
+        {
+            if (selected)
             {
-                throw new DataException($"User with Id {command.UpdateUserId} not found.");
+                if (!await _userManager.IsInRoleAsync(identityUser, name))
+                {
+                    await _userManager.AddToRoleAsync(identityUser, name);
+                }
             }
-
-            user.UpdateDetails(command.DisplayName);
-
-            var @event = new UserUpdated
+            else
             {
-                DisplayName = user.DisplayName,
-                Roles = command.Roles is { Count: > 0 } ? string.Join(", ", command.Roles) : string.Empty,
-                TargetId = user.Id,
-                TargetType = nameof(User),
-                SiteId = command.SiteId,
-                UserId = command.UserId
-            };
-
-            _dbContext.Events.Add(@event.ToDbEntity());
-
-            await _dbContext.SaveChangesAsync();
-
-            return new Success(new IEvent[] { @event });
+                if (await _userManager.IsInRoleAsync(identityUser, name))
+                {
+                    await _userManager.RemoveFromRoleAsync(identityUser, name);
+                }
+            }
         }
     }
 }

@@ -81,7 +81,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Models", "src\Atles.M
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Validators", "src\Atles.Validators\Atles.Validators.csproj", "{558685B8-2B05-486E-9987-7FF6829B0A14}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Atles.Validators.ValidationRules", "src\Atles.Validators.ValidationRules\Atles.Validators.ValidationRules.csproj", "{F821D9F1-CC6E-4A64-9338-DCD790C0FE4B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Atles.Validators.ValidationRules", "src\Atles.Validators.ValidationRules\Atles.Validators.ValidationRules.csproj", "{F821D9F1-CC6E-4A64-9338-DCD790C0FE4B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

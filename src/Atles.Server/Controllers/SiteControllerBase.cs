@@ -103,7 +103,7 @@ public abstract class SiteControllerBase : ControllerBase
         var commandResult = await _dispatcher.Send(command);
 
         return commandResult.Match(
-            success => Ok(),
+            success => success.Result is not null ? Ok(success.Result) : Ok(),
             failure => failure.ToActionResult()
         );
     }

@@ -7,55 +7,63 @@ using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Events.Users;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Commands.Handlers.Users
+namespace Atles.Commands.Handlers.Users;
+
+public class DeleteUserHandler : ICommandHandler<DeleteUser>
 {
-    public class DeleteUserHandler : ICommandHandler<DeleteUser>
+    private readonly AtlesDbContext _dbContext;
+    private readonly UserManager<IdentityUser> _userManager;
+
+    public DeleteUserHandler(AtlesDbContext dbContext, UserManager<IdentityUser> userManager)
     {
-        private readonly AtlesDbContext _dbContext;
+        _dbContext = dbContext;
+        _userManager = userManager;
+    }
 
-        public DeleteUserHandler(AtlesDbContext dbContext)
+    public async Task<CommandResult> Handle(DeleteUser command)
+    {
+        var user = await _dbContext.Users
+            .FirstOrDefaultAsync(x =>
+                x.Id == command.DeleteUserId &&
+                x.IdentityUserId == command.IdentityUserId &&
+                x.Status != UserStatusType.Deleted);
+
+        if (user == null)
         {
-            _dbContext = dbContext;
+            return new Failure(FailureType.NotFound, "User", $"User with Id {command.DeleteUserId} not found.");
         }
 
-        public async Task<CommandResult> Handle(DeleteUser command)
+        user.Delete();
+
+        var existingSubscriptions = _dbContext.Subscriptions.Where(x => x.UserId == user.Id);
+
+        foreach (var subscription in existingSubscriptions)
         {
-            var user = await _dbContext.Users
-                .FirstOrDefaultAsync(x =>
-                    x.Id == command.DeleteUserId &&
-                    x.IdentityUserId == command.IdentityUserId &&
-                    x.Status != UserStatusType.Deleted);
-
-            if (user == null)
-            {
-                throw new DataException($"User with Id {command.DeleteUserId} not found.");
-            }
-
-            user.Delete();
-
-            var existingSubscriptions = _dbContext.Subscriptions.Where(x => x.UserId == user.Id);
-
-            foreach (var subscription in existingSubscriptions)
-            {
-                _dbContext.Subscriptions.Remove(subscription);
-            }
-
-            var @event = new UserDeleted
-            {
-                RemovedSubscriptions = existingSubscriptions.Count(),
-                TargetId = user.Id,
-                TargetType = nameof(User),
-                SiteId = command.SiteId,
-                UserId = command.UserId
-            };
-
-            _dbContext.Events.Add(@event.ToDbEntity());
-
-            await _dbContext.SaveChangesAsync();
-
-            return new Success(new IEvent[] { @event });
+            _dbContext.Subscriptions.Remove(subscription);
         }
+
+        var @event = new UserDeleted
+        {
+            RemovedSubscriptions = existingSubscriptions.Count(),
+            TargetId = user.Id,
+            TargetType = nameof(User),
+            SiteId = command.SiteId,
+            UserId = command.UserId
+        };
+
+        _dbContext.Events.Add(@event.ToDbEntity());
+
+        await _dbContext.SaveChangesAsync();
+
+        var identityUser = await _userManager.FindByIdAsync(command.IdentityUserId);
+        if (identityUser != null)
+        {
+            await _userManager.DeleteAsync(identityUser);
+        }
+
+        return new Success(new IEvent[] { @event });
     }
 }

@@ -9,44 +9,43 @@ using Atles.Domain;
 using Atles.Events.Users;
 using Microsoft.EntityFrameworkCore;
 
-namespace Atles.Commands.Handlers.Users
+namespace Atles.Commands.Handlers.Users;
+
+public class ConfirmUserHandler : ICommandHandler<ConfirmUser>
 {
-    public class ConfirmUserHandler : ICommandHandler<ConfirmUser>
+    private readonly AtlesDbContext _dbContext;
+
+    public ConfirmUserHandler(AtlesDbContext dbContext)
     {
-        private readonly AtlesDbContext _dbContext;
+        _dbContext = dbContext;
+    }
 
-        public ConfirmUserHandler(AtlesDbContext dbContext)
+    public async Task<CommandResult> Handle(ConfirmUser command)
+    {
+        var user = await _dbContext.Users
+            .FirstOrDefaultAsync(x =>
+                x.IdentityUserId == command.IdentityUserId &&
+                x.Status == UserStatusType.Pending);
+
+        if (user == null)
         {
-            _dbContext = dbContext;
+            throw new DataException($"User with Id {command.IdentityUserId} not found.");
         }
 
-        public async Task<CommandResult> Handle(ConfirmUser command)
+        user.Confirm();
+
+        var @event = new UserConfirmed
         {
-            var user = await _dbContext.Users
-                .FirstOrDefaultAsync(x =>
-                    x.IdentityUserId == command.IdentityUserId &&
-                    x.Status == UserStatusType.Pending);
+            TargetId = user.Id,
+            TargetType = nameof(User),
+            SiteId = command.SiteId,
+            UserId = user.Id
+        };
 
-            if (user == null)
-            {
-                throw new DataException($"User with Id {command.IdentityUserId} not found.");
-            }
+        _dbContext.Events.Add(@event.ToDbEntity());
 
-            user.Confirm();
+        await _dbContext.SaveChangesAsync();
 
-            var @event = new UserConfirmed
-            {
-                TargetId = user.Id,
-                TargetType = nameof(User),
-                SiteId = command.SiteId,
-                UserId = user.Id
-            };
-
-            _dbContext.Events.Add(@event.ToDbEntity());
-
-            await _dbContext.SaveChangesAsync();
-
-            return new Success(new IEvent[] { @event });
-        }
+        return new Success(new IEvent[] { @event });
     }
 }
