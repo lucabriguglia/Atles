@@ -1,45 +1,36 @@
 ﻿using Atles.Domain;
 using Atles.Models.Public;
 
-namespace Atles.Server.Services
+namespace Atles.Server.Services;
+
+public class SecurityService : ISecurityService
 {
-    public class SecurityService : ISecurityService
+    private readonly IHttpContextAccessor _httpContextAccessor;
+
+    public SecurityService(IHttpContextAccessor httpContextAccessor)
     {
-        private readonly IHttpContextAccessor _httpContextAccessor;
+        _httpContextAccessor = httpContextAccessor;
+    }
 
-        public SecurityService(IHttpContextAccessor httpContextAccessor)
+    public bool HasPermission(PermissionModel model)
+    {
+        if (model.AllUsers)
         {
-            _httpContextAccessor = httpContextAccessor;
+            return true;
         }
 
-        public bool HasPermission(PermissionModel model)
+        if (model.RegisteredUsers)
         {
-            if (model.AllUsers)
-            {
-                return true;
-            }
-
-            if (model.RegisteredUsers)
-            {
-                return _httpContextAccessor.HttpContext.User.Identity.IsAuthenticated;
-            }
-
-            foreach (var role in model.Roles)
-            {
-                if (_httpContextAccessor.HttpContext.User.IsInRole(role))
-                {
-                    return true;
-                }
-            }
-
-            return false;
+            return _httpContextAccessor.HttpContext?.User?.Identity?.IsAuthenticated ?? false;
         }
 
-        public bool HasPermission(PermissionType permissionType, IList<PermissionModel> models)
-        {
-            var model = models.FirstOrDefault(x => x.Type == permissionType);
+        return model.Roles.Any(role => _httpContextAccessor.HttpContext?.User?.IsInRole(role) ?? false);
+    }
 
-            return model != null && HasPermission(model);
-        }
+    public bool HasPermission(PermissionType permissionType, IList<PermissionModel> models)
+    {
+        var model = models.FirstOrDefault(x => x.Type == permissionType);
+
+        return model != null && HasPermission(model);
     }
 }
