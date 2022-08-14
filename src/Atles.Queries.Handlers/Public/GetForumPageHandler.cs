@@ -1,5 +1,6 @@
 ﻿using Atles.Core.Queries;
 using Atles.Core.Results;
+using Atles.Core.Results.Types;
 using Atles.Data;
 using Atles.Domain;
 using Atles.Models.Public;
@@ -13,11 +14,19 @@ public class GetForumPageHandler : IQueryHandler<GetForumPage, ForumPageModel>
 {
     private readonly AtlesDbContext _dbContext;
     private readonly IForumPageTopicsService _forumPageTopicsService;
+    private readonly ISecurityService _securityService;
+    private readonly IPermissionsService _permissionsService;
 
-    public GetForumPageHandler(AtlesDbContext dbContext, IForumPageTopicsService forumPageTopicsService)
+    public GetForumPageHandler(
+        AtlesDbContext dbContext,
+        IForumPageTopicsService forumPageTopicsService,
+        ISecurityService securityService, 
+        IPermissionsService permissionsService)
     {
         _dbContext = dbContext;
         _forumPageTopicsService = forumPageTopicsService;
+        _securityService = securityService;
+        _permissionsService = permissionsService;
     }
 
     public async Task<QueryResult<ForumPageModel>> Handle(GetForumPage query)
@@ -31,7 +40,7 @@ public class GetForumPageHandler : IQueryHandler<GetForumPage, ForumPageModel>
 
         if (forum == null)
         {
-            return null;
+            return new Failure(FailureType.NotFound, "Forum", $"Forum with slug {query.Slug} not found.");
         }
 
         var topics = await _forumPageTopicsService.GetForumPageTopics(new GetForumPageTopics
@@ -51,6 +60,19 @@ public class GetForumPageHandler : IQueryHandler<GetForumPage, ForumPageModel>
             },
             Topics = topics
         };
+
+        var permissions = await _permissionsService.GetPermissions(query.SiteId, forum.Id, null);
+
+        var canViewForum = _securityService.HasPermission(PermissionType.ViewForum, permissions);
+        var canViewTopics = _securityService.HasPermission(PermissionType.ViewTopics, permissions);
+
+        if (!canViewForum || !canViewTopics)
+        {
+            return new Failure(FailureType.Unauthorized, "Forum", $"User can't access forum with slug {query.Slug}.");
+        }
+
+        result.CanRead = _securityService.HasPermission(PermissionType.Read, permissions);
+        result.CanStart = _securityService.HasPermission(PermissionType.Start, permissions) /*TODO: && !CurrentUser.IsSuspended*/;
 
         return result;
     }
