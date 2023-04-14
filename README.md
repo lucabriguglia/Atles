@@ -2,6 +2,12 @@
 
 [![.NET 6](https://github.com/lucabriguglia/Atles/actions/workflows/dotnet-6.yml/badge.svg)](https://github.com/lucabriguglia/Atles/actions/workflows/dotnet-6.yml)
 
+**PROJECT NO LONGER MAINTAINED**
+
+IT WAS MADE PRIVATE WHEN IT HAD **195 STARS** AND THEN MADE PUBLIC AGAIN FOR ARCHIVE PURPOSES
+
+<hr>
+
 A forum software built with ASP.NET Blazor WebAssembly and CQRS.
 
 **Documentation**: [Atles Wiki](https://lucabriguglia.github.io/Atles).
