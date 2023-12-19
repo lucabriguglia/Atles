@@ -1,7 +1,8 @@
 ﻿using Atles.Domain;
 using Atles.Models.Public;
+using Microsoft.AspNetCore.Http;
 
-namespace Atles.Server.Services;
+namespace Atles.Queries.Handlers.Public.Services;
 
 public class SecurityService : ISecurityService
 {

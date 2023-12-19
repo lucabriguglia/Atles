@@ -1,3 +1,3 @@
 ﻿namespace Atles.Core.Results.Types;
 
-public enum FailureType { Error, NotFound, NullArgument }
+public enum FailureType { Error, NotFound, NullArgument, Unauthorized }

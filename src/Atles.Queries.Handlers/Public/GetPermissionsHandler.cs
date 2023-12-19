@@ -43,7 +43,7 @@ namespace Atles.Queries.Handlers.Public
                     return await BuildPermissionModels(query.SiteId, permission.Id);
                 }
             }
-            else if(query.PermissionSetId != null)
+            else if (query.PermissionSetId != null)
             {
                 return await BuildPermissionModels(query.SiteId, query.PermissionSetId.Value);
             }
